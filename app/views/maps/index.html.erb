@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <!-- 
+    <div id="loading-overlay" class="overlay">
+        <div id="loading" class="message">
+            <div>
+                <ul class="loading-icon">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div class="loading-text">Please wait...</div>
+            </div>
+        </div>
+    </div>
+    -->
+    <div id="error-overlay" class="overlay">
+        <div id="error" class="message">
+            <div>
+                <div id="error-icon"></div>
+                <div id="error-text"></div>
+                <div id="error-button" class="button button-primary">Okay</div>
+            </div>
+        </div>
+    </div>
+    <div id="message-overlay" class="overlay">
+        <div id="message" class="message">
+          <%= image_tag 'close.png', class: 'close', id: 'message-overlay-close' %>
+            <div id="message-overlay-inner">
+            </div>
+        </div>
+    </div>
+    <div id="right-sidebar">
+        <div id="severity-legend">
+        </div>
+        <fieldset id="definitions">
+            <legend>Terms</legend>
+            <ul>
+                <li id="disease-forecasting">Disease Forecasting <span id="disease-forecasting-information" class="more-information">?</span></li>
+                <li id="tomcast">TOMCAST <span id="tomcast-information" class="more-information">?</span></li>
+                <li id="blitecast">Blitecast <span id="blitecast-information" class="more-information">?</span></li>
+            </ul>
+        </fieldset>
+    </div>
+    <div id="sidebar">
+        <header>
+            <hgroup>
+                <a id="plantpath-logo" href="http://www.plantpath.wisc.edu/wivegdis/" target="_blank">UW-Madison Plant Pathology</a>
+                <a id="vegento-logo" href="http://labs.russell.wisc.edu/vegento/" target="_blank">UW-Madison Vegetable Crop Entomology</a>
+                <h1><span>Vegetable Disease &amp;</span><span>Insect Forecasting Network</span></h1>
+            </hgroup>
+        </header>
+        <div id="options">
+            <div class="inner">
+                <fieldset id="crop">
+                    <legend>Crop:</legend>
+                    <div id="crop-select-wrapper">
+                        <select id="crop-select">
+                            <% @crops.each do |key, val| %>
+                              <option value="<%= key %>"><%= val %></option>
+                            <% end %>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset id="infliction">
+                    <legend>Pest/Disease:</legend>
+                    <div id="infliction-select-wrapper" class="select-wrapper">
+                        <select id="infliction-select">
+                            {% for name, group in inflictions %}
+                            <optgroup label="{{ name }}">
+                                {% for slug, infliction in group %}
+                                <option value="{{ slug }}">{{ infliction }}</option>
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+                        <span class="more-information" id="infliction-select-information">?</span>
+                    </div>
+                </fieldset>
+                <fieldset id="datepicker">
+                    <legend id="datepicker-legend">Dates:</legend>
+                    <div class="select-wrapper" id="datepicker-start-wrapper">
+                        <input type="text" class="datepicker" id="datepicker-start">
+                        <span class="more-information" id="datepicker-start-information">?</span>
+                    </div>
+                    <div class="to" id="datepicker-to">to</div>
+                    <div class="select-wrapper" id="datepicker-end-wrapper">
+                        <input type="text" class="datepicker" id="datepicker-end">
+                        <span class="more-information" id="datepicker-end-information">?</span>
+                    </div>
+                </fieldset>
+                <input type="button" class="button button-primary" id="select" value="Select" />
+            </div>
+        </div>
+        <footer>
+            <div id="uw-group">
+                <a id="uw-madison" href="http://www.wisc.edu" target="_blank">UW Madison</a>
+                <a id="uw-extension" href="http://www.uwex.edu" target="_blank">UW Extension</a>
+            </div>
+            <div id="potato-field"></div>
+        </footer>
+    </div>
+    <div id="map"></div>
+  </body>
+</html>
