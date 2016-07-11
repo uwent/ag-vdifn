@@ -55,4 +55,9 @@ Rails.application.routes.draw do
   #   end
 
   resources :maps, only: [:index]
+  resources :db, only: [:index] do
+    collection do
+      get 'severities'
+    end
+  end
 end

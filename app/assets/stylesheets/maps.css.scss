@@ -1,6 +1,8 @@
 html,
 body {
   height: 100%;
+  margin: 0;
+  adding: 0;
   font-family: "Lucida Grande", "Trebuchet MS", Trebuchet, Arial, sans-serif;
 }
 
@@ -29,6 +31,10 @@ tr {
 
 th, td {
   padding: 2px 6px;
+}
+
+#google-map {
+  height: 100%;
 }
 
 #sidebar {
@@ -103,13 +109,13 @@ hgroup > * {
 }
 
 #uw-madison {
-  background-image: url('/bundles/plantpathvdifn/img/uw-madison.png');
+  background-image: image-url('uw-madison.png');
   width: 53px;
   height: 80px;
 }
 
 #uw-extension {
-  background-image: url('/bundles/plantpathvdifn/img/uw-extension.png');
+  background-image: image-url('uw-extension.png');
   width: 119px;
   height: 30px;
   margin-left: 9px;
@@ -192,7 +198,7 @@ fieldset {
   display: inline-block;
   width: 12px;
   height: 12px;
-  background-image: url('/bundles/plantpathvdifn/img/question-mark.png');
+  background-image: image-url('question-mark.png');
   cursor: help;
   text-indent: -9999em;
   background-repeat: no-repeat;
@@ -494,7 +500,7 @@ footer {
 }
 
 #error-icon {
-  background-image: url('/bundles/plantpathvdifn/img/error.png');
+  background-image: image-url('error.png');
   width: 48px;
   height: 48px;
   margin-left: auto;
@@ -559,7 +565,7 @@ input[disabled="disabled"]:hover,
   position: absolute;
   bottom: 0;
   left: 0;
-  background-image: url('/bundles/plantpathvdifn/img/potato-field.png');
+  background-image: image-url('potato-field.png');
   width: 100%;
   height: 182px;
   z-index: 5;
