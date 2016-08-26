@@ -57,7 +57,8 @@ Rails.application.routes.draw do
   resources :maps, only: [:index]
   resources :db, only: [:index] do
     collection do
-      get 'severities'
+      post 'severities'
+      post 'info'
     end
   end
 end

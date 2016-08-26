@@ -1,12 +1,12 @@
 $ ->
   map = new ForecastMap($('#google-map')[0])
-  Database.fetchSeverities(map.severityOverlay.bind(map))
+  Database.fetchSeverities(null, null, 'carrot', map.severityOverlay.bind(map))
 
   selectCarrot()
 
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
     map.clearDataPoints()
-    Database.fetchSeverities(map.severityOverlay.bind(map))
+    Database.fetchSeverities(startPicker.getMoment().format('YYYY-MM-DD'), endPicker.getMoment().format('YYYY-MM-DD'), $('#crop-select')[0].value, map.severityOverlay.bind(map))
   )
 
   google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
@@ -74,6 +74,12 @@ selectPotato = () ->
     .end()
     .append('<option value="disease-late-blight">Late Blight</option>')
     .val('disease-late-blight')
+  $('#datepicker-end')
+    .find('option')
+    .remove()
+    .end()
+    .append('<option value="disease-foliar-disease">Foliar Disease</option>')
+    .val('disease-foliar-disease')
 
 
 class ForecastMap
@@ -140,8 +146,8 @@ class DataPoint
 
     @map_object = new google.maps.Rectangle(
       strokeColor: '#FF0000'
-      strokeOpacity: 0.8
-      strokeWeight: 0.0
+      strokeOpacity: 1.0
+      strokeWeight: 0.05
       fillColor: this.color()
       fillOpacity: 0.2
       map: map,
@@ -152,12 +158,43 @@ class DataPoint
         west: longitude - longitudeOffset - cornerOffset
     )
 
+    @map_object.addListener('click', (event) ->
+
+      infowindow = new google.maps.InfoWindow(
+        position: event.latLng
+      )
+      infowindow.open(map)
+      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (content) ->
+        infowindow.setContent(content)
+      )
+    )
+
 class Database
-  @fetchSeverities: (callback) =>
+  @fetchSeverities: (start_date, end_date, type, callback) =>
     $.ajax
       url: '/db/severities'
-      type: 'GET'
+      data:
+        start_date: start_date
+        end_date: end_date
+        type: type
+      type: 'POST'
       dataType: 'json'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        callback(data)
+
+  @fetchInfo: (lat, long, start_date, end_date, type, callback) =>
+    $.ajax
+      url: '/db/info'
+      data:
+        latitude: lat
+        longitude: long
+        start_date: start_date
+        end_date: end_date
+        type: type
+      type: 'POST'
+      dataType: 'html'
       error: (jqxhr, textstatus, errorthrown) ->
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>

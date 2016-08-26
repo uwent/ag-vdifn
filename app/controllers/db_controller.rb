@@ -1,18 +1,30 @@
 class DbController < ApplicationController
-  
+
   def severities
-    severities = ["#00c957", ""]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    crop = params[:type]
 
-    (42.4..47.3).step(0.1) do |lat| 
-      (-92.8..-86.3).step(0.1) do |long| 
-        severities << {
-          lat: lat.round(1),
-          long: long.round(1),
-          severity: Random.rand(5) 
-        }
-      end
-    end
+    url = (crop == 'carrot') ?
+      "http://localhost:4000/carrot_forecasts?start_date=#{start_date}&end_date=#{end_date}" :
+      "http://localhost:4000/potato_forecasts?end_date=#{end_date}"
+    response = HTTParty.get(url, { timeout: 10 })
 
-    render json: severities
+    render json: response
+  end
+
+  def info
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    crop = params[:type]
+    @latitude = params[:latitude].to_f.round(1)
+    @longitude = params[:longitude].to_f.round(1)
+    url = crop == 'carrot' ?
+      "http://localhost:4000/carrot_forecasts/info?start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}" :
+      "http://localhost:4000/potato_forecasts/info?start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}"
+
+    response = HTTParty.get(url, { timeout: 10 })
+    @weather = JSON.parse(response.body)
+    render layout: false
   end
 end
