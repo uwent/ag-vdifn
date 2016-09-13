@@ -1,13 +1,15 @@
 class DbController < ApplicationController
 
+  HOST = ENV['AG_WEATHER_HOST'] || 'http://localhost:3000'
+
   def severities
     start_date = params[:start_date]
     end_date = params[:end_date]
     crop = params[:type]
 
     url = (crop == 'carrot') ?
-      "http://localhost:4000/carrot_forecasts?start_date=#{start_date}&end_date=#{end_date}" :
-      "http://localhost:4000/potato_forecasts?end_date=#{end_date}"
+      "#{HOST}/carrot_forecasts?start_date=#{start_date}&end_date=#{end_date}" :
+      "#{HOST}/potato_forecasts?end_date=#{end_date}"
     response = HTTParty.get(url, { timeout: 10 })
 
     render json: response
