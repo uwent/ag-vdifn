@@ -172,7 +172,7 @@ class DataPoint
 class Database
   @fetchSeverities: (start_date, end_date, type, callback) =>
     $.ajax
-      url: '/db/severities'
+      url: Routes.severities_db_index_path()
       data:
         start_date: start_date
         end_date: end_date
@@ -186,7 +186,7 @@ class Database
 
   @fetchInfo: (lat, long, start_date, end_date, type, callback) =>
     $.ajax
-      url: '/db/info'
+      url: Routes.info_db_index_path()
       data:
         latitude: lat
         longitude: long
