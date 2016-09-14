@@ -7,7 +7,11 @@ $ ->
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
     map.openLoadingOverlay()
 
-    Database.fetchSeverities(startPicker.getMoment().format('YYYY-MM-DD'), endPicker.getMoment().format('YYYY-MM-DD'), $('#crop-select')[0].value, map.severityOverlay.bind(map))
+    Database.fetchSeverities(
+      startPicker.getMoment().format('YYYY-MM-DD'),
+      endPicker.getMoment().format('YYYY-MM-DD'),
+      $('#crop-select')[0].value,
+      map.severityOverlay.bind(map))
   )
 
   google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
@@ -22,7 +26,6 @@ $ ->
 
     defaultOptions =
       setDefaultDate: true
-      minDate: new Date(2014, 4, 16)
       maxDate: new Date()
       format: 'MMMM D, YYYY'
       onClose: () ->
@@ -34,21 +37,19 @@ $ ->
 
   startPicker = createDatePicker(
     defaultDate: moment().subtract(7,'d').toDate()
+    minDate: new Date(2014, 4, 16)
     field: $('#datepicker-start')[0]
     onSelect: () ->
-      ultimateMaxDate = endDate
-      minDate = this.getDate()
-      maxDate = new Date(+this.getDate() + 48384e05)
+      maxDate = new Date()
 
-      if (maxDate > ultimateMaxDate)
-        maxDate = ultimateMaxDate
-
-      endPicker.setMinDate(minDate)
+      endPicker.setMinDate(this.getDate())
       endPicker.setMaxDate(maxDate)
 
-      if (endPicker.getDate() < minDate)
-        endPicker.setDate(minDate)
-        endPicker.gotoDate(minDate)
+      if $('#datepicker-end').prop('disabled')
+        endPicker.setDate(moment(this.getDate()).add(7, 'd').toDate())
+
+      if (endPicker.getDate() < this.getDate())
+        endPicker.setDate(this.getDate())
 
       if (endPicker.getDate() > maxDate)
         endPicker.setDate(maxDate)
@@ -67,6 +68,7 @@ selectCarrot = () ->
     .end()
     .append('<option value="disease-foliar-disease">Foliar Disease</option>')
     .val('disease-foliar-disease')
+  $('#datepicker-end').prop('disabled', false)
 
 selectPotato = () ->
   $('#infliction-select')
@@ -75,13 +77,7 @@ selectPotato = () ->
     .end()
     .append('<option value="disease-late-blight">Late Blight</option>')
     .val('disease-late-blight')
-  $('#datepicker-end')
-    .find('option')
-    .remove()
-    .end()
-    .append('<option value="disease-foliar-disease">Foliar Disease</option>')
-    .val('disease-foliar-disease')
-
+  $('#datepicker-end').prop('disabled', true)
 
 class ForecastMap
   constructor: (@map_node) ->
@@ -100,6 +96,7 @@ class ForecastMap
     @map = new google.maps.Map(@map_node, mapOptions)
     @loadingOverlay = $('#loading-overlay')[0]
     @dataPoints = []
+    @initialLoad = true
     google.maps.event.addListenerOnce(@map, 'tilesloaded', this.tilesLoaded)
 
   closeLoadingOverlay: () ->
@@ -129,8 +126,10 @@ class ForecastMap
       @dataPoints.push(new DataPoint(1, new google.maps.LatLng(severity.lat, severity.long), severity.severity))
     for point in @dataPoints
       point.draw(@map)
-    this.closeLoadingOverlay()
 
+    if !@initialLoad
+      this.closeLoadingOverlay()
+    @initialLoad = false
 
 class DataPoint
   constructor: (@id, @latLng, @severity) ->
