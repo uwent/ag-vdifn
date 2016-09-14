@@ -5,7 +5,8 @@ $ ->
   selectCarrot()
 
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
-    map.clearDataPoints()
+    map.openLoadingOverlay()
+
     Database.fetchSeverities(startPicker.getMoment().format('YYYY-MM-DD'), endPicker.getMoment().format('YYYY-MM-DD'), $('#crop-select')[0].value, map.severityOverlay.bind(map))
   )
 
@@ -105,6 +106,10 @@ class ForecastMap
     @loadingOverlay.style.opacity = 0
     @loadingOverlay.style.visibility = "hidden"
 
+  openLoadingOverlay: () ->
+    @loadingOverlay.style.opacity = 1
+    @loadingOverlay.style.visibility = "visible"
+
   tilesLoaded: () =>
     this.closeLoadingOverlay()
     @loadingOverlay.style.backgroundColor = "transparent"
@@ -124,6 +129,8 @@ class ForecastMap
       @dataPoints.push(new DataPoint(1, new google.maps.LatLng(severity.lat, severity.long), severity.severity))
     for point in @dataPoints
       point.draw(@map)
+    this.closeLoadingOverlay()
+
 
 class DataPoint
   constructor: (@id, @latLng, @severity) ->
