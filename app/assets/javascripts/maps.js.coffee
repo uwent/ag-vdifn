@@ -170,14 +170,13 @@ class DataPoint
       )
 
       content = document.createElement("div")
-      $(content).addClass("allen")
       $(content).attr("id", "iw-container")
       content.innerHTML =  Mustache.render($('#infowindow-tmpl').html())
       infowindow.open(map)
       infowindow.setContent(content)
-#      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (newContent) ->
-#        content.innerHTML = newContent
-#      )
+      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (newContent) ->
+        content.innerHTML = newContent
+      )
     )
 
 class Database

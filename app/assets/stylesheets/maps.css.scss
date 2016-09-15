@@ -2,7 +2,7 @@ html,
 body {
   height: 100%;
   margin: 0;
-  adding: 0;
+  padding: 0;
   font-family: "Lucida Grande", "Trebuchet MS", Trebuchet, Arial, sans-serif;
 }
 
@@ -316,22 +316,43 @@ footer {
   vertical-align: middle;
 }
 
-.allen {
-  width: 350px;
-  height: 400px;
+// -----------------------------------------------------------------------
+// Infownindow
+// -----------------------------------------------------------------------
+#iw-container {
+  width: 275px;
+  height: 350px;
+}
+
+#iw-content {
+  margin:0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 303px;
+  font-size: 9pt;
+  
+             
+  #loading {
+    margin: 100px 90px;
+  }
+  .loading-text {
+    font-size: 16px;
+    color: #656565;
+  }
 }
 
 .iw-title {
   font-family: 'Open Sans Condensed', sans-serif;
-   font-size: 22px;
-   font-weight: 400;
-   padding: 10px;
-   background-color: #48b5e9;
-   color: white;
-   margin: 1px;
-   border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #48b5e9;
+  color: white;
+  margin: 1px;
+  border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
 }
 
+//---------------------------------------------------------------------------
 .overlay {
   position: absolute;
   top: 0;
@@ -383,10 +404,14 @@ footer {
 }
 
 .allen {
-  #loading {
-    margin: 100px 100px;
+  .loading-icon {
+    width: 60px;
+    height: 60px;
+    margin: -30px auto 0 10px;
+    padding: 0 10px 0 0;
   }
 }
+
 #loading .loading-icon {
   width: 60px;
   height: 60px;
