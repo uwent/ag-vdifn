@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     collection do
       post 'severities'
       post 'info'
+      post 'severity_legend'
     end
   end
 end

@@ -249,6 +249,14 @@ fieldset {
 
 #severity-legend .dsv {
   clear: both;
+
+  label {
+    display: inline-block;
+    margin-top: 5px;
+    span {
+      margin-left: 5px;
+    }
+  }
 }
 
 #severity-legend .dsv div {
@@ -264,37 +272,34 @@ fieldset {
   padding-left: 5px;
 }
 
-.dsv-threshold > span {
+.dsv-threshold  {
   display: inline-block;
   width: 15px;
   height: 15px;
   vertical-align: middle;
   margin: 2px;
+
 }
 
-.dsv-threshold.dsv-very_high > span {
+
+.dsv-threshold.dsv-very_high {
   background: rgb(204, 0, 0);
-  background: rgba(204, 0, 0, 0.4);
 }
 
-.dsv-threshold.dsv-high > span {
+.dsv-threshold.dsv-high  {
   background: rgb(255, 128, 0);
-  background: rgba(255, 128, 0, 0.4);
 }
 
-.dsv-threshold.dsv-medium > span {
+.dsv-threshold.dsv-medium  {
   background: rgb(255, 215, 0);
-  background: rgba(255, 215, 0, 0.4);
 }
 
-.dsv-threshold.dsv-low > span {
+.dsv-threshold.dsv-low  {
   background: rgb(125, 255, 35);
-  background: rgba(125, 255, 35, 0.4);
 }
 
-.dsv-threshold.dsv-very_low > span {
+.dsv-threshold.dsv-very_low {
   background: rgb(0, 201, 87);
-  background: rgba(0, 201, 87, 0.4);
 }
 
 footer {

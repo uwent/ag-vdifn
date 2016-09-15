@@ -1,6 +1,7 @@
 $ ->
   map = new ForecastMap($('#google-map')[0])
   Database.fetchSeverities(null, null, 'carrot', map.severityOverlay.bind(map))
+  Database.fetchSeverityLegend('carrot')
 
   selectCarrot()
 
@@ -13,11 +14,13 @@ $ ->
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
     map.closeInfoWindow()
     map.openLoadingOverlay()
+    crop = $('#crop-select')[0].value
 
+    Database.fetchSeverityLegend(crop)
     Database.fetchSeverities(
       startPicker.getMoment().format('YYYY-MM-DD'),
       endPicker.getMoment().format('YYYY-MM-DD'),
-      $('#crop-select')[0].value,
+      crop,
       map.severityOverlay.bind(map))
   )
 
@@ -226,6 +229,18 @@ class Database
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
         callback(data)
+
+  @fetchSeverityLegend: (type) =>
+    $.ajax
+      url: Routes.severity_legend_db_index_path()
+      data:
+        type: type
+      type: 'POST'
+      dataType: 'html'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        $('#severity-legend').html(data)
 
   @fetchInfo: (lat, long, start_date, end_date, type, callback) =>
     $.ajax
