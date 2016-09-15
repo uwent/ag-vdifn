@@ -165,14 +165,19 @@ class DataPoint
     )
 
     @map_object.addListener('click', (event) ->
-
       infowindow = new google.maps.InfoWindow(
         position: event.latLng
       )
+
+      content = document.createElement("div")
+      $(content).addClass("allen")
+      $(content).attr("id", "iw-container")
+      content.innerHTML =  Mustache.render($('#infowindow-tmpl').html())
       infowindow.open(map)
-      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (content) ->
-        infowindow.setContent(content)
-      )
+      infowindow.setContent(content)
+#      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (newContent) ->
+#        content.innerHTML = newContent
+#      )
     )
 
 class Database

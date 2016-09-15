@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.20"></script>
     <div id="loading-overlay" class="overlay">
       <div id="loading" class="message">
         <div>
@@ -100,5 +100,28 @@
       </footer>
     </div>
     <div id="google-map"></div>
+
+    <script id="infowindow-tmpl" type="x-tmpl-mustache">
+      <div class='iw-title'>
+         Data Point Information
+      </div>
+      <div id="loading" class="message">
+        <div>
+          <ul class="loading-icon">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <div class="loading-text">Please wait...</div>
+        </div>
+        <div>
+           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in laoreet purus, eget tempus metus. Aenean odio ex, posuere nec metus quis, suscipit elementum enim. Pellentesque sollicitudin enim sit amet lectus auctor lobortis. Aliquam et velit nibh. Nulla vehicula, nibh nec feugiat posuere, lacus nulla gravida ex, et ullamcorper mi justo ut ex. Pellentesque egestas, urna quis cursus tempus, diam est malesuada dui, nec pulvinar ex risus eget nisi. Pellentesque imperdiet sed mi vel pellentesque. Maecenas hendrerit, odio aliquam venenatis finibus, lorem nibh tempor est, sit amet feugiat est risus dignissim felis.
+
+Pellentesque dictum lectus elit, nec ultrices felis cursus eu. Nullam malesuada nisl vel lorem pretium pretium. Suspendisse potenti. Sed tempus lobortis diam, et tincidunt eros euismod et. Donec viverra est eget magna pharetra consectetur. Nullam eu augue quis nibh egestas porta. Praesent hendrerit massa vel orci pretium, at congue libero pulvinar. Integer iaculis auctor fringilla.
+
+Sed pretium velit quis suscipit ornare. Integer eros nisi, varius in venenatis sit amet, bibendum at nisi. Duis in quam quis metus bibendum semper in id enim. Cras sapien ex, condimentum pretium viverra sit amet, gravida nec ex. Praesent congue sapien sed erat ornare, sit amet sodales nisi volutpat. Curabitur vehicula ut velit at maximus. Proin consectetur in arcu et facilisis. Fusce vitae nunc in nulla interdum posuere. 
+        </div>
+      </div>
+    </script>
   </body>
 </html>

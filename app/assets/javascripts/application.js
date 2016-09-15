@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require js-routes
 //= require moment
+//= require mustache.min
 //= require pikaday
 //= require_tree .
