@@ -339,6 +339,14 @@ footer {
     font-size: 16px;
     color: #656565;
   }
+
+  table {
+    width: 100%;
+  }
+
+  table .odd {
+    background-color: #ebefef;
+  }
 }
 
 .iw-title {
@@ -754,10 +762,6 @@ input[disabled="disabled"]:hover,
   }
 
   footer {
-    display: none;
-  }
-
-  .more-information {
     display: none;
   }
 

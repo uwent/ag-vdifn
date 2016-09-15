@@ -42,9 +42,9 @@
       <fieldset id="definitions">
         <legend>Terms</legend>
         <ul>
-          <li id="disease-forecasting">Disease Forecasting <span id="disease-forecasting-information" class="more-information">?</span></li>
-          <li id="tomcast">TOMCAST <span id="tomcast-information" class="more-information">?</span></li>
-          <li id="blitecast">Blitecast <span id="blitecast-information" class="more-information">?</span></li>
+          <li id="disease-forecasting">Disease Forecasting <span id="disease-forecasting-information" class="more-information" title="" data-tooltip="A plant disease management system that uses computer-based models to collect field weather data and predict the onset and potential severity of crop diseases. Current and forecasted weather conditions determine the risk for disease, and prompts disease management decisions (preventative pesticide applications).">?</span></li>
+          <li id="tomcast">TOMCAST <span id="tomcast-information" class="more-information" title="" data-tooltip="Disease forecasting model (adapted from a tomato disease model) used to predict the development of carrot foliar blights caused by Alternaria and Cercospora fungi, based on an accumulation of DSVs from past temperature and leaf wetness data combined with forecasted weather conditions.">?</span></li>
+          <li id="blitecast">Blitecast <span id="blitecast-information" class="more-information" title="" data-tooltip="Disease forecasting model used to predict the development of late blight of potato/tomato caused by <i>Phytophthora infestans</i>, based on an accumulation of DSVs, which are generated from air temperature and relative humidity data.">?</span></li>
         </ul>
       </fieldset>
     </div>
@@ -71,21 +71,20 @@
           <fieldset id="infliction">
             <legend>Pest/Disease:</legend>
             <div id="infliction-select-wrapper" class="select-wrapper">
-              <select id="infliction-select">
-              </select>
-              <span class="more-information" id="infliction-select-information">?</span>
+              <select id="infliction-select"></select>
+              <span class="more-information" title="" id="infliction-select-information">?</span>
             </div>
           </fieldset>
           <fieldset id="datepicker">
             <legend id="datepicker-legend">Dates:</legend>
             <div class="select-wrapper" id="datepicker-start-wrapper">
               <input type="text" class="datepicker" id="datepicker-start">
-              <span class="more-information" id="datepicker-start-information">?</span>
+              <span class="more-information" id="datepicker-start-information" title='' data-tooltip="Date of Emergence/Last Fungicide Application">?</span>
             </div>
             <div class="to" id="datepicker-to">to</div>
             <div class="select-wrapper" id="datepicker-end-wrapper">
               <input type="text" class="datepicker" id="datepicker-end">
-              <span class="more-information" id="datepicker-end-information">?</span>
+              <span class="more-information" id="datepicker-end-information" title="" data-tooltip="Date through which disease severity values are accumulated">?</span>
             </div>
           </fieldset>
           <input type="button" class="button button-primary" id="change-params" value="Select" />
@@ -102,7 +101,7 @@
     <div id="google-map"></div>
 
     <script id="infowindow-tmpl" type="x-tmpl-mustache">
-      <div class='iw-title'>
+``      <div class='iw-title'>
          Data Point Information
       </div>
       <div id="iw-content" class="message">
