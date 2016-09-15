@@ -5,6 +5,7 @@ $ ->
   selectCarrot()
 
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
+    map.closeInfoWindow()
     map.openLoadingOverlay()
 
     Database.fetchSeverities(
@@ -96,8 +97,16 @@ class ForecastMap
     @map = new google.maps.Map(@map_node, mapOptions)
     @loadingOverlay = $('#loading-overlay')[0]
     @dataPoints = []
+    @infoWindow = null
     @initialLoad = true
     google.maps.event.addListenerOnce(@map, 'tilesloaded', this.tilesLoaded)
+
+  getMap: () ->
+    return @map
+
+  closeInfoWindow: () ->
+    if @infoWindow
+      @infoWindow.close()
 
   closeLoadingOverlay: () ->
     @loadingOverlay.style.opacity = 0
@@ -125,7 +134,7 @@ class ForecastMap
     for severity in data
       @dataPoints.push(new DataPoint(1, new google.maps.LatLng(severity.lat, severity.long), severity.severity))
     for point in @dataPoints
-      point.draw(@map)
+      point.draw(this)
 
     if !@initialLoad
       this.closeLoadingOverlay()
@@ -143,12 +152,13 @@ class DataPoint
     @map_object.setMap(null)
     @map_object = null
 
-  draw: (map) ->
+  draw: (forecastMap) ->
     latitude = @latLng.lat()
     longitude = @latLng.lng()
     longitudeOffset = 0.05
     latitudeOffset = 0.05
     cornerOffset = 0.0025
+    map = forecastMap.getMap()
 
     @map_object = new google.maps.Rectangle(
       strokeColor: '#FF0000'
@@ -165,10 +175,12 @@ class DataPoint
     )
 
     @map_object.addListener('click', (event) ->
-      infowindow = new google.maps.InfoWindow(
+      forecastMap.closeInfoWindow()
+      forecastMap.infoWindow = new google.maps.InfoWindow(
         position: event.latLng
       )
 
+      infowindow = forecastMap.infoWindow
       content = document.createElement("div")
       $(content).attr("id", "iw-container")
       content.innerHTML =  Mustache.render($('#infowindow-tmpl').html())
