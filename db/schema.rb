@@ -11,6 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170428015343) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "crop_pests", force: :cascade do |t|
+    t.integer "crop_id"
+    t.integer "pest_id"
+  end
+
+  create_table "crops", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pests", force: :cascade do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "remote_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "info"
+  end
 
 end
