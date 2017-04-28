@@ -2,14 +2,13 @@ $ ->
   map = new ForecastMap($('#google-map')[0])
   Database.fetchSeverities(null, null, 'carrot', map.severityOverlay.bind(map))
   Database.fetchSeverityLegend('carrot')
+  $(".infliction:first").show()
 
-  selectCarrot()
 
   $(".more-information").tooltip(
     content: ->
       $(this).data("tooltip")
   )
-
 
   google.maps.event.addDomListener($('#change-params')[0], 'click', ->
     map.closeInfoWindow()
@@ -25,10 +24,9 @@ $ ->
   )
 
   google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
-    if $(event.target).val() == 'carrot'
-      selectCarrot()
-    else
-      selectPotato()
+    crop_select_wrapper = "#select-" + $(event.target).val()
+    $(".infliction").hide()
+    $(crop_select_wrapper).show()
   )
 
   createDatePicker = (options) ->

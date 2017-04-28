@@ -62,18 +62,25 @@
             <legend>Crop:</legend>
             <div id="crop-select-wrapper">
               <select id="crop-select">
-                <% @crops.each do |key, val| %>
-                  <option value="<%= key %>"><%= val %></option>
+                <% @crops.each do |crop| %>
+                  <option value="<%= crop.id %>"><%= crop.name %></option>
                 <% end %>
               </select>
             </div>
           </fieldset>
           <fieldset id="infliction">
             <legend>Pest/Disease:</legend>
-            <div id="infliction-select-wrapper" class="select-wrapper">
-              <select id="infliction-select"></select>
-              <span class="more-information" title="" id="infliction-select-information">?</span>
-            </div>
+
+            <% @crops.each do |crop| %>
+              <div id="select-<%= crop.id %>" class="select-wrapper infliction">
+                <select class="infliction-select">
+                  <% crop.pests.each do |pest| %>
+                    <option value="<%= pest.id %>"><%= pest.name %></option>
+                  <% end %>
+                </select>
+                <span class="more-information" title="" id="infliction-select-information"  data-tooltip="<%= crop.pests.first.info %>">?</span>
+              </div>
+              <% end %>
           </fieldset>
           <fieldset id="datepicker">
             <legend id="datepicker-legend">Dates:</legend>
