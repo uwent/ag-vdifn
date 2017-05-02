@@ -1,3 +1,4 @@
+# coding: utf-8
 class DbController < ApplicationController
 
   HOST = ENV['AG_WEATHER_BASE_URL'] || 'http://localhost:3000'
@@ -5,12 +6,9 @@ class DbController < ApplicationController
   def severities
     start_date = params[:start_date]
     end_date = params[:end_date]
-    crop = params[:type]
+    pest = Pest.find(params[:pest_id])
 
-    url = (crop == 'carrot') ?
-      "#{HOST}/carrot_forecasts?start_date=#{start_date}&end_date=#{end_date}" :
-      "#{HOST}/potato_forecasts?end_date=#{end_date}"
-    response = HTTParty.get(url, { timeout: 10 })
+    pest.severities(start_date, end_date)
 
     render json: response
   end

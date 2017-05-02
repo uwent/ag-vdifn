@@ -3,6 +3,7 @@ class DegreeDayPest < Pest
   def severities(start_date, end_date)
     url = "#{REMOTE_HOST}/degree_days/totals?start_date=#{start_date}&end_date=#{end_date}&pest=#{remote_name}"
 
+    puts url
     begin
       response = HTTParty.get(url, { timeout: 10 })
       return severities_from_totals(JSON.parse(response.body))
@@ -11,6 +12,10 @@ class DegreeDayPest < Pest
       return []
     end
 
+  end
+
+  def biofix_date
+    Date.current.beginning_of_year
   end
 
   private
