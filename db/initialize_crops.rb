@@ -5,7 +5,7 @@ late_blight = DsvPest.create!(name: "Late Blight",
                               critical_value: 0,
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
-late_blight = DsvPest.create!(name: "Foliar Disease",
+foliar_disease = DsvPest.create!(name: "Foliar Disease",
                               remote_name: 'foliar_disease',
                               info: "Foliar Info",
                               biofix_mm: 1, biofix_dd: 1,
@@ -27,7 +27,7 @@ asparagus_beetle = DegreeDayPest.create!(name: "Asparagus Beetle (Common)",
                                 critical_value: 105,
                                 link: 'labs.russell.wisc.edu/vegento/pests/asparagus-beetle')
 
-black_cutworm DegreeDayPest.create!(name: "Black Cutworm",
+black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
                            remote_name: 'black_cutworm',
                            info: "Black Cutworm Info",
                            biofix_mm: 5, biofix_dd: 15,
@@ -183,12 +183,12 @@ western_flower_thrips = DegreeDayPest.create!(name: "Western Flower Thrip",
 
 
 
-alfalfa = Crop.create!!(name: "Alfalfa")
+alfalfa = Crop.create!(name: "Alfalfa")
 alfalfa.pests = [alfalfa_weevil]
 
 asparagus = Crop.create!(name: "Asparagus")
 asparagus.pests = [asparagus_beetle, black_cutworm, western_bean_cutworm,
-                   variegated_cutworm. japanese_beetle]
+                   variegated_cutworm, japanese_beetle]
 
 bean = Crop.create!(name: "Bean")
 bean.pests = [corn_earworm, black_cutworm, western_bean_cutworm,

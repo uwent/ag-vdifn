@@ -29,8 +29,13 @@ ActiveRecord::Schema.define(version: 20170428002912) do
 
   create_table "pests", force: :cascade do |t|
     t.string   "type"
+    t.string   "name"
     t.string   "remote_name"
     t.string   "info"
+    t.string   "link"
+    t.integer  "biofix_mm"
+    t.integer  "biofix_dd"
+    t.float    "critical_value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
