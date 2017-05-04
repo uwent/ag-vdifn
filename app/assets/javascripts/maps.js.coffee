@@ -1,6 +1,6 @@
 $ ->
   map = new ForecastMap($('#google-map')[0])
-  Database.fetchSeverities(null, null, 'carrot', map.severityOverlay.bind(map))
+  Database.fetchSeverities(null, null, 5, map.severityOverlay.bind(map))
   Database.fetchSeverityLegend('carrot')
   $(".infliction:first").show()
 
@@ -215,7 +215,7 @@ class Database
       data:
         start_date: start_date
         end_date: end_date
-        type: type
+        pest_id: type
       type: 'POST'
       dataType: 'json'
       error: (jqxhr, textstatus, errorthrown) ->

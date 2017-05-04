@@ -29,9 +29,10 @@ class DegreeDayPest < Pest
 
   def severities_from_totals(totals)
     totals.map do | measurement |
-      { latitude: measurement['latitude'],
-        longitude: measurement['longitude'],
-        severity: total_to_severity(measurement['total'].to_f)
+      { lat: measurement['lat'],
+        long: measurement['long'],
+        #severity: total_to_severity(measurement['total'].to_f)
+        severity: rand(5)
       }
     end
   end

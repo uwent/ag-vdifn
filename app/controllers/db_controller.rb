@@ -8,9 +8,7 @@ class DbController < ApplicationController
     end_date = params[:end_date]
     pest = Pest.find(params[:pest_id])
 
-    pest.severities(start_date, end_date)
-
-    render json: response
+    render json: pest.severities(start_date, end_date)
   end
 
   def info

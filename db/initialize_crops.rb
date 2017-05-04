@@ -5,12 +5,12 @@ late_blight = DsvPest.create!(name: "Late Blight",
                               critical_value: 0,
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
-foliar_disease = DsvPest.create!(name: "Foliar Disease",
-                              remote_name: 'foliar_disease',
-                              info: "Foliar Info",
-                              biofix_mm: 1, biofix_dd: 1,
-                              critical_value: 0,
-                              link: 'www.plantpath.wisc.edu/wivegdis')
+foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
+                                       remote_name: 'foliar_disease',
+                                       info: "Foliar Info",
+                                       biofix_mm: 1, biofix_dd: 1,
+                                       critical_value: 0,
+                                       link: 'www.plantpath.wisc.edu/wivegdis')
 
 
 alfalfa_weevil = DegreeDayPest.create!(name: "Alfalfa Weevil",
