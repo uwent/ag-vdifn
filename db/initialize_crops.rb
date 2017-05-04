@@ -1,12 +1,12 @@
-late_blight = DsvPest.create!(name: "Late Blight",
-                              remote_name: 'late_blight',
+late_blight = LateBlight.create!(name: "Late Blight",
+                              remote_name: 'potato_blight_dsv',
                               info: "Late Blight Info",
                               biofix_mm: 1, biofix_dd: 1,
                               critical_value: 0,
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
 foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
-                                       remote_name: 'foliar_disease',
+                                       remote_name: 'carrot_foliar_dsv',
                                        info: "Foliar Info",
                                        biofix_mm: 1, biofix_dd: 1,
                                        critical_value: 0,

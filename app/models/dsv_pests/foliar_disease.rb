@@ -1,9 +1,16 @@
 class FoliarDisease < DsvPest
 
-  def severities(start_date, end_date)
-    url = "#{REMOTE_HOST}/degree_days/totals?start_date=#{start_date}&end_date=#{end_date}&pest=#{remote_name}"
-
-
+  def total_to_severity(total)
+    if total >= 20
+      return 4
+    elsif total >= 15
+      return 3
+    elsif total >= 10
+      return 2
+    elsif total >= 5
+      return 1
+    else
+      return 0
+    end
   end
-
 end
