@@ -4,7 +4,7 @@ class Pest < ActiveRecord::Base
   has_many :crop_pests, dependent: :destroy
   has_many :crops, through: :crop_pests
 
-  def get_remote_values(start_date, end_date)
+  def get_remote_totals(start_date, end_date)
     url = "#{REMOTE_HOST}/pest_forecasts?start_date=#{start_date}&end_date=#{end_date}&pest=#{remote_name}"
 
     puts url
@@ -18,7 +18,7 @@ class Pest < ActiveRecord::Base
   end
 
   def severities(start_date, end_date)
-    response = get_remote_values(start_date, end_date)
+    response = get_remote_totals(start_date, end_date)
     return severities_from_totals(response)
   end
 

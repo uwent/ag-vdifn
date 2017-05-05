@@ -73,7 +73,7 @@
 
             <% @crops.each do |crop| %>
               <div id="select-<%= crop.id %>" class="select-wrapper infliction">
-                <select class="infliction-select">
+                <select class="infliction-select" id="pest-select-<%= crop.id %>">
                   <% crop.pests.each do |pest| %>
                     <option value="<%= pest.id %>"><%= pest.name %></option>
                   <% end %>

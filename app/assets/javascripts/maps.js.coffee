@@ -14,12 +14,13 @@ $ ->
     map.closeInfoWindow()
     map.openLoadingOverlay()
     crop = $('#crop-select')[0].value
+    pest = $('#pest-select-' + crop)[0].value
 
     Database.fetchSeverityLegend(crop)
     Database.fetchSeverities(
       startPicker.getMoment().format('YYYY-MM-DD'),
       endPicker.getMoment().format('YYYY-MM-DD'),
-      crop,
+      pest,
       map.severityOverlay.bind(map))
   )
 

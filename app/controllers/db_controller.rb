@@ -4,16 +4,11 @@ class DbController < ApplicationController
   HOST = ENV['AG_WEATHER_BASE_URL'] || 'http://localhost:3000'
 
   def severities
-    start_date = params[:start_date]
-    end_date = params[:end_date]
     pest = Pest.find(params[:pest_id])
-
     render json: pest.severities(start_date, end_date)
   end
 
   def info
-    start_date = params[:start_date]
-    end_date = params[:end_date]
     crop = params[:type]
     @latitude = params[:latitude].to_f.round(1)
     @longitude = params[:longitude].to_f.round(1)
@@ -46,5 +41,13 @@ class DbController < ApplicationController
       {name: "Low", slug: "very_low", description: "Low likelihood of disease
 (7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}]
     render layout: false
+  end
+
+  private
+  def start_date
+    params[:start_date].blank? ? Date.current - 7.days : Date.parse(params[:start_date])
+  end
+  def end_date
+    params[:end_date].blank? ? Date.current : Date.parse(params[:end_date])
   end
 end

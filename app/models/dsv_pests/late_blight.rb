@@ -1,8 +1,8 @@
 class LateBlight < DsvPest
 
   def severities(start_date, end_date)
-    past_week = get_remote_values(end_date - 7.days, end_date)
-    season_to_date = get_remote_values(end_date.beginning_of_year, end_date)
+    past_week = get_remote_totals(end_date - 7.days, end_date)
+    season_to_date = get_remote_totals(end_date.beginning_of_year, end_date)
     return severities_from_totals(past_week, season_to_date)
   end
 
