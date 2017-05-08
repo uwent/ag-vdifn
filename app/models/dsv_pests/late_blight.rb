@@ -1,3 +1,4 @@
+# coding: utf-8
 class LateBlight < DsvPest
 
   def severities(start_date, end_date)
@@ -34,5 +35,16 @@ class LateBlight < DsvPest
     elsif last_week >= 3 || season >= 30
       return 2
     end
+  end
+
+  def severity_legend
+    [
+      {name: "High", slug: "very_high", description: "High likelihood of disease
+(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)"},
+      {name: "Medium", slug: "medium", description: "Medium likelihood of disease
+(7-day accumulated DSVs ≥ 3 or season accumulated DSVs > 30)"},
+      {name: "Low", slug: "very_low", description: "Low likelihood of disease
+(7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}
+    ]
   end
 end

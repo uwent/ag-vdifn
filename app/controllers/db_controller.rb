@@ -22,24 +22,8 @@ class DbController < ApplicationController
   end
 
   def severity_legend
-    crop = params[:type]
-
-    @severities = (crop == 'carrot') ? [
-      {name: "Very High", slug: "very_high",
-       description: "Very high likelihood of disease (accumulated DSVs ≥ 20)"},
-      {name: "High", slug: "high",
-       description: "High likelihood of disease (15 ≤ accumulated DSVs < 20)"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of disease (10 ≤ accumulated DSVs < 15)"},
-      {name: "Low", slug: "low", description: "Low likelihood of disease
-(5 ≤ accumulated DSVs < 10)"},
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (accumulated DSVs < 5)"}]
-    : [
-      {name: "High", slug: "very_high", description: "High likelihood of disease
-(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of disease
-(7-day accumulated DSVs ≥ 3 or season accumulated DSVs > 30)"},
-      {name: "Low", slug: "very_low", description: "Low likelihood of disease
-(7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}]
+    pest = Pest.find(params[:pest_id])
+    @severities = pest.severity_legend
     render layout: false
   end
 

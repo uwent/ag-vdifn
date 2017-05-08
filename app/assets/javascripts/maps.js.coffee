@@ -1,7 +1,7 @@
 $ ->
   map = new ForecastMap($('#google-map')[0])
   Database.fetchSeverities(null, null, 5, map.severityOverlay.bind(map))
-  Database.fetchSeverityLegend('carrot')
+  Database.fetchSeverityLegend(5)
   $(".infliction:first").show()
 
 
@@ -16,7 +16,7 @@ $ ->
     crop = $('#crop-select')[0].value
     pest = $('#pest-select-' + crop)[0].value
 
-    Database.fetchSeverityLegend(crop)
+    Database.fetchSeverityLegend(pest)
     Database.fetchSeverities(
       startPicker.getMoment().format('YYYY-MM-DD'),
       endPicker.getMoment().format('YYYY-MM-DD'),
@@ -228,7 +228,7 @@ class Database
     $.ajax
       url: Routes.severity_legend_db_index_path()
       data:
-        type: type
+        pest_id: type
       type: 'POST'
       dataType: 'html'
       error: (jqxhr, textstatus, errorthrown) ->
