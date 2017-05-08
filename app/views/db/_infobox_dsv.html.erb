@@ -26,7 +26,7 @@
           <% @weather.each do |day| %>
             <tr>
               <td class="odd"><%= day["date"] %></td>
-              <td><%= day["dsv"] %></td>
+              <td><%= day["value"] %></td>
               <td class="odd"><%= day["avg_temperature"].to_f.round(1) %>&deg;C</td>
               <td><%= day["hours_over"] %></td>
             </tr>
@@ -36,7 +36,7 @@
           <tr>
             <th>Total:</th>
             <td colspan="3"><strong>
-              <%= @weather.inject(0) { |sum, h| sum += h['dsv']} %></strong></td>
+              <%= @weather.inject(0) { |sum, h| sum += h['value']} %></strong></td>
           </tr>
 
 

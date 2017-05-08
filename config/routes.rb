@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   resources :db, only: [:index] do
     collection do
       post 'severities'
-      post 'info'
+      post 'point_details'
       post 'severity_legend'
     end
   end

@@ -1,0 +1,43 @@
+<div class='iw-title'>
+  Data Point Information
+</div>
+
+<div id='iw-content'>
+  <div class="information">
+    <div><strong>Latitude</strong>: <%= @latitude %></div>
+    <div><strong>Longitude</strong>: <%= @longitude %></div>
+  </div>
+
+  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
+  <div class="weather-details">
+      <% if @weather %>
+      <table>
+        <thead>
+          <tr>
+            <th width='35%'>Day</th>
+            <th>Degree Days<span class="weather-details-dsv more-information" title="Degree Days value information.">?</span></th>
+            <th>Mean temp.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @weather.each do |day| %>
+            <tr>
+              <td class="odd"><%= day["date"] %></td>
+              <td><%= day["value"] %></td>
+              <td class="odd"><%= day["avg_temperature"].to_f.round(1) %>&deg;C</td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <td colspan="2"><strong>
+              <%= @weather.inject(0) { |sum, h| sum += h['value']}.round(1) %></strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    <% else %>
+      <p style="text-align: center;">No data to display.</p>
+    <% end %>
+  </div>
+</div>

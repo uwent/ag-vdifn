@@ -200,11 +200,13 @@ class DataPoint
 
       infowindow = forecastMap.infoWindow
       content = document.createElement("div")
+      crop = $('#crop-select')[0].value
+      pest = $('#pest-select-' + crop)[0].value
       $(content).attr("id", "iw-container")
       content.innerHTML =  Mustache.render($('#infowindow-tmpl').html())
       infowindow.open(map)
       infowindow.setContent(content)
-      Database.fetchInfo(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, $('#crop-select')[0].value, (newContent) ->
+      Database.fetchPointDetails(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, pest, (newContent) ->
         content.innerHTML = newContent
       )
     )
@@ -236,15 +238,15 @@ class Database
       success: (data, textStatus, jqXHR) =>
         $('#severity-legend').html(data)
 
-  @fetchInfo: (lat, long, start_date, end_date, type, callback) =>
+  @fetchPointDetails: (lat, long, start_date, end_date, pest, callback) =>
     $.ajax
-      url: Routes.info_db_index_path()
+      url: Routes.point_details_db_index_path()
       data:
         latitude: lat
         longitude: long
         start_date: start_date
         end_date: end_date
-        type: type
+        pest_id: pest
       type: 'POST'
       dataType: 'html'
       error: (jqxhr, textstatus, errorthrown) ->

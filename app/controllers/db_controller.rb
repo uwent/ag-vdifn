@@ -1,4 +1,3 @@
-# coding: utf-8
 class DbController < ApplicationController
 
   HOST = ENV['AG_WEATHER_BASE_URL'] || 'http://localhost:3000'
@@ -8,14 +7,13 @@ class DbController < ApplicationController
     render json: pest.severities(start_date, end_date)
   end
 
-  def info
-    crop = params[:type]
+  def point_details
+    @pest = Pest.find(params[:pest_id])
     @latitude = params[:latitude].to_f.round(1)
     @longitude = params[:longitude].to_f.round(1)
-    url = crop == 'carrot' ?
-      "#{HOST}/carrot_forecasts/info?start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}" :
-      "#{HOST}/potato_forecasts/info?start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}"
+    url = "#{HOST}/pest_forecasts/point_details?pest=#{@pest.remote_name}&start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}"
 
+    puts "=====> #{url}"
     response = HTTParty.get(url, { timeout: 10 })
     @weather = JSON.parse(response.body)
     render layout: false
