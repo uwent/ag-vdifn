@@ -35,7 +35,7 @@ black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
                            critical_value: 400,
                            link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
 
-stink_bug = DegreeDayPest.create!(name: "Brown Marmorated Stink Bug",
+stink_bug = BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
                          remote_name: 'brown_marmorated_stink_bug',
                          info: "Brown Marmorated Stink Bug Info",
                          biofix_mm: 1, biofix_dd: 1,
@@ -69,7 +69,7 @@ corn_earworm = DegreeDayPest.create!(name: "Corn Earworm",
                          biofix_mm: 8, biofix_dd: 1,
                          critical_value: 73,
                          link: 'labs.russell.wisc.edu/vegento/pests/corn-earworm')
-corn_rootworm = DegreeDayPest.create!(name: "Corn Rootworm",
+corn_rootworm = CornRootworm.create!(name: "Corn Rootworm",
                              remote_name: 'corn_rootworm',
                              info: "Corn Rootworm Info",
                              biofix_mm: 1, biofix_dd: 1,
