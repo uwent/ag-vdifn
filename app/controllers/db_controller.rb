@@ -25,6 +25,17 @@ class DbController < ApplicationController
     render layout: false
   end
 
+  def pest_info
+    pest = Pest.find(params[:pest_id])
+
+    render json: {
+             info: pest.info,
+             pest_link: pest.link,
+             biofix: pest.biofix_date,
+             end_date_disabled: false
+           }
+  end
+
   private
   def start_date
     params[:start_date].blank? ? Date.current - 7.days : Date.parse(params[:start_date])

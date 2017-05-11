@@ -35,4 +35,8 @@ class Pest < ActiveRecord::Base
   def total_to_severity(total)
     return 0
   end
+
+  def biofix_date
+    Date.new(Date.current.year, biofix_mm, biofix_dd)
+  end
 end

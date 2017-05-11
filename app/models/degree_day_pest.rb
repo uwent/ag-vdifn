@@ -1,9 +1,5 @@
 class DegreeDayPest < Pest
 
-  def biofix_date
-    Date.current.beginning_of_year
-  end
-
   def total_to_severity(total)
     return 5 if very_high.include?(total)
     return 4 if high.include?(total)

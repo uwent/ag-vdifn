@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       post 'severities'
       post 'point_details'
       post 'severity_legend'
+      post  'pest_info'
     end
   end
 end
