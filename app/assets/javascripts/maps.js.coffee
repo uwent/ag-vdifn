@@ -30,6 +30,28 @@ $ ->
     $(crop_select_wrapper).show()
   )
 
+  google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
+    crop_select_wrapper = "#select-" + $(event.target).val()
+    $(".infliction").hide()
+    $(crop_select_wrapper).show()
+  )
+
+  for pest_entry in $(".infliction-select")
+    google.maps.event.addDomListener($(pest_entry)[0], 'change', (event) ->
+      change_pest($(event.target))
+    )
+
+  change_pest = (pest) ->
+    pest_id = $(pest).val()
+    Database.fetchPestInfo(pest_id, (pest_info) ->
+      $(pest).parent()
+        .find('span')
+        .remove()
+      $(pest).parent()
+        .append('<span class="more-information" title="" id="infliction-select-information">?</span>')
+        .tooltip(content: pest_info.info)
+      )
+
   createDatePicker = (options) ->
     console.log(options)
 
@@ -249,6 +271,18 @@ class Database
         pest_id: pest
       type: 'POST'
       dataType: 'html'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        callback(data)
+
+  @fetchPestInfo: (pest, callback) =>
+    $.ajax
+      url: Routes.pest_info_db_index_path()
+      data:
+        pest_id: pest
+      type: 'POST'
+      dataType: 'json'
       error: (jqxhr, textstatus, errorthrown) ->
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
