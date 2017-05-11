@@ -4,7 +4,6 @@ $ ->
   Database.fetchSeverityLegend(5)
   $(".infliction:first").show()
 
-
   $(".more-information").tooltip(
     content: ->
       $(this).data("tooltip")
@@ -44,13 +43,28 @@ $ ->
   change_pest = (pest) ->
     pest_id = $(pest).val()
     Database.fetchPestInfo(pest_id, (pest_info) ->
+      change_pest_info(pest, pest_info.info)
+      change_pest_info_link(pest_info.pest_link)
+      change_start_date(new Date(moment(pest_info.biofix)))
+      toggle_end_date(pest_info.end_date_enabled)
+    )
+
+  change_pest_info = (pest, new_info) ->
       $(pest).parent()
         .find('span')
         .remove()
       $(pest).parent()
         .append('<span class="more-information" title="" id="infliction-select-information">?</span>')
-        .tooltip(content: pest_info.info)
-      )
+        .tooltip(content: new_info)
+
+  change_pest_info_link = (new_link) ->
+    $('#more-information-link').attr('href', "http://" + new_link)
+
+  toggle_end_date = (enabled) ->
+    if enabled
+      $('#datepicker-end').prop('disabled', false)
+    else
+      $('#datepicker-end').prop('disabled', true)
 
   createDatePicker = (options) ->
     console.log(options)
@@ -85,6 +99,12 @@ $ ->
       if (endPicker.getDate() > maxDate)
         endPicker.setDate(maxDate)
   )
+
+  change_start_date = (new_date) ->
+    if new_date > new Date()
+      startPicker.setDate(moment().subtract(7,'d').toDate())
+    else
+      startPicker.setDate(new_date)
 
   endPicker = createDatePicker(
     defaultDate: endDate
@@ -230,6 +250,10 @@ class DataPoint
       infowindow.setContent(content)
       Database.fetchPointDetails(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, pest, (newContent) ->
         content.innerHTML = newContent
+        $(content).find(".more-information").tooltip(
+          content: ->
+            $(this).data("tooltip")
+        )
       )
     )
 
@@ -259,6 +283,11 @@ class Database
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
         $('#severity-legend').html(data)
+        $("#severity-legend").find(".more-information").tooltip(
+          content: ->
+            $(this).data("tooltip")
+        )
+
 
   @fetchPointDetails: (lat, long, start_date, end_date, pest, callback) =>
     $.ajax

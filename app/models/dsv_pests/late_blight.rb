@@ -47,4 +47,12 @@ class LateBlight < DsvPest
 (7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}
     ]
   end
+
+  def biofix_date
+    7.days.ago.to_date
+  end
+
+  def end_date_enabled?
+    return false
+  end
 end

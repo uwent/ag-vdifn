@@ -1,13 +1,14 @@
+# coding: utf-8
 late_blight = LateBlight.create!(name: "Late Blight",
                               remote_name: 'potato_blight_dsv',
-                              info: "Late Blight Info",
+                              info: "<u>Late blight:</u> Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.<br /><br />[<a href='http://www.plantpath.wisc.edu/wivegdis/'>http://www.plantpath.wisc.edu/wivegdis/</a>]",
                               biofix_mm: 1, biofix_dd: 1,
                               critical_value: 0,
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
 foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
                                        remote_name: 'carrot_foliar_dsv',
-                                       info: "Foliar Info",
+                                       info: "<u>Alternaria leaf blight:</u> the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.<br/><br/> Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br/><br/><u>Cercospora leaf blight:</u> the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.<br /><br /> Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br />[<a href='http://www.plantpath.wisc.edu/wivegdis/'>http://www.plantpath.wisc.edu/wivegdis/</a>]",
                                        biofix_mm: 1, biofix_dd: 1,
                                        critical_value: 0,
                                        link: 'www.plantpath.wisc.edu/wivegdis')
@@ -18,7 +19,7 @@ alfalfa_weevil = DegreeDayPest.create!(name: "Alfalfa Weevil",
                               info: "Alfalfa Weevil Info",
                               biofix_mm: 1, biofix_dd: 1,
                               critical_value: 371,
-                              link: '')
+                              link: 'labs.russell.wisc.edu/vegento/pests')
 
 asparagus_beetle = DegreeDayPest.create!(name: "Asparagus Beetle (Common)",
                                 remote_name: 'asparagus_beetle',
@@ -39,7 +40,7 @@ stink_bug = DegreeDayPest.create!(name: "Brown Marmorated Stink Bug",
                          info: "Brown Marmorated Stink Bug Info",
                          biofix_mm: 1, biofix_dd: 1,
                          critical_value: 1608,
-                         link: '')
+                         link: 'labs.russell.wisc.edu/vegento/pests')
 
 cabbage_looper = DegreeDayPest.create!(name: 'Cabbage Looper',
                               remote_name: 'cabbage_looper',
@@ -115,14 +116,14 @@ lygus_bug = DegreeDayPest.create!(name: "Lygus Bug",
                          info: "Lygus Bug Info",
                          biofix_mm: 1, biofix_dd: 1,
                          critical_value: 275,
-                         link: '')
+                         link: 'labs.russell.wisc.edu/vegento/pests')
 
 mint_root_borer = DegreeDayPest.create!(name: "Mint Root Borer",
                                remote_name: 'mint_root_borer',
                                info: "Mint Root Borer Info",
                                biofix_mm: 4, biofix_dd: 1,
                                critical_value: 1280,
-                               link: '')
+                               link: 'labs.russell.wisc.edu/vegento/pests')
 
 onion_maggot = DegreeDayPest.create!(name: "Onion Maggot",
                      remote_name: 'onion_maggot',
@@ -136,7 +137,7 @@ potato_psyllid = DegreeDayPest.create!(name: "Potato Psyllid",
                      info: "Potato Psyllid Info",
                      biofix_mm: 1, biofix_dd: 1,
                      critical_value: 762,
-                     link: '')
+                     link: 'labs.russell.wisc.edu/vegento/pests')
 
 seedcorn_maggot = DegreeDayPest.create!(name: "Seedcorn Maggot",
                      remote_name: 'seedcorn_maggot',
@@ -157,7 +158,7 @@ stalk_borer = DegreeDayPest.create!(name: "Stalk Borer",
                      info: "Stalk Borer Info",
                      biofix_mm: 1, biofix_dd: 1,
                      critical_value: 1400,
-                     link: '')
+                     link: 'labs.russell.wisc.edu/vegento/pests')
 
 variegated_cutworm = DegreeDayPest.create!(name: "Variegated Cutworm",
                      remote_name: 'variegated_cutworm',

@@ -335,8 +335,8 @@ footer {
   overflow-x: hidden;
   height: 303px;
   font-size: 9pt;
-  
-             
+
+
   #loading {
     margin: 100px 90px;
   }
@@ -775,12 +775,25 @@ input[disabled="disabled"]:hover,
   }
 }
 
+#more-information-link-wrapper {
+  font-size: 10pt;
+  padding-top: 5px;
+  float: right;
+  a {
+    color: inherit;
+  }
+
+}
 
 .infliction {
   display: none;
 }
 
+.ui-tooltip {
+  max-width: 50%;
+}
+
 .ui-tooltip-content {
-    font-size:11pt;
-    font-family:Calibri;
+    font-size: 11pt;
+    font-family: Arial, Helvetica, sans-serif;
 }

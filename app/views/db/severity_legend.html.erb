@@ -1,9 +1,9 @@
   <fieldset id="dsv-legend">
     <legend>Severity Legend:</legend>
     <% @severities.each do |severity| %>
-      <div id="dsv-<%= severity[:slug] %>" class="dsv" title="<%= severity[:description] %>" data-color="#ff0000" >
+      <div id="dsv-<%= severity[:slug] %>" class="dsv" data-color="#ff0000" >
         <div class="dsv-threshold dsv-<%= severity[:slug] %>"></div>
-        <label><%= severity[:name] %><span class="more-information"> ? </span></label>
+        <label><%= severity[:name] %><span class="more-information" title="" data-tooltip="<%= severity[:description] %>"> ? </span></label>
       </div>
     <% end %>
   </fieldset>

@@ -27,4 +27,8 @@ class FoliarDisease < DsvPest
       {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (accumulated DSVs < 5)"}
     ]
   end
+
+  def biofix_date
+    7.days.ago.to_date
+  end
 end

@@ -39,4 +39,8 @@ class Pest < ActiveRecord::Base
   def biofix_date
     Date.new(Date.current.year, biofix_mm, biofix_dd)
   end
+
+  def end_date_enabled?
+    true
+  end
 end

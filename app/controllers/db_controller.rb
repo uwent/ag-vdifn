@@ -13,7 +13,6 @@ class DbController < ApplicationController
     @longitude = params[:longitude].to_f.round(1)
     url = "#{HOST}/pest_forecasts/point_details?pest=#{@pest.remote_name}&start_date=#{start_date}&end_date=#{end_date}&longitude=#{@longitude}&latitude=#{@latitude}"
 
-    puts "=====> #{url}"
     response = HTTParty.get(url, { timeout: 10 })
     @weather = JSON.parse(response.body)
     render layout: false
@@ -32,7 +31,7 @@ class DbController < ApplicationController
              info: pest.info,
              pest_link: pest.link,
              biofix: pest.biofix_date,
-             end_date_disabled: false
+             end_date_enabled: pest.end_date_enabled?
            }
   end
 
