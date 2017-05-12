@@ -4,7 +4,7 @@ class BrownMarmoratedStinkBug < DegreeDayPest
     return 0 if total < 1286 || total > 2656
     return 1 if total > 2545
     return 2 if total > 2434
-    return 3 if total > 2223
+    return 3 if total > 2323
     return 4 if total > 2102
     return 3 if total > 1991
     return 2 if total > 1769
