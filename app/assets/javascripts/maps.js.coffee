@@ -1,7 +1,6 @@
 $ ->
   map = new ForecastMap($('#google-map')[0])
-  Database.fetchSeverities(null, null, 5, map.severityOverlay.bind(map))
-  Database.fetchSeverityLegend(5)
+
   $(".infliction:first").show()
 
   $(".more-information").tooltip(
@@ -30,9 +29,11 @@ $ ->
   )
 
   google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
-    crop_select_wrapper = "#select-" + $(event.target).val()
+    crop_id = $(event.target).val()
+    crop_select_wrapper = "#select-" + crop_id
     $(".infliction").hide()
     $(crop_select_wrapper).show()
+    change_pest($('#pest-select-' + crop_id)[0])
   )
 
   for pest_entry in $(".infliction-select")
@@ -111,6 +112,17 @@ $ ->
     minDate: startPicker.getDate()
     field: $('#datepicker-end')[0]
   )
+
+  initializer = () ->
+    init_crop_id = $('#crop-select')[0].value
+    pest = $('#pest-select-' + init_crop_id)[0]
+    change_pest(pest)
+    start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
+    Database.fetchSeverities(start_date, endPicker.getDate(),
+      pest.value, map.severityOverlay.bind(map))
+    Database.fetchSeverityLegend(pest.value)
+
+  initializer()
 
 selectCarrot = () ->
   $('#infliction-select')
