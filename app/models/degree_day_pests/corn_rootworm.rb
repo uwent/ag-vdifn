@@ -1,18 +1,18 @@
 class CornRootworm < DegreeDayPest
 
   def total_to_severity(total)
-    return 1 if total < 263 || total > 566
-    return 2 if total > 543
-    return 3 if total > 519
-    return 4 if total > 495
-    return 5 if total > 448
-    return 4 if total > 408
-    return 5 if total > 369
-    return 4 if total > 345
-    return 5 if total > 312
-    return 4 if total > 296
-    return 3 if total > 279
-    return 2
+    return 0 if total < 263 || total > 566
+    return 1 if total > 543
+    return 2 if total > 519
+    return 3 if total > 495
+    return 4 if total > 448
+    return 3 if total > 408
+    return 4 if total > 369
+    return 3 if total > 345
+    return 4 if total > 312
+    return 3 if total > 296
+    return 2 if total > 279
+    return 1
   end
 
   def severity_legend

@@ -1,18 +1,18 @@
 class BrownMarmoratedStinkBug < DegreeDayPest
 
   def total_to_severity(total)
-    return 1 if total < 1286 || total > 2656
-    return 2 if total > 2545
-    return 3 if total > 2434
-    return 4 if total > 2223
-    return 5 if total > 2102
-    return 4 if total > 1991
-    return 3 if total > 1769
-    return 4 if total > 1688
-    return 5 if total > 1567
-    return 4 if total > 1447
-    return 3 if total > 1367
-    return 2
+    return 0 if total < 1286 || total > 2656
+    return 1 if total > 2545
+    return 2 if total > 2434
+    return 3 if total > 2223
+    return 4 if total > 2102
+    return 3 if total > 1991
+    return 2 if total > 1769
+    return 3 if total > 1688
+    return 4 if total > 1567
+    return 3 if total > 1447
+    return 2 if total > 1367
+    return 1
   end
 
   def severity_legend

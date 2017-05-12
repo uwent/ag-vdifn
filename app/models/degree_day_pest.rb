@@ -1,11 +1,11 @@
 class DegreeDayPest < Pest
 
   def total_to_severity(total)
-    return 5 if very_high.include?(total)
-    return 4 if high.include?(total)
-    return 3 if moderate.include?(total)
-    return 2 if low.include?(total)
-    return 1
+    return 4 if very_high.include?(total)
+    return 3 if high.include?(total)
+    return 2 if moderate.include?(total)
+    return 1 if low.include?(total)
+    return 0
   end
 
   def severity_legend
