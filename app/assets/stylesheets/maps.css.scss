@@ -65,7 +65,7 @@ hgroup > * {
 #right-sidebar,
 #message {
   background: #ffffff;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   -webkit-box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
   box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
@@ -146,12 +146,12 @@ fieldset {
   padding: 10px;
 }
 
-#options .inner {
+.options .inner {
   margin: 0 10px;
 }
 
-#options input[type="text"],
-#options select {
+.options input[type="text"],
+.options select {
   -webkit-appearance: none;
   -moz-appearance: none;
   width: 99%;
@@ -164,18 +164,18 @@ fieldset {
   cursor: pointer;
 }
 
-#options select {
+.options select {
   overflow: hidden;
   padding: 5px 8px;
   text-indent: 0.01px;
 }
 
-#options select::-ms-expand {
+.options select::-ms-expand {
   display: none;
 }
 
-#options input[type="text"][disabled="disabled"],
-#options select[disabled="disabled"] {
+.options input[type="text"][disabled="disabled"],
+.options select[disabled="disabled"] {
   background-color: #d0d0d0;
   cursor: default;
 }
@@ -770,7 +770,7 @@ input[disabled="disabled"]:hover,
     display: none;
   }
 
-  #options {
+  .options {
     display: none;
   }
 }

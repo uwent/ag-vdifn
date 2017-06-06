@@ -56,10 +56,24 @@
           <h1><span>Vegetable Disease &amp;</span><span>Insect Forecasting Network</span></h1>
         </hgroup>
       </header>
-      <div id="options">
+
+      <div class="options">
         <div class="inner">
+          <fieldset id="interface">
+            <div class="switch-field">
+              <input type="radio" id="toggle-disease" name="interface"
+                     value="disease" checked />
+              <label for="toggle-disease">Disease</label>
+              <input type="radio" id="toggle-insect" name="interface"
+                     value="insect"/>
+              <label for="toggle-insect">Insect</label>
+              <input type="radio" id="toggle-custom" name="interface"
+                     value="custom"/>
+              <label for="toggle-custom">Custom</label>
+            </div>
+          </fieldset>
           <fieldset id="crop">
-            <legend>Crop:</legend>
+            <legend>Model Selection:</legend>
             <div id="crop-select-wrapper">
               <select id="crop-select">
                 <% @crops.each do |crop| %>
@@ -70,7 +84,6 @@
           </fieldset>
           <fieldset id="infliction">
             <legend>Pest/Disease:</legend>
-
             <% @crops.each do |crop| %>
               <div id="select-<%= crop.id %>" class="select-wrapper infliction">
                 <select class="infliction-select" id="pest-select-<%= crop.id %>">
@@ -82,7 +95,7 @@
               </div>
             <% end %>
             <div id="more-information-link-wrapper">
-                <a target="_blank" href="http://www.google.com" id='more-information-link'>More infomation</a>
+              <a target="_blank" href="http://www.google.com" id='more-information-link'>More infomation</a>
             </div>
           </fieldset>
           <fieldset id="datepicker">
@@ -100,6 +113,7 @@
           <input type="button" class="button button-primary" id="change-params" value="Select" />
         </div>
       </div>
+
       <footer>
         <div id="uw-group">
           <a id="uw-madison" href="http://www.wisc.edu" target="_blank">UW Madison</a>
@@ -112,17 +126,17 @@
 
     <script id="infowindow-tmpl" type="x-tmpl-mustache">
      <div class='iw-title'>
-         Data Point Information
-      </div>
-      <div id="iw-content" class="message">
-        <div id="loading">
-          <ul class="loading-icon">
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-      </div>
+       Data Point Information
+     </div>
+     <div id="iw-content" class="message">
+       <div id="loading">
+         <ul class="loading-icon">
+           <li></li>
+           <li></li>
+           <li></li>
+         </ul>
+       </div>
+     </div>
     </script>
   </body>
 </html>
