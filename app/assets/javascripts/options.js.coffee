@@ -15,10 +15,11 @@ class @Options
       field: $('#datepicker-end')[0]
     )
     init_crop_id = $('#crop-select')[0].value
-    pest = $('#pest-select-' + init_crop_id)[0]
-    this.change_pest(pest)
-    start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
-    this.reload_map()
+    pest = $('#pest-select-' + init_crop_id)
+    this.change_pest(pest, =>
+      start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
+      this.reload_map()
+    )
 
     $('#crop-select').on 'change', (event) =>
       console.log("In change crop-select")
@@ -64,14 +65,15 @@ class @Options
       .append('<span class="more-information" title="" id="infliction-select-information">?</span>')
       .tooltip(content: new_info)
 
-  change_pest: (pest) ->
-    console.log("In change_pest")
+  change_pest: (pest, callback) ->
     pest_id = $(pest).val()
     Database.fetchPestInfo(pest_id, (pest_info) =>
       this.change_pest_info(pest, pest_info.info)
       this.change_pest_info_link(pest_info.pest_link)
       this.change_start_date(new Date(moment(pest_info.biofix)))
       this.toggle_end_date(pest_info.end_date_enabled)
+      if callback
+        callback()
     )
   
   change_pest_info_link: (new_link) ->
