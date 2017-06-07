@@ -8,121 +8,25 @@ $ ->
       $(this).data("tooltip")
   )
 
-  google.maps.event.addDomListener($('#change-params')[0], 'click', ->
-    map.closeInfoWindow()
-    map.openLoadingOverlay()
-    crop = $('#crop-select')[0].value
-    pest = $('#pest-select-' + crop)[0].value
+  $('input[type=radio]').on 'change', (event) ->
+    change_interface(event.target.value)
+  
+  change_interface = (interface_name) ->
+    $.ajax
+      url: Routes.sidebar_maps_path()
+      data:
+        interface: interface_name
+      type: 'POST'
+      dataType: 'html'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        $('#interface-options').replaceWith(data)
+        $(".infliction:first").show()
+        new Options(map)
 
-    Database.fetchSeverityLegend(pest)
-    Database.fetchSeverities(
-      startPicker.getMoment().format('YYYY-MM-DD'),
-      endPicker.getMoment().format('YYYY-MM-DD'),
-      pest,
-      map.severityOverlay.bind(map))
-  )
-
-  google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
-    crop_select_wrapper = "#select-" + $(event.target).val()
-    $(".infliction").hide()
-    $(crop_select_wrapper).show()
-  )
-
-  google.maps.event.addDomListener($('#crop-select')[0], 'change', (event) ->
-    crop_id = $(event.target).val()
-    crop_select_wrapper = "#select-" + crop_id
-    $(".infliction").hide()
-    $(crop_select_wrapper).show()
-    change_pest($('#pest-select-' + crop_id)[0])
-  )
-
-  for pest_entry in $(".infliction-select")
-    google.maps.event.addDomListener($(pest_entry)[0], 'change', (event) ->
-      change_pest($(event.target))
-    )
-
-  change_pest = (pest) ->
-    pest_id = $(pest).val()
-    Database.fetchPestInfo(pest_id, (pest_info) ->
-      change_pest_info(pest, pest_info.info)
-      change_pest_info_link(pest_info.pest_link)
-      change_start_date(new Date(moment(pest_info.biofix)))
-      toggle_end_date(pest_info.end_date_enabled)
-    )
-
-  change_pest_info = (pest, new_info) ->
-      $(pest).parent()
-        .find('span')
-        .remove()
-      $(pest).parent()
-        .append('<span class="more-information" title="" id="infliction-select-information">?</span>')
-        .tooltip(content: new_info)
-
-  change_pest_info_link = (new_link) ->
-    $('#more-information-link').attr('href', "http://" + new_link)
-
-  toggle_end_date = (enabled) ->
-    if enabled
-      $('#datepicker-end').prop('disabled', false)
-    else
-      $('#datepicker-end').prop('disabled', true)
-
-  createDatePicker = (options) ->
-
-    defaultOptions =
-      setDefaultDate: true
-      maxDate: new Date()
-      format: 'MMMM D, YYYY'
-      onClose: () ->
-        this.config().field.blur()
-
-    return new Pikaday($.extend({}, options || {}, defaultOptions), false, false)
-
-  endDate = new Date()
-
-  startPicker = createDatePicker(
-    defaultDate: moment().subtract(7,'d').toDate()
-    minDate: new Date(2014, 4, 16)
-    field: $('#datepicker-start')[0]
-    onSelect: () ->
-      maxDate = new Date()
-
-      endPicker.setMinDate(this.getDate())
-      endPicker.setMaxDate(maxDate)
-
-      if $('#datepicker-end').prop('disabled')
-        endPicker.setDate(moment(this.getDate()).add(7, 'd').toDate())
-
-      if (endPicker.getDate() < this.getDate())
-        endPicker.setDate(this.getDate())
-
-      if (endPicker.getDate() > maxDate)
-        endPicker.setDate(maxDate)
-  )
-
-  change_start_date = (new_date) ->
-    if new_date > new Date()
-      startPicker.setDate(moment().subtract(7,'d').toDate())
-    else
-      startPicker.setDate(new_date)
-
-  endPicker = createDatePicker(
-    defaultDate: endDate
-    minDate: startPicker.getDate()
-    field: $('#datepicker-end')[0]
-  )
-
-  initializer = () ->
-    init_crop_id = $('#crop-select')[0].value
-    pest = $('#pest-select-' + init_crop_id)[0]
-    change_pest(pest)
-    start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
-    Database.fetchSeverities(start_date, endPicker.getDate(),
-      pest.value, map.severityOverlay.bind(map))
-    Database.fetchSeverityLegend(pest.value)
-
-  initializer()
-
+  options = new Options(map)
+  
 class ForecastMap
   constructor: (@map_node) ->
     mapOptions =
@@ -163,7 +67,6 @@ class ForecastMap
     this.closeLoadingOverlay()
     @loadingOverlay.style.backgroundColor = "transparent"
     @loadingOverlay.classList.add("radial")
-
     return this
 
   clearDataPoints: () ->
@@ -182,6 +85,17 @@ class ForecastMap
     if !@initialLoad
       this.closeLoadingOverlay()
     @initialLoad = false
+
+  reload: (start_date, end_date, pest) ->
+    this.closeInfoWindow()
+    this.clearDataPoints()
+    this.openLoadingOverlay()
+    Database.fetchSeverityLegend(pest)
+    Database.fetchSeverities(
+      start_date,
+      end_date,
+      pest,
+      this.severityOverlay.bind(this))
 
 class DataPoint
   constructor: (@id, @latLng, @severity) ->
@@ -239,63 +153,3 @@ class DataPoint
         )
       )
     )
-
-class Database
-  @fetchSeverities: (start_date, end_date, type, callback) =>
-    $.ajax
-      url: Routes.severities_db_index_path()
-      data:
-        start_date: start_date
-        end_date: end_date
-        pest_id: type
-      type: 'POST'
-      dataType: 'json'
-      error: (jqxhr, textstatus, errorthrown) ->
-        $('body').append "ajax error: #{textstatus}"
-      success: (data, textStatus, jqXHR) =>
-        callback(data)
-
-  @fetchSeverityLegend: (type) =>
-    $.ajax
-      url: Routes.severity_legend_db_index_path()
-      data:
-        pest_id: type
-      type: 'POST'
-      dataType: 'html'
-      error: (jqxhr, textstatus, errorthrown) ->
-        $('body').append "ajax error: #{textstatus}"
-      success: (data, textStatus, jqXHR) =>
-        $('#severity-legend').html(data)
-        $("#severity-legend").find(".more-information").tooltip(
-          content: ->
-            $(this).data("tooltip")
-        )
-
-
-  @fetchPointDetails: (lat, long, start_date, end_date, pest, callback) =>
-    $.ajax
-      url: Routes.point_details_db_index_path()
-      data:
-        latitude: lat
-        longitude: long
-        start_date: start_date
-        end_date: end_date
-        pest_id: pest
-      type: 'POST'
-      dataType: 'html'
-      error: (jqxhr, textstatus, errorthrown) ->
-        $('body').append "ajax error: #{textstatus}"
-      success: (data, textStatus, jqXHR) =>
-        callback(data)
-
-  @fetchPestInfo: (pest, callback) =>
-    $.ajax
-      url: Routes.pest_info_db_index_path()
-      data:
-        pest_id: pest
-      type: 'POST'
-      dataType: 'json'
-      error: (jqxhr, textstatus, errorthrown) ->
-        $('body').append "ajax error: #{textstatus}"
-      success: (data, textStatus, jqXHR) =>
-        callback(data)

@@ -54,7 +54,12 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :maps, only: [:index]
+  resources :maps, only: [:index] do
+    collection do
+      post 'sidebar'
+    end
+  end
+  
   resources :db, only: [:index] do
     collection do
       post 'severities'

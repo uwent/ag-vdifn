@@ -1,0 +1,40 @@
+  <fieldset id="crop">
+    <legend>Model Selection:</legend>
+    <div id="crop-select-wrapper">
+      <select id="crop-select">
+        <% @crops.each do |crop| %>
+          <option value="<%= crop.id %>"><%= crop.name %></option>
+        <% end %>
+      </select>
+    </div>
+  </fieldset>
+  <fieldset id="infliction">
+    <legend>Pest/Disease:</legend>
+    <% @crops.each do |crop| %>
+      <div id="select-<%= crop.id %>" class="select-wrapper infliction">
+        <select class="infliction-select" id="pest-select-<%= crop.id %>">
+          <% crop.diseases.each do |pest| %>
+            <option value="<%= pest.id %>"><%= pest.name %></option>
+          <% end %>
+        </select>
+        <span class="more-information" title="" id="infliction-select-information"  data-tooltip="this is info">?</span>
+      </div>
+    <% end %>
+    <div id="more-information-link-wrapper">
+      <a target="_blank" href="http://www.google.com" id='more-information-link'>More infomation</a>
+    </div>
+  </fieldset>
+  <fieldset id="datepicker">
+    <legend id="datepicker-legend">Dates:</legend>
+    <div class="select-wrapper" id="datepicker-start-wrapper">
+      <input type="text" class="datepicker" id="datepicker-start">
+      <span class="more-information" id="datepicker-start-information" title='' data-tooltip="Date of Emergence/Last Fungicide Application">?</span>
+    </div>
+    <div class="to" id="datepicker-to">to</div>
+    <div class="select-wrapper" id="datepicker-end-wrapper">
+      <input type="text" class="datepicker" id="datepicker-end">
+      <span class="more-information" id="datepicker-end-information" title="" data-tooltip="Date through which disease severity values are accumulated">?</span>
+    </div>
+  </fieldset>
+  <input type="button" class="button button-primary" id="change-params" value="Select" />
+
