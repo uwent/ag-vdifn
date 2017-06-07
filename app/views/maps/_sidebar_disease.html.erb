@@ -1,17 +1,17 @@
   <fieldset id="crop">
-    <legend>Model Selection:</legend>
+    <legend>Model Selection</legend>
     <div id="crop-select-wrapper">
+      <label for="crop-select">Crop</label>
       <select id="crop-select">
         <% @crops.each do |crop| %>
           <option value="<%= crop.id %>"><%= crop.name %></option>
         <% end %>
       </select>
     </div>
-  </fieldset>
-  <fieldset id="infliction">
-    <legend>Pest/Disease:</legend>
+    <div class="clear"></div>
     <% @crops.each do |crop| %>
       <div id="select-<%= crop.id %>" class="select-wrapper infliction">
+        <label for="infliction-select-<%= crop.id %>">Disease</label>
         <select class="infliction-select" id="pest-select-<%= crop.id %>">
           <% crop.diseases.each do |pest| %>
             <option value="<%= pest.id %>"><%= pest.name %></option>
@@ -25,12 +25,17 @@
     </div>
   </fieldset>
   <fieldset id="datepicker">
-    <legend id="datepicker-legend">Dates:</legend>
+    <legend id="datepicker-legend">Model Parameters</legend>
+    <label for='datepicker-start'>
+      Date of Emergence/Last Pesticide Application
+    </label>
     <div class="select-wrapper" id="datepicker-start-wrapper">
       <input type="text" class="datepicker" id="datepicker-start">
       <span class="more-information" id="datepicker-start-information" title='' data-tooltip="Date of Emergence/Last Fungicide Application">?</span>
     </div>
-    <div class="to" id="datepicker-to">to</div>
+    <label for='datepicker-end'>
+      End Date (default: today)
+    </label>
     <div class="select-wrapper" id="datepicker-end-wrapper">
       <input type="text" class="datepicker" id="datepicker-end">
       <span class="more-information" id="datepicker-end-information" title="" data-tooltip="Date through which disease severity values are accumulated">?</span>
