@@ -24,9 +24,14 @@ class @Database
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
         $('#severity-legend').html(data)
-        $("#severity-legend").find(".more-information").tooltip(
+        $("#severity-legend").find(".more-information").qtip(
           content: ->
             $(this).data("tooltip")
+          style:
+            classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+          position:
+            my: 'right bottom'
+            at: 'top left'
         )
 
 

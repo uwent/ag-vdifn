@@ -1,3 +1,4 @@
+# coding: utf-8
 class DbController < ApplicationController
 
   HOST = ENV['AG_WEATHER_BASE_URL'] || 'http://localhost:3000'
@@ -26,9 +27,13 @@ class DbController < ApplicationController
 
   def pest_info
     pest = Pest.find(params[:pest_id])
+    info = pest.info
+    info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: '100px')) unless pest.photo.blank?
+    info += " <a href=http://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
     render json: {
-             info: pest.info,
+             info: info,
+             name: pest.name,
              pest_link: pest.link,
              biofix: pest.biofix_date,
              end_date_enabled: pest.end_date_enabled?
@@ -39,6 +44,7 @@ class DbController < ApplicationController
   def start_date
     params[:start_date].blank? ? Date.current - 7.days : Date.parse(params[:start_date])
   end
+
   def end_date
     params[:end_date].blank? ? Date.current : Date.parse(params[:end_date])
   end

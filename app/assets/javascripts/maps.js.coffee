@@ -3,14 +3,26 @@ $ ->
 
   $(".infliction:first").show()
 
-  $(".more-information").tooltip(
+  $(".more-information-left").qtip
     content: ->
       $(this).data("tooltip")
-  )
+    style:
+      classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+    position:
+      my: 'right bottom'
+      at: 'top left'
+
+  $(".more-information").qtip
+    content: ->
+      $(this).data("tooltip")
+    hide:
+      fixed: true
+    style:
+      classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
 
   $('input[type=radio]').on 'change', (event) ->
     change_interface(event.target.value)
-  
+
   change_interface = (interface_name) ->
     $.ajax
       url: Routes.sidebar_maps_path()
@@ -26,7 +38,7 @@ $ ->
         new Options(map)
 
   options = new Options(map)
-  
+
 class ForecastMap
   constructor: (@map_node) ->
     mapOptions =
@@ -147,9 +159,11 @@ class DataPoint
       infowindow.setContent(content)
       Database.fetchPointDetails(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, pest, (newContent) ->
         content.innerHTML = newContent
-        $(content).find(".more-information").tooltip(
+        $(content).find(".more-information").qtip(
           content: ->
             $(this).data("tooltip")
-        )
+          style:
+            classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+)
       )
     )

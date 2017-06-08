@@ -19,6 +19,7 @@ class @Options
     this.change_pest(pest, =>
       start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
       this.reload_map()
+      this.add_date_tooltip()
     )
 
     $('#crop-select').on 'change', (event) =>
@@ -49,35 +50,42 @@ class @Options
 
     if (@endPicker.getDate() > maxDate)
       @endPicker.setDate(maxDate)
-    
+
   reload_map: ->
     crop = $('#crop-select')[0].value
     pest = $('#pest-select-' + crop)[0].value
     @map.reload(@startPicker.getMoment().format('YYYY-MM-DD'),
       @endPicker.getMoment().format('YYYY-MM-DD'),
       pest)
-  
-  change_pest_info: (pest, new_info) ->
+
+  change_pest_info: (pest, title, new_info) ->
     $(pest).parent()
       .find('span')
       .remove()
     $(pest).parent()
       .append('<span class="more-information" title="" id="infliction-select-information">?</span>')
-      .tooltip(content: new_info)
+      .qtip(
+        content:
+          text: new_info
+          title: title
+        hide:
+          fixed: true
+        style:
+          classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+        position:
+          my: 'left center'
+          at: 'bottom right'
+      )
 
   change_pest: (pest, callback) ->
     pest_id = $(pest).val()
     Database.fetchPestInfo(pest_id, (pest_info) =>
-      this.change_pest_info(pest, pest_info.info)
-      this.change_pest_info_link(pest_info.pest_link)
+      this.change_pest_info(pest, pest_info.name, pest_info.info)
       this.change_start_date(new Date(moment(pest_info.biofix)))
       this.toggle_end_date(pest_info.end_date_enabled)
       if callback
         callback()
     )
-  
-  change_pest_info_link: (new_link) ->
-    $('#more-information-link').attr('href', "http://" + new_link)
 
   toggle_end_date: (enabled) ->
     if enabled
@@ -99,3 +107,11 @@ class @Options
       @startPicker.setDate(moment().subtract(7,'d').toDate())
     else
       @startPicker.setDate(new_date)
+
+  add_date_tooltip: ->
+    $('#datepicker').find('.more-information').qtip(
+      content: ->
+        $(this).data("tooltip")
+      style:
+        classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+    )
