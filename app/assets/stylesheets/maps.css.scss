@@ -759,6 +759,28 @@ input[disabled="disabled"]:hover,
 
 }
 
+#degree_day_info {
+  margin-top: 0.5em;
+}
+
+#tmax, #tmin {
+  width: 5.0em;
+  margin-top: 0.3em;
+}
+
+.in-celcius {
+  padding-left: 0.3em
+}
+.in-farhenheit {
+  float: right;
+  margin-right: 1.2em;
+}
+
+.temp-group {
+  width: 5.0em;
+  float: left;
+}
+
 .infliction {
   display: none;
 }
@@ -784,5 +806,4 @@ input[disabled="disabled"]:hover,
     float: left;
     margin-right: 10px;
   }
-
 }

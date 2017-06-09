@@ -33,5 +33,25 @@
       <input type="text" class="datepicker" id="datepicker-end">
       <span class="more-information" id="datepicker-end-information" title="" data-tooltip="Date through which degree days are accumulatecd">?</span>
     </div>
+    <div id="degree_day_info">
+      <div class="temp-group" id="t-min-wrapper">
+        <label for='tmin'>Tmin</label>
+        <input type="text" id='tmin' maxlength="4" disabled="disabled">
+      </div>
+      <div class="temp-group" id="t-max-wrapper">
+        <label for='tmax'>Tmin</label>
+        <input type="text" id='tmax' maxlength="4" disabled="disabled">
+      </div>
+      <div class="temp-group" id="in-farhen-wrapper">
+        <div>
+          <span class="in-celcius">&#8451;</span>
+          <span class="in-farhenheit">&#8457; </span>
+        </div>
+        <label class='switch'>
+          <input type="checkbox" id='in-farhen'>
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </div>
   </fieldset>
   <input type="button" class="button button-primary" id="change-params" value="Select" />
