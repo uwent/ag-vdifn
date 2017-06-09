@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20170608190533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "photo"
+    t.float    "t_max"
+    t.float    "t_min"
   end
 
 end

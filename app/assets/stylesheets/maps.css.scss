@@ -763,15 +763,21 @@ input[disabled="disabled"]:hover,
   margin-top: 0.5em;
 }
 
+#t-max-wrapper, #t-min-wrapper {
+  label {
+    margin-left: 1.3em;
+  }
+}
 #tmax, #tmin {
   width: 5.0em;
   margin-top: 0.3em;
+  text-align: center;
 }
 
 .in-celcius {
   padding-left: 0.3em
 }
-.in-farhenheit {
+.in-fahrenheit {
   float: right;
   margin-right: 1.2em;
 }

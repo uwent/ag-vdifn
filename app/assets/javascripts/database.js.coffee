@@ -51,11 +51,12 @@ class @Database
       success: (data, textStatus, jqXHR) =>
         callback(data)
 
-  @fetchPestInfo: (pest, callback) =>
+  @fetchPestInfo: (pest, in_fahrenheit, callback) =>
     $.ajax
       url: Routes.pest_info_db_index_path()
       data:
         pest_id: pest
+        in_fahrenheit: in_fahrenheit
       type: 'POST'
       dataType: 'json'
       error: (jqxhr, textstatus, errorthrown) ->

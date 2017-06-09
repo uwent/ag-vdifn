@@ -27,6 +27,7 @@ class DbController < ApplicationController
 
   def pest_info
     pest = Pest.find(params[:pest_id])
+    in_f = params[:in_fahrenheit] == 'true'
     info = pest.info
     info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: '100px')) unless pest.photo.blank?
     info += " <a href=http://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
@@ -36,7 +37,9 @@ class DbController < ApplicationController
              name: pest.name,
              pest_link: pest.link,
              biofix: pest.biofix_date,
-             end_date_enabled: pest.end_date_enabled?
+             end_date_enabled: pest.end_date_enabled?,
+             tmin: in_f ? pest.t_min : convert_temp(pest.t_min),
+             tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : convert_temp(pest.t_max))
            }
   end
 
@@ -47,5 +50,10 @@ class DbController < ApplicationController
 
   def end_date
     params[:end_date].blank? ? Date.current : Date.parse(params[:end_date])
+  end
+
+  def convert_temp(temp)
+    return 0 if temp.nil?
+    ((temp - 32) * 5.0/9.0).round(1)
   end
 end

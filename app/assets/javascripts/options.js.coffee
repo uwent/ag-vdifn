@@ -16,14 +16,13 @@ class @Options
     )
     init_crop_id = $('#crop-select')[0].value
     pest = $('#pest-select-' + init_crop_id)
-    this.change_pest(pest, =>
+    this.change_pest(pest, (pest_info) =>
       start_date = moment((new Date()).getFullYear() + "0101", "YYYYMMDD").toDate()
       this.reload_map()
       this.add_date_tooltip()
     )
 
     $('#crop-select').on 'change', (event) =>
-      console.log("In change crop-select")
       crop_id = $(event.target).val()
       crop_select_wrapper = "#select-" + crop_id
       $(".infliction").hide()
@@ -79,12 +78,12 @@ class @Options
 
   change_pest: (pest, callback) ->
     pest_id = $(pest).val()
-    Database.fetchPestInfo(pest_id, (pest_info) =>
+    Database.fetchPestInfo(pest_id, !@in_fahrenheit, (pest_info) =>
       this.change_pest_info(pest, pest_info.name, pest_info.info)
       this.change_start_date(new Date(moment(pest_info.biofix)))
       this.toggle_end_date(pest_info.end_date_enabled)
       if callback
-        callback()
+        callback(pest_info)
     )
 
   toggle_end_date: (enabled) ->
@@ -115,3 +114,35 @@ class @Options
       style:
         classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
     )
+
+class @InsectOptions extends Options
+  constructor: (map) ->
+    @in_fahrenheit = true
+    super
+    $('#in-fahren').change (evt) =>
+      @in_fahrenheit = $(evt.target).is(':checked')
+      this.change_tmin($('#tmin').val())
+      this.change_tmax($('#tmax').val())
+
+  change_pest: (pest, callback) ->
+    super(pest, (pest_info) =>
+      this.change_tmin(pest_info.tmin)
+      this.change_tmax(pest_info.tmax)
+      if callback
+        callback(pest_info)
+    )
+
+  change_tmin: (new_tmin) ->
+    $('#tmin').val(this.convert_temp(new_tmin))
+
+  change_tmax: (new_tmax) ->
+    $('#tmax').val(this.convert_temp(new_tmax))
+
+  convert_temp: (value) ->
+    if value != '' && value != 'None'
+      if @in_fahrenheit
+        Temperature.to_f(value)
+      else
+        Temperature.to_c(value)
+    else
+      'None'

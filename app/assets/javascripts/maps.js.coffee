@@ -35,9 +35,12 @@ $ ->
       success: (data, textStatus, jqXHR) =>
         $('#interface-options').replaceWith(data)
         $(".infliction:first").show()
-        new Options(map)
+        if interface_name == 'disease'
+          new Options(map)
+        else
+          new InsectOptions(map)
 
-  options = new Options(map)
+  new Options(map)
 
 class ForecastMap
   constructor: (@map_node) ->
