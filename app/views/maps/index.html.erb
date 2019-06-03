@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4"></script>
     <div id="loading-overlay" class="overlay">
       <div id="loading" class="message">
         <div>
@@ -95,6 +95,21 @@
     <script id="infowindow-tmpl" type="x-tmpl-mustache">
      <div class='iw-title'>
        Data Point Information
+     </div>
+     <div id="iw-content" class="message">
+       <div id="loading">
+         <ul class="loading-icon">
+           <li></li>
+           <li></li>
+           <li></li>
+         </ul>
+       </div>
+     </div>
+    </script>
+
+    <script id="station-infowindow-tmpl" type="x-tmpl-mustache">
+     <div class='iw-title'>
+       Station Information
      </div>
      <div id="iw-content" class="message">
        <div id="loading">

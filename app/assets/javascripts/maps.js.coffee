@@ -59,6 +59,8 @@ class ForecastMap
     @map = new google.maps.Map(@map_node, mapOptions)
     @loadingOverlay = $('#loading-overlay')[0]
     @dataPoints = []
+    @stations = []
+    Database.fetchStations(this.placeStations.bind(this))
     @infoWindow = null
     @initialLoad = true
     google.maps.event.addListenerOnce(@map, 'tilesloaded', this.tilesLoaded)
@@ -101,6 +103,12 @@ class ForecastMap
       this.closeLoadingOverlay()
     @initialLoad = false
 
+  placeStations: (data) ->
+    for station in data
+      station = new Station(1, station.name, new google.maps.LatLng(station.lat, station.long))
+      @stations.push(station)
+      station.draw(this)
+      
   reload: (start_date, end_date, pest) ->
     this.closeInfoWindow()
     this.clearDataPoints()
@@ -167,6 +175,41 @@ class DataPoint
             $(this).data("tooltip")
           style:
             classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
-)
+        )
+      )
+    )
+
+class Station
+  constructor: (@id, @title, @latLng) ->
+    @drawn = false
+
+  draw: (forecastMap) ->
+    map = forecastMap.getMap()
+
+    @map_object = new google.maps.Marker(
+      position: @latLng
+      map: map
+      title: @title)
+
+    @map_object.addListener('click', (event) ->
+      forecastMap.closeInfoWindow()
+      forecastMap.infoWindow = new google.maps.InfoWindow(
+        position: event.latLng
+      )
+
+      infowindow = forecastMap.infoWindow
+      content = document.createElement("div")
+      $(content).attr("id", "iw-container")
+      content.innerHTML =  Mustache.render($('#station-infowindow-tmpl').html())
+      infowindow.open(map)
+      infowindow.setContent(content)
+      Database.fetchStationDetails(@title, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, (newContent) ->
+        content.innerHTML = newContent
+        $(content).find(".more-information").qtip(
+          content: ->
+            $(this).data("tooltip")
+          style:
+            classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
+        )
       )
     )

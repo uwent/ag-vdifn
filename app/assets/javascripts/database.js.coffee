@@ -63,3 +63,27 @@ class @Database
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
         callback(data)
+
+  @fetchStations: (callback) =>
+    $.ajax
+      url: Routes.stations_db_index_path()
+      type: 'POST'
+      dataType: 'json'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        callback(data)
+
+  @fetchStationDetails: (name, start_date, end_date, callback) =>
+    $.ajax
+      url: Routes.station_details_db_index_path()
+      data:
+        name: name
+        start_date: start_date
+        end_date: end_date
+      type: 'POST'
+      dataType: 'html'
+      error: (jqxhr, textstatus, errorthrown) ->
+        $('body').append "ajax error: #{textstatus}"
+      success: (data, textStatus, jqXHR) =>
+        callback(data)

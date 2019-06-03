@@ -1,0 +1,42 @@
+<div class='iw-title'>
+  <%= @name %> Station Information
+</div>
+
+<div id='iw-content'>
+  <h3 class="weather-details-title">Weather Summary</h3>
+  <div class="weather-details">
+    <% if @weather %>
+      <table>
+        <thead>
+          <tr>
+            <th width='35%'>Day</th>
+            <th>Late Blight DSV <span class="weather-details-dsv more-information" title="" data-tooltip="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">?</span></th>
+            <th>Mean temp.</th>
+            <th>
+              Hours over RH <span class="weather-details-rh more-information" title="" data-tooltip="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature.">?</span> threshold
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @weather.each do |day| %>
+            <tr>
+              <td class="odd"><%= day["date"] %></td>
+              <td><%= day["potato_late_blight_dsv"] %></td>
+              <td class="odd"><%= day["avg_temperature"].to_f.round(1) %>&deg;C</td>
+              <td><%= day["wet_hours"] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total:</th>
+            <td colspan="3"><strong>
+              <%= @weather.inject(0) { |sum, h| sum += h['potato_late_blight_dsv']} %></strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    <% else %>
+      <p style="text-align: center;">No data to display.</p>
+    <% end %>
+  </div>
+</div>
