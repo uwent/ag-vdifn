@@ -60,7 +60,8 @@ class ForecastMap
     @loadingOverlay = $('#loading-overlay')[0]
     @dataPoints = []
     @stations = []
-    Database.fetchStations(this.placeStations.bind(this))
+    # taking the station marker off the map.
+    # Database.fetchStations(this.placeStations.bind(this))
     @infoWindow = null
     @initialLoad = true
     google.maps.event.addListenerOnce(@map, 'tilesloaded', this.tilesLoaded)
