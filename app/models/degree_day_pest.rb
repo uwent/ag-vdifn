@@ -1,5 +1,4 @@
 class DegreeDayPest < Pest
-
   def total_to_severity(total)
     return 4 if very_high.include?(total)
     return 3 if high.include?(total)
@@ -12,14 +11,14 @@ class DegreeDayPest < Pest
     [
       {name: "Very High", slug: "very_high",
        description: "Very high likelihood (accumulated degree days between #{very_high.min} and #{very_high.max})"},
-      {name: "High", slug: "high",
-       description: "High likelihood (accumulated degree days between #{high.min} and #{high.max})"},
-      {name: "Medium", slug: "medium",
-       description: "Medium likelihood (accumulated degree days between #{moderate.min} and #{moderate.max})"},
-      {name: "Low", slug: "low",
-       description: "Low likelihood (accumulated degree days between #{low.min} and #{low.max})"},
-      {name: "Very Low", slug: "very_low",
-       description: "Very low likelihood (accumulated degree days less than #{low.min} or greater than #{low.max})"}
+    {name: "High", slug: "high",
+     description: "High likelihood (accumulated degree days between #{high.min} and #{high.max})"},
+    {name: "Medium", slug: "medium",
+     description: "Medium likelihood (accumulated degree days between #{moderate.min} and #{moderate.max})"},
+    {name: "Low", slug: "low",
+     description: "Low likelihood (accumulated degree days between #{low.min} and #{low.max})"},
+    {name: "Very Low", slug: "very_low",
+     description: "Very low likelihood (accumulated degree days less than #{low.min} or greater than #{low.max})"}
     ]
   end
 

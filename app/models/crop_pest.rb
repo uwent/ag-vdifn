@@ -1,4 +1,4 @@
-class CropPest < ActiveRecord::Base
+class CropPest < ApplicationRecord
   belongs_to :pest
   belongs_to :crop
 end
