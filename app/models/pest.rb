@@ -5,9 +5,9 @@ class Pest < ApplicationRecord
   def severities_from_totals(totals)
     totals.map do |measurement|
       {
-        lat: measurement['lat'],
-        long: measurement['long'],
-        severity: total_to_severity(measurement['total'].to_f)
+        lat: measurement[:lat],
+        long: measurement[:long],
+        severity: total_to_severity(measurement[:total].to_f)
       }
     end
   end

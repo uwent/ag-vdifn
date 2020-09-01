@@ -5,8 +5,7 @@ class DbController < ApplicationController
   end
 
   def stations
-    response = ag_weather_client.stations
-    @stations = JSON.parse(response.body)
+    @stations = ag_weather_client.stations
     render json: @stations
   end
 
@@ -16,9 +15,7 @@ class DbController < ApplicationController
     @longitude = params[:longitude].to_f.round(1)
 
     options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude }
-    response = ag_weather_client.point_details(options)
-
-    @weather = JSON.parse(response.body)
+    @weather = ag_weather_client.point_details(options)
     render layout: false
   end
 
@@ -26,9 +23,7 @@ class DbController < ApplicationController
     @name = params[:name]
 
     options = { name: @name, start_date: start_date, end_date: end_date }
-    response = ag_weather_client.station_observations(options)
-
-    @weather = JSON.parse(response.body)
+    @weather = ag_weather_client.station_observations(options)
     render layout: false
   end
 
@@ -96,11 +91,11 @@ class DbController < ApplicationController
   end
 
   def build_pest_strategy
-    PestSeverityStrategy.new(get_pest(), ag_weather_client, start_date, end_date)
+    PestSeverityStrategy.new(get_pest, ag_weather_client, start_date, end_date)
   end
 
   def build_late_blight_strategy
-    LateBlightStrategy.new(get_pest(), ag_weather_client, start_date, end_date)
+    LateBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
   end
 
   class PestSeverityStrategy
@@ -112,9 +107,8 @@ class DbController < ApplicationController
     end
 
     def severities
-      response = client.pest_forecasts(pest: pest.remote_name, start_date: start_date, end_date: end_date)
       begin
-        JSON.parse(response.body)
+        client.pest_forecasts(pest: pest.remote_name, start_date: start_date, end_date: end_date)
       rescue Exception => e
         logger.error(e.backtrace.join("\n"))
         []
@@ -139,13 +133,11 @@ class DbController < ApplicationController
     end
 
     def severities
-      response_for_past_week = client.pest_forecasts(pest: pest.remote_name, start_date: end_date - 7.days, end_date: end_date)
-      response_for_season_to_date = client.pest_forecasts(pest: pest.remote_name, start_date: end_date.beginning_of_year, end_date: end_date)
       past_week = []
       season_to_date = []
       begin
-        past_week = JSON.parse(response_for_past_week.body)
-        season_to_date = JSON.parse(response_for_season_to_date.body)
+        past_week = client.pest_forecasts(pest: pest.remote_name, start_date: end_date - 7.days, end_date: end_date)
+        season_to_date = client.pest_forecasts(pest: pest.remote_name, start_date: end_date.beginning_of_year, end_date: end_date)
       rescue Exception
       end
       { past_week: past_week, season_to_date: season_to_date }

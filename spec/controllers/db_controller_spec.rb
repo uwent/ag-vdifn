@@ -1,16 +1,16 @@
 require "spec_helper"
 
 RSpec.describe DbController, type: :request do
-  let(:fake_response) { { body: { data: "data" }.to_json } }
-  let(:severity_data) { { body: [{ lat: 20, long: 40, total: 200 }].to_json } }
-  let(:days_data) { { body: [{ value: 10, date: "data", avg_temperature: "100"}].to_json } }
-  let(:station_data) { { body: [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temperature: "100"}].to_json } }
+  let(:fake_response) { { data: "data" } }
+  let(:severity_data) { [{ lat: 20, long: 40, total: 200 }] }
+  let(:days_data) { [{ value: 10, date: "data", avg_temperature: "100"}] }
+  let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temperature: "100"}] }
 
   describe "POST#severities" do
     it "returns success response" do
       pest = Pest.create!
       allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).
-        and_return(OpenStruct.new(severity_data))
+        and_return(severity_data)
 
       post severities_db_index_path, params: { pest_id: pest.id }
 
@@ -21,7 +21,7 @@ RSpec.describe DbController, type: :request do
     it "returns correct response when Late Blight" do
       late_blight = DsvPests::LateBlight.create!
       allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).
-        and_return(OpenStruct.new(severity_data))
+        and_return(severity_data)
 
       post severities_db_index_path, params: { pest_id: late_blight.id }
 
@@ -33,21 +33,20 @@ RSpec.describe DbController, type: :request do
   describe "POST#stations" do
     it "returns success response" do
       allow_any_instance_of(AgWeather::Client).to receive(:stations).
-        and_return(OpenStruct.new(fake_response))
+        and_return(fake_response)
 
       post stations_db_index_path
 
       expect(response).to have_http_status(:success)
-      expect(response.body).to eq(fake_response[:body])
+      expect(response.body).to eq(fake_response.to_json)
     end
   end
 
   describe "POST#point_details" do
     it "returns success response" do
       pest = Pest.create!
-      days_data = { body: [{ value: 10, date: "data", avg_temperature: "100"}].to_json }
       allow_any_instance_of(AgWeather::Client).to receive(:point_details).
-        and_return(OpenStruct.new(days_data))
+        and_return(days_data)
 
       post point_details_db_index_path, params: { pest_id: pest.id, latitude: 10, longitude: 20 }
 
@@ -58,7 +57,7 @@ RSpec.describe DbController, type: :request do
   describe "POST#station_details" do
     it "returns success response" do
       allow_any_instance_of(AgWeather::Client).to receive(:station_observations).
-        and_return(OpenStruct.new(station_data))
+        and_return(station_data)
 
       post station_details_db_index_path, params: { name: "name" }
 

@@ -8,13 +8,13 @@ module DsvPests
       end
 
       past_week.zip(season_to_date).map do | pair |
-        logger.error("Potato Late Blight: Latitude mismatch") if pair[0]["lat"] != pair[1]["lat"]
-        logger.error("Potato Late Blight: Longitude mismatch") if pair[0]["long"] != pair[1]["long"]
-        last_week = pair[0]["total"]
-        season = pair[1]["total"]
+        logger.error("Potato Late Blight: Latitude mismatch") if pair[0][:lat] != pair[1][:lat]
+        logger.error("Potato Late Blight: Longitude mismatch") if pair[0][:long] != pair[1][:long]
+        last_week = pair[0][:total]
+        season = pair[1][:total]
         {
-          lat: pair[0]['lat'],
-          long: pair[0]['long'],
+          lat: pair[0][:lat],
+          long: pair[0][:long],
           severity: total_to_severity(last_week, season)
         }
       end
