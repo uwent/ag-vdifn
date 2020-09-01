@@ -1,0 +1,35 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.5-node-browsers
+        environment:
+          RAILS_ENV: test
+      - image: circleci/postgres:12.2 # database image
+        environment: # environment variables for database
+          POSTGRES_USER: postgres
+          POSTGRES_DB: vdifn_test
+          POSTGRES_PASSWORD: "password"
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - restore_cache:
+          keys:
+            - agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
+            - agvdifn-bundle-v1-
+      - run:
+          name: Bundle Install
+          command: bundle check --path ./vendor/bundle || bundle install --deployment
+      - save_cache:
+          key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
