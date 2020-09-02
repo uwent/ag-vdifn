@@ -5,9 +5,10 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.5-node-browsers
+      - image: circleci/ruby:2.6.5-node
         environment:
           RAILS_ENV: test
+          BUNDLER_VERSION: 2.1.4
       - image: circleci/postgres:12.2 # database image
         environment: # environment variables for database
           POSTGRES_USER: postgres
@@ -16,6 +17,9 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - run:
+          name: Get Bundler
+          command: gem install bundler:2.1.4
       - run:
           name: Which bundler?
           command: bundle -v
@@ -33,3 +37,9 @@ jobs:
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Setup database
+          command: bin/rails db:setup
+      - run:
+          name: RSpec
+          command: bundle exec rspec

@@ -15,3 +15,4 @@
 /coverage
 .rbenv-gemsets
 /db/development.sqlite3
+.byebug_history
