@@ -32,7 +32,7 @@ role :db,  %w{deploy@dev.agweather.cals.wisc.edu:216}
 
 set :rails_env, 'production'
 
-
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle", "node_modules"
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a

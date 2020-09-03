@@ -1,4 +1,8 @@
-class @Options
+import { Database } from './database.js.coffee'
+import { Temperature } from './temperature.js.coffee'
+import Pikaday from 'pikaday'
+
+class Options
   constructor: (map) ->
     @map = map
     @startPicker = Options.createDatePicker(
@@ -115,10 +119,11 @@ class @Options
         classes: 'qtip-light qtip-rounded qtip-shadow qtip-vdifn'
     )
 
-class @InsectOptions extends Options
+class InsectOptions extends Options
   constructor: (map) ->
+    super map
+    @map = map
     @in_fahrenheit = true
-    super
     $('#in-fahren').change (evt) =>
       @in_fahrenheit = $(evt.target).is(':checked')
       this.change_tmin($('#tmin').val())
@@ -146,3 +151,4 @@ class @InsectOptions extends Options
         Temperature.to_c(value)
     else
       'None'
+export { Options as Options, InsectOptions as InsectOptions }

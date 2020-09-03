@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :db, only: [:index] do
+  resources :db, only: [:index], export: true do
     collection do
       post 'severities'
       post 'point_details'

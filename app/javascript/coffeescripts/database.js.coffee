@@ -1,4 +1,6 @@
-class @Database
+import Routes from '../routes/js-routes.js.erb'
+import * as qtip from 'qtip2'
+class Database
   @fetchSeverities: (start_date, end_date, type, callback) =>
     $.ajax
       url: Routes.severities_db_index_path()
@@ -87,3 +89,4 @@ class @Database
         $('body').append "ajax error: #{textstatus}"
       success: (data, textStatus, jqXHR) =>
         callback(data)
+export { Database as Database }

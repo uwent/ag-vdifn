@@ -21,6 +21,7 @@ role :app, %w{deploy@ec2-54-212-209-95.us-west-2.compute.amazonaws.com:216}
 role :web, %w{deploy@ec2-54-212-209-95.us-west-2.compute.amazonaws.com:216}
 role :db,  %w{deploy@ec2-54-212-209-95.us-west-2.compute.amazonaws.com:216}
 
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle", "node_modules"
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb

@@ -17,6 +17,7 @@ gem 'httparty', '~> 0.18'
 gem 'pikaday-gem', '~> 1.4'
 gem 'momentjs-rails', '~> 2.20'
 gem 'js-routes', '~> 1.4'
+gem 'webpacker', '5.2.1'
 
 group :development, :test do
   gem 'dotenv-rails', '2.7.6'
