@@ -110,7 +110,7 @@ class DbController < ApplicationController
       begin
         client.pest_forecasts(pest: pest.remote_name, start_date: start_date, end_date: end_date)
       rescue Exception => e
-        logger.error(e.backtrace.join("\n"))
+        Rails.logger.error(e.backtrace.join("\n"))
         []
       end
     end
