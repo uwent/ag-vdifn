@@ -16,7 +16,7 @@ class MapsController < ApplicationController
     elsif (@sidebar == 'custom')
       @pests = []
     else
-      @pests = Pest.all.select { |p| p.is_a? DsvPest }
+      @pests = Pest.all.select { |p| p.is_a? DsvPests::DsvPest }
     end
     @crops = crops_for_pests(@pests)
   end
