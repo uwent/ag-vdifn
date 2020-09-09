@@ -1,34 +1,50 @@
 {
   "dependencies": {
+    "@babel/plugin-transform-regenerator": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@googlemaps/js-api-loader": "^1.2.0",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "5.2.1",
-    "coffee-loader": "^1.0.0",
-    "coffeescript": "^2.5.1",
-    "jquery": "^3.5.1",
-    "jquery-ui": "^1.12.1",
+    "axios": "^0.20.0",
+    "chroma-js": "^2.1.0",
     "moment": "^2.27.0",
-    "mustache": "^4.0.1",
-    "pikaday": "^1.8.0",
-    "popper.js": "^1.16.1",
-    "qtip2": "^3.0.3",
-    "rails-erb-loader": "^5.5.2",
+    "node-sass": "^4.14.1",
+    "svelte": "^3.25.1",
+    "svelte-loader": "^2.13.6",
+    "svelte-preprocess": "^4.3.0",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
+    "svelte-check": "svelte-check",
     "test": "jest",
-    "test-watch": "jest --watch"
-  },
-  "jest": {
-    "roots": [
-      "app/javascript/spec"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+    "test-watch": "jest --watch",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/svelte": "^6.0.21",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/svelte": "^3.0.0",
+    "@types/googlemaps": "^3.39.13",
+    "@types/jest": "^26.0.13",
+    "@types/node": "^14.10.2",
+    "babel-loader": "^8.1.0",
+    "fork-ts-checker-webpack-plugin": "^5.1.0",
     "jest": "^26.4.2",
+    "jest-google-maps-mock": "^1.0.3",
+    "jest-mock-extended": "^1.0.10",
+    "jest-transform-svelte": "^2.1.1",
+    "msw": "^0.21.2",
+    "react-is": "^16.13.1",
+    "svelte-check": "^1.0.50",
+    "svelte-jester": "^1.1.5",
+    "ts-jest": "^26.4.0",
+    "typescript": "^4.0.3",
     "webpack-dev-server": "^3.11.0"
   }
 }

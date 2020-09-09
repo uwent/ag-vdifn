@@ -1,16 +1,7 @@
-const { environment } = require('@rails/webpacker')
-
+const { environment } = require('@rails/webpacker');
+const svelte = require('./loaders/svelte')
+const env = require('@rails/webpacker/package/env');
 const webpack = require('webpack')
 
-environment.plugins.prepend('Provide',
-  new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery',
-    qtip: 'qtip2',
-    Popper: ['popper.js', 'default'],
-  })
-)
-environment.loaders.prepend('coffee', require('./loaders/coffee'))
-environment.loaders.append('erb', require('./loaders/erb'))
-
+environment.loaders.prepend('svelte', svelte)
 module.exports = environment

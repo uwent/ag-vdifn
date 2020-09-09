@@ -45,7 +45,7 @@ module DsvPests
       7.days.ago.to_date
     end
 
-    def end_date_enabled?
+    def end_date_enabled
       return false
     end
   end
