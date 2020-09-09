@@ -1,7 +1,8 @@
 import DiseasePanel from '../../src/components/leftSidebar/DiseasePanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { panelKey, submitParams, startDate, endDate, afflictionValue } from '../../src/store/store'
+import { panelKey, afflictionParams, startDate, endDate, afflictionValue } from '../../src/store/store'
 import { get } from 'svelte/store'
+import moment from 'moment'
 let getText;
 let diseasePanel; 
 
@@ -23,7 +24,7 @@ it('should dispatch submit params when button is clicked', () => {
 
     fireEvent.click(button);
 
-    expect(get(submitParams)).toEqual({
+    expect(get(afflictionParams)).toEqual({
         start_date: "2000-10-10",
         end_date: "2000-11-10",
         pest_id: 1
@@ -38,6 +39,7 @@ it('sets context data for child elements', () => {
             endDate: "Date through which disease severity values are accumulated",
             startLabel: "Application"
         },
-        getAfflictionName: expect.any(Function)
+        defaultStartDate: moment.utc().subtract(1, 'week').format("YYYY-MM-DD"),
+        getAfflictionName: expect.any(Function),
     })
 })

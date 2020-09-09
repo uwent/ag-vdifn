@@ -1,4 +1,4 @@
-import DataPoint from "./dataPoint";
+import RectangleOption from "./rectangleOption";
 
 export default class GoogleWrapper {
     google;
@@ -15,8 +15,8 @@ export default class GoogleWrapper {
         return new this.google.maps.LatLng(latitude, longitude);
     }
     
-    createRectangle(dataPoint: DataPoint) {
-        return new this.google.maps.Rectangle(dataPoint);
+    createRectangle(RectangleOption: RectangleOption) {
+        return new this.google.maps.Rectangle(RectangleOption);
     }
 
     createInfoWindow(options) {

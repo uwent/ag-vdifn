@@ -52,4 +52,26 @@ RSpec.describe AgWeather::Client do
       expect(response[:data]).to eq("data")
     end
   end
+
+  describe "#custom" do
+    it "calls correct endpoint and returns success" do
+      options = { start_date: start_date, end_date: end_date, t_min: 10, t_max: 50}
+      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom?start_date=#{options[:start_date]}&end_date=#{options[:end_date]}&t_min=#{options[:t_min]}&t_max=#{options[:t_max]}"
+      stub_request(:get, request_url).to_return(status: 200, body: data)
+      response = client.custom(options)
+
+      expect(response[:data]).to eq("data")
+    end
+  end
+
+  describe "#custom_point_details" do
+    it "calls correct endpoint and returns success" do
+      options = { latitude: 10, longitude: -90, start_date: start_date, end_date: end_date, t_min: 10, t_max: 50}
+      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom_point_details?latitude=#{options[:latitude]}&longitude=#{options[:longitude]}&t_min=#{options[:t_min]}&t_max=#{options[:t_max]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
+      stub_request(:get, request_url).to_return(status: 200, body: data)
+      response = client.custom_point_details(options)
+
+      expect(response[:data]).to eq("data")
+    end
+  end
 end

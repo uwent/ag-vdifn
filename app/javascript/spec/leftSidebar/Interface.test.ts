@@ -47,3 +47,12 @@ it('shows insect panel when insect tab is selected', async () => {
 
     expect(getRole("combobox", { name: "Insect"})).toBeInTheDocument();
 })
+
+it('shows custom panel when custom tab is selected', async () => {
+    await tick();
+
+    const customTab = getRole("radio", { name: "Custom"});
+    await fireEvent.click(customTab);
+
+    expect(getTitle("Custom Parameters")).toBeInTheDocument();
+})

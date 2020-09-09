@@ -1,7 +1,6 @@
-import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.svelte'
+import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.svelte' 
 import { render } from '@testing-library/svelte'
-import { submitParams } from '../../src/store/store'
-
+import { mapMinMapMax } from '../../src/store/store'
 import { tick } from 'svelte';
 let getTitle;
 let legend;
@@ -15,7 +14,8 @@ beforeEach(() => {
     legend = component
 })
 
-
-it('displays legend', () => {
+it('displays legend', async () => {
+    mapMinMapMax.set(null)
+    await tick();
     expect(getTitle("severity-level")).toBeInTheDocument();
 })

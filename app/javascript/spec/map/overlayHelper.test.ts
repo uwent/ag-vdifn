@@ -1,15 +1,15 @@
 import GoogleWrapper from '../../src/components/map/TypeScript/googleWrapper';
 import ColorHelper from '../../src/components/map/TypeScript/colorHelper';
-import DataPoint from '../../src/components/map/TypeScript/dataPoint';
+import RectangleOption from '../../src/components/map/TypeScript/rectangleOption';
 import infoWindowLoadingTemplate from '../../src/components/map/TypeScript/templates/infoWindowLoading';
 import DatabaseClient from '../../src/components/common/TypeScript/databaseClient';
 import OverlayHelper from '../../src/components/map/overlayHelper';
 jest.mock('../../src/components/map/TypeScript/googleWrapper')
-jest.mock('../../src/components/map/TypeScript/dataPoint')
+jest.mock('../../src/components/map/TypeScript/rectangleOption')
 jest.mock('../../src/components/map/TypeScript/colorHelper')
 let overlayHelper;
-let firstSeverity = { "lat": 5, "long": 10, "severity": 10 }
-let secondSeverity = { "lat": 50, "long": 60, "severity": 5 }
+let firstSeverity = { "lat": 5, "long": 10, "level": 10 }
+let secondSeverity = { "lat": 50, "long": 60, "level": 5 }
 let severityResults = [firstSeverity, secondSeverity];
 let googleWrapper = new GoogleWrapper({})
 let map = {}
@@ -57,7 +57,7 @@ it('gets severities', async () => {
     expect(severities).toEqual(severityResults)
 })
 
-describe("convert severities to datapoints", () => {
+describe("convert severities to rectangleOptions", () => {
     it('calls google wrapper latLng', () => {
         const latMock = jest.fn().mockReturnValue(2);
         const lngMock = jest.fn().mockReturnValue(3);
@@ -67,7 +67,7 @@ describe("convert severities to datapoints", () => {
         }))
         googleWrapper.latLng = latLngMock;
 
-        overlayHelper.convertSeveritiesToDataPoints(severityResults);
+        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
 
         expect(latLngMock).toHaveBeenNthCalledWith(1, firstSeverity.lat, firstSeverity.long)
         expect(latLngMock).toHaveBeenNthCalledWith(2, secondSeverity.lat, secondSeverity.long)
@@ -78,17 +78,17 @@ describe("convert severities to datapoints", () => {
     it('calls color helper', () => {
         const spy = spyOn(ColorHelper, "color")
 
-        overlayHelper.convertSeveritiesToDataPoints(severityResults);
+        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
 
-        expect(spy).toHaveBeenNthCalledWith(1, firstSeverity.severity, 5);
-        expect(spy).toHaveBeenNthCalledWith(2, secondSeverity.severity, 5);
+        expect(spy).toHaveBeenNthCalledWith(1, firstSeverity.level, 5);
+        expect(spy).toHaveBeenNthCalledWith(2, secondSeverity.level, 5);
     })
 
-    it('creates datapoints', () => {
+    it('creates rectangleOptions', () => {
         ColorHelper.color = jest.fn().mockReturnValue("#cc0000")
-        overlayHelper.convertSeveritiesToDataPoints(severityResults);
+        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
 
-        expect(DataPoint).toHaveBeenNthCalledWith(
+        expect(RectangleOption).toHaveBeenNthCalledWith(
             1,
             2,
             3,
@@ -99,10 +99,10 @@ describe("convert severities to datapoints", () => {
 })
 
 it('creates rectangles', () => {
-    const dataPoint = {}
+    const RectangleOption = {}
     const dataPoint2 = {}
-    const dataPoints = [dataPoint, dataPoint2]
-    overlayHelper.drawDataPoints(dataPoints)
+    const rectangleOptions = [RectangleOption, dataPoint2]
+    overlayHelper.drawDataPoints(rectangleOptions)
 
     expect(googleWrapper.createRectangle).toHaveBeenCalledTimes(2)
     expect(overlayHelper.rectangles.length).toEqual(2)
@@ -204,13 +204,13 @@ describe("rectangle click listener event", () => {
 it('updates overlay', async () => {
     const severities = [{ "lat": 5, "long": 10, "severity": 10 },
     { "lat": 50, "long": 60, "severity": 5 }]
-    const dataPoints = [{ data: "data"}, {data: "data2"}]
+    const rectangleOptions = [{ data: "data"}, {data: "data2"}]
     overlayHelper.getSeverities = jest.fn().mockResolvedValue(severities)
-    overlayHelper.convertSeveritiesToDataPoints = jest.fn().mockReturnValue(dataPoints)
+    overlayHelper.convertSeveritiesToRectangleOptions = jest.fn().mockReturnValue(rectangleOptions)
     spyOn(OverlayHelper.prototype, 'clearRectangles')
     spyOn(OverlayHelper.prototype, 'closeInfoWindow')
     spyOn(OverlayHelper.prototype, "getSeverities")
-    spyOn(OverlayHelper.prototype, 'convertSeveritiesToDataPoints')
+    spyOn(OverlayHelper.prototype, 'convertSeveritiesToRectangleOptions')
     spyOn(OverlayHelper.prototype, "drawDataPoints")
     spyOn(OverlayHelper.prototype, "addInfoWindowEvents")
 
@@ -219,7 +219,33 @@ it('updates overlay', async () => {
     expect(overlayHelper.clearRectangles).toHaveBeenCalled();
     expect(overlayHelper.closeInfoWindow).toHaveBeenCalled();
     expect(overlayHelper.getSeverities).toHaveBeenCalledWith(severityParams);
-    expect(overlayHelper.convertSeveritiesToDataPoints).toHaveBeenCalledWith(severities);
-    expect(overlayHelper.drawDataPoints).toHaveBeenCalledWith(dataPoints)
+    expect(overlayHelper.convertSeveritiesToRectangleOptions).toHaveBeenCalledWith(severities);
+    expect(overlayHelper.drawDataPoints).toHaveBeenCalledWith(rectangleOptions)
     expect(overlayHelper.addInfoWindowEvents).toHaveBeenCalledWith(severityParams)
+})
+
+it('maps gradient to severity values', () => {
+    const gradientMapping = {
+        "435": "#00cc00",
+        "463.4": "#55d000",
+        "491.8": "#aad300",
+        "520.2": "#ffd700",
+        "548.6": "#ee8f00",
+        "577": "#dd4800",
+        "597": "#cc0000",
+        "624.6": "#dd4800",
+        "652.2": "#ee8f00",
+        "679.8": "#ffd700",
+        "707.4": "#aad300",
+        "735": "#55d000",
+        "749.19": "#00cc00",
+    }
+
+    let result = overlayHelper.mapColorToSeverity(506.47, gradientMapping)
+
+    expect(result).toEqual("#ffd700")
+
+    result = overlayHelper.mapColorToSeverity(800, gradientMapping)
+
+    expect(result).toEqual("#00cc00")
 })

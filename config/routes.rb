@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "/", to: redirect('maps')
   resources :db, only: [:index], export: true do
     collection do
       post 'severities'
@@ -13,5 +12,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get "maps", to: "application#maps"
+  # get 'service-worker.js', to: 'service_worker#index'
+
+  get '/maps', to: "application#index"
+  root to: "application#index"
 end

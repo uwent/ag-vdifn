@@ -10,12 +10,17 @@ class DbController < ApplicationController
   end
 
   def point_details
-    @pest = Pest.find(params[:pest_id])
+    @pest = get_pest
     @latitude = params[:latitude].to_f.round(1)
     @longitude = params[:longitude].to_f.round(1)
 
-    options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude }
-    @weather = ag_weather_client.point_details(options)
+    if (@pest.class.name === PestNames::CUSTOM_PEST)
+      options = { latitude: @latitude, longitude: @longitude, t_min: t_min, t_max: t_max, start_date: start_date, end_date: end_date }
+      @weather = ag_weather_client.custom_point_details(options)
+    else
+      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude }
+      @weather = ag_weather_client.point_details(options)
+    end
     render layout: false
   end
 
@@ -29,7 +34,6 @@ class DbController < ApplicationController
 
   def severity_legend
     pest = Pest.find(params[:pest_id])
-    # TODO ask why base pest model does not have severity legend??
     @severities = pest.severity_legend
     render json: @severities
   end
@@ -53,24 +57,29 @@ class DbController < ApplicationController
   end
 
   def disease_panel
-    @pests = Pest.all.select { |p| p.is_a? DsvPest }
-    @crops = crops_for_pests(@pests)
+    @crops = create_crops_for_disease_panel.unshift(create_any_option(DsvPest))
     render json: @crops, include: { diseases: { methods: :end_date_enabled } }
   end
 
   def insect_panel
-    @pests = Pest.all.select { |p| p.is_a? DegreeDayPest }
-    @crops = crops_for_pests(@pests)
+    @crops = create_crops_for_insect_panel.unshift(create_any_option(DegreeDayPest))
     render json: @crops, include: { insects: { methods: [ :end_date_enabled, :biofix_date] } }
   end
 
   private
 
-  def crops_for_pests(pests)
-    crops = pests.map { |p| p.crops }.flatten.uniq.sort
-    any_crop = Crop.new(id:0, name: 'Any')
-    any_crop.pests = pests.sort { |x, y| x.name <=> y.name }
-    crops.unshift(any_crop)
+  def create_crops_for_disease_panel
+    Crop.includes(:pests).references(:pests).all.select {|crop| crop.diseases.count > 0 }
+  end
+
+  def create_crops_for_insect_panel
+    Crop.includes(:pests).references(:pests).all.select {|crop| crop.insects }
+  end
+
+  def create_any_option(pest_type)
+    any_crop = Crop.new(id: 0, name: 'Any')
+    any_crop.pests = Pest.all.select {|pest| pest.is_a? pest_type }.sort { |x, y| x.name <=> y.name }
+    any_crop
   end
 
   def start_date
@@ -79,6 +88,27 @@ class DbController < ApplicationController
 
   def end_date
     params[:end_date].blank? ? Date.current : Date.parse(params[:end_date])
+  end
+
+  def t_min
+    if (!params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit])
+      convert_to_fahrenheit(params[:t_min].to_f)
+    else
+      params[:t_min].nil? ? 0 : params[:t_min].to_f
+    end
+  end
+
+  def t_max
+    if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit])
+      convert_to_fahrenheit(params[:t_max].to_f)
+    else
+      params[:t_max].nil? ? nil : params[:t_max].to_f
+    end
+  end
+
+  def convert_to_fahrenheit(temp)
+    return 0 if temp.nil?
+    ((temp * 9.0/5.0) + 32.0).round(1)
   end
 
   def convert_temp(temp)
@@ -96,17 +126,23 @@ class DbController < ApplicationController
 
   def pick_strategy(pest)
     case pest.class.name
-    when "Pest"
+    when PestNames::PEST
       "build_pest_strategy"
-    when "DsvPests::LateBlight"
+    when PestNames::LATE_BLIGHT
       "build_late_blight_strategy"
+    when PestNames::CUSTOM_PEST
+      "build_custom_pest_strategy"
     else
       "build_pest_strategy"
     end
   end
 
   def get_pest
-    @pest ||= Pest.find(params[:pest_id])
+    if params[:pest_id]
+      @pest ||= Pest.find(params[:pest_id])
+    else
+      @pest = Pest.new(type: PestNames::CUSTOM_PEST)
+    end
   end
 
   def build_pest_strategy
@@ -115,6 +151,37 @@ class DbController < ApplicationController
 
   def build_late_blight_strategy
     LateBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
+  end
+
+  def build_custom_pest_strategy
+    CustomPestStrategy.new(ag_weather_client, start_date, end_date, t_min, t_max)
+  end
+
+  class CustomPestStrategy
+    def initialize(client, start_date, end_date, t_min, t_max)
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+      @t_min = t_min
+      @t_max = t_max
+    end
+
+    def severities
+      begin
+        client.custom(start_date: start_date, end_date: end_date, t_min: t_min, t_max: t_max)
+      rescue Exception => e
+        puts e
+        []
+      end
+    end
+
+    def severities_from_totals(totals)
+      totals
+    end
+
+    private
+
+    attr_reader :client, :start_date, :end_date, :t_min, :t_max
   end
 
   class PestSeverityStrategy
@@ -129,7 +196,7 @@ class DbController < ApplicationController
       begin
         client.pest_forecasts(pest: pest.remote_name, start_date: start_date, end_date: end_date)
       rescue Exception => e
-        Rails.logger.error(e.backtrace.join("\n"))
+        puts e
         []
       end
     end

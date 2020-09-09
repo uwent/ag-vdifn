@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["googlemaps", "jest", "node"],
+    "types": ["googlemaps", "jest", "node", "lodash"],
     "downlevelIteration": true,
     "declaration": false,
     "emitDecoratorMetadata": true,

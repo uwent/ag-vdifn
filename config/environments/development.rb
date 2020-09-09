@@ -39,4 +39,5 @@ Rails.application.configure do
   config.logger = Logger.new(STDOUT)
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.hosts << /[a-z0-9]+\.ngrok\.io/
 end

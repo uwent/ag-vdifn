@@ -3,7 +3,7 @@ const MapOptions = {
         lat: 45.05026979463,
         lng: -90.274658203125
     },
-    mapTypeControl: true,
+    mapTypeControl: false,
     mapTypeControlOptions: {
         mapTypeIds: ['terrain', 'hybrid']
     },

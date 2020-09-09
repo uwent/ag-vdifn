@@ -5,6 +5,24 @@ module AgWeather
 
     base_uri ENV['AG_WEATHER_BASE_URL']
 
+    def custom(options)
+      forecasts = self.class.get(
+        AgWeather::Endpoints::CUSTOM,
+        query: get_options(options),
+        timeout: 12000
+      )
+      JSON.parse(forecasts.body, symbolize_names: true)
+    end
+
+    def custom_point_details(options)
+      point_details = self.class.get(
+        AgWeather::Endpoints::CUSTOM_POINT_DETAILS,
+        query: get_options(options),
+        timeout: 1000
+      )
+      JSON.parse(point_details.body, symbolize_names: true)
+    end
+
     def pest_forecasts(options)
       forecasts = self.class.get(
         AgWeather::Endpoints::PEST_FORECASTS,

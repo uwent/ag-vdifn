@@ -2,16 +2,16 @@
   import { Loader } from "@googlemaps/js-api-loader";
   import { onMount, setContext } from "svelte";
   import mapOptions from "./TypeScript/mapOptions";
-  import Loading from '../common/Loading.svelte'
-  import { mapKey } from '../../store/store'
-  import GoogleWrapper from './TypeScript/googleWrapper'
+  import Loading from "../common/Loading.svelte";
+  import { mapKey } from "../../store/store";
+  import GoogleWrapper from "./TypeScript/googleWrapper";
   let container;
   let promise;
   let map;
   let googleInstance: GoogleWrapper;
 
   const loader = new Loader({
-    apiKey: "AIzaSyCVC30xyMTzH5fupUsdfd1lcD4ICitf7io",
+    apiKey: "AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4",
   });
 
   setContext(mapKey, {
@@ -31,6 +31,30 @@
   });
 </script>
 
+<style>
+  #google-map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+  :global(#map-pan-zoom-controls, #map-google-logo) {
+    left: 335px;
+  }
+
+  :global(#map-google-logo) {
+    bottom: 0;
+  }
+
+  :global(.gm-style .gm-style-iw-c) {
+    overflow: visible;
+  }
+
+  :global(.weather-details-dsv) {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+</style>
+
 {#await promise}
   <Loading />
 {:catch error}
@@ -43,27 +67,3 @@
     <slot />
   {/if}
 </div>
-
-<style>
-  #google-map {
-    height: 100%;
-  }
-:global(#map-pan-zoom-controls,
-#map-google-logo){
-  position: absolute;
-  left: 335px;
-}
-
-:global(#map-google-logo) {
-  bottom: 0;
-}
-
-:global(.gm-style .gm-style-iw-c) {
-    overflow: visible;
-}
-
-:global(.weather-details-dsv) {
-  margin-left: 8px;
-  margin-right: 8px
-}
-</style>

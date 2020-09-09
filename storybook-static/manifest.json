@@ -1,0 +1,30 @@
+{
+  "entrypoints": {
+    "main": {
+      "js": [
+        "/packs/runtime~main.37e75a23b47bb3ce1eb3.bundle.js",
+        "/packs/vendors~main.37e75a23b47bb3ce1eb3.bundle.js",
+        "/packs/main.37e75a23b47bb3ce1eb3.bundle.js"
+      ],
+      "js.map": [
+        "/packs/runtime~main.37e75a23b47bb3ce1eb3.bundle.js.map",
+        "/packs/vendors~main.37e75a23b47bb3ce1eb3.bundle.js.map",
+        "/packs/main.37e75a23b47bb3ce1eb3.bundle.js.map"
+      ],
+      "css": [
+        "/packs/css/main-40b34479.chunk.css"
+      ],
+      "css.map": [
+        "/packs/css/main-40b34479.chunk.css.map"
+      ]
+    }
+  },
+  "main.css": "/packs/css/main-40b34479.chunk.css",
+  "main.css.map": "/packs/css/main-40b34479.chunk.css.map",
+  "main.js": "/packs/main.37e75a23b47bb3ce1eb3.bundle.js",
+  "main.js.map": "/packs/main.37e75a23b47bb3ce1eb3.bundle.js.map",
+  "runtime~main.js": "/packs/runtime~main.37e75a23b47bb3ce1eb3.bundle.js",
+  "runtime~main.js.map": "/packs/runtime~main.37e75a23b47bb3ce1eb3.bundle.js.map",
+  "vendors~main.js": "/packs/vendors~main.37e75a23b47bb3ce1eb3.bundle.js",
+  "vendors~main.js.map": "/packs/vendors~main.37e75a23b47bb3ce1eb3.bundle.js.map"
+}
