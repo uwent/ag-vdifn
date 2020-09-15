@@ -1,3 +1,7 @@
+import { Options, InsectOptions } from './options.js.coffee'
+import { Database } from './database.js.coffee'
+import Mustache from 'mustache'
+import Routes from '../routes/js-routes.js.erb'
 $ ->
   map = new ForecastMap($('#google-map')[0])
 
@@ -109,7 +113,7 @@ class ForecastMap
       station = new Station(1, station.name, new google.maps.LatLng(station.lat, station.long))
       @stations.push(station)
       station.draw(this)
-      
+
   reload: (start_date, end_date, pest) ->
     this.closeInfoWindow()
     this.clearDataPoints()
@@ -166,7 +170,7 @@ class DataPoint
       crop = $('#crop-select')[0].value
       pest = $('#pest-select-' + crop)[0].value
       $(content).attr("id", "iw-container")
-      content.innerHTML =  Mustache.render($('#infowindow-tmpl').html())
+      content.innerHTML = Mustache.render($('#infowindow-tmpl').html())
       infowindow.open(map)
       infowindow.setContent(content)
       Database.fetchPointDetails(latitude, longitude, $('#datepicker-start')[0].value, $('#datepicker-end')[0].value, pest, (newContent) ->

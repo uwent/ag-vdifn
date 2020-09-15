@@ -1,4 +1,4 @@
-class @Temperature
+export class Temperature
   @to_c: (in_f) ->
     Temperature.to_tenths((in_f - 32) * 5.0/9.0)
 
@@ -11,4 +11,3 @@ class @Temperature
       new_num/10 + ".0"
     else
       new_num/10
-      

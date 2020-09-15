@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "@rails/ujs": "^6.0.3-2",
+    "@rails/webpacker": "5.2.1",
+    "coffee-loader": "^1.0.0",
+    "coffeescript": "^2.5.1",
+    "jquery": "^3.5.1",
+    "jquery-ui": "^1.12.1",
+    "moment": "^2.27.0",
+    "mustache": "^4.0.1",
+    "pikaday": "^1.8.0",
+    "popper.js": "^1.16.1",
+    "qtip2": "^3.0.3",
+    "rails-erb-loader": "^5.5.2",
+    "turbolinks": "^5.2.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test-watch": "jest --watch"
+  },
+  "jest": {
+    "roots": [
+      "app/javascript/spec"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "devDependencies": {
+    "jest": "^26.4.2",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.11'
+lock '3.14.1'
 
 branch = ENV['BRANCH'] || 'master'
 
@@ -49,6 +49,15 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  desc "Run rake yarn install"
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+      end
     end
   end
 

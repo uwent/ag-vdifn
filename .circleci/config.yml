@@ -34,12 +34,25 @@ jobs:
           key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
+      - restore_cache:
+          keys:
+            - agvdifn-yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Yarn install
+          command: yarn install --check-files --cache-folder ~/.cache/yarn
+      - save_cache:
+          key: agvdifn-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: Setup database
           command: bin/rails db:setup
+      - run:
+          name: Jest
+          command: yarn test
       - run:
           name: RSpec
           command: bundle exec rspec
