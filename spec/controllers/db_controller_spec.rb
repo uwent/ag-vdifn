@@ -6,6 +6,33 @@ RSpec.describe DbController, type: :request do
   let(:days_data) { [{ value: 10, date: "data", avg_temperature: "100"}] }
   let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temperature: "100"}] }
 
+  describe "GET#disease_panel" do
+    it "returns success response" do
+      crop = Crop.create!(name: "crop")
+      crop.pests << DsvPests::LateBlight.create!(name: "lateblight")
+      crop.pests << DsvPests::FoliarDisease.create!(name: "FoliarDisease")
+
+      get disease_panel_db_index_path
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).not_to be_empty
+    end
+  end
+
+
+  describe "GET#insect_panel" do
+    it "returns success response" do
+      crop = Crop.create!(name: "crop")
+      crop.pests << DegreeDayPest.create!(name: "test1", biofix_mm: 1, biofix_dd: 2)
+      crop.pests << DegreeDayPest.create!(name: "test2", biofix_mm: 1, biofix_dd: 2)
+
+      get insect_panel_db_index_path
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).not_to be_empty
+    end
+  end
+
   describe "POST#severities" do
     it "returns success response" do
       pest = Pest.create!

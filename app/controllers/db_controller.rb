@@ -31,7 +31,7 @@ class DbController < ApplicationController
     pest = Pest.find(params[:pest_id])
     # TODO ask why base pest model does not have severity legend??
     @severities = pest.severity_legend
-    render layout: false
+    render json: @severities
   end
 
   def pest_info
@@ -46,13 +46,32 @@ class DbController < ApplicationController
              name: pest.name,
              pest_link: pest.link,
              biofix: pest.biofix_date,
-             end_date_enabled: pest.end_date_enabled?,
+             end_date_enabled: pest.end_date_enabled,
              tmin: in_f ? pest.t_min : convert_temp(pest.t_min),
              tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : convert_temp(pest.t_max))
            }
   end
 
+  def disease_panel
+    @pests = Pest.all.select { |p| p.is_a? DsvPest }
+    @crops = crops_for_pests(@pests)
+    render json: @crops, include: { diseases: { methods: :end_date_enabled } }
+  end
+
+  def insect_panel
+    @pests = Pest.all.select { |p| p.is_a? DegreeDayPest }
+    @crops = crops_for_pests(@pests)
+    render json: @crops, include: { insects: { methods: [ :end_date_enabled, :biofix_date] } }
+  end
+
   private
+
+  def crops_for_pests(pests)
+    crops = pests.map { |p| p.crops }.flatten.uniq.sort
+    any_crop = Crop.new(id:0, name: 'Any')
+    any_crop.pests = pests.sort { |x, y| x.name <=> y.name }
+    crops.unshift(any_crop)
+  end
 
   def start_date
     params[:start_date].blank? ? Date.current - 7.days : Date.parse(params[:start_date])

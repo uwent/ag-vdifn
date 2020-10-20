@@ -33,6 +33,10 @@ default: &default
     - .woff2
 
   extensions:
+    - .svelte
+    - .erb
+    - .tsx
+    - .ts
     - .mjs
     - .js
     - .sass
