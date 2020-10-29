@@ -97,11 +97,6 @@
     background-position: center;
   }
 
-  #uw-extension {
-    background-image: url("../../../../assets/images/uw-extension.png");
-    background-position: center;
-  }
-
   h1 {
     clear: both;
     margin: 0;
@@ -140,11 +135,6 @@
         class="logo"
         href="http://labs.russell.wisc.edu/vegento/"
         target="_blank">UW-Madison Vegetable Crop Entomology</a>
-      <a
-        id="uw-extension"
-        href="http://www.uwex.edu"
-        target="_blank"
-        class="logo">UWex</a>
     </div>
     <h1>
       <span>Vegetable Disease &amp;</span><span>Insect Forecasting Network</span>
