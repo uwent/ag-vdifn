@@ -79,12 +79,61 @@ RSpec.describe DbController, type: :request do
   end
 
   describe "POST#point_details" do
-    it "returns success response" do
-      pest = Pest.create!
+    it "returns success response when standard pest" do
+      pest = Pest.create!(remote_name: "pest")
+      start_date = Date.current
+      end_date = Date.current - 20.days
+      latitude = 10
+      longitude = 20
       allow_any_instance_of(AgWeather::Client).to receive(:point_details).
         and_return(days_data)
 
-      post point_details_db_index_path, params: { pest_id: pest.id, latitude: 10, longitude: 20 }
+      expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
+        start_date: start_date,
+        end_date: end_date,
+        latitude: latitude.to_f,
+        longitude: longitude.to_f,
+        pest: "pest",
+      })
+
+      post point_details_db_index_path, params: {
+        pest_id: pest.id,
+        latitude: latitude,
+        longitude: longitude,
+        start_date: start_date,
+        end_date: end_date
+      }
+
+      expect(response).to have_http_status(:success)
+    end
+    it "returns success response when custom pest" do
+      Pest.create!
+      t_min = 50
+      t_max = 100
+      start_date = Date.current
+      end_date = Date.current - 20.days
+      latitude = 10
+      longitude = 20
+      allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).
+        and_return(days_data)
+
+      expect_any_instance_of(AgWeather::Client).to receive(:custom_point_details).with({
+        start_date: start_date,
+        end_date: end_date,
+        latitude: latitude.to_f,
+        longitude: longitude.to_f,
+        t_min: t_min,
+        t_max: t_max
+      })
+
+      post point_details_db_index_path, params: {
+        t_min: t_min,
+        t_max: t_max,
+        latitude: latitude,
+        longitude: longitude,
+        start_date: start_date,
+        end_date: end_date
+      }
 
       expect(response).to have_http_status(:success)
     end
