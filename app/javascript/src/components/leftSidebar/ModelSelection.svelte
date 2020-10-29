@@ -1,9 +1,9 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import { panelKey, selectedAffliction } from "../../store/store"
+  import { panelKey, selectedAffliction } from "../../store/store";
   import { afflictionValue } from "../../store/store";
   import { CropWithAfflictions, Pest } from "../common/TypeScript/types";
-  import Modal from '../common/Modal.svelte';
+  import Modal from "../common/Modal.svelte";
   let showModal: boolean = false;
   let afflictionInputValue: number = 1;
   let selectedCropValue: number;
@@ -13,31 +13,30 @@
 
   const { getCrops, getAfflictionName } = getContext(panelKey);
   crops = getCrops();
-  afflictionName = getAfflictionName()
+  afflictionName = getAfflictionName();
 
   function getAfflictionsForCrop(cropId) {
     const cropWithAfflictions = crops.find((crop) => {
-      return crop.id === cropId
-    })
+      return crop.id === cropId;
+    });
     if (cropWithAfflictions) {
       afflictionsForCrop = cropWithAfflictions.afflictions;
-      selectedAffliction.set(afflictionsForCrop[0])
+      selectedAffliction.set(afflictionsForCrop[0]);
     }
   }
 
   function getCurrentAffliction(afflictionId) {
     const affliction = afflictionsForCrop.find((affliction) => {
       return affliction.id === afflictionId;
-    })
+    });
     if (affliction) {
       return affliction;
     } else if (crops[0] === undefined) {
-        return []
-      } else {
-        return crops[0].afflictions[0]
-    } 
+      return [];
+    } else {
+      return crops[0].afflictions[0];
+    }
   }
-
 
   $: afflictionValue.set(afflictionInputValue);
   $: getAfflictionsForCrop(selectedCropValue);
@@ -47,44 +46,11 @@
   });
 </script>
 
-<fieldset id="crop">
-  <legend>Model Selection</legend>
-    <label for="crop-select">Crop</label>
-    <select bind:value={selectedCropValue} id="crop-select" name="crop-select">
-      {#each crops as {id, name}}
-        <option value={id} name="crop_id">{name}</option>
-      {/each}
-    </select>
-  <div class="clear" />
-  <label for="affliction-select">{afflictionName}</label>
-  <div class="affliction-container">
-    <select bind:value={afflictionInputValue} class="affliction-select" id="affliction-select" name="affliction-select">
-      {#each afflictionsForCrop as { id, name }}
-        <option value={id} name="affliction_id">{name}</option>
-      {/each}
-    </select>
-    {#if crops.length > 0}
-    <button on:click="{() => showModal = true}">
-      ?
-    </button>
-    {/if}
-  </div>
-
-</fieldset>
-{#if showModal}
-<Modal on:close="{() => showModal = false}">
-  {@html $selectedAffliction.info}
-</Modal>
-{/if}
-
 <style>
-
   .affliction-container {
     display: flex;
-    
   }
   fieldset {
-    background: rgba(200, 200, 200, 0.4);
     margin-bottom: 10px;
     padding: 10px;
   }
@@ -121,5 +87,35 @@
     clear: both;
     height: 0.5em;
   }
-
 </style>
+
+<fieldset id="crop">
+  <legend>Model Selection</legend>
+  <label for="crop-select">Crop</label>
+  <select bind:value={selectedCropValue} id="crop-select" name="crop-select">
+    {#each crops as { id, name }}
+      <option value={id} name="crop_id">{name}</option>
+    {/each}
+  </select>
+  <div class="clear" />
+  <label for="affliction-select">{afflictionName}</label>
+  <div class="affliction-container">
+    <select
+      bind:value={afflictionInputValue}
+      class="affliction-select"
+      id="affliction-select"
+      name="affliction-select">
+      {#each afflictionsForCrop as { id, name }}
+        <option value={id} name="affliction_id">{name}</option>
+      {/each}
+    </select>
+    {#if crops.length > 0}
+      <button on:click={() => (showModal = true)}> ? </button>
+    {/if}
+  </div>
+</fieldset>
+{#if showModal}
+  <Modal on:close={() => (showModal = false)}>
+    {@html $selectedAffliction.info}
+  </Modal>
+{/if}

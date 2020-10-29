@@ -4,7 +4,7 @@ lock '3.14.1'
 branch = ENV['BRANCH'] || 'master'
 
 set :application, 'ag-vdifn'
-set :repo_url, 'git@github.com:ballman/ag-vdifn.git'
+set :repo_url, 'git@github.com:adorableio/ag-vdifn.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -39,9 +39,11 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 # set :keep_releases, 5
 
 # rbenv
+set :deploy_user, 'deploy'
 set :rbenv_type, :user
-set :rbenv_ruby, '2.4.1'
+set :rbenv_ruby, '2.6.5'
 
+before "deploy:assets:precompile", "deploy:yarn_install"
 namespace :deploy do
 
   desc 'Restart application'

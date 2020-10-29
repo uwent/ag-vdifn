@@ -1,7 +1,6 @@
-<fieldset>
-    <legend>Model Parameters</legend>
-    <slot></slot>
-</fieldset>
+<script lang="ts">
+  export let title = "Model Parameters";
+</script>
 
 <style>
   legend {
@@ -9,6 +8,9 @@
     font-size: 0.85em;
     padding: 0 5px;
   }
-
 </style>
 
+<fieldset>
+  <legend>{title}</legend>
+  <slot />
+</fieldset>

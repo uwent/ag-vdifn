@@ -15,10 +15,10 @@
         <thead>
           <tr>
             <th width='35%'>Day</th>
-            <th>DSV <span class="weather-details-dsv tooltip" title="" data-tooltip="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications."><%= render 'questionSvg' %></span></th>
+            <th><button class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">DSV</button></th>
             <th>Mean temp.</th>
             <th>
-              Hours over RH <span class="weather-details-rh tooltip" title="" data-tooltip="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature."><%= render 'questionSvg' %></span> threshold
+              <button class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature.">Hours over RH threshold</button> 
             </th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
           <tr>
             <th>Total:</th>
             <td colspan="3"><strong>
-              <%= @weather.inject(0) { |sum, h| sum += h[:value]} %></strong></td>
+              <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></strong></td>
           </tr>
 
 

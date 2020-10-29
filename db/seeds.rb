@@ -1,11 +1,11 @@
-late_blight = DsvPests::LateBlight.create!(name: "Late Blight",
+late_blight = LateBlight.create!(name: "Late Blight",
                               remote_name: 'potato_blight_dsv',
                               info: "<u><b>Late blight</b></u>: Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.<br /><br />",
                               biofix_mm: 1, biofix_dd: 1,
                               critical_value: 0,
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
-foliar_disease = DsvPests::FoliarDisease.create!(name: "Foliar Disease",
+foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
                                        remote_name: 'carrot_foliar_dsv',
                                        info: "<u><b>Alternaria leaf blight</b></u>: the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.<br /><br />Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br /><u><b>Cercospora leaf blight</b></u>: the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.<br /><br />Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br />",
                                        biofix_mm: 1, biofix_dd: 1,
@@ -42,7 +42,7 @@ black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
                            critical_value: 400,
                            link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
 
-stink_bug = DegreeDayPests::BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
+stink_bug = BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
                          remote_name: 'brown_marmorated_stink_bug',
                          info: "Brown Marmorated Stink Bug Info",
                          biofix_mm: 1, biofix_dd: 1,
@@ -91,7 +91,7 @@ corn_earworm = DegreeDayPest.create!(name: "Corn Earworm",
                          photo: 'corn_earworm.jpg',
                          link: 'labs.russell.wisc.edu/vegento/pests/corn-earworm')
 
-corn_rootworm = DegreeDayPests::CornRootworm.create!(name: "Corn Rootworm",
+corn_rootworm = CornRootworm.create!(name: "Corn Rootworm",
                              remote_name: 'corn_rootworm',
                              info: "Rootworm <i>(genus Diabrotica)</i> larvae are white with black heads and grow 1/2 inch long. Northern and western rootworm larvae cannot be differentiated in the field. They feed on crown roots from June to August, causing corn to lodge and “gooseneck.”<br/><br />Rootworms are most serious in loam soils but are of little consequence in muck or non-irrigated sandy soils. The larvae are not a potential problem unless corn is planted on the same ground in a “rootworm area” for 2 or more years in succession. Annual crop rotation controls these insects, because eggs overwinter in the soil.<br />",
                              biofix_mm: 1, biofix_dd: 1,

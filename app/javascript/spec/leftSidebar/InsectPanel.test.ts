@@ -1,7 +1,8 @@
 import InsectPanel from '../../src/components/leftSidebar/InsectPanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { panelKey, submitParams, startDate, endDate, afflictionValue } from '../../src/store/store'
+import { panelKey, afflictionParams, startDate, endDate, afflictionValue } from '../../src/store/store'
 import { get } from 'svelte/store'
+import moment from 'moment'
 let getText;
 let insectPanel; 
 
@@ -21,7 +22,7 @@ beforeEach(() => {
 it('should dispatch submit params when button is clicked', () => {
     const button = getText("Select")
     fireEvent.click(button);
-    expect(get(submitParams)).toEqual({
+    expect(get(afflictionParams)).toEqual({
         start_date: "2000-10-10",
         end_date: "2000-11-10",
         pest_id: 1
@@ -36,6 +37,7 @@ it('sets context data for child elements', () => {
             endDate: "Date through which degree days are accumulated",
             startLabel: "Biofix"
         },
-        getAfflictionName: expect.any(Function)
+        getAfflictionName: expect.any(Function),
+        defaultStartDate: moment.utc().subtract(1, 'week').format("YYYY-MM-DD")
     })
 })

@@ -1,4 +1,4 @@
-import { Severity, SeverityLegend, PestInfo, PointDetailsParams, SeverityParams, StationDetailsParams, CropWithAfflictions } from '../types
+import { Severity, SeverityLegend, PestInfo, PointDetailsParams, SeverityParams, StationDetailsParams, CropWithAfflictions } from '../types'
 
 export default interface DatabaseClientInterface {
     fetchSeverities(severityParams: SeverityParams): Promise<Severity[]>;

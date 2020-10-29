@@ -1,33 +1,52 @@
 import { SeverityParams, Severity } from '../common/TypeScript/types';
 import DatabaseClient from '../common/TypeScript/databaseClient';
 import GoogleWrapper from './TypeScript/googleWrapper';
-import DataPoint from './TypeScript/dataPoint';
+import RectangleOption from './TypeScript/rectangleOption';
 import infoWindowLoadingTemplate from './TypeScript/templates/infoWindowLoading'
 import ColorHelper from './TypeScript/colorHelper';
+import _ from "lodash";
+
 export default class OverlayHelper {
     googleWrapper: GoogleWrapper;
     rectangles: any;
     infoWindow: any;
     map;
+    severities: Severity[];
+    min: number;
+    max: number;
     constructor(googleWrapper: GoogleWrapper, map: any) {
         this.googleWrapper = googleWrapper;
         this.rectangles = [];
         this.map = map;
+        this.severities = [];
     }
 
     async updateOverlay(severityParams: SeverityParams) {
         this.clearRectangles();
         this.closeInfoWindow();
-        const severities = await this.getSeverities(severityParams);
-        const dataPoints = this.convertSeveritiesToDataPoints(severities);
-        this.drawDataPoints(dataPoints);
+        this.severities = await this.getSeverities(severityParams);
+        if (this.severities.length > 0 && this.severities[0].min) {
+            this.min = this.severities[0].min
+            this.max = this.severities[0].max
+        }
+        const rectangleOptions = this.convertSeveritiesToRectangleOptions(this.severities);
+        this.drawDataPoints(rectangleOptions);
         this.addInfoWindowEvents(severityParams)
+    }
+
+    updateOverlayGradient(gradientMapping) {
+        _.zip(this.severities, this.rectangles).forEach((severityWithRect: [Severity, any]) => {
+            severityWithRect[1].setOptions({
+                fillColor: this.mapColorToSeverity(severityWithRect[0].level, gradientMapping)
+            })
+        })
     }
 
     clearRectangles() {
         this.rectangles.forEach((rectangle) => {
             rectangle.setMap(null);
         });
+        this.rectangles = [];
     }
 
     closeInfoWindow() {
@@ -40,24 +59,24 @@ export default class OverlayHelper {
         return await new DatabaseClient().fetchSeverities(severityParams);
     }
 
-    convertSeveritiesToDataPoints(severities: Severity[]): DataPoint[] {
-        let dataPoints: DataPoint[] = [];
+    convertSeveritiesToRectangleOptions(severities: Severity[]): RectangleOption[] {
+        let rectangleOptions: RectangleOption[] = [];
         severities.forEach((severity: Severity) => {
             let latLang = this.googleWrapper.latLng(severity.lat, severity.long);
-            let dataPoint = new DataPoint(
+            let rectangleOption = new RectangleOption(
                 latLang.lat(),
                 latLang.lng(),
-                ColorHelper.color(severity.severity, 5),
+                ColorHelper.color(severity.level, 5),
                 this.map
             );
-            dataPoints.push(dataPoint);
+            rectangleOptions.push(rectangleOption);
         });
-        return dataPoints;
+        return rectangleOptions;
     }
 
-    drawDataPoints(dataPoints: DataPoint[]) {
-        dataPoints.forEach((dataPoint: DataPoint) => {
-            let rectangle = this.googleWrapper.createRectangle(dataPoint);
+    drawDataPoints(rectangleOptions: RectangleOption[]) {
+        rectangleOptions.forEach((rectangleOption) => {
+            let rectangle = this.googleWrapper.createRectangle(rectangleOption);
             this.rectangles.push(rectangle);
         });
     }
@@ -82,13 +101,30 @@ export default class OverlayHelper {
         })
     }
 
-    private async fetchPointDetails(latitude, longitude, severityParams): Promise<string> {
+    mapColorToSeverity(severityNumber: number, gradientMapping): string {
+        const key = _.find(
+            _.keys(gradientMapping)
+            .map((value) => parseFloat(value))
+            .sort(), (rangeMin) => severityNumber <= rangeMin
+            )
+        if (key === undefined) {
+            return gradientMapping[_.findLastKey(gradientMapping)]
+        } else {
+            return gradientMapping[key]
+        }
+    }
+
+    private async fetchPointDetails(latitude, longitude, severityParams: SeverityParams): Promise<string> {
         return new DatabaseClient().fetchPointDetails({
             latitude: latitude,
             longitude: longitude,
             start_date: severityParams.start_date,
             end_date: severityParams.end_date,
             pest_id: severityParams.pest_id,
+            t_min: severityParams.t_min,
+            t_max: severityParams.t_max,
+            in_fahrenheit: severityParams.in_fahrenheit
         });
     }
+
 }

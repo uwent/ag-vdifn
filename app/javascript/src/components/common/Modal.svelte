@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from "svelte";
+  import Button from "./Button.svelte";
 
   const dispatch = createEventDispatcher();
   const close = () => dispatch("close");
@@ -38,12 +39,50 @@
   }
 </script>
 
+<style type="scss">
+  @import "../../scss/settings.scss";
+
+  .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .modal {
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    width: calc(100vw - 4em);
+    max-width: 32em;
+    max-height: calc(100vh - 4em);
+    overflow: auto;
+    transform: translate(-60%, -50%);
+    padding: 1em;
+    border-radius: 0.2em;
+    background: white;
+    z-index: 1;
+
+    @media #{$medium-up} {
+      position: fixed;
+      left: 62%;
+    }
+  }
+</style>
 
 <svelte:window on:keydown={handle_keydown} />
 
 <div class="modal-background" on:click={close} />
 
-<div class="modal" role="dialog" aria-modal="true" bind:this={modal} aria-labelledby="affliction-modal">
+<div
+  class="modal"
+  role="dialog"
+  aria-modal="true"
+  bind:this={modal}
+  aria-labelledby="affliction-modal">
   <h2 id="affliction-modal">Additional Information</h2>
   <slot name="header" />
   <hr />
@@ -51,36 +90,5 @@
   <hr />
 
   <!-- svelte-ignore a11y-autofocus -->
-  <button autofocus on:click={close}>Close</button>
+  <Button click={close} text="Close" />
 </div>
-
-
-<style>
-    .modal-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .modal {
-      position: absolute;
-      left: 280%;
-      top: 50%;
-      width: calc(100vw - 4em);
-      max-width: 32em;
-      max-height: calc(100vh - 4em);
-      overflow: auto;
-      transform: translate(-50%, -50%);
-      padding: 1em;
-      border-radius: 0.2em;
-      background: white;
-    }
-
-    button {
-      display: block;
-    }
-  </style>
-

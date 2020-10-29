@@ -1,38 +1,28 @@
 <script lang="ts">
-  import { SeverityParams } from "../../components/common/TypeScript/types";
-  import { submitParams } from "../../store/store";
-  import DatabaseClient from "../../components/common/TypeScript/databaseClient";
+  import { SeverityParams } from "../common/TypeScript/types";
+  import { afflictionParams, mapMinMapMax } from "../../store/store";
+  import DatabaseClient from "../common/TypeScript/databaseClient";
   import { onDestroy } from "svelte";
-  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+  import QuestionSvg from "../common/SVG/QuestionSvg.svelte";
   export let severities = [];
 
-  const unsubscribe = submitParams.subscribe(async (severityParams: SeverityParams) => {
-    if (Object.entries(severityParams).length === 0) 
-      return;
-    severities = await updateSeverities(severityParams);
-  });
+  const unsubscribe = afflictionParams.subscribe(
+    async (severityParams: SeverityParams) => {
+      if (Object.entries(severityParams).length === 0) return;
+      severities = await updateSeverities(severityParams);
+    }
+  );
 
   async function updateSeverities(severityParams) {
     return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
   }
 
-  onDestroy(unsubscribe)
-
+  onDestroy(unsubscribe);
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<style type="scss">
+  @import "../../scss/settings.scss";
 
-<fieldset id="dsv-legend">
-    <legend>Severity Legend:</legend>
-    {#each severities as { name, description, slug }}
-      <div title="severity-level" id="dsv-{slug}" class="dsv" data-color="#ff0000">
-        <div class="dsv-threshold dsv-{slug}" />
-        <label>{name}<span class="tooltip left" title="" data-tooltip={description}><QuestionSvg /></span></label>
-      </div>
-    {/each}
-</fieldset>
-
-<style>
   .dsv-threshold.dsv-very_high {
     background: rgb(204, 0, 0);
   }
@@ -61,11 +51,7 @@
     display: inline-block;
     margin-top: 5px;
   }
-
-  span {
-    margin-left: 5px;
-  }
-
+  
   .dsv-threshold {
     display: inline-block;
     width: 15px;
@@ -73,5 +59,29 @@
     vertical-align: middle;
     margin: 2px;
   }
+
+  button {
+    border: none;
+    background-color: transparent;
+  }
 </style>
 
+{#if !$mapMinMapMax}
+  <fieldset id="dsv-legend">
+    <legend>Severity Legend:</legend>
+    {#each severities as { name, description, slug }}
+      <div
+        title="severity-level"
+        id="dsv-{slug}"
+        class="dsv"
+        data-color="#ff0000">
+        <div class="dsv-threshold dsv-{slug}" />
+        <label>{name}<button
+            title=""
+            data-balloon-length="medium"
+            data-balloon-pos="up"
+            aria-label={description}><QuestionSvg /></button></label>
+      </div>
+    {/each}
+  </fieldset>
+{/if}

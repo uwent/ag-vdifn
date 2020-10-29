@@ -1,7 +1,8 @@
 import { rest } from 'msw'
+import ENDPOINTS from '../../src/components/common/TypeScript/endpoints';
 
 export const handlers = [
-    rest.post('/db/disease_panel', (req, res, ctx) => {
+    rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([
@@ -10,7 +11,7 @@ export const handlers = [
         )
     }),
 
-    rest.post('/db/severities', (req, res, ctx) => {
+    rest.post(ENDPOINTS.SEVERITIES, (req, res, ctx) => {
         const { pest_id } = req.body
         if (pest_id === 101) {
             return res(
@@ -27,7 +28,7 @@ export const handlers = [
         }
     }),
 
-    rest.post('/db/severity_legend', (req, res, ctx) => {
+    rest.post(ENDPOINTS.SEVERITY_LEGEND, (req, res, ctx) => {
         const { pest_id } = req.body
         if (pest_id === 101) {
             return res(
@@ -45,7 +46,7 @@ export const handlers = [
         }
     }),
 
-    rest.post('/db/point_details', (req, res, ctx) => {
+    rest.post(ENDPOINTS.POINT_DETAILS, (req, res, ctx) => {
         const { pest_id } = req.body
         if (pest_id === 101) {
             return res(
@@ -59,7 +60,7 @@ export const handlers = [
         }
     }),
 
-    rest.post('/db/pest_info', (req, res, ctx) => {
+    rest.post(ENDPOINTS.PEST_INFO, (req, res, ctx) => {
         const { pest_id } = req.body
         if (pest_id === 101) {
             return res(
@@ -81,7 +82,7 @@ export const handlers = [
         }
     }),
 
-    rest.post('/db/station_details', (req, res, ctx) => {
+    rest.post(ENDPOINTS.STATION_DETAILS, (req, res, ctx) => {
         const { name } = req.body
         if (name === 'error') {
             return res(
@@ -95,7 +96,7 @@ export const handlers = [
         }
     }),
 
-    rest.get('/db/disease_panel', (req, res, ctx) => {
+    rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([
@@ -109,7 +110,7 @@ export const handlers = [
         )
     }),
 
-    rest.get('/db/insect_panel', (req, res, ctx) => {
+    rest.get(ENDPOINTS.INSECT_PANEL, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([

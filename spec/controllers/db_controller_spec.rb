@@ -9,8 +9,8 @@ RSpec.describe DbController, type: :request do
   describe "GET#disease_panel" do
     it "returns success response" do
       crop = Crop.create!(name: "crop")
-      crop.pests << DsvPests::LateBlight.create!(name: "lateblight")
-      crop.pests << DsvPests::FoliarDisease.create!(name: "FoliarDisease")
+      crop.pests << LateBlight.create!(name: "lateblight")
+      crop.pests << FoliarDisease.create!(name: "FoliarDisease")
 
       get disease_panel_db_index_path
 
@@ -46,7 +46,7 @@ RSpec.describe DbController, type: :request do
     end
 
     it "returns correct response when Late Blight" do
-      late_blight = DsvPests::LateBlight.create!
+      late_blight = LateBlight.create!
       allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).
         and_return(severity_data)
 
@@ -54,6 +54,15 @@ RSpec.describe DbController, type: :request do
 
       expect(response).to have_http_status(:success)
       expect(response.body).to eq([{lat: 20, long: 40, severity: 4}].to_json)
+    end
+
+    it "returns correct response when custom params sent" do
+      allow_any_instance_of(AgWeather::Client).to receive(:custom).
+        and_return(severity_data)
+      post severities_db_index_path, params: { start_date: "2020-10-01", end_date: "2020-10-10", t_min: "10.0", t_max: "50.0" }
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to eq(severity_data.to_json)
     end
   end
 
@@ -94,7 +103,7 @@ RSpec.describe DbController, type: :request do
 
   describe "POST#severity_legend" do
     it "returns success response" do
-      pest = DsvPests::FoliarDisease.create!
+      pest = FoliarDisease.create!
 
       post severity_legend_db_index_path, params: { pest_id: pest.id }
 

@@ -12,8 +12,8 @@ describe('fetchSeverities', () => {
         const response = await database.fetchSeverities(params)
 
         expect(response).toEqual([
-            { "lat": 5, "long": 10, "severity": 10 },
-            { "lat": 50, "long": 60, "severity": 5 }
+            { "lat": 5, "long": 10, "level": 10 },
+            { "lat": 50, "long": 60, "level": 5 }
         ]);
     })
 
@@ -147,9 +147,8 @@ describe('fetchDiseasePanel', () => {
 
         expect(response).toEqual([
             {
-                id: 1, name: "potato", afflictions: [
-                    { id: 5, name: "late blight", t_min: null, t_max: null, end_date_enabled: true },
-                    { id: 10, name: "black death", t_min: null, t_max: null, end_date_enabled: true }
+                id: 1, name: "potatoes", afflictions: [
+                    { id: 2, name: "late blight" },
                 ]
             }
         ])

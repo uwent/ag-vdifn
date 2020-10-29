@@ -1,63 +1,57 @@
 <script lang="ts">
-  const moment = require('moment');
-  import { getContext, onDestroy, onMount } from 'svelte';
-  import { endDate, panelKey, startDate, selectedAffliction } from '../../store/store'
-  import { PestInfo } from '../common/TypeScript/types';
-  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
-  let startLabel;
+  const moment = require("moment");
+  import { getContext, onDestroy, onMount } from "svelte";
+  import {
+    endDate,
+    panelKey,
+    startDate,
+    selectedAffliction,
+  } from "../../store/store";
+  import { PestInfo } from "../common/TypeScript/types";
+  import QuestionSvg from "../common/SVG/QuestionSvg.svelte";
+  const { dateToolTip, defaultStartDate } = getContext(panelKey);
   let today: string = moment.utc().format("YYYY-MM-DD");
   let endDateValue: string = today;
-  let lastWeek: string = moment.utc().subtract(1, 'week').format("YYYY-MM-DD");
-  let startDateValue: string = lastWeek;
   let startDateMax: string = endDateValue;
+  let startDateValue: string = defaultStartDate;
+  let startLabel = dateToolTip.startLabel;
 
-  function updateStartDateMax(endDate) {
-    startDateMax = endDate;
+  function updateStartDateInput(event) {
+    const {
+      target: { value },
+    } = event;
+    startDateMax = value;
+    if (moment.utc(endDateValue) < moment.utc(startDateValue)) {
+      startDateValue = value;
+    }
   }
 
-  const { dateToolTip } = getContext(panelKey)
-  startLabel = dateToolTip.startLabel;
   onMount(() => {
-    startDate.set(lastWeek)
+    startDateValue = defaultStartDate;
+    startDate.set(defaultStartDate);
     endDate.set(today);
-  })
+  });
+
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
     if (affliction.biofix_date) {
-      startDateValue = affliction.biofix_date
+      startDateValue = affliction.biofix_date;
     }
-  })
+  });
+
   onDestroy(unsubscribe);
 
-  $: updateStartDateMax(endDateValue);
   $: startDate.set(startDateValue);
   $: endDate.set(endDateValue);
-
 </script>
 
-<fieldset id="datepicker">
-  <legend>Date Range</legend>
-    <label for='datepicker-start'>
-      {startLabel}
-    </label>
-    <div class="select-wrapper" id="datepicker-start-wrapper">
-      <input type="date" class="datepicker" id="datepicker-start" bind:value={startDateValue} max={startDateMax}>
-      <span class="tooltip datepicker-tooltip" id="datepicker-start-information" title='start-date-tooltip' data-tooltip={dateToolTip.startDate}><QuestionSvg /></span>
-    </div>
-    <label for='datepicker-end'>End Date</label>
-    <div class="select-wrapper" id="datepicker-end-wrapper">
-      <input type="date" class="datepicker" id="datepicker-end" bind:value={endDateValue} max={today} disabled={!$selectedAffliction.end_date_enabled}>
-      <div class="tooltip datepicker-tooltip" id="datepicker-end-information" title='end-date-tooltip' data-tooltip={dateToolTip.endDate}><QuestionSvg /></div>
-    </div>
-</fieldset>
-
-<style>
+<style type="scss">
+  @import "../../scss/settings.scss";
 
   .select-wrapper {
     display: flex;
   }
 
   fieldset {
-    background: rgba(200, 200, 200, 0.4);
     margin-bottom: 10px;
     padding: 10px;
   }
@@ -72,5 +66,45 @@
     margin-left: 8px;
   }
 
+  button {
+    border: none;
+  }
 </style>
 
+<fieldset id="datepicker">
+  <legend>Date Range</legend>
+  <label for="datepicker-start"> {startLabel} </label>
+  <div class="select-wrapper" id="datepicker-start-wrapper">
+    <input
+      type="date"
+      class="datepicker"
+      id="datepicker-start"
+      bind:value={startDateValue}
+      max={startDateMax} />
+    <button
+      class="datepicker-tooltip"
+      id="datepicker-start-information"
+      title="start-date-tooltip"
+      data-balloon-length="small"
+      data-balloon-pos="right"
+      aria-label={dateToolTip.startDate}><QuestionSvg /></button>
+  </div>
+  <label for="datepicker-end">End Date</label>
+  <div class="select-wrapper" id="datepicker-end-wrapper">
+    <input
+      type="date"
+      class="datepicker"
+      id="datepicker-end"
+      bind:value={endDateValue}
+      on:change={updateStartDateInput}
+      disabled={!$selectedAffliction.end_date_enabled}
+      max={today} />
+    <button
+      class="datepicker-tooltip"
+      id="datepicker-end-information"
+      title="end-date-tooltip"
+      data-balloon-length="small"
+      data-balloon-pos="right"
+      aria-label={dateToolTip.endDate}><QuestionSvg /></button>
+  </div>
+</fieldset>

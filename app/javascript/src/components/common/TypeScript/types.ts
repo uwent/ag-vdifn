@@ -1,7 +1,9 @@
 export type Severity = {
     lat: number;
     long: number;
-    severity: number
+    level: number;
+    min?: number;
+    max?: number;
 }
 
 export type SeverityLegend = {
@@ -26,12 +28,18 @@ export type PointDetailsParams = {
     start_date: string;
     end_date: string;
     pest_id: number;
+    t_max?: string;
+    t_min?: string;
+    in_fahrenheit?: boolean;
 }
 
 export type SeverityParams = {
     start_date: string;
     end_date: string;
-    pest_id: number;
+    pest_id?: number;
+    t_max?: string;
+    t_min?: string;
+    in_fahrenheit?: boolean;
 }
 
 export type StationDetailsParams = {
