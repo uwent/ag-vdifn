@@ -18,7 +18,7 @@ class DbController < ApplicationController
       options = { latitude: @latitude, longitude: @longitude, t_min: t_min, t_max: t_max, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.custom_point_details(options)
     else
-      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude }
+      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.point_details(options)
     end
     render layout: false
