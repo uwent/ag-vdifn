@@ -1,6 +1,82 @@
 <script lang="ts">
   import QuestionSvg from "../common/SVG/QuestionSvg.svelte";
+  import {
+    selectedPanel,
+    PANELS,
+    diseasePanelParams,
+    insectPanelParams,
+    overlayGradient,
+    mapMinMapMax,
+    selectedAffliction,
+  } from "../../store/store";
+  import { SeverityParams } from "../common/TypeScript/types";
+  import DatabaseClient from "../common/TypeScript/databaseClient";
+  import { onDestroy } from "svelte";
+  import SeverityLegend from "./SeverityLegend.svelte";
+  import CustomSeverityLegend from "./CustomSeverityLegend.svelte";
+  import Modal from "../common/Modal.svelte";
   let expanded = false;
+  export let currentSeverities = [];
+  let diseaseSeverities = [];
+  let insectSeverities = [];
+  let gradient = [];
+  let showModal = false;
+  const _ = require("lodash");
+
+  const diseaseUnsubscribe = diseasePanelParams.subscribe(
+    async (severityParams: SeverityParams) => {
+      if (Object.entries(severityParams).length === 0) return;
+      diseaseSeverities = await updateSeverities(severityParams);
+      currentSeverities = diseaseSeverities;
+    }
+  );
+
+  const insectUnsubscribe = insectPanelParams.subscribe(
+    async (severityParams: SeverityParams) => {
+      if (Object.entries(severityParams).length === 0) return;
+      insectSeverities = await updateSeverities(severityParams);
+      currentSeverities = insectSeverities;
+    }
+  );
+
+  const overlayGradientUnsubscribe = overlayGradient.subscribe(
+    (gradientMapping) => {
+      if (Object.entries(gradientMapping).length === 0) return;
+      const temp = [];
+      _.forEach(gradientMapping, (value, key) => {
+        temp.push({ number: key, color: value });
+      });
+      gradient = temp.sort((x, y) => {
+        return x.number - y.number;
+      });
+    }
+  );
+
+  async function updateSeverities(severityParams) {
+    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
+  }
+
+  $: swapSeverities($selectedPanel);
+
+  function swapSeverities(selectedPanel) {
+    switch (selectedPanel) {
+      case PANELS.DISEASE:
+        currentSeverities = diseaseSeverities;
+        break;
+      case PANELS.INSECT:
+        currentSeverities = insectSeverities;
+        break;
+      case PANELS.CUSTOM:
+        currentSeverities = [];
+        break;
+    }
+  }
+
+  onDestroy(() => {
+    diseaseUnsubscribe();
+    insectUnsubscribe();
+    overlayGradientUnsubscribe();
+  });
 </script>
 
 <style type="scss">
@@ -13,8 +89,8 @@
 
   #right-sidebar-expand-button {
     position: fixed;
-    width: 100px;
-    right: 10px;
+    width: 75px;
+    left: 10px;
     top: 70px;
     z-index: 100;
     padding: 10px 15px;
@@ -32,8 +108,6 @@
     bottom: 115px;
     right: 10px;
     z-index: 10;
-    min-width: 200px;
-    min-height: 75px;
     padding: 5px 10px;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
@@ -53,6 +127,7 @@
         visibility: visible;
         position: absolute;
         right: 15px;
+        bottom: 30px;
       }
       visibility: hidden;
     }
@@ -82,6 +157,10 @@
   ul li {
     color: #424242;
   }
+
+  .more-info-button {
+    width: 100%;
+  }
 </style>
 
 <button
@@ -89,34 +168,52 @@
   on:click={() => (expanded = !expanded)}>{expanded ? 'Hide Legend' : 'Show Legend'}</button>
 
 <div id="right-sidebar" aria-expanded={expanded}>
-  <slot />
-  <fieldset id="definitions">
-    <legend>Terms</legend>
-    <ul>
-      <li id="disease-forecasting">
-        Disease Forecasting <button
-          class="tooltip"
-          id="disease-forecasting-information"
-          data-balloon-length="medium"
-          data-balloon-pos={expanded ? 'up-right' : 'left'}
-          aria-label="A plant disease management system that uses computer-based models to collect field weather data and predict the onset and potential severity of crop diseases. Current and forecasted weather conditions determine the risk for disease, and prompts disease management decisions (preventative pesticide applications)."><QuestionSvg /></button>
-      </li>
-      <li id="tomcast">
-        TOMCAST <button
-          class="tooltip"
-          id="tomcast-information"
-          data-balloon-length="medium"
-          data-balloon-pos={expanded ? 'up-right' : 'left'}
-          aria-label="Disease forecasting model (adapted from a tomato disease model) used to predict the development of carrot foliar blights caused by Alternaria and Cercospora fungi, based on an accumulation of DSVs from past temperature and leaf wetness data combined with forecasted weather conditions."><QuestionSvg /></button>
-      </li>
-      <li id="blitecast">
-        Blitecast <button
-          class="tooltip"
-          id="blitecast-information"
-          data-balloon-length="medium"
-          data-balloon-pos={expanded ? 'up-right' : 'left'}
-          aria-label="Disease forecasting model used to predict the development of late blight of potato/tomato caused by Phytophthora infestans, based on an accumulation of DSVs, which are generated from air temperature and relative humidity data."><QuestionSvg /></button>
-      </li>
-    </ul>
-  </fieldset>
+  {#if $selectedPanel === PANELS.CUSTOM}
+    <CustomSeverityLegend
+      mapMin={$mapMinMapMax.min}
+      mapMax={$mapMinMapMax.max}
+      gradientMapping={gradient} />
+  {:else}
+    {#if $selectedPanel === PANELS.INSECT}
+      <button class="more-info-button" on:click={() => (showModal = !showModal)}>More Info</button>
+      {#if showModal}
+        <Modal on:close={() => (showModal = false)}>
+          {@html $selectedAffliction.info}
+        </Modal>
+      {/if}
+    {/if}
+    <SeverityLegend severities={currentSeverities} />
+  {/if}
+
+  {#if $selectedPanel === PANELS.DISEASE}
+    <fieldset id="definitions">
+      <legend>Terms</legend>
+      <ul>
+        <li id="disease-forecasting">
+          Disease Forecasting <button
+            class="tooltip"
+            id="disease-forecasting-information"
+            data-balloon-length="medium"
+            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            aria-label="A plant disease management system that uses computer-based models to collect field weather data and predict the onset and potential severity of crop diseases. Current and forecasted weather conditions determine the risk for disease, and prompts disease management decisions (preventative pesticide applications)."><QuestionSvg /></button>
+        </li>
+        <li id="tomcast">
+          TOMCAST <button
+            class="tooltip"
+            id="tomcast-information"
+            data-balloon-length="medium"
+            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            aria-label="Disease forecasting model (adapted from a tomato disease model) used to predict the development of carrot foliar blights caused by Alternaria and Cercospora fungi, based on an accumulation of DSVs from past temperature and leaf wetness data combined with forecasted weather conditions."><QuestionSvg /></button>
+        </li>
+        <li id="blitecast">
+          Blitecast <button
+            class="tooltip"
+            id="blitecast-information"
+            data-balloon-length="medium"
+            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            aria-label="Disease forecasting model used to predict the development of late blight of potato/tomato caused by Phytophthora infestans, based on an accumulation of DSVs, which are generated from air temperature and relative humidity data."><QuestionSvg /></button>
+        </li>
+      </ul>
+    </fieldset>
+  {/if}
 </div>

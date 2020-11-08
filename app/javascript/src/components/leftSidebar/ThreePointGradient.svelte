@@ -56,6 +56,7 @@
             userMiddleMin,
             absoluteMax: get(mapMinMapMax).max,
             absoluteMin: get(mapMinMapMax).min,
+            gradient: getGradient()
         });
     });
 
@@ -273,10 +274,15 @@
         });
     }
 
-    function updateOverlay() {
+    function getGradient() {
         const upper = getUpperColorRange();
         const lower = getLowerColorRange();
-        dispatch("updateOverlay", { ...lower, ...upper });
+
+        return { ...lower, ...upper }
+    }
+
+    function updateOverlay() {
+        dispatch("updateOverlay", getGradient());
     }
 </script>
 

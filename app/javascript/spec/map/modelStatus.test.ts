@@ -1,0 +1,61 @@
+import { render } from '@testing-library/svelte';
+import { tick } from 'svelte';
+import ModelStatus from '../../src/components/map/ModelStatus.svelte';
+import { selectedPanel, PANELS, insectPanelState, diseasePanelState, customPanelState } from '../../src/store/store';
+let getText;
+beforeEach(() => {
+    const { getByText } = render(ModelStatus);
+    getText = getByText
+})
+
+describe('when insect panel selected', () => {
+    it('shows feedback when no model is submitted', async () => {
+        selectedPanel.set(PANELS.INSECT)
+        await tick();
+
+        expect(getText("insect - No Model Submitted")).toBeInTheDocument()
+    })
+
+    it('shows current affliction name', async () => {
+        selectedPanel.set(PANELS.INSECT)
+        insectPanelState.set({currentAffliction: { name: "insect name"}})
+        await tick();
+ 
+        expect(getText("insect - insect name")).toBeInTheDocument()
+    })
+})
+
+describe('when disease panel selected', () => {
+    it('shows feedback when no model is submitted', async () => {
+        selectedPanel.set(PANELS.DISEASE)
+        await tick()
+
+        expect(getText("disease - No Model Submitted")).toBeInTheDocument()
+ 
+    })
+    
+    it('shows current affliction name', async () => {
+        selectedPanel.set(PANELS.DISEASE)
+        diseasePanelState.set({currentAffliction: { name: "disease name"}})
+        await tick()
+ 
+        expect(getText("disease - disease name")).toBeInTheDocument()
+    })
+})
+
+describe('when custom panel selected', () => {
+    it('shows none when no tmin/max', async () => {
+        selectedPanel.set(PANELS.CUSTOM);
+        await tick();
+
+        expect(getText("custom - TMin/Max: None/None \u2103")).toBeInTheDocument()
+    })
+
+    it('shows tMin and TMax and temp scale', async () => {
+        selectedPanel.set(PANELS.CUSTOM);
+        customPanelState.set({t_max: 10, t_min: 5, in_fahrenheit: true})
+        await tick();
+
+        expect(getText("custom - TMin/Max: 5/10 \u2109")).toBeInTheDocument()
+    })
+})

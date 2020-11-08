@@ -21,7 +21,7 @@
     transition-delay: 0.1s;
 
     @media #{$medium-up} {
-      width: 40em;
+      width: 25em;
       height: 100%;
       bottom: 0;
 
@@ -57,7 +57,6 @@
 
       @media #{$medium-up} {
         top: 0;
-        width: 30%;
       }
 
       button {

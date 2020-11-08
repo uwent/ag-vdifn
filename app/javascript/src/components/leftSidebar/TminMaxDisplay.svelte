@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte";
-    import { panelKey, selectedAffliction } from "../../store/store";
+    import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
     import Temperature from "./TypeScript/temperature";
     let tMin = "";
     let tMax = "";
@@ -10,6 +10,11 @@
         if (affliction) {
             tMin = affliction.t_min;
             tMax = affliction.t_max || "None";
+        }
+        if (tMax === "None") {
+            tMinTmax.update(state => ({...state, t_min: tMin, t_max: null}))
+        } else {
+            tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax}))
         }
     }
 
@@ -21,6 +26,7 @@
         } else {
             tMax = Temperature.to_f(tMax);
         }
+        tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     }
 
     function convertToCelcius() {
@@ -30,12 +36,18 @@
         } else {
             tMax = Temperature.to_c(tMax);
         }
+        tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     }
 
     onMount(() => {
         if (getCrops().length > 0) {
             tMin = getCrops()[0].afflictions[0].t_min;
             tMax = getCrops()[0].afflictions[0].t_max || "None";
+            if (tMax === "None") {
+                tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
+            } else {
+                tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+            }
         }
     });
 

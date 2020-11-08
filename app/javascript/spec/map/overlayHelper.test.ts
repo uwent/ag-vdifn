@@ -19,6 +19,26 @@ beforeEach(() => {
 })
 afterEach(jest.clearAllMocks)
 
+it('hides overlay', () => {
+    const setOptionsSpy = jest.fn()
+    overlayHelper.rectangles = [{setOptions: setOptionsSpy}, {setOptions: setOptionsSpy}]
+
+    overlayHelper.hideOverlay();
+
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(1, {visible: false})
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: false})
+})
+
+it('shows overlay', () => {
+    const setOptionsSpy = jest.fn()
+    overlayHelper.rectangles = [{setOptions: setOptionsSpy}, {setOptions: setOptionsSpy}]
+
+    overlayHelper.showOverlay();
+
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(1, {visible: true})
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: true}) 
+})
+
 it('clears all rectangles', () => {
     const setMapMock = jest.fn();
     const rectMock = {
@@ -66,8 +86,9 @@ describe("convert severities to rectangleOptions", () => {
             lng: lngMock
         }))
         googleWrapper.latLng = latLngMock;
+        overlayHelper.severities = severityResults 
 
-        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
+        overlayHelper.convertSeveritiesToRectangleOptions();
 
         expect(latLngMock).toHaveBeenNthCalledWith(1, firstSeverity.lat, firstSeverity.long)
         expect(latLngMock).toHaveBeenNthCalledWith(2, secondSeverity.lat, secondSeverity.long)
@@ -77,16 +98,17 @@ describe("convert severities to rectangleOptions", () => {
 
     it('calls color helper', () => {
         const spy = spyOn(ColorHelper, "color")
+        overlayHelper.severities = severityResults
+        overlayHelper.convertSeveritiesToRectangleOptions()
 
-        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
-
-        expect(spy).toHaveBeenNthCalledWith(1, firstSeverity.level, 5);
-        expect(spy).toHaveBeenNthCalledWith(2, secondSeverity.level, 5);
+        expect(spy).toHaveBeenNthCalledWith(1, firstSeverity.level, 5)
+        expect(spy).toHaveBeenNthCalledWith(2, secondSeverity.level, 5)
     })
 
     it('creates rectangleOptions', () => {
         ColorHelper.color = jest.fn().mockReturnValue("#cc0000")
-        overlayHelper.convertSeveritiesToRectangleOptions(severityResults);
+        overlayHelper.severities = severityResults
+        overlayHelper.convertSeveritiesToRectangleOptions()
 
         expect(RectangleOption).toHaveBeenNthCalledWith(
             1,
@@ -206,6 +228,7 @@ it('updates overlay', async () => {
     { "lat": 50, "long": 60, "severity": 5 }]
     const rectangleOptions = [{ data: "data"}, {data: "data2"}]
     overlayHelper.getSeverities = jest.fn().mockResolvedValue(severities)
+    overlayHelper.severities = severities
     overlayHelper.convertSeveritiesToRectangleOptions = jest.fn().mockReturnValue(rectangleOptions)
     spyOn(OverlayHelper.prototype, 'clearRectangles')
     spyOn(OverlayHelper.prototype, 'closeInfoWindow')
@@ -219,7 +242,7 @@ it('updates overlay', async () => {
     expect(overlayHelper.clearRectangles).toHaveBeenCalled();
     expect(overlayHelper.closeInfoWindow).toHaveBeenCalled();
     expect(overlayHelper.getSeverities).toHaveBeenCalledWith(severityParams);
-    expect(overlayHelper.convertSeveritiesToRectangleOptions).toHaveBeenCalledWith(severities);
+    expect(overlayHelper.convertSeveritiesToRectangleOptions).toHaveBeenCalled();
     expect(overlayHelper.drawDataPoints).toHaveBeenCalledWith(rectangleOptions)
     expect(overlayHelper.addInfoWindowEvents).toHaveBeenCalledWith(severityParams)
 })

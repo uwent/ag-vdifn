@@ -1,21 +1,28 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import { panelKey, selectedAffliction } from "../../store/store";
-  import { afflictionValue } from "../../store/store";
+  import { panelKey, selectedAffliction, afflictionValue } from "../../store/store";
   import { CropWithAfflictions, Pest } from "../common/TypeScript/types";
   import Modal from "../common/Modal.svelte";
   let showModal: boolean = false;
-  let afflictionInputValue: number = 1;
   let selectedCropValue: number;
   let afflictionsForCrop: Pest[] = [];
   let crops: CropWithAfflictions[] = [];
   let afflictionName: string;
 
   const { getCrops, getAfflictionName } = getContext(panelKey);
-  crops = getCrops();
+
+  onMount(() => {
+    crops = getCrops();
+    if (crops.length <= 0) return;
+    afflictionsForCrop = crops[0].afflictions
+    afflictionValue.update((_) => afflictionsForCrop[0].id)
+    selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[0].id))
+  })
+
   afflictionName = getAfflictionName();
 
-  function getAfflictionsForCrop(cropId) {
+  function getAfflictionsForCrop(event) {
+    const cropId = parseInt(event.target.value)
     const cropWithAfflictions = crops.find((crop) => {
       return crop.id === cropId;
     });
@@ -38,12 +45,12 @@
     }
   }
 
-  $: afflictionValue.set(afflictionInputValue);
-  $: getAfflictionsForCrop(selectedCropValue);
-  $: selectedAffliction.set(getCurrentAffliction(afflictionInputValue));
-  onMount(() => {
-    afflictionValue.set(afflictionInputValue);
-  });
+  function setAfflictionValue(event) {
+    const value = parseInt(event.target.value)
+    afflictionValue.update((value) => value)
+    selectedAffliction.set(getCurrentAffliction(value))
+  }
+
 </script>
 
 <style>
@@ -92,7 +99,8 @@
 <fieldset id="crop">
   <legend>Model Selection</legend>
   <label for="crop-select">Crop</label>
-  <select bind:value={selectedCropValue} id="crop-select" name="crop-select">
+  <!-- svelte-ignore a11y-no-onchange -->
+  <select on:change={getAfflictionsForCrop} bind:value={selectedCropValue} id="crop-select" name="crop-select">
     {#each crops as { id, name }}
       <option value={id} name="crop_id">{name}</option>
     {/each}
@@ -100,8 +108,9 @@
   <div class="clear" />
   <label for="affliction-select">{afflictionName}</label>
   <div class="affliction-container">
+    <!-- svelte-ignore a11y-no-onchange -->
     <select
-      bind:value={afflictionInputValue}
+      on:change={setAfflictionValue}
       class="affliction-select"
       id="affliction-select"
       name="affliction-select">

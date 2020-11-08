@@ -14,11 +14,28 @@ export default class OverlayHelper {
     severities: Severity[];
     min: number;
     max: number;
+    severityParams: SeverityParams;
     constructor(googleWrapper: GoogleWrapper, map: any) {
         this.googleWrapper = googleWrapper;
         this.rectangles = [];
         this.map = map;
         this.severities = [];
+    }
+
+    hideOverlay() {
+        this.rectangles.forEach((rectangle) => {
+            rectangle.setOptions({
+                visible: false
+            });
+        });
+    }
+
+    showOverlay() {
+        this.rectangles.forEach((rectangle) => {
+            rectangle.setOptions({
+                visible: true
+            });
+        });
     }
 
     async updateOverlay(severityParams: SeverityParams) {
@@ -29,7 +46,7 @@ export default class OverlayHelper {
             this.min = this.severities[0].min
             this.max = this.severities[0].max
         }
-        const rectangleOptions = this.convertSeveritiesToRectangleOptions(this.severities);
+        const rectangleOptions = this.convertSeveritiesToRectangleOptions();
         this.drawDataPoints(rectangleOptions);
         this.addInfoWindowEvents(severityParams)
     }
@@ -59,9 +76,9 @@ export default class OverlayHelper {
         return await new DatabaseClient().fetchSeverities(severityParams);
     }
 
-    convertSeveritiesToRectangleOptions(severities: Severity[]): RectangleOption[] {
+    convertSeveritiesToRectangleOptions(): RectangleOption[] {
         let rectangleOptions: RectangleOption[] = [];
-        severities.forEach((severity: Severity) => {
+        this.severities.forEach((severity: Severity) => {
             let latLang = this.googleWrapper.latLng(severity.lat, severity.long);
             let rectangleOption = new RectangleOption(
                 latLang.lat(),
