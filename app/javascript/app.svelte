@@ -5,7 +5,7 @@
   import Interface from "./src/components/leftSidebar/Interface.svelte";
   import RightSidebar from "./src/components/rightSidebar/RightSidebar.svelte";
   import SeverityLegend from "./src/components/rightSidebar/SeverityLegend.svelte";
-  import ModelStatus from './src/components/map/ModelStatus.svelte';
+  import Status from "./src/components/map/Status.svelte";
 </script>
 
 <style global type="scss">
@@ -119,7 +119,7 @@
     <Interface />
   </Sidebar>
   <Map>
-    <ModelStatus />
+    <Status />
     <SeverityOverlay />
   </Map>
   <RightSidebar>

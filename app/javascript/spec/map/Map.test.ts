@@ -1,6 +1,6 @@
-import { render } from '@testing-library/svelte'
+import { render } from '@testing-library/svelte';
 import { mapKey } from '../../src/store/store';
-import Map from '../../src/components/map/Map.svelte'
+import Map from '../../src/components/map/Map.svelte';
 import { Loader } from '@googlemaps/js-api-loader';
 
 jest.mock('@googlemaps/js-api-loader');

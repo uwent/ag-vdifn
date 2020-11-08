@@ -1,10 +1,11 @@
 import { render } from '@testing-library/svelte';
 import { tick } from 'svelte';
-import ModelStatus from '../../src/components/map/ModelStatus.svelte';
 import { selectedPanel, PANELS, insectPanelState, diseasePanelState, customPanelState } from '../../src/store/store';
+import Status from '../../src/components/map/Status.svelte';
+
 let getText;
 beforeEach(() => {
-    const { getByText } = render(ModelStatus);
+    const { getByText } = render(Status);
     getText = getByText
 })
 
