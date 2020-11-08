@@ -119,7 +119,7 @@
       {:else if selected === 'insect'}
         <InsectPanel data={insectPanelData} />
       {:else if selected === 'custom'}
-        <CustomPanel />
+        <CustomPanel data={insectPanelData}/>
       {/if}
     {:else}
       <Loading />

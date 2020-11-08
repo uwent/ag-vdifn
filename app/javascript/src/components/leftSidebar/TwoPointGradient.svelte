@@ -2,7 +2,10 @@
     import GradientHelper from "./TypeScript/gradientHelper";
     import ColorHelper from "../../components/map/TypeScript/colorHelper";
     import { createEventDispatcher, onDestroy, onMount } from "svelte";
-    import { mapMinMapMax, twoPointGradientState } from "../../store/store";
+    import {
+        mapMinMapMax,
+        twoPointGradientState,
+    } from "../../store/store";
     import { get } from "svelte/store";
     const _ = require("lodash");
     const dispatch = createEventDispatcher();
@@ -43,6 +46,7 @@
             userMax,
             absoluteMax: get(mapMinMapMax).max,
             absoluteMin: get(mapMinMapMax).min,
+            gradient: getGradient()
         });
     });
 
@@ -151,17 +155,18 @@
         updateButtons();
     }
 
+    function getGradient() {
+        return gradientHelper.mapRangeMinsToColors({
+            min: userMin,
+            max: userMax,
+            intermediateLevels: severityLevels - 2,
+            absoluteMax: $mapMinMapMax.max,
+            totalLevels: severityLevels,
+        });
+    }
+
     function updateOverlay() {
-        dispatch(
-            "updateOverlay",
-            gradientHelper.mapRangeMinsToColors({
-                min: userMin,
-                max: userMax,
-                intermediateLevels: severityLevels - 2,
-                absoluteMax: $mapMinMapMax.max,
-                totalLevels: severityLevels,
-            })
-        );
+        dispatch("updateOverlay", getGradient());
     }
 </script>
 

@@ -1,5 +1,5 @@
 import SeverityGradient from '../../src/components/leftSidebar/SeverityGradient.svelte';
-import { panelKey, mapMinMapMax, twoPointGradientState, threePointGradientState, customParams } from '../../src/store/store';
+import { panelKey, mapMinMapMax, twoPointGradientState, threePointGradientState, customPanelParams } from '../../src/store/store';
 import { render } from '@testing-library/svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import { tick } from 'svelte';
@@ -47,7 +47,7 @@ describe("when data present", () => {
     })
 
     it('displays params once submitted', async () => {
-        customParams.set({
+        customPanelParams.set({
             start_date: "2020-10-10",
             end_date: "2020-10-20",
             t_min: 50,

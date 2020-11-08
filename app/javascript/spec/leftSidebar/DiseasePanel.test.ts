@@ -1,6 +1,6 @@
 import DiseasePanel from '../../src/components/leftSidebar/DiseasePanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { panelKey, afflictionParams, startDate, endDate, afflictionValue } from '../../src/store/store'
+import { selectedAffliction, diseasePanelState, PANELS, selectedPanel, panelKey, diseasePanelParams, startDate, endDate, afflictionValue } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
 let getText;
@@ -17,18 +17,31 @@ beforeEach(() => {
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
     afflictionValue.set(1)
+    selectedAffliction.set({name: "bug"})
 })
+
+it('sets selectedPanel state to disease panel on mount', () => {
+    expect(get(selectedPanel)).toEqual(PANELS.DISEASE)
+})    
 
 it('should dispatch submit params when button is clicked', () => {
     const button = getText("Select")
 
     fireEvent.click(button);
 
-    expect(get(afflictionParams)).toEqual({
+    expect(get(diseasePanelParams)).toEqual({
         start_date: "2000-10-10",
         end_date: "2000-11-10",
         pest_id: 1
     })
+})
+
+it('should update disease panel state', async () => {
+    const button = getText("Select")
+
+    fireEvent.click(button);
+
+    expect(get(diseasePanelState)).toEqual({currentAffliction: {name: "bug"}})
 })
 
 it('sets context data for child elements', () => {

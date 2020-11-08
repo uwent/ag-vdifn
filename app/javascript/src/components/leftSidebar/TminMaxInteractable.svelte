@@ -31,6 +31,11 @@
     function tMaxToggle(event) {
         tMax = null;
         tMaxDisabled = event.target.checked;
+        if (tMaxDisabled) {
+            valid = true
+        } else if (!tMaxDisabled && !tMax) {
+            valid = false
+        }
     }
 
     function validateTmin(event) {

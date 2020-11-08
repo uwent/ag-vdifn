@@ -1,24 +1,35 @@
 import CustomPanel from '../../src/components/leftSidebar/CustomPanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { overlayLoading, customParams, startDate, endDate, afflictionValue, tMinTmax, customOverlaySubmitted } from '../../src/store/store'
+import { customPanelState, PANELS, selectedPanel, overlayLoading, customPanelParams, startDate, endDate, afflictionValue, tMinTmax, customOverlaySubmitted } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte';
 let getText;
 let getTitle;
 let customPanel;
 let submitSpy;
+let selectedPanelSpy;
+
 
 beforeEach(() => {
-    const { getByText, getByTitle, component } = render(CustomPanel);
-    submitSpy = spyOn(customParams, "set")
+    selectedPanelSpy = spyOn(selectedPanel, "set")
+    const { getByText, getByTitle, component } = render(CustomPanel, {
+        props: {
+            data: [{ id: 1, name: "potato", afflictions: [{ id: 1, name: "bug" }] }]
+        }
+    });
+    submitSpy = spyOn(customPanelParams, "set")
     customPanel = component;
     getText = getByText;
     getTitle = getByTitle;
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
     afflictionValue.set(1);
-    tMinTmax.set({t_min: 1, t_max: 2, in_fahrenheit: true});
+    tMinTmax.set({ t_min: 1, t_max: 2, in_fahrenheit: true });
     customOverlaySubmitted.set(false)
+})
+
+it('should set the selected panel state on mount', () => {
+    expect(selectedPanelSpy).toHaveBeenCalledWith(PANELS.CUSTOM)
 })
 
 it('should dispatch submit params when button is clicked', async () => {
@@ -38,6 +49,19 @@ it('sets customOverlaySubmitted to true when submitted', async () => {
     expect(get(customOverlaySubmitted)).toEqual(true)
 })
 
+it('updates state on submit', async () => {
+    const button = getText("Submit")
+
+    await fireEvent.click(button);
+
+    expect(get(customPanelState)).toEqual({
+        in_fahrenheit: true,
+        selectedGradient: 1,
+        t_max: 2,
+        t_min: 1
+    })
+})
+
 it('asks user to submit model parameters if overlay options not submitted', async () => {
     customOverlaySubmitted.set(false)
     await tick();
@@ -54,7 +78,7 @@ it('displays loading component if options are submitted and the overlay is loadi
 })
 
 it('displays severity gradient options if options have been submitted', async () => {
-    customOverlaySubmitted.set(true) 
+    customOverlaySubmitted.set(true)
     overlayLoading.set(false)
     await tick();
 

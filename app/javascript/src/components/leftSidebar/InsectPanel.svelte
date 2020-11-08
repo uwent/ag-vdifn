@@ -1,13 +1,17 @@
 <script lang="ts">
   const moment = require("moment");
-  import { setContext } from "svelte";
+  import { onMount, setContext } from "svelte";
   import {
     overlayLoading,
     afflictionValue,
     endDate,
     panelKey,
     startDate,
-    afflictionParams,
+    insectPanelParams,
+    selectedPanel,
+    PANELS,
+  insectPanelState,
+  selectedAffliction
   } from "../../store/store";
   import ModelSelection from "./ModelSelection.svelte";
   import ModelParameters from "./ModelParameters.svelte";
@@ -15,6 +19,7 @@
   import TminMaxDisplay from "./TminMaxDisplay.svelte";
   import Button from "../common/Button.svelte";
   import Loading from "../common/Loading.svelte";
+  import { get } from "svelte/store";
   export let data;
 
   setContext(panelKey, {
@@ -29,12 +34,17 @@
   });
 
   function submit() {
-    afflictionParams.set({
+    insectPanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}))
+    insectPanelParams.set({
       start_date: moment.utc($startDate).format("YYYY-MM-DD"),
       end_date: moment.utc($endDate).format("YYYY-MM-DD"),
       pest_id: $afflictionValue,
     });
   }
+
+  onMount(() => {
+    selectedPanel.set(PANELS.INSECT)
+  })
 </script>
 
 <div title="Insect Parameters">

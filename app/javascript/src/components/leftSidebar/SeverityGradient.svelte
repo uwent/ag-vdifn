@@ -1,13 +1,27 @@
 <script lang="ts">
   import TwoPointGradient from "./TwoPointGradient.svelte";
   import ThreePointGradient from "./ThreePointGradient.svelte";
-  import { overlayGradient, customParams } from "../../store/store";
+  import { overlayGradient, customPanelParams, customOverlaySubmitted, customPanelState } from "../../store/store";
+  import { onMount } from "svelte";
+  import { get } from "svelte/store";
   const moment = require("moment");
   let gradient = 1;
 
   function updateOverlay(event) {
     overlayGradient.set(event.detail);
+    updateCustomPanelState()
   }
+
+  function updateCustomPanelState() {
+    customPanelState.update(state => ({...state, selectedGradient: gradient}))
+  }
+
+  onMount(() => {
+    if (get(customOverlaySubmitted)) {
+      gradient = get(customPanelState).selectedGradient 
+    }
+  })
+  
 </script>
 
 <style type="scss">
@@ -108,18 +122,18 @@
   }
 </style>
 
-{#if $customParams.start_date}
+{#if $customPanelParams.start_date}
   <div class="submitted-params" title="submitted-params">
     <div>Start Date:</div>
-    <div>{moment($customParams.start_date).format('MM/DD/YYYY')}</div>
+    <div>{moment($customPanelParams.start_date).format('MM/DD/YYYY')}</div>
     <div>End Date:</div>
-    <div>{moment($customParams.end_date).format('MM/DD/YYYY')}</div>
+    <div>{moment($customPanelParams.end_date).format('MM/DD/YYYY')}</div>
     <div>T Min:</div>
-    <div>{$customParams.t_min}</div>
+    <div>{$customPanelParams.t_min}</div>
     <div>T Max:</div>
-    <div>{$customParams.t_max ? $customParams.t_max : 'None'}</div>
+    <div>{$customPanelParams.t_max ? $customPanelParams.t_max : 'None'}</div>
     <div>Temp scale:</div>
-    <div>{$customParams.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
+    <div>{$customPanelParams.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
   </div>
 {/if}
 <fieldset class="gradient-type-field">

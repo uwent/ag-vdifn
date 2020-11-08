@@ -1,8 +1,22 @@
 import SeverityOverlay from '../../src/components/map/SeverityOverlay.svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import { render, } from '@testing-library/svelte'
-import { overlayGradient, mapKey, afflictionParams, overlayLoading, mapMinMapMax, customOverlaySubmitted, customParams } from '../../src/store/store';
+import {
+    customPanelState,
+    insectPanelState,
+    insectPanelParams,
+    diseasePanelState,
+    overlayGradient,
+    mapKey,
+    diseasePanelParams,
+    overlayLoading,
+    mapMinMapMax,
+    customPanelParams,
+    selectedPanel
+} from '../../src/store/store';
 import OverlayHelper from '../../src/components/map/overlayHelper';
+import { Severity } from '../../src/components/common/TypeScript/types';
+import { get } from 'svelte/store'
 
 const severityParams = {
     start_date: "2020-10-10",
@@ -18,16 +32,23 @@ const customSeverityParams = {
     in_fahrenheit: true
 }
 
+const severities: Severity[] = [{ lat: 5, long: 10, level: 1 }, { lat: 2, long: 4, level: 2 }]
+
 let mockUpdateOverlay = jest.fn();
 let mockUpdateOverlayGradient = jest.fn();
+let mockShowOverlay = jest.fn();
 jest.mock('../../src/components/map/overlayHelper')
 const overlayLoadingSpy = jest.spyOn(overlayLoading, "set")
 const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, "set")
+const customPanelStateSpy = jest.spyOn(customPanelState, "set")
 beforeEach(() => {
     (OverlayHelper as jest.Mock).mockImplementation(() => {
         return {
             updateOverlay: mockUpdateOverlay,
             updateOverlayGradient: mockUpdateOverlayGradient,
+            hideOverlay: jest.fn(),
+            showOverlay: mockShowOverlay,
+            severities: severities,
             min: 10,
             max: 15
         }
@@ -37,84 +58,106 @@ beforeEach(() => {
             Component: SeverityOverlay,
             context_key: mapKey,
             context_value: {
-                getMap: () => {},
-                getGoogle: () => {}
-            } 
+                getMap: () => { },
+                getGoogle: () => { }
+            }
         }
     })
 })
 
 afterEach(() => {
-    mapMinMapMaxSpy.mockClear() 
+    mapMinMapMaxSpy.mockClear()
 })
 afterAll(() => {
     jest.clearAllMocks();
     overlayLoadingSpy.mockClear()
- })
+
+    diseasePanelParams.set({})
+    customPanelState.set({})
+})
 
 
- describe('afflictionParams', () => {
+describe('updating overlay for disease panel params', () => {
     it('updates overlay when afflictionParams is updated', () => {
-        afflictionParams.set(severityParams)
-    
+        diseasePanelParams.set(severityParams)
+
         expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams)
     })
-    
+
     it('sets overlay loading to true, then false after update overlay finished loading', async () => {
-        afflictionParams.set(severityParams)
+        diseasePanelParams.set(severityParams)
         mockUpdateOverlay.mockResolvedValue({})
-    
+
         await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(1, true)
         await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(2, false)
     })
-    
-    it('sets mapMinMapMax to null', () => {
-        const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, "set")
-    
-        afflictionParams.set(severityParams)
-        mockUpdateOverlay.mockResolvedValue({})
-    
-        expect(mapMinMapMaxSpy).toHaveBeenCalledWith(null)
-    })
-    
-    it('sets customOverlaySubmitted to false', () => {
-        const customOverlaySubmittedSpy = jest.spyOn(customOverlaySubmitted, "set")
-    
-        afflictionParams.set(severityParams)
-        mockUpdateOverlay.mockResolvedValue({})
-    
-        expect(customOverlaySubmittedSpy).toHaveBeenCalledWith(false) 
-    })
- })
 
- describe('customParams', () => {
+    it('updates store with new severities', async () => {
+        diseasePanelParams.set(severityParams)
+        mockUpdateOverlay.mockResolvedValue({})
+
+        expect(get(diseasePanelState).severities).toEqual(severities);
+        expect(get(diseasePanelState).severityParams).toEqual(severityParams);
+    })
+})
+
+describe('updating overlay for insect panel params', () => {
     it('updates overlay when afflictionParams is updated', () => {
-        customParams.set(customSeverityParams)
-    
-        expect(mockUpdateOverlay).toHaveBeenCalledWith(customSeverityParams)
-    }) 
+        insectPanelParams.set(severityParams)
 
-    it('sets overlay loading to true then false after finished loading overlay', async () => {
-        customParams.set(customSeverityParams)
+        expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams)
+    })
+
+    it('sets overlay loading to true, then false after update overlay finished loading', async () => {
+        insectPanelParams.set(severityParams)
         mockUpdateOverlay.mockResolvedValue({})
-    
+
+        await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(1, true)
+        await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(2, false)
+    })
+
+    it('updates store with new severities', async () => {
+        insectPanelParams.set(severityParams)
+        mockUpdateOverlay.mockResolvedValue({})
+
+        expect(get(insectPanelState).severities).toEqual(severities);
+        expect(get(insectPanelState).severityParams).toEqual(severityParams);
+    })
+})
+
+describe('updating overlay for custom panel params', () => {
+    it('sets overlay loading to true then false after finished loading overlay', async () => {
+        customPanelParams.set(customSeverityParams)
+        mockUpdateOverlay.mockResolvedValue({})
+
         await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(1, true)
         await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(2, false)
     })
 
     it('sets mapMinMapMax', async () => {
-        customParams.set(customSeverityParams)
+        customPanelParams.set(customSeverityParams)
         mockUpdateOverlay.mockResolvedValue({})
-    
-        await expect(mapMinMapMaxSpy).toHaveBeenCalledWith({"max": 15, "min": 10})
-    })
- })
 
- describe("overlayGradient", () => {
+        await expect(mapMinMapMaxSpy).toHaveBeenCalledWith({ "max": 15, "min": 10 })
+    })
+})
+
+describe("overlayGradient", () => {
     it("calls updateOverlayGradient", () => {
-        const gradientMapping = {a: 1, b: 2}
+        const gradientMapping = { a: 1, b: 2 }
         overlayGradient.set(gradientMapping)
-        
+
         expect(mockUpdateOverlayGradient).toHaveBeenCalledWith(gradientMapping)
     })
- })
+})
+
+describe("when new panel is loaded", () => {
+    it('loads in insect overlay if it exists', () => {
+        insectPanelParams.set(severityParams)
+
+        selectedPanel.set("insect")
+
+        expect(mockShowOverlay).toHaveBeenCalled()
+    })
+
+})

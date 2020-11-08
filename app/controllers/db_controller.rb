@@ -167,8 +167,13 @@ class DbController < ApplicationController
     end
 
     def severities
+      pests = Pest.where(t_max: t_max, t_min: t_min)
       begin
-        client.custom(start_date: start_date, end_date: end_date, t_min: t_min, t_max: t_max)
+        if pests.any?
+          client.custom(start_date: start_date, end_date: end_date, pest: pests.first.remote_name)
+        else
+          client.custom(start_date: start_date, end_date: end_date, t_min: t_min, t_max: t_max)
+        end
       rescue Exception => e
         puts e
         []
