@@ -21,7 +21,6 @@
     background: rgba(255, 255, 255, 0.95);
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
     @media #{$medium-up} {
       left: 430px;
     }
