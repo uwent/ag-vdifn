@@ -27,6 +27,8 @@ group :development, :test do
   gem 'shoulda-matchers', '4.4.1'
   gem 'byebug', '~> 11.1'
   gem 'pry-rails'
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
 end
 
 group :development do
