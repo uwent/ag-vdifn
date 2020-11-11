@@ -89,14 +89,17 @@
 
   #right-sidebar-expand-button {
     position: fixed;
-    width: 75px;
-    left: 10px;
-    top: 70px;
+    right: 10px;
+    bottom: 60px;
     z-index: 100;
     padding: 10px 15px;
-    border-radius: 20px 20px;
     border: none;
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3);
+
+    &[aria-expanded="true"] {
+      background-color: white;
+      box-shadow: none;
+    }
 
     @media #{$medium-up} {
       display: none;
@@ -105,13 +108,17 @@
 
   #right-sidebar {
     position: fixed;
-    bottom: 115px;
+    bottom: 60px;
     right: 10px;
     z-index: 10;
     padding: 5px 10px;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
+
+    @media #{$medium-up} {
+      bottom: 30px;
+    }
 
     &[aria-expanded="true"] {
       visibility: visible;
@@ -164,8 +171,8 @@
 </style>
 
 <button
-  id="right-sidebar-expand-button"
-  on:click={() => (expanded = !expanded)}>{expanded ? 'Hide Legend' : 'Show Legend'}</button>
+  id="right-sidebar-expand-button" aria-expanded={expanded}
+  on:click={() => (expanded = !expanded)}>{expanded ? 'X' : 'Show Legend'}</button>
 
 <div id="right-sidebar" aria-expanded={expanded}>
   {#if $selectedPanel === PANELS.CUSTOM}

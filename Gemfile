@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rspec-rails', '4.0.1'
   gem 'shoulda-matchers', '4.4.1'
   gem 'byebug', '~> 11.1'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -36,4 +37,3 @@ group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
 end
-
