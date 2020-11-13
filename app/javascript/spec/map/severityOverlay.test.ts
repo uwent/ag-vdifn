@@ -12,7 +12,8 @@ import {
     overlayLoading,
     mapMinMapMax,
     customPanelParams,
-    selectedPanel
+    selectedPanel,
+    PANELS
 } from '../../src/store/store';
 import OverlayHelper from '../../src/components/map/overlayHelper';
 import { Severity } from '../../src/components/common/TypeScript/types';
@@ -81,7 +82,7 @@ describe('updating overlay for disease panel params', () => {
     it('updates overlay when afflictionParams is updated', () => {
         diseasePanelParams.set(severityParams)
 
-        expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams)
+        expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, PANELS.DISEASE)
     })
 
     it('sets overlay loading to true, then false after update overlay finished loading', async () => {
@@ -105,7 +106,7 @@ describe('updating overlay for insect panel params', () => {
     it('updates overlay when afflictionParams is updated', () => {
         insectPanelParams.set(severityParams)
 
-        expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams)
+        expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, PANELS.INSECT)
     })
 
     it('sets overlay loading to true, then false after update overlay finished loading', async () => {

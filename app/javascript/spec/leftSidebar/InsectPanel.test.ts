@@ -1,6 +1,6 @@
 import InsectPanel from '../../src/components/leftSidebar/InsectPanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { selectedAffliction, selectedPanel, PANELS, insectPanelState, panelKey, insectPanelParams, startDate, endDate, afflictionValue } from '../../src/store/store'
+import { selectedAffliction, selectedPanel, PANELS, insectPanelState, panelKey, tMinTmax, insectPanelParams, startDate, endDate, afflictionValue } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
 let getText;
@@ -16,8 +16,10 @@ beforeEach(() => {
     insectPanel = component;
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
-    afflictionValue.set(1)
-    selectedAffliction.set({name: "bug"})
+    afflictionValue.set(1);
+    tMinTmax.set({ t_min: 1, t_max: 1, in_fahrenheit: true });
+    selectedAffliction.set({name: "bug"});
+
 })
 
 it('should set selected panel to insect on mount', () => {
@@ -38,9 +40,9 @@ it('should dispatch submit params when button is clicked', async () => {
         start_date: "2000-10-10",
         end_date: "2000-11-10",
         pest_id: 1,
-        t_min: "48",
-        t_max: "None",
-        in_fahrenheit: true,
+        t_min: 1,
+        t_max: 1,
+        in_fahrenheit: true
 
     })
 })
