@@ -4,7 +4,7 @@ import { selectedAffliction, selectedPanel, PANELS, insectPanelState, panelKey, 
 import { get } from 'svelte/store'
 import moment from 'moment'
 let getText;
-let insectPanel; 
+let insectPanel;
 
 beforeEach(() => {
     const { getByText, component } = render(InsectPanel, {
@@ -26,7 +26,7 @@ it('should set selected panel to insect on mount', () => {
 
 it('should update insect panels state when submit button clicked', async () => {
     const button = getText("Select")
-    await fireEvent.click(button); 
+    await fireEvent.click(button);
 
     expect(get(insectPanelState)).toEqual({currentAffliction: {name: "bug"}})
 })
@@ -37,7 +37,11 @@ it('should dispatch submit params when button is clicked', async () => {
     expect(get(insectPanelParams)).toEqual({
         start_date: "2000-10-10",
         end_date: "2000-11-10",
-        pest_id: 1
+        pest_id: 1,
+        t_min: "48",
+        t_max: "None",
+        in_fahrenheit: true,
+
     })
 })
 

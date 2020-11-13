@@ -13,11 +13,19 @@ class DbController < ApplicationController
     @pest = get_pest
     @latitude = params[:latitude].to_f.round(1)
     @longitude = params[:longitude].to_f.round(1)
-
-    if (@pest.class.name === PestNames::CUSTOM_PEST)
+    @t_min = params[:t_min]
+    @t_max = params[:t_max].nil? ? "None" : params[:t_max]
+    @in_fahrenheit = params[:in_fahrenheit]
+    case params[:panel]
+    when "custom"
+      @model_value = "Custom"
       options = { latitude: @latitude, longitude: @longitude, t_min: t_min, t_max: t_max, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.custom_point_details(options)
-    else
+    when "insect"
+      @model_value = @pest.name
+      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
+      @weather = ag_weather_client.custom_point_details(options)
+    when "disease"
       options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.point_details(options)
     end

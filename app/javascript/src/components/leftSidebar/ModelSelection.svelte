@@ -48,6 +48,7 @@
   function setAfflictionValue(event) {
     const value = parseInt(event.target.value)
     afflictionValue.update((value) => value)
+    afflictionValue.set(value)
     selectedAffliction.set(getCurrentAffliction(value))
   }
 

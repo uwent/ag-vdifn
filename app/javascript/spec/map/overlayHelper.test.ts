@@ -36,7 +36,7 @@ it('shows overlay', () => {
     overlayHelper.showOverlay();
 
     expect(setOptionsSpy).toHaveBeenNthCalledWith(1, {visible: true})
-    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: true}) 
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: true})
 })
 
 it('clears all rectangles', () => {
@@ -86,7 +86,7 @@ describe("convert severities to rectangleOptions", () => {
             lng: lngMock
         }))
         googleWrapper.latLng = latLngMock;
-        overlayHelper.severities = severityResults 
+        overlayHelper.severities = severityResults
 
         overlayHelper.convertSeveritiesToRectangleOptions();
 
@@ -226,6 +226,7 @@ describe("rectangle click listener event", () => {
 it('updates overlay', async () => {
     const severities = [{ "lat": 5, "long": 10, "severity": 10 },
     { "lat": 50, "long": 60, "severity": 5 }]
+    const panelType = "Disease"
     const rectangleOptions = [{ data: "data"}, {data: "data2"}]
     overlayHelper.getSeverities = jest.fn().mockResolvedValue(severities)
     overlayHelper.severities = severities
@@ -237,7 +238,7 @@ it('updates overlay', async () => {
     spyOn(OverlayHelper.prototype, "drawDataPoints")
     spyOn(OverlayHelper.prototype, "addInfoWindowEvents")
 
-    await overlayHelper.updateOverlay(severityParams);
+    await overlayHelper.updateOverlay(severityParams, panelType);
 
     expect(overlayHelper.clearRectangles).toHaveBeenCalled();
     expect(overlayHelper.closeInfoWindow).toHaveBeenCalled();

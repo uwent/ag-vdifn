@@ -6,33 +6,41 @@
   <div class="information">
     <div><strong>Latitude</strong>: <%= @latitude %></div>
     <div><strong>Longitude</strong>: <%= @longitude %></div>
-  </div>
 
-  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
+  </div>
+  <h3 class="weather-details-title">Weather Summary - <%= @model_value %></h3>
+  <h4>Tmin: <%= @t_min %> , Tmax: <%= @t_max %></h4>
   <div class="weather-details">
       <% if @weather %>
       <table>
         <thead>
           <tr>
-            <th width='35%'>Day</th>
-            <th><button class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree Days value information.">Degree Days</button></th>
-            <th>Mean temp.</th>
+            <th>Day</th>
+            <th>Min Temp.</th>
+            <th>Max Temp.</th>
+            <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree Days value information.">Degree Days <div class="info-icon">?</div></th>
+            <th>Cumulative Degree Days</th>
           </tr>
         </thead>
         <tbody>
           <% @weather.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
+              <td><%= convert_temp(day[:min_temp]) %>&deg;<%= temp_symbol() %></td>
+              <td class="odd"><%= convert_temp(day[:max_temp]) %>&deg;<%= temp_symbol() %></td>
               <td><%= day[:value] %></td>
-              <td class="odd"><%= day[:avg_temperature].to_f.round(1) %>&deg;C</td>
+              <td class="odd"><%= day[:cumulative_value] %></td>
             </tr>
           <% end %>
         </tbody>
         <tfoot>
           <tr>
             <th>Total:</th>
-            <td colspan="2"><strong>
-              <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></strong></td>
+            <td></td>
+            <td></td>
+            <td><strong>
+              <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %>
+            </strong></td>
           </tr>
         </tfoot>
       </table>

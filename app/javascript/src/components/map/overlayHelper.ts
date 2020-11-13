@@ -38,7 +38,7 @@ export default class OverlayHelper {
         });
     }
 
-    async updateOverlay(severityParams: SeverityParams) {
+    async updateOverlay(severityParams: SeverityParams, panelType) {
         this.clearRectangles();
         this.closeInfoWindow();
         this.severities = await this.getSeverities(severityParams);
@@ -48,7 +48,7 @@ export default class OverlayHelper {
         }
         const rectangleOptions = this.convertSeveritiesToRectangleOptions();
         this.drawDataPoints(rectangleOptions);
-        this.addInfoWindowEvents(severityParams)
+        this.addInfoWindowEvents(severityParams, panelType)
     }
 
     updateOverlayGradient(gradientMapping) {
@@ -98,7 +98,7 @@ export default class OverlayHelper {
         });
     }
 
-    addInfoWindowEvents(severityParams: SeverityParams) {
+    addInfoWindowEvents(severityParams: SeverityParams, panelType: string) {
         this.rectangles.forEach((rectangle) => {
             rectangle.addListener("click", async (event) => {
                 if (this.infoWindow) {
@@ -110,9 +110,10 @@ export default class OverlayHelper {
                 });
                 this.infoWindow.open(this.map);
                 const newContent = await this.fetchPointDetails(
-                    event.latLng.lat(), 
-                    event.latLng.lng(), 
-                    severityParams)
+                    event.latLng.lat(),
+                    event.latLng.lng(),
+                    severityParams,
+                    panelType)
                 this.infoWindow.setContent(newContent);
             });
         })
@@ -131,7 +132,7 @@ export default class OverlayHelper {
         }
     }
 
-    private async fetchPointDetails(latitude, longitude, severityParams: SeverityParams): Promise<string> {
+    private async fetchPointDetails(latitude, longitude, severityParams: SeverityParams, panelType): Promise<string> {
         return new DatabaseClient().fetchPointDetails({
             latitude: latitude,
             longitude: longitude,
@@ -140,7 +141,8 @@ export default class OverlayHelper {
             pest_id: severityParams.pest_id,
             t_min: severityParams.t_min,
             t_max: severityParams.t_max,
-            in_fahrenheit: severityParams.in_fahrenheit
+            in_fahrenheit: severityParams.in_fahrenheit,
+            panel: panelType
         });
     }
 

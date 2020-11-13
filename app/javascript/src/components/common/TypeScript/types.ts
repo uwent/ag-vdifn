@@ -31,6 +31,7 @@ export type PointDetailsParams = {
     t_max?: string;
     t_min?: string;
     in_fahrenheit?: boolean;
+    panel: string;
 }
 
 export type SeverityParams = {
