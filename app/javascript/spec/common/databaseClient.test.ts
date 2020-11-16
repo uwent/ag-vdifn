@@ -61,7 +61,8 @@ describe('fetchPointDetails', () => {
         const start_date = new Date().toDateString();
         const end_date = new Date().toDateString();
         const pest_id = 1;
-        const params: PointDetailsParams = { latitude, longitude, start_date, end_date, pest_id }
+        const panel = "disease"
+        const params: PointDetailsParams = { latitude, longitude, start_date, end_date, pest_id, panel }
 
         const response = await database.fetchPointDetails(params);
 
@@ -75,7 +76,8 @@ describe('fetchPointDetails', () => {
         const start_date = new Date().toDateString();
         const end_date = new Date().toDateString();
         const pest_id = 101;
-        const params: PointDetailsParams = { latitude, longitude, start_date, end_date, pest_id };
+        const panel = "disease"
+        const params: PointDetailsParams = { latitude, longitude, start_date, end_date, pest_id, panel };
 
         const response = await database.fetchPointDetails(params);
 
