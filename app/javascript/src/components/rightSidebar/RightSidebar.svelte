@@ -182,7 +182,6 @@
       gradientMapping={gradient} />
   {:else}
     {#if $selectedPanel === PANELS.INSECT}
-      <button class="more-info-button" on:click={() => (showModal = !showModal)}>More Info</button>
       {#if showModal}
         <Modal on:close={() => (showModal = false)}>
           {@html $selectedAffliction.info}
