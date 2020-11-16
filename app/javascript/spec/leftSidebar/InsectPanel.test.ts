@@ -17,7 +17,7 @@ beforeEach(() => {
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
     afflictionValue.set(1);
-    tMinTmax.set({ t_min: 1, t_max: 1, in_fahrenheit: true });
+    tMinTmax.set({ t_min: "42", t_max: "none", in_fahrenheit: true });
     selectedAffliction.set({name: "bug"});
 
 })
@@ -40,8 +40,8 @@ it('should dispatch submit params when button is clicked', async () => {
         start_date: "2000-10-10",
         end_date: "2000-11-10",
         pest_id: 1,
-        t_min: 1,
-        t_max: 1,
+        t_min: undefined,
+        t_max: null,
         in_fahrenheit: true
 
     })

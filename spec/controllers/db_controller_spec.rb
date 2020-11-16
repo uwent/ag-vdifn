@@ -79,7 +79,7 @@ RSpec.describe DbController, type: :request do
   end
 
   describe "POST#point_details" do
-    it "returns success response when standard pest" do
+    it "returns success response when standard pest from disease panel" do
       pest = Pest.create!(remote_name: "pest")
       start_date = Date.current
       end_date = Date.current - 20.days
@@ -101,11 +101,42 @@ RSpec.describe DbController, type: :request do
         latitude: latitude,
         longitude: longitude,
         start_date: start_date,
-        end_date: end_date
+        end_date: end_date,
+        panel: "disease"
       }
 
       expect(response).to have_http_status(:success)
     end
+
+    it "returns success response when standard pest from insect panel" do
+      pest = Pest.create!(remote_name: "pest")
+      start_date = Date.current
+      end_date = Date.current - 20.days
+      latitude = 10
+      longitude = 20
+      allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).
+        and_return(days_data)
+
+      expect_any_instance_of(AgWeather::Client).to receive(:custom_point_details).with({
+        start_date: start_date,
+        end_date: end_date,
+        latitude: latitude.to_f,
+        longitude: longitude.to_f,
+        pest: "pest",
+      })
+
+      post point_details_db_index_path, params: {
+        pest_id: pest.id,
+        latitude: latitude,
+        longitude: longitude,
+        start_date: start_date,
+        end_date: end_date,
+        panel: "insect"
+      }
+
+      expect(response).to have_http_status(:success)
+    end
+
     it "returns success response when custom pest" do
       Pest.create!
       t_min = 50
@@ -132,7 +163,8 @@ RSpec.describe DbController, type: :request do
         latitude: latitude,
         longitude: longitude,
         start_date: start_date,
-        end_date: end_date
+        end_date: end_date,
+        panel: "custom"
       }
 
       expect(response).to have_http_status(:success)
