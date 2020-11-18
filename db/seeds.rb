@@ -207,7 +207,7 @@ seedcorn_maggot = DegreeDayPest.create!(name: "Seedcorn Maggot",
                      photo: 'seedcorn-maggot.jpg',
                      link: 'labs.russell.wisc.edu/vegento/pests/seedcorn-maggot')
 
-squash_vine_borer = DegreeDayPest.create!(name: "Squash Vine_Borer",
+squash_vine_borer = DegreeDayPest.create!(name: "Squash Vine Borer",
                      remote_name: 'squash_vine_borer',
                      info: "The squash vine borer <i>(Melittia cucurbitae)</i> is an annual pest of pumpkins and squash. Often, it is not recognized as a potential pest until too late and as a result, can produce a negative economic impact in some years. Winter squash is highly susceptible to attack.<br />",
                      biofix_mm: 1,

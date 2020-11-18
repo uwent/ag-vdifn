@@ -165,9 +165,6 @@
     color: #424242;
   }
 
-  .more-info-button {
-    width: 100%;
-  }
 </style>
 
 <button
@@ -182,7 +179,6 @@
       gradientMapping={gradient} />
   {:else}
     {#if $selectedPanel === PANELS.INSECT}
-      <button class="more-info-button" on:click={() => (showModal = !showModal)}>More Info</button>
       {#if showModal}
         <Modal on:close={() => (showModal = false)}>
           {@html $selectedAffliction.info}

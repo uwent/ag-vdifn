@@ -53,6 +53,15 @@
     margin-left: 8px;
     margin-right: 8px;
   }
+  
+  :global(.info-icon){
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 9px;
+  }
 </style>
 
 {#await promise}

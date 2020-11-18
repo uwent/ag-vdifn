@@ -14,6 +14,7 @@ let severityResults = [firstSeverity, secondSeverity];
 let googleWrapper = new GoogleWrapper({})
 let map = {}
 let severityParams = { start_date: "2020-10-10", end_date: "2020-10-11", pest_id: 2 }
+let panelType = "Disease"
 beforeEach(() => {
     overlayHelper = new OverlayHelper(googleWrapper, map)
 })
@@ -36,7 +37,7 @@ it('shows overlay', () => {
     overlayHelper.showOverlay();
 
     expect(setOptionsSpy).toHaveBeenNthCalledWith(1, {visible: true})
-    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: true}) 
+    expect(setOptionsSpy).toHaveBeenNthCalledWith(2, {visible: true})
 })
 
 it('clears all rectangles', () => {
@@ -86,7 +87,7 @@ describe("convert severities to rectangleOptions", () => {
             lng: lngMock
         }))
         googleWrapper.latLng = latLngMock;
-        overlayHelper.severities = severityResults 
+        overlayHelper.severities = severityResults
 
         overlayHelper.convertSeveritiesToRectangleOptions();
 
@@ -165,7 +166,7 @@ describe("rectangle click listener event", () => {
         overlayHelper.rectangles = [rectMock, rectMock2]
         overlayHelper.infoWindow = infoWindowMock
 
-        overlayHelper.addInfoWindowEvents(severityParams)
+        overlayHelper.addInfoWindowEvents(severityParams, panelType)
 
         expect(closeMock).toHaveBeenCalled()
     })
@@ -176,7 +177,7 @@ describe("rectangle click listener event", () => {
 
         overlayHelper.rectangles = [rectMock, rectMock2]
 
-        overlayHelper.addInfoWindowEvents(severityParams)
+        overlayHelper.addInfoWindowEvents(severityParams, panelType)
 
         expect(createInfoWindowSpy).toHaveBeenNthCalledWith(1, { content: infoWindowLoadingTemplate, position: latLngMock })
         expect(createInfoWindowSpy).toHaveBeenNthCalledWith(2, { content: infoWindowLoadingTemplate, position: latLngMock })
@@ -189,7 +190,7 @@ describe("rectangle click listener event", () => {
         overlayHelper.rectangles = [rectMock, rectMock2];
         (googleWrapper.createInfoWindow as jest.Mock).mockImplementation((content, position) => (infoWindowMock))
 
-        overlayHelper.addInfoWindowEvents(severityParams)
+        overlayHelper.addInfoWindowEvents(severityParams, panelType)
 
         expect(openMock).toHaveBeenCalledTimes(2)
     })
@@ -198,7 +199,7 @@ describe("rectangle click listener event", () => {
         const spy = spyOn(DatabaseClient.prototype, 'fetchPointDetails');
         overlayHelper.rectangles = [rectMock, rectMock2]
 
-        overlayHelper.addInfoWindowEvents(severityParams)
+        overlayHelper.addInfoWindowEvents(severityParams, panelType)
 
         expect(spy).toHaveBeenCalledTimes(2)
         expect(spy).toHaveBeenCalledWith({
@@ -207,16 +208,17 @@ describe("rectangle click listener event", () => {
             start_date: severityParams.start_date,
             end_date: severityParams.end_date,
             pest_id: severityParams.pest_id,
+            panel: panelType
         })
     })
 
     it('sets the content on the infoWindow', async () => {
         const setContentMock = jest.fn().mockImplementation((newContent) => {});
         infoWindowMock = { ...infoWindowMock, setContent: setContentMock };
-        overlayHelper.fetchPointDetails = jest.fn().mockImplementation((lat, long, severityParams) => "newContent")
+        overlayHelper.fetchPointDetails = jest.fn().mockImplementation((lat, long, severityParams, panelType) => "newContent")
         overlayHelper.rectangles = [rectMock, rectMock2];
 
-        await overlayHelper.addInfoWindowEvents(severityParams);
+        await overlayHelper.addInfoWindowEvents(severityParams, panelType);
 
         expect(setContentMock).toHaveBeenCalledTimes(2);
         expect(setContentMock).toHaveBeenCalledWith("newContent");
@@ -226,6 +228,7 @@ describe("rectangle click listener event", () => {
 it('updates overlay', async () => {
     const severities = [{ "lat": 5, "long": 10, "severity": 10 },
     { "lat": 50, "long": 60, "severity": 5 }]
+    const panelType = "Disease"
     const rectangleOptions = [{ data: "data"}, {data: "data2"}]
     overlayHelper.getSeverities = jest.fn().mockResolvedValue(severities)
     overlayHelper.severities = severities
@@ -237,14 +240,14 @@ it('updates overlay', async () => {
     spyOn(OverlayHelper.prototype, "drawDataPoints")
     spyOn(OverlayHelper.prototype, "addInfoWindowEvents")
 
-    await overlayHelper.updateOverlay(severityParams);
+    await overlayHelper.updateOverlay(severityParams, panelType);
 
     expect(overlayHelper.clearRectangles).toHaveBeenCalled();
     expect(overlayHelper.closeInfoWindow).toHaveBeenCalled();
     expect(overlayHelper.getSeverities).toHaveBeenCalledWith(severityParams);
     expect(overlayHelper.convertSeveritiesToRectangleOptions).toHaveBeenCalled();
     expect(overlayHelper.drawDataPoints).toHaveBeenCalledWith(rectangleOptions)
-    expect(overlayHelper.addInfoWindowEvents).toHaveBeenCalledWith(severityParams)
+    expect(overlayHelper.addInfoWindowEvents).toHaveBeenCalledWith(severityParams, panelType)
 })
 
 it('maps gradient to severity values', () => {

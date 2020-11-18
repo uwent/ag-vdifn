@@ -2,7 +2,7 @@
 
 <style>
     svg {
-        width: 25px;
-        height: 25px;
+        width: 15px;
+        height: 15px;
     }
 </style>

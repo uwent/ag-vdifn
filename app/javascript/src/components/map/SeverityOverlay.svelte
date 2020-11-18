@@ -65,7 +65,7 @@
   });
 
   insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(insectOverlay, severityParams);
+    await updateOverlay(insectOverlay, severityParams, PANELS.INSECT);
     insectPanelState.update((state) => ({
       ...state,
       severities: insectOverlay.severities,
@@ -74,7 +74,7 @@
   });
 
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(diseaseOverlay, severityParams);
+    await updateOverlay(diseaseOverlay, severityParams, PANELS.DISEASE);
     diseasePanelState.update((state) => ({
       ...state,
       severities: diseaseOverlay.severities,
@@ -83,7 +83,7 @@
   });
 
   customPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(customOverlay, severityParams);
+    await updateOverlay(customOverlay, severityParams, PANELS.CUSTOM);
     customPanelState.update((state) => ({
       ...state,
       severities: customOverlay.severities,
@@ -99,11 +99,12 @@
 
   async function updateOverlay(
     overlayHelper: OverlayHelper,
-    severityParams: SeverityParams
+    severityParams: SeverityParams,
+    panelType
   ) {
     if (Object.entries(severityParams).length === 0) return;
     overlayLoading.set(true);
-    await overlayHelper.updateOverlay(severityParams);
+    await overlayHelper.updateOverlay(severityParams, panelType);
     overlayLoading.set(false);
   }
 </script>

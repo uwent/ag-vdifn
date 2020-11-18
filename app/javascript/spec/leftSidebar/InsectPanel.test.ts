@@ -1,10 +1,10 @@
 import InsectPanel from '../../src/components/leftSidebar/InsectPanel.svelte';
 import { fireEvent, render } from '@testing-library/svelte'
-import { selectedAffliction, selectedPanel, PANELS, insectPanelState, panelKey, insectPanelParams, startDate, endDate, afflictionValue } from '../../src/store/store'
+import { selectedAffliction, selectedPanel, PANELS, insectPanelState, panelKey, tMinTmax, insectPanelParams, startDate, endDate, afflictionValue } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
 let getText;
-let insectPanel; 
+let insectPanel;
 
 beforeEach(() => {
     const { getByText, component } = render(InsectPanel, {
@@ -16,8 +16,10 @@ beforeEach(() => {
     insectPanel = component;
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
-    afflictionValue.set(1)
-    selectedAffliction.set({name: "bug"})
+    afflictionValue.set(1);
+    tMinTmax.set({ t_min: "42", t_max: "none", in_fahrenheit: true });
+    selectedAffliction.set({name: "bug"});
+
 })
 
 it('should set selected panel to insect on mount', () => {
@@ -26,7 +28,7 @@ it('should set selected panel to insect on mount', () => {
 
 it('should update insect panels state when submit button clicked', async () => {
     const button = getText("Select")
-    await fireEvent.click(button); 
+    await fireEvent.click(button);
 
     expect(get(insectPanelState)).toEqual({currentAffliction: {name: "bug"}})
 })
@@ -37,7 +39,11 @@ it('should dispatch submit params when button is clicked', async () => {
     expect(get(insectPanelParams)).toEqual({
         start_date: "2000-10-10",
         end_date: "2000-11-10",
-        pest_id: 1
+        pest_id: 1,
+        t_min: undefined,
+        t_max: null,
+        in_fahrenheit: true
+
     })
 })
 

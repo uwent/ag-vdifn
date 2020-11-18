@@ -37,6 +37,7 @@
 
   thead th {
     background-color: #e2e6e6;
+    max-width: 60px;
   }
 
   tr {

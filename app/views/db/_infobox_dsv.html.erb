@@ -8,17 +8,20 @@
     <div><strong>Longitude</strong>: <%= @longitude %></div>
   </div>
 
-  <h3 class="weather-details-title">Weather Summary</h3>
+  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
   <div class="weather-details">
     <% if @weather %>
       <table>
         <thead>
           <tr>
-            <th width='35%'>Day</th>
-            <th><button class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">DSV</button></th>
-            <th>Mean temp.</th>
-            <th>
-              <button class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature.">Hours over RH threshold</button> 
+            <th>Day</th>
+            <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">DSV <div class="info-icon">?</div></th>
+            <th> Cumulative DSV</th>
+            <th>Min Temp.</th>
+            <th>Max Temp.</th>
+            <th>Mean Temp. (RH > 85%)</th>
+            <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature.">
+              Hours over RH threshold<div class="info-icon">?</div>
             </th>
           </tr>
         </thead>
@@ -27,8 +30,11 @@
             <tr>
               <td class="odd"><%= day[:date] %></td>
               <td><%= day[:value] %></td>
-              <td class="odd"><%= day[:avg_temperature].to_f.round(1) %>&deg;C</td>
-              <td><%= day[:hours_over] %></td>
+              <td class= "odd"><%= day[:cumulative_value] %></td>
+              <td><%= day[:min_temp] %>&deg;C</td>
+              <td class="odd"><%= day[:max_temp] %>&deg;C</td>
+              <td><%= day[:avg_temp_over_85].to_f.round(1) %>&deg;C</td>
+              <td class="odd"><%= day[:hours_over] %></td>
             </tr>
           <% end %>
         </tbody>

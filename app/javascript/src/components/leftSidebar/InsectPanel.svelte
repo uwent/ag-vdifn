@@ -7,6 +7,7 @@
     endDate,
     panelKey,
     startDate,
+    tMinTmax,
     insectPanelParams,
     selectedPanel,
     PANELS,
@@ -39,6 +40,9 @@
       start_date: moment.utc($startDate).format("YYYY-MM-DD"),
       end_date: moment.utc($endDate).format("YYYY-MM-DD"),
       pest_id: $afflictionValue,
+      t_min: $tMinTmax.t_min,
+      t_max: $tMinTmax.t_max,
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
     });
   }
 
