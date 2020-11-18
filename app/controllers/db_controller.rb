@@ -107,10 +107,10 @@ class DbController < ApplicationController
   end
 
   def t_max
-    if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit])
+    if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None")
       convert_to_fahrenheit(params[:t_max].to_f)
     else
-      params[:t_max].nil? ? nil : params[:t_max].to_f
+      params[:t_max].nil? || params[:t_max] === "None" ? nil : params[:t_max].to_f
     end
   end
 

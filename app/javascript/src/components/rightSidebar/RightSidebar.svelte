@@ -165,9 +165,6 @@
     color: #424242;
   }
 
-  .more-info-button {
-    width: 100%;
-  }
 </style>
 
 <button
