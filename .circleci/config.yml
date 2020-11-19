@@ -56,8 +56,6 @@ jobs:
       - run:
           name: RSpec
           command: bundle exec rspec
-  deploy-job:
-    steps:
       - add_ssh_keys:
           fingerprints:
             - "2d:1d:c0:8a:d9:0f:1d:47:d3:73:69:5b:4e:87:3f:43"
