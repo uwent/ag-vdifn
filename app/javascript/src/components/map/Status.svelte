@@ -22,7 +22,7 @@
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
     @media #{$medium-up} {
-      left: 430px;
+      left: 360px;
     }
   }
 </style>

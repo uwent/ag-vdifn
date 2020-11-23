@@ -1,15 +1,10 @@
 <div class='iw-title'>
-  Data Point Information
+  Grid Point Details (<%= @latitude %>&deg;N, <%= @longitude %>&deg;W)
 </div>
 
 <div id='iw-content'>
-  <div class="information">
-    <div><strong>Latitude</strong>: <%= @latitude %></div>
-    <div><strong>Longitude</strong>: <%= @longitude %></div>
-
-  </div>
-  <h3 class="weather-details-title">Weather Summary - <%= @model_value %></h3>
-  <h4>Tmin: <%= @t_min %> , Tmax: <%= @t_max %></h4>
+  <h3 class="weather-details-title">Selected Model: <%= @model_value %></h3>
+  <h4>Tmin: <%= @t_min %>, Tmax: <%= @t_max %></h4>
   <div class="weather-details">
       <% if @weather %>
       <table>
@@ -18,8 +13,12 @@
             <th>Day</th>
             <th>Min Temp.</th>
             <th>Max Temp.</th>
-            <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree Days value information.">Degree Days <div class="info-icon">?</div></th>
-            <th>Cumulative Degree Days</th>
+            <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
+              Degree Days <div class="info-icon">?</div>
+            </th>
+            <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Accumulated degree-day values can be used to estimate insect development.">
+              Cumulative Degree Days <div class="info-icon">?</div>
+            </th>
           </tr>
         </thead>
         <tbody>
