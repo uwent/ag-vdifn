@@ -140,10 +140,6 @@
     }
   }
 
-  ul {
-    list-style-type: none;
-  }
-
   fieldset {
     margin-top: 10px;
     background: rgba(200, 200, 200, 0.4);

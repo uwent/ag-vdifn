@@ -18,10 +18,10 @@
 
   onMount(() => {
     if (get(customOverlaySubmitted)) {
-      gradient = get(customPanelState).selectedGradient 
+      gradient = get(customPanelState).selectedGradient
     }
   })
-  
+
 </script>
 
 <style type="scss">
@@ -74,7 +74,7 @@
     top: 0;
     left: 0;
     height: 36px;
-    width: 135px;
+    width: 110px;
     border-radius: 6px;
   }
 

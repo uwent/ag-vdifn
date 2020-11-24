@@ -31,7 +31,7 @@
     getCrops: () => data,
     dateToolTip: {
       startDate: "Biofix",
-      endDate: "Date through which severity values are accumulated",
+      endDate: "Date through which degree-days are accumulated",
       startLabel: "Start Date",
     },
     getAfflictionName: () => "Custom Model",

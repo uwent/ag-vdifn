@@ -3,45 +3,41 @@
 </div>
 
 <div id='iw-content'>
-  <h3 class="weather-details-title">Selected Model: <%= @model_value %></h3>
-  <h4>Tmin: <%= @t_min %>, Tmax: <%= @t_max %></h4>
+  <h3 class="weather-details-title"><%= @model_value %> (<%= @t_min %>/<%= @t_max %> &deg;<%= temp_symbol() %></h3>
+  <div class="information">
+    <div><strong>Start date:</strong> <%= @weather[:date].min() %></div>
+    <div><strong>End date:</strong> <%= @weather[:date].max() %></div>
+    <% if @weather %>
+      <div><strong>Degree-day total:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></div>
+    <% end %>
+  </div>
   <div class="weather-details">
       <% if @weather %>
       <table>
         <thead>
           <tr>
             <th>Day</th>
-            <th>Min Temp.</th>
-            <th>Max Temp.</th>
             <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
-              Degree Days <div class="info-icon">?</div>
+              Degree Days
             </th>
             <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Accumulated degree-day values can be used to estimate insect development.">
-              Cumulative Degree Days <div class="info-icon">?</div>
+              Cumulative Degree Days
             </th>
+            <th>Min Temp.</th>
+            <th>Max Temp.</th>
           </tr>
         </thead>
         <tbody>
           <% @weather.each do |day| %>
             <tr>
+              <td><%= day[:value] %></td>
+              <td class="odd"><%= day[:cumulative_value] %></td>
               <td class="odd"><%= day[:date] %></td>
               <td><%= convert_temp(day[:min_temp]) %>&deg;<%= temp_symbol() %></td>
               <td class="odd"><%= convert_temp(day[:max_temp]) %>&deg;<%= temp_symbol() %></td>
-              <td><%= day[:value] %></td>
-              <td class="odd"><%= day[:cumulative_value] %></td>
             </tr>
           <% end %>
         </tbody>
-        <tfoot>
-          <tr>
-            <th>Total:</th>
-            <td></td>
-            <td></td>
-            <td><strong>
-              <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %>
-            </strong></td>
-          </tr>
-        </tfoot>
       </table>
     <% else %>
       <p style="text-align: center;">No data to display.</p>

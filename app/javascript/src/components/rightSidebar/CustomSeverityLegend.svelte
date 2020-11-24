@@ -33,26 +33,18 @@
         content: "\2264";
     }
 
-    .mapMinMax {
-        margin-bottom: 5px;
-    }
-
     span {
         display: inline;
     }
 </style>
 
 <fieldset id="dsv-legend">
-    <legend>Severity Legend:</legend>
-    {#if mapMin && mapMax}
-        <div class="mapMinMax">Map Min: {mapMin}</div>
-        <div class="mapMinMax">Map Max: {mapMax}</div>
-    {/if}
+    <legend>Degree-Day Legend:</legend>
     {#each gradientMapping as severity}
         <div class="severity-level-col">
             <div class="severity-level-row">
                 <div class="severity-color" style="background: {severity.color}"></div>
-                <div class="severity-range"><span>&#8804;</span>{severity.number}</div>
+                <div class="severity-range"><span>&#8804;</span>{Math.round(severity.number)}</div>
             </div>
         </div>
     {/each}
