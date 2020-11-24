@@ -1,14 +1,9 @@
 <div class='iw-title'>
-  Data Point Information
+  Grid Point Details (<%= @latitude %>&deg;N, <%= @longitude %>&deg;W)
 </div>
 
 <div id='iw-content'>
-  <div class="information">
-    <div><strong>Latitude</strong>: <%= @latitude %></div>
-    <div><strong>Longitude</strong>: <%= @longitude %></div>
-  </div>
-
-  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
+  <h3 class="weather-details-title">Selected DSV model: <%= @pest.name %></h3>
   <div class="weather-details">
     <% if @weather %>
       <table>
@@ -19,9 +14,11 @@
             <th> Cumulative DSV</th>
             <th>Min Temp.</th>
             <th>Max Temp.</th>
-            <th>Mean Temp. (RH > 85%)</th>
-            <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Relative humidity is a measure of how much water vapor (%) is in the air compared to complete saturation (100%) at a given temperature.">
-              Hours over RH threshold<div class="info-icon">?</div>
+            <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="High temperatures during periods of high relative humidity (RH) contribute to disease progression.">
+              Mean Temp. (RH > 90%) <div class="info-icon">?</div>
+            </th>
+            <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Longer daily periods of high relative humidity (RH) contribute to disease progression.">
+              Hours RH > 90% <div class="info-icon">?</div>
             </th>
           </tr>
         </thead>
@@ -33,8 +30,8 @@
               <td class= "odd"><%= day[:cumulative_value] %></td>
               <td><%= day[:min_temp] %>&deg;C</td>
               <td class="odd"><%= day[:max_temp] %>&deg;C</td>
-              <td><%= day[:avg_temp_over_85].to_f.round(1) %>&deg;C</td>
-              <td class="odd"><%= day[:hours_over] %></td>
+              <td><%= day[:avg_temp_hi_rh].to_f.round(1) %>&deg;C</td>
+              <td class="odd"><%= day[:hours_hi_rh] %></td>
             </tr>
           <% end %>
         </tbody>

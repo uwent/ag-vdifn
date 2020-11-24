@@ -21,7 +21,7 @@
     transition-delay: 0.1s;
 
     @media #{$medium-up} {
-      width: 22em;
+      width: 350px;
       height: 100%;
       bottom: 0;
 
