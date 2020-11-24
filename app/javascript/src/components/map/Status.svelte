@@ -38,6 +38,6 @@
 {:else}
   <div class="model-status">
     {PANELS.CUSTOM} - TMin/Max: {!$customPanelState.t_min ? 'None' : $customPanelState.t_min}/{!$customPanelState.t_max ? 'None' : $customPanelState.t_max}
-    {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
+    {$customPanelState.in_fahrenheit ? '&deg;F' : '&deg;C'}
   </div>
 {/if}

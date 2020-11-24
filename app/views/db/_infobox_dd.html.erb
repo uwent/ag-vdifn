@@ -5,8 +5,8 @@
 <div id='iw-content'>
   <h3 class="weather-details-title"><%= @model_value %> (<%= @t_min %>/<%= @t_max %> &deg;<%= temp_symbol() %></h3>
   <div class="information">
-    <div><strong>Start date:</strong> <%= @weather[:date].min() %></div>
-    <div><strong>End date:</strong> <%= @weather[:date].max() %></div>
+    <div><strong>Start date:</strong> <%= @weather.min(:date) %></div>
+    <div><strong>End date:</strong> <%= @weather.max(:date) %></div>
     <% if @weather %>
       <div><strong>Degree-day total:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></div>
     <% end %>
