@@ -3,7 +3,7 @@
 </div>
 
 <div id='iw-content'>
-  <h3 class="weather-details-title"><%= @model_value %> (<%= @t_min %>/<%= @t_max %> &deg;<%= temp_symbol() %></h3>
+  <h3 class="weather-details-title"><%= @model_value %> (<%= @t_min %>/<%= @t_max %> &deg;<%= temp_symbol() %>)</h3>
   <% if @weather %>
     <div class="information">
       <div><strong>Start date:</strong> <%= @weather.first[:date] %></div>
@@ -16,10 +16,10 @@
           <tr>
             <th>Day</th>
             <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
-              Degree Days
+              Degree Days <div class="info-icon">?</div>
             </th>
             <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Accumulated degree-day values can be used to estimate insect development.">
-              Cumulative Degree Days
+              Cumulative Degree Days <div class="info-icon">?</div>
             </th>
             <th>Min Temp.</th>
             <th>Max Temp.</th>
@@ -28,9 +28,9 @@
         <tbody>
           <% @weather.each do |day| %>
             <tr>
+              <td class="odd"><%= day[:date] %></td>
               <td><%= day[:value] %></td>
               <td class="odd"><%= day[:cumulative_value] %></td>
-              <td class="odd"><%= day[:date] %></td>
               <td><%= convert_temp(day[:min_temp]) %>&deg;<%= temp_symbol() %></td>
               <td class="odd"><%= convert_temp(day[:max_temp]) %>&deg;<%= temp_symbol() %></td>
             </tr>
