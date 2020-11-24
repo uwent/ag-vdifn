@@ -49,7 +49,7 @@ describe('when custom panel selected', () => {
         selectedPanel.set(PANELS.CUSTOM);
         await tick();
 
-        expect(getText("custom - TMin/Max: None/None \u2103")).toBeInTheDocument()
+        expect(getText("custom - None/None \u2103")).toBeInTheDocument()
     })
 
     it('shows tMin and TMax and temp scale', async () => {
@@ -57,6 +57,6 @@ describe('when custom panel selected', () => {
         customPanelState.set({t_max: 10, t_min: 5, in_fahrenheit: true})
         await tick();
 
-        expect(getText("custom - TMin/Max: 5/10 \u2109")).toBeInTheDocument()
+        expect(getText("custom - 5/10 \u2109")).toBeInTheDocument()
     })
 })

@@ -128,11 +128,11 @@
     <div>{moment($customPanelParams.start_date).format('MM/DD/YYYY')}</div>
     <div>End Date:</div>
     <div>{moment($customPanelParams.end_date).format('MM/DD/YYYY')}</div>
-    <div>T Min:</div>
+    <div>Tmin:</div>
     <div>{$customPanelParams.t_min}</div>
-    <div>T Max:</div>
+    <div>Tmax:</div>
     <div>{$customPanelParams.t_max ? $customPanelParams.t_max : 'None'}</div>
-    <div>Temp scale:</div>
+    <div>Units:</div>
     <div>{$customPanelParams.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
   </div>
 {/if}
