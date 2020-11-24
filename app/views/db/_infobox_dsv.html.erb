@@ -4,15 +4,13 @@
 
 <div id='iw-content'>
   <h3 class="weather-details-title"><%= @pest.name %></h3>
-  <div class="information">
-    <div><strong>Start date:</strong> <%= @weather.first[:date] %></div>
-    <div><strong>End date:</strong> <%= @weather.last[:date] %></div>
-    <% if @weather %>
+  <% if @weather %>
+    <div class="information">
+      <div><strong>Start date:</strong> <%= @weather.first[:date] %></div>
+      <div><strong>End date:</strong> <%= @weather.last[:date] %></div>
       <div><strong>DSV total for selected dates:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></div>
-    <% end %>
-  </div>
-  <div class="weather-details">
-    <% if @weather %>
+    </div>
+    <div class="weather-details">
       <table>
         <thead>
           <tr>
@@ -47,8 +45,8 @@
           <% end %>
         </tbody>
       </table>
-    <% else %>
-      <p style="text-align: center;">No data to display.</p>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <p style="text-align: center;">No data to display.</p>
+  <% end %>
 </div>

@@ -21,7 +21,7 @@ describe('when insect panel selected', () => {
         selectedPanel.set(PANELS.INSECT)
         insectPanelState.set({currentAffliction: { name: "insect name"}})
         await tick();
- 
+
         expect(getText("insect - insect name")).toBeInTheDocument()
     })
 })
@@ -32,14 +32,14 @@ describe('when disease panel selected', () => {
         await tick()
 
         expect(getText("disease - No Model Submitted")).toBeInTheDocument()
- 
+
     })
-    
+
     it('shows current affliction name', async () => {
         selectedPanel.set(PANELS.DISEASE)
         diseasePanelState.set({currentAffliction: { name: "disease name"}})
         await tick()
- 
+
         expect(getText("disease - disease name")).toBeInTheDocument()
     })
 })
