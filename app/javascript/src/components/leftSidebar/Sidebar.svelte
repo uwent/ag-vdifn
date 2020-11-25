@@ -132,7 +132,7 @@
       <a
         id="vegento-logo"
         class="logo"
-        href="http://labs.russell.wisc.edu/vegento/"
+        href="http://vegento.russell.wisc.edu/"
         target="_blank">UW-Madison Vegetable Crop Entomology</a>
     </div>
     <h1>

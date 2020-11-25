@@ -4,7 +4,7 @@ import { selectedAffliction, diseasePanelState, PANELS, selectedPanel, panelKey,
 import { get } from 'svelte/store'
 import moment from 'moment'
 let getText;
-let diseasePanel; 
+let diseasePanel;
 
 beforeEach(() => {
     const { getByText, component } = render(DiseasePanel, {
@@ -22,7 +22,7 @@ beforeEach(() => {
 
 it('sets selectedPanel state to disease panel on mount', () => {
     expect(get(selectedPanel)).toEqual(PANELS.DISEASE)
-})    
+})
 
 it('should dispatch submit params when button is clicked', () => {
     const button = getText("Select")
@@ -50,7 +50,7 @@ it('sets context data for child elements', () => {
         dateToolTip: {
             startDate: "Date of Emergence/Last Fungicide Application",
             endDate: "Date through which disease severity values are accumulated",
-            startLabel: "Application"
+            startLabel: "Date of Emergence/Last Fungicide Application"
         },
         defaultStartDate: moment.utc().subtract(1, 'week').format("YYYY-MM-DD"),
         getAfflictionName: expect.any(Function),

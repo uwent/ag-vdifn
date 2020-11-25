@@ -3,15 +3,24 @@
 </div>
 
 <div id='iw-content'>
-  <h3 class="weather-details-title">Selected DSV model: <%= @pest.name %></h3>
-  <div class="weather-details">
-    <% if @weather %>
+  <h3 class="weather-details-title"><%= @pest.name %></h3>
+  <% if @weather %>
+    <div class="information">
+      <div><strong>Start date:</strong> <%= @weather.first[:date] %></div>
+      <div><strong>End date:</strong> <%= @weather.last[:date] %></div>
+      <div><strong>DSV total for selected dates:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></div>
+    </div>
+    <div class="weather-details">
       <table>
         <thead>
           <tr>
             <th>Day</th>
-            <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">DSV <div class="info-icon">?</div></th>
-            <th> Cumulative DSV</th>
+            <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
+              DSV <div class="info-icon">?</div>
+            </th>
+            <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
+              Cumulative DSV <div class="info-icon">?</div>
+            </th>
             <th>Min Temp.</th>
             <th>Max Temp.</th>
             <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="High temperatures during periods of high relative humidity (RH) contribute to disease progression.">
@@ -35,18 +44,9 @@
             </tr>
           <% end %>
         </tbody>
-        <tfoot>
-          <tr>
-            <th>Total:</th>
-            <td colspan="3"><strong>
-              <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></strong></td>
-          </tr>
-
-
-        </tfoot>
       </table>
-    <% else %>
-      <p style="text-align: center;">No data to display.</p>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <p style="text-align: center;">No data to display.</p>
+  <% end %>
 </div>

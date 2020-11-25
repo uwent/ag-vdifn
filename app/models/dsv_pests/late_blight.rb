@@ -31,12 +31,9 @@ class LateBlight < DsvPest
 
   def severity_legend
     [
-      {name: "High", slug: "very_high", description: "High likelihood of disease
-(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)"},
-    {name: "Medium", slug: "medium", description: "Medium likelihood of disease
-(7-day accumulated DSVs ≥ 3 or season accumulated DSVs > 30)"},
-    {name: "Low", slug: "very_low", description: "Low likelihood of disease
-(7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}
+      {name: "High", slug: "very_high", description: "High likelihood of disease (widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)"},
+      {name: "Medium", slug: "medium", description: "Medium likelihood of disease (7-day accumulated DSVs ≥ 3 or season accumulated DSVs > 30)"},
+      {name: "Low", slug: "very_low", description: "Low likelihood of disease (7-day accumulated DSVs ≤ 3 and season accumulated DSVs < 30)"}
     ]
   end
 

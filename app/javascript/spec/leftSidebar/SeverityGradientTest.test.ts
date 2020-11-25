@@ -17,8 +17,8 @@ describe("when data present", () => {
         twoPointGradientState.set({})
         threePointGradientState.set({})
         data = [{
-            id: 1, 
-            name: "corn", 
+            id: 1,
+            name: "corn",
             afflictions: [{id: 5, name: "bug"}],
         },
         {
@@ -27,7 +27,7 @@ describe("when data present", () => {
             afflictions: [{id: 15, name: "ladybug"}, {id: 6, name: "grasshopper"}, {id: 10, name: "fly"}]
         }
         ]
-    
+
         const {  getByRole, getByTitle } = render(SetContextTest, {
             props: {
                 Component: SeverityGradient,
@@ -55,6 +55,6 @@ describe("when data present", () => {
             in_fahrenheit: true
         })
         await tick();
-        expect(getTitle('submitted-params').textContent).toContain(`Start Date: 10/10/2020 End Date: 10/20/2020 T Min: 50 T Max: None Temp scale: Fahrenheit`)
+        expect(getTitle('submitted-params').textContent).toContain(`Start Date: 10/10/2020 End Date: 10/20/2020 Tmin: 50 Tmax: None Units: Fahrenheit`)
     })
 })

@@ -26,7 +26,7 @@
     dateToolTip: {
       startDate: "Date of Emergence/Last Fungicide Application",
       endDate: "Date through which disease severity values are accumulated",
-      startLabel: "Application",
+      startLabel: "Date of Emergence/Last Fungicide Application",
     },
     getAfflictionName: () => "Disease",
     defaultStartDate: moment.utc().subtract(1, "week").format("YYYY-MM-DD"),
