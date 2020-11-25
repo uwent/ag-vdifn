@@ -15,6 +15,7 @@
   let startDateMax: string = endDateValue;
   let startDateValue: string = defaultStartDate;
   let startLabel = dateToolTip.startLabel;
+  let startMin = moment().subtract(7, "days")
 
   function updateStartDateInput(event) {
     const {
@@ -24,6 +25,17 @@
     if (moment.utc(endDateValue) < moment.utc(startDateValue)) {
       startDateValue = value;
     }
+  }
+
+  function updateLateBlightEndDate(event) {
+    selectedAffliction.subscribe((affliction: PestInfo) => {
+      if (affliction.name === "Late Blight" && moment.utc(startDateValue) <= startMin) {
+        endDateValue = moment(startDateValue).add(7, "days").format("YYYY-MM-DD")
+      }
+      else if (affliction.name === "Late Blight" && moment.utc(startDateValue) >= startMin) {
+        endDateValue = today
+      }
+    });
   }
 
   onMount(() => {
@@ -80,6 +92,7 @@
       class="datepicker"
       id="datepicker-start"
       bind:value={startDateValue}
+      on:change={updateLateBlightEndDate}
       max={startDateMax} />
     <button
       class="datepicker-tooltip"

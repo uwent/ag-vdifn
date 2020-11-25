@@ -1,7 +1,5 @@
 <script lang="ts">
    export let gradientMapping;
-   export let mapMin;
-   export let mapMax;
 </script>
 
 <style type="scss">
