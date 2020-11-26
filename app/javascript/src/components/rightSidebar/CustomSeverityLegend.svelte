@@ -38,7 +38,7 @@
 
 <fieldset id="dsv-legend">
     <legend>Degree-Day Legend:</legend>
-    {#each gradientMapping as severity}
+    {#each gradientMapping.reverse() as severity}
         <div class="severity-level-col">
             <div class="severity-level-row">
                 <div class="severity-color" style="background: {severity.color}"></div>
