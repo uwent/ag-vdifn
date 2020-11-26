@@ -3,9 +3,9 @@
 </div>
 
 <div id='iw-content'>
-  <h3 class="weather-details-title"><%= @pest.name %></h3>
+  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
   <% if @weather %>
-    <div class="information">
+    <div class="information" style="padding-bottom: 1em;">
       <div><strong>Start date:</strong> <%= @weather.first[:date] %></div>
       <div><strong>End date:</strong> <%= @weather.last[:date] %></div>
       <div><strong>DSV total for selected dates:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %></div>
