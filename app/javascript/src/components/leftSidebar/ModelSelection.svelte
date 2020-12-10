@@ -126,6 +126,8 @@
 </fieldset>
 {#if showModal}
   <Modal on:close={() => (showModal = false)}>
+    {@html $selectedAffliction.name}
+    <br/>
     {@html $selectedAffliction.info}
   </Modal>
 {/if}

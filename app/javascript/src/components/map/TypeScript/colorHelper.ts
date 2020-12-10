@@ -16,4 +16,4 @@ export default class ColorHelper {
             .domain([...Array(severityLevels).keys()])
         return scale(severity).hex() as string;
     }
-} 
+}
