@@ -180,11 +180,11 @@
         <div id="tMinMaxRange">
         <div class="t-min-wrapper">
           <label for="tmin">Tmin</label>
-            <div title="tMinTmaxDisplay" type="text" class="tmin">{tMin}</div>
+            <div title="tMinDisplay" type="text" class="tmin">{tMin}</div>
             </div>
           <div class="t-max-wrapper">
             <label for="tmax">Tmax</label>
-            <div title="tMinTmaxDisplay" type="text" class="tmax">{tMax}</div>
+            <div title="tMaxDisplay" type="text" class="tmax">{tMax}</div>
           </div>
         </div>
     </div>

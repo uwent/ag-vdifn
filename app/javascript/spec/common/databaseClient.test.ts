@@ -53,6 +53,24 @@ describe("fetchSeverityLegend", () => {
     })
 })
 
+describe("fetchSeverityLegendInfo", () => {
+    it('calls correct url and returns data', async () => {
+        const database = new DatabaseClient;
+        const pestId = 1;
+        const response = await database.fetchSeverityLegendInfo(pestId);
+        console.log(response)
+        expect(response).toEqual("Alfalfa Weevil Info");
+    })
+
+    it('returns empty string failure', async () => {
+        const database = new DatabaseClient;
+        const pestId = 101;
+        const response = await database.fetchSeverityLegendInfo(pestId);
+
+        expect(response).toEqual("");
+    })
+})
+
 describe('fetchPointDetails', () => {
     it('calls correct url and returns data', async () => {
         const database = new DatabaseClient;

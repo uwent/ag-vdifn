@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_06_08_190533) do
+ActiveRecord::Schema.define(version: 2020_12_10_230130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2017_06_08_190533) do
     t.string "photo"
     t.float "t_max"
     t.float "t_min"
+    t.string "severity_info"
   end
 
 end

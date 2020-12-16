@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       post 'severities'
       post 'point_details'
       post 'severity_legend'
+      post 'severity_legend_info'
       post 'pest_info'
       post 'stations'
       post 'station_details'

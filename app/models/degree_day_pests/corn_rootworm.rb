@@ -16,16 +16,11 @@ class CornRootworm < DegreeDayPest
 
   def severity_legend
     [
-      {name: "Very High", slug: "very_high",
-       description: "Very high likelihood (very near peak 1st instar, peak 2nd instar, or peak 3rd instar)"},
-    {name: "High", slug: "high",
-     description: "High likelihood (near peak 1st instar, peak 2nd instar, or peak 3rd instar)"},
-    {name: "Medium", slug: "medium",
-     description: "Medium likelihood (before peak 1st instar or after 2nd instar)"},
-    {name: "Low", slug: "low",
-     description: "Low likelihood (well before peak 1st instar or after 2nd instar)"},
-    {name: "Very Low", slug: "very_low",
-     description: "Very low likelihood (not near peak 1st instar, peak 2nd instar, or peak 3rd instar)"}
+      {name: "Very High", slug: "very_high", description: "Very high likelihood (very near peak 1st instar, peak 2nd instar, or peak 3rd instar)"},
+      {name: "High", slug: "high", description: "High likelihood (near peak 1st instar, peak 2nd instar, or peak 3rd instar)"},
+      {name: "Medium", slug: "medium", description: "Medium likelihood (before peak 1st instar or after 2nd instar)"},
+      {name: "Low", slug: "low", description: "Low likelihood (well before peak 1st instar or after 2nd instar)"},
+      {name: "Very Low", slug: "very_low", description: "Very low likelihood (not near peak 1st instar, peak 2nd instar, or peak 3rd instar)"}
     ]
   end
 end

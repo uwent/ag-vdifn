@@ -33,6 +33,7 @@
     let severityParams;
     let gradientStore;
     currentOverlay.hideOverlay();
+    currentOverlay.closeInfoWindow();
     overlayLoading.set(true);
     switch (selectedSeverity) {
       case PANELS.DISEASE:

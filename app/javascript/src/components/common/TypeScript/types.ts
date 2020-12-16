@@ -15,6 +15,7 @@ export type SeverityLegend = {
 export type PestInfo = {
     info: string;
     name: string;
+    photo: string;
     pest_link: string;
     biofix_date: string;
     end_date_enabled: boolean;

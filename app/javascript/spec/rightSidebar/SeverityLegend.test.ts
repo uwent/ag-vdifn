@@ -1,4 +1,4 @@
-import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.svelte' 
+import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.svelte'
 import { render } from '@testing-library/svelte'
 import { mapMinMapMax } from '../../src/store/store'
 import { tick } from 'svelte';
