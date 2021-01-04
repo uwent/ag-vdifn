@@ -87,12 +87,12 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
-  async fetchPestInfo(pestId: number ): Promise<PestInfo> {
+  async fetchPestInfo(pestId: number, inFahrenheit: boolean ): Promise<PestInfo> {
     try {
-      const response = await axios.post(ENDPOINTS.PEST_INFO, { pest_id: pestId })
+      const response = await axios.post(ENDPOINTS.PEST_INFO, { pest_id: pestId, in_fahrenheit: inFahrenheit })
       return response.data;
     } catch (e) {
-      return { info: null, name: null, photo: null, pest_link: null, biofix_date: null, end_date_enabled: null, tmin: null, tmax: null }
+      return { info: null, name: null, pest_link: null, biofix_date: null, end_date_enabled: null, tmin: null, tmax: null }
     }
   }
 
