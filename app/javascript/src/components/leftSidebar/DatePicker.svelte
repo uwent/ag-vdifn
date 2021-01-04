@@ -15,7 +15,7 @@
   let startDateMax: string = endDateValue;
   let startDateValue: string = defaultStartDate;
   let startLabel = dateToolTip.startLabel;
-  let startMin = moment().subtract(7, "days")
+  let startMin = moment.utc().subtract(7, "days")
 
   function updateStartDateInput(event) {
     const {
@@ -45,8 +45,10 @@
   });
 
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
-    if (affliction.biofix_date) {
+    if (affliction.biofix_date && affliction.biofix_date < today) {
       startDateValue = affliction.biofix_date;
+    } else if (affliction.biofix_date && affliction.biofix_date >= today) {
+      startDateValue = moment.utc(affliction.biofix_date).subtract(1, "year").format("YYYY-MM-DD");
     }
   });
 

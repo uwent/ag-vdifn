@@ -56,6 +56,6 @@ it('sets context data for child elements', () => {
             startLabel: "Biofix"
         },
         getAfflictionName: expect.any(Function),
-        defaultStartDate: moment.utc().subtract(1, 'week').format("YYYY-MM-DD")
+        defaultStartDate: moment.utc().startOf('year').format("YYYY-MM-DD")
     })
 })
