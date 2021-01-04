@@ -46,6 +46,11 @@ class DbController < ApplicationController
     render json: @severities
   end
 
+  def severity_legend_info
+    pest_info = Pest.find(params[:pest_id]).severity_info
+    render json: pest_info
+  end
+
   def pest_info
     pest = Pest.find(params[:pest_id])
     in_f = params[:in_fahrenheit] == 'true'

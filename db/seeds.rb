@@ -3,6 +3,7 @@ late_blight = LateBlight.create!(name: "Late Blight",
                               info: "<u><b>Late blight</b></u>: Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.<br /><br />",
                               biofix_mm: 1, biofix_dd: 1,
                               critical_value: 0,
+                              severity_info: 'More information on pest severity',
                               link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
 
 foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
@@ -10,6 +11,7 @@ foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
                                        info: "<u><b>Alternaria leaf blight</b></u>: the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.<br /><br />Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br /><u><b>Cercospora leaf blight</b></u>: the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.<br /><br />Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br />",
                                        biofix_mm: 1, biofix_dd: 1,
                                        critical_value: 0,
+                                       severity_info: 'More information on pest severity',
                                        link: 'www.plantpath.wisc.edu/wivegdis')
 
 
@@ -20,6 +22,7 @@ alfalfa_weevil = DegreeDayPest.create!(name: "Alfalfa Weevil",
                               critical_value: 371,
                               t_min: 48,
                               t_max: nil,
+                              severity_info: 'Alfalfa weevil egg hatch begins around 300 DD. Light feeding damage expected during 1st and 2nd instar life stages (350-500 DD). Heavy feeding damage expected during 3rd and 4th instar development, approx. 400-600 DD.',
                               link: 'labs.russell.wisc.edu/vegento/pests')
 
 asparagus_beetle = DegreeDayPest.create!(name: "Asparagus Beetle (Common)",
@@ -30,6 +33,7 @@ asparagus_beetle = DegreeDayPest.create!(name: "Asparagus Beetle (Common)",
                                 remote_name: 'asparagus_beetle',
                                 biofix_mm: 1, biofix_dd: 1,
                                 critical_value: 105,
+                                severity_info: 'More information on pest severity',
                                 link: 'labs.russell.wisc.edu/vegento/pests/asparagus-beetle')
 
 black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
@@ -40,6 +44,7 @@ black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
                            remote_name: 'black_cutworm',
                            biofix_mm: 5, biofix_dd: 15,
                            critical_value: 400,
+                           severity_info: 'More information on pest severity',
                            link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
 
 stink_bug = BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
@@ -49,6 +54,7 @@ stink_bug = BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
                          critical_value: 1608,
                          t_min: 54,
                          t_max: 92,
+                         severity_info: 'More information on pest severity',
                          link: 'labs.russell.wisc.edu/vegento/pests')
 
 cabbage_looper = DegreeDayPest.create!(name: 'Cabbage Looper',
@@ -59,6 +65,7 @@ cabbage_looper = DegreeDayPest.create!(name: 'Cabbage Looper',
                               t_min: 50,
                               t_max: 90,
                               photo: 'cabbage-looper.jpg',
+                              severity_info: 'More information on pest severity',
                               link: 'labs.russell.wisc.edu/vegento/pests/caterpillar-pests-of-cole-crops')
 
 cabbage_maggot = DegreeDayPest.create!(name: 'Cabbage Maggot',
@@ -69,6 +76,7 @@ cabbage_maggot = DegreeDayPest.create!(name: 'Cabbage Maggot',
                               t_min: 39.7,
                               t_max: 86,
                               photo: 'cabbage-maggot.jpg',
+                              severity_info: 'More information on pest severity',
                               link: 'labs.russell.wisc.edu/vegento/pests/cabbage-maggot')
 
 colorado_potato_beetle = DegreeDayPest.create!(name: 'Colorado Potato Beetle',
@@ -79,6 +87,7 @@ colorado_potato_beetle = DegreeDayPest.create!(name: 'Colorado Potato Beetle',
                               t_min: 52,
                               t_max: nil,
                               photo: 'colorado-potato-beetle.jpg',
+                              severity_info: 'More information on pest severity',
                               link: 'labs.russell.wisc.edu/vegento/pests/colorado-potato-beetle')
 
 corn_earworm = DegreeDayPest.create!(name: "Corn Earworm",
@@ -89,6 +98,7 @@ corn_earworm = DegreeDayPest.create!(name: "Corn Earworm",
                          t_min: 55,
                          t_max: 92,
                          photo: 'corn_earworm.jpg',
+                         severity_info: 'More information on pest severity',
                          link: 'labs.russell.wisc.edu/vegento/pests/corn-earworm')
 
 corn_rootworm = CornRootworm.create!(name: "Corn Rootworm",
@@ -99,6 +109,7 @@ corn_rootworm = CornRootworm.create!(name: "Corn Rootworm",
                              t_min: 52,
                              t_max: nil,
                              photo: 'corn-rootworm.jpg',
+                             severity_info: 'More information on pest severity',
                              link: 'labs.russell.wisc.edu/vegento/pests/corn-rootworms')
 
 european_corn_borer = DegreeDayPest.create!(name: "European Corn Borer",
@@ -109,6 +120,7 @@ european_corn_borer = DegreeDayPest.create!(name: "European Corn Borer",
                                    t_min: 50,
                                    t_max: 86,
                                    photo: 'european-corn-borer.jpg',
+                                   severity_info: 'More information on pest severity',
                                    link: 'labs.russell.wisc.edu/vegento/pests/european-corn-borer')
 
 flea_beetle_mint = DegreeDayPest.create!(name: "Flea Beetle (Mint)",
@@ -120,6 +132,7 @@ flea_beetle_mint = DegreeDayPest.create!(name: "Flea Beetle (Mint)",
                                 t_min: 41,
                                 t_max: 103,
                                 photo: 'flea-beetle.jpg',
+                                severity_info: 'More information on pest severity',
                                 link: 'labs.russell.wisc.edu/vegento/pests/flea-beetles')
 
 flea_beetle_crucifer = DegreeDayPest.create!(name: "Flea Beetle (Crucifer)",
@@ -131,6 +144,7 @@ flea_beetle_crucifer = DegreeDayPest.create!(name: "Flea Beetle (Crucifer)",
                                     t_min: 50,
                                     t_max: nil,
                                     photo: 'flea-beetle.jpg',
+                                    severity_info: 'More information on pest severity',
                                     link: 'labs.russell.wisc.edu/vegento/pests/flea-beetles')
 
 imported_cabbageworm = DegreeDayPest.create!(name: "Imported Cabbageworm",
@@ -142,6 +156,7 @@ imported_cabbageworm = DegreeDayPest.create!(name: "Imported Cabbageworm",
                                     t_min: 50,
                                     t_max: nil,
                                     photo: 'imported-cabbageworm.jpg',
+                                    severity_info: 'More information on pest severity',
                                     link: 'labs.russell.wisc.edu/vegento/insects/pests/caterpillar-pests-of-cole-crops')
 
 japanese_beetle = DegreeDayPest.create!(name: "Japanese Beetle",
@@ -153,6 +168,7 @@ japanese_beetle = DegreeDayPest.create!(name: "Japanese Beetle",
                                t_min: 50,
                                t_max: 100,
                                photo: 'japanese-beetle.jpg',
+                               severity_info: 'More information on pest severity',
                                link: 'labs.russell.wisc.edu/vegento/insects/pests/japanese-beetle')
 
 lygus_bug = DegreeDayPest.create!(name: "Lygus Bug",
@@ -163,6 +179,7 @@ lygus_bug = DegreeDayPest.create!(name: "Lygus Bug",
                          critical_value: 275,
                          t_min: 52,
                          t_max: nil,
+                         severity_info: 'More information on pest severity',
                          link: 'labs.russell.wisc.edu/vegento/pests')
 
 mint_root_borer = DegreeDayPest.create!(name: "Mint Root Borer",
@@ -173,6 +190,7 @@ mint_root_borer = DegreeDayPest.create!(name: "Mint Root Borer",
                                critical_value: 1280,
                                t_min: 50,
                                t_max: nil,
+                               severity_info: 'More information on pest severity',
                                link: 'labs.russell.wisc.edu/vegento/pests')
 
 onion_maggot = DegreeDayPest.create!(name: "Onion Maggot",
@@ -184,6 +202,7 @@ onion_maggot = DegreeDayPest.create!(name: "Onion Maggot",
                      t_min: 39,
                      t_max: 84,
                      photo: 'onion-maggot.jpg',
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/insects/pests/onion-maggot')
 
 potato_psyllid = DegreeDayPest.create!(name: "Potato Psyllid",
@@ -194,6 +213,7 @@ potato_psyllid = DegreeDayPest.create!(name: "Potato Psyllid",
                      critical_value: 762,
                      t_min: 40,
                      t_max: 86,
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/pests')
 
 seedcorn_maggot = DegreeDayPest.create!(name: "Seedcorn Maggot",
@@ -205,6 +225,7 @@ seedcorn_maggot = DegreeDayPest.create!(name: "Seedcorn Maggot",
                      t_min: 50,
                      t_max: nil,
                      photo: 'seedcorn-maggot.jpg',
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/pests/seedcorn-maggot')
 
 squash_vine_borer = DegreeDayPest.create!(name: "Squash Vine Borer",
@@ -216,6 +237,7 @@ squash_vine_borer = DegreeDayPest.create!(name: "Squash Vine Borer",
                      t_min: 50,
                      t_max: nil,
                      photo: 'squash-vine-borer.jpg',
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/pests/squash-vine-borer')
 
 stalk_borer = DegreeDayPest.create!(name: "Stalk Borer",
@@ -226,6 +248,7 @@ stalk_borer = DegreeDayPest.create!(name: "Stalk Borer",
                      critical_value: 1400,
                      t_min: 41,
                      t_max: 86,
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/pests')
 
 variegated_cutworm = DegreeDayPest.create!(name: "Variegated Cutworm",
@@ -237,6 +260,7 @@ variegated_cutworm = DegreeDayPest.create!(name: "Variegated Cutworm",
                      t_min: 41,
                      t_max: 88,
                      photo: 'cutworm-larvae.jpg',
+                     severity_info: 'More information on pest severity',
                      link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
 
 western_bean_cutworm = DegreeDayPest.create!(name: "Western Bean Cutworm",
@@ -248,6 +272,7 @@ western_bean_cutworm = DegreeDayPest.create!(name: "Western Bean Cutworm",
                                              t_min: 45,
                                              t_max: 104,
                                              photo: 'cutworm-larvae.jpg',
+                                             severity_info: 'More information on pest severity',
                                              link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
 
 DegreeDayPest.create!(name: "Western Flower Thrip",
@@ -259,6 +284,7 @@ DegreeDayPest.create!(name: "Western Flower Thrip",
                                      t_min: 45,
                                      t_max: 104,
                                      photo: 'thrips.png',
+                                     severity_info: 'More information on pest severity',
                                      link: 'labs.russell.wisc.edu/vegento/pests/onion-thrips')
 
 

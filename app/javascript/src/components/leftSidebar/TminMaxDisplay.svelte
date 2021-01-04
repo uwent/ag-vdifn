@@ -56,22 +56,15 @@
 </script>
 
 <style>
+    #t-min-wrapper {
+      width: 50%;
+    }
+
     #tMinMaxRange {
         -webkit-appearance: none;
         -moz-appearance: none;
-        width: 99%;
-        background-color: rgba(255, 255, 255, 0.7);
-        -webkit-border-radius: 0;
-        -moz-border-radius: 0;
-        border-radius: 0;
-        border: 1px solid #d0d0d0;
-        padding: 5px 0;
-        background: #d0d0d0;
-        color: #525252;
-        cursor: default;
         display: flex;
-        flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
     }
 
     #degree_day_info {
@@ -85,6 +78,30 @@
         padding: 0 5px;
         color: #484848;
         font-size: 0.75em;
+    }
+
+    .t-min-wrapper, .t-max-wrapper {
+      width: 50%;
+      text-align: center;
+
+    }
+
+    .t-min-wrapper {
+      margin-right: 10px;
+    }
+
+    .tmin, .tmax {
+      background-color: rgba(255, 255, 255, 0.7);
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      background: #d0d0d0;
+      padding: 5px;
+      margin-top: 3px;
+      border-radius: 0;
+      border: 1px solid #d0d0d0;
+      color: #525252;
+      cursor: default;
+      text-align: center;
     }
 
     .in-celcius {
@@ -160,9 +177,15 @@
 
 <div id="degree_day_info">
     <div class="temp-group" id="t-min-wrapper">
-        <label for="tmin">Tmin - Tmax Range</label>
-        <div title="tMinTmaxDisplay" type="text" id="tMinMaxRange">
-            {tMin} - {tMax}
+        <div id="tMinMaxRange">
+        <div class="t-min-wrapper">
+          <label for="tmin">Tmin</label>
+            <div title="tMinDisplay" type="text" class="tmin">{tMin}</div>
+            </div>
+          <div class="t-max-wrapper">
+            <label for="tmax">Tmax</label>
+            <div title="tMaxDisplay" type="text" class="tmax">{tMax}</div>
+          </div>
         </div>
     </div>
     <div class="temp-group" id="in-fahren-wrapper">

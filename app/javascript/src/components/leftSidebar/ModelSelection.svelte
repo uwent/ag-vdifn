@@ -28,6 +28,8 @@
     });
     if (cropWithAfflictions) {
       afflictionsForCrop = cropWithAfflictions.afflictions;
+      afflictionValue.update((_) => afflictionsForCrop[0].id)
+      afflictionValue.set(afflictionsForCrop[0].id)
       selectedAffliction.set(afflictionsForCrop[0]);
     }
   }
@@ -50,6 +52,21 @@
     afflictionValue.update((value) => value)
     afflictionValue.set(value)
     selectedAffliction.set(getCurrentAffliction(value))
+  }
+
+  function buildModalLink(link) {
+    if (link != null) {
+      return `<a href='http://${link}' target='_blank'>More Information... </a>`
+    }
+  }
+
+  function buildModalImage(photo) {
+    if (photo != null) {
+      return `<img src='images/${photo}' width='150px' align="left" style="margin-right: 10px;"/>`
+    }
+    else {
+      return ""
+    }
   }
 
 </script>
@@ -95,6 +112,15 @@
     clear: both;
     height: 0.5em;
   }
+
+  .modal__pest-info {
+    overflow: hidden;
+  }
+
+  .modal__pest-info p {
+    word-break: break-word;
+    margin: 0px;
+  }
 </style>
 
 <fieldset id="crop">
@@ -125,7 +151,11 @@
   </div>
 </fieldset>
 {#if showModal}
-  <Modal on:close={() => (showModal = false)}>
-    {@html $selectedAffliction.info}
+  <Modal on:close={() => (showModal = false)} name = {$selectedAffliction.name}>
+    <div class="modal__pest-info">
+      {@html buildModalImage($selectedAffliction.photo)}
+      <p>{@html $selectedAffliction.info}</p>
+      {@html buildModalLink($selectedAffliction.link)}
+    </div>
   </Modal>
 {/if}

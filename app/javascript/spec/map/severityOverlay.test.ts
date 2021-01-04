@@ -48,6 +48,7 @@ beforeEach(() => {
             updateOverlay: mockUpdateOverlay,
             updateOverlayGradient: mockUpdateOverlayGradient,
             hideOverlay: jest.fn(),
+            closeInfoWindow: jest.fn(),
             showOverlay: mockShowOverlay,
             severities: severities,
             min: 10,

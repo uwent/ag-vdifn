@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from "svelte";
   import Button from "./Button.svelte";
+  export let name;
 
   const dispatch = createEventDispatcher();
   const close = () => dispatch("close");
@@ -83,7 +84,7 @@
   aria-modal="true"
   bind:this={modal}
   aria-labelledby="affliction-modal">
-  <h2 id="affliction-modal">Additional Information</h2>
+  <h2 id="affliction-modal">{name}</h2>
   <slot name="header" />
   <hr />
   <slot />

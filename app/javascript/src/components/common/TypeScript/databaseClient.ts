@@ -69,6 +69,15 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
+  async fetchSeverityLegendInfo(pestId: number): Promise<string> {
+    try {
+      const response = await axios.post(ENDPOINTS.SEVERITY_LEGEND_INFO, { pest_id: pestId })
+      return response.data;
+    } catch (e) {
+      return ""
+    }
+  }
+
   async fetchPointDetails(pointDetailsParams: PointDetailsParams): Promise<string> {
     try {
       const response = await axios.post(ENDPOINTS.POINT_DETAILS, { ...pointDetailsParams })
@@ -78,7 +87,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
-  async fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo> {
+  async fetchPestInfo(pestId: number, inFahrenheit: boolean ): Promise<PestInfo> {
     try {
       const response = await axios.post(ENDPOINTS.PEST_INFO, { pest_id: pestId, in_fahrenheit: inFahrenheit })
       return response.data;

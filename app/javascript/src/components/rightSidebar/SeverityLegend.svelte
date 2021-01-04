@@ -61,7 +61,7 @@
       <label>{name}<button
           title=""
           data-balloon-length="medium"
-          data-balloon-pos="up"
+          data-balloon-pos="up-right"
           aria-label={description}><QuestionSvg /></button></label>
     </div>
   {/each}

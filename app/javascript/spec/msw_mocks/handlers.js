@@ -46,6 +46,20 @@ export const handlers = [
         }
     }),
 
+    rest.post(ENDPOINTS.SEVERITY_LEGEND_INFO, (req, res, ctx) => {
+        const { pest_id } = req.body
+        if (pest_id === 101) {
+            return res(
+                ctx.status(500)
+            )
+        } else {
+            return res(
+                ctx.status(200),
+                ctx.json("Alfalfa Weevil Info")
+            )
+        }
+    }),
+
     rest.post(ENDPOINTS.POINT_DETAILS, (req, res, ctx) => {
         const { pest_id } = req.body
         if (pest_id === 101) {
@@ -124,4 +138,3 @@ export const handlers = [
         )
     })
 ]
-

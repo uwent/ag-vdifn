@@ -19,6 +19,7 @@
   export let currentSeverities = [];
   let diseaseSeverities = [];
   let insectSeverities = [];
+  let severityInfo = ""
   let gradient = [];
   let showModal = false;
   const _ = require("lodash");
@@ -36,6 +37,8 @@
       if (Object.entries(severityParams).length === 0) return;
       insectSeverities = await updateSeverities(severityParams);
       currentSeverities = insectSeverities;
+      severityInfo = await updateSeverityInfo(severityParams);
+
     }
   );
 
@@ -54,6 +57,10 @@
 
   async function updateSeverities(severityParams) {
     return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
+  }
+
+  async function updateSeverityInfo(severityParams) {
+    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id);
   }
 
   $: swapSeverities($selectedPanel);
@@ -108,6 +115,7 @@
 
   #right-sidebar {
     position: fixed;
+    max-width: 200px;
     bottom: 60px;
     right: 10px;
     z-index: 10;
@@ -145,6 +153,11 @@
     background: rgba(200, 200, 200, 0.4);
     margin-bottom: 10px;
     padding: 10px;
+
+    p {
+      margin: 0;
+      font-size: 12px
+    }
   }
 
   legend {
@@ -193,7 +206,7 @@
             class="tooltip"
             id="disease-forecasting-information"
             data-balloon-length="medium"
-            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            data-balloon-pos='up-right'
             aria-label="A plant disease management system that uses computer-based models to collect field weather data and predict the onset and potential severity of crop diseases. Current and forecasted weather conditions determine the risk for disease, and prompts disease management decisions (preventative pesticide applications)."><QuestionSvg /></button>
         </li>
         <li id="tomcast">
@@ -201,7 +214,7 @@
             class="tooltip"
             id="tomcast-information"
             data-balloon-length="medium"
-            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            data-balloon-pos='up-right'
             aria-label="Disease forecasting model (adapted from a tomato disease model) used to predict the development of carrot foliar blights caused by Alternaria and Cercospora fungi, based on an accumulation of DSVs from past temperature and leaf wetness data combined with forecasted weather conditions."><QuestionSvg /></button>
         </li>
         <li id="blitecast">
@@ -209,10 +222,17 @@
             class="tooltip"
             id="blitecast-information"
             data-balloon-length="medium"
-            data-balloon-pos={expanded ? 'up-right' : 'left'}
+            data-balloon-pos='up-right'
             aria-label="Disease forecasting model used to predict the development of late blight of potato/tomato caused by Phytophthora infestans, based on an accumulation of DSVs, which are generated from air temperature and relative humidity data."><QuestionSvg /></button>
         </li>
       </ul>
     </fieldset>
   {/if}
+
+  {#if $selectedPanel === PANELS.INSECT}
+    <fieldset title="more-info">
+      <legend>More Information</legend>
+      <p> {severityInfo} </p>
+    </fieldset>
+    {/if}
 </div>
