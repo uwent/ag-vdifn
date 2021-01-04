@@ -28,6 +28,8 @@
     });
     if (cropWithAfflictions) {
       afflictionsForCrop = cropWithAfflictions.afflictions;
+      afflictionValue.update((_) => afflictionsForCrop[0].id)
+      afflictionValue.set(afflictionsForCrop[0].id)
       selectedAffliction.set(afflictionsForCrop[0]);
     }
   }
