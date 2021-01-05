@@ -31,7 +31,7 @@
       startLabel: "Biofix",
     },
     getAfflictionName: () => "Insect",
-    defaultStartDate: moment.utc().subtract(1, "week").format("YYYY-MM-DD"),
+    defaultStartDate: moment.utc().startOf('year').format("YYYY-MM-DD"),
   });
 
   function submit() {
