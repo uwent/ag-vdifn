@@ -1,83 +1,88 @@
-late_blight = LateBlight.create!(name: "Late Blight",
-                              remote_name: 'potato_blight_dsv',
-                              info: "<u><b>Late blight</b></u>: Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.<br /><br />",
-                              biofix_mm: 1, biofix_dd: 1,
-                              critical_value: 0,
-                              severity_info: 'More information on pest severity',
-                              link: 'www.plantpath.wisc.edu/wivegdis/contents_pages/late_blight.html')
+# Foliar diseases
+late_blight = LateBlight.create!(
+  name: "Late Blight",
+  remote_name: "potato_blight_dsv",
+  biofix_mm: 1, biofix_dd: 1,
+  critical_value: 0,
+  info: "<p><u><b>Late blight</b></u>: Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
+  severity_info: "More information on pest severity",
+  link: "https://vegpath.plantpath.wisc.edu/")
 
-foliar_disease = FoliarDisease.create!(name: "Foliar Disease",
-                                       remote_name: 'carrot_foliar_dsv',
-                                       info: "<u><b>Alternaria leaf blight</b></u>: the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.<br /><br />Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br /><u><b>Cercospora leaf blight</b></u>: the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.<br /><br />Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.<br /><br />",
-                                       biofix_mm: 1, biofix_dd: 1,
-                                       critical_value: 0,
-                                       severity_info: 'More information on pest severity',
-                                       link: 'www.plantpath.wisc.edu/wivegdis')
+foliar_disease = FoliarDisease.create!(
+  name: "Foliar Disease",
+  remote_name: "carrot_foliar_dsv",
+  biofix_mm: 1, biofix_dd: 1,
+  critical_value: 0,
+  info: "<p><u><b>Alternaria leaf blight</b></u>: the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.</p><p>Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><u><b>Cercospora leaf blight</b></u>: the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.</p><p>Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
+  severity_info: "More information on pest severity",
+  link: "https://vegpath.plantpath.wisc.edu/")
 
+# Insect models
+alfalfa_weevil = DegreeDayPest.create!(
+  name: "Alfalfa Weevil",
+  remote_name: 'alfalfa_weevil',
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 48, t_max: nil,
+  critical_value: 371,
+  info: "<p><strong><i>Hypera postica</i></strong>, commonly known as the alfalfa weevil, is a species of beetle in the superfamily Curculionoidea; it can be found in alfalfa fields throughout Europe and North America. Considered a destructive threat to alfalfa production in North America, several accidental introductions have been successfully countered though the use of a variety of biological control species.</p><p>The alfalfa weevil grows to a length of about 4 to 5.5 mm (0.16 to 0.22 in). The rostrum or beak is short and broad. The frons is half as wide as the rostrum while the pronotum is broadest in the centre. The general colour of the insect is brown, with a dark mid-dorsal stripe. The larva has a distinctive black head and no legs; it is yellowish-green, with a white dorsal stripe and faint white lateral stripes. It is about 1 cm (0.4 in) long just before pupation. It pupates in a white, pea-sized cocoon made of loosely-woven silk. It resembles the clover leaf weevil (<i>Hypera punctata</i>), but that species is nearly twice as large, the larvae have tan heads and they seldom cause much damage to alfalfa crops.</p><p>In the midwest, some eggs are laid in the late fall or the winter, when weather conditions permit. Adults also overwinter and become increasingly active in March and April. Eggs are laid in batches of up to 25 inside alfalfa stems. The larvae feed for three or four weeks, moulting three times, before pupating in the cocoons they make. They emerge as adults in about one or two weeks. After feeding for a week or two, they may experience aestivation during the remainder of the summer, in which they demonstrate a dampening of their metabolic, respiratory and nervous system activities. In fall, the adults hide in the crowns of alfalfa plants or move onto coarse vegetation in ditches or by fences or in nearby woodland.</p>",
+  severity_info: "Alfalfa weevil egg hatch begins around 300 FDD. Light feeding damage expected during 1st and 2nd instar life stages (350-500 FDD). Heavy feeding damage expected during 3rd and 4th instar development, approx. 400-600 FDD.",
+  link: "https://en.wikipedia.org/wiki/Hypera_postica")
 
-alfalfa_weevil = DegreeDayPest.create!(name: "Alfalfa Weevil",
-                              remote_name: 'alfalfa_weevil',
-                              info: "Alfalfa Weevil Info",
-                              biofix_mm: 1, biofix_dd: 1,
-                              critical_value: 371,
-                              t_min: 48,
-                              t_max: nil,
-                              severity_info: 'Alfalfa weevil egg hatch begins around 300 DD. Light feeding damage expected during 1st and 2nd instar life stages (350-500 DD). Heavy feeding damage expected during 3rd and 4th instar development, approx. 400-600 DD.',
-                              link: 'labs.russell.wisc.edu/vegento/pests')
+asparagus_beetle = DegreeDayPest.create!(
+  name: "Asparagus Beetle (Common)",
+  remote_name: "asparagus_beetle",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 50, t_max: 86,
+  critical_value: 105,
+  info: "<p>The common (<i>Crioceris asparagi</i>) and spotted (<i>Crioceris duodecimpunctata</i>) asparagus beetles are annual pests of asparagus in Wisconsin. The common asparagus beetle is the most prevalent and the only one that causes economic damage to asparagus.</p><p>Adults of the common asparagus beetle feed on the plant’s spears and ferns. Disfigured and unmarketable spears can result when the beetles feed or lay eggs on the spears. Spotted asparagus beetle larvae feed more on the berries rather than the ferns of asparagus.  Larvae secrete a black fluid onto the plants. Spring spear feeding reduces crop quality (browning, scarring, staining, and bent growth).  Summer fern feeding can cause defoliation and reduces yield of subsequent years.  Eggs laid on spears are unattractive to consumers, though harmless. Large populations of asparagus beetles, if left unchecked, can defoliate the plants.</p><p>Asparagus beetle overwinters in plant debris and brush as an adult.  Adults become active in spring when new spears emerge. The spotted asparagus beetle becomes active later in spring than the common asparagus beetle. Common asparagus beetles lay eggs on spears while spotted asparagus beetles lay eggs on ferns. About a week later eggs hatch. The larvae feed for about two weeks on asparagus and then pupate in the soil. About one week later the next generation of adults hatch.  Two to three generations occur in a growing season. Most larvae and adults are more active in the afternoon when the temperature and sunlight are at their peak.</p>",
+  severity_info: "Egg hatch begins around 105 FDD, with peak larvae around 250 FDD and last larvae around 405 FDD. Peak adults around 570 FDD.",
+  photo: "asparagus-beetle-common.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/asparagus-beetle/")
 
-asparagus_beetle = DegreeDayPest.create!(name: "Asparagus Beetle (Common)",
-                                info: "The common <i>(Crioceris asparagi)</i> and spotted <i>(Crioceris duodecimpunctata)</i> asparagus beetles are annual pests of asparagus in Wisconsin. The common asparagus beetle is the most prevalent and the only one that causes economic damage to asparagus.<br />",
-                                photo: 'asparagus-beetle-common.jpg',
-                                t_min: 50,
-                                t_max: 86,
-                                remote_name: 'asparagus_beetle',
-                                biofix_mm: 1, biofix_dd: 1,
-                                critical_value: 105,
-                                severity_info: 'More information on pest severity',
-                                link: 'labs.russell.wisc.edu/vegento/pests/asparagus-beetle')
+black_cutworm = DegreeDayPest.create!(
+  name: "Black Cutworm",
+  remote_name: "black_cutworm",
+  biofix_mm: 5, biofix_dd: 15,
+  t_min: 50, t_max: 86,
+  critical_value: 400,
+  info: "<p>Black cutworm larvae feed on newly emerged vegetable crops. The worms are active feeders, clipping many seedlings at or below the soil line in a single night. They prefer crops sown as seed (rather than transplants); susceptible crops include beets, carrots, cucumber, leafy greens, melons, peas, potato, pumpkin, snap beans, squash, and sweet corn. If not controlled, these pests can destroy approximately a third of planting. Black cutworms are particularly problematic to fresh market growers and home gardeners. As an adult moth, the black cutworm may be referred to as the Dark sword-grass or the Ipsilon dart.</p><p>The dark gray to black larvae have a greasy appearance and a grainy texture. Mature larvae grow to 1 ½ inches long. When disturbed, cutworms curl up into a tight C-shape. Adults are gray moths that have a series of distinctive dark markings on their forewings (including a dagger-shape on each outer forewing) and lighter colored hind wings.</p><p>The black cutworm doesn’t overwinter in Wisconsin. Instead, the adult moth migrates north on storm fronts in early spring, usually in May and early June. Females lay eggs on low-growing vegetation such as chickweed, curly dock, cruciferous weeds, and plant residue. Larvae hatch about 5-10 days later and over the course of a month will pass through six instars (growth stages) before pupating. Larvae migrate from mature vegetation to seedlings when they’re about ¾ inches long. About 2 weeks after entering the pupal stage, adult moths emerge, mate, and repeat the cycle. In Wisconsin, three generations emerge each year.</p>",
+  severity_info: "Egg hatch begins around 180 FDD, with leaf cutting and larval development starting around 300 FDD and extending through 1000 FDD.",
+  photo: "cutworm-larvae.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/black-cutworm/")
 
-black_cutworm = DegreeDayPest.create!(name: "Black Cutworm",
-                          info: "These are the larval stage (caterpillar) of night-flying moths. They are whitish gray to brown worms, ranging from 1/2 to 2 inches long. They feed almost exclusively at night and hide in the soil during the day. All cutworms curl to a characteristic tight ball when exposed, making them easy to identify. Most cutworms cut plants off at or slightly below the soil surface, making recent transplants especially susceptible. Eventually, plants become too thick and tough for cutworms to feed. Adult females are attracted to tall grasses for egg laying, and cutworm numbers tend to be higher in weedy or trashy fields.<br /><br/>Almost all commercial vegetable crops such as asparagus, beets, onions, carrots, celery, and potatoes can be attacked by cutworms. It is very difficult to predict when and where an infestation will spring up, and pre-plant insecticide treatments will not control heavy cutworm infestations. Scouting fields on a weekly basis is the best method for monitoring cutworm activity. If damaging populations are found, a “rescue” treatment will be needed. Bait formulations are the preferred treatment if conditions are dry, whereas both baits and sprays can be used when the cutworms are feeding at the soil surface.<br />",
-                           t_min: 50.7,
-                           t_max: 86,
-                           photo: 'cutworm-larvae.jpg',
-                           remote_name: 'black_cutworm',
-                           biofix_mm: 5, biofix_dd: 15,
-                           critical_value: 400,
-                           severity_info: 'More information on pest severity',
-                           link: 'labs.russell.wisc.edu/vegento/pests/black-cutworm')
+stink_bug = DegreeDayPest.create!(
+  name: "Brown Marmorated Stink Bug",
+  remote_name: "brown_marmorated_stink_bug",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 54, t_max: 92,
+  critical_value: 1608,
+  info: "<p>Adult brown marmorated stink bugs are approximately 1.7 cm (0.67 in) long and about as wide, forming the heraldic shield shape characteristic of bugs in the superfamily Pentatomoidea. They are generally a dark brown when viewed from above, with a creamy white-brown underside. Individual coloration may vary, with some bugs being various shades of red, grey, light brown, copper, or black. The term 'marmorated' means variegated or veined, like marble, which refers to the markings unique to this species, includes alternating light-colored bands on the antennae and alternating dark bands on the thin outer edge of the abdomen. The legs are brown with faint white mottling or banding.</p><p>The nymph stages are black or very dark brown, with red integument between the sclerites. First instar nymphs have no white markings, but second through fifth instar nymphs have black antennae with a single white band. The legs of nymphs are black with varying amounts of white banding. Freshly molted individuals of all stages are pale white with red markings. Eggs are normally laid on the underside of leaves in masses of 28 eggs, and are light green when laid, gradually turning white.</p><p>Like all stink bugs, the glands that produce the defensive chemicals (the 'stink') are located on the underside of the thorax, between the first and second pair of legs.</p>",
+  severity_info: "First generation adults typically develop by around 1608 FDD. Adult feeding is most damaging. Only one generation per year is typical in Wisconsin.",
+  link: "https://en.wikipedia.org/wiki/Brown_marmorated_stink_bug")
 
-stink_bug = BrownMarmoratedStinkBug.create!(name: "Brown Marmorated Stink Bug",
-                         remote_name: 'brown_marmorated_stink_bug',
-                         info: "Brown Marmorated Stink Bug Info",
-                         biofix_mm: 1, biofix_dd: 1,
-                         critical_value: 1608,
-                         t_min: 54,
-                         t_max: 92,
-                         severity_info: 'More information on pest severity',
-                         link: 'labs.russell.wisc.edu/vegento/pests')
+# needs work
+cabbage_looper = CabbageLooper.create!(
+  name: "Cabbage Looper",
+  remote_name: "cabbage_looper",
+  biofix_mm: 5, biofix_dd: 15,
+  t_min: 50, t_max: 90,
+  critical_value: 325,
+  info: "<p>The cabbage looper (<i>Trichoplusia ni</i>) is a medium-sized moth in the family Noctuidae, a family commonly referred to as owlet moths. Its common name comes from its preferred host plants and distinctive crawling behavior. Cruciferous vegetables, such as cabbage, bok choy, and broccoli, are its main host plant; hence, the reference to cabbage in its common name. The larva is called a looper because it arches its back into a loop when it crawls.</p><p>While crucifers are preferred, over 160 plants can serve as hosts for the cabbage looper larvae. The adult cabbage looper is a migratory moth that can be found across North America and Eurasia, as far south as Florida and as far north as British Columbia. Its migratory behavior and wide range of host plants contribute to its broad distribution.</p><p>The cabbage looper larva is a minor vegetable pest, especially for crucifers. While it is not significantly destructive, it is becoming difficult to manage due to its broad distribution and resistance to many insecticides. Numerous methods are being researched in order to control this species.</p>",
+  photo: "cabbage-looper.jpg",
+  severity_info: "The first small larvae appear around 325 FDD after the May 15 biofix date. Feeding continues and worsens as larvae grow, peaking around 520 FDD and ending around 750 FDD. Second generation larvae may begin appearing around 1115 FDD, peak around 1310 FDD, and end around 1540 FDD.",
+  link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/")
 
-cabbage_looper = DegreeDayPest.create!(name: 'Cabbage Looper',
-                              remote_name: 'cabbage_looper',
-                              info: "Imported cabbageworms <i>(Pieris rapae)</i>, cabbage loopers <i>(Trichoplusia ni)</i> and diamondback moths <i>(Plutella xylostella)</i> are the three most significant caterpillar pests of Wisconsin cole crops, with the imported cabbage worm being the most significant. The cabbage looper attacks beets, celery, lettuce, peas, potatoes, spinach and tomatoes, in addition to cole crops. Damage caused by these pests is generally of little economic importance in Wisconsin.<br />",
-                              biofix_mm: 5, biofix_dd: 15,
-                              critical_value: 325,
-                              t_min: 50,
-                              t_max: 90,
-                              photo: 'cabbage-looper.jpg',
-                              severity_info: 'More information on pest severity',
-                              link: 'labs.russell.wisc.edu/vegento/pests/caterpillar-pests-of-cole-crops')
-
-cabbage_maggot = DegreeDayPest.create!(name: 'Cabbage Maggot',
-                              remote_name: 'cabbage_maggot',
-                              info: "The adult cabbage maggot <i>(Delia radicum)</i> is a small gray fly that lays its eggs at the base of crop plants in the cabbage family. The small, cylindrical white eggs hatch into legless white maggots that feed on the roots. Seedling plants can be killed rapidly, while transplants tend to wilt and die slowly. Root crucifers such as radish and turnip show surface tunneling that is often accompanied by soft rots.<br />",
-                              biofix_mm: 1, biofix_dd: 1,
-                              critical_value: 360,
-                              t_min: 39.7,
-                              t_max: 86,
-                              photo: 'cabbage-maggot.jpg',
-                              severity_info: 'More information on pest severity',
-                              link: 'labs.russell.wisc.edu/vegento/pests/cabbage-maggot')
+# needs work
+cabbage_maggot = DegreeDayPest.create!(
+  name: 'Cabbage Maggot',
+  remote_name: 'cabbage_maggot',
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 42.8, t_max: 86,
+  critical_value: 360,
+  info: "The adult cabbage maggot <i>(Delia radicum)</i> is a small gray fly that lays its eggs at the base of crop plants in the cabbage family. The small, cylindrical white eggs hatch into legless white maggots that feed on the roots. Seedling plants can be killed rapidly, while transplants tend to wilt and die slowly. Root crucifers such as radish and turnip show surface tunneling that is often accompanied by soft rots.<br />",
+  severity_info: 'More information on pest severity',
+  photo: 'cabbage-maggot.jpg',
+  link: 'labs.russell.wisc.edu/vegento/pests/cabbage-maggot')
 
 colorado_potato_beetle = DegreeDayPest.create!(name: 'Colorado Potato Beetle',
                               remote_name: 'colorado_potato_beetle',
