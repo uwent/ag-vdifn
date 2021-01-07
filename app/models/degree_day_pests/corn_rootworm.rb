@@ -1,5 +1,6 @@
 class CornRootworm < DegreeDayPest
   def total_to_severity(total, after_november_first, freezing)
+    return 0 if after_november_first && freezing
     return 0 if total < 263 || total > 566
     return 1 if total > 543
     return 2 if total > 519
