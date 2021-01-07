@@ -1,5 +1,6 @@
 class DegreeDayPest < Pest
-  def total_to_severity(total)
+  def total_to_severity(total, after_november_first, freezing)
+    return 0 if after_november_first && freezing
     return 4 if very_high.include?(total)
     return 3 if high.include?(total)
     return 2 if moderate.include?(total)
@@ -18,6 +19,7 @@ class DegreeDayPest < Pest
   end
 
   private
+
   def very_high
     (critical_value * 0.95).round(0)..(critical_value * 1.05).round(0)
   end

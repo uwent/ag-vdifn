@@ -1,5 +1,6 @@
 class BrownMarmoratedStinkBug < DegreeDayPest
-  def total_to_severity(total)
+  def total_to_severity(total, after_november_first, freezing)
+    return 0 if after_november_first && freezing
     return 0 if total < 1286 || total > 2656
     return 1 if total > 2545
     return 2 if total > 2434
