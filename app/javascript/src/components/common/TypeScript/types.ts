@@ -75,17 +75,18 @@ export type CropWithAfflictions = {
 export type Pest = {
     id: number;
     name: string;
-    info: string;
-    link: string;
     biofix_mm: number;
     biofix_dd: 1;
-    critical_value: 0;
-    created_at: Date;
-    updated_at: Date;
-    photo: string;
+    end_date_enabled: boolean
     t_max: number;
     t_min: number;
-    end_date_enabled: boolean
+    critical_value: 0;
+    info: string;
+    severity_info: string;
+    photo: string;
+    link: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export type PestsForCrops = {

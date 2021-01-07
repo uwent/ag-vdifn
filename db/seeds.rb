@@ -66,7 +66,7 @@ cabbage_looper = CabbageLooper.create!(
   remote_name: "cabbage_looper",
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 90,
-  critical_value: 325,
+  critical_value: 520,
   info: "<p>The cabbage looper (<i>Trichoplusia ni</i>) is a medium-sized moth in the family Noctuidae, a family commonly referred to as owlet moths. Its common name comes from its preferred host plants and distinctive crawling behavior. Cruciferous vegetables, such as cabbage, bok choy, and broccoli, are its main host plant; hence, the reference to cabbage in its common name. The larva is called a looper because it arches its back into a loop when it crawls.</p><p>While crucifers are preferred, over 160 plants can serve as hosts for the cabbage looper larvae. The adult cabbage looper is a migratory moth that can be found across North America and Eurasia, as far south as Florida and as far north as British Columbia. Its migratory behavior and wide range of host plants contribute to its broad distribution.</p><p>The cabbage looper larva is a minor vegetable pest, especially for crucifers. While it is not significantly destructive, it is becoming difficult to manage due to its broad distribution and resistance to many insecticides. Numerous methods are being researched in order to control this species.</p>",
   photo: "cabbage-looper.jpg",
   severity_info: "The first small larvae appear around 325 FDD after the May 15 biofix date. Feeding continues and worsens as larvae grow, peaking around 520 FDD and ending around 750 FDD. Second generation larvae may begin appearing around 1115 FDD, peak around 1310 FDD, and end around 1540 FDD.",
@@ -74,37 +74,37 @@ cabbage_looper = CabbageLooper.create!(
 
 # needs work
 cabbage_maggot = DegreeDayPest.create!(
-  name: 'Cabbage Maggot',
-  remote_name: 'cabbage_maggot',
+  name: "Cabbage Maggot",
+  remote_name: "cabbage_maggot",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 42.8, t_max: 86,
-  critical_value: 360,
-  info: "The adult cabbage maggot <i>(Delia radicum)</i> is a small gray fly that lays its eggs at the base of crop plants in the cabbage family. The small, cylindrical white eggs hatch into legless white maggots that feed on the roots. Seedling plants can be killed rapidly, while transplants tend to wilt and die slowly. Root crucifers such as radish and turnip show surface tunneling that is often accompanied by soft rots.<br />",
+  critical_value: 600,
+  info: "<p>Cabbage maggots (<i>Delia radicum</i>) are early season pests that feed on the roots and lower stems of all cruciferous crops and weeds. Wounds produced by this feeding can create entry points for several cole crop diseases. Early season transplants and spring roots crops are damaged most severely.</p><p>The adult cabbage maggot is an ash gray, bristly fly that resembles a housefly but is half as long with black stripes on its thorax. The larvae are only 1/3-inch long, white and have no legs and a body that tapers toward the head. Cabbage maggots appear similar to seed corn maggots, but cabbage maggot prefers to feed on the roots of cole crops while seed corn maggot prefers to feed on seeds and seedlings of corn and cucurbits.</p><p>Cabbage maggots feed both internally and on the surface of roots. Their tunneling provides a point of entry into the plant for pathogens such as soft rot bacteria and the blackleg fungus. Maggots can be especially damaging to seedlings, injuring the growing point of the root, and stunting plant growth. Affected seedlings and young transplants may become off-color or wilt during hot weather. Cabbage maggots thrive in wet, cool conditions, and injury to crops is most likely during first and third generations.</p>",
   severity_info: 'More information on pest severity',
-  photo: 'cabbage-maggot.jpg',
-  link: 'labs.russell.wisc.edu/vegento/pests/cabbage-maggot')
+  photo: "cabbage-maggot.jpg",
+  link: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD.")
 
-colorado_potato_beetle = DegreeDayPest.create!(name: 'Colorado Potato Beetle',
-                              remote_name: 'colorado_potato_beetle',
-                              info: "The Colorado potato beetle <i>(Leptinotarsa decemlineata)</i> is the most distinctive pest of potatoes. Both the yellow-and-black striped adults and the brick-red humped larvae feed on the foliage. Feeding normally is initiated on the terminal growth and can be severe. Adults overwinter and move to emerging potatoes early in the spring (May). The adults lay bright yellow egg masses, and larvae feed for several weeks in the summer before pupating in the soil. Emerging adults then continue feeding throughout the season until no vines remain.<br />",
-                              biofix_mm: 5, biofix_dd: 1,
-                              critical_value: 185,
-                              t_min: 52,
-                              t_max: nil,
-                              photo: 'colorado-potato-beetle.jpg',
-                              severity_info: 'More information on pest severity',
-                              link: 'labs.russell.wisc.edu/vegento/pests/colorado-potato-beetle')
+colorado_potato_beetle = DegreeDayPest.create!(
+  name: "Colorado Potato Beetle",
+  remote_name: "colorado_potato_beetle",
+  biofix_mm: 5, biofix_dd: 1,
+  t_min: 52, t_max: nil,
+  critical_value: 400,
+  info: "<p>The Colorado potato beetle (<i>Leptinotarsa decemlineata</i>) is a significant pest of potato, eggplant and pepper in home gardens as well as fresh market agricultural production. When not controlled, Colorado potato beetle (CPB) can completely defoliate plants resulting in serious yield losses or even plant death. Beetles prefer to feed on potato, but will also use eggplant and other solanaceous crops. Both larval and adult life stages commonly cause damage to plants throughout the growing season. CPB is a persistent pest annually, once an infestation occurs beetle populations tend to increase annually. When potato is unavailable in the environment CPB can utilize alternate solanaceous host plants such as eastern black and deadly black nightshade, jimson-weed, Carolina horse-nettle and buffalo-bur. Common solanaceous weeds in the environment are thought to provide a green bridge enabling potato beetle colonization into new environments.</p>",
+  severity_info: "In Wisconsin two generations of CPB are typical. Overwintering adults lay eggs around 120 FDD after the May 1 biofix, with peak larvae and feeding occurring around 400 FDD. First generation feeding ends around 675 FDD. Secon generation adults can cause severe damage, appearing around 900 FDD, peaking around 1400 FDD, and dispersing to overwintering habitats by around 1800 FDD.",
+  photo: "colorado-potato-beetle.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/")
 
-corn_earworm = DegreeDayPest.create!(name: "Corn Earworm",
-                         remote_name: 'corn_earworm',
-                         info: "Corn earworm <i>(Helicoverpa zea)</i> caterpillars are varicolored, smooth, up to 2 inches long and feed mostly on ear tips. Insecticide treatment is necessary for early market sweet corn and for late-season canning or market sweet corn (silking after August 15).<br />",
-                         biofix_mm: 8, biofix_dd: 1,
-                         critical_value: 73,
-                         t_min: 55,
-                         t_max: 92,
-                         photo: 'corn_earworm.jpg',
-                         severity_info: 'More information on pest severity',
-                         link: 'labs.russell.wisc.edu/vegento/pests/corn-earworm')
+corn_earworm = DegreeDayPest.create!(
+  name: "Corn Earworm",
+  remote_name: "corn_earworm",
+  biofix_mm: 8, biofix_dd: 1,
+  t_min: 55, t_max: 92,
+  critical_value: 275,
+  info: "<p>The corn earworm (<i>Helicoverpa zea</i>) can cause serious economic damage to fresh market and processing sweet corn and hybrid dent seed corn. Also known as the tomato fruit worm, the larvae feed on field corn, tomatoes, lettuce, peppers, and snap beans.</p><p>Full-grown larvae of the corn earworm are olive-brown, tan, maroon, pink, or black with three or four dark stripes along their backs. The head is yellow and not spotted. They measure up to 2 inches long when mature. Adults are robust, grayish-brown moths with a wing-span of 1.5 inches. The front wings are marked with dark gray, irregular lines with a dark area near the wing tip. Eggs are tiny (1/32 inch), flattened spheres with prominent ridges. When deposited, the eggs are light yellow, but they darken to dusky brown before hatching.</p>",
+  severity_info: "Corn earworm eggs typically hatch around 70 FDD after the Aug 1 biofix date. Peak larval populations and damage occur around 275 FDD, with larvae leaving corn ears and pupating around 440 FDD.",
+  photo: "corn_earworm.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/corn-earworm/")
 
 corn_rootworm = CornRootworm.create!(name: "Corn Rootworm",
                              remote_name: 'corn_rootworm',
@@ -287,7 +287,7 @@ DegreeDayPest.create!(name: "Western Flower Thrip",
                                      biofix_dd: 1,
                                      critical_value: 675,
                                      t_min: 45,
-                                     t_max: 104,
+                                     t_max: nil,
                                      photo: 'thrips.png',
                                      severity_info: 'More information on pest severity',
                                      link: 'labs.russell.wisc.edu/vegento/pests/onion-thrips')

@@ -13,11 +13,11 @@ class CabbageLooper < DegreeDayPest
 
   def severity_legend
     [
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of pest presence or damage"},
-      {name: "High", slug: "high", description: "High likelihood of pest presence or damage"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of pest presence or damage"},
-      {name: "Low", slug: "low", description: "Low likelihood of pest presence or damage"},
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of pest presence or damage"}
+      {name: "Very High", slug: "very_high", description: "Very high likelihood of 1st or 2nd generation pest presence or damage"},
+      {name: "High", slug: "high", description: "High likelihood of 1st or 2nd generation pest presence or damage"},
+      {name: "Medium", slug: "medium", description: "Medium likelihood of 1st or 2nd generation pest presence or damage"},
+      {name: "Low", slug: "low", description: "Low likelihood of 1st or 2nd generation pest presence or damage"},
+      {name: "Very Low", slug: "very_low", description: "Very low likelihood of 1st or 2nd generation pest presence or damage"}
     ]
   end
 
