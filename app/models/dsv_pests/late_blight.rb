@@ -5,7 +5,6 @@ class LateBlight < DsvPest
       logger.error("Potato Late Blight: past week and season mismatch")
       return []
     end
-
     past_week.zip(season_to_date).map do | pair |
       logger.error("Potato Late Blight: Latitude mismatch") if pair[0][:lat] != pair[1][:lat]
       logger.error("Potato Late Blight: Longitude mismatch") if pair[0][:long] != pair[1][:long]
