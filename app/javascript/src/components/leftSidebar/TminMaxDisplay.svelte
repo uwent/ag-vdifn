@@ -6,6 +6,7 @@
     let tMax = "";
     let in_f = true;
     const { getCrops } = getContext(panelKey);
+
     function setTminTMax(affliction) {
         in_f = true;
         if (affliction) {
@@ -18,6 +19,44 @@
             tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
         }
     }
+
+
+    // function setTminTMax(affliction) {
+    //     tMinF = affliction.t_min;
+    //     tMaxF = affliction.t_max;
+    //     tMinC = ((tMinF - 32.0) * (5/9)).toFixed(1);
+    //     if (tMaxF === null) {
+    //       tMaxC = null;
+    //     } else {
+    //       tMaxC = ((tMinF - 32.0) * (5/9)).toFixed(1);
+    //     }
+    //     in_f = true;
+    //     tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
+    // }
+
+    // function showF() {
+    //   tMinText = string(tMinF);
+    //   if (tMaxF === null) {
+    //     tMaxText = "None";
+    //   } else {
+    //     tMaxText = string(tMaxF);
+    //   }
+    //   in_f = true;
+    //   tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
+    // }
+    //
+    // function showC() {
+    //   tMinText = string(tMinC);
+    //   if (tMaxC === null) {
+    //     tMaxText = "None";
+    //   } else {
+    //     tMaxText = string(tMaxC);
+    //   }
+    //   in_f = false;
+    //   tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
+    // }
+
+
 
     function convertToFahrenheit() {
         tMin = Temperature.to_f(tMin);
@@ -53,7 +92,15 @@
         }
     });
 
+    // onMount(() => {
+    //     if (getCrops().length > 0) {
+    //         setTminTMax(getCrops()[0].afflictions[0]);
+    //       }
+    // });
+
+
     $: in_f ? convertToFahrenheit() : convertToCelcius();
+    // $: in_f ? showF() : showC();
     $: setTminTMax($selectedAffliction);
 </script>
 
@@ -182,15 +229,15 @@
         <div id="tMinMaxRange">
         <div class="t-min-wrapper">
           <label for="tmin">Tmin</label>
-            <div title="tMinDisplay" type="text" class="tmin">{tMin}</div>
+            <div title="Min temp" type="text" class="tmin">{tMin}</div>
             </div>
           <div class="t-max-wrapper">
             <label for="tmax">Tmax</label>
-            <div title="tMaxDisplay" type="text" class="tmax">{tMax}</div>
+            <div title="Max temp" type="text" class="tmax">{tMax}</div>
           </div>
         </div>
     </div>
-    <div class="temp-group" id="in-fahren-wrapper">
+    <div title="Units" class="temp-group" id="in-fahren-wrapper">
         <div class="symbol-wrapper">
             <span class="in-celcius">&#8451;</span>
             <span class="in-fahrenheit">&#8457; </span>
