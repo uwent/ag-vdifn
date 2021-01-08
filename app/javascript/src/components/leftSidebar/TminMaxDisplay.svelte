@@ -7,25 +7,26 @@
     let in_f = true;
     const { getCrops } = getContext(panelKey);
     function setTminTMax(affliction) {
+        in_f = true;
         if (affliction) {
             tMin = affliction.t_min;
             tMax = affliction.t_max || "None";
         }
         if (tMax === "None") {
-            tMinTmax.update(state => ({...state, t_min: tMin, t_max: null}))
+            tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
         } else {
-            tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax}))
+            tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
         }
     }
 
     function convertToFahrenheit() {
         tMin = Temperature.to_f(tMin);
-
         if (tMax === null || tMax === "None") {
             tMax = "None";
         } else {
             tMax = Temperature.to_f(tMax);
         }
+        in_f = true;
         tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     }
 
@@ -36,6 +37,7 @@
         } else {
             tMax = Temperature.to_c(tMax);
         }
+        in_f = false;
         tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     }
 

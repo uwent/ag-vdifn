@@ -9,10 +9,10 @@
   } from "../../store/store";
   import { PestInfo } from "../common/TypeScript/types";
   import QuestionSvg from "../common/SVG/QuestionSvg.svelte";
-  const { dateToolTip, defaultStartDate } = getContext(panelKey);
+  const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey);
   let today: string = moment.utc().format("YYYY-MM-DD");
   let endDateValue: string = today;
-  let startDateMax: string = endDateValue;
+  let startDateMax: string = today;
   let startDateValue: string = defaultStartDate;
   let startLabel = dateToolTip.startLabel;
   let startMin = moment.utc().subtract(7, "days")
@@ -21,19 +21,23 @@
     const {
       target: { value },
     } = event;
-    startDateMax = value;
     if (moment.utc(endDateValue) < moment.utc(startDateValue)) {
       startDateValue = value;
     }
   }
 
-  function updateLateBlightEndDate(event) {
+  function updateEndDateInput(event) {
     selectedAffliction.subscribe((affliction: PestInfo) => {
-      if (affliction.name === "Late Blight" && moment.utc(startDateValue) <= startMin) {
-        endDateValue = moment(startDateValue).add(7, "days").format("YYYY-MM-DD")
+      if (affliction.name === "Late Blight") {
+        if (moment.utc(startDateValue) <= startMin) {
+          endDateValue = moment(startDateValue).add(7, "days").format("YYYY-MM-DD")
+        }
+        else if (moment.utc(startDateValue) >= startMin) {
+          endDateValue = today;
+        }
       }
-      else if (affliction.name === "Late Blight" && moment.utc(startDateValue) >= startMin) {
-        endDateValue = today
+      else if (moment.utc(startDateValue) > moment.utc(endDateValue)){
+        endDateValue = startDateValue;
       }
     });
   }
@@ -45,10 +49,15 @@
   });
 
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
+    if (panelType === "Insect") {
+      startLabel = dateToolTip.startLabel + " (default: " + moment.utc(affliction.biofix_date).format("M-D") + ")";
+    }
     if (affliction.biofix_date && affliction.biofix_date < today) {
       startDateValue = affliction.biofix_date;
+      endDateValue = today;
     } else if (affliction.biofix_date && affliction.biofix_date >= today) {
       startDateValue = moment.utc(affliction.biofix_date).subtract(1, "year").format("YYYY-MM-DD");
+      endDateValue = moment.utc(startDateValue).format("YYYY") + "-12-31";
     }
   });
 
@@ -94,8 +103,8 @@
       class="datepicker"
       id="datepicker-start"
       bind:value={startDateValue}
-      on:change={updateLateBlightEndDate}
-      max={startDateMax} />
+      on:change={updateEndDateInput}
+      max={today} />
     <button
       class="datepicker-tooltip"
       id="datepicker-start-information"

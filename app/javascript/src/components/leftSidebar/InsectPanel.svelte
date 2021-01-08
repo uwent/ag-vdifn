@@ -24,6 +24,7 @@
   export let data;
 
   setContext(panelKey, {
+    panelType: "Insect",
     getCrops: () => data,
     dateToolTip: {
       startDate: "Biofix date for insect",
