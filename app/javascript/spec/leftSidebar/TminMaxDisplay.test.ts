@@ -38,11 +38,11 @@ describe('TminMaxDisplay component', () => {
     });
 
     it('sets tMin to the first crop affliction', () => {
-        expect(getTitle("tMinDisplay")).toHaveTextContent(`${firstCropTmin}`)
+        expect(getTitle("Min temp")).toHaveTextContent(`${firstCropTmin}`)
     })
 
     it('sets tMax to the first crop affliction', () => {
-        expect(getTitle("tMaxDisplay")).toHaveTextContent(`${firstCropTmax}`)
+        expect(getTitle("Max temp")).toHaveTextContent(`${firstCropTmax}`)
     })
 
     it('updates tMin and tMax for selected affliction', async () => {
@@ -50,8 +50,8 @@ describe('TminMaxDisplay component', () => {
         const t_max = 86
         selectedAffliction.set({id: 15, name: "ladybug", t_min: t_min, t_max: t_max})
         await tick();
-        expect(getTitle("tMinDisplay")).toHaveTextContent(`${t_min}`)
-        expect(getTitle("tMaxDisplay")).toHaveTextContent(`${t_max}`)
+        expect(getTitle("Min temp")).toHaveTextContent(`${t_min}`)
+        expect(getTitle("Max temp")).toHaveTextContent(`${t_max}`)
     })
 
     it('defaults temp to fahrenheit', () => {
@@ -62,11 +62,11 @@ describe('TminMaxDisplay component', () => {
         const tempToggle: HTMLInputElement = getTitle("temp-unit-toggle");
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(false)
-        expect(getTitle('tMinDisplay')).toHaveTextContent("-1.1")
-        expect(getTitle('tMaxDisplay')).toHaveTextContent("26.7")
+        expect(getTitle("Min temp")).toHaveTextContent("-1.1")
+        expect(getTitle("Max temp")).toHaveTextContent("26.7")
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(true)
-        expect(getTitle('tMinDisplay')).toHaveTextContent("30.0")
-        expect(getTitle('tMaxDisplay')).toHaveTextContent("80.1")
+        expect(getTitle("Min temp")).toHaveTextContent("30.0")
+        expect(getTitle("Max temp")).toHaveTextContent("80.1")
     })
 })
