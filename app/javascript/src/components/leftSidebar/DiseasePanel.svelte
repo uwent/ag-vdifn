@@ -53,7 +53,7 @@
   }
 </style>
 
-<div title="disease parameters">
+<div title="Disease model selection">
   <ModelSelection />
   <ModelParameters>
     <DatePicker />

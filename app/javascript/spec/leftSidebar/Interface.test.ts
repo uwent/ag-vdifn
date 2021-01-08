@@ -8,20 +8,20 @@ beforeEach(() => {
         props: {
             diseasePanelData: [
                 {
-                    id: 1, 
-                    name: "potato", 
+                    id: 1,
+                    name: "potato",
                     afflictions: [
-                        {id: 5, name: "late blight", t_min: 5, t_max: 10}, 
+                        {id: 5, name: "late blight", t_min: 5, t_max: 10},
                         {id: 10, name: "black death", t_min: 10, t_max: 100}
                     ]
                 }
             ],
             insectPanelData: [
                 {
-                    id: 1, 
-                    name: "potato", 
+                    id: 1,
+                    name: "potato",
                     afflictions: [
-                        {id: 10, name: "grasshopper"}, 
+                        {id: 10, name: "grasshopper"},
                         {id: 45, name: "caterpillar"}
                     ]
                 }
@@ -54,5 +54,5 @@ it('shows custom panel when custom tab is selected', async () => {
     const customTab = getRole("radio", { name: "Custom"});
     await fireEvent.click(customTab);
 
-    expect(getTitle("Custom Parameters")).toBeInTheDocument();
+    expect(getTitle("Custom model specification")).toBeInTheDocument();
 })

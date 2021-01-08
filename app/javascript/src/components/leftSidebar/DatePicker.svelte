@@ -50,7 +50,7 @@
 
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
     if (panelType === "Insect") {
-      startLabel = dateToolTip.startLabel + " (default: " + moment.utc(affliction.biofix_date).format("M-D") + ")";
+      startLabel = dateToolTip.startLabel + " (Default: " + moment.utc(affliction.biofix_date).format("MMM D") + ")";
     }
     if (affliction.biofix_date && affliction.biofix_date < today) {
       startDateValue = affliction.biofix_date;
@@ -101,6 +101,7 @@
     <input
       type="date"
       class="datepicker"
+      title="Start date/biofix"
       id="datepicker-start"
       bind:value={startDateValue}
       on:change={updateEndDateInput}
@@ -118,6 +119,7 @@
     <input
       type="date"
       class="datepicker"
+      title="End date"
       id="datepicker-end"
       bind:value={endDateValue}
       on:change={updateStartDateInput}

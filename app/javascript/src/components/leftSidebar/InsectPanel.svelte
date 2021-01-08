@@ -52,7 +52,7 @@
   })
 </script>
 
-<div title="Insect Parameters">
+<div title="Insect model selection">
   <ModelSelection />
   <ModelParameters>
     <DatePicker />
