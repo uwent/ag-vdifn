@@ -41,7 +41,7 @@ it('should dispatch submit params when button is clicked', async () => {
         end_date: "2000-11-10",
         pest_id: 1,
         t_min: undefined,
-        t_max: null,
+        t_max: undefined,
         in_fahrenheit: true
 
     })

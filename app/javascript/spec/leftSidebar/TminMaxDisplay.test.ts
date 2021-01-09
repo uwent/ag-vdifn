@@ -7,8 +7,8 @@ import { tick } from 'svelte';
 let getLabelText;
 let getTitle;
 let getRole;
-const firstCropTmin = 30;
-const firstCropTmax = 80
+const firstCropTmin = 40;
+const firstCropTmax = 80;
 describe('TminMaxDisplay component', () => {
     beforeEach(() => {
         const data = [{
@@ -47,7 +47,7 @@ describe('TminMaxDisplay component', () => {
 
     it('updates tMin and tMax for selected affliction', async () => {
         const t_min = 50;
-        const t_max = 86
+        const t_max = 86;
         selectedAffliction.set({id: 15, name: "ladybug", t_min: t_min, t_max: t_max})
         await tick();
         expect(getTitle("Min temp")).toHaveTextContent(`${t_min}`)
@@ -62,11 +62,11 @@ describe('TminMaxDisplay component', () => {
         const tempToggle: HTMLInputElement = getTitle("temp-unit-toggle");
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(false)
-        expect(getTitle("Min temp")).toHaveTextContent("-1.1")
+        expect(getTitle("Min temp")).toHaveTextContent("4.4")
         expect(getTitle("Max temp")).toHaveTextContent("26.7")
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(true)
-        expect(getTitle("Min temp")).toHaveTextContent("30.0")
-        expect(getTitle("Max temp")).toHaveTextContent("80.1")
+        expect(getTitle("Min temp")).toHaveTextContent("40")
+        expect(getTitle("Max temp")).toHaveTextContent("80")
     })
 })

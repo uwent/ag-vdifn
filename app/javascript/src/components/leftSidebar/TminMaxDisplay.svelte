@@ -1,107 +1,139 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte";
     import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
-    import Temperature from "./TypeScript/temperature";
-    let tMin = "";
-    let tMax = "";
+    // import Temperature from "./TypeScript/temperature";
+    // let tMin = "";
+    // let tMax = "";
     let in_f = true;
+    let tMinF = 50;
+    let tMaxF = null;
+    let tMinC = 10;
+    let tMaxC = null;
+    let tMinText = "";
+    let tMaxText = "";
     const { getCrops } = getContext(panelKey);
 
-    function setTminTMax(affliction) {
-        in_f = true;
-        if (affliction) {
-            tMin = affliction.t_min;
-            tMax = affliction.t_max || "None";
-        }
-        if (tMax === "None") {
-            tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
-        } else {
-            tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-        }
-    }
+function c_to_f(temp: number) {
+  if (temp === null) {
+    return null;
+  } else {
+      return (temp - 32) * (5/9);
+  }
+}
 
+function makeText(temp) {
+    if (temp === null || temp === undefined) {
+        return "None";
+    } else if (Number.isInteger(temp)) {
+        return temp.toFixed(0);
+    } else {
+        return temp.toFixed(1);
+    }
+}
+
+
+function updateText(in_f) {
+    if (in_f) {
+        tMinText = makeText(tMinF);
+        tMaxText = makeText(tMaxF);
+        tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+    } else {
+        tMinText = makeText(tMinC);
+        tMaxText = makeText(tMaxC);
+        tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
+    }
+}
+
+
+// original
+    // function setTminTMax(affliction) {
+    //     in_f = true;
+    //     if (affliction) {
+    //         tMin = affliction.t_min;
+    //         tMax = affliction.t_max || "None";
+    //     }
+    //     if (tMax === "None") {
+    //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
+    //     } else {
+    //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+    //     }
+    // }
 
     // function setTminTMax(affliction) {
-    //     tMinF = affliction.t_min;
-    //     tMaxF = affliction.t_max;
-    //     tMinC = ((tMinF - 32.0) * (5/9)).toFixed(1);
-    //     if (tMaxF === null) {
-    //       tMaxC = null;
+    //     in_f = true;
+    //     if (affliction) {
+    //       tMinF = affliction.t_min;
+    //       tMaxF = affliction.t_max;
+    //       tMinC = c_to_f(tMinF);
+    //       tMaxC = c_to_f(tMaxF);
+    //       updateText();
+    //     }
+    //     tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+    // }
+
+    function setTminTmax(affliction) {
+        in_f = true;
+        tMinF = affliction.t_min;
+        tMaxF = affliction.t_max;
+        tMinC = c_to_f(tMinF);
+        tMaxC = c_to_f(tMaxF);
+        updateText(in_f);
+    }
+
+
+    // function convertToFahrenheit() {
+    //     tMin = Temperature.to_f(tMin);
+    //     if (tMax === null || tMax === "None") {
+    //         tMax = "None";
     //     } else {
-    //       tMaxC = ((tMinF - 32.0) * (5/9)).toFixed(1);
+    //         tMax = Temperature.to_f(tMax);
     //     }
     //     in_f = true;
-    //     tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
-    // }
-
-    // function showF() {
-    //   tMinText = string(tMinF);
-    //   if (tMaxF === null) {
-    //     tMaxText = "None";
-    //   } else {
-    //     tMaxText = string(tMaxF);
-    //   }
-    //   in_f = true;
-    //   tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
+    //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     // }
     //
-    // function showC() {
-    //   tMinText = string(tMinC);
-    //   if (tMaxC === null) {
-    //     tMaxText = "None";
-    //   } else {
-    //     tMaxText = string(tMaxC);
-    //   }
-    //   in_f = false;
-    //   tMinTmax.update(state => ({...state, t_min: tMinText, t_max: tMaxText, in_fahrenheit: in_f}))
+    // function convertToCelcius() {
+    //     tMin = Temperature.to_c(tMin);
+    //     if (tMax === null || tMax === "None") {
+    //         tMax = "None";
+    //     } else {
+    //         tMax = Temperature.to_c(tMax);
+    //     }
+    //     in_f = false;
+    //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
     // }
 
-
-
-    function convertToFahrenheit() {
-        tMin = Temperature.to_f(tMin);
-        if (tMax === null || tMax === "None") {
-            tMax = "None";
-        } else {
-            tMax = Temperature.to_f(tMax);
-        }
-        in_f = true;
-        tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    }
-
-    function convertToCelcius() {
-        tMin = Temperature.to_c(tMin);
-        if (tMax === null || tMax === "None") {
-            tMax = "None";
-        } else {
-            tMax = Temperature.to_c(tMax);
-        }
-        in_f = false;
-        tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    }
+    // onMount(() => {
+    //     if (getCrops().length > 0) {
+    //         tMin = getCrops()[0].afflictions[0].t_min;
+    //         tMax = getCrops()[0].afflictions[0].t_max || "None";
+    //         if (tMax === "None") {
+    //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
+    //         } else {
+    //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+    //         }
+    //     }
+    // });
 
     onMount(() => {
         if (getCrops().length > 0) {
-            tMin = getCrops()[0].afflictions[0].t_min;
-            tMax = getCrops()[0].afflictions[0].t_max || "None";
-            if (tMax === "None") {
-                tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
-            } else {
-                tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-            }
-        }
+            setTminTmax(getCrops()[0].afflictions[0]);
+          }
     });
 
     // onMount(() => {
     //     if (getCrops().length > 0) {
-    //         setTminTMax(getCrops()[0].afflictions[0]);
+    //         tMinF = getCrops()[0].afflictions[0];
+    //         tMaxF = getCrops()[0].afflictions[0];
+    //         tMinC = c_to_f(tMinF);
+    //         tMaxC = c_to_f(tMaxF);
+    //         updateText();
     //       }
     // });
 
-
-    $: in_f ? convertToFahrenheit() : convertToCelcius();
-    // $: in_f ? showF() : showC();
-    $: setTminTMax($selectedAffliction);
+    // $: in_f ? convertToFahrenheit() : convertToCelcius();
+    $: updateText(in_f);
+    $: setTminTmax($selectedAffliction);
 </script>
 
 <style>
@@ -229,11 +261,11 @@
         <div id="tMinMaxRange">
         <div class="t-min-wrapper">
           <label for="tmin">Tmin</label>
-            <div title="Min temp" type="text" class="tmin">{tMin}</div>
+            <div title="Min temp" type="text" class="tmin">{tMinText}</div>
             </div>
           <div class="t-max-wrapper">
             <label for="tmax">Tmax</label>
-            <div title="Max temp" type="text" class="tmax">{tMax}</div>
+            <div title="Max temp" type="text" class="tmax">{tMaxText}</div>
           </div>
         </div>
     </div>
