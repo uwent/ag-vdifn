@@ -36,7 +36,7 @@
   });
 
   function submit() {
-    insectPanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}))
+    insectPanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}));
     insectPanelParams.set({
       start_date: moment.utc($startDate).format("YYYY-MM-DD"),
       end_date: moment.utc($endDate).format("YYYY-MM-DD"),
@@ -48,7 +48,8 @@
   }
 
   onMount(() => {
-    selectedPanel.set(PANELS.INSECT)
+    selectedPanel.set(PANELS.INSECT);
+    submit();
   })
 </script>
 
@@ -62,4 +63,11 @@
   {#if $overlayLoading}
     <Loading />
   {/if}
+  <div>
+  Tmin = {$tMinTmax.t_min}
+  Tmax = {$tMinTmax.t_max}<br /><br />
+  pest_id = {insectPanelParams.pest_id}
+  Tmin = {insectPanelParams.t_min}
+  Tmax = {insectPanelParams.t_max}
+  </div>
 </div>

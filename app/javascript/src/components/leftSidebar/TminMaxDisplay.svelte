@@ -13,37 +13,48 @@
     let tMaxText = "";
     const { getCrops } = getContext(panelKey);
 
-function c_to_f(temp: number) {
-  if (temp === null) {
-    return null;
-  } else {
-      return (temp - 32) * (5/9);
-  }
-}
-
-function makeText(temp) {
-    if (temp === null || temp === undefined) {
-        return "None";
-    } else if (Number.isInteger(temp)) {
-        return temp.toFixed(0);
-    } else {
-        return temp.toFixed(1);
+    // convert fahrenheit to celcius
+    function c_to_f(temp: number) {
+      if (temp === null) {
+        return null;
+      } else {
+          return (temp - 32) * (5/9);
+      }
     }
-}
 
-
-function updateText(in_f) {
-    if (in_f) {
-        tMinText = makeText(tMinF);
-        tMaxText = makeText(tMaxF);
-        tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
-    } else {
-        tMinText = makeText(tMinC);
-        tMaxText = makeText(tMaxC);
-        tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
+    // generate the temperature display text
+    function makeText(temp) {
+        if (temp === null || temp === undefined) {
+            return "None";
+        } else if (Number.isInteger(temp)) {
+            return temp.toFixed(0);
+        } else {
+            return temp.toFixed(1);
+        }
     }
-}
 
+    // convert between units and update text
+    function updateText(in_f) {
+        if (in_f) {
+            tMinText = makeText(tMinF);
+            tMaxText = makeText(tMaxF);
+            tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+        } else {
+            tMinText = makeText(tMinC);
+            tMaxText = makeText(tMaxC);
+            tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
+        }
+    }
+
+    // set Tmin and Tmax on load or pest change
+    function setTminTmax(affliction) {
+        in_f = true;
+        tMinF = affliction.t_min;
+        tMaxF = affliction.t_max;
+        tMinC = c_to_f(tMinF);
+        tMaxC = c_to_f(tMaxF);
+        updateText(in_f);
+    }
 
 // original
     // function setTminTMax(affliction) {
@@ -70,17 +81,6 @@ function updateText(in_f) {
     //     }
     //     tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
     // }
-
-    function setTminTmax(affliction) {
-        in_f = true;
-        tMinF = affliction.t_min;
-        tMaxF = affliction.t_max;
-        tMinC = c_to_f(tMinF);
-        tMaxC = c_to_f(tMaxF);
-        updateText(in_f);
-    }
-
-
     // function convertToFahrenheit() {
     //     tMin = Temperature.to_f(tMin);
     //     if (tMax === null || tMax === "None") {
@@ -115,12 +115,6 @@ function updateText(in_f) {
     //     }
     // });
 
-    onMount(() => {
-        if (getCrops().length > 0) {
-            setTminTmax(getCrops()[0].afflictions[0]);
-          }
-    });
-
     // onMount(() => {
     //     if (getCrops().length > 0) {
     //         tMinF = getCrops()[0].afflictions[0];
@@ -132,6 +126,19 @@ function updateText(in_f) {
     // });
 
     // $: in_f ? convertToFahrenheit() : convertToCelcius();
+
+
+    onMount(() => {
+        if (getCrops().length > 0) {
+          in_f = true;
+          tMinF = getCrops()[0].afflictions[0].t_min;
+          tMaxF = getCrops()[0].afflictions[0].t_max;
+          tMinC = c_to_f(tMinF);
+          tMaxC = c_to_f(tMaxF);
+          updateText(in_f);
+        }
+    });
+
     $: updateText(in_f);
     $: setTminTmax($selectedAffliction);
 </script>

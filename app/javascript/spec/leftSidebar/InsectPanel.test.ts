@@ -17,7 +17,7 @@ beforeEach(() => {
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
     afflictionValue.set(1);
-    tMinTmax.set({ t_min: "42", t_max: "none", in_fahrenheit: true });
+    tMinTmax.set({ t_min: 42, t_max: null, in_fahrenheit: true });
     selectedAffliction.set({name: "bug"});
 
 })
@@ -33,6 +33,7 @@ it('should update insect panels state when submit button clicked', async () => {
     expect(get(insectPanelState)).toEqual({currentAffliction: {name: "bug"}})
 })
 
+// fix this test
 it('should dispatch submit params when button is clicked', async () => {
     const button = getText("Select")
     await fireEvent.click(button);
