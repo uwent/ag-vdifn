@@ -18,15 +18,22 @@
   let startMin = moment.utc().subtract(7, "days")
 
   function updateStartDateInput(event) {
-    const {
-      target: { value },
-    } = event;
+    const { target: { value } } = event;
+
+    // allow end date to push start date forward and update
     if (moment.utc(endDateValue) < moment.utc(startDateValue)) {
       startDateValue = value;
+    }
+
+    // if end date moves to different year end date follows
+    if (moment.utc(endDateValue).format("YYYY") != moment.utc(startDateValue).format("YYYY")) {
+      startDateValue = moment.utc(endDateValue).format("YYYY") + "-01-01";
     }
   }
 
   function updateEndDateInput(event) {
+
+    // late blight forces 7-day date window
     selectedAffliction.subscribe((affliction: PestInfo) => {
       if (affliction.name === "Late Blight") {
         if (moment.utc(startDateValue) <= startMin) {
@@ -36,10 +43,17 @@
           endDateValue = today;
         }
       }
-      else if (moment.utc(startDateValue) > moment.utc(endDateValue)){
-        endDateValue = startDateValue;
-      }
     });
+
+    // allow start date to push end date backward
+    if (moment.utc(startDateValue) > moment.utc(endDateValue)){
+      endDateValue = startDateValue;
+    }
+
+    // if start date moves to different year end date follows
+    if (moment.utc(startDateValue).format("YYYY") != moment.utc(endDateValue).format("YYYY")) {
+      endDateValue = moment.utc(startDateValue).format("YYYY") + "-12-31";
+    }
   }
 
   onMount(() => {

@@ -1,146 +1,141 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte";
-    import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
-    // import Temperature from "./TypeScript/temperature";
-    // let tMin = "";
-    // let tMax = "";
-    let in_f = true;
-    let tMinF = 50;
-    let tMaxF = null;
-    let tMinC = 10;
-    let tMaxC = null;
-    let tMinText = "";
-    let tMaxText = "";
-    const { getCrops } = getContext(panelKey);
+  import { getContext, onMount } from "svelte";
+  import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
+  // import Temperature from "./TypeScript/temperature";
+  // let tMin = "";
+  // let tMax = "";
+  let in_f = true;
+  let tMinF = 50;
+  let tMaxF = null;
+  let tMinC = 10;
+  let tMaxC = null;
+  let tMinText = "";
+  let tMaxText = "";
+  const { getCrops } = getContext(panelKey);
 
-    // convert fahrenheit to celcius
-    function c_to_f(temp: number) {
-      if (temp === null) {
-        return null;
-      } else {
-          return (temp - 32) * (5/9);
-      }
+  // convert fahrenheit to celcius
+  function c_to_f(temp: number) {
+    if (temp === null) {
+      return null;
+    } else {
+      return (temp - 32) * (5/9);
     }
+  }
 
-    // generate the temperature display text
-    function makeText(temp) {
-        if (temp === null || temp === undefined) {
-            return "None";
-        } else if (Number.isInteger(temp)) {
-            return temp.toFixed(0);
-        } else {
-            return temp.toFixed(1);
-        }
+  // generate the temperature display text
+  function makeText(temp) {
+    if (temp === null || temp === undefined) {
+      return "None";
+    } else if (Number.isInteger(temp)) {
+      return temp.toFixed(0);
+    } else {
+      return temp.toFixed(1);
     }
+  }
 
-    // convert between units and update text
-    function updateText(in_f) {
-        if (in_f) {
-            tMinText = makeText(tMinF);
-            tMaxText = makeText(tMaxF);
-            tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
-        } else {
-            tMinText = makeText(tMinC);
-            tMaxText = makeText(tMaxC);
-            tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
-        }
+  // convert between units and update text
+  function updateText(in_f) {
+    if (in_f) {
+      tMinText = makeText(tMinF);
+      tMaxText = makeText(tMaxF);
+      tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+    } else {
+      tMinText = makeText(tMinC);
+      tMaxText = makeText(tMaxC);
+      tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
     }
+  }
 
-    // set Tmin and Tmax on load or pest change
-    function setTminTmax(affliction) {
-        in_f = true;
-        tMinF = affliction.t_min;
-        tMaxF = affliction.t_max;
-        tMinC = c_to_f(tMinF);
-        tMaxC = c_to_f(tMaxF);
-        updateText(in_f);
+  // set Tmin and Tmax on load or pest change
+  function setTminTmax(affliction) {
+    in_f = true;
+    tMinF = affliction.t_min;
+    tMaxF = affliction.t_max;
+    tMinC = c_to_f(tMinF);
+    tMaxC = c_to_f(tMaxF);
+    updateText(in_f);
+  }
+
+  // original
+  // function setTminTMax(affliction) {
+  //     in_f = true;
+  //     if (affliction) {
+  //         tMin = affliction.t_min;
+  //         tMax = affliction.t_max || "None";
+  //     }
+  //     if (tMax === "None") {
+  //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
+  //     } else {
+  //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+  //     }
+  // }
+
+  // function setTminTMax(affliction) {
+  //     in_f = true;
+  //     if (affliction) {
+  //       tMinF = affliction.t_min;
+  //       tMaxF = affliction.t_max;
+  //       tMinC = c_to_f(tMinF);
+  //       tMaxC = c_to_f(tMaxF);
+  //       updateText();
+  //     }
+  //     tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+  // }
+  // function convertToFahrenheit() {
+  //     tMin = Temperature.to_f(tMin);
+  //     if (tMax === null || tMax === "None") {
+  //         tMax = "None";
+  //     } else {
+  //         tMax = Temperature.to_f(tMax);
+  //     }
+  //     in_f = true;
+  //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+  // }
+  //
+  // function convertToCelcius() {
+  //     tMin = Temperature.to_c(tMin);
+  //     if (tMax === null || tMax === "None") {
+  //         tMax = "None";
+  //     } else {
+  //         tMax = Temperature.to_c(tMax);
+  //     }
+  //     in_f = false;
+  //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+  // }
+
+  // onMount(() => {
+  //     if (getCrops().length > 0) {
+  //         tMin = getCrops()[0].afflictions[0].t_min;
+  //         tMax = getCrops()[0].afflictions[0].t_max || "None";
+  //         if (tMax === "None") {
+  //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
+  //         } else {
+  //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
+  //         }
+  //     }
+  // });
+
+  // onMount(() => {
+  //     if (getCrops().length > 0) {
+  //         tMinF = getCrops()[0].afflictions[0];
+  //         tMaxF = getCrops()[0].afflictions[0];
+  //         tMinC = c_to_f(tMinF);
+  //         tMaxC = c_to_f(tMaxF);
+  //         updateText();
+  //       }
+  // });
+
+  // $: in_f ? convertToFahrenheit() : convertToCelcius();
+
+
+  onMount(() => {
+    if (getCrops().length > 0) {
+      setTminTmax(getCrops()[0].afflictions[0]);
     }
+  });
 
-// original
-    // function setTminTMax(affliction) {
-    //     in_f = true;
-    //     if (affliction) {
-    //         tMin = affliction.t_min;
-    //         tMax = affliction.t_max || "None";
-    //     }
-    //     if (tMax === "None") {
-    //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
-    //     } else {
-    //         tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    //     }
-    // }
-
-    // function setTminTMax(affliction) {
-    //     in_f = true;
-    //     if (affliction) {
-    //       tMinF = affliction.t_min;
-    //       tMaxF = affliction.t_max;
-    //       tMinC = c_to_f(tMinF);
-    //       tMaxC = c_to_f(tMaxF);
-    //       updateText();
-    //     }
-    //     tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
-    // }
-    // function convertToFahrenheit() {
-    //     tMin = Temperature.to_f(tMin);
-    //     if (tMax === null || tMax === "None") {
-    //         tMax = "None";
-    //     } else {
-    //         tMax = Temperature.to_f(tMax);
-    //     }
-    //     in_f = true;
-    //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    // }
-    //
-    // function convertToCelcius() {
-    //     tMin = Temperature.to_c(tMin);
-    //     if (tMax === null || tMax === "None") {
-    //         tMax = "None";
-    //     } else {
-    //         tMax = Temperature.to_c(tMax);
-    //     }
-    //     in_f = false;
-    //     tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    // }
-
-    // onMount(() => {
-    //     if (getCrops().length > 0) {
-    //         tMin = getCrops()[0].afflictions[0].t_min;
-    //         tMax = getCrops()[0].afflictions[0].t_max || "None";
-    //         if (tMax === "None") {
-    //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: null, in_fahrenheit: in_f}))
-    //         } else {
-    //             tMinTmax.update(state => ({...state, t_min: tMin, t_max: tMax, in_fahrenheit: in_f}))
-    //         }
-    //     }
-    // });
-
-    // onMount(() => {
-    //     if (getCrops().length > 0) {
-    //         tMinF = getCrops()[0].afflictions[0];
-    //         tMaxF = getCrops()[0].afflictions[0];
-    //         tMinC = c_to_f(tMinF);
-    //         tMaxC = c_to_f(tMaxF);
-    //         updateText();
-    //       }
-    // });
-
-    // $: in_f ? convertToFahrenheit() : convertToCelcius();
-
-
-    onMount(() => {
-        if (getCrops().length > 0) {
-          in_f = true;
-          tMinF = getCrops()[0].afflictions[0].t_min;
-          tMaxF = getCrops()[0].afflictions[0].t_max;
-          tMinC = c_to_f(tMinF);
-          tMaxC = c_to_f(tMaxF);
-          updateText(in_f);
-        }
-    });
-
-    $: updateText(in_f);
-    $: setTminTmax($selectedAffliction);
+  $: updateText(in_f);
+  $: setTminTmax($selectedAffliction);
 </script>
 
 <style>

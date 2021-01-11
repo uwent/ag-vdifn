@@ -43,7 +43,7 @@
 
 
   function submit() {
-    diseasePanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}))
+    diseasePanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}));
     diseasePanelParams.set({
       start_date: moment.utc($startDate).format("YYYY-MM-DD"),
       end_date: moment.utc($endDate).format("YYYY-MM-DD"),
@@ -52,8 +52,8 @@
   };
 
   onMount(() => {
-    selectedPanel.set(PANELS.DISEASE)
-    submit()
+    selectedPanel.set(PANELS.DISEASE);
+    submit();
   })
 </script>
 
