@@ -72,6 +72,11 @@
       left: 62%;
     }
   }
+
+  h2 {
+    margin: 0px;
+  }
+
 </style>
 
 <svelte:window on:keydown={handle_keydown} />
@@ -86,9 +91,7 @@
   aria-labelledby="affliction-modal">
   <h2 id="affliction-modal">{name}</h2>
   <slot name="header" />
-  <hr />
   <slot />
-  <hr />
 
   <!-- svelte-ignore a11y-autofocus -->
   <Button click={close} text="Close" />

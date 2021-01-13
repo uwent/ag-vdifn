@@ -99,13 +99,13 @@
     right: 10px;
     bottom: 60px;
     z-index: 100;
-    padding: 10px 15px;
+    padding: 5px 5px;
     border: none;
+    border-radius: 3px;
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3);
 
     &[aria-expanded="true"] {
-      background-color: white;
-      box-shadow: none;
+      background: rgba(240, 240, 240);
     }
 
     @media #{$medium-up} {
@@ -121,6 +121,7 @@
     z-index: 10;
     padding: 5px 10px;
     background: rgba(255, 255, 255, 0.95);
+    border-radius: 3px;
     box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
 
@@ -150,7 +151,7 @@
 
   fieldset {
     margin-top: 10px;
-    background: rgba(200, 200, 200, 0.4);
+    background: rgba(234, 234, 234, 0.4);
     margin-bottom: 10px;
     padding: 10px;
 
@@ -178,7 +179,7 @@
 
 <button
   id="right-sidebar-expand-button" aria-expanded={expanded}
-  on:click={() => (expanded = !expanded)}>{expanded ? 'X' : 'Show Legend'}</button>
+  on:click={() => (expanded = !expanded)}>{expanded ? '\u2716' : 'Show Legend'}</button>
 
 <div id="right-sidebar" aria-expanded={expanded}>
   {#if $selectedPanel === PANELS.CUSTOM}

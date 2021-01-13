@@ -56,7 +56,7 @@
 
   function buildModalLink(link) {
     if (link != null) {
-      return `<a href='http://${link}' target='_blank'>More Information... </a>`
+      return `<a href='${link}' target='_blank'>More Information... </a>`
     }
   }
 

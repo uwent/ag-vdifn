@@ -1,6 +1,6 @@
 ## Foliar diseases ##
 late_blight = LateBlight.create!(
-  name: "Late Blight",
+  name: "Late Blight (Potato)",
   remote_name: "potato_blight_dsv",
   biofix_mm: 1, biofix_dd: 1,
   critical_value: 0,
@@ -8,7 +8,7 @@ late_blight = LateBlight.create!(
   link: "https://vegpath.plantpath.wisc.edu/")
 
 foliar_disease = FoliarDisease.create!(
-  name: "Foliar Disease",
+  name: "Foliar Disease (Carrot)",
   remote_name: "carrot_foliar_dsv",
   biofix_mm: 1, biofix_dd: 1,
   critical_value: 0,

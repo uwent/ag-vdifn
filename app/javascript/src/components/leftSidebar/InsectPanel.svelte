@@ -63,15 +63,4 @@
   {#if $overlayLoading}
     <Loading />
   {/if}
-  <div>
-  tMinTmax values...<br />
-  Tmin = {$tMinTmax.t_min}<br />
-  Tmax = {$tMinTmax.t_max}<br /><br />
-  insectPanelParams values...<br />
-  start_date = {$insectPanelParams.start_date}<br />
-  end_date = {$insectPanelParams.end_date}<br />
-  pest_id = {$insectPanelParams.pest_id}<br />
-  Tmin = {$insectPanelParams.t_min}<br />
-  Tmax = {$insectPanelParams.t_max}<br />
-  </div>
 </div>

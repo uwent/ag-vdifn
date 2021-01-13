@@ -80,7 +80,12 @@ export type Pest = {
     end_date_enabled: boolean
     t_max: number;
     t_min: number;
-    critical_value: 0;
+    risk_start: number;
+    risk_peak: number;
+    risk_end: number;
+    risk_start2: number;
+    risk_peak2: number;
+    risk_end2: number;
     info: string;
     severity_info: string;
     photo: string;
