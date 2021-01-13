@@ -14,7 +14,7 @@ describe('when insect panel selected', () => {
         selectedPanel.set(PANELS.INSECT)
         await tick();
 
-        expect(getText("insect - No Model Submitted")).toBeInTheDocument()
+        expect(getText("No Model Submitted")).toBeInTheDocument()
     })
 
     it('shows current affliction name', async () => {
@@ -22,7 +22,7 @@ describe('when insect panel selected', () => {
         insectPanelState.set({currentAffliction: { name: "insect name"}})
         await tick();
 
-        expect(getText("insect - insect name")).toBeInTheDocument()
+        expect(getText("insect name")).toBeInTheDocument()
     })
 })
 
@@ -31,7 +31,7 @@ describe('when disease panel selected', () => {
         selectedPanel.set(PANELS.DISEASE)
         await tick()
 
-        expect(getText("disease - No Model Submitted")).toBeInTheDocument()
+        expect(getText("No Model Submitted")).toBeInTheDocument()
 
     })
 
@@ -40,7 +40,7 @@ describe('when disease panel selected', () => {
         diseasePanelState.set({currentAffliction: { name: "disease name"}})
         await tick()
 
-        expect(getText("disease - disease name")).toBeInTheDocument()
+        expect(getText("disease name")).toBeInTheDocument()
     })
 })
 
@@ -49,7 +49,7 @@ describe('when custom panel selected', () => {
         selectedPanel.set(PANELS.CUSTOM);
         await tick();
 
-        expect(getText("custom - None/None \u2103")).toBeInTheDocument()
+        expect(getText("Custom model: None/None \u2103")).toBeInTheDocument()
     })
 
     it('shows tMin and TMax and temp scale', async () => {
@@ -57,6 +57,6 @@ describe('when custom panel selected', () => {
         customPanelState.set({t_max: 10, t_min: 5, in_fahrenheit: true})
         await tick();
 
-        expect(getText("custom - 5/10 \u2109")).toBeInTheDocument()
+        expect(getText("Custom model: 5/10 \u2109")).toBeInTheDocument()
     })
 })

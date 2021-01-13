@@ -31,11 +31,11 @@
 
 {#if $selectedPanel === PANELS.DISEASE}
   <div class="model-status">
-    {$diseasePanelState.currentAffliction.name}
+    {$diseasePanelState.currentAffliction === undefined ? 'No Model Submitted' : $diseasePanelState.currentAffliction.name}
   </div>
 {:else if $selectedPanel === PANELS.INSECT}
   <div class="model-status">
-    {$insectPanelState.currentAffliction.name}
+    {$insectPanelState.currentAffliction === undefined ? 'No Model Submitted' : $insectPanelState.currentAffliction.name}
   </div>
 {:else}
   <div class="model-status">
