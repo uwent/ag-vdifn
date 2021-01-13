@@ -62,7 +62,7 @@
 
   function buildModalImage(photo) {
     if (photo != null) {
-      return `<img src='images/${photo}' width='150px' align="left" style="margin-right: 10px;"/>`
+      return `<img src='images/${photo}' width='150px' align="left" style="margin-top: 1em; margin-right: 10px;"/>`
     }
     else {
       return ""

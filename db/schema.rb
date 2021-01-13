@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_10_230130) do
+ActiveRecord::Schema.define(version: 2021_01_13_170224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 2020_12_10_230130) do
     t.string "link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "risk_start"
+    t.integer "risk_peak"
+    t.integer "risk_end"
+    t.integer "risk_start2"
+    t.integer "risk_peak2"
+    t.integer "risk_end2"
   end
 
 end
