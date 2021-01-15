@@ -19,7 +19,7 @@ export type PestInfo = {
     biofix_date: string;
     end_date_enabled: boolean;
     tmin: number;
-    tmax: number
+    tmax: number;
 }
 
 export type PointDetailsParams = {
@@ -28,8 +28,8 @@ export type PointDetailsParams = {
     start_date: string;
     end_date: string;
     pest_id: number;
-    t_max?: string;
-    t_min?: string;
+    t_max?: number;
+    t_min?: number;
     in_fahrenheit?: boolean;
     panel: string;
 }
@@ -38,8 +38,8 @@ export type SeverityParams = {
     start_date: string;
     end_date: string;
     pest_id?: number;
-    t_max?: string;
-    t_min?: string;
+    t_max?: number;
+    t_min?: number;
     in_fahrenheit?: boolean;
 }
 

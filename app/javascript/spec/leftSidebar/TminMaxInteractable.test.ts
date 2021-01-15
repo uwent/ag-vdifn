@@ -22,14 +22,14 @@ describe('TminMaxInteractable component', () => {
             name: 'carrots',
             afflictions: [{id: 15, name: "ladybug", t_min: 50, t_max: 86}, {id: 6, name: "grasshopper", t_min: 48, t_max: null}]
         }]
-    
+
         const { getByLabelText, getByTitle, getByRole, component } = render(TminMaxInteractable);
         getLabelText = getByLabelText;
         getTitle = getByTitle;
         getRole = getByRole;
         _component = component;
     });
-        
+
        afterEach(jest.clearAllMocks)
 
     it('sets tMin and tMax to default values', () => {
@@ -54,12 +54,12 @@ describe('TminMaxInteractable component', () => {
 
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(false)
-        expect(tMin.value).toEqual("10.0")
+        expect(tMin.value).toEqual("10")
         expect(tMax.value).toEqual("26.7")
 
         await fireEvent.click(tempToggle)
         expect(tempToggle.checked).toEqual(true)
-        expect(tMin.value).toEqual("50.0")
+        expect(tMin.value).toEqual("50")
         expect(tMax.value).toEqual("80.1")
     })
 
@@ -88,13 +88,13 @@ describe('TminMaxInteractable component', () => {
 
             await fireEvent.change(tMaxInput, { target: { value: 0}})
 
-            expect(tMaxInput.validationMessage).toEqual("This value must be greater than the tMin") 
+            expect(tMaxInput.validationMessage).toEqual("This value must be greater than the tMin")
         })
 
         it("does not validate if tMax is disabled", async () => {
             const tMinInput: HTMLInputElement = getRole("spinbutton", { name: "Tmin"})
 
-            await fireEvent.click(getRole("checkbox", { name: "No TMax"})) 
+            await fireEvent.click(getRole("checkbox", { name: "No TMax"}))
 
             await fireEvent.change(tMinInput, { target: { value: 100}})
 

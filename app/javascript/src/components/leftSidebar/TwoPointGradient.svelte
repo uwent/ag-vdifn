@@ -10,9 +10,9 @@
     const _ = require("lodash");
     const dispatch = createEventDispatcher();
     let gradientHelper = new GradientHelper();
-    let severityLevels: number = 3;
-    let userMin;
-    let userMax;
+    let severityLevels: number = 5;
+    let userMin: number;
+    let userMax: number;
     let intermediateRanges: number[][] = [];
     let addButton: HTMLInputElement;
     let minusButton: HTMLInputElement;
@@ -150,7 +150,7 @@
         updateButtons();
     }
 
-    function updateUserMax(value) {
+    function updateUserMax(value: number) {
         if (maxInputValid(value)) userMax = value;
         updateButtons();
     }

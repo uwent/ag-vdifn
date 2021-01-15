@@ -14,7 +14,7 @@
     let intermediateRangesUpper: number[][] = [];
     let intermediateRangesLower: number[][] = [];
     let gradientHelper = new GradientHelper();
-    let severityLevels: number = 3;
+    let severityLevels: number = 5;
     let userMiddleInputMin: HTMLInputElement;
     let userMiddleInputMax: HTMLInputElement;
     let userMinInput: HTMLInputElement;

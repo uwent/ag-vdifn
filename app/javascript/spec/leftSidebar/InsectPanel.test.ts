@@ -17,8 +17,8 @@ beforeEach(() => {
     startDate.set("2000-10-10");
     endDate.set("2000-11-10");
     afflictionValue.set(1);
-    tMinTmax.set({ t_min: 42, t_max: null, in_fahrenheit: true });
-    selectedAffliction.set({name: "bug"});
+    // tMinTmax.set({ t_min: 42, t_max: null, in_fahrenheit: true });
+    selectedAffliction.set({name: "bug", t_min: 42, t_max: null});
 
 })
 
@@ -30,22 +30,24 @@ it('should update insect panels state when submit button clicked', async () => {
     const button = getText("Select")
     await fireEvent.click(button);
 
-    expect(get(insectPanelState)).toEqual({currentAffliction: {name: "bug"}})
+    expect(get(insectPanelState)).toEqual({
+      currentAffliction: { name: "bug", t_min: 42, t_max: null }
+    })
 })
 
 // fix this test
-// it('should dispatch submit params when button is clicked', async () => {
-//     const button = getText("Select")
-//     await fireEvent.click(button);
-//     expect(get(insectPanelParams)).toEqual({
-//         start_date: "2000-10-10",
-//         end_date: "2000-11-10",
-//         pest_id: 1,
-//         t_min: 42,
-//         t_max: null,
-//         in_fahrenheit: true
-//     })
-// })
+it('should dispatch submit params when button is clicked', async () => {
+    const button = getText("Select")
+    await fireEvent.click(button);
+    expect(get(insectPanelParams)).toEqual({
+        start_date: "2000-10-10",
+        end_date: "2000-11-10",
+        pest_id: 1,
+        t_min: 42,
+        t_max: null,
+        in_fahrenheit: true
+    })
+})
 
 it('sets context data for child elements', () => {
     expect(insectPanel.$$.context.get(panelKey)).toEqual({

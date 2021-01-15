@@ -1,93 +1,153 @@
 <script lang="ts">
-    import { createEventDispatcher, onMount } from "svelte";
-    import { tMinTmax } from "../../store/store";
-    import Temperature from "./TypeScript/temperature";
-    let tMin = null;
-    let tMax = null;
-    let in_f: boolean = true;
-    let tMaxDisabled: boolean = false;
-    let valid: boolean = true;
-    const dispatch = createEventDispatcher();
+  import { createEventDispatcher, onMount } from "svelte";
+  import { tMinTmax } from "../../store/store";
+  // import Temperature from "./TypeScript/temperature";
+  let tMin: number = 50;
+  let tMax: number = null;
+  let tMinSubmit;
+  let tMaxSubmit;
+  let in_f: boolean = true;
+  let tMaxDisabled: boolean = false;
+  let valid: boolean = true;
+  const dispatch = createEventDispatcher();
 
-    function convert(event) {
-        in_f = event.target.checked;
-        if (in_f) {
-            convertToFahrenheit();
-        } else {
-            convertToCelcius();
-        }
+  // convert fahrenheit to celcius
+  function f_to_c(f: number) {
+    if (f === null) {
+      return null;
+    } else {
+      return Math.round(((f - 32) * (5/9)) * 10) / 10;
     }
+  }
 
-    function convertToFahrenheit() {
-        tMin = Temperature.to_f(tMin);
-        if (tMax !== null) tMax = Temperature.to_f(tMax);
+  // convert celcius to fahrenheit
+  function c_to_f(c: number) {
+    if (c === null) {
+      return null;
+    } else {
+      return Math.round(((c * (9/5)) + 32) * 10) / 10;
     }
+  }
 
-    function convertToCelcius() {
-        tMin = Temperature.to_c(tMin);
-        if (tMax !== null) tMax = Temperature.to_c(tMax);
+  function convert(event) {
+    in_f = event.target.checked;
+    if (in_f) {
+      tMin = c_to_f(tMin);
+      tMax = c_to_f(tMax);
+    } else {
+      tMin = f_to_c(tMin);
+      tMax = f_to_c(tMax);
     }
+  }
 
-    function tMaxToggle(event) {
-        tMax = null;
-        tMaxDisabled = event.target.checked;
-        if (tMaxDisabled) {
-            valid = true
-        } else if (!tMaxDisabled && !tMax) {
-            valid = false
-        }
+  // function convertToFahrenheit() {
+  //   tMin = Temperature.to_f(tMin);
+  //   if (tMax !== null) tMax = Temperature.to_f(tMax);
+  // }
+  //
+  // function convertToCelcius() {
+  //   tMin = Temperature.to_c(tMin);
+  //   if (tMax !== null) tMax = Temperature.to_c(tMax);
+  // }
+
+  function tMaxToggle(event) {
+    tMaxDisabled = event.target.checked;
+    if (tMaxDisabled) {
+      valid = true
+    } else if (!tMaxDisabled && !tMax) {
+      valid = false
     }
+  }
 
-    function validateTmin(event) {
-        const {
-            target,
-            target: { value },
-        } = event;
-        if (tMaxDisabled) {
-            target.setCustomValidity("");
-            valid = true;
-            return;
-        }
-        if (value >= tMax) {
-            target.setCustomValidity("This value must be less than the tMax");
-            valid = false;
-        } else {
-            target.setCustomValidity("");
-            tMin = event.target.value;
-            valid = true;
-        }
+  function validateTmin(event) {
+    const {
+      target,
+      target: { value },
+    } = event;
+    if (tMaxDisabled) {
+      target.setCustomValidity("");
+      valid = true;
+      return;
     }
-
-    function validateTmax(event) {
-        const {
-            target,
-            target: { value },
-        } = event;
-        if (tMaxDisabled) {
-            target.setCustomValidity("");
-            valid = true;
-            return;
-        }
-        if (value <= tMin) {
-            target.setCustomValidity(
-                "This value must be greater than the tMin"
-            );
-            valid = false;
-        } else {
-            target.setCustomValidity("");
-            tMax = event.target.value;
-            valid = true;
-        }
+    if (value >= tMax) {
+      target.setCustomValidity("This value must be less than the tMax");
+      valid = false;
+    } else {
+      target.setCustomValidity("");
+      tMin = Number(event.target.value);
+      valid = true;
     }
+  }
 
-    onMount(() => {
-        tMin = 50;
-        tMax = null;
-        tMaxDisabled = true;
-    });
+  function validateTmax(event) {
+    const {
+      target,
+      target: { value },
+    } = event;
+    if (tMaxDisabled) {
+      target.setCustomValidity("");
+      valid = true;
+      return;
+    }
+    if (value <= tMin) {
+      target.setCustomValidity(
+        "This value must be greater than the tMin"
+      );
+      valid = false;
+    } else {
+      target.setCustomValidity("");
+      tMax = Number(event.target.value);
+      valid = true;
+    }
+  }
 
-    $: dispatch("tMinMaxValid", { valid: valid });
-    $: tMinTmax.set({ t_max: tMax, t_min: tMin, in_fahrenheit: in_f });
+  // function updateTminTmax(tMin, tMax, in_f, tMaxDisabled) {
+  //   tMinSubmit = Number(tMin.toFixed(1));
+  //   if (tMaxDisabled) {
+  //     tMaxSubmit = null;
+  //   } else {
+  //     tMaxSubmit = Number(tMax.toFixed(1));
+  //   }
+  //   tMinTmax.set({ t_min: tMinSubmit, t_max: tMaxSubmit, in_fahrenheit: in_f });
+  // }
+
+  // function updateTminTmax(tMin, tMax, in_f, tMaxDisabled) {
+  //   if (tMaxDisabled) {
+  //     tMinTmax.set({
+  //       t_min: Number(tMin.toFixed(1)),
+  //       t_max: null,
+  //       in_fahrenheit: in_f });
+  //   } else {
+  //     tMinTmax.set({
+  //       t_min: Number(tMin.toFixed(1)),
+  //       t_max: Number(tMax.toFixed(1)),
+  //       in_fahrenheit: in_f });
+  //   }
+  // }
+
+  function updateTminTmax(tMin, tMax, in_f, tMaxDisabled) {
+    if (tMaxDisabled) {
+      tMinTmax.set({
+        t_min: tMin,
+        t_max: null,
+        in_fahrenheit: in_f });
+    } else {
+      tMinTmax.set({
+        t_min: tMin,
+        t_max: tMax,
+        in_fahrenheit: in_f });
+    }
+  }
+
+  onMount(() => {
+    tMin = 50;
+    tMax = null;
+    tMaxDisabled = true;
+  });
+
+  $: dispatch("tMinMaxValid", { valid: valid });
+  // $: tMinTmax.set({ t_min: tMin, t_max: tMax, in_fahrenheit: in_f });
+  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled);
 </script>
 
 <style>

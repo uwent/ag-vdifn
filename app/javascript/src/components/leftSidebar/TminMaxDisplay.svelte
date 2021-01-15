@@ -2,21 +2,17 @@
   import { getContext, onMount } from "svelte";
   import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
   let in_f = true;
-  let tMinF = 50;
-  let tMaxF = null;
-  let tMinC = 10;
-  let tMaxC = null;
+  let tMinF;
+  let tMaxF;
+  let tMinC;
+  let tMaxC;
   let tMinText = "";
   let tMaxText = "";
   const { getCrops } = getContext(panelKey);
 
-  // convert fahrenheit to celcius
-  function c_to_f(temp: number) {
-    if (temp === null) {
-      return null;
-    } else {
-      return (temp - 32) * (5/9);
-    }
+  function f_to_c(f) {
+    if (f === null) return null;
+    return Math.round(((f - 32) * (5/9)) * 10) / 10;
   }
 
   // generate the temperature display text
@@ -43,19 +39,23 @@
     }
   }
 
-  // set Tmin and Tmax on load or pest change
+  // Sets temperature values and updates display text
   function setTminTmax(affliction) {
-    in_f = true;
-    tMinF = affliction.t_min;
-    tMaxF = affliction.t_max;
-    tMinC = c_to_f(tMinF);
-    tMaxC = c_to_f(tMaxF);
-    updateText(in_f);
+    if (affliction) {
+      in_f = true;
+      tMinF = affliction.t_min;
+      tMaxF = affliction.t_max;
+      tMinC = f_to_c(tMinF);
+      tMaxC = f_to_c(tMaxF);
+      updateText(in_f);
+    }
   }
 
   onMount(() => {
     if (getCrops().length > 0) {
       setTminTmax(getCrops()[0].afflictions[0]);
+    } else {
+      setTminTmax($selectedAffliction);
     }
   });
 

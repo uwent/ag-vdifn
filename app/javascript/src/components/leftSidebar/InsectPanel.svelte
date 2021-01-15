@@ -63,4 +63,12 @@
   {#if $overlayLoading}
     <Loading />
   {/if}
+  <!-- <div>
+    Insect panel params:<br />
+    start_date: {$insectPanelParams.start_date}<br />
+    end_date: {$insectPanelParams.end_date}<br />
+    t_min: {$insectPanelParams.t_min} {typeof $insectPanelParams.t_min}<br />
+    t_max: {$insectPanelParams.t_max} {typeof $insectPanelParams.t_max}<br />
+    in_fahrenheit: {$insectPanelParams.in_fahrenheit}
+  </div> -->
 </div>
