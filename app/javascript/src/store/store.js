@@ -31,7 +31,7 @@ export const customPanelState = writable({selectedGradient: 1})
 export const selectedPanel = writable("")
 
 export const PANELS = {
-    INSECT: "insect",
-    DISEASE: "disease",
-    CUSTOM: "custom"
+  INSECT: "insect",
+  DISEASE: "disease",
+  CUSTOM: "custom"
 }

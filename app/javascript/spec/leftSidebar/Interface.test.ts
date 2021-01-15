@@ -4,55 +4,55 @@ import { tick } from 'svelte';
 let getRole;
 let getTitle;
 beforeEach(() => {
-    const { getByRole, getByTitle } = render(Interface, {
-        props: {
-            diseasePanelData: [
-                {
-                    id: 1,
-                    name: "potato",
-                    afflictions: [
-                        {id: 5, name: "late blight", t_min: 5, t_max: 10},
-                        {id: 10, name: "black death", t_min: 10, t_max: 100}
-                    ]
-                }
-            ],
-            insectPanelData: [
-                {
-                    id: 1,
-                    name: "potato",
-                    afflictions: [
-                        {id: 10, name: "grasshopper"},
-                        {id: 45, name: "caterpillar"}
-                    ]
-                }
-            ]
+  const { getByRole, getByTitle } = render(Interface, {
+    props: {
+      diseasePanelData: [
+        {
+          id: 1,
+          name: "potato",
+          afflictions: [
+            {id: 5, name: "late blight", t_min: 5, t_max: 10},
+            {id: 10, name: "black death", t_min: 10, t_max: 100}
+          ]
         }
-    });
-    getRole = getByRole;
-    getTitle = getByTitle;
+      ],
+      insectPanelData: [
+        {
+          id: 1,
+          name: "potato",
+          afflictions: [
+            {id: 10, name: "grasshopper"},
+            {id: 45, name: "caterpillar"}
+          ]
+        }
+      ]
+    }
+  });
+  getRole = getByRole;
+  getTitle = getByTitle;
 })
 
 it('disease tab is selected by default', async () => {
-    await tick();
+  await tick();
 
-    expect(getRole("radio", { name: "Disease" }).checked).toEqual(true)
-    expect(getRole("combobox", { name: "Disease"})).toBeInTheDocument();
+  expect(getRole("radio", { name: "Disease" }).checked).toEqual(true)
+  expect(getRole("combobox", { name: "Disease"})).toBeInTheDocument();
 })
 
 it('shows insect panel when insect tab is selected', async () => {
-    await tick();
+  await tick();
 
-    const insectTab = getRole("radio", { name: "Insect"});
-    await fireEvent.click(insectTab);
+  const insectTab = getRole("radio", { name: "Insect"});
+  await fireEvent.click(insectTab);
 
-    expect(getRole("combobox", { name: "Insect"})).toBeInTheDocument();
+  expect(getRole("combobox", { name: "Insect"})).toBeInTheDocument();
 })
 
 it('shows custom panel when custom tab is selected', async () => {
-    await tick();
+  await tick();
 
-    const customTab = getRole("radio", { name: "Custom"});
-    await fireEvent.click(customTab);
+  const customTab = getRole("radio", { name: "Custom"});
+  await fireEvent.click(customTab);
 
-    expect(getTitle("Custom model specification")).toBeInTheDocument();
+  expect(getTitle("Custom model specification")).toBeInTheDocument();
 })

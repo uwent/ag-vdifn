@@ -90,7 +90,7 @@
       severities: customOverlay.severities,
       severityParams,
     }));
-    mapMinMapMax.set({ min: customOverlay.min, max: customOverlay.max });
+    mapMinMapMax.set({ min: customOverlay.min || 0, max: customOverlay.max || 0 });
   });
 
   overlayGradient.subscribe((gradientMapping) => {
