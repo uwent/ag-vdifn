@@ -1,34 +1,34 @@
 <script lang="ts">
-  import { Loader } from "@googlemaps/js-api-loader";
-  import { onMount, setContext } from "svelte";
-  import mapOptions from "./TypeScript/mapOptions";
-  import Loading from "../common/Loading.svelte";
-  import { mapKey } from "../../store/store";
-  import GoogleWrapper from "./TypeScript/googleWrapper";
-  let container;
-  let promise;
-  let map;
-  let googleInstance: GoogleWrapper;
+  import { Loader } from '@googlemaps/js-api-loader'
+  import { onMount, setContext } from 'svelte'
+  import mapOptions from './TypeScript/mapOptions'
+  import Loading from '../common/Loading.svelte'
+  import { mapKey } from '../../store/store'
+  import GoogleWrapper from './TypeScript/googleWrapper'
+  let container
+  let promise
+  let map
+  let googleInstance: GoogleWrapper
 
   const loader = new Loader({
-    apiKey: "AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4",
-  });
+    apiKey: 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4',
+  })
 
   setContext(mapKey, {
     getMap: () => map,
     getGoogle: () => googleInstance,
-  });
+  })
 
   async function loadMap() {
     await loader.load().then(() => {
-      googleInstance = new GoogleWrapper(google);
-      map = googleInstance.createMap(container, mapOptions);
-    });
+      googleInstance = new GoogleWrapper(google)
+      map = googleInstance.createMap(container, mapOptions)
+    })
   }
 
   onMount(() => {
-    promise = loadMap();
-  });
+    promise = loadMap()
+  })
 </script>
 
 <style>
@@ -53,8 +53,8 @@
     margin-left: 8px;
     margin-right: 8px;
   }
-  
-  :global(.info-icon){
+
+  :global(.info-icon) {
     width: 10px;
     height: 10px;
     border: 1px solid black;

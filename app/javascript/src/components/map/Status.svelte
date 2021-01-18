@@ -5,11 +5,11 @@
     PANELS,
     diseasePanelState,
     customPanelState,
-  } from "../../store/store";
+  } from '../../store/store'
 </script>
 
 <style type="scss">
-  @import "../../scss/settings.scss";
+  @import '../../scss/settings.scss';
 
   .model-status {
     text-transform: capitalize;
