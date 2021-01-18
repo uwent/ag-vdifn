@@ -24,7 +24,7 @@
   import Loading from '../common/Loading.svelte'
   const buttonText = 'Submit'
   let submitDisabled = false
-  let tMinTmaxSelection = 'modelSelection'
+  let tMinTmaxSelection = 'custom'
   const _ = require('lodash')
 
   setContext(panelKey, {
@@ -123,18 +123,18 @@
     <div class="tMinTMaxOptions">
       <input
         type="radio"
-        name="tMinMaxModelSelection"
-        id="tMinMaxModelSelection"
-        value="modelSelection"
-        bind:group={tMinTmaxSelection} />
-      <label for="tMinMaxModelSelection">Existing model</label>
-      <input
-        type="radio"
         name="customTminTmax"
         id="customTminTmax"
         value="custom"
         bind:group={tMinTmaxSelection} />
       <label for="customTminTmax">Custom values</label>
+      <input
+        type="radio"
+        name="tMinMaxModelSelection"
+        id="tMinMaxModelSelection"
+        value="modelSelection"
+        bind:group={tMinTmaxSelection} />
+      <label for="tMinMaxModelSelection">Existing model</label>
     </div>
     {#if tMinTmaxSelection === 'modelSelection'}
       <ModelSelection />

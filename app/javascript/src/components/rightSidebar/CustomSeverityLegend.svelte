@@ -42,10 +42,7 @@
     <div class="severity-level-col">
       <div class="severity-level-row">
         <div class="severity-color" style="background: {severity.color}" />
-        <div class="severity-range">
-          <span>&#8804;</span>
-          {Math.round(severity.number)}
-        </div>
+        <div class="severity-range"><span>&#8804;</span>{Math.round(severity.number)}</div>
       </div>
     </div>
   {/each}
