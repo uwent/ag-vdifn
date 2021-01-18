@@ -56,13 +56,13 @@
 
   function buildModalLink(link) {
     if (link != null) {
-      return `<a href='http://${link}' target='_blank'>More Information... </a>`
+      return `<a href='${link}' target='_blank'>More Information... </a>`
     }
   }
 
   function buildModalImage(photo) {
     if (photo != null) {
-      return `<img src='images/${photo}' width='150px' align="left" style="margin-right: 10px;"/>`
+      return `<img src='images/${photo}' width='150px' align="left" style="margin-top: 1em; margin-right: 10px;"/>`
     }
     else {
       return ""

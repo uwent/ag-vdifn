@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let click;
-  export let text = "Select";
-  export let disabled: boolean = false;
+  export let click
+  export let text = 'Select'
+  export let disabled: boolean = false
 </script>
 
 <style>
@@ -55,7 +55,6 @@
   }
 </style>
 
-<button
-  class="button button-primary"
-  {disabled}
-  on:click={click}>{text}</button>
+<button class="button button-primary" {disabled} on:click={click}>
+  {text}
+</button>

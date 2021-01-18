@@ -1,13 +1,13 @@
 <script lang="ts">
-  const moment = require("moment");
-  export let data;
-  import { onMount, setContext } from "svelte";
-  import ModelParameters from "./ModelParameters.svelte";
-  import DatePicker from "./DatePicker.svelte";
-  import TminMaxInteractable from "./TminMaxInteractable.svelte";
-  import SeverityGradient from "./SeverityGradient.svelte";
-  import ModelSelection from "./ModelSelection.svelte";
-  import TminMaxDisplay from "./TminMaxDisplay.svelte";
+  const moment = require('moment')
+  export let data
+  import { onMount, setContext } from 'svelte'
+  import ModelParameters from './ModelParameters.svelte'
+  import DatePicker from './DatePicker.svelte'
+  import TminMaxInteractable from './TminMaxInteractable.svelte'
+  import SeverityGradient from './SeverityGradient.svelte'
+  import ModelSelection from './ModelSelection.svelte'
+  import TminMaxDisplay from './TminMaxDisplay.svelte'
   import {
     customOverlaySubmitted,
     endDate,
@@ -19,44 +19,50 @@
     selectedPanel,
     PANELS,
     customPanelState,
-  } from "../../store/store";
-  import Button from "../common/Button.svelte";
-  import Loading from "../common/Loading.svelte";
-  const buttonText = "Submit";
-  let submitDisabled = false;
-  let tMinTmaxSelection = "modelSelection";
-  const _ = require("lodash");
+  } from '../../store/store'
+  import Button from '../common/Button.svelte'
+  import Loading from '../common/Loading.svelte'
+  const buttonText = 'Submit'
+  let submitDisabled = false
+  let tMinTmaxSelection = 'custom'
+  const _ = require('lodash')
 
   setContext(panelKey, {
     getCrops: () => data,
     dateToolTip: {
-      startDate: "Biofix",
-      endDate: "Date through which degree-days are accumulated",
-      startLabel: "Start Date",
+      startDate: 'Biofix',
+      endDate: 'Date through which degree-days are accumulated',
+      startLabel: 'Start Date',
     },
-    getAfflictionName: () => "Custom Model",
-    defaultStartDate: moment.utc().dayOfYear(1).format("YYYY-MM-DD"),
-  });
+    getAfflictionName: () => 'Custom Model',
+    defaultStartDate: moment.utc().dayOfYear(1).format('YYYY-MM-DD'),
+  })
 
   function submit() {
-    customOverlaySubmitted.set(true);
-    customPanelState.update((state) => ({...state, t_min: $tMinTmax.t_min, t_max: $tMinTmax.t_max, in_fahrenheit: $tMinTmax.in_fahrenheit}))
-    customPanelParams.set({
-      start_date: moment.utc($startDate).format("YYYY-MM-DD"),
-      end_date: moment.utc($endDate).format("YYYY-MM-DD"),
+    customOverlaySubmitted.set(true)
+    customPanelState.update((state) => ({
+      ...state,
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
-    });
+    }))
+    customPanelParams.set({
+      start_date: moment.utc($startDate).format('YYYY-MM-DD'),
+      end_date: moment.utc($endDate).format('YYYY-MM-DD'),
+      t_min: $tMinTmax.t_min,
+      t_max: $tMinTmax.t_max,
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
+    })
   }
 
   function handleCustomTminTMax(event) {
-    submitDisabled = !event.detail.valid;
+    submitDisabled = !event.detail.valid
   }
 
   onMount(() => {
-    selectedPanel.set(PANELS.CUSTOM);
-  });
+    selectedPanel.set(PANELS.CUSTOM)
+    submit()
+  })
 </script>
 
 <style>
@@ -108,18 +114,13 @@
   }
 </style>
 
-<div title="Custom Parameters">
+<div title="Custom model specification">
   <ModelParameters>
     <DatePicker />
-    <label class="tMinTMaxOptions" for="TminTMaxOptions">Choose Tmin/Tmax from:</label>
+    <label class="tMinTMaxOptions" for="TminTMaxOptions">
+      Choose Tmin/Tmax from:
+    </label>
     <div class="tMinTMaxOptions">
-      <input
-        type="radio"
-        name="tMinMaxModelSelection"
-        id="tMinMaxModelSelection"
-        value="modelSelection"
-        bind:group={tMinTmaxSelection} />
-      <label for="tMinMaxModelSelection">Existing model</label>
       <input
         type="radio"
         name="customTminTmax"
@@ -127,6 +128,13 @@
         value="custom"
         bind:group={tMinTmaxSelection} />
       <label for="customTminTmax">Custom values</label>
+      <input
+        type="radio"
+        name="tMinMaxModelSelection"
+        id="tMinMaxModelSelection"
+        value="modelSelection"
+        bind:group={tMinTmaxSelection} />
+      <label for="tMinMaxModelSelection">Existing model</label>
     </div>
     {#if tMinTmaxSelection === 'modelSelection'}
       <ModelSelection />
@@ -150,4 +158,12 @@
       <p>Please submit model parameters</p>
     </ModelParameters>
   {/if}
+  <!-- <div>
+    Custom panel params:<br />
+    start_date: {$customPanelParams.start_date}<br />
+    end_date: {$customPanelParams.end_date}<br />
+    t_min: {$customPanelParams.t_min} {typeof $customPanelParams.t_min}<br />
+    t_max: {$customPanelParams.t_max} {typeof $customPanelParams.t_max}<br />
+    in_fahrenheit: {$customPanelParams.in_fahrenheit}
+  </div> -->
 </div>

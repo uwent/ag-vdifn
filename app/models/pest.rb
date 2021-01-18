@@ -23,4 +23,15 @@ class Pest < ApplicationRecord
   def end_date_enabled
     true
   end
+
+  def sev_ramp(start, peak, stop, total)
+    a = ((peak - start) / 3.5).round(0)
+    b = ((stop - peak) / 3.5).round(0)
+    return 4 if total.between?(start + a * 3, stop - b * 3)
+    return 3 if total.between?(start + a * 2, stop - b * 2)
+    return 2 if total.between?(start + a, stop - b)
+    return 1 if total.between?(start, stop)
+    return 0
+  end
+
 end

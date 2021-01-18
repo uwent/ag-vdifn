@@ -1,8 +1,8 @@
 import Interface from '../src/components/leftSidebar/Interface.svelte'
 import { server } from '../spec/msw_mocks/server'
 
-const ele = document.createElement("div")
-ele.setAttribute("name", "csrf-token")
+const ele = document.createElement('div')
+ele.setAttribute('name', 'csrf-token')
 document.body.append(ele)
 
 export default {
@@ -11,12 +11,12 @@ export default {
 }
 
 export const interfaceData = {
-  selected: "disease"
+  selected: 'disease',
 }
 
 export const Default = () => ({
   Component: Interface,
   props: {
     interface: interfaceData,
-  }
+  },
 })

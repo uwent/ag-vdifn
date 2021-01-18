@@ -1,9 +1,9 @@
 <script lang="ts">
-  let expanded = true;
+  let expanded = true
 </script>
 
 <style type="scss">
-  @import "../../scss/settings.scss";
+  @import '../../scss/settings.scss';
 
   #sidebar {
     position: absolute;
@@ -36,7 +36,7 @@
       bottom: 0;
       width: 100%;
       border-bottom: black 1px solid;
-      background-image: url("../../../../assets/images/close.svg");
+      background-image: url('../../../../assets/images/close.svg');
       background-color: white;
       border-top: 1px solid gray;
       border-left: none;
@@ -48,11 +48,11 @@
       z-index: 1;
     }
 
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       top: 0;
     }
 
-    &[aria-expanded="false"] {
+    &[aria-expanded='false'] {
       top: 100%;
 
       @media #{$medium-up} {
@@ -60,7 +60,7 @@
       }
 
       button {
-        background-image: url("../../../../assets/images/open.svg");
+        background-image: url('../../../../assets/images/open.svg');
       }
     }
   }
@@ -84,15 +84,15 @@
   }
 
   #plantpath-logo {
-    background-image: url("../../../../assets/images/plantpath-logo.png");
+    background-image: url('../../../../assets/images/plantpath-logo.png');
   }
 
   #vegento-logo {
-    background-image: url("../../../../assets/images/vegento-logo.png");
+    background-image: url('../../../../assets/images/vegento-logo.png');
   }
 
   #uw-madison {
-    background-image: url("../../../../assets/images/uw-madison.png");
+    background-image: url('../../../../assets/images/uw-madison.png');
     background-position: center;
   }
 
@@ -100,7 +100,7 @@
     clear: both;
     margin: 0;
     text-align: center;
-    font-family: Caudex, Garamond, Georgia, "Times New Roman", Times, serif;
+    font-family: Caudex, Garamond, Georgia, 'Times New Roman', Times, serif;
     font-weight: normal;
     font-size: 1.65em;
   }
@@ -123,20 +123,27 @@
         id="uw-madison"
         href="http://www.wisc.edu"
         target="_blank"
-        class="logo">Wisc Edu</a>
+        class="logo">
+        Wisc Edu
+      </a>
       <a
         id="plantpath-logo"
         class="logo"
         href="http://www.plantpath.wisc.edu/wivegdis/"
-        target="_blank">UW-Madison Plant Pathology</a>
+        target="_blank">
+        UW-Madison Plant Pathology
+      </a>
       <a
         id="vegento-logo"
         class="logo"
         href="http://vegento.russell.wisc.edu/"
-        target="_blank">UW-Madison Vegetable Crop Entomology</a>
+        target="_blank">
+        UW-Madison Vegetable Crop Entomology
+      </a>
     </div>
     <h1>
-      <span>Vegetable Disease &amp;</span><span>Insect Forecasting Network</span>
+      <span>Vegetable Disease &amp;</span>
+      <span>Insect Forecasting Network</span>
     </h1>
   </header>
 

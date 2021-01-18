@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'railties', '6.0.3.2'
 gem 'rails', '6.0.3.2'
 gem 'activesupport', '6.0.3.2'
-gem 'pg', '~> 0.15'
+gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -19,6 +19,11 @@ gem 'momentjs-rails', '~> 2.20'
 gem 'js-routes', '~> 1.4'
 gem 'webpacker', '5.2.1'
 gem 'active_model_serializers', '~> 0.10.10'
+
+platform :mswin, :mingw, :x64_mingw do
+  gem 'tzinfo-data', '~> 1.2020'
+  gem 'wdm', '>=0.1.0'
+end
 
 group :development, :test do
   gem 'dotenv-rails', '2.7.6'

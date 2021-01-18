@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import DiseasePanel from "./DiseasePanel.svelte";
-  import InsectPanel from "./InsectPanel.svelte";
-  import DatabaseClient from "../common/TypeScript/databaseClient";
-  import Loading from "../common/Loading.svelte";
-  import CustomPanel from "./CustomPanel.svelte";
-  export let diseasePanelData;
-  export let insectPanelData;
-  let selected = "disease";
-  const databaseClient = new DatabaseClient();
+  import { onMount } from 'svelte'
+  import DiseasePanel from './DiseasePanel.svelte'
+  import InsectPanel from './InsectPanel.svelte'
+  import DatabaseClient from '../common/TypeScript/databaseClient'
+  import Loading from '../common/Loading.svelte'
+  import CustomPanel from './CustomPanel.svelte'
+  export let diseasePanelData
+  export let insectPanelData
+  let selected = 'disease'
+  const databaseClient = new DatabaseClient()
 
   onMount(async () => {
     if (!diseasePanelData || !insectPanelData)
-      diseasePanelData = await databaseClient.fetchDiseasePanel();
-    insectPanelData = await databaseClient.fetchInsectPanel();
-  });
+      diseasePanelData = await databaseClient.fetchDiseasePanel()
+    insectPanelData = await databaseClient.fetchInsectPanel()
+  })
 </script>
 
 <style>
@@ -33,7 +33,7 @@
   }
 
   .switch-field {
-    font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+    font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
     overflow: hidden;
     display: flex;
     justify-content: space-evenly;
@@ -119,7 +119,7 @@
       {:else if selected === 'insect'}
         <InsectPanel data={insectPanelData} />
       {:else if selected === 'custom'}
-        <CustomPanel data={insectPanelData}/>
+        <CustomPanel data={insectPanelData} />
       {/if}
     {:else}
       <Loading />

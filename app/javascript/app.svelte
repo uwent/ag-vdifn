@@ -1,22 +1,22 @@
 <script lang="ts">
-  import Map from "./src/components/map/Map.svelte";
-  import SeverityOverlay from "./src/components/map/SeverityOverlay.svelte";
-  import Sidebar from "./src/components/leftSidebar/Sidebar.svelte";
-  import Interface from "./src/components/leftSidebar/Interface.svelte";
-  import RightSidebar from "./src/components/rightSidebar/RightSidebar.svelte";
-  import SeverityLegend from "./src/components/rightSidebar/SeverityLegend.svelte";
-  import Status from "./src/components/map/Status.svelte";
+  import Map from './src/components/map/Map.svelte'
+  import SeverityOverlay from './src/components/map/SeverityOverlay.svelte'
+  import Sidebar from './src/components/leftSidebar/Sidebar.svelte'
+  import Interface from './src/components/leftSidebar/Interface.svelte'
+  import RightSidebar from './src/components/rightSidebar/RightSidebar.svelte'
+  import SeverityLegend from './src/components/rightSidebar/SeverityLegend.svelte'
+  import Status from './src/components/map/Status.svelte'
 </script>
 
 <style global type="scss">
-  @import "node_modules/balloon-css/src/balloon.scss";
+  @import 'node_modules/balloon-css/src/balloon.scss';
 
   html,
   body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: "Lucida Grande", "Trebuchet MS", Trebuchet, Arial, sans-serif;
+    font-family: 'Lucida Grande', 'Trebuchet MS', Trebuchet, Arial, sans-serif;
     overflow: hidden;
   }
 
@@ -62,7 +62,7 @@
     clear: both;
     margin: 0;
     text-align: center;
-    font-family: Caudex, Garamond, Georgia, "Times New Roman", Times, serif;
+    font-family: Caudex, Garamond, Georgia, 'Times New Roman', Times, serif;
     font-weight: normal;
     font-size: 1.65em;
   }
@@ -104,7 +104,7 @@
   }
 
   .iw-title {
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: 'Open Sans Condensed', sans-serif;
     font-size: 22px;
     font-weight: 400;
     padding: 10px;
