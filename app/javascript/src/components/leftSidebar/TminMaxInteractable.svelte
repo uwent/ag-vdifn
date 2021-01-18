@@ -1,47 +1,45 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
-  import { tMinTmax } from "../../store/store";
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { tMinTmax } from '../../store/store'
   // import Temperature from "./TypeScript/temperature";
-  let tMin: number = 50;
-  let tMax: number = null;
-  let tMinSubmit;
-  let tMaxSubmit;
-  let in_f: boolean = true;
-  let tMaxDisabled: boolean = false;
-  let valid: boolean = true;
-  const dispatch = createEventDispatcher();
+  let tMin: number = 50
+  let tMax: number = null
+  let in_f: boolean = true
+  let tMaxDisabled: boolean = false
+  let valid: boolean = true
+  const dispatch = createEventDispatcher()
 
   // convert fahrenheit to celcius
   function f_to_c(f: number) {
     if (f === null) {
-      return null;
+      return null
     } else {
-      return Math.round(((f - 32) * (5/9)) * 10) / 10;
+      return Math.round((f - 32) * (5 / 9) * 10) / 10
     }
   }
 
   // convert celcius to fahrenheit
   function c_to_f(c: number) {
     if (c === null) {
-      return null;
+      return null
     } else {
-      return Math.round(((c * (9/5)) + 32) * 10) / 10;
+      return Math.round((c * (9 / 5) + 32) * 10) / 10
     }
   }
 
   function convert(event) {
-    in_f = event.target.checked;
+    in_f = event.target.checked
     if (in_f) {
-      tMin = c_to_f(tMin);
-      tMax = c_to_f(tMax);
+      tMin = c_to_f(tMin)
+      tMax = c_to_f(tMax)
     } else {
-      tMin = f_to_c(tMin);
-      tMax = f_to_c(tMax);
+      tMin = f_to_c(tMin)
+      tMax = f_to_c(tMax)
     }
   }
 
   function tMaxToggle(event) {
-    tMaxDisabled = event.target.checked;
+    tMaxDisabled = event.target.checked
     if (tMaxDisabled) {
       valid = true
     } else if (!tMaxDisabled && !tMax) {
@@ -53,19 +51,19 @@
     const {
       target,
       target: { value },
-    } = event;
+    } = event
     if (tMaxDisabled) {
-      target.setCustomValidity("");
-      valid = true;
-      return;
+      target.setCustomValidity('')
+      valid = true
+      return
     }
     if (value >= tMax) {
-      target.setCustomValidity("This value must be less than the tMax");
-      valid = false;
+      target.setCustomValidity('This value must be less than the tMax')
+      valid = false
     } else {
-      target.setCustomValidity("");
-      tMin = Number(event.target.value);
-      valid = true;
+      target.setCustomValidity('')
+      tMin = Number(event.target.value)
+      valid = true
     }
   }
 
@@ -73,21 +71,19 @@
     const {
       target,
       target: { value },
-    } = event;
+    } = event
     if (tMaxDisabled) {
-      target.setCustomValidity("");
-      valid = true;
-      return;
+      target.setCustomValidity('')
+      valid = true
+      return
     }
     if (value <= tMin) {
-      target.setCustomValidity(
-        "This value must be greater than the tMin"
-      );
-      valid = false;
+      target.setCustomValidity('This value must be greater than the tMin')
+      valid = false
     } else {
-      target.setCustomValidity("");
-      tMax = Number(event.target.value);
-      valid = true;
+      target.setCustomValidity('')
+      tMax = Number(event.target.value)
+      valid = true
     }
   }
 
@@ -96,27 +92,29 @@
       tMinTmax.set({
         t_min: tMin,
         t_max: null,
-        in_fahrenheit: in_f });
+        in_fahrenheit: in_f,
+      })
     } else {
       tMinTmax.set({
         t_min: tMin,
         t_max: tMax,
-        in_fahrenheit: in_f });
+        in_fahrenheit: in_f,
+      })
     }
   }
 
   onMount(() => {
-    tMin = 50;
-    tMax = null;
-    tMaxDisabled = true;
-  });
+    tMin = 50
+    tMax = null
+    tMaxDisabled = true
+  })
 
-  $: dispatch("tMinMaxValid", { valid: valid });
-  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled);
+  $: dispatch('tMinMaxValid', { valid: valid })
+  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled)
 </script>
 
 <style>
-  input[type="number"] {
+  input[type='number'] {
     -webkit-appearance: none;
     -moz-appearance: none;
     width: 99%;
@@ -197,7 +195,7 @@
 
   .slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 26px;
     width: 26px;
     left: 4px;
@@ -273,14 +271,14 @@
   <div class="temp-group" id="in-fahren-wrapper">
     <div>
       <span class="in-celcius">&#8451;</span>
-      <span class="in-fahrenheit">&#8457; </span>
+      <span class="in-fahrenheit">&#8457;</span>
     </div>
     <label class="switch">
       <input
-          type="checkbox"
-          title="temp-unit-toggle"
-          on:change={convert}
-          bind:checked={in_f} />
+        type="checkbox"
+        title="temp-unit-toggle"
+        on:change={convert}
+        bind:checked={in_f} />
       <span class="slider round" />
     </label>
   </div>

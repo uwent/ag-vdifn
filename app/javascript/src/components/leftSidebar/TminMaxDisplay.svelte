@@ -1,66 +1,76 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
-  import { panelKey, selectedAffliction, tMinTmax } from "../../store/store";
-  let in_f = true;
-  let tMinF;
-  let tMaxF;
-  let tMinC;
-  let tMaxC;
-  let tMinText = "";
-  let tMaxText = "";
-  const { getCrops } = getContext(panelKey);
+  import { getContext, onMount } from 'svelte'
+  import { panelKey, selectedAffliction, tMinTmax } from '../../store/store'
+  let in_f = true
+  let tMinF: number
+  let tMaxF: number
+  let tMinC: number
+  let tMaxC: number
+  let tMinText: string
+  let tMaxText: string
+  const { getCrops } = getContext(panelKey)
 
   function f_to_c(f) {
-    if (f === null) return null;
-    return Math.round(((f - 32) * (5/9)) * 10) / 10;
+    if (f === null) return null
+    return Math.round((f - 32) * (5 / 9) * 10) / 10
   }
 
   // generate the temperature display text
   function makeText(temp) {
     if (temp === null || temp === undefined) {
-      return "None";
+      return 'None'
     } else if (Number.isInteger(temp)) {
-      return temp.toFixed(0);
+      return temp.toFixed(0)
     } else {
-      return temp.toFixed(1);
+      return temp.toFixed(1)
     }
   }
 
   // convert between units and update text
   function updateText(in_f) {
     if (in_f) {
-      tMinText = makeText(tMinF);
-      tMaxText = makeText(tMaxF);
-      tMinTmax.update(state => ({...state, t_min: tMinF, t_max: tMaxF, in_fahrenheit: true}))
+      tMinText = makeText(tMinF)
+      tMaxText = makeText(tMaxF)
+      tMinTmax.update((state) => ({
+        ...state,
+        t_min: tMinF,
+        t_max: tMaxF,
+        in_fahrenheit: true,
+      }))
     } else {
-      tMinText = makeText(tMinC);
-      tMaxText = makeText(tMaxC);
-      tMinTmax.update(state => ({...state, t_min: tMinC, t_max: tMaxC, in_fahrenheit: false}))
+      tMinText = makeText(tMinC)
+      tMaxText = makeText(tMaxC)
+      tMinTmax.update((state) => ({
+        ...state,
+        t_min: tMinC,
+        t_max: tMaxC,
+        in_fahrenheit: false,
+      }))
     }
   }
 
   // Sets temperature values and updates display text
   function setTminTmax(affliction) {
     if (affliction) {
-      in_f = true;
-      tMinF = affliction.t_min;
-      tMaxF = affliction.t_max;
-      tMinC = f_to_c(tMinF);
-      tMaxC = f_to_c(tMaxF);
-      updateText(in_f);
+      in_f = true
+      tMinF = affliction.t_min
+      tMaxF = affliction.t_max
+      tMinC = f_to_c(tMinF)
+      tMaxC = f_to_c(tMaxF)
+      updateText(in_f)
     }
   }
 
   onMount(() => {
     if (getCrops().length > 0) {
-      setTminTmax(getCrops()[0].afflictions[0]);
+      setTminTmax(getCrops()[0].afflictions[0])
     } else {
-      setTminTmax($selectedAffliction);
+      setTminTmax($selectedAffliction)
     }
-  });
+  })
 
-  $: updateText(in_f);
-  $: setTminTmax($selectedAffliction);
+  $: updateText(in_f)
+  $: setTminTmax($selectedAffliction)
 </script>
 
 <style>
@@ -88,17 +98,18 @@
     font-size: 0.75em;
   }
 
-  .t-min-wrapper, .t-max-wrapper {
+  .t-min-wrapper,
+  .t-max-wrapper {
     width: 50%;
     text-align: center;
-
   }
 
   .t-min-wrapper {
     margin-right: 10px;
   }
 
-  .tmin, .tmax {
+  .tmin,
+  .tmax {
     background-color: rgba(255, 255, 255, 0.7);
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -151,7 +162,7 @@
 
   .slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 26px;
     width: 26px;
     left: 4px;
@@ -186,10 +197,10 @@
 <div id="degree_day_info">
   <div class="temp-group" id="t-min-wrapper">
     <div id="tMinMaxRange">
-    <div class="t-min-wrapper">
-      <label for="tmin">Tmin</label>
+      <div class="t-min-wrapper">
+        <label for="tmin">Tmin</label>
         <div title="Min temp" type="text" class="tmin">{tMinText}</div>
-        </div>
+      </div>
       <div class="t-max-wrapper">
         <label for="tmax">Tmax</label>
         <div title="Max temp" type="text" class="tmax">{tMaxText}</div>
@@ -199,7 +210,7 @@
   <div title="Units" class="temp-group" id="in-fahren-wrapper">
     <div class="symbol-wrapper">
       <span class="in-celcius">&#8451;</span>
-      <span class="in-fahrenheit">&#8457; </span>
+      <span class="in-fahrenheit">&#8457;</span>
     </div>
     <label class="switch">
       <input type="checkbox" title="temp-unit-toggle" bind:checked={in_f} />

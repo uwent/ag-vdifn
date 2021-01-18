@@ -1,19 +1,27 @@
 <script lang="ts">
-  import TwoPointGradient from "./TwoPointGradient.svelte";
-  import ThreePointGradient from "./ThreePointGradient.svelte";
-  import { overlayGradient, customPanelParams, customOverlaySubmitted, customPanelState } from "../../store/store";
-  import { onMount } from "svelte";
-  import { get } from "svelte/store";
-  const moment = require("moment");
-  let gradient = 1;
+  import TwoPointGradient from './TwoPointGradient.svelte'
+  import ThreePointGradient from './ThreePointGradient.svelte'
+  import {
+    overlayGradient,
+    customPanelParams,
+    customOverlaySubmitted,
+    customPanelState,
+  } from '../../store/store'
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
+  const moment = require('moment')
+  let gradient = 1
 
   function updateOverlay(event) {
-    overlayGradient.set(event.detail);
+    overlayGradient.set(event.detail)
     updateCustomPanelState()
   }
 
   function updateCustomPanelState() {
-    customPanelState.update(state => ({...state, selectedGradient: gradient}))
+    customPanelState.update((state) => ({
+      ...state,
+      selectedGradient: gradient,
+    }))
   }
 
   onMount(() => {
@@ -21,7 +29,6 @@
       gradient = get(customPanelState).selectedGradient
     }
   })
-
 </script>
 
 <style type="scss">
@@ -95,7 +102,7 @@
 
   /* Create the indicator (the dot/circle - hidden when not checked) */
   .gradient:after {
-    content: "";
+    content: '';
     position: absolute;
     display: none;
   }
