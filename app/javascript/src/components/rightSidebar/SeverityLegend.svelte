@@ -1,10 +1,10 @@
 <script lang="ts">
-  import QuestionSvg from "../common/SVG/QuestionSvg.svelte";
-  export let severities = [];
+  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+  export let severities = []
 </script>
 
 <style type="scss">
-  @import "../../scss/settings.scss";
+  @import '../../scss/settings.scss';
 
   .dsv-threshold.dsv-very_high {
     background: rgb(204, 0, 0);
@@ -58,11 +58,16 @@
       class="dsv"
       data-color="#ff0000">
       <div class="dsv-threshold dsv-{slug}" />
-      <label>{name}<button
+      <label>
+        {name}
+        <button
           title=""
           data-balloon-length="medium"
           data-balloon-pos="up-right"
-          aria-label={description}><QuestionSvg /></button></label>
+          aria-label={description}>
+          <QuestionSvg />
+        </button>
+      </label>
     </div>
   {/each}
 </fieldset>
