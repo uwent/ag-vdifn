@@ -38,12 +38,37 @@
 
 <fieldset id="dsv-legend">
   <legend>Degree-Day Legend:</legend>
-  {#each gradientMapping.reverse() as severity}
-    <div class="severity-level-col">
-      <div class="severity-level-row">
-        <div class="severity-color" style="background: {severity.color}" />
-        <div class="severity-range"><span>&#8804;</span>{Math.round(severity.number)}</div>
+  {#each gradientMapping.reverse() as severity, i}
+    {#if i === 0}
+      <div class="severity-level-col">
+        <div class="severity-level-row">
+          <div class="severity-color" style="background: {severity.color}" />
+          <div class="severity-range"><span>&gt;</span></div>
+        </div>
       </div>
-    </div>
+    {:else}
+      <div class="severity-level-col">
+        <div class="severity-level-row">
+          <div class="severity-color" style="background: {severity.color}" />
+          <div class="severity-range"><span>&#8804</span>{Math.round(severity.number)}</div>
+        </div>
+      </div>
+    {/if}
+  {:else}
+    Update overlay!
   {/each}
 </fieldset>
+
+<!-- <fieldset id="dsv-legend">
+  <legend>Degree-Day Legend:</legend>
+  {#each gradientMapping.reverse() as severity, index (severity)}
+    {#if index === 0}
+      <div class="severity-level-col">
+        <div class="severity-level-row">
+          <div class="severity-color" style="background: {severity.color}" />
+          <div class="severity-range"><span>&#8804;</span>{Math.round(severity.number)}</div>
+        </div>
+      </div>
+      
+  {/each}
+</fieldset> -->

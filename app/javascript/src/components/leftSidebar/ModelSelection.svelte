@@ -1,49 +1,53 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
-  import { panelKey, selectedAffliction, afflictionValue } from "../../store/store";
-  import { CropWithAfflictions, Pest } from "../common/TypeScript/types";
-  import Modal from "../common/Modal.svelte";
-  let showModal: boolean = false;
-  let selectedCropValue: number;
-  let afflictionsForCrop: Pest[] = [];
-  let crops: CropWithAfflictions[] = [];
-  let afflictionName: string;
+  import { getContext, onMount } from 'svelte'
+  import {
+    panelKey,
+    selectedAffliction,
+    afflictionValue,
+  } from '../../store/store'
+  import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
+  import Modal from '../common/Modal.svelte'
+  let showModal: boolean = false
+  let selectedCropValue: number
+  let afflictionsForCrop: Pest[] = []
+  let crops: CropWithAfflictions[] = []
+  let afflictionName: string
 
-  const { getCrops, getAfflictionName } = getContext(panelKey);
+  const { getCrops, getAfflictionName } = getContext(panelKey)
 
   onMount(() => {
-    crops = getCrops();
-    if (crops.length <= 0) return;
+    crops = getCrops()
+    if (crops.length <= 0) return
     afflictionsForCrop = crops[0].afflictions
     afflictionValue.update((_) => afflictionsForCrop[0].id)
     selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[0].id))
   })
 
-  afflictionName = getAfflictionName();
+  afflictionName = getAfflictionName()
 
   function getAfflictionsForCrop(event) {
     const cropId = parseInt(event.target.value)
     const cropWithAfflictions = crops.find((crop) => {
-      return crop.id === cropId;
-    });
+      return crop.id === cropId
+    })
     if (cropWithAfflictions) {
-      afflictionsForCrop = cropWithAfflictions.afflictions;
+      afflictionsForCrop = cropWithAfflictions.afflictions
       afflictionValue.update((_) => afflictionsForCrop[0].id)
       afflictionValue.set(afflictionsForCrop[0].id)
-      selectedAffliction.set(afflictionsForCrop[0]);
+      selectedAffliction.set(afflictionsForCrop[0])
     }
   }
 
   function getCurrentAffliction(afflictionId) {
     const affliction = afflictionsForCrop.find((affliction) => {
-      return affliction.id === afflictionId;
-    });
+      return affliction.id === afflictionId
+    })
     if (affliction) {
-      return affliction;
+      return affliction
     } else if (crops[0] === undefined) {
-      return [];
+      return []
     } else {
-      return crops[0].afflictions[0];
+      return crops[0].afflictions[0]
     }
   }
 
@@ -63,12 +67,10 @@
   function buildModalImage(photo) {
     if (photo != null) {
       return `<img src='images/${photo}' width='150px' align="left" style="margin-top: 1em; margin-right: 10px;"/>`
-    }
-    else {
-      return ""
+    } else {
+      return ''
     }
   }
-
 </script>
 
 <style>
@@ -127,7 +129,11 @@
   <legend>Model Selection</legend>
   <label for="crop-select">Crop</label>
   <!-- svelte-ignore a11y-no-onchange -->
-  <select on:change={getAfflictionsForCrop} bind:value={selectedCropValue} id="crop-select" name="crop-select">
+  <select
+    on:change={getAfflictionsForCrop}
+    bind:value={selectedCropValue}
+    id="crop-select"
+    name="crop-select">
     {#each crops as { id, name }}
       <option value={id} name="crop_id">{name}</option>
     {/each}
@@ -146,15 +152,17 @@
       {/each}
     </select>
     {#if crops.length > 0}
-      <button on:click={() => (showModal = true)}> ? </button>
+      <button on:click={() => (showModal = true)}>?</button>
     {/if}
   </div>
 </fieldset>
 {#if showModal}
-  <Modal on:close={() => (showModal = false)} name = {$selectedAffliction.name}>
+  <Modal on:close={() => (showModal = false)} name={$selectedAffliction.name}>
     <div class="modal__pest-info">
       {@html buildModalImage($selectedAffliction.photo)}
-      <p>{@html $selectedAffliction.info}</p>
+      <p>
+        {@html $selectedAffliction.info}
+      </p>
       {@html buildModalLink($selectedAffliction.link)}
     </div>
   </Modal>

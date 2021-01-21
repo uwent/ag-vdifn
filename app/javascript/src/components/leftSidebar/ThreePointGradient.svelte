@@ -22,6 +22,7 @@
   let addButton: HTMLButtonElement
   let minusButton: HTMLButtonElement
   let updateOverlayButton: HTMLButtonElement
+  let resetOverlayButton: HTMLButtonElement
   let buttonsDisabled: boolean = false
 
   $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
@@ -60,11 +61,21 @@
     })
   })
 
-  function setUserMinMax(absoluteMin, absoluteMax) {
-    userMin = Math.round(absoluteMin + 10)
-    userMax = Math.round(absoluteMax - 10)
-    userMiddleMin = Math.round((userMax - userMin) / 2 + userMin - 10)
-    userMiddleMax = Math.round((userMax - userMin) / 2 + userMin + 10)
+  // function setUserMinMax(absoluteMin, absoluteMax) {
+  //   userMin = Math.round(absoluteMin + 10)
+  //   userMax = Math.round(absoluteMax - 10)
+  //   userMiddleMin = Math.round((userMax - userMin) / 2 + userMin - 10)
+  //   userMiddleMax = Math.round((userMax - userMin) / 2 + userMin + 10)
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
+
+  function setUserMinMax(mapMin, mapMax) {
+    const x = (mapMax - mapMin) / (severityLevels * 2)
+    userMin = Math.round(mapMin + x)
+    userMax = Math.round(mapMax - x)
+    userMiddleMin = Math.round((mapMin + mapMax) / 2 - x)
+    userMiddleMax = Math.round((mapMin + mapMax) / 2 + x)
     updateIntermediateValuesUpper()
     updateIntermediateValuesLower()
   }
@@ -87,47 +98,56 @@
     intermediateRangesLower = intermediateValues
   }
 
+  // function addLevel() {
+  //   if (
+  //     severityLevels + 1 > 8 ||
+  //     userMax > $mapMinMapMax.max ||
+  //     userMin < $mapMinMapMax.min
+  //   )
+  //     return
+  //   severityLevels += 1
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
+
   function addLevel() {
-    if (
-      severityLevels + 1 > 8 ||
-      userMax > $mapMinMapMax.max ||
-      userMin < $mapMinMapMax.min
-    )
-      return
+    if (severityLevels + 1 > 8) return
     severityLevels += 1
     updateIntermediateValuesUpper()
     updateIntermediateValuesLower()
   }
 
+  // function decrementLevel() {
+  //   if (
+  //     severityLevels - 1 < 3 ||
+  //     userMax > $mapMinMapMax.max ||
+  //     userMin < $mapMinMapMax.min
+  //   )
+  //     return
+  //   severityLevels -= 1
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
+
   function decrementLevel() {
-    if (
-      severityLevels - 1 < 3 ||
-      userMax > $mapMinMapMax.max ||
-      userMin < $mapMinMapMax.min
-    )
-      return
+    if (severityLevels - 1 < 3) return
     severityLevels -= 1
     updateIntermediateValuesUpper()
     updateIntermediateValuesLower()
   }
 
+  // Validation checks
   function userMinInputValid(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
-    } else if (value >= userMax || value >= $mapMinMapMax.max) {
-      userMinInput.setCustomValidity(
-        'This value must be less than the chosen max and the map max',
-      )
+    } else if (value > userMax) {
+      userMinInput.setCustomValidity('This value must be less than the chosen max and the map max')
       return false
-    } else if (value < $mapMinMapMax.min) {
-      userMinInput.setCustomValidity(
-        'This value must be greater than the map minimum',
-      )
+    } else if (value < 0) {
+      userMinInput.setCustomValidity('This value must be greater than 0')
       return false
     } else if (value >= userMiddleMin || value >= userMiddleMax) {
-      userMinInput.setCustomValidity(
-        'This value must be less than both middle values',
-      )
+      userMinInput.setCustomValidity('This value must be less than both middle values')
       return false
     } else {
       userMinInput.setCustomValidity('')
@@ -138,13 +158,8 @@
   function maxInputValid(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
-    } else if (value <= userMin || value <= $mapMinMapMax.min) {
-      userMaxInput.setCustomValidity(
-        'This value must be greater than the chosen min and the map min',
-      )
-      return false
-    } else if (value > $mapMinMapMax.max) {
-      userMaxInput.setCustomValidity('This value must be less than the map max')
+    } else if (value <= userMin) {
+      userMaxInput.setCustomValidity('This value must be greater than the chosen min and the map min')
       return false
     } else {
       userMaxInput.setCustomValidity('')
@@ -155,19 +170,11 @@
   function middleMaxInputValid(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
-    } else if (
-      value <= userMiddleMin ||
-      value <= userMin ||
-      value <= $mapMinMapMax.min
-    ) {
-      userMiddleInputMax.setCustomValidity(
-        'This value must be greater the middle and min input values',
-      )
+    } else if (value <= userMiddleMin || value <= userMin) {
+      userMiddleInputMax.setCustomValidity('This value must be greater the middle and min input values')
       return false
-    } else if (value >= userMax || value >= $mapMinMapMax.max) {
-      userMiddleInputMax.setCustomValidity(
-        'This value must be less than the chosen and map max values',
-      )
+    } else if (value >= userMax) {
+      userMiddleInputMax.setCustomValidity('This value must be less than the chosen and max values')
       return false
     } else {
       userMiddleInputMax.setCustomValidity('')
@@ -178,19 +185,11 @@
   function middleMinInputValid(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
-    } else if (
-      value >= userMiddleMax ||
-      value >= userMax ||
-      value >= $mapMinMapMax.max
-    ) {
-      userMiddleInputMin.setCustomValidity(
-        'This value must be less than the chosen middle and max',
-      )
+    } else if (value >= userMiddleMax || value >= userMax) {
+      userMiddleInputMin.setCustomValidity('This value must be less than the chosen middle and max')
       return false
-    } else if (value <= userMin || value <= $mapMinMapMax.min) {
-      userMiddleInputMin.setCustomValidity(
-        'This value must be greater the absolute minimum and the chosen minimum',
-      )
+    } else if (value <= userMin) {
+      userMiddleInputMin.setCustomValidity('This value must be greater the absolute minimum and the chosen minimum')
       return false
     } else {
       userMiddleInputMin.setCustomValidity('')
@@ -251,24 +250,23 @@
     updateButtons()
   }
 
-  function getUpperColorRange() {
-    return gradientHelper.mapRangeMinsToColors({
+  function getLowerColorRange() {
+    return gradientHelper.mapRangeToColors({
       min: userMin,
       max: userMiddleMin,
-      absoluteMax: userMiddleMax,
       intermediateLevels: severityLevels - 3,
       totalLevels: severityLevels - 1,
     })
   }
 
-  function getLowerColorRange() {
-    return gradientHelper.mapRangeMinsToColors({
+  function getUpperColorRange() {
+    return gradientHelper.mapRangeToColors({
       min: userMiddleMax,
       max: userMax,
-      absoluteMax: $mapMinMapMax.max,
       intermediateLevels: severityLevels - 3,
       totalLevels: severityLevels - 1,
       inverse: true,
+      toInfinity: true,
     })
   }
 
@@ -276,7 +274,13 @@
     const upper = getUpperColorRange()
     const lower = getLowerColorRange()
 
-    return { ...lower, ...upper }
+    return { ...upper, ...lower }
+  }
+
+  function resetOverlay() {
+    setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+    updateOverlay()
+    updateButtons()
   }
 
   function updateOverlay() {
@@ -383,14 +387,14 @@
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
-      <div class="severity-value-end" title="absoluteMin">
-        {$mapMinMapMax.min}
+      <div class="severity-value-end" title="">
+        &lt;
       </div>
       <input
         class="severity-value-end-input"
         type="number"
         data-id="userMin"
-        title="userMin"
+        title="Start of gradient"
         required
         bind:this={userMinInput}
         bind:value={userMin}
@@ -448,13 +452,13 @@
         class="severity-value-end-input"
         type="number"
         data-id="userMax"
-        title="userMax"
+        title="End of gradient"
         required
         bind:value={userMax}
         bind:this={userMaxInput}
         on:change={handleUpdate} />
-      <div class="severity-value-end" title="absoluteMax">
-        {$mapMinMapMax.max}
+      <div class="severity-value-end" id="absoluteMax" title="">
+        &lt;
       </div>
     </div>
     <div class="button-row">
@@ -470,7 +474,13 @@
         bind:this={updateOverlayButton}
         on:click={updateOverlay}
         disabled={buttonsDisabled}>
-        Update Overlay
+        Update
+      </button>
+      <button
+        class="update-overlay-button"
+        bind:this={resetOverlayButton}
+        on:click={resetOverlay}>
+        Reset
       </button>
       <button
         class="level-quantity-button"
@@ -482,4 +492,5 @@
     </div>
   </div>
 </fieldset>
+Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
 <div />

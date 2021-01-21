@@ -91,8 +91,8 @@
       severityParams,
     }))
     mapMinMapMax.set({
-      min: customOverlay.min || 0,
-      max: customOverlay.max || 0,
+      min: customOverlay.min,
+      max: customOverlay.max,
     })
   })
 
