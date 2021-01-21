@@ -1,5 +1,4 @@
-# config valid only for current version of Capistrano
-lock '3.14.1'
+# config valid only for current version of Capistrano 
 
 branch = ENV['BRANCH'] || 'master'
 
