@@ -1,12 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
   import { tMinTmax } from '../../store/store'
-  // import Temperature from "./TypeScript/temperature";
   let tMin: number = 50
   let tMax: number = null
-  let in_f: boolean = true
-  let tMaxDisabled: boolean = false
-  let valid: boolean = true
+  let in_f = true
+  let tMaxDisabled = true
+  let valid = true
   const dispatch = createEventDispatcher()
 
   // convert fahrenheit to celcius

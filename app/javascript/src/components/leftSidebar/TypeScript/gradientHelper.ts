@@ -22,32 +22,65 @@ export default class GradientHelper {
   //   return result;
   // }
 
+  // mapRangeToColors(options) {
+  //   const { min, max, intermediateLevels, totalLevels, inverse = false, toInfinity = false}: { 
+  //     totalLevels: number, min: number, max: number, intermediateLevels: number, inverse: boolean, toInfinity: boolean} = options
+  //   const ranges = this.calculateRanges(min, max, intermediateLevels);
+  //   let result = {}
+  //   ranges.forEach((range, index) => {
+  //     if (inverse) {
+  //       result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels)
+  //     } else {
+  //       result[range[1]] = ColorHelper.color(index + 1, totalLevels)
+  //     }
+  //   })
+  //   if (inverse) {
+  //     if (toInfinity) {
+  //       result[Infinity] = ColorHelper.colorInverse(totalLevels, totalLevels)
+  //     } else {
+  //       result[max] = ColorHelper.colorInverse(totalLevels, totalLevels)
+  //     }
+  //     result[min] = ColorHelper.colorInverse(0, totalLevels);
+  //   } else {
+  //     if (toInfinity) {
+  //       result[Infinity] = ColorHelper.color(totalLevels, totalLevels)
+  //     }
+  //     result[min] = ColorHelper.color(0, totalLevels);
+  //   }
+  //   return result;
+  // }
+
   mapRangeToColors(options) {
-    const { min, max, intermediateLevels, totalLevels, inverse = false, toInfinity = false}: { 
-      totalLevels: number, min: number, max: number, intermediateLevels: number, inverse: boolean, toInfinity: boolean} = options
-    const ranges = this.calculateRanges(min, max, intermediateLevels);
+    const { min, middleMin, middleMax, max, totalLevels }: {
+      min: number,
+      middleMin: number,
+      middleMax: number,
+      max: number,
+      totalLevels: number,
+    } = options
+
     let result = {}
-    ranges.forEach((range, index) => {
-      if (inverse) {
-        result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels)
-      } else {
+    result[min] = ColorHelper.color(0, totalLevels)
+
+    if (middleMin && middleMax) {
+      const lowerRanges = this.calculateRanges(min, middleMin, totalLevels - 2)
+      const upperRanges = this.calculateRanges(middleMax, max, totalLevels - 2)
+      lowerRanges.forEach((range, index) => {
         result[range[1]] = ColorHelper.color(index + 1, totalLevels)
-      }
-    })
-    if (inverse) {
-      if (toInfinity) {
-        result[Infinity] = ColorHelper.colorInverse(totalLevels, totalLevels)
-      } else {
-        result[max] = ColorHelper.colorInverse(totalLevels, totalLevels)
-      }
-      result[min] = ColorHelper.colorInverse(0, totalLevels);
+      })
+      result[middleMax] = ColorHelper.colorInverse(0, totalLevels)
+      upperRanges.forEach((range, index) => {
+        result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels)
+      })
+      result[Infinity] = ColorHelper.color(0, totalLevels)
     } else {
-      if (toInfinity) {
-        result[Infinity] = ColorHelper.color(totalLevels, totalLevels)
-      }
-      result[min] = ColorHelper.color(0, totalLevels);
+      const ranges = this.calculateRanges(min, max, totalLevels - 2)
+      ranges.forEach((range, index) => {
+        result[range[1]] = ColorHelper.color(index + 1, totalLevels)
+      })
+      result[Infinity] = ColorHelper.color(totalLevels, totalLevels)
     }
-    return result;
+    return result
   }
 
   gradientValues(options) {

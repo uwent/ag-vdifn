@@ -77,7 +77,7 @@
     updateIntermediateValues()
   }
 
-  function validateUserMinInput(value: number | typeof NaN): boolean {
+  function validateMinInput(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
     } else if (value > userMax) {
@@ -92,7 +92,7 @@
     }
   }
 
-  function maxInputValid(value: number | typeof NaN): boolean {
+  function validateMaxInput(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
     } else if (value < userMin) {
@@ -104,31 +104,17 @@
     }
   }
 
-  function handleUserMinInput(event) {
+  function handleUpdate(event) {
     const { valueAsNumber } = event.target
-    updateUserMin(valueAsNumber)
-    updateUserMax(userMax)
+    if (event.target.name === 'userMin') {
+      updateUserMin(valueAsNumber)
+      updateUserMax(userMax)
+    } else {
+      updateUserMax(valueAsNumber)
+      updateUserMin(userMin)
+    }
     updateIntermediateValues()
   }
-
-  function handleUserMaxInput(event) {
-    const { valueAsNumber } = event.target
-    updateUserMax(valueAsNumber)
-    updateUserMin(userMin)
-    updateIntermediateValues()
-  }
-
-  // function handleUpdate(event) {
-  //   const { valueAsNumber } = event.target
-  //   if (event.target.title === 'userMin') {
-  //     updateUserMin(valueAsNumber)
-  //     updateUserMax(userMax)
-  //   } else {
-  //     updateUserMax(valueAsNumber)
-  //     updateUserMin(userMin)
-  //   }
-  //   updateIntermediateValues()
-  // }
 
   function updateButtons() {
     if (userMinInput.validationMessage || userMaxInput.validationMessage) {
@@ -139,24 +125,14 @@
   }
 
   function updateUserMin(value: number) {
-    if (validateUserMinInput(value)) userMin = value
+    if (validateMinInput(value)) userMin = value
     updateButtons()
   }
 
   function updateUserMax(value: number) {
-    if (maxInputValid(value)) userMax = value
+    if (validateMaxInput(value)) userMax = value
     updateButtons()
   }
-
-  // function getGradient() {
-  //   return gradientHelper.mapRangeMinsToColors({
-  //     min: userMin,
-  //     max: userMax,
-  //     intermediateLevels: severityLevels - 2,
-  //     absoluteMax: $mapMinMapMax.max,
-  //     totalLevels: severityLevels,
-  //   })
-  // }
 
   function getGradient() {
     return gradientHelper.mapRangeToColors({
@@ -170,7 +146,8 @@
 
   function resetOverlay() {
     setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
-    updateButtons()
+    updateUserMax(userMax)
+    updateUserMin(userMin)
     updateOverlay()
   }
 
@@ -270,14 +247,14 @@
   }
 </style>
 
-<fieldset>
+<fieldset title="Gradient specification">
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
-    <div class="severity-row" title="severity-row">
+    <div class="severity-row" id="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
-      <div class="severity-value-end" data-title="absoluteMin" title="">
+      <div class="severity-value-end" id="absoluteMin">
         &lt; &lt; &lt;
       </div>
       <input
@@ -287,20 +264,20 @@
         name="userMin"
         required
         bind:this={userMinInput}
-        on:change={handleUserMinInput}
+        on:change={handleUpdate}
         bind:value={userMin} />
     </div>
     {#each intermediateRanges as severityValueRange, index}
-      <div class="severity-row" data-title="severity-row" title="Color">
+      <div class="severity-row" id="severity-row">
         <div
           class="severity-color"
           style="background: {ColorHelper.color(index + 1, severityLevels)}" />
-        <div class="severity-value-intermediate" title="severity-range">
+        <div class="severity-value-intermediate" id="severity-range">
           {`${severityValueRange[0]} - ${severityValueRange[1]}`}
         </div>
       </div>
     {/each}
-    <div class="severity-row" title="severity-row">
+    <div class="severity-row" id="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(severityLevels, severityLevels)}" />
@@ -311,9 +288,9 @@
         name="userMax"
         required
         bind:this={userMaxInput}
-        on:change={handleUserMaxInput}
+        on:change={handleUpdate}
         bind:value={userMax} />
-      <div class="severity-value-end" title="absoluteMax">
+      <div class="severity-value-end" id="absoluteMax">
         &gt; &gt; &gt;
       </div>
     </div>
@@ -321,6 +298,7 @@
   <div class="button-row">
     <button
       class="level-quantity-button"
+      title="Add levels to gradient"
       bind:this={addButton}
       on:click={addLevel}
       disabled={buttonsDisabled || severityLevels >= 8}>
@@ -328,6 +306,7 @@
     </button>
     <button
       class="update-overlay-button"
+      title="Update grid overlay with new values"
       bind:this={updateOverlayButton}
       on:click={updateOverlay}
       disabled={buttonsDisabled}>
@@ -335,12 +314,14 @@
     </button>
     <button
       class="update-overlay-button"
+      title="Reset to defaults"
       bind:this={resetOverlayButton}
       on:click={resetOverlay}>
       Reset
     </button>
     <button
       class="level-quantity-button"
+      title="Remove levels from gradient"
       bind:this={minusButton}
       on:click={decrementLevel}
       disabled={buttonsDisabled || severityLevels <= 3}>
