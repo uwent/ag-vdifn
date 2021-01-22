@@ -27,24 +27,50 @@
 
   $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
 
+  // onMount(() => {
+  //   const state = get(threePointGradientState)
+  //   if (_.size(state) > 0) {
+  //     severityLevels = state.severityLevels
+  //     if (
+  //       state.absoluteMin === $mapMinMapMax.min &&
+  //       state.mapMax === $mapMinMapMax.max
+  //     ) {
+  //       userMin = state.userMin
+  //       userMax = state.userMax
+  //       userMiddleMin = state.userMiddleMin
+  //       userMiddleMax = state.userMiddleMax
+  //       updateIntermediateValuesUpper()
+  //       updateIntermediateValuesLower()
+  //     } else {
+  //       setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+  //     }
+  //     updateUserMin(userMin)
+  //     updateUserMax(userMax)
+  //     updateUserMiddleMin(userMiddleMin)
+  //     updateUserMiddleMax(userMiddleMax)
+  //   }
+  // })
+
   onMount(() => {
     const state = get(threePointGradientState)
     if (_.size(state) > 0) {
       severityLevels = state.severityLevels
-      if (state.absoluteMin === $mapMinMapMax.min && state.mapMax === $mapMinMapMax.max) {
+      if (
+        state.absoluteMin === $mapMinMapMax.min &&
+        state.mapMax === $mapMinMapMax.max
+      ) {
         userMin = state.userMin
         userMax = state.userMax
         userMiddleMin = state.userMiddleMin
         userMiddleMax = state.userMiddleMax
-        updateIntermediateValuesUpper()
-        updateIntermediateValuesLower()
+        updateIntermediateValues()
       } else {
         setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
       }
       updateUserMin(userMin)
-      updateUserMax(userMax)
       updateUserMiddleMin(userMiddleMin)
       updateUserMiddleMax(userMiddleMax)
+      updateUserMax(userMax)
     }
   })
 
@@ -61,59 +87,99 @@
     })
   })
 
+  // function setUserMinMax(mapMin, mapMax) {
+  //   const x = (mapMax - mapMin) / (severityLevels + 2)
+  //   userMin = Math.round(mapMin + x)
+  //   userMax = Math.round(mapMax - x)
+  //   userMiddleMin = Math.round((mapMin + mapMax) / 2 - x / 2)
+  //   userMiddleMax = Math.round((mapMin + mapMax) / 2 + x / 2)
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
+
   function setUserMinMax(mapMin, mapMax) {
     const x = (mapMax - mapMin) / (severityLevels + 2)
     userMin = Math.round(mapMin + x)
     userMax = Math.round(mapMax - x)
     userMiddleMin = Math.round((mapMin + mapMax) / 2 - x / 2)
     userMiddleMax = Math.round((mapMin + mapMax) / 2 + x / 2)
-    updateIntermediateValuesUpper()
-    updateIntermediateValuesLower()
+    updateIntermediateValues()
   }
 
-  function updateIntermediateValuesUpper() {
-    const { intermediateValues } = gradientHelper.gradientValues({
+  // function updateIntermediateValuesUpper() {
+  //   const { intermediateValues } = gradientHelper.gradientValues({
+  //     min: userMin,
+  //     max: userMiddleMin,
+  //     intermediateLevels: severityLevels - 3,
+  //   })
+  //   intermediateRangesUpper = intermediateValues
+  // }
+
+  // function updateIntermediateValuesLower() {
+  //   const { intermediateValues } = gradientHelper.gradientValues({
+  //     min: userMiddleMax,
+  //     max: userMax,
+  //     intermediateLevels: severityLevels - 3,
+  //   })
+  //   intermediateRangesLower = intermediateValues
+  // }
+
+  function updateIntermediateValues() {
+    const { intermediateValues: lower } = gradientHelper.gradientValues({
       min: userMin,
       max: userMiddleMin,
       intermediateLevels: severityLevels - 3,
     })
-    intermediateRangesUpper = intermediateValues
-  }
-
-  function updateIntermediateValuesLower() {
-    const { intermediateValues } = gradientHelper.gradientValues({
+    const { intermediateValues: upper } = gradientHelper.gradientValues({
       min: userMiddleMax,
       max: userMax,
       intermediateLevels: severityLevels - 3,
     })
-    intermediateRangesLower = intermediateValues
+    intermediateRangesLower = lower
+    intermediateRangesUpper = upper
   }
+
+  // function addLevel() {
+  //   if (severityLevels + 1 > 8) return
+  //   severityLevels += 1
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
+
+  // function decrementLevel() {
+  //   if (severityLevels - 1 < 4) return
+  //   severityLevels -= 1
+  //   updateIntermediateValuesUpper()
+  //   updateIntermediateValuesLower()
+  // }
 
   function addLevel() {
     if (severityLevels + 1 > 8) return
     severityLevels += 1
-    updateIntermediateValuesUpper()
-    updateIntermediateValuesLower()
+    updateIntermediateValues()
   }
 
   function decrementLevel() {
     if (severityLevels - 1 < 4) return
     severityLevels -= 1
-    updateIntermediateValuesUpper()
-    updateIntermediateValuesLower()
+    updateIntermediateValues()
   }
 
   function validateMin(value: number | typeof NaN): boolean {
     if (isNaN(value)) {
       return false
     } else if (value > userMax) {
-      userMinInput.setCustomValidity('This value must be less than the chosen maximum value')
+      userMinInput.setCustomValidity(
+        'This value must be less than the chosen maximum value',
+      )
       return false
     } else if (value < 0) {
       userMinInput.setCustomValidity('This value must be greater than 0')
       return false
     } else if (value >= userMiddleMin || value >= userMiddleMax) {
-      userMinInput.setCustomValidity('This value must be less than both middle values')
+      userMinInput.setCustomValidity(
+        'This value must be less than both middle values',
+      )
       return false
     } else {
       userMinInput.setCustomValidity('')
@@ -125,10 +191,14 @@
     if (isNaN(value)) {
       return false
     } else if (value >= userMiddleMax || value >= userMax) {
-      userMiddleInputMin.setCustomValidity('This value must be less than the chosen middle and max')
+      userMiddleInputMin.setCustomValidity(
+        'This value must be less than the chosen middle and max',
+      )
       return false
     } else if (value <= userMin) {
-      userMiddleInputMin.setCustomValidity('This value must be greater the chosen minimum')
+      userMiddleInputMin.setCustomValidity(
+        'This value must be greater the chosen minimum',
+      )
       return false
     } else {
       userMiddleInputMin.setCustomValidity('')
@@ -140,10 +210,14 @@
     if (isNaN(value)) {
       return false
     } else if (value <= userMiddleMin || value <= userMin) {
-      userMiddleInputMax.setCustomValidity('This value must be greater the middle and min input values')
+      userMiddleInputMax.setCustomValidity(
+        'This value must be greater the middle and min input values',
+      )
       return false
     } else if (value >= userMax) {
-      userMiddleInputMax.setCustomValidity('This value must be less than the chosen max value')
+      userMiddleInputMax.setCustomValidity(
+        'This value must be less than the chosen max value',
+      )
       return false
     } else {
       userMiddleInputMax.setCustomValidity('')
@@ -155,7 +229,9 @@
     if (isNaN(value)) {
       return false
     } else if (value <= userMin) {
-      userMaxInput.setCustomValidity('This value must be greater than the chosen min value')
+      userMaxInput.setCustomValidity(
+        'This value must be greater than the chosen min value',
+      )
       return false
     } else {
       userMaxInput.setCustomValidity('')
@@ -176,24 +252,78 @@
     }
   }
 
+  // function handleUpdate(event) {
+  //   const {
+  //     dataset: { id: name },
+  //     valueAsNumber,
+  //   } = event.target
+  //   if (name === 'userMin') {
+  //     updateUserMin(valueAsNumber)
+  //     updateIntermediateValuesUpper()
+  //   } else if (name === 'userMiddleMin') {
+  //     updateUserMiddleMin(valueAsNumber)
+  //     updateIntermediateValuesUpper()
+  //   } else if (name === 'userMiddleMax') {
+  //     updateUserMiddleMax(valueAsNumber)
+  //     updateIntermediateValuesLower()
+  //   } else if (name === 'userMax') {
+  //     updateUserMax(valueAsNumber)
+  //     updateIntermediateValuesLower()
+  //   }
+  // }
+
+  // function handleUpdate(event) {
+  //   const { name: name, valueAsNumber } = event.target
+  //   if (name === 'userMin') {
+  //     updateUserMin(valueAsNumber)
+  //     updateUserMiddleMin(userMiddleMin)
+  //     updateUserMiddleMax(userMiddleMax)
+  //     updateUserMax(userMax)
+  //     updateIntermediateValuesUpper()
+  //   } else if (name === 'userMiddleMin') {
+  //     updateUserMin(userMin)
+  //     updateUserMiddleMin(valueAsNumber)
+  //     updateUserMiddleMax(userMiddleMax)
+  //     updateUserMax(userMax)
+  //     updateIntermediateValuesUpper()
+  //   } else if (name === 'userMiddleMax') {
+  //     updateUserMin(userMin)
+  //     updateUserMiddleMin(userMiddleMin)
+  //     updateUserMiddleMax(valueAsNumber)
+  //     updateUserMax(userMax)
+  //     updateIntermediateValuesLower()
+  //   } else if (name === 'userMax') {
+  //     updateUserMin(userMin)
+  //     updateUserMiddleMin(userMiddleMin)
+  //     updateUserMiddleMax(userMiddleMax)
+  //     updateUserMax(valueAsNumber)
+  //     updateIntermediateValuesLower()
+  //   }
+  // }
+
   function handleUpdate(event) {
-    const {
-      dataset: { id: name },
-      valueAsNumber,
-    } = event.target
+    const { id: name, valueAsNumber } = event.target
     if (name === 'userMin') {
       updateUserMin(valueAsNumber)
-      updateIntermediateValuesUpper()
-    } else if (name === 'userMiddleMin') {
-      updateUserMiddleMin(valueAsNumber)
-      updateIntermediateValuesUpper()
-    } else if (name === 'userMiddleMax') {
-      updateUserMiddleMax(valueAsNumber)
-      updateIntermediateValuesLower()
-    } else if (name === 'userMax') {
-      updateUserMax(valueAsNumber)
-      updateIntermediateValuesLower()
+    } else {
+      updateUserMin(userMin)
     }
+    if (name === 'userMiddleMin') {
+      updateUserMiddleMin(valueAsNumber)
+    } else {
+      updateUserMiddleMin(userMiddleMin)
+    }
+    if (name === 'userMiddleMax') {
+      updateUserMiddleMax(valueAsNumber)
+    } else {
+      updateUserMiddleMax(userMiddleMax)
+    }
+    if (name === 'userMax') {
+      updateUserMax(valueAsNumber)
+    } else {
+      updateUserMax(userMax)
+    }
+      updateIntermediateValues()
   }
 
   function updateUserMin(value: number) {
@@ -339,20 +469,18 @@
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
-      <div class="severity-value-end">
-        &lt;
-      </div>
+      <div class="severity-value-end">&lt;</div>
       <input
         class="severity-value-end-input"
         type="number"
-        data-id="userMin"
+        id="userMin"
         title="Start of gradient"
         required
         bind:this={userMinInput}
         bind:value={userMin}
         on:change={handleUpdate} />
     </div>
-    {#each intermediateRangesUpper as severityValueRange, index}
+    {#each intermediateRangesLower as severityValueRange, index}
       <div class="severity-row" title="severity-row">
         <div
           class="severity-color"
@@ -369,7 +497,7 @@
       <input
         class="severity-value-end-input"
         type="number"
-        data-id="userMiddleMin"
+        id="userMiddleMin"
         title="Lower middle range"
         required
         on:change={handleUpdate}
@@ -378,7 +506,7 @@
       <input
         class="severity-value-end-input"
         type="number"
-        data-id="userMiddleMax"
+        id="userMiddleMax"
         title="Upper middle range"
         required
         on:change={handleUpdate}
@@ -386,7 +514,7 @@
         bind:value={userMiddleMax} />
     </div>
 
-    {#each intermediateRangesLower as severityValueRange, index}
+    {#each intermediateRangesUpper as severityValueRange, index}
       <div class="severity-row" id="severity-row">
         <div
           class="severity-color"
@@ -403,15 +531,13 @@
       <input
         class="severity-value-end-input"
         type="number"
-        data-id="userMax"
+        id="userMax"
         title="End of gradient"
         required
         bind:value={userMax}
         bind:this={userMaxInput}
         on:change={handleUpdate} />
-      <div class="severity-value-end" id="absoluteMax" title="">
-        &lt;
-      </div>
+      <div class="severity-value-end" id="absoluteMax" title="">&lt;</div>
     </div>
     <div class="button-row">
       <button
