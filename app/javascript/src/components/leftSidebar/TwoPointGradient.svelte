@@ -50,7 +50,7 @@
   })
 
   function setUserMinMax(mapMin, mapMax) {
-    const x = (mapMax - mapMin) / (severityLevels * 2)
+    const x = (mapMax - mapMin) / (severityLevels)
     userMin = Math.round(mapMin + x)
     userMax = Math.round(mapMax - x)
     updateIntermediateValues()
@@ -138,9 +138,7 @@
     return gradientHelper.mapRangeToColors({
       min: userMin,
       max: userMax,
-      intermediateLevels: severityLevels - 2,
       totalLevels: severityLevels,
-      toInfinity: true,
     })
   }
 
@@ -250,47 +248,49 @@
 <fieldset title="Gradient specification">
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
-    <div class="severity-row" id="severity-row">
+    <div class="severity-row" data-testid="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
-      <div class="severity-value-end" id="absoluteMin">
+      <div class="severity-value-end">
         &lt; &lt; &lt;
       </div>
       <input
-        title="Start of gradient"
         class="severity-value-end-input"
-        type="number"
+        title="Start of gradient"
         name="userMin"
+        data-testid="userMinInput"
+        type="number"
         required
         bind:this={userMinInput}
         on:change={handleUpdate}
         bind:value={userMin} />
     </div>
     {#each intermediateRanges as severityValueRange, index}
-      <div class="severity-row" id="severity-row">
+      <div class="severity-row" data-testid="severity-row">
         <div
           class="severity-color"
           style="background: {ColorHelper.color(index + 1, severityLevels)}" />
-        <div class="severity-value-intermediate" id="severity-range">
+        <div class="severity-value-intermediate">
           {`${severityValueRange[0]} - ${severityValueRange[1]}`}
         </div>
       </div>
     {/each}
-    <div class="severity-row" id="severity-row">
+    <div class="severity-row" data-testid="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(severityLevels, severityLevels)}" />
       <input
-        title="End of gradient"
         class="severity-value-end-input"
-        type="number"
+        title="End of gradient"
         name="userMax"
+        data-testid="userMaxInput"
+        type="number"
         required
         bind:this={userMaxInput}
         on:change={handleUpdate}
         bind:value={userMax} />
-      <div class="severity-value-end" id="absoluteMax">
+      <div class="severity-value-end">
         &gt; &gt; &gt;
       </div>
     </div>
@@ -299,6 +299,7 @@
     <button
       class="level-quantity-button"
       title="Add levels to gradient"
+      data-testid="plusButton"
       bind:this={addButton}
       on:click={addLevel}
       disabled={buttonsDisabled || severityLevels >= 8}>
@@ -307,6 +308,7 @@
     <button
       class="update-overlay-button"
       title="Update grid overlay with new values"
+      data-testid="updateButton"
       bind:this={updateOverlayButton}
       on:click={updateOverlay}
       disabled={buttonsDisabled}>
@@ -315,6 +317,7 @@
     <button
       class="update-overlay-button"
       title="Reset to defaults"
+      data-testid="resetButton"
       bind:this={resetOverlayButton}
       on:click={resetOverlay}>
       Reset
@@ -322,6 +325,7 @@
     <button
       class="level-quantity-button"
       title="Remove levels from gradient"
+      data-testid="minusButton"
       bind:this={minusButton}
       on:click={decrementLevel}
       disabled={buttonsDisabled || severityLevels <= 3}>
@@ -329,4 +333,6 @@
     </button>
   </div>
 </fieldset>
-Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
+<div title="Map range">
+  Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
+</div>

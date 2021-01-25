@@ -27,30 +27,6 @@
 
   $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
 
-  // onMount(() => {
-  //   const state = get(threePointGradientState)
-  //   if (_.size(state) > 0) {
-  //     severityLevels = state.severityLevels
-  //     if (
-  //       state.absoluteMin === $mapMinMapMax.min &&
-  //       state.mapMax === $mapMinMapMax.max
-  //     ) {
-  //       userMin = state.userMin
-  //       userMax = state.userMax
-  //       userMiddleMin = state.userMiddleMin
-  //       userMiddleMax = state.userMiddleMax
-  //       updateIntermediateValuesUpper()
-  //       updateIntermediateValuesLower()
-  //     } else {
-  //       setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
-  //     }
-  //     updateUserMin(userMin)
-  //     updateUserMax(userMax)
-  //     updateUserMiddleMin(userMiddleMin)
-  //     updateUserMiddleMax(userMiddleMax)
-  //   }
-  // })
-
   onMount(() => {
     const state = get(threePointGradientState)
     if (_.size(state) > 0) {
@@ -87,16 +63,6 @@
     })
   })
 
-  // function setUserMinMax(mapMin, mapMax) {
-  //   const x = (mapMax - mapMin) / (severityLevels + 2)
-  //   userMin = Math.round(mapMin + x)
-  //   userMax = Math.round(mapMax - x)
-  //   userMiddleMin = Math.round((mapMin + mapMax) / 2 - x / 2)
-  //   userMiddleMax = Math.round((mapMin + mapMax) / 2 + x / 2)
-  //   updateIntermediateValuesUpper()
-  //   updateIntermediateValuesLower()
-  // }
-
   function setUserMinMax(mapMin, mapMax) {
     const x = (mapMax - mapMin) / (severityLevels + 2)
     userMin = Math.round(mapMin + x)
@@ -105,24 +71,6 @@
     userMiddleMax = Math.round((mapMin + mapMax) / 2 + x / 2)
     updateIntermediateValues()
   }
-
-  // function updateIntermediateValuesUpper() {
-  //   const { intermediateValues } = gradientHelper.gradientValues({
-  //     min: userMin,
-  //     max: userMiddleMin,
-  //     intermediateLevels: severityLevels - 3,
-  //   })
-  //   intermediateRangesUpper = intermediateValues
-  // }
-
-  // function updateIntermediateValuesLower() {
-  //   const { intermediateValues } = gradientHelper.gradientValues({
-  //     min: userMiddleMax,
-  //     max: userMax,
-  //     intermediateLevels: severityLevels - 3,
-  //   })
-  //   intermediateRangesLower = intermediateValues
-  // }
 
   function updateIntermediateValues() {
     const { intermediateValues: lower } = gradientHelper.gradientValues({
@@ -138,20 +86,6 @@
     intermediateRangesLower = lower
     intermediateRangesUpper = upper
   }
-
-  // function addLevel() {
-  //   if (severityLevels + 1 > 8) return
-  //   severityLevels += 1
-  //   updateIntermediateValuesUpper()
-  //   updateIntermediateValuesLower()
-  // }
-
-  // function decrementLevel() {
-  //   if (severityLevels - 1 < 4) return
-  //   severityLevels -= 1
-  //   updateIntermediateValuesUpper()
-  //   updateIntermediateValuesLower()
-  // }
 
   function addLevel() {
     if (severityLevels + 1 > 8) return
@@ -252,57 +186,8 @@
     }
   }
 
-  // function handleUpdate(event) {
-  //   const {
-  //     dataset: { id: name },
-  //     valueAsNumber,
-  //   } = event.target
-  //   if (name === 'userMin') {
-  //     updateUserMin(valueAsNumber)
-  //     updateIntermediateValuesUpper()
-  //   } else if (name === 'userMiddleMin') {
-  //     updateUserMiddleMin(valueAsNumber)
-  //     updateIntermediateValuesUpper()
-  //   } else if (name === 'userMiddleMax') {
-  //     updateUserMiddleMax(valueAsNumber)
-  //     updateIntermediateValuesLower()
-  //   } else if (name === 'userMax') {
-  //     updateUserMax(valueAsNumber)
-  //     updateIntermediateValuesLower()
-  //   }
-  // }
-
-  // function handleUpdate(event) {
-  //   const { name: name, valueAsNumber } = event.target
-  //   if (name === 'userMin') {
-  //     updateUserMin(valueAsNumber)
-  //     updateUserMiddleMin(userMiddleMin)
-  //     updateUserMiddleMax(userMiddleMax)
-  //     updateUserMax(userMax)
-  //     updateIntermediateValuesUpper()
-  //   } else if (name === 'userMiddleMin') {
-  //     updateUserMin(userMin)
-  //     updateUserMiddleMin(valueAsNumber)
-  //     updateUserMiddleMax(userMiddleMax)
-  //     updateUserMax(userMax)
-  //     updateIntermediateValuesUpper()
-  //   } else if (name === 'userMiddleMax') {
-  //     updateUserMin(userMin)
-  //     updateUserMiddleMin(userMiddleMin)
-  //     updateUserMiddleMax(valueAsNumber)
-  //     updateUserMax(userMax)
-  //     updateIntermediateValuesLower()
-  //   } else if (name === 'userMax') {
-  //     updateUserMin(userMin)
-  //     updateUserMiddleMin(userMiddleMin)
-  //     updateUserMiddleMax(userMiddleMax)
-  //     updateUserMax(valueAsNumber)
-  //     updateIntermediateValuesLower()
-  //   }
-  // }
-
   function handleUpdate(event) {
-    const { id: name, valueAsNumber } = event.target
+    const { name: name, valueAsNumber } = event.target
     if (name === 'userMin') {
       updateUserMin(valueAsNumber)
     } else {
@@ -462,18 +347,20 @@
   }
 </style>
 
-<fieldset>
+<fieldset title="Gradient specification">
   <legend>Custom Degree-Day Values</legend>
-  <div class="custom-values-wrapper" title="Gradient specification">
-    <div class="severity-row" id="severity-row">
+  <div class="custom-values-wrapper">
+    <div class="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
-      <div class="severity-value-end">&lt;</div>
+      <div class="severity-value-end">
+        &lt; &lt; &lt;
+      </div>
       <input
         class="severity-value-end-input"
         type="number"
-        id="userMin"
+        name="userMin"
         title="Start of gradient"
         required
         bind:this={userMinInput}
@@ -481,7 +368,7 @@
         on:change={handleUpdate} />
     </div>
     {#each intermediateRangesLower as severityValueRange, index}
-      <div class="severity-row" title="severity-row">
+      <div class="severity-row">
         <div
           class="severity-color"
           style="background: {ColorHelper.color(index + 1, severityLevels - 1)}" />
@@ -490,14 +377,14 @@
         </div>
       </div>
     {/each}
-    <div class="severity-row" title="severity-row">
+    <div class="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(severityLevels, severityLevels)}" />
       <input
         class="severity-value-end-input"
         type="number"
-        id="userMiddleMin"
+        name="userMiddleMin"
         title="Lower middle range"
         required
         on:change={handleUpdate}
@@ -506,16 +393,15 @@
       <input
         class="severity-value-end-input"
         type="number"
-        id="userMiddleMax"
+        name="userMiddleMax"
         title="Upper middle range"
         required
         on:change={handleUpdate}
         bind:this={userMiddleInputMax}
         bind:value={userMiddleMax} />
     </div>
-
     {#each intermediateRangesUpper as severityValueRange, index}
-      <div class="severity-row" id="severity-row">
+      <div class="severity-row">
         <div
           class="severity-color"
           style="background: {ColorHelper.colorInverse(index + 1, severityLevels - 1)}" />
@@ -524,20 +410,22 @@
         </div>
       </div>
     {/each}
-    <div class="severity-row" id="severity-row">
+    <div class="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
       <input
         class="severity-value-end-input"
         type="number"
-        id="userMax"
+        name="userMax"
         title="End of gradient"
         required
         bind:value={userMax}
         bind:this={userMaxInput}
         on:change={handleUpdate} />
-      <div class="severity-value-end" id="absoluteMax" title="">&lt;</div>
+      <div class="severity-value-end">
+        &gt; &gt; &gt;
+      </div>
     </div>
     <div class="button-row">
       <button

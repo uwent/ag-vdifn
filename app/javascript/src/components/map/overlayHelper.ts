@@ -164,14 +164,10 @@ export default class OverlayHelper {
     const key = _.find(
       _.keys(gradientMapping)
         .map((value) => parseFloat(value))
-        .sort(),
+        .sort((x, y) => x - y),
       (rangeMax) => severityNumber <= rangeMax,
     )
-    if (key === undefined) {
-      return gradientMapping[_.findLastKey(gradientMapping)]
-    } else {
-      return gradientMapping[key]
-    }
+    return gradientMapping[key]
   }
 
   private async fetchPointDetails(
