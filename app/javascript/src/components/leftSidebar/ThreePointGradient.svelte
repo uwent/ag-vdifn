@@ -355,7 +355,7 @@
         class="severity-color"
         style="background: {ColorHelper.color(0, severityLevels)}" />
       <div class="severity-value-end">
-        &lt; &lt; &lt;
+        0
       </div>
       <input
         class="severity-value-end-input"

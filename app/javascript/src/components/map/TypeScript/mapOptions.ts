@@ -4,13 +4,13 @@ const MapOptions = {
     lng: -90.274658203125,
   },
   mapTypeControl: true,
-  mapTypeControlOptions: {
-    mapTypeIds: ['terrain', 'hybrid'],
-  },
   // mapTypeControlOptions: {
   //   mapTypeIds: ['terrain', 'hybrid'],
-  //   position: google.maps.ControlPosition.TOP_RIGHT,
   // },
+  mapTypeControlOptions: {
+    mapTypeIds: ['terrain', 'satellite', 'hybrid'],
+    position: 3
+  },
   mapTypeId: 'terrain',
   maxZoom: 12,
   minZoom: 6,
