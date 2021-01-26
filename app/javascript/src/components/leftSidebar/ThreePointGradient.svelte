@@ -31,7 +31,6 @@
     const state = get(threePointGradientState)
     if (_.size(state) > 0) {
       if (state.mapMin === $mapMinMapMax.min && state.mapMax === $mapMinMapMax.max) {
-        console.log('loaded values from saved state')
         severityLevels = state.severityLevels
         userInputs = state.userValues
         validateInputs()
@@ -96,6 +95,7 @@
     updateIntermediateValues()
   }
 
+  // validate inputs, write to values, and update intermediates
   function validateInputs() {
 
     if (!userMinInput || !userMiddleMinInput || !userMiddleMaxInput || !userMaxInput) return
@@ -148,6 +148,7 @@
 
   }
 
+  // fetch gradient
   function getGradient() {
     return gradientHelper.mapRangeToColors({
       min: userValues[0],
@@ -158,10 +159,12 @@
     })
   }
 
+  // handle reset button
   function resetOverlay() {
     setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
   }
 
+  // update grid overlay
   function updateOverlay() {
     dispatch('updateOverlay', getGradient())
   }

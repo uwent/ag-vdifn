@@ -263,7 +263,7 @@
           type="checkbox"
           on:change={tMaxToggle}
           bind:checked={tMaxDisabled} />
-        <label for="tMaxToggle">No TMax</label>
+        <label for="tMaxToggle">No Tmax</label>
       </div>
     </div>
   </div>

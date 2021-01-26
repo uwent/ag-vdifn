@@ -1,5 +1,4 @@
 <script lang="ts">
-  const moment = require('moment')
   import { getContext, onDestroy, onMount } from 'svelte'
   import {
     endDate,
@@ -9,53 +8,52 @@
   } from '../../store/store'
   import { PestInfo } from '../common/TypeScript/types'
   import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+
+  const moment = require('moment')
   const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey)
+
   let today: string = moment.utc().format('YYYY-MM-DD')
   let endDateValue: string = today
   let startDateValue: string = defaultStartDate
   let startLabel = dateToolTip.startLabel
   let startMin = moment.utc().subtract(7, 'days')
 
+  // handle end date changes
   function updateStartDateInput() {
-    // allow end date to push start date forward and update
-    if (moment.utc(endDateValue) < moment.utc(startDateValue)) {
-      startDateValue = endDateValue
-    }
+    const start = moment.utc(startDateValue)
+    const end = moment.utc(endDateValue)
 
-    // if end date moves to different year end date follows
-    if (
-      moment.utc(endDateValue).format('YYYY') !=
-      moment.utc(startDateValue).format('YYYY')
-    ) {
-      startDateValue = moment.utc(endDateValue).format('YYYY') + '-01-01'
+    // allow end date to push start date forward and update
+    if (end < start) startDateValue = endDateValue
+
+    // if end date moves to different year start date set to Jan 1 of same year
+    if (end.format('YYYY') != start.format('YYYY')) {
+      startDateValue = end.format('YYYY') + '-01-01'
     }
   }
 
+  // handle start date changes
   function updateEndDateInput() {
-    // late blight forces 7-day date window
+    const start = moment.utc(startDateValue)
+    const end = moment.utc(endDateValue)
+
+    // force 7-day window for late blight
     selectedAffliction.subscribe((affliction: PestInfo) => {
       if (affliction.name === 'Late Blight') {
-        if (moment.utc(startDateValue) <= startMin) {
-          endDateValue = moment(startDateValue)
-            .add(7, 'days')
-            .format('YYYY-MM-DD')
-        } else if (moment.utc(startDateValue) >= startMin) {
+        if (start <= startMin) {
+          endDateValue = moment(startDateValue).add(7, 'days').format('YYYY-MM-DD')
+        } else if (start >= startMin) {
           endDateValue = today
         }
       }
     })
 
     // allow start date to push end date backward
-    if (moment.utc(startDateValue) > moment.utc(endDateValue)) {
-      endDateValue = startDateValue
-    }
+    if (start > end) endDateValue = startDateValue
 
     // if start date moves to different year end date follows
-    if (
-      moment.utc(startDateValue).format('YYYY') !=
-      moment.utc(endDateValue).format('YYYY')
-    ) {
-      endDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
+    if (start.format('YYYY') != end.format('YYYY')) {
+      endDateValue = start.format('YYYY') + '-12-31'
     }
   }
 
