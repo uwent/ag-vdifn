@@ -17,8 +17,8 @@
   let resetOverlayButton: HTMLButtonElement
 
   let severityLevels: number = 5
-  let userValues: number[] = []
-  let userInputs: number[] = []
+  let userValues: number[] = [0, 0]
+  let userInputs: number[] = [0, 0]
   let intermediateRanges: number[][] = []
   let buttonsDisabled: boolean = false
 
@@ -53,9 +53,7 @@
   // populate user values from map range
   function setUserMinMax(mapMin, mapMax) {
     const x = (mapMax - mapMin) / (severityLevels)
-    userInputs[0] = Math.round(mapMin + x)
-    userInputs[1] = Math.round(mapMax - x)
-    userValues = userInputs
+    userInputs = [Math.round(mapMin + x), Math.round(mapMax - x)]
     validateInputs()
     updateOverlay()
   }
@@ -68,6 +66,49 @@
       intermediateLevels: severityLevels - 2,
     })
     intermediateRanges = values
+  }
+
+  // validate inputs, write to values, and update intermediates
+  function validateInputs() {
+
+    if (!userMinInput || !userMaxInput) return
+
+    const min = Number(userInputs[0])
+    const max = Number(userInputs[1])
+
+    if (isNaN(min)) {
+      userMinInput.setCustomValidity('No value entered')
+    } else if (min < 0 || min > max) {
+      userMinInput.setCustomValidity('This value must be between 0 and the maximum')
+    } else {
+      userMinInput.setCustomValidity('')
+    }
+
+    if (isNaN(max)) {
+      userMaxInput.setCustomValidity('No value entered')
+    } else if (max < min) {
+      userMaxInput.setCustomValidity('This value must be greater than the minimum')
+    } else {
+      userMaxInput.setCustomValidity('')
+    }
+
+    if (userMinInput.validationMessage || userMaxInput.validationMessage) {
+      buttonsDisabled = true
+    } else {
+      buttonsDisabled = false
+      userValues = [min, max]
+      updateIntermediateValues()
+    }
+
+  }
+
+  // fetch gradient
+  function getGradient() {
+    return gradientHelper.mapRangeToColors({
+      min: userValues[0],
+      max: userValues[1],
+      totalLevels: severityLevels,
+    })
   }
 
   // add gradient level
@@ -84,47 +125,9 @@
     updateIntermediateValues()
   }
 
-  // validate inputs, write to values, and update intermediates
-  function validateInputs() {
-
-    if (!userMinInput || !userMaxInput) return
-
-    const min = userInputs[0]
-    const max = userInputs[1]
-
-    if (isNaN(min)) {
-      userMinInput.setCustomValidity('No value entered')
-    } else if (min < 0 || min > max) {
-      userMinInput.setCustomValidity('This value must be between 0 and the max')
-    } else {
-      userMinInput.setCustomValidity('')
-    }
-
-    if (isNaN(max)) {
-      userMaxInput.setCustomValidity('No value entered')
-    } else if (max < min) {
-      userMaxInput.setCustomValidity('This value must be greater than the chosen mininum')
-    } else {
-      userMaxInput.setCustomValidity('')
-    }
-
-    if (userMinInput.validationMessage || userMaxInput.validationMessage) {
-      buttonsDisabled = true
-    } else {
-      buttonsDisabled = false
-      userValues = userInputs
-      updateIntermediateValues()
-    }
-
-  }
-
-  // fetch gradient
-  function getGradient() {
-    return gradientHelper.mapRangeToColors({
-      min: userValues[0],
-      max: userValues[1],
-      totalLevels: severityLevels,
-    })
+  // update grid overlay
+  function updateOverlay() {
+    dispatch('updateOverlay', getGradient())
   }
 
   // handle reset button
@@ -132,10 +135,18 @@
     setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
   }
 
-  // update grid overlay
-  function updateOverlay() {
-    dispatch('updateOverlay', getGradient())
+  // handle input updates
+  function handleUpdate(event) {
+    const name = event.target.name
+    const { value } = event.target
+    if (name === 'userMin') {
+      userInputs[0] = value
+    } else if (name === 'userMax') {
+      userInputs[1] = value
+    }
+    validateInputs()
   }
+
 </script>
 
 <style type="scss">
@@ -248,7 +259,7 @@
         required
         bind:this={userMinInput}
         bind:value={userInputs[0]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
     </div>
     {#each intermediateRanges as severityValueRange, index}
       <div class="severity-row" data-testid="severity-row">
@@ -273,7 +284,7 @@
         required
         bind:this={userMaxInput}
         bind:value={userInputs[1]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
       <div class="severity-value-end">
         &gt; &gt; &gt;
       </div>

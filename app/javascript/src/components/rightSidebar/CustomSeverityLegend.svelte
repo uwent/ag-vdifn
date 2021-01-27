@@ -10,7 +10,7 @@
         if (index === 0) {
             legend[0] = {color: element.color, text: "0 - " + element.number}
         } else if (index === gradient.length - 1) {
-            legend[index] = {color: element.color, text: Math.round(gradient[index - 1].number) + "+"}
+            legend[index] = {color: element.color, text: (Math.round(gradient[index - 1].number) + 1) + "+"}
         } else {
             legend[index] = {color: element.color, text: (Math.round(gradient[index - 1].number) + 1) + " - " + Math.round(gradient[index].number)}
         }

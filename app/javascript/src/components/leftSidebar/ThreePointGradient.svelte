@@ -19,8 +19,8 @@
   let resetOverlayButton: HTMLButtonElement
 
   let severityLevels: number = 5
-  let userValues: number[] = []
-  let userInputs: number[] = []
+  let userValues: number[] = [0, 0, 0, 0]
+  let userInputs: number[] = [0, 0, 0, 0]
   let intermediateRangesUpper: number[][] = []
   let intermediateRangesLower: number[][] = []
   let buttonsDisabled: boolean = false
@@ -56,11 +56,11 @@
   // populate user values from map range
   function setUserMinMax(mapMin, mapMax) {
     const x = (mapMax - mapMin) / (severityLevels + 2)
-    userInputs[0] = Math.round(mapMin + x)
-    userInputs[1] = Math.round((mapMin + mapMax) / 2 - x / 2)
-    userInputs[2] = Math.round((mapMin + mapMax) / 2 + x / 2)
-    userInputs[3] = Math.round(mapMax - x)
-    userValues = userInputs
+    userInputs = [
+      Math.round(mapMin + x),
+      Math.round((mapMin + mapMax) / 2 - x / 2),
+      Math.round((mapMin + mapMax) / 2 + x / 2),
+      Math.round(mapMax - x)]
     validateInputs()
     updateOverlay()
   }
@@ -81,29 +81,15 @@
     intermediateRangesUpper = upper
   }
 
-  // add gradient level
-  function addLevel() {
-    if (severityLevels + 1 > 8) return
-    severityLevels += 1
-    updateIntermediateValues()
-  }
-
-  // remove gradient level
-  function decrementLevel() {
-    if (severityLevels - 1 < 4) return
-    severityLevels -= 1
-    updateIntermediateValues()
-  }
-
   // validate inputs, write to values, and update intermediates
   function validateInputs() {
 
     if (!userMinInput || !userMiddleMinInput || !userMiddleMaxInput || !userMaxInput) return
 
-    const min = userInputs[0]
-    const middleMin = userInputs[1]
-    const middleMax = userInputs[2]
-    const max = userInputs[3]
+    const min = Number(userInputs[0])
+    const middleMin = Number(userInputs[1])
+    const middleMax = Number(userInputs[2])
+    const max = Number(userInputs[3])
 
     if (isNaN(min)) {
       userMinInput.setCustomValidity('No value entered')
@@ -142,12 +128,12 @@
       buttonsDisabled = true
     } else {
       buttonsDisabled = false
-      userValues = userInputs
+      userValues = [min, middleMin, middleMax, max]
       updateIntermediateValues()
     }
 
   }
-
+  
   // fetch gradient
   function getGradient() {
     return gradientHelper.mapRangeToColors({
@@ -159,15 +145,46 @@
     })
   }
 
-  // handle reset button
-  function resetOverlay() {
-    setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+  // add gradient level
+  function addLevel() {
+    if (severityLevels + 1 > 8) return
+    severityLevels += 1
+    updateIntermediateValues()
+  }
+
+  // remove gradient level
+  function decrementLevel() {
+    if (severityLevels - 1 < 4) return
+    severityLevels -= 1
+    updateIntermediateValues()
   }
 
   // update grid overlay
   function updateOverlay() {
     dispatch('updateOverlay', getGradient())
   }
+
+  // handle reset button
+  function resetOverlay() {
+    setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+  }
+
+  // handle inputs
+  function handleUpdate(event) {
+    const name = event.target.name
+    const { value } = event.target
+    if (name === 'userMin') {
+      userInputs[0] = value
+    } else if (name === 'userMiddleMin') {
+      userInputs[1] = value
+    } else if (name === 'userMiddleMax') {
+      userInputs[2] = value
+    } else if (name === 'userMax') {
+      userInputs[3] = value
+    }
+    validateInputs()
+  }
+
 </script>
 
 <style type="scss">
@@ -280,7 +297,7 @@
         required
         bind:this={userMinInput}
         bind:value={userInputs[0]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
     </div>
     {#each intermediateRangesLower as severityValueRange, index}
       <div class="severity-row">
@@ -304,7 +321,7 @@
         required
         bind:this={userMiddleMinInput}
         bind:value={userInputs[1]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
       <input
         class="severity-value-end-input"
         type="number"
@@ -313,7 +330,7 @@
         required
         bind:this={userMiddleMaxInput}
         bind:value={userInputs[2]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
     </div>
     {#each intermediateRangesUpper as severityValueRange, index}
       <div class="severity-row">
@@ -337,7 +354,7 @@
         required
         bind:this={userMaxInput}
         bind:value={userInputs[3]}
-        on:change={validateInputs} />
+        on:change={handleUpdate} />
       <div class="severity-value-end">
         &gt; &gt; &gt;
       </div>
