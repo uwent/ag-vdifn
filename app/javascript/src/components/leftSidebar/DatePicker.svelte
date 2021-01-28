@@ -53,7 +53,11 @@
 
     // if start date moves to different year end date follows
     if (start.format('YYYY') != end.format('YYYY')) {
-      endDateValue = start.format('YYYY') + '-12-31'
+      if (today < start.format('YYYY') + '-12-31') {
+        endDateValue = today
+      } else {
+        endDateValue = start.format('YYYY') + '-12-31'
+      }
     }
   }
 
