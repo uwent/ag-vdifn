@@ -38,19 +38,6 @@ export default class OverlayHelper {
     })
   }
 
-  // async updateOverlay(severityParams: SeverityParams, panelType) {
-  //   this.clearRectangles()
-  //   this.closeInfoWindow()
-  //   this.severities = await this.getSeverities(severityParams)
-  //   if (this.severities.length > 0 && this.severities[0].min) {
-  //     this.min = this.severities[0].min
-  //     this.max = this.severities[0].max
-  //   }
-  //   const rectangleOptions = this.convertSeveritiesToRectangleOptions()
-  //   this.drawDataPoints(rectangleOptions)
-  //   this.addInfoWindowEvents(severityParams, panelType)
-  // }
-
   async updateOverlay(severityParams: SeverityParams, panelType) {
     this.clearRectangles()
     this.closeInfoWindow()
@@ -145,20 +132,6 @@ export default class OverlayHelper {
       })
     })
   }
-
-  // mapColorToSeverity(severityNumber: number, gradientMapping): string {
-  //   const key = _.find(
-  //     _.keys(gradientMapping)
-  //       .map((value) => parseFloat(value))
-  //       .sort(),
-  //     (rangeMin) => severityNumber <= rangeMin,
-  //   )
-  //   if (key === undefined) {
-  //     return gradientMapping[_.findLastKey(gradientMapping)]
-  //   } else {
-  //     return gradientMapping[key]
-  //   }
-  // }
 
   severityToColor(severityNumber: number, gradientMapping): string {
     const key = _.find(
