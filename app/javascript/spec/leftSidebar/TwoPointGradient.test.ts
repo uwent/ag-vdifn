@@ -29,7 +29,7 @@ describe('without save state', () => {
     queryId = queryAllByTestId
     userMinInput = getByTestId('userMinInput') as HTMLInputElement
     userMaxInput = getByTestId('userMaxInput') as HTMLInputElement
-    addButton = getByTestId('plusButton')
+    addButton = getByTestId('addButton')
     minusButton = getByTestId('minusButton')
     updateButton = getByTestId('updateButton')
     resetButton = getByTestId('resetButton')
@@ -52,18 +52,18 @@ describe('without save state', () => {
       expect(minusButton.disabled).toEqual(false)
     })
 
-    it('defaults userMin and userMax to evenly divided between mapMin and mapMax', () => {
-      const x = (mapMax - mapMin) / (defaultSeverityLevels)
-      expect(userMinInput.value).toEqual(`${to_tenths(mapMin + x)}`)
-      expect(userMaxInput.value).toEqual(`${to_tenths(mapMax - x)}`)
+    it('sets initial input values based on map range', () => {
+      const x = to_tenths((mapMax - mapMin) / (defaultSeverityLevels))
+      expect(userMinInput.value).toEqual(`${mapMin + x}`)
+      expect(userMaxInput.value).toEqual(`${mapMax - x}`)
     })
 
     it('generates intermediate values divided between userMin and userMax', async () => {
       const userMin = Number(userMinInput.value)
       const userMax = Number(userMaxInput.value)
-      const x = (userMax - userMin) / (defaultSeverityLevels - 2)
+      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
       expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${userMin} - ${to_tenths(userMin + x)}`,
+        ` ${userMin} - ${userMin + x}`,
       )
     })
   })
@@ -88,22 +88,20 @@ describe('without save state', () => {
       await fireEvent.click(addButton)
       await fireEvent.click(addButton)
       await fireEvent.click(addButton)
-      await fireEvent.click(addButton)
-      await fireEvent.click(addButton)
       expect(addButton.disabled).toEqual(true)
     })
   
     it('updates intermediate values when severity levels change', async () => {
       const userMin = Number(userMinInput.value)
       const userMax = Number(userMaxInput.value)
-      const x = (userMax - userMin) / (defaultSeverityLevels - 2)
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${to_tenths(userMin + x)}`)
+      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
+      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + x}`)
 
       await fireEvent.click(addButton)
 
       const severityLevels = defaultSeverityLevels + 1
-      const y = (userMax - userMin) / (severityLevels - 2)
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${to_tenths(userMin + y)}`)
+      const y = to_tenths((userMax - userMin) / (severityLevels - 2))
+      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + y}`)
     })
   })
 
@@ -131,25 +129,23 @@ describe('without save state', () => {
       expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum')
       expect(updateButton.disabled).toEqual(true)
     })
+  })
 
+  describe('updates intermediate values when user inputs change', () => {
     it('updates intermediate values when userMin is changed', async () => {
       const newMin = 200
       const userMax = Number(userMaxInput.value)
       await fireEvent.change(userMinInput, { target: { value: newMin } })
-      const x = (userMax - newMin) / (defaultSeverityLevels - 2)
-      expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${newMin} - ${to_tenths(newMin + x)}`,
-      )
+      const x = to_tenths((userMax - newMin) / (defaultSeverityLevels - 2))
+      expect(queryId('severity-row')[1].textContent).toEqual(` ${newMin} - ${newMin + x}`)
     })
   
     it('updates intermediate values when userMax is changed', async () => {
       const newMax = 1000
       const userMin = Number(userMinInput.value)
       await fireEvent.change(userMaxInput, { target: { value: newMax } })
-      const x = (newMax - userMin) / (defaultSeverityLevels - 2)
-      expect(queryId('severity-row')[defaultSeverityLevels - 2].textContent).toEqual(
-        ` ${to_tenths(newMax - x)} - ${newMax}`,
-      )
+      const x = to_tenths((newMax - userMin) / (defaultSeverityLevels - 2))
+      expect(queryId('severity-row')[defaultSeverityLevels - 2].textContent).toEqual(` ${newMax - x} - ${newMax}`)
     })
   })
 
@@ -166,15 +162,14 @@ describe('without save state', () => {
 })
 
 describe('saving valid state', () => {
-  const userMinValue = 350
-  const userMaxValue = 650
   const severityLevels = 4
+  const userValues = [350, 650]
 
   beforeEach(() => {
     mapMinMapMax.set({ min: mapMin, max: mapMax })
     twoPointGradientState.set({
       severityLevels: severityLevels,
-      userValues: [userMinValue, userMaxValue],
+      userValues: userValues,
       mapMax: mapMax,
       mapMin: mapMin,
     })
@@ -187,8 +182,8 @@ describe('saving valid state', () => {
   })
 
   it('saves state', () => {
-    expect(userMinInput.value).toEqual(userMinValue.toString())
-    expect(userMaxInput.value).toEqual(userMaxValue.toString())
+    expect(userMinInput.value).toEqual(userValues[0].toString())
+    expect(userMaxInput.value).toEqual(userValues[1].toString())
     expect(queryId('severity-row').length).toEqual(severityLevels)
   })
 })

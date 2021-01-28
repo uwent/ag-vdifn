@@ -28,14 +28,17 @@
     const state = get(twoPointGradientState)
     if (_.size(state) > 0) {
       if (state.mapMin === $mapMinMapMax.min && state.mapMax === $mapMinMapMax.max) {
+        // console.log('loading saved state')
         severityLevels = state.severityLevels
         userInputs = state.userValues
         validateInputs()
         updateOverlay()
       } else {
+        // console.log('saved state present but map has changed')
         setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
       }
     } else {
+      // console.log('no saved state found')
       setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
     }
   })
@@ -294,7 +297,7 @@
     <button
       class="level-quantity-button"
       title="Add levels to gradient"
-      data-testid="plusButton"
+      data-testid="addButton"
       bind:this={addButton}
       on:click={addLevel}
       disabled={buttonsDisabled || severityLevels >= 8}>
