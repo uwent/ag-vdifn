@@ -158,12 +158,4 @@
       <p>Please submit model parameters</p>
     </ModelParameters>
   {/if}
-  <!-- <div>
-    Custom panel params:<br />
-    start_date: {$customPanelParams.start_date}<br />
-    end_date: {$customPanelParams.end_date}<br />
-    t_min: {$customPanelParams.t_min} {typeof $customPanelParams.t_min}<br />
-    t_max: {$customPanelParams.t_max} {typeof $customPanelParams.t_max}<br />
-    in_fahrenheit: {$customPanelParams.in_fahrenheit}
-  </div> -->
 </div>

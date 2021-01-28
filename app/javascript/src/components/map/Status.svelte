@@ -39,7 +39,6 @@
   </div>
 {:else}
   <div class="model-status">
-    Custom model: {!$customPanelState.t_min ? 'None' : $customPanelState.t_min}/{!$customPanelState.t_max ? 'None' : $customPanelState.t_max}
-    {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
+    Custom model: {!$customPanelState.t_min === undefined ? 'None' : $customPanelState.t_min}/{!$customPanelState.t_max ? 'None' : $customPanelState.t_max} {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
   </div>
 {/if}

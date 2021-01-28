@@ -45,16 +45,10 @@ describe('when disease panel selected', () => {
 })
 
 describe('when custom panel selected', () => {
-  it('shows none when no tmin/max', async () => {
-    selectedPanel.set(PANELS.CUSTOM);
-    await tick();
-
-    expect(getText("Custom model: None/None \u2103")).toBeInTheDocument()
-  })
 
   it('shows tMin and TMax and temp scale', async () => {
     selectedPanel.set(PANELS.CUSTOM);
-    customPanelState.set({t_max: 10, t_min: 5, in_fahrenheit: true})
+    customPanelState.set({t_min: 5, t_max: 10, in_fahrenheit: true})
     await tick();
 
     expect(getText("Custom model: 5/10 \u2109")).toBeInTheDocument()

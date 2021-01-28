@@ -7,9 +7,10 @@ export default class RectangleOption {
   strokeOpacity: number = 1.0
   strokeWeight: number = 0.05
   fillColor: string
-  fillOpacity: number = 0.2
+  fillOpacity: number = 0.25
   map: any
-  private cornerOffset: number = 0.0025
+  // private cornerOffset: number = 0.0025
+  private cornerOffset: number = 0.00
   private latitudeOffset: number = 0.05
   private longitudeOffset: number = 0.05
   bounds: { north: number; south: number; east: number; west: number }

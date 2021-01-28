@@ -32,15 +32,6 @@
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
   })
 
-  // const submit = () => {
-  //   diseasePanelState.update(state => ({...state, currentAffliction: get(selectedAffliction)}))
-  //   diseasePanelParams.set({
-  //     start_date: moment.utc($startDate).format("YYYY-MM-DD"),
-  //     end_date: moment.utc($endDate).format("YYYY-MM-DD"),
-  //     pest_id: $afflictionValue,
-  //   });
-  // };
-
   function submit() {
     diseasePanelState.update((state) => ({
       ...state,

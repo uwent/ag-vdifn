@@ -12,10 +12,7 @@ export const customOverlaySubmitted = writable(false)
 export const twoPointGradientState = writable({})
 export const threePointGradientState = writable({})
 export const tMinTmax = writable({})
-export const mapMinMapMax = writable({
-  min: 0,
-  max: 0,
-})
+export const mapMinMapMax = writable({min: 0, max: 0})
 export const panelKey = {}
 export const diseasePanelKey = {}
 export const insectPanelKey = {}

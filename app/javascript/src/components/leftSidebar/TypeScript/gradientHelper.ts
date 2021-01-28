@@ -2,24 +2,41 @@ import _ from "lodash"
 import ColorHelper from "../../map/TypeScript/colorHelper";
 
 export default class GradientHelper {
-  mapRangeMinsToColors(options) {
-    const { min, max, intermediateLevels, totalLevels, absoluteMax, inverse = false}: { totalLevels: number, min: number, max: number, intermediateLevels: number, absoluteMax: number, inverse: boolean} = options
-    const ranges = this.calculateRanges(max, min, intermediateLevels);
+
+  mapRangeToColors(options) {
+    const { min, middleMin, middleMax, max, totalLevels }: {
+      min: number,
+      middleMin: number,
+      middleMax: number,
+      max: number,
+      totalLevels: number,
+    } = options
+
     let result = {}
-    result[min] = ColorHelper.color(0, totalLevels);
-    ranges.forEach((range, index) => {
-      if (inverse) {
-        result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels)
-      } else {
+    
+    result[min] = ColorHelper.color(0, totalLevels)
+
+    if (min === max) return result
+
+    if (middleMin && middleMax) {
+      const lowerRanges = this.calculateRanges(min, middleMin, totalLevels - 2)
+      const upperRanges = this.calculateRanges(middleMax, max, totalLevels - 2)
+      lowerRanges.forEach((range, index) => {
         result[range[1]] = ColorHelper.color(index + 1, totalLevels)
-      }
-    })
-    if (inverse) {
-      result[absoluteMax] = ColorHelper.colorInverse(totalLevels, totalLevels)
+      })
+      result[middleMax] = ColorHelper.colorInverse(0, totalLevels)
+      upperRanges.forEach((range, index) => {
+        result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels)
+      })
+      result[Infinity] = ColorHelper.color(0, totalLevels)
     } else {
-      result[absoluteMax] = ColorHelper.color(totalLevels, totalLevels)
+      const ranges = this.calculateRanges(min, max, totalLevels - 2)
+      ranges.forEach((range, index) => {
+        result[range[1]] = ColorHelper.color(index + 1, totalLevels)
+      })
+      result[Infinity] = ColorHelper.color(totalLevels, totalLevels)
     }
-    return result;
+    return result
   }
 
   gradientValues(options) {
@@ -27,11 +44,11 @@ export default class GradientHelper {
     return {
       userMin: min,
       userMax: max,
-      intermediateValues: this.calculateRanges(max, min, intermediateLevels)
+      intermediateValues: this.calculateRanges(min, max, intermediateLevels)
     }
   }
 
-  private calculateRanges(max: number, min: number, levels: number): number[][] {
+  private calculateRanges(min: number, max: number, levels: number): number[][] {
     if (levels <= 0) return [];
     let ranges: number[][] = [];
     let length_of_range = (max - min) / levels;

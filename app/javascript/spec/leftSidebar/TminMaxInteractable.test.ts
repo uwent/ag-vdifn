@@ -33,7 +33,7 @@ describe('TminMaxInteractable component', () => {
   afterEach(jest.clearAllMocks)
 
   it('sets tMin and tMax to default values', () => {
-    const checkbox = getRole("checkbox", { name: "No TMax"})
+    const checkbox = getRole("checkbox", { name: "No Tmax"})
     expect(getRole("spinbutton", { name: "Tmin"}).value).toEqual("50")
     expect(getRole("spinbutton", { name: "Tmax"}).disabled).toEqual(true)
     expect(checkbox.checked).toEqual(true)
@@ -44,7 +44,7 @@ describe('TminMaxInteractable component', () => {
   })
 
   it('converts values between celcius and fahrenheit when temp unit is toggled', async () => {
-    const checkbox = getRole("checkbox", { name: "No TMax"});
+    const checkbox = getRole("checkbox", { name: "No Tmax"});
     const tMax = getRole("spinbutton", { name: "Tmax"});
     const tMin = getRole("spinbutton", { name: "Tmin"})
     const tempToggle: HTMLInputElement = getTitle("temp-unit-toggle");
@@ -65,14 +65,14 @@ describe('TminMaxInteractable component', () => {
 
   it('unchecking "no Tmax" button enables tMax input', async () => {
     const tMaxInput: HTMLInputElement = getRole("spinbutton", { name: "Tmax"})
-    await fireEvent.click(getRole("checkbox", { name: "No TMax"}))
+    await fireEvent.click(getRole("checkbox", { name: "No Tmax"}))
 
     expect(tMaxInput.disabled).toEqual(false)
   })
 
   describe("validations", () => {
     beforeEach(async () => {
-      const checkbox = getRole("checkbox", { name: "No TMax"})
+      const checkbox = getRole("checkbox", { name: "No Tmax"})
       await fireEvent.click(checkbox)
     })
     it('shows validation when tMax is less than tMin', async () => {
@@ -94,7 +94,7 @@ describe('TminMaxInteractable component', () => {
     it("does not validate if tMax is disabled", async () => {
       const tMinInput: HTMLInputElement = getRole("spinbutton", { name: "Tmin"})
 
-      await fireEvent.click(getRole("checkbox", { name: "No TMax"}))
+      await fireEvent.click(getRole("checkbox", { name: "No Tmax"}))
 
       await fireEvent.change(tMinInput, { target: { value: 100}})
 

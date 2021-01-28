@@ -85,15 +85,15 @@
 
   customPanelParams.subscribe(async (severityParams: SeverityParams) => {
     await updateOverlay(customOverlay, severityParams, PANELS.CUSTOM)
+    mapMinMapMax.set({
+      min: customOverlay.min || 0,
+      max: customOverlay.max || 0,
+    })
     customPanelState.update((state) => ({
       ...state,
       severities: customOverlay.severities,
       severityParams,
     }))
-    mapMinMapMax.set({
-      min: customOverlay.min || 0,
-      max: customOverlay.max || 0,
-    })
   })
 
   overlayGradient.subscribe((gradientMapping) => {

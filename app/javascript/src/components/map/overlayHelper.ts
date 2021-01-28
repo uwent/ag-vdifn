@@ -42,9 +42,17 @@ export default class OverlayHelper {
     this.clearRectangles()
     this.closeInfoWindow()
     this.severities = await this.getSeverities(severityParams)
-    if (this.severities.length > 0 && this.severities[0].min) {
-      this.min = this.severities[0].min
-      this.max = this.severities[0].max
+    if (this.severities.length > 0) {
+      if (this.severities[0].min) {
+        this.min = this.severities[0].min
+      } else {
+        this.min = 0
+      }
+      if (this.severities[0].max) {
+        this.max = this.severities[0].max
+      } else {
+        this.max = 0
+      }
     }
     const rectangleOptions = this.convertSeveritiesToRectangleOptions()
     this.drawDataPoints(rectangleOptions)
@@ -55,7 +63,7 @@ export default class OverlayHelper {
     _.zip(this.severities, this.rectangles).forEach(
       (severityWithRect: [Severity, any]) => {
         severityWithRect[1].setOptions({
-          fillColor: this.mapColorToSeverity(
+          fillColor: this.severityToColor(
             severityWithRect[0].level,
             gradientMapping,
           ),
@@ -125,18 +133,14 @@ export default class OverlayHelper {
     })
   }
 
-  mapColorToSeverity(severityNumber: number, gradientMapping): string {
+  severityToColor(severityNumber: number, gradientMapping): string {
     const key = _.find(
       _.keys(gradientMapping)
         .map((value) => parseFloat(value))
-        .sort(),
-      (rangeMin) => severityNumber <= rangeMin,
+        .sort((x, y) => x - y),
+      (rangeMax) => severityNumber <= rangeMax,
     )
-    if (key === undefined) {
-      return gradientMapping[_.findLastKey(gradientMapping)]
-    } else {
-      return gradientMapping[key]
-    }
+    return gradientMapping[key]
   }
 
   private async fetchPointDetails(

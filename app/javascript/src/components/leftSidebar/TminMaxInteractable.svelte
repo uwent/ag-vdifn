@@ -1,12 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
   import { tMinTmax } from '../../store/store'
-  // import Temperature from "./TypeScript/temperature";
   let tMin: number = 50
   let tMax: number = null
-  let in_f: boolean = true
-  let tMaxDisabled: boolean = false
-  let valid: boolean = true
+  let in_f = true
+  let tMaxDisabled = true
+  let valid = true
   const dispatch = createEventDispatcher()
 
   // convert fahrenheit to celcius
@@ -264,7 +263,7 @@
           type="checkbox"
           on:change={tMaxToggle}
           bind:checked={tMaxDisabled} />
-        <label for="tMaxToggle">No TMax</label>
+        <label for="tMaxToggle">No Tmax</label>
       </div>
     </div>
   </div>
