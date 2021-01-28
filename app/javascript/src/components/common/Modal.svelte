@@ -59,7 +59,7 @@
     top: 50%;
     width: calc(100vw - 4em);
     max-width: 32em;
-    max-height: calc(100vh - 4em);
+    max-height: 80%;
     overflow: auto;
     transform: translate(-60%, -50%);
     padding: 1em;
