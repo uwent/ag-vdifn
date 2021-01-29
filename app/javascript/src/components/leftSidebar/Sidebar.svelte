@@ -45,7 +45,7 @@
       background-repeat: no-repeat;
       background-position: center;
       transition: none;
-      z-index: 1;
+      z-index: 100;
     }
 
     &[aria-expanded='true'] {

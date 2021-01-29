@@ -44,12 +44,12 @@
 
 </style>
 
-<fieldset id="dsv-legend">
+<fieldset id="dsv-legend" data-testid="dsv-legend">
   <legend>Degree-Day Legend:</legend>
   {#each legend.reverse() as entry}
     <div class="severity-level-col">
-      <div class="severity-level-row">
-        <div class="severity-color" style="background: {entry.color}" />
+      <div class="severity-level-row" data-testid="dsv-row">
+        <div class="severity-color" data-testid="dsv-color" style="background: {entry.color}" />
         <div>{entry.text}</div>
       </div>
     </div>
