@@ -7,7 +7,7 @@
     "@googlemaps/js-api-loader": "^1.2.0",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "5.2.1",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "balloon-css": "^1.2.0",
     "chroma-js": "^2.1.0",
     "lodash": "^4.17.20",
