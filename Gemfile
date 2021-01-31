@@ -27,7 +27,7 @@ end
 
 group :development, :test do
   gem 'dotenv-rails', '2.7.6'
-  gem 'webmock', '~> 3.8'
+  gem 'webmock', '~> 3.11'
   gem 'rspec-rails', '4.0.1'
   gem 'shoulda-matchers', '4.4.1'
   gem 'byebug', '~> 11.1'
