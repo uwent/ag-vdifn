@@ -10,7 +10,7 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
 2. Install dependencies with `bundle install`
-3. Add ruby gems to lockfile if building on windows machine (`bundle lock --add-platform ruby')
+3. Add ruby gems to lockfile if building on windows machine (`bundle lock --add-platform ruby`)
 4. Setup database with `rails db:setup`
 
 ## Launch local instance
