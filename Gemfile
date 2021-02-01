@@ -37,7 +37,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '4.0.4'
+  gem 'web-console', '4.1.0'
   gem 'spring', '~> 2.1'
   gem "capistrano", "~> 3.4"
   gem 'capistrano-rbenv', '~> 2.0'
