@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'railties', '6.0.3.2'
-gem 'rails', '6.0.3.2'
-gem 'activesupport', '6.0.3.2'
+gem 'railties', '6.0.3.4'
+gem 'rails', '6.0.3.4'
+gem 'activesupport', '6.0.3.4'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
 gem 'sass-rails', '~> 5.0'
@@ -28,7 +28,7 @@ end
 group :development, :test do
   gem 'dotenv-rails', '2.7.6'
   gem 'webmock', '~> 3.11'
-  gem 'rspec-rails', '4.0.1'
+  gem 'rspec-rails', '4.0.2'
   gem 'shoulda-matchers', '4.5.1'
   gem 'byebug', '~> 11.1'
   gem 'pry-rails'
