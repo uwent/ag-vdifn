@@ -33,7 +33,7 @@ group :development, :test do
   gem 'byebug', '~> 11.1'
   gem 'pry-rails'
   gem 'ed25519'
-  gem 'bcrypt_pbkdf', platforms: :ruby
+  gem 'bcrypt_pbkdf'
 end
 
 group :development do
