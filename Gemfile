@@ -12,7 +12,7 @@ gem 'therubyracer', '~> 0.12', platforms: :ruby
 gem 'jquery-rails', '~> 4.4'
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'jbuilder', '~> 2.11'
-gem 'sdoc', '~> 1.1', group: :doc
+gem 'sdoc', '~> 2.0', group: :doc
 gem 'httparty', '~> 0.18'
 gem 'pikaday-gem', '~> 1.4'
 gem 'momentjs-rails', '~> 2.20'
