@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'railties', '6.0.3.4'
 gem 'rails', '6.0.3.4'
+gem 'railties', '6.0.3.4'
 gem 'activesupport', '6.0.3.4'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
@@ -33,7 +33,7 @@ group :development, :test do
   gem 'byebug', '~> 11.1'
   gem 'pry-rails'
   gem 'ed25519'
-  gem 'bcrypt_pbkdf'
+  gem 'bcrypt_pbkdf', platforms: :ruby
 end
 
 group :development do
