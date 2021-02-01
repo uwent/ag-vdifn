@@ -12,7 +12,8 @@ Yarn version `1.22.5`
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
 2. Install dependencies with `bundle install`
-3. Setup database with `rails db:setup`
+3. Add ruby platform gems to lockfile if building on windows machine (`bundle lock --add-platform ruby`)
+4. Setup database with `rails db:setup`
 
 ## Launch local instance
 1. Run [ag-weather](https://github.com/adorableio/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
