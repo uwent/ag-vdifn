@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'railties', '6.0.3.4'
 gem 'rails', '6.0.3.4'
+gem 'railties', '6.0.3.4'
 gem 'activesupport', '6.0.3.4'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
