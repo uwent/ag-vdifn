@@ -13,7 +13,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
-    "sass": "^1.32.5",
+    "sass": "^1.32.6",
     "svelte": "^3.25.1",
     "svelte-awesome": "^2.3.0",
     "svelte-loader": "^2.13.6",
