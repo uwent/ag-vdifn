@@ -5,7 +5,7 @@ gem 'railties', '6.0.3.4'
 gem 'activesupport', '6.0.3.4'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '5.0.0'
 gem 'therubyracer', '~> 0.12', platforms: :ruby
