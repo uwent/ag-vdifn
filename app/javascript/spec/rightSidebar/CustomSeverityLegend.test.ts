@@ -1,7 +1,5 @@
 import CustomSeverityLegend from '../../src/components/rightSidebar/CustomSeverityLegend.svelte'
-
 import { render } from '@testing-library/svelte'
-// import { mapMinMapMax } from '../../src/store/store'
 import { tick } from 'svelte'
 
 let getId
@@ -11,10 +9,10 @@ beforeEach(() => {
   const { getByTestId, queryAllByTestId } = render(CustomSeverityLegend, {
     props: {
       gradientMapping: [
-        {color: 'green', number: 100},
-        {color: 'yellow', number: 200},
-        {color: 'orange', number: 300},
-        {color: 'red', number: Infinity}
+        { color: 'green', number: 100 },
+        { color: 'yellow', number: 200 },
+        { color: 'orange', number: 300 },
+        { color: 'red', number: Infinity },
       ],
     },
   })

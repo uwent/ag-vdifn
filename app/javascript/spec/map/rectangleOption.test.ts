@@ -1,5 +1,6 @@
 import { COLORS } from '../../src/components/common/TypeScript/colors'
 import RectangleOption from '../../src/components/map/TypeScript/rectangleOption'
+
 const latitude: number = 41.88
 const longitude: number = -87.62
 const latitudeOffset: number = 0.05
@@ -9,9 +10,9 @@ const strokeWeight: number = 0.05
 const color: string = '#ffff'
 const fillOpacity: number = 0.25
 const map: any = {}
+
 it('returns properties', () => {
   const rectangleOption = new RectangleOption(latitude, longitude, color, map)
-
   expect(rectangleOption.latitude).toEqual(latitude)
   expect(rectangleOption.longitude).toEqual(longitude)
   expect(rectangleOption.strokeColor).toEqual(COLORS.brightRed)
