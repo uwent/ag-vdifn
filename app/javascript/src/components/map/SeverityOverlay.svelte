@@ -37,8 +37,8 @@
     overlayLoading.set(true)
     switch (selectedSeverity) {
       case PANELS.DISEASE:
-        severities = get(insectPanelState).severities
-        severityParams = get(insectPanelState).severityParams
+        severities = get(diseasePanelState).severities
+        severityParams = get(diseasePanelState).severityParams
         if (!severities && !severityParams) return
         currentOverlay = diseaseOverlay
         break
@@ -65,20 +65,20 @@
     overlayLoading.set(false)
   })
 
-  insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(insectOverlay, severityParams, PANELS.INSECT)
-    insectPanelState.update((state) => ({
-      ...state,
-      severities: insectOverlay.severities,
-      severityParams,
-    }))
-  })
-
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
     await updateOverlay(diseaseOverlay, severityParams, PANELS.DISEASE)
     diseasePanelState.update((state) => ({
       ...state,
       severities: diseaseOverlay.severities,
+      severityParams,
+    }))
+  })
+
+  insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
+    await updateOverlay(insectOverlay, severityParams, PANELS.INSECT)
+    insectPanelState.update((state) => ({
+      ...state,
+      severities: insectOverlay.severities,
       severityParams,
     }))
   })
