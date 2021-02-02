@@ -12,7 +12,10 @@ const MapOptions = {
   maxZoom: 12,
   minZoom: 6,
   streetViewControl: false,
-  zoomControl: false,
+  zoomControl: true,
+  zoomControlOptions: {
+    position: 7,
+  },
   zoom: 7,
 }
 
