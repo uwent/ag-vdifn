@@ -1246,17 +1246,17 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@fortawesome/fontawesome-common-types@^0.2.31":
-  version "0.2.31"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.31.tgz#f15a39e5ab4e5dfda0717733bcacb9580e666ad9"
-  integrity sha512-xfnPyH6NN5r/h1/qDYoGB0BlHSID902UkQzxR8QsoKDh55KAPr8ruAoie12WQEEQT8lRE2wtV7LoUllJ1HqCag==
+"@fortawesome/fontawesome-common-types@^0.2.34":
+  version "0.2.34"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
+  integrity sha512-XcIn3iYbTEzGIxD0/dY5+4f019jIcEIWBiHc3KrmK/ROahwxmZ/s+tdj97p/5K0klz4zZUiMfUlYP0ajhSJjmA==
 
-"@fortawesome/free-regular-svg-icons@^5.15.0":
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.15.0.tgz#6be839db8ee97facafd94fb8be180b2f28cf0d9f"
-  integrity sha512-kgdP2N5sFjzs5+XFZTsz8KNJjXm/851Gtjh8FcG+gpzN4weN/pd9S1jrf1e+2naWughHUzo7AKAzFB2CodpJ3g==
+"@fortawesome/free-regular-svg-icons@^5.15.2":
+  version "5.15.2"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.15.2.tgz#61eeb8c206e792c530eaa58279cc32c55332fe8f"
+  integrity sha512-Uv5NQCYjyisNVTu/1Xjs+z8vwQjbfT6hiqYvQNfF0n8qdgfWLM581bAfVMQ3BCs1SPy+eEUKNcGkK4n0FihFHg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.31"
+    "@fortawesome/fontawesome-common-types" "^0.2.34"
 
 "@googlemaps/js-api-loader@^1.2.0":
   version "1.2.0"
@@ -11294,10 +11294,10 @@ sass-loader@^8.0.2:
     schema-utils "^2.6.1"
     semver "^6.3.0"
 
-sass@^1.32.5:
-  version "1.32.5"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.5.tgz#2882d22ad5748c05fa9bff6c3b0ffbc4f4b9e1dc"
-  integrity sha512-kU1yJ5zUAmPxr7f3q0YXTAd1oZjSR1g3tYyv+xu0HZSl5JiNOaE987eiz7wCUvbm4I9fGWGU2TgApTtcP4GMNQ==
+sass@^1.32.6:
+  version "1.32.6"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.32.6.tgz#e3646c8325cd97ff75a8a15226007f3ccd221393"
+  integrity sha512-1bcDHDcSqeFtMr0JXI3xc/CXX6c4p0wHHivJdru8W7waM7a1WjKMm4m/Z5sY7CbVw4Whi2Chpcw6DFfSWwGLzQ==
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
