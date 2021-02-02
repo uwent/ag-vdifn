@@ -96,9 +96,7 @@ describe('without save state', () => {
       const userMax = Number(userMaxInput.value)
       const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
       expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + x}`)
-
       await fireEvent.click(addButton)
-
       const severityLevels = defaultSeverityLevels + 1
       const y = to_tenths((userMax - userMin) / (severityLevels - 2))
       expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + y}`)

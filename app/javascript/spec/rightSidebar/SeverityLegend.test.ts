@@ -2,8 +2,10 @@ import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.sve
 import { render } from '@testing-library/svelte'
 import { mapMinMapMax } from '../../src/store/store'
 import { tick } from 'svelte'
+
 let getTitle
 let legend
+
 beforeEach(() => {
   const { getByTitle, component } = render(SeverityLegend, {
     props: {

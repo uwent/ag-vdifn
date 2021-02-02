@@ -1,4 +1,5 @@
 import { COLORS } from '../../common/TypeScript/colors'
+
 export default class RectangleOption {
   severityLevel: number
   latitude: number
@@ -9,11 +10,12 @@ export default class RectangleOption {
   fillColor: string
   fillOpacity: number = 0.25
   map: any
-  // private cornerOffset: number = 0.0025
-  private cornerOffset: number = 0.00
+
   private latitudeOffset: number = 0.05
   private longitudeOffset: number = 0.05
+
   bounds: { north: number; south: number; east: number; west: number }
+
   constructor(
     latitude: number,
     longitude: number,
@@ -29,10 +31,10 @@ export default class RectangleOption {
 
   private calculateBounds() {
     return {
-      north: this.latitude - this.latitudeOffset - this.cornerOffset,
-      south: this.latitude + this.latitudeOffset + this.cornerOffset,
-      east: this.longitude + this.longitudeOffset + this.cornerOffset,
-      west: this.longitude - this.longitudeOffset - this.cornerOffset,
+      north: this.latitude - this.latitudeOffset,
+      south: this.latitude + this.latitudeOffset,
+      east: this.longitude + this.longitudeOffset,
+      west: this.longitude - this.longitudeOffset,
     }
   }
 }

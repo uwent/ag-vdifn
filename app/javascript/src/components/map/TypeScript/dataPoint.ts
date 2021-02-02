@@ -1,4 +1,5 @@
 import { COLORS } from '../../common/TypeScript/colors'
+
 export default class DataPoint {
   latitude: number
   longitude: number
@@ -6,12 +7,14 @@ export default class DataPoint {
   strokeOpacity: number = 1.0
   strokeWeight: number = 0.05
   fillColor: string
-  fillOpacity: number = 0.2
+  fillOpacity: number = 0.25
   map: any
-  private cornerOffset: number = 0.0025
+
   private latitudeOffset: number = 0.05
   private longitudeOffset: number = 0.05
+
   bounds: { north: number; south: number; east: number; west: number }
+
   constructor(
     latitude: number,
     longitude: number,
@@ -27,10 +30,10 @@ export default class DataPoint {
 
   private calculateBounds() {
     return {
-      north: this.latitude - this.latitudeOffset - this.cornerOffset,
-      south: this.latitude + this.latitudeOffset + this.cornerOffset,
-      east: this.longitude + this.longitudeOffset + this.cornerOffset,
-      west: this.longitude - this.longitudeOffset - this.cornerOffset,
+      north: this.latitude - this.latitudeOffset,
+      south: this.latitude + this.latitudeOffset,
+      east: this.longitude + this.longitudeOffset,
+      west: this.longitude - this.longitudeOffset,
     }
   }
 }
