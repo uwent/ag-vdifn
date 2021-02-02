@@ -6,7 +6,7 @@ const longitude: number = -87.62
 const strokeOpacity: number = 1.0
 const strokeWeight: number = 0.05
 const color: string = '#ffff'
-const fillOpacity: number = 0.2
+const fillOpacity: number = 0.25
 const map: any = {}
 
 it('returns properties', () => {
@@ -20,9 +20,9 @@ it('returns properties', () => {
   expect(dataPointOptions.map).toEqual(map)
   expect(dataPointOptions.fillOpacity).toEqual(fillOpacity)
   expect(dataPointOptions.bounds).toEqual({
-    north: 41.82750000000001,
-    south: 41.9325,
-    east: -87.56750000000001,
-    west: -87.6725,
+    north: 41.830000000000005,
+    south: 41.93,
+    east: -87.57000000000001,
+    west: -87.67,
   })
 })
