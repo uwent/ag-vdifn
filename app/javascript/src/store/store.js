@@ -1,18 +1,38 @@
-import { stringify } from 'querystring'
+// import { stringify } from 'querystring'
 import { writable } from 'svelte/store'
 
 export const startDate = writable('')
 export const endDate = writable('')
 export const afflictionValue = writable()
-export const selectedAffliction = writable({})
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
+export const selectedAffliction = writable({})
 
-export const twoPointGradientState = writable({})
-export const threePointGradientState = writable({})
-export const tMinTmax = writable({})
-export const mapMinMapMax = writable({min: 0, max: 0})
+export const twoPointGradientState = writable({
+  severityLevels: undefined,
+  userValues: undefined,
+  mapMax: undefined,
+  mapMin: undefined,
+  gradient: undefined,
+})
+export const threePointGradientState = writable({
+  severityLevels: undefined,
+  userValues: undefined,
+  mapMax: undefined,
+  mapMin: undefined,
+  gradient: undefined,
+})
+export const tMinTmax = writable({
+  t_min: undefined,
+  t_max: undefined,
+  in_fahrenheit: undefined,
+})
+export const mapMinMapMax = writable({
+  min: 0,
+  max: 0,
+})
+
 export const panelKey = {}
 export const diseasePanelKey = {}
 export const insectPanelKey = {}
