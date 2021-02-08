@@ -16,7 +16,6 @@
   let endDateValue: string = today
   let startDateValue: string = defaultStartDate
   let startLabel = dateToolTip.startLabel
-  let startMin = moment.utc().subtract(7, 'days')
 
   // handle end date changes
   function updateStartDateInput() {
@@ -39,26 +38,26 @@
 
     // force 7-day window for late blight
     selectedAffliction.subscribe((affliction: PestInfo) => {
-      if (affliction.name === 'Late Blight') {
-        if (start <= startMin) {
-          endDateValue = moment(startDateValue).add(7, 'days').format('YYYY-MM-DD')
-        } else if (start >= startMin) {
+      if (affliction.name === 'Late Blight (Potato)') {
+        if (start > moment.utc().subtract(7, 'days')) {
           endDateValue = today
+        } else {
+          endDateValue = moment(startDateValue).add(7, 'days').format('YYYY-MM-DD')
+        }
+      } else {
+        // allow start date to push end date backward
+        if (start > end) endDateValue = startDateValue
+
+        // if start date moves to different year end date follows
+        if (start.format('YYYY') != end.format('YYYY')) {
+          if (today < start.format('YYYY') + '-12-31') {
+            endDateValue = today
+          } else {
+            endDateValue = start.format('YYYY') + '-12-31'
+          }
         }
       }
     })
-
-    // allow start date to push end date backward
-    if (start > end) endDateValue = startDateValue
-
-    // if start date moves to different year end date follows
-    if (start.format('YYYY') != end.format('YYYY')) {
-      if (today < start.format('YYYY') + '-12-31') {
-        endDateValue = today
-      } else {
-        endDateValue = start.format('YYYY') + '-12-31'
-      }
-    }
   }
 
   onMount(() => {
