@@ -11,7 +11,7 @@
     "balloon-css": "^1.2.0",
     "chroma-js": "^2.1.0",
     "lodash": "^4.17.20",
-    "moment": "^2.27.0",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "sass": "^1.32.6",
     "svelte": "^3.25.1",
