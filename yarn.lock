@@ -3037,10 +3037,10 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/svelte@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/svelte/-/svelte-3.0.0.tgz#cfb9c5e2679b0e90f6a79ffdf4397b92537dd1f2"
-  integrity sha512-0KarnU6czyhNaRECWUI4lpxTGg+9lTgASrsrtnflw9odVSmKk3iRym3ZOg0TOM4GBsX/CR4Un590fEsf6FdTJg==
+"@testing-library/svelte@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/svelte/-/svelte-3.0.3.tgz#fd0653c02c95c8715ff5a51aa232e3306536755e"
+  integrity sha512-GxafAllShGM2nkntFGURZ7fYVlUYwv7K62lqv1aFqtTYzzeZ2Cu8zTVhtE/Qt3bk2zMl6+FPKP03wjLip/G8mA==
   dependencies:
     "@testing-library/dom" "^7.0.3"
 
@@ -9898,10 +9898,10 @@ mkdirp@1.x, mkdirp@^1.0.3, mkdirp@^1.0.4:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.27.0:
-  version "2.27.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
-  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -13375,10 +13375,10 @@ svelte-awesome@^2.3.0:
   dependencies:
     svelte "^3.15.0"
 
-svelte-check@^1.1.32:
-  version "1.1.32"
-  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-1.1.32.tgz#a3b6865130ad82861122664b27f93f9e57350484"
-  integrity sha512-tnG79CAz9F5kY8EYGeTfKNSN2OPbSQR/BVAFB60cFYa4P59Ti+6iGZ4gxNFm+dmzFSgZ5bjDq/AJneA0h7Pxow==
+svelte-check@^1.1.33:
+  version "1.1.33"
+  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-1.1.33.tgz#5e6a7263b3f8a8f0e51d6df705aec4b26a3fd096"
+  integrity sha512-YsplRdToDiH0nFrHbQBap3subpar53E+95wHOVP8dzaXjbJkfkv3yQQAAFIbCUUcbqvZ2FjO2lBFpHZPP3mNRw==
   dependencies:
     chalk "^4.0.0"
     chokidar "^3.4.1"
