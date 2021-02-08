@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { overlayLoading } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
   import DatabaseClient from '../common/TypeScript/databaseClient'
@@ -95,21 +96,24 @@
           id="disease"
           name="interface"
           value="disease"
-          checked={true} />
+          checked={true}
+          disabled={$overlayLoading} />
         <label for="disease">Disease</label>
         <input
           type="radio"
           bind:group={selected}
           id="insect"
           name="interface"
-          value="insect" />
+          value="insect" 
+          disabled={$overlayLoading}/>
         <label for="insect">Insect</label>
         <input
           type="radio"
           bind:group={selected}
           id="custom"
           name="interface"
-          value="custom" />
+          value="custom" 
+          disabled={$overlayLoading}/>
         <label for="custom">Custom</label>
       </div>
     </fieldset>

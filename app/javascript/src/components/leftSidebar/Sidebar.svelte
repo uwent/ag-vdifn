@@ -121,7 +121,7 @@
     <div>
       <a
         id="uw-madison"
-        href="http://www.wisc.edu"
+        href="https://www.wisc.edu"
         target="_blank"
         class="logo">
         Wisc Edu
@@ -129,14 +129,14 @@
       <a
         id="plantpath-logo"
         class="logo"
-        href="http://www.plantpath.wisc.edu/wivegdis/"
+        href="https://vegpath.plantpath.wisc.edu/"
         target="_blank">
         UW-Madison Plant Pathology
       </a>
       <a
         id="vegento-logo"
         class="logo"
-        href="http://vegento.russell.wisc.edu/"
+        href="https://vegento.russell.wisc.edu/"
         target="_blank">
         UW-Madison Vegetable Crop Entomology
       </a>
