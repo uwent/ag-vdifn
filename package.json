@@ -38,7 +38,7 @@
     "@types/googlemaps": "^3.43.2",
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.168",
-    "@types/node": "^14.14.24",
+    "@types/node": "^14.14.25",
     "babel-loader": "^8.2.2",
     "fork-ts-checker-webpack-plugin": "^6.1.0",
     "jest": "^26.6.3",
