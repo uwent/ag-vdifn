@@ -19,7 +19,7 @@
     "svelte": "^3.32.3",
     "svelte-awesome": "^2.3.0",
     "svelte-loader": "^2.13.6",
-    "svelte-preprocess": "^4.6.6",
+    "svelte-preprocess": "^4.6.8",
     "turbolinks": "^5.2.0",
     "webpack": "^5.21.2"
   },
