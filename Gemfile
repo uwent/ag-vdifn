@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.1.2'
-gem 'railties', '6.1.2'
-gem 'activesupport', '6.1.2'
+gem 'rails', '6.1.2.1'
+gem 'railties', '6.1.2.1'
+gem 'activesupport', '6.1.2.1'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
 gem 'sass-rails', '~> 6.0'
