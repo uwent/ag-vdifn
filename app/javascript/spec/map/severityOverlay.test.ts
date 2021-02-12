@@ -2,18 +2,18 @@ import SeverityOverlay from '../../src/components/map/SeverityOverlay.svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte'
 import { render } from '@testing-library/svelte'
 import {
-  customPanelState,
-  insectPanelState,
-  insectPanelParams,
-  diseasePanelState,
-  overlayGradient,
   mapKey,
   diseasePanelParams,
-  overlayLoading,
-  mapMinMapMax,
+  insectPanelParams,
   customPanelParams,
+  diseasePanelState,
+  insectPanelState,
+  customPanelState,
   selectedPanel,
   PANELS,
+  overlayGradient,
+  overlayLoading,
+  mapMinMapMax,
 } from '../../src/store/store'
 import OverlayHelper from '../../src/components/map/overlayHelper'
 import { Severity } from '../../src/components/common/TypeScript/types'
