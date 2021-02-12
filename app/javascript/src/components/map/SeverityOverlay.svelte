@@ -5,14 +5,14 @@
     diseasePanelParams,
     insectPanelParams,
     customPanelParams,
-    overlayGradient,
-    mapMinMapMax,
-    overlayLoading,
     diseasePanelState,
     insectPanelState,
     customPanelState,
     selectedPanel,
     PANELS,
+    overlayGradient,
+    overlayLoading,
+    mapMinMapMax,
     twoPointGradientState,
     threePointGradientState,
     customOverlaySubmitted,
@@ -20,12 +20,14 @@
   import OverlayHelper from './overlayHelper'
   import { SeverityParams } from '../common/TypeScript/types'
   import { get } from 'svelte/store'
+
   const { getMap, getGoogle } = getContext(mapKey)
   const map = getMap()
   const google = getGoogle()
   const diseaseOverlay = new OverlayHelper(google, map)
   const insectOverlay = new OverlayHelper(google, map)
   const customOverlay = new OverlayHelper(google, map)
+  
   let currentOverlay = insectOverlay
 
   selectedPanel.subscribe((selectedSeverity: string) => {

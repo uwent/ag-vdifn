@@ -2,18 +2,18 @@ import SeverityOverlay from '../../src/components/map/SeverityOverlay.svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte'
 import { render } from '@testing-library/svelte'
 import {
-  customPanelState,
-  insectPanelState,
-  insectPanelParams,
-  diseasePanelState,
-  overlayGradient,
   mapKey,
   diseasePanelParams,
-  overlayLoading,
-  mapMinMapMax,
+  insectPanelParams,
   customPanelParams,
+  diseasePanelState,
+  insectPanelState,
+  customPanelState,
   selectedPanel,
   PANELS,
+  overlayGradient,
+  overlayLoading,
+  mapMinMapMax,
 } from '../../src/store/store'
 import OverlayHelper from '../../src/components/map/overlayHelper'
 import { Severity } from '../../src/components/common/TypeScript/types'
@@ -44,7 +44,7 @@ jest.mock('../../src/components/map/overlayHelper')
 
 const overlayLoadingSpy = jest.spyOn(overlayLoading, 'set')
 const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, 'set')
-const customPanelStateSpy = jest.spyOn(customPanelState, 'set')
+// const customPanelStateSpy = jest.spyOn(customPanelState, 'set')
 
 beforeEach(() => {
   ;(OverlayHelper as jest.Mock).mockImplementation(() => {
@@ -101,8 +101,8 @@ describe('updating overlay for disease panel params', () => {
   it('updates store with new severities', async () => {
     diseasePanelParams.set(severityParams)
     mockUpdateOverlay.mockResolvedValue({})
-    expect(get(diseasePanelState).severities).toEqual(severities)
-    expect(get(diseasePanelState).severityParams).toEqual(severityParams)
+    expect(get(diseasePanelState)['severities']).toEqual(severities)
+    expect(get(diseasePanelState)['severityParams']).toEqual(severityParams)
   })
 })
 
@@ -125,8 +125,8 @@ describe('updating overlay for insect panel params', () => {
   it('updates store with new severities', async () => {
     insectPanelParams.set(severityParams)
     mockUpdateOverlay.mockResolvedValue({})
-    expect(get(insectPanelState).severities).toEqual(severities)
-    expect(get(insectPanelState).severityParams).toEqual(severityParams)
+    expect(get(insectPanelState)['severities']).toEqual(severities)
+    expect(get(insectPanelState)['severityParams']).toEqual(severityParams)
   })
 })
 

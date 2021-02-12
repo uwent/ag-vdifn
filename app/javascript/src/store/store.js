@@ -45,9 +45,18 @@ export const diseasePanelParams = writable({})
 export const insectPanelParams = writable({})
 export const customPanelParams = writable({})
 
-export const diseasePanelState = writable({})
-export const insectPanelState = writable({})
-export const customPanelState = writable({ selectedGradient: 1 })
+export const diseasePanelState = writable({
+  severities: undefined,
+  severityParams: undefined,
+})
+export const insectPanelState = writable({
+  severities: undefined,
+  severityParams: undefined,
+})
+export const customPanelState = writable({
+  severities: undefined,
+  severityParams: undefined,
+  selectedGradient: 1 })
 
 export const selectedPanel = writable('')
 
