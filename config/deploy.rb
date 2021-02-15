@@ -40,7 +40,7 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 # rbenv
 set :deploy_user, 'deploy'
 set :rbenv_type, :user
-set :rbenv_ruby, '2.6.6'
+set :rbenv_ruby, '2.7.2'
 
 before "deploy:assets:precompile", "deploy:yarn_install"
 namespace :deploy do
