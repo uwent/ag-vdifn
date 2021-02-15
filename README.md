@@ -5,7 +5,7 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 ## Dependencies
 
-Ruby version `2.6.6`
+Ruby version `2.7.2`
 
 Bundler version `2.2.10`
 
@@ -20,8 +20,7 @@ Yarn version `1.22.5`
 ## Launch local instance
 1. Run [ag-weather](https://github.com/adorableio/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
 2. Run ag-vdifn server with `rails s`
-3. Run webpack dev server (if necessary) with `./bin/webpack-dev-server`
-4. Visit `localhost:3030` in browser
+3. Visit `localhost:3030` in browser
 
 ## Running Tests
 1. RSpec: `bundle exec rspec`
