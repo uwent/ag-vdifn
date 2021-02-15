@@ -7,7 +7,7 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 Ruby version `2.6.6`
 
-Bundler version `2.1.4`
+Bundler version `2.2.10`
 
 Yarn version `1.22.5`
 
