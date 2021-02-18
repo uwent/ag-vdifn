@@ -150,7 +150,6 @@
       id="datepicker-end"
       bind:value={endDateValue}
       on:change={updateStartDateInput}
-      disabled={!$selectedAffliction.end_date_enabled}
       max={today} />
     <button
       class="datepicker-tooltip"
