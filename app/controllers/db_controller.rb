@@ -56,17 +56,17 @@ class DbController < ApplicationController
     in_f = params[:in_fahrenheit] == 'true'
     info = pest.info
     info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: '100px')) unless pest.photo.blank?
-    info += " <a href=http://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
+    info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
     render json: {
-             info: info,
-             name: pest.name,
-             pest_link: pest.link,
-             biofix: pest.biofix_date,
-             end_date_enabled: pest.end_date_enabled,
-             tmin: in_f ? pest.t_min : convert_temp(pest.t_min),
-             tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : convert_temp(pest.t_max))
-           }
+      info: info,
+      name: pest.name,
+      pest_link: pest.link,
+      biofix: pest.biofix_date,
+      end_date_enabled: pest.end_date_enabled,
+      tmin: in_f ? pest.t_min : convert_temp(pest.t_min),
+      tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : convert_temp(pest.t_max))
+    }
   end
 
   def disease_panel
