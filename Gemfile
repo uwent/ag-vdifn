@@ -6,7 +6,7 @@ gem 'activesupport', '6.1.3'
 gem 'pg', '~> 1.2'
 gem 'turbolinks', '~> 5.2'
 gem 'sass-rails', '~> 6.0'
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '~> 4.2'
 gem 'coffee-rails', '5.0.0'
 gem 'therubyracer', '~> 0.12', platforms: :ruby
 gem 'jquery-rails', '~> 4.4'
@@ -21,8 +21,8 @@ gem 'webpacker', '5.2.1'
 gem 'active_model_serializers', '~> 0.10.10'
 
 platform :mswin, :mingw, :x64_mingw do
-  gem 'tzinfo-data', '~> 1.2020'
-  gem 'wdm', '>=0.1.0'
+  gem 'tzinfo-data', '~> 1'
+  gem 'wdm', '0.1.1'
 end
 
 group :development, :test do
