@@ -19,13 +19,10 @@ class LateBlight < DsvPest
   end
 
   def total_to_severity(last_week, season)
-    if last_week <= 3 && season < 30
-      return 0
-    elsif last_week > 21
-      return 4
-    elsif last_week >= 3 || season >= 30
-      return 2
-    end
+    return 0 if last_week <= 3 && season < 30
+    return 4 if last_week > 21
+    return 2 if last_week >= 3 || season >= 30
+    return 0
   end
 
   def severity_legend
