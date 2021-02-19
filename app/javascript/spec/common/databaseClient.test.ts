@@ -171,31 +171,31 @@ describe('fetchPestInfo', () => {
   })
 })
 
-describe('fetchStationDetails', () => {
-  it('calls correct url and returns data', async () => {
-    const database = new DatabaseClient()
-    const name = 'name'
-    const start_date = new Date()
-    const end_date = new Date()
-    const params: StationDetailsParams = { name, start_date, end_date }
+// describe('fetchStationDetails', () => {
+//   it('calls correct url and returns data', async () => {
+//     const database = new DatabaseClient()
+//     const name = 'name'
+//     const start_date = new Date()
+//     const end_date = new Date()
+//     const params: StationDetailsParams = { name, start_date, end_date }
 
-    const response = await database.fetchStationDetails(params)
+//     const response = await database.fetchStationDetails(params)
 
-    expect(response).toEqual('string')
-  })
+//     expect(response).toEqual('string')
+//   })
 
-  it('returns empty string on failure', async () => {
-    const database = new DatabaseClient()
-    const name = 'error'
-    const start_date = new Date()
-    const end_date = new Date()
-    const params: StationDetailsParams = { name, start_date, end_date }
+//   it('returns empty string on failure', async () => {
+//     const database = new DatabaseClient()
+//     const name = 'error'
+//     const start_date = new Date()
+//     const end_date = new Date()
+//     const params: StationDetailsParams = { name, start_date, end_date }
 
-    const response = await database.fetchStationDetails(params)
+//     const response = await database.fetchStationDetails(params)
 
-    expect(response).toEqual('')
-  })
-})
+//     expect(response).toEqual('')
+//   })
+// })
 
 describe('fetchDiseasePanel', () => {
   it('converts diseases into afflictions', async () => {

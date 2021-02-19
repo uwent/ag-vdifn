@@ -57,12 +57,12 @@ it('tooltips are rendered', () => {
   expect(endDateToolTip.getAttribute('aria-label')).toEqual('End date')
 })
 
-it('disables end date if pest has end date disabled', async () => {
-  selectedAffliction.set({ id: 1, name: 'insect', end_date_enabled: false })
-  const endDate: HTMLInputElement = getLabelText('End Date')
-  await tick()
-  expect(endDate.disabled).toEqual(true)
-})
+// it('disables end date if pest has end date disabled', async () => {
+//   selectedAffliction.set({ id: 1, name: 'insect', end_date_enabled: false })
+//   const endDate: HTMLInputElement = getLabelText('End Date')
+//   await tick()
+//   expect(endDate.disabled).toEqual(true)
+// })
 
 it('sets the start date to the biofix', async () => {
   selectedAffliction.set({

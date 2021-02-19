@@ -1,18 +1,27 @@
 ## Foliar diseases ##
 late_blight = LateBlight.create!(
-  name: "Late Blight (Potato)",
+  name: "Late Blight (Potato, Tomato)",
   remote_name: "potato_blight_dsv",
   biofix_mm: 1, biofix_dd: 1,
-  critical_value: 0,
-  info: "<p><u><b>Late blight</b></u>: Phytophthora infestans infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
+  info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
+  photo: "potato-late-blight.png",
   link: "https://vegpath.plantpath.wisc.edu/")
+
+early_blight = EarlyBlight.create!(
+  name: "Early Blight (Potato, Tomato)",
+  remote_name: "potato_p_days",
+  biofix_mm: 1, biofix_dd: 1,
+  info: "<p><b>Early blight</b> is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. Early blight can also be a serious disease on other popular Solanaceous vegetables including eggplants, and peppers. Symptoms of early blight first appear at the base of affected plants, where roughly circular brown spots appear on leaves and stems. As these spots enlarge, concentric rings appear giving the areas a target-like appearance. Often spots have a yellow halo. Eventually multiple spots on a single leaf will merge, leading to extensive destruction of leaf tissue. Early blight can lead to total defoliation of lower leaves and even the death of an infected plant. Early blight is caused by the fungus <i>Alternaria solani</i>, which survives in plant debris or on infected plants. Early blight symptoms typically begin as plant canopies start to close. Denser foliage leads to high humidity and longer periods of leaf wetness that favor the disease. The risk of Early Blight is greatest after the accumulation of 300 physiological days (P-Days) in a season.</p>",
+  photo: "tomato-early-blight.jpg",
+  link: "https://vegpath.plantpath.wisc.edu/"
+)
 
 foliar_disease = FoliarDisease.create!(
   name: "Foliar Disease (Carrot)",
   remote_name: "carrot_foliar_dsv",
   biofix_mm: 1, biofix_dd: 1,
-  critical_value: 0,
-  info: "<p><u><b>Alternaria leaf blight</b></u>: the seedborne Alternaria fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest.</p><p>Disease management includes using certified or heat-treated seed, crop rotation, in- furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><u><b>Cercospora leaf blight</b></u>: the potentially seedborne Cercospora fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy.</p><p>Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
+  info: "<p><b>Alternaria leaf blight</b>: the seedborne <i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. Disease management includes using certified or heat-treated seed, crop rotation, in-furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
+  photo: "carrot-foliar-disease.png",
   link: "https://vegpath.plantpath.wisc.edu/")
 
 
@@ -335,12 +344,12 @@ pepper = Crop.create!(name: "Pepper")
 pepper.pests = [european_corn_borer, japanese_beetle]
 
 potato = Crop.create!(name: "Potato")
-potato.pests = [late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, lygus_bug]
+potato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, lygus_bug]
 
 pumpkin_squash = Crop.create!(name: "Pumpkin and Squash")
 pumpkin_squash.pests = [japanese_beetle, seedcorn_maggot, squash_vine_borer]
 
 tomato = Crop.create!(name: "Tomato")
-tomato.pests = [cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
+tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
 
 #Crop.create!(name: "Wheat/Small Grains")

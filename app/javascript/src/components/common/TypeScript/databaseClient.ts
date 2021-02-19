@@ -144,16 +144,17 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
-  async fetchStationDetails(
-    stationDetailsParams: StationDetailsParams,
-  ): Promise<string> {
-    try {
-      const response = await axios.post(ENDPOINTS.STATION_DETAILS, {
-        ...stationDetailsParams,
-      })
-      return response.data
-    } catch (e) {
-      return ''
-    }
-  }
+  // Weather station display is not implemented
+  // async fetchStationDetails(
+  //   stationDetailsParams: StationDetailsParams,
+  // ): Promise<string> {
+  //   try {
+  //     const response = await axios.post(ENDPOINTS.STATION_DETAILS, {
+  //       ...stationDetailsParams,
+  //     })
+  //     return response.data
+  //   } catch (e) {
+  //     return ''
+  //   }
+  // }
 }
