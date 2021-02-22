@@ -18,7 +18,7 @@ Yarn version `1.22.5`
 4. Setup database with `rails db:setup`
 
 ## Launch local instance
-1. Run [ag-weather](https://github.com/adorableio/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
+1. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
 2. Run ag-vdifn server with `rails s`
 3. Visit `localhost:3030` in browser
 
