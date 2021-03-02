@@ -7690,10 +7690,10 @@ jest-get-type@^26.3.0:
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-26.3.0.tgz#e97dc3c3f53c2b406ca7afaed4493b1d099199e0"
   integrity sha512-TpfaviN1R2pQWkIihlfEanwOXK0zcxrKEE4MlU6Tn7keoXdN6/3gK/xl0yEh8DOunn5pOVGKf8hB4R9gVh04ig==
 
-jest-google-maps-mock@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/jest-google-maps-mock/-/jest-google-maps-mock-1.0.4.tgz#83b43f3dc06c95623b0c166c155ca94cb785467e"
-  integrity sha512-lRC+XFYckkBM8MW1TNcr8xeinESitGE1+1WEf8EzJ9WXyKy8BMHtwMK9weTQSOu+bPzJyCR1pxNR5sVXc1PTjQ==
+jest-google-maps-mock@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/jest-google-maps-mock/-/jest-google-maps-mock-1.0.5.tgz#4b696117591082b9698332546bc9c9a0e916ae1a"
+  integrity sha512-hvD3sA2zsp66Lq0i9X4Lc30thXTbPjfr60F45SwXrn+8tYP9zfa4CXbNOheI5OoQTpygXA9cZrdcbxy6kItxow==
 
 jest-haste-map@^26.6.2:
   version "26.6.2"
