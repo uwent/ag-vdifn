@@ -32,7 +32,7 @@ end
 group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rspec-rails', '~> 4.0'
-  gem 'webmock', '~> 3.11'
+  gem 'webmock', '~> 3.12'
   gem 'shoulda-matchers', '~> 4.5'
   gem 'byebug', '~> 11.1'
   gem 'pry-rails', '~> 0.3'
