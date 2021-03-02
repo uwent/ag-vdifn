@@ -28,6 +28,7 @@
   const _ = require('lodash')
 
   setContext(panelKey, {
+    panelType: 'Custom',
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Biofix',
@@ -35,7 +36,7 @@
       startLabel: 'Start Date',
     },
     getAfflictionName: () => 'Custom Model',
-    defaultStartDate: moment.utc().dayOfYear(1).format('YYYY-MM-DD'),
+    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
   })
 
   function submit() {
