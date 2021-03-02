@@ -1,10 +1,15 @@
+# Dependabot config
+
 version: 2
 updates:
+
+# gems
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "daily"
 
+# yarn pacakges
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
