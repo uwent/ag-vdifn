@@ -7,9 +7,7 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 Ruby version `2.7.2`
 
-Bundler version `2.2.10`
-
-Yarn version `1.22.5`
+Rails version `6.1.3`
 
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
