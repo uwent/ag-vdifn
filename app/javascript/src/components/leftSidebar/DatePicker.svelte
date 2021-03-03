@@ -18,75 +18,73 @@
   let startLabel = dateToolTip.startLabel
 
   // handle end date changes
+  // allow end date to push start date forward and update
+  // if end date moves to different year start date set to Jan 1 of same year
   function updateStartDateInput() {
     const start = moment.utc(startDateValue)
     const end = moment.utc(endDateValue)
-
-    // allow end date to push start date forward and update
+    
     if (end < start) startDateValue = endDateValue
-
-    // if end date moves to different year start date set to Jan 1 of same year
+    
     if (end.format('YYYY') != start.format('YYYY')) {
       startDateValue = end.format('YYYY') + '-01-01'
     }
   }
 
   // handle start date changes
+  // allow start date to push end date backward
+  // if start date moves to different year end date follows
   function updateEndDateInput() {
     const start = moment.utc(startDateValue)
     const end = moment.utc(endDateValue)
 
-    // force 7-day window for late blight
-    selectedAffliction.subscribe((affliction: PestInfo) => {
-      if (affliction.name === 'Late Blight (Potato)') {
-        if (start > moment.utc().subtract(7, 'days')) {
-          endDateValue = today
-        } else {
-          endDateValue = moment(startDateValue).add(7, 'days').format('YYYY-MM-DD')
-        }
-      } else {
-        // allow start date to push end date backward
-        if (start > end) endDateValue = startDateValue
+    if (start > end) endDateValue = startDateValue
 
-        // if start date moves to different year end date follows
-        if (start.format('YYYY') != end.format('YYYY')) {
-          if (today < start.format('YYYY') + '-12-31') {
-            endDateValue = today
-          } else {
-            endDateValue = start.format('YYYY') + '-12-31'
-          }
-        }
+    if (start.format('YYYY') != end.format('YYYY')) {
+      if (today < start.format('YYYY') + '-12-31') {
+        endDateValue = today
+      } else {
+        endDateValue = start.format('YYYY') + '-12-31'
       }
-    })
+    }
   }
 
-  onMount(() => {
-    startDateValue = defaultStartDate
-    startDate.set(defaultStartDate)
-    endDate.set(today)
-  })
-
+  // panel and pest-specific tweaks to datepicker
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
-    if (panelType === 'Insect') {
-      startLabel =
-        dateToolTip.startLabel +
-        ' (Default: ' +
-        moment.utc(affliction.biofix_date).format('MMM D') +
-        ')'
+    if (affliction.name) {
+      if (panelType === 'Insect') {
+        startLabel =
+          dateToolTip.startLabel +
+          ' (Default: ' +
+          moment.utc(affliction.biofix_date).format('MMM D') +
+          ')'
+      } else if (affliction.name.includes('Early Blight')) {
+        startLabel = "Start of year"
+      } else {
+        startLabel = dateToolTip.startLabel
+      }
     }
-    if (affliction.biofix_date && affliction.biofix_date < today) {
-      startDateValue = affliction.biofix_date
-      endDateValue = today
-    } else if (affliction.biofix_date && affliction.biofix_date >= today) {
-      startDateValue = moment
-        .utc(affliction.biofix_date)
-        .subtract(1, 'year')
-        .format('YYYY-MM-DD')
-      endDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
+
+    if (affliction.biofix_date) {
+      if (affliction.biofix_date < today) {
+        startDateValue = affliction.biofix_date
+        endDateValue = today
+      } else {
+        startDateValue = moment
+          .utc(affliction.biofix_date)
+          .subtract(1, 'year')
+          .format('YYYY-MM-DD')
+        endDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
+      }
     }
   })
 
   onDestroy(unsubscribe)
+
+  onMount(() => {
+    startDate.set(startDateValue)
+    endDate.set(endDateValue)
+  })
 
   $: startDate.set(startDateValue)
   $: endDate.set(endDateValue)
@@ -128,13 +126,14 @@
       class="datepicker"
       title="Start date/biofix"
       id="datepicker-start"
+      data-testid="datepicker-start"
       bind:value={startDateValue}
       on:change={updateEndDateInput}
       max={today} />
     <button
       class="datepicker-tooltip"
       id="datepicker-start-information"
-      title="start-date-tooltip"
+      data-testid="start-date-tooltip"
       data-balloon-length="small"
       data-balloon-pos="right"
       aria-label={dateToolTip.startDate}>
@@ -148,13 +147,14 @@
       class="datepicker"
       title="End date"
       id="datepicker-end"
+      data-testid="datepicker-end"
       bind:value={endDateValue}
       on:change={updateStartDateInput}
       max={today} />
     <button
       class="datepicker-tooltip"
       id="datepicker-end-information"
-      title="end-date-tooltip"
+      data-testid="end-date-tooltip"
       data-balloon-length="small"
       data-balloon-pos="right"
       aria-label={dateToolTip.endDate}>

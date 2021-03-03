@@ -22,6 +22,7 @@
   export let data
 
   setContext(panelKey, {
+    panelType: 'Disease',
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Date of Emergence/Last Fungicide Application',

@@ -3,6 +3,7 @@ import { fireEvent, render } from '@testing-library/svelte'
 import {
   customPanelState,
   PANELS,
+  panelKey,
   selectedPanel,
   overlayLoading,
   customPanelParams,
@@ -14,6 +15,8 @@ import {
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
+import moment from 'moment'
+
 let getText
 let getTitle
 let customPanel
@@ -86,4 +89,18 @@ it('displays severity gradient options if options have been submitted', async ()
   await tick()
   expect(getText('Gradient Type')).toBeInTheDocument()
   expect(getText('Custom Degree-Day Values')).toBeInTheDocument()
+})
+
+it('sets context data for child elements', () => {
+  expect(customPanel.$$.context.get(panelKey)).toEqual({
+    panelType: 'Custom',
+    getCrops: expect.any(Function),
+    dateToolTip: {
+      startDate: 'Biofix',
+      endDate: 'Date through which degree-days are accumulated',
+      startLabel: 'Start Date',
+    },
+    getAfflictionName: expect.any(Function),
+    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
+  })
 })
