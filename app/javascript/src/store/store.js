@@ -7,7 +7,16 @@ export const afflictionValue = writable()
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
-export const selectedAffliction = writable({})
+
+export const selectedAffliction = writable({
+  id: undefined,
+  name: undefined,
+  photo: undefined,
+  info: undefined,
+  link: undefined,
+  biofix_date: undefined,
+  end_date_enabled: undefined,
+})
 
 export const twoPointGradientState = writable({
   severityLevels: undefined,
@@ -16,6 +25,7 @@ export const twoPointGradientState = writable({
   mapMin: undefined,
   gradient: undefined,
 })
+
 export const threePointGradientState = writable({
   severityLevels: undefined,
   userValues: undefined,
@@ -23,11 +33,13 @@ export const threePointGradientState = writable({
   mapMin: undefined,
   gradient: undefined,
 })
+
 export const tMinTmax = writable({
   t_min: undefined,
   t_max: undefined,
   in_fahrenheit: undefined,
 })
+
 export const mapMinMapMax = writable({
   min: 0,
   max: 0,
