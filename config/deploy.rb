@@ -1,7 +1,7 @@
 branch = ENV['BRANCH'] || 'master'
 
 set :application, 'ag-vdifn'
-set :repo_url, 'git@github.com:uwent/ag-vdifn.git'
+set :repo_url, 'git@agvdifn.github.com:uwent/ag-vdifn.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
