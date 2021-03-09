@@ -59,7 +59,7 @@
           moment.utc(affliction.biofix_date).format('MMM D') +
           ')'
       } else if (affliction.name.includes('Early Blight')) {
-        startLabel = "Start of year"
+        startLabel = "Date of emergence"
       } else {
         startLabel = dateToolTip.startLabel
       }
