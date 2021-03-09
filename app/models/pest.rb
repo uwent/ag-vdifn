@@ -7,7 +7,11 @@ class Pest < ApplicationRecord
       {
         lat: measurement[:lat],
         long: measurement[:long],
-        severity: total_to_severity(measurement[:total].to_f, measurement[:after_november_first], measurement[:freeze])
+        severity: total_to_severity(
+          measurement[:total].to_f,
+          measurement[:after_november_first],
+          measurement[:freeze]
+        )
       }
     end
   end
