@@ -1,5 +1,6 @@
 module PestNames
-    CUSTOM_PEST = "CustomPest"
+    CUSTOM = "Custom"
     PEST = "Pest"
     LATE_BLIGHT = "LateBlight"
+    EARLY_BLIGHT = "EarlyBlight"
 end

@@ -10,7 +10,9 @@
         <strong>Date range:</strong> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
       </div>
       <div>
-        <strong>DSV total:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %>
+        <strong>P-Day total:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value] }.round(1) %>
+        <br>
+        <strong>7-day average:</strong> <%= ((@weather.last(7).inject(0) { |sum, h| sum += h[:value] }) / @weather.last(7).size).round(1) %>
       </div>
     </div>
     <div class="weather-details">
@@ -26,10 +28,10 @@
               Mean Temp. (High RH) <div class="info-icon">?</div>
             </th>
             <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
-              Daily DSV <div class="info-icon">?</div>
+              Daily P-Days <div class="info-icon">?</div>
             </th>
             <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
-              Cumulative DSV <div class="info-icon">?</div>
+              Cumulative P-Days <div class="info-icon">?</div>
             </th>
           </tr>
         </thead>

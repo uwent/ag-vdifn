@@ -139,12 +139,14 @@ class DbController < ApplicationController
 
   def pick_strategy(pest)
     case pest.class.name
+    when PestNames::CUSTOM
+      "build_custom_strategy"
     when PestNames::PEST
       "build_pest_strategy"
     when PestNames::LATE_BLIGHT
       "build_late_blight_strategy"
-    when PestNames::CUSTOM_PEST
-      "build_custom_pest_strategy"
+    when PestNames::EARLY_BLIGHT
+      "build_early_blight_strategy"
     else
       "build_pest_strategy"
     end
@@ -154,52 +156,12 @@ class DbController < ApplicationController
     if params[:pest_id]
       @pest ||= Pest.find(params[:pest_id])
     else
-      @pest = Pest.new(type: PestNames::CUSTOM_PEST)
+      @pest = Pest.new(type: PestNames::CUSTOM)
     end
   end
 
   def build_pest_strategy
     PestSeverityStrategy.new(get_pest, ag_weather_client, start_date, end_date)
-  end
-
-  def build_late_blight_strategy
-    LateBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
-  end
-
-  def build_custom_pest_strategy
-    CustomPestStrategy.new(ag_weather_client, start_date, end_date, t_min, t_max)
-  end
-
-  class CustomPestStrategy
-    def initialize(client, start_date, end_date, t_min, t_max)
-      @client = client
-      @start_date = start_date
-      @end_date = end_date
-      @t_min = t_min
-      @t_max = t_max
-    end
-
-    def severities
-      pests = Pest.where(t_max: t_max, t_min: t_min)
-      begin
-        if pests.any?
-          client.custom(start_date: start_date, end_date: end_date, pest: pests.first.remote_name)
-        else
-          client.custom(start_date: start_date, end_date: end_date, t_min: t_min, t_max: t_max)
-        end
-      rescue Exception => e
-        puts e
-        []
-      end
-    end
-
-    def severities_from_totals(totals)
-      totals
-    end
-
-    private
-
-    attr_reader :client, :start_date, :end_date, :t_min, :t_max
   end
 
   class PestSeverityStrategy
@@ -212,7 +174,10 @@ class DbController < ApplicationController
 
     def severities
       begin
-        client.pest_forecasts(pest: pest.remote_name, start_date: start_date, end_date: end_date)
+        client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: start_date,
+          end_date: end_date)
       rescue Exception => e
         puts e
         []
@@ -224,8 +189,53 @@ class DbController < ApplicationController
     end
 
     private
-
     attr_reader :pest, :client, :start_date, :end_date
+  end
+
+  def build_custom_strategy
+    CustomStrategy.new(ag_weather_client, start_date, end_date, t_min, t_max)
+  end
+
+  class CustomStrategy
+    def initialize(client, start_date, end_date, t_min, t_max)
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+      @t_min = t_min
+      @t_max = t_max
+    end
+
+    def severities
+      pests = Pest.where(t_max: t_max, t_min: t_min)
+      begin
+        if pests.any?
+          client.custom(
+            start_date: start_date,
+            end_date: end_date,
+            pest: pests.first.remote_name)
+        else
+          client.custom(
+            start_date: start_date,
+            end_date: end_date,
+            t_min: t_min,
+            t_max: t_max)
+        end
+      rescue Exception => e
+        puts e
+        []
+      end
+    end
+
+    def severities_from_totals(totals)
+      return totals
+    end
+
+    private
+    attr_reader :client, :start_date, :end_date, :t_min, :t_max
+  end
+
+  def build_late_blight_strategy
+    LateBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
   end
 
   class LateBlightStrategy
@@ -240,11 +250,17 @@ class DbController < ApplicationController
       past_week = []
       season_to_date = []
       begin
-        past_week = client.pest_forecasts(pest: pest.remote_name, start_date: end_date - 7.days, end_date: end_date)
-        season_to_date = client.pest_forecasts(pest: pest.remote_name, start_date: end_date.beginning_of_year, end_date: end_date)
+        past_week = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 7.days,
+          end_date: end_date)
+        season_to_date = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date.beginning_of_year,
+          end_date: end_date)
       rescue Exception
       end
-      { past_week: past_week, season_to_date: season_to_date }
+      return { past_week: past_week, season_to_date: season_to_date }
     end
 
     def severities_from_totals(totals)
@@ -252,7 +268,43 @@ class DbController < ApplicationController
     end
 
     private
+    attr_reader :pest, :client, :start_date, :end_date
+  end
 
+  def build_early_blight_strategy
+    EarlyBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
+  end
+
+  class EarlyBlightStrategy
+    def initialize(pest, client, start_date, end_date)
+      @pest = pest
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+    end
+
+    def severities
+      selected_dates = []
+      past_week = []
+      begin
+        selected_dates = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: start_date,
+          end_date: end_date)
+        past_week = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 7.days,
+          end_date: end_date)
+      rescue Exception
+      end
+      return { selected_dates: selected_dates, past_week: past_week }
+    end
+
+    def severities_from_totals(totals)
+      pest.severities_from_totals(totals[:selected_dates], totals[:past_week])
+    end
+
+    private
     attr_reader :pest, :client, :start_date, :end_date
   end
 end

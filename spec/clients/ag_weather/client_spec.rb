@@ -2,8 +2,8 @@ require 'spec_helper'
 
 RSpec.describe AgWeather::Client do
 
-  let(:start_date) { Date.today }
-  let(:end_date) { Date.tomorrow }
+  let(:start_date) { Date.today - 14.days }
+  let(:end_date) { Date.today }
   let(:client) { AgWeather::Client.new }
   let(:data) { { data: "data" }.to_json }
 
