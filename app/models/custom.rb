@@ -1,3 +1,3 @@
 # type used for custom severity overlay
-class CustomPest < Pest
+class Custom < Pest
 end

@@ -25,7 +25,6 @@
             <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="High temperatures during periods of high relative humidity contribute to disease progression.">
               Mean Temp. (High RH) <div class="info-icon">?</div>
             </th>
-            <th class="weather-details-rh">RH Threshold</th>
             <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
               Daily DSV <div class="info-icon">?</div>
             </th>
@@ -39,11 +38,10 @@
             <tr>
               <td class="odd"><%= day[:date] %></td>
               <td><%= convert_temp(day[:avg_temperature]) %>&deg;<%= temp_symbol() %></td>
-              <td class = "odd"><%= day[:hours_hi_rh] %></td>
+              <td class="odd"><%= day[:hours_hi_rh] %></td>
               <td><%= convert_temp(day[:avg_temp_hi_rh].to_f.round(1)) %>&deg;<%= temp_symbol() %></td>
-              <td class = "odd">&gt;<%= day[:rh_threshold] %>&#37;</td>
-              <td><%= day[:value] %></td>
-              <td class = "odd"><%= day[:cumulative_value] %></td>
+              <td class="odd"><%= day[:value] %></td>
+              <td><%= day[:cumulative_value] %></td>
             </tr>
           <% end %>
         </tbody>
