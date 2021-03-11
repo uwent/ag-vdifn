@@ -1,5 +1,7 @@
-<% if @pest.is_a?(DsvPest)%>
-    <%= render 'infobox_dsv' %>
+<% if @pest.is_a?(EarlyBlight) %>
+  <%= render 'infobox_pdays' %>
+<% elsif @pest.is_a?(DsvPest) %>
+  <%= render 'infobox_dsv' %>
 <% else %>
-    <%= render 'infobox_dd' %>
+  <%= render 'infobox_dd' %>
 <% end %>
