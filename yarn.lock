@@ -12485,10 +12485,10 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-svelte-awesome@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.3.0.tgz#03735c1ba1940e931c41271a5ebf72e2ae9e292c"
-  integrity sha512-xXU3XYJmr5PK9e3pCpW6feU/tNpAhERWDrgDxkC0DU6LNum02zzc00I17bmUWTSRdKLf+IFbA5hWvCm1V8g+/A==
+svelte-awesome@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.3.1.tgz#b69cc16048ac3da50afebfc134c71a1ed1bfead0"
+  integrity sha512-n+6u0hMTUHvDR+pBbVghEr7TxA1lLoTE3ZuySteDChNGxpW1GMjN2cm6sZ1yr+868HOzoSS529YG02YuwFpxbw==
   dependencies:
     svelte "^3.15.0"
 

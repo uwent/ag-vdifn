@@ -17,7 +17,7 @@
     "react-dom": "^17.0.1",
     "sass": "^1.32.8",
     "svelte": "^3.35.0",
-    "svelte-awesome": "^2.3.0",
+    "svelte-awesome": "^2.3.1",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^4.6.9",
     "turbolinks": "^5.2.0",
