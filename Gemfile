@@ -4,7 +4,6 @@ gem 'rails', '6.1.3'
 gem 'railties', '6.1.3'
 gem 'activesupport', '6.1.3'
 gem 'pg', '~> 1.2'
-gem 'therubyracer', '0.12.3', platform: :ruby
 gem 'sassc-rails', '~> 2.1'
 gem 'coffee-rails', '~> 5.0'
 gem 'jquery-rails', '~> 4.4'
@@ -14,10 +13,10 @@ gem 'turbolinks', '~> 5.2'
 gem 'jbuilder', '~> 2.11'
 gem 'uglifier', '~> 4.2'
 gem 'httparty', '~> 0.18'
-gem 'pikaday-gem', '~> 1.4'
+gem 'pikaday-gem', '~> 1.4' # datepicker
 gem 'js-routes', '~> 1.4'
 gem 'webpacker', '~> 5.2'
-gem 'active_model_serializers', '~> 0.10.10'
+gem 'active_model_serializers', '~> 0.10'
 gem 'sdoc', '~> 2.0', group: :doc
 
 platform :mswin, :mingw, :x64_mingw do
