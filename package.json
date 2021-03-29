@@ -39,7 +39,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/svelte": "^3.0.3",
     "@types/googlemaps": "^3.43.3",
-    "@types/jest": "^26.0.21",
+    "@types/jest": "^26.0.22",
     "@types/lodash": "^4.14.168",
     "@types/node": "^14.14.37",
     "babel-loader": "^8.2.2",
