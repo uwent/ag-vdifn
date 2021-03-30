@@ -126,10 +126,10 @@ RSpec.describe DbController, type: :request do
       end_date = Date.current - 20.days
       latitude = 10
       longitude = 20
-      allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).
+      allow_any_instance_of(AgWeather::Client).to receive(:point_details).
         and_return(days_data)
 
-      expect_any_instance_of(AgWeather::Client).to receive(:custom_point_details).with({
+      expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
         start_date: start_date,
         end_date: end_date,
         latitude: latitude.to_f,

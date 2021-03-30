@@ -24,7 +24,7 @@ class DbController < ApplicationController
     when "insect"
       @model_value = @pest.name
       options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.custom_point_details(options)
+      @weather = ag_weather_client.point_details(options)
     when "disease"
       options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.point_details(options)
