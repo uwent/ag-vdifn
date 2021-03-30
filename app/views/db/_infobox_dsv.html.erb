@@ -17,7 +17,7 @@
       <table>
         <thead>
           <tr>
-            <th>Day</th>
+            <th>Date</th>
             <th>Mean Temp.</th>
             <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Longer daily periods of high relative humidity contribute to disease progression.">
               Hours High RH <div class="info-icon">?</div>
@@ -37,7 +37,7 @@
           <% @weather.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
-              <td><%= convert_temp(day[:avg_temperature]) %>&deg;<%= temp_symbol() %></td>
+              <td><%= convert_temp(day[:avg_temp]) %>&deg;<%= temp_symbol() %></td>
               <td class="odd"><%= day[:hours_hi_rh] %></td>
               <td><%= convert_temp(day[:avg_temp_hi_rh].to_f.round(1)) %>&deg;<%= temp_symbol() %></td>
               <td class="odd"><%= day[:value] %></td>

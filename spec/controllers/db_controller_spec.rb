@@ -3,8 +3,8 @@ require "spec_helper"
 RSpec.describe DbController, type: :request do
   let(:fake_response) { { data: "data" } }
   let(:severity_data) { [{ lat: 20, long: 40, total: 200 }] }
-  let(:days_data) { [{ value: 10, date: "data", avg_temperature: "100"}] }
-  let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temperature: "100"}] }
+  let(:days_data) { [{ value: 10, date: "data", avg_temp: "100"}] }
+  let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temp: "100"}] }
 
   describe "GET#disease_panel" do
     it "returns success response" do
