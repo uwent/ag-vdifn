@@ -1,4 +1,3 @@
-# coding: utf-8
 class EarlyBlight < DsvPest
 
   def severities_from_totals(selected_dates, past_week)

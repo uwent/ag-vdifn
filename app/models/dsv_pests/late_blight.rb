@@ -1,4 +1,3 @@
-# coding: utf-8
 class LateBlight < DsvPest
   def severities_from_totals(past_week, season_to_date)
     if past_week.count != season_to_date.count
@@ -35,9 +34,5 @@ class LateBlight < DsvPest
 
   def biofix_date
     7.days.ago.to_date
-  end
-
-  def end_date_enabled
-    return false
   end
 end
