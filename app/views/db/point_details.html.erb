@@ -1,5 +1,7 @@
 <% if @pest.is_a?(EarlyBlight) %>
   <%= render 'infobox_pdays' %>
+<% elsif @pest.is_a?(CercosporaLeafSpot) %>
+  <%= render 'infobox_div' %>
 <% elsif @pest.is_a?(DsvPest) %>
   <%= render 'infobox_dsv' %>
 <% else %>

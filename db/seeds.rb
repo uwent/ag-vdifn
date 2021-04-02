@@ -1,13 +1,4 @@
 ## Foliar diseases ##
-late_blight = LateBlight.create!(
-  name: "Late Blight (Potato, Tomato)",
-  remote_name: "potato_blight_dsv",
-  biofix_mm: 1, biofix_dd: 1,
-  info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
-  photo: "potato-late-blight.png",
-  link: "https://vegpath.plantpath.wisc.edu/"
-)
-
 early_blight = EarlyBlight.create!(
   name: "Early Blight (Potato, Tomato)",
   remote_name: "potato_p_days",
@@ -17,12 +8,29 @@ early_blight = EarlyBlight.create!(
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
+late_blight = LateBlight.create!(
+  name: "Late Blight (Potato, Tomato)",
+  remote_name: "potato_blight_dsv",
+  biofix_mm: 1, biofix_dd: 1,
+  info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
+  photo: "potato-late-blight.png",
+  link: "https://vegpath.plantpath.wisc.edu/"
+)
+
 foliar_disease = FoliarDisease.create!(
   name: "Foliar Disease (Carrot)",
   remote_name: "carrot_foliar_dsv",
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Alternaria leaf blight</b>: the seedborne <i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. Disease management includes using certified or heat-treated seed, crop rotation, in-furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
   photo: "carrot-foliar-disease.png",
+  link: "https://vegpath.plantpath.wisc.edu/"
+)
+
+cercospora_leaf_spot = CercosporaLeafSpot.create!(
+  name: "Cercospora Leaf Spot (Beet)",
+  remote_name: "cercospora_div",
+  biofix_mm: 1, biofix_dd: 1,
+  info: "<p><b>Cercospora leaf spot (CLS)</b> and resultant defoliation is caused by the fungus <i>Cercospora beticola</i> Sacc. and is one of the most damaging diseases of table and sugar beet crops worldwide.  Disease symptoms are initially discrete and necrotic lesions with red to purple margins red table beets. Lesions have gray centers and contain diagnostic fungal structures (pseudostromata). For large scale table beet production, defoliation may lead to challenges with mechanical harvest and crop loss. For fresh market, 'bunched beet' sale, foliar lesions can result in rejection. CLS control in conventional table beet requires preventative fungicide applications. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.</p>",
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
@@ -325,8 +333,6 @@ aphid_pvy = DegreeDayPest.create!(
 )
 
 
-
-
 ## Crop filters ##
 alfalfa = Crop.create!(name: "Alfalfa")
 alfalfa.pests = [alfalfa_weevil]
@@ -338,7 +344,7 @@ bean = Crop.create!(name: "Bean")
 bean.pests = [corn_earworm, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, seedcorn_maggot]
 
 beet = Crop.create!(name: "Beet")
-beet.pests = [black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
+beet.pests = [cercospora_leaf_spot, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
 
 carrot = Crop.create!(name: "Carrot")
 carrot.pests = [foliar_disease, black_cutworm, western_bean_cutworm, variegated_cutworm]
@@ -390,5 +396,3 @@ pumpkin_squash.pests = [japanese_beetle, seedcorn_maggot, squash_vine_borer]
 
 tomato = Crop.create!(name: "Tomato")
 tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
-
-#Crop.create!(name: "Wheat/Small Grains")

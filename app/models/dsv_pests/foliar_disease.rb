@@ -1,4 +1,3 @@
-# coding: utf-8
 class FoliarDisease < DsvPest
   def total_to_severity(total, after_november_first, freezing)
     return 4 if total >= 20
