@@ -7,10 +7,17 @@
   <% if @weather %>
     <div class="information" style="padding-bottom: 1em;">
       <div>
-        <strong>Date range:</strong> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
-      </div>
-      <div>
-        <strong>Degree-day total:</strong> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %>
+        <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
+        <b>Degree-day total:</b> <%= @weather.inject(0) { |sum, h| sum += h[:value]}.round(1) %>
+        <% if @weather.size >= 14 %>
+          <br><b>14-day average:</b> <%= ((@weather.last(14).inject(0) { |sum, h| sum += h[:value] }) / 14.size).round(1) %>
+        <% end %>
+        <% if @weather.size >= 7 %>
+          <br><b>7-day average:</b> <%= ((@weather.last(7).inject(0) { |sum, h| sum += h[:value] }) / 7).round(1) %>
+        <% end %>
+        <% if @weather.size >= 2 %>
+          <br><b>2-day average:</b> <%= ((@weather.last(2).inject(0) { |sum, h| sum += h[:value] }) / 2).round(1) %>
+        <% end %>
       </div>
     </div>
     <div class="weather-details">

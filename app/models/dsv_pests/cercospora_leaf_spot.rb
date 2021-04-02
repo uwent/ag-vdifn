@@ -20,8 +20,8 @@ class CercosporaLeafSpot < DsvPest
 
   def severity_legend
     [
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of disease (average daily DSVs ≥ 6)"},
-      {name: "High", slug: "high", description: "High likelihood of disease (average daily DSVs between 4 and 6)"},
+      {name: "Very High", slug: "very_high", description: "Very high likelihood of disease (average daily DIVs ≥ 6)"},
+      {name: "High", slug: "high", description: "High likelihood of disease (average daily DIVs between 4 and 6)"},
       {name: "Medium", slug: "medium", description: "Medium likelihood of disease (average daily DIVs between 2 and 4)"},
       {name: "Low", slug: "low", description: "Low likelihood of disease (average daily DIVs between 1 and 2)"},
       {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (average daily DIVs < 1)"}
@@ -29,6 +29,6 @@ class CercosporaLeafSpot < DsvPest
   end
 
   def biofix_date
-    7.days.ago.to_date
+    14.days.ago.to_date
   end
 end
