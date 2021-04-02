@@ -1,20 +1,47 @@
 class CercosporaLeafSpot < DsvPest
 
-  def severities_from_totals(totals)
-    totals.map do |measurement|
+  # def severities_from_totals(totals)
+  #   totals.map do |measurement|
+  #     {
+  #       lat: measurement[:lat],
+  #       long: measurement[:long],
+  #       severity: total_to_severity(measurement[:total].to_f)
+  #     }
+  #   end
+  # end
+
+  # def severities_from_totals(selected_dates, last_7_days, last_2_days)
+  #   selected_dates.zip(last_7_days).zip(last_2_days).map do | pair |
+  #     {
+  #       lat: pair[0][:lat],
+  #       long: pair[0][:long],
+  #       severity: total_to_severity(pair[0][:total], pair[1][:total], pair[2][:total])
+  #     }
+  #   end
+  # end
+
+  def severities_from_totals(selected_dates, last_7_days, last_2_days)
+    selected_dates.zip(last_7_days, last_2_days).map do | pair |
       {
-        lat: measurement[:lat],
-        long: measurement[:long],
-        severity: total_to_severity(measurement[:total].to_f)
+        lat: pair[0][:lat],
+        long: pair[0][:long],
+        severity: total_to_severity(
+          pair[0][:total],
+          pair[1][:total],
+          pair[2][:total]
+        )
       }
     end
   end
 
-  def total_to_severity(total)
-    return 4 if total >= 7 * 6
-    return 3 if total >= 7 * 4
-    return 2 if total >= 7 * 2
-    return 1 if total >= 7
+  def total_to_severity(selected_dates, last_7_days, last_2_days)
+    avg7 = last_7_days / 7
+    avg2 = last_2_days / 2
+
+    return 4 if avg2 >= 7 || avg7 >= 7
+    return 3 if avg2 >= 6 || avg7 >= 5
+    return 2 if avg2 >= 4 || avg7 >= 3
+    return 1 if avg2 >= 1 || avg7 >= 1
     return 0
   end
 

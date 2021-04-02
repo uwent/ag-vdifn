@@ -1,24 +1,21 @@
 class EarlyBlight < DsvPest
 
-  def severities_from_totals(selected_dates, past_week)
-    if selected_dates.count != past_week.count
-      logger.error("Error: Early Blight data past week and selected dates mismatch")
-      return []
-    end
-    selected_dates.zip(past_week).map do | pair |
-      logger.error("Error: Early Blight latitude mismatch") if pair[0][:lat] != pair[1][:lat]
-      logger.error("Error: Early blight longitude mismatch") if pair[0][:long] != pair[1][:long]
+  def severities_from_totals(selected_dates, past_7_days, past_2_days)
+    selected_dates.zip(past_7_days).map do | pair |
       {
         lat: pair[0][:lat],
         long: pair[0][:long],
-        severity: total_to_severity(pair[0][:total], pair[1][:total])
+        severity: total_to_severity(
+          pair[0][:total],
+          pair[1][:total]
+        )
       }
     end
   end
 
-  def total_to_severity(selected_dates, past_week)
+  def total_to_severity(selected_dates, past_7_days)
     if selected_dates > 300
-      daily_avg = past_week / 7
+      daily_avg = past_7_days / 7
       return 4 if daily_avg > 8
       return 3 if daily_avg > 5
       return 2 if daily_avg > 3
