@@ -1,3 +1,7 @@
+# Delete old entries
+Pest.delete_all
+Crop.delete_all
+
 ## Foliar diseases ##
 early_blight = EarlyBlight.create!(
   name: "Early Blight (Potato, Tomato)",
@@ -38,7 +42,7 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
 ## Insect models ##
 alfalfa_weevil = DegreeDayPest.create!(
   name: "Alfalfa Weevil",
-  remote_name: 'alfalfa_weevil',
+  remote_name: 'dd_48_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 48, t_max: nil,
   risk_start: 300, risk_peak: 504, risk_end: 814,
@@ -50,11 +54,11 @@ alfalfa_weevil = DegreeDayPest.create!(
 
 asparagus_beetle = DegreeDayPest.create!(
   name: "Asparagus Beetle (Common)",
-  remote_name: "asparagus_beetle",
+  remote_name: "dd_50_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_start: 105, risk_peak: 250, risk_end: 405,
-  info: "<p>The common (<i>Crioceris asparagi</i>) and spotted (<i>Crioceris duodecimpunctata</i>) asparagus beetles are annual pests of asparagus in Wisconsin. The common asparagus beetle is the most prevalent and the only one that causes economic damage to asparagus.</p><p>Adults of the common asparagus beetle feed on the plant’s spears and ferns. Disfigured and unmarketable spears can result when the beetles feed or lay eggs on the spears. Spotted asparagus beetle larvae feed more on the berries rather than the ferns of asparagus.  Larvae secrete a black fluid onto the plants. Spring spear feeding reduces crop quality (browning, scarring, staining, and bent growth).  Summer fern feeding can cause defoliation and reduces yield of subsequent years.  Eggs laid on spears are unattractive to consumers, though harmless. Large populations of asparagus beetles, if left unchecked, can defoliate the plants.</p><p>Asparagus beetle overwinters in plant debris and brush as an adult.  Adults become active in spring when new spears emerge. The spotted asparagus beetle becomes active later in spring than the common asparagus beetle. Common asparagus beetles lay eggs on spears while spotted asparagus beetles lay eggs on ferns. About a week later eggs hatch. The larvae feed for about two weeks on asparagus and then pupate in the soil. About one week later the next generation of adults hatch.  Two to three generations occur in a growing season. Most larvae and adults are more active in the afternoon when the temperature and sunlight are at their peak.</p>",
+  info: "<p>The common (<i>Crioceris asparagi</i>) and spotted (<i>Crioceris duodecimpunctata</i>) asparagus beetles are annual pests of asparagus in Wisconsin. The common asparagus beetle is the most prevalent and the only one that causes economic damage to asparagus.</p><p>Adults of the common asparagus beetle feed on the plant’s spears and ferns. Disfigured and unmarketable spears can result when the beetles feed or lay eggs on the spears. Spotted asparagus beetle larvae feed more on the berries rather than the ferns of asparagus.  Larvae secrete a black fluid onto the plants. Spring spear feeding reduces crop quality (browning, scarring, staining, and bent growth). Summer fern feeding can cause defoliation and reduces yield of subsequent years. Eggs laid on spears are unattractive to consumers, though harmless. Large populations of asparagus beetles, if left unchecked, can defoliate the plants.</p><p>Asparagus beetle overwinters in plant debris and brush as an adult. Adults become active in spring when new spears emerge. The spotted asparagus beetle becomes active later in spring than the common asparagus beetle. Common asparagus beetles lay eggs on spears while spotted asparagus beetles lay eggs on ferns. About a week later eggs hatch. The larvae feed for about two weeks on asparagus and then pupate in the soil. About one week later the next generation of adults hatch.  Two to three generations occur in a growing season. Most larvae and adults are more active in the afternoon when the temperature and sunlight are at their peak.</p>",
   severity_info: "Egg hatch begins around 105 FDD, with peak larvae around 250 FDD and last larvae around 405 FDD. Peak adults around 570 FDD.",
   photo: "asparagus-beetle-common.jpg",
   link: "https://vegento.russell.wisc.edu/pests/asparagus-beetle/"
@@ -62,7 +66,7 @@ asparagus_beetle = DegreeDayPest.create!(
 
 black_cutworm = DegreeDayPest.create!(
   name: "Black Cutworm",
-  remote_name: "black_cutworm",
+  remote_name: "dd_50_86",
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 86,
   risk_start: 300, risk_peak: 700, risk_end: 1000,
@@ -74,7 +78,7 @@ black_cutworm = DegreeDayPest.create!(
 
 stink_bug = DegreeDayPest.create!(
   name: "Brown Marmorated Stink Bug",
-  remote_name: "brown_marmorated_stink_bug",
+  remote_name: "dd_54_92",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 54, t_max: 92,
   risk_start: 1608, risk_peak: 1734, risk_end: 2022,
@@ -86,7 +90,7 @@ stink_bug = DegreeDayPest.create!(
 
 cabbage_looper = DegreeDayPest2.create!(
   name: "Cabbage Looper",
-  remote_name: "cabbage_looper",
+  remote_name: "dd_50_90",
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 90,
   risk_start: 325, risk_peak: 520, risk_end: 750,
@@ -99,7 +103,7 @@ cabbage_looper = DegreeDayPest2.create!(
 
 cabbage_maggot = DegreeDayPest.create!(
   name: "Cabbage Maggot",
-  remote_name: "cabbage_maggot",
+  remote_name: "dd_42p8_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 42.8, t_max: 86,
   risk_start: 360, risk_peak: 600, risk_end: 1521,
@@ -111,7 +115,7 @@ cabbage_maggot = DegreeDayPest.create!(
 
 colorado_potato_beetle = DegreeDayPest2.create!(
   name: "Colorado Potato Beetle",
-  remote_name: "colorado_potato_beetle",
+  remote_name: "dd_52_none",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 120, risk_peak: 400, risk_end: 675,
@@ -124,7 +128,7 @@ colorado_potato_beetle = DegreeDayPest2.create!(
 
 corn_earworm = DegreeDayPest.create!(
   name: "Corn Earworm",
-  remote_name: "corn_earworm",
+  remote_name: "dd_55_92",
   biofix_mm: 8, biofix_dd: 1,
   t_min: 55, t_max: 92,
   risk_start: 70, risk_peak: 275, risk_end: 440,
@@ -136,7 +140,7 @@ corn_earworm = DegreeDayPest.create!(
 
 corn_rootworm = DegreeDayPest.create!(
   name: "Corn Rootworm",
-  remote_name: "corn_rootworm",
+  remote_name: "dd_52_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 329, risk_peak: 472, risk_end: 636,
@@ -148,7 +152,7 @@ corn_rootworm = DegreeDayPest.create!(
 
 european_corn_borer = DegreeDayPest2.create!(
   name: "European Corn Borer",
-  remote_name: "european_corn_borer",
+  remote_name: "dd_50_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_start: 550, risk_peak: 740, risk_end: 900,
@@ -161,7 +165,7 @@ european_corn_borer = DegreeDayPest2.create!(
 
 flea_beetle_crucifer = DegreeDayPest2.create!(
   name: "Flea Beetle (Crucifer)",
-  remote_name: "flea_beetle_crucifer",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 820, risk_peak: 965, risk_end: 1155,
@@ -174,7 +178,7 @@ flea_beetle_crucifer = DegreeDayPest2.create!(
 
 flea_beetle_mint = DegreeDayPest.create!(
   name: "Flea Beetle (Mint)",
-  remote_name: "flea_beetle_mint",
+  remote_name: "dd_41_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   risk_start: 550, risk_peak: 740, risk_end: 900,
@@ -186,7 +190,7 @@ flea_beetle_mint = DegreeDayPest.create!(
 
 imported_cabbageworm = DegreeDayPest2.create!(
   name: "Imported Cabbageworm",
-  remote_name: "imported_cabbageworm",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 150, risk_peak: 240, risk_end: 630,
@@ -199,7 +203,7 @@ imported_cabbageworm = DegreeDayPest2.create!(
 
 japanese_beetle = DegreeDayPest.create!(
   name: "Japanese Beetle",
-  remote_name: "japanese_beetle",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 970, risk_peak: 1600, risk_end: 2150,
@@ -211,7 +215,7 @@ japanese_beetle = DegreeDayPest.create!(
 
 lygus_bug = DegreeDayPest.create!(
   name: "Lygus Bug",
-  remote_name: "lygus_bug",
+  remote_name: "dd_52_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 275, risk_peak: 1000, risk_end: 2000,
@@ -223,7 +227,7 @@ lygus_bug = DegreeDayPest.create!(
 
 mint_root_borer = DegreeDayPest.create!(
   name: "Mint Root Borer",
-  remote_name: "mint_root_borer",
+  remote_name: "dd_50_none",
   biofix_mm: 4, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 430, risk_peak: 1280, risk_end: 2150,
@@ -235,7 +239,7 @@ mint_root_borer = DegreeDayPest.create!(
 
 onion_maggot = DegreeDayPest2.create!(
   name: "Onion Maggot",
-  remote_name: 'onion_maggot',
+  remote_name: 'dd_39p2_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_start: 510, risk_peak: 680, risk_end: 850,
@@ -248,7 +252,7 @@ onion_maggot = DegreeDayPest2.create!(
 
 seedcorn_maggot = SeedcornMaggot.create!(
   name: "Seedcorn Maggot",
-  remote_name: "seedcorn_maggot",
+  remote_name: "dd_39p2_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_start: 295, risk_peak: 360, risk_end: 425,
@@ -261,7 +265,7 @@ seedcorn_maggot = SeedcornMaggot.create!(
 
 squash_vine_borer = DegreeDayPest.create!(
   name: "Squash Vine Borer",
-  remote_name: "squash_vine_borer",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 750, risk_peak: 900, risk_end: 1000,
@@ -273,7 +277,7 @@ squash_vine_borer = DegreeDayPest.create!(
 
 stalk_borer = DegreeDayPest.create!(
   name: "Stalk Borer",
-  remote_name: "stalk_borer",
+  remote_name: "dd_41_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: 86,
   risk_start: 1110, risk_peak: 1400, risk_end: 1700,
@@ -285,7 +289,7 @@ stalk_borer = DegreeDayPest.create!(
 
 variegated_cutworm = DegreeDayPest.create!(
   name: "Variegated Cutworm",
-  remote_name: "variegated_cutworm",
+  remote_name: "dd_41_88",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 41, t_max: 88,
   risk_start: 900, risk_peak: 1450, risk_end: 2100,
@@ -297,7 +301,7 @@ variegated_cutworm = DegreeDayPest.create!(
 
 western_bean_cutworm = DegreeDayPest.create!(
   name: "Western Bean Cutworm",
-  remote_name: "western_bean_cutworm",
+  remote_name: "dd_50_none",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 1320, risk_peak: 1420, risk_end: 1535,
@@ -309,7 +313,7 @@ western_bean_cutworm = DegreeDayPest.create!(
 
 western_flower_thrips = Thrips.create!(
   name: "Western Flower Thrips",
-  remote_name: "western_flower_thrips",
+  remote_name: "dd_45_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: nil,
   risk_start: 340, risk_peak: 675, risk_end: 1010,
@@ -322,9 +326,9 @@ western_flower_thrips = Thrips.create!(
 
 aphid_pvy = DegreeDayPest.create!(
   name: "Aphid PVY Vectors",
-  remote_name: "onion_maggot",
+  remote_name: "dd_39p2_86",
   biofix_mm: 1, biofix_dd: 1,
-  t_min: 39, t_max: 86,
+  t_min: 39.2, t_max: 86,
   risk_start: 1967, risk_peak: 2473, risk_end: 3228,
   info: "<p>Of principal interest to potato seed growers in Wisconsin is the prevention of PVY in seed potato lots. PVY is transmitted by aphid feeding activity and can be prevented in part by the timely application of crop oils, which discourage aphids from probing leaf tissues in search of their preferred host and inadvertently transmitting the virus.</p><p>The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after 14 years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.</p><p>We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin.</p>",
   severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD.",
