@@ -21,7 +21,7 @@
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^4.7.0",
     "turbolinks": "^5.2.0",
-    "webpack": "4.46.0"
+    "webpack": "5.30.0"
   },
   "scripts": {
     "svelte-check": "svelte-check",
