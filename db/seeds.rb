@@ -101,16 +101,17 @@ cabbage_looper = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/"
 )
 
-cabbage_maggot = DegreeDayPest.create!(
+cabbage_maggot = DegreeDayPest2.create!(
   name: "Cabbage Maggot",
   remote_name: "dd_42p8_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 42.8, t_max: 86,
   risk_start: 360, risk_peak: 600, risk_end: 1521,
+  risk_start2: 1881, risk_peak2: 2121, risk_end2: 3042,
   info: "<p>Cabbage maggots (<i>Delia radicum</i>) are early season pests that feed on the roots and lower stems of all cruciferous crops and weeds. Wounds produced by this feeding can create entry points for several cole crop diseases. Early season transplants and spring roots crops are damaged most severely.</p><p>The adult cabbage maggot is an ash gray, bristly fly that resembles a housefly but is half as long with black stripes on its thorax. The larvae are only 1/3-inch long, white and have no legs and a body that tapers toward the head. Cabbage maggots appear similar to seed corn maggots, but cabbage maggot prefers to feed on the roots of cole crops while seed corn maggot prefers to feed on seeds and seedlings of corn and cucurbits.</p><p>Cabbage maggots feed both internally and on the surface of roots. Their tunneling provides a point of entry into the plant for pathogens such as soft rot bacteria and the blackleg fungus. Maggots can be especially damaging to seedlings, injuring the growing point of the root, and stunting plant growth. Affected seedlings and young transplants may become off-color or wilt during hot weather. Cabbage maggots thrive in wet, cool conditions, and injury to crops is most likely during first and third generations.</p>",
-  severity_info: 'More information on pest severity',
+  severity_info: "Spring adult emergence begins around 360 FDD with peak emergence at around 600 FDD. Management actions targeting adults is recommended at this time. Adults will lay eggs from 750-1521 FDD when spring flight concludes.",
   photo: "cabbage-maggot.jpg",
-  link: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD."
+  link: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD. Second generation adult emergence begins around 1880 FDD and peaks around 2120 FDD, with egg-laying occurring from 2270 FDD through 3040 FDD."
 )
 
 colorado_potato_beetle = DegreeDayPest2.create!(
@@ -258,7 +259,7 @@ seedcorn_maggot = SeedcornMaggot.create!(
   risk_start: 295, risk_peak: 360, risk_end: 425,
   risk_start2: 1015, risk_peak2: 1080, risk_end2: 1145,
   info: "<p>The seedcorn maggot (<i>Delia platura</i>) is a perennial pest of the germinating seeds and young seedlings of a wide range of vegetable and agronomic crops. In addition to corn, seedcorn maggots (SCM) has a large host range including numerous common vegetable crops. SCM can cause economic damage to seeds of artichoke, beet, Brussels sprouts, cabbage, cantaloupe, carrot, cauliflower, cucumber, kale, lettuce, bean (lima, snap, red), onion, pea, pumpkin, tomato, and turnip. In high numbers SCM can decimate entire crop stands if left untreated. SCM can be an increasing problem when susceptible crop crops are planted in succession.</p><p>Larvae are typical of many other fly maggots: 7 mm when fully grown, cream–colored, legless, and wedge-shaped. The head of the maggot is sharply pointed. SCM pupae are dark brown, 5 mm long, cylindrical in shape, and evenly rounded on both ends. SCM spends between 7-14 days in the pupal stage at normal summer time temperatures (~70°F). Adult flies resemble miniature houseflies. They are dark gray with black legs, 4-5 mm long and commonly hold their opaque wings flat over their abdomen when at rest.</p>Seed corn maggots overwinter as pupae in the soil. Adult flies begin emerging in the late spring, peak emergence for the first generation occurs in early to mid-May. Adult SCM often swarm over recently tilled fields or gardens. Preferred egg deposition sites are locations with germinating or decaying seeds, plant residue, incorporated green manures or where organic fertilizers have been recently applied. Adults often mate and lay eggs within 2-3 days of emergence. Eggs hatch 2-4 days later depending on soil temperature. The larval portion of the SCM life cycle occurs below ground over the course of a few weeks. Once hatched larvae burrow into the soil 6-8 cm to locate food resources. A complete life cycle for SCM can range from 15-77 days, in a typical season 16-21 days is sufficient. In Wisconsin, there are typically 3-5 generations per year.</p>",
-  severity_info: "In Wisconsin there are typically 3-5 generations per year, with maximum risk coinciding with peak adult flight times.",
+  severity_info: "In Wisconsin there are typically 3-5 generations per year, with maximum risk coinciding with peak adult flight times: First (overwintering) generation flight peaks around 360 FDD, second generation flight peaks around 1080 FDD, third generation peaks around 1800 FDD, fourth generation peaks around 2520 FDD, and the fifth generation peaks around 3240.",
   photo: "seedcorn-maggot.jpg",
   link: "https://vegento.russell.wisc.edu/pests/seedcorn-maggot/"
 )
@@ -270,7 +271,7 @@ squash_vine_borer = DegreeDayPest.create!(
   t_min: 50, t_max: nil,
   risk_start: 750, risk_peak: 900, risk_end: 1000,
   info: "<p>The squash vine borer (<i>Melittia cucurbitae</i>) is a sporadic pest of pumpkin and squash (e.g. cucurbits). Activity of adult moths and larvae often occurs as the crop is expanding rapidly from late June until the first of August. Resulting damage can be difficult to diagnose prior to significant harm to the plant occurs. In years of heavy infestation squash vine borer can become a significant economic pest in some cucurbit crops.</p><p>Susceptibility to squash vine borer is variable among species of cucurbits. Varieties known to be suitable hosts are pumpkins and squashes. Commonly infested cultivars are pumpkin (standard and giant), zucchini, as well as crookneck, straight neck, acorn, patty pan, summer, banana, buttercup, and hubbard squashes.</p><p>The damage caused by squash vine borer larvae is often difficult to detect until the plant wilts and dies in late July and August. Initial signs of infestation are very difficult to detect. Scouting early often involves searching for entrance holes and frass at the base of vine crop stems. Advanced symptoms of squash vine borer infestation are quickly wilting plants in the heat of the day. Since wilting may be confused with other pests of vine crops (e.g. bacterial or <i>Fusarium</i> wilts) scouting remains critical. Plants that infested plants may be diagnosed by splitting the base stems of the plant to confirm the presence of the larvae. Fields that have been damaged in past seasons have a good chance for recurring squash vine borer infestations annually.</p>",
-  severity_info: "Adult emergence beings around 750 FDD, peaking around 900 FDD, and ending around 1000 FDD.",
+  severity_info: "Adult emergence begins around 750 FDD, peaking around 900 FDD, and ending around 1000 FDD.",
   photo: "squash-vine-borer.jpg",
   link: "https://vegento.russell.wisc.edu/pests/squash-vine-borer/"
 )
@@ -331,7 +332,7 @@ aphid_pvy = DegreeDayPest.create!(
   t_min: 39.2, t_max: 86,
   risk_start: 1967, risk_peak: 2473, risk_end: 3228,
   info: "<p>Of principal interest to potato seed growers in Wisconsin is the prevention of PVY in seed potato lots. PVY is transmitted by aphid feeding activity and can be prevented in part by the timely application of crop oils, which discourage aphids from probing leaf tissues in search of their preferred host and inadvertently transmitting the virus.</p><p>The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after 14 years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.</p><p>We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin.</p>",
-  severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD.",
+  severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD. PVY transmission risk is calculated from a combination of several aphid species, the relative abundance of each species in Wisconsin, and the estimated PVY transmission efficiency of each species. Aphid vectors include Soybean aphid, Bird cherry-oat aphid, Green peach aphid, Pea aphid, Corn leaf aphid, and Potato aphid.",
   photo: "pea-aphid.jpg",
   link: "https://vegento.russell.wisc.edu/pests/aphids/"
 )
