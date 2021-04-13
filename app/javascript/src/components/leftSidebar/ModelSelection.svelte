@@ -94,6 +94,10 @@
     padding: 0 5px;
   }
 
+  button {
+    margin-left: 10px;
+  }
+
   select {
     padding: 5px 8px;
     text-indent: 0.01px;

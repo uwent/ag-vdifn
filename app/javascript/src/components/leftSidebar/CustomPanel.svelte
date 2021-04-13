@@ -115,7 +115,7 @@
   }
 </style>
 
-<div title="Custom model specification">
+<div>
   <ModelParameters>
     <DatePicker />
     <label class="tMinTMaxOptions" for="TminTMaxOptions">

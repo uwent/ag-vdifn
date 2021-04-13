@@ -58,7 +58,7 @@
   }
 </style>
 
-<div title="Disease model selection">
+<div>
   <ModelSelection />
   <ModelParameters>
     <DatePicker />

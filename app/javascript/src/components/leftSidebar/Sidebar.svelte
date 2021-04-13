@@ -121,9 +121,9 @@
     <div>
       <a
         id="uw-madison"
+        class="logo"
         href="https://www.wisc.edu"
-        target="_blank"
-        class="logo">
+        target="_blank">
         Wisc Edu
       </a>
       <a
