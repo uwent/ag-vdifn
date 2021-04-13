@@ -6,8 +6,6 @@
     afflictionValue,
   } from '../../store/store'
   import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
-  import Modal from '../common/Modal.svelte'
-  let showModal: boolean = false
   let selectedCropValue: number
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
@@ -56,20 +54,6 @@
     afflictionValue.update((value) => value)
     afflictionValue.set(value)
     selectedAffliction.set(getCurrentAffliction(value))
-  }
-
-  function buildModalLink(link) {
-    if (link != null) {
-      return `<a href='${link}' target='_blank'>More Information... </a>`
-    }
-  }
-
-  function buildModalImage(photo) {
-    if (photo != null) {
-      return `<img src='vdifn/images/${photo}' width='150px' align="left" style="margin-top: 1em; margin-right: 10px;"/>`
-    } else {
-      return ''
-    }
   }
 </script>
 
@@ -149,23 +133,9 @@
       id="affliction-select"
       name="affliction-select"
       title="Select model">
-      {#each afflictionsForCrop as { id, name }}
-        <option value={id} name="affliction_id">{name}</option>
+      {#each afflictionsForCrop as { id, name, t_min, t_max }}
+        <option value={id} name="affliction_id">{name} ({t_min}/{!t_max ? 'None' : t_max}&deg;F)</option>
       {/each}
     </select>
-    {#if crops.length > 0}
-      <button on:click={() => (showModal = true)}>?</button>
-    {/if}
   </div>
 </fieldset>
-{#if showModal}
-  <Modal on:close={() => (showModal = false)} name={$selectedAffliction.name}>
-    <div class="modal__pest-info">
-      {@html buildModalImage($selectedAffliction.photo)}
-      <p>
-        {@html $selectedAffliction.info}
-      </p>
-      {@html buildModalLink($selectedAffliction.link)}
-    </div>
-  </Modal>
-{/if}

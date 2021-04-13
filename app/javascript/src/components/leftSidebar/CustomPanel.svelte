@@ -6,7 +6,7 @@
   import DatePicker from './DatePicker.svelte'
   import TminMaxInteractable from './TminMaxInteractable.svelte'
   import SeverityGradient from './SeverityGradient.svelte'
-  import ModelSelection from './ModelSelection.svelte'
+  import CustomModelSelection from './CustomModelSelection.svelte'
   import TminMaxDisplay from './TminMaxDisplay.svelte'
   import {
     customOverlaySubmitted,
@@ -138,7 +138,7 @@
       <label for="tMinMaxModelSelection">Existing model</label>
     </div>
     {#if tMinTmaxSelection === 'modelSelection'}
-      <ModelSelection />
+      <CustomModelSelection />
       <TminMaxDisplay />
     {:else}
       <TminMaxInteractable on:tMinMaxValid={handleCustomTminTMax} />

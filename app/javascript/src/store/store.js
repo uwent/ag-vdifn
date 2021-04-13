@@ -9,13 +9,13 @@ export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
 
 export const selectedAffliction = writable({
-  id: undefined,
-  name: undefined,
-  photo: undefined,
-  info: undefined,
-  link: undefined,
-  biofix_date: undefined,
-  end_date_enabled: undefined,
+  // id: undefined,
+  // name: undefined,
+  // photo: undefined,
+  // info: undefined,
+  // link: undefined,
+  // biofix_date: undefined,
+  // end_date_enabled: undefined,
 })
 
 export const twoPointGradientState = writable({
@@ -58,17 +58,23 @@ export const insectPanelParams = writable({})
 export const customPanelParams = writable({})
 
 export const diseasePanelState = writable({
+  currentAffliction: undefined,
   severities: undefined,
   severityParams: undefined,
 })
 export const insectPanelState = writable({
+  currentAffliction: undefined,
   severities: undefined,
   severityParams: undefined,
 })
 export const customPanelState = writable({
   severities: undefined,
   severityParams: undefined,
-  selectedGradient: 1 })
+  selectedGradient: 1,
+  t_min: undefined,
+  t_max: undefined,
+  in_fahrenheit: undefined,
+ })
 
 export const selectedPanel = writable('')
 
