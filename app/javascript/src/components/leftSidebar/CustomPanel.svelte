@@ -115,7 +115,7 @@
   }
 </style>
 
-<div>
+<div data-testid="custom-panel">
   <ModelParameters>
     <DatePicker />
     <label class="tMinTMaxOptions" for="TminTMaxOptions">

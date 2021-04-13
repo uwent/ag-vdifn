@@ -56,7 +56,7 @@
   })
 </script>
 
-<div>
+<div data-testid="insect-panel">
   <ModelSelection />
   <ModelParameters>
     <DatePicker />

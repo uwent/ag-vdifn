@@ -3,10 +3,10 @@ import { fireEvent, render } from '@testing-library/svelte'
 import { tick } from 'svelte'
 
 let getRole
-let getTitle
+let getTestId
 
 beforeEach(() => {
-  const { getByRole, getByTitle } = render(Interface, {
+  const { getByRole, getByTestId } = render(Interface, {
     props: {
       diseasePanelData: [
         {
@@ -31,12 +31,13 @@ beforeEach(() => {
     },
   })
   getRole = getByRole
-  getTitle = getByTitle
+  getTestId = getByTestId
 })
 
 it('disease tab is selected by default', async () => {
   await tick()
   expect(getRole('radio', { name: 'Disease' }).checked).toEqual(true)
+  expect(getTestId('disease-panel')).toBeInTheDocument()
   expect(getRole('combobox', { name: 'Disease' })).toBeInTheDocument()
 })
 
@@ -44,6 +45,7 @@ it('shows insect panel when insect tab is selected', async () => {
   await tick()
   const insectTab = getRole('radio', { name: 'Insect' })
   await fireEvent.click(insectTab)
+  expect(getTestId('insect-panel')).toBeInTheDocument()
   expect(getRole('combobox', { name: 'Insect' })).toBeInTheDocument()
 })
 
@@ -51,5 +53,5 @@ it('shows custom panel when custom tab is selected', async () => {
   await tick()
   const customTab = getRole('radio', { name: 'Custom' })
   await fireEvent.click(customTab)
-  expect(getTitle('Custom model specification')).toBeInTheDocument()
+  expect(getTestId('custom-panel')).toBeInTheDocument()
 })

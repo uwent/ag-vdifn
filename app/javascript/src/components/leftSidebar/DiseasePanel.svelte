@@ -58,7 +58,7 @@
   }
 </style>
 
-<div>
+<div data-testid="disease-panel">
   <ModelSelection />
   <ModelParameters>
     <DatePicker />

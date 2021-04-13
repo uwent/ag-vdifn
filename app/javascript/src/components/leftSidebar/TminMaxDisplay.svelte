@@ -111,8 +111,6 @@
   .tmin,
   .tmax {
     background-color: rgba(255, 255, 255, 0.7);
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
     background: #d0d0d0;
     padding: 5px;
     margin-top: 3px;
@@ -156,7 +154,6 @@
     right: 0;
     bottom: 0;
     background-color: #6c6c6c;
-    -webkit-transition: 0.4s;
     transition: 0.4s;
   }
 
@@ -168,13 +165,10 @@
     left: 4px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: 0.4s;
     transition: 0.4s;
   }
 
   input:checked + .slider:before {
-    -webkit-transform: translateX(36px);
-    -ms-transform: translateX(36px);
     transform: translateX(36px);
   }
 

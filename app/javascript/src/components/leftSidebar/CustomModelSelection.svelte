@@ -98,15 +98,6 @@
     clear: both;
     height: 0.5em;
   }
-
-  .modal__pest-info {
-    overflow: hidden;
-  }
-
-  .modal__pest-info p {
-    word-break: break-word;
-    margin: 0px;
-  }
 </style>
 
 <fieldset id="model-selection">
