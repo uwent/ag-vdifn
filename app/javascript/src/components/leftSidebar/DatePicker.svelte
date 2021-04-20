@@ -14,7 +14,9 @@
 
   let today: string = moment.utc().format('YYYY-MM-DD')
   let endDateValue: string = today
+  let defaultEndDateValue = endDateValue
   let startDateValue: string = defaultStartDate
+  let defaultStartDateValue = startDateValue
   let startLabel = dateToolTip.startLabel
 
   // handle end date changes
@@ -49,6 +51,26 @@
     }
   }
 
+  function selectPastWeek() {
+    endDateValue = today
+    startDateValue = moment.utc().subtract(1, 'week').format('YYYY-MM-DD')
+  }
+
+  function selectPastMonth() {
+    endDateValue = today
+    startDateValue = moment.utc().subtract(1, 'month').format('YYYY-MM-DD')
+  }
+
+  function selectThisYear() {
+    endDateValue = today
+    startDateValue = moment.utc().format('YYYY') + '-01-01'
+  }
+
+  function selectDefaults() {
+    endDateValue = defaultEndDateValue
+    startDateValue = defaultStartDateValue
+  }
+
   // panel and pest-specific tweaks to datepicker
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
     if (affliction.name) {
@@ -67,15 +89,17 @@
 
     if (affliction.biofix_date) {
       if (affliction.biofix_date < today) {
-        startDateValue = affliction.biofix_date
-        endDateValue = today
+        defaultStartDateValue = affliction.biofix_date
+        defaultEndDateValue = today
       } else {
-        startDateValue = moment
+        defaultStartDateValue = moment
           .utc(affliction.biofix_date)
           .subtract(1, 'year')
           .format('YYYY-MM-DD')
-        endDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
+        defaultEndDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
       }
+      startDateValue = defaultStartDateValue
+      endDateValue = defaultEndDateValue
     }
   })
 
@@ -110,10 +134,30 @@
 
   .datepicker-tooltip {
     margin-left: 8px;
+    border: none;
   }
 
-  button {
-    border: none;
+  .clear {
+    clear: both;
+    height: 0.5em;
+  }
+
+  .preset-buttons {
+    font-size: 0.75em;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .preset-buttons button {
+    padding: 5px 8px;
+    margin: 5px;
+    background: rgb(225, 225, 225);
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    appearance: none;
+    cursor: pointer;
+    font-size: 1em;
   }
 </style>
 
@@ -159,6 +203,30 @@
       data-balloon-pos="right"
       aria-label={dateToolTip.endDate}>
       <QuestionSvg />
+    </button>
+  </div>
+  <div class="clear" />
+  <label for="preset-buttons">Quick date ranges:</label>
+  <div class="preset-buttons">
+    <button
+    data-testid="button-past-week"
+    on:click={selectPastWeek}>
+      Past week
+    </button>
+    <button
+    data-testid="button-past-month"
+    on:click={selectPastMonth}>
+      Past month
+    </button>
+    <button
+    data-testid="button-this-year"
+    on:click={selectThisYear}>
+      This year
+    </button>
+    <button
+    data-testid="button-defaults"
+    on:click={selectDefaults}>
+      Defaults
     </button>
   </div>
 </fieldset>

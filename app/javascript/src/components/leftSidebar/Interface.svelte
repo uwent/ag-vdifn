@@ -108,7 +108,6 @@
           disabled={$overlayLoading}/>
         <label for="custom">Custom</label>
         <button on:click={() => (showModal = true)}>?</button>
-
       </div>
     </fieldset>
     {#if diseasePanelData && insectPanelData}

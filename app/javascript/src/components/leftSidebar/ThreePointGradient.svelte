@@ -225,14 +225,13 @@
 
   %severity-button {
     background: #249dde;
-    background: -moz-linear-gradient(top, #29d4ff 0%, #249dde);
     border-radius: 3px;
     box-shadow: 0px 1px 3px rgba(000, 000, 000, 0),
       inset 0px 0px 1px rgba(255, 255, 255, 1);
     color: #fff;
     font-size: 0.85em;
-    margin-top: 13px;
     padding: 10px;
+    margin-top: 13px;
     border: none;
   }
 

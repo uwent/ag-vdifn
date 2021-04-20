@@ -9,6 +9,10 @@ let startPicker
 let endPicker
 let startTooltip: HTMLElement
 let endTooltip: HTMLElement
+let buttonPastWeek: HTMLElement
+let buttonPastMonth: HTMLElement
+let buttonThisYear: HTMLElement
+let buttonDefaults: HTMLElement
 
 Date.now = jest.fn(() => +new Date('2020-06-01'))
 
@@ -17,8 +21,8 @@ const lastWeek = moment.utc().subtract(1, 'week').format('YYYY-MM-DD')
 const nextWeek = moment.utc().add(1, 'week').format('YYYY-MM-DD')
 const twoWeeksAgo = moment.utc().subtract(2, 'week').format('YYYY-MM-DD')
 const lastMonth = moment.utc().subtract(1, 'month').format('YYYY-MM-DD')
-const lastYear = moment.utc().subtract(1, 'year').format('YYYY-MM-DD')
-const endOfLastYear = moment.utc().subtract(1, 'year').format('YYYY-12-31')
+const startOfYear = moment.utc().format('YYYY') + '-01-01'
+// const endOfLastYear = moment.utc().subtract(1, 'year').format('YYYY-12-31')
 
 it('sets a mock date', () => {
   expect(today).toEqual('2020-06-01')
@@ -85,40 +89,60 @@ describe('common behavior for all panels', () => {
     expect(endPicker.value).toEqual(twoWeeksAgo)
     expect(startPicker.value).toEqual(twoWeeksAgo)
   })
+})
 
-  // it('moves end date back when start date passes it', async () => {
-  //   await fireEvent.change(endPicker, { target: { value: twoWeeksAgo } })
-  //   expect(endPicker.value).toEqual(twoWeeksAgo)
-  //   expect(startPicker.value).toEqual(twoWeeksAgo)
-  //   await fireEvent.change(startPicker, { target: { value: lastWeek } })
-  //   expect(startPicker.value).toEqual(lastWeek)
-  //   expect(endPicker.value).toEqual(lastWeek)
-  // })
+describe('Quick date range buttons', () => {
+  beforeEach(() => {
+    const { getByTestId } = render(SetContextTest, {
+      props: {
+        Component: DatePicker,
+        context_key: panelKey,
+        context_value: {
+          dateToolTip: {
+            startDate: 'Start date',
+            endDate: 'End date',
+            startLabel: 'Application',
+          },
+          defaultStartDate: twoWeeksAgo,
+        },
+      },
+    })
+    startPicker = getByTestId('datepicker-start')
+    endPicker = getByTestId('datepicker-end')
+    buttonPastWeek = getByTestId('button-past-week')
+    buttonPastMonth = getByTestId('button-past-month')
+    buttonThisYear = getByTestId('button-this-year')
+    buttonDefaults = getByTestId('button-defaults')
+  })
 
-  // it('moves end date to end of year when start date moves to different year', async () => {
-  //   await fireEvent.change(startPicker, { target: { value: lastYear } })
-  //   expect(startPicker.value).toEqual(lastYear)
-  //   expect(endPicker.value).toEqual(endOfLastYear)
-  // })
+  it('defaults to two weeks ago', () => {
+    expect(startPicker.value).toEqual(twoWeeksAgo)
+  })
 
-  // it('changes the start date tooltip for early blight', async () => {
-  //   const expected = 'Start of year'
-  //   selectedAffliction.set({
-  //     id: 1,
-  //     name: 'Early Blight',
-  //     biofix_date: twoWeeksAgo,
-  //     end_date_enabled: true,
-  //   })
-  //   await tick()
-  //   expect(selectedAffliction.name).toEqual('Early Blight')
-  //   expect(startTooltip.getAttribute('aria-label')).toEqual(expected)
-  // })
+  it('sets date range to one week on click', async () => {
+    await fireEvent.click(buttonPastWeek)
+    expect(startPicker.value).toEqual(lastWeek)
+    expect(endPicker.value).toEqual(today)
+  })
 
-  // it('disables end date if pest has end date disabled', async () => {
-  //   selectedAffliction.set({ id: 1, name: 'insect', end_date_enabled: false })
-  //   const endDate: HTMLInputElement = getLabelText('End Date')
-  //   await tick()
-  //   expect(endDate.disabled).toEqual(true)
-  // })
+  it('sets date range to one month on click', async () => {
+    await fireEvent.click(buttonPastMonth)
+    expect(startPicker.value).toEqual(lastMonth)
+    expect(endPicker.value).toEqual(today)
+  })
 
+  it('sets date range to current year on click', async () => {
+    await fireEvent.click(buttonThisYear)
+    expect(startPicker.value).toEqual(startOfYear)
+    expect(endPicker.value).toEqual(today)
+  })
+
+  it('restores default dates on click', async () => {
+    await fireEvent.click(buttonThisYear)
+    expect(startPicker.value).toEqual(startOfYear)
+    expect(endPicker.value).toEqual(today)
+    await fireEvent.click(buttonDefaults)
+    expect(startPicker.value).toEqual(twoWeeksAgo)
+    expect(endPicker.value).toEqual(today)
+  })
 })

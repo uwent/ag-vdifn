@@ -96,6 +96,11 @@
 
   button {
     margin-left: 10px;
+    background: rgb(225, 225, 225);
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    cursor: pointer;
+    appearance: none;
   }
 
   select {
@@ -106,8 +111,7 @@
     border-radius: 0;
     border: 1px solid #d0d0d0;
     cursor: pointer;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    appearance: none;
   }
 
   select::-ms-expand {
