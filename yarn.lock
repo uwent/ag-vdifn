@@ -13308,10 +13308,10 @@ svelte-hmr@^0.12.3:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.12.9.tgz#e323b71062a59bf4b73d2d5a7cc80dba256217e1"
   integrity sha512-SGE7Odznj4dqZtUVIWcoPCvZ9gHImxVIIjrz+O3DDSi0j4OaSLim6MRF4UdhlBKeW3glSRc+tXNSKYvM5x+Dyw==
 
-svelte-jester@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-1.4.0.tgz#75484201e1fefa60555fdbd1912bf902a437effb"
-  integrity sha512-lRNJZb+vxwOv4jhPzi+VFCaX0PMnHO8b9hcEVwjWURrwobXzdwGhJdb3NJy8WjLt1nHd4NWeS7Ei8mpvA7mNRg==
+svelte-jester@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-1.5.0.tgz#3472cc581ec77f57d710a98a5c47f2c8b7d9b128"
+  integrity sha512-nHOMAPpywjdz11wl/MRiSgcnaCrPM9zkmfaGO42pWRySzx9Y/99K3hosdWez/mXLMtFot3XwPDyEt+VmGiFWiQ==
   dependencies:
     cosmiconfig "^7.0.0"
 
