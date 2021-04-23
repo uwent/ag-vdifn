@@ -36,7 +36,7 @@
     "@storybook/addon-essentials": "^6.2.8",
     "@storybook/addon-links": "^6.2.8",
     "@storybook/svelte": "^6.2.8",
-    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/svelte": "^3.0.3",
     "@types/googlemaps": "^3.43.3",
     "@types/jest": "^26.0.22",
