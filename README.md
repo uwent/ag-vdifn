@@ -5,9 +5,9 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 ## Dependencies
 
-Ruby version `2.7.2`
+Ruby version `2.7.x`
 
-Rails version `6.1.3`
+Rails version `6.1.x`
 
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
