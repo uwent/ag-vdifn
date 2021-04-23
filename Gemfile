@@ -43,4 +43,5 @@ group :development do
   gem 'capistrano-bundler', '~> 2.0', require: false
   gem 'web-console', '~> 4.1'
   gem 'spring', '~> 2.1'
+  gem 'listen', '~> 3.5'
 end
