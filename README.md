@@ -12,8 +12,9 @@ Rails version `6.1.x`
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
 2. Install dependencies with `bundle install`
-3. Add ruby platform gems to lockfile if building on windows machine (`bundle lock --add-platform ruby`)
-4. Setup database with `rails db:setup`
+3. Setup database with `rails db:setup`
+4. Load db schema with `rails db:schema:load`
+5. Seed db with `rails db:seed`
 
 ## Launch local instance
 1. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
