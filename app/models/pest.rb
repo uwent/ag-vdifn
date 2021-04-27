@@ -9,14 +9,13 @@ class Pest < ApplicationRecord
         long: measurement[:long],
         severity: total_to_severity(
           measurement[:total].to_f,
-          measurement[:after_november_first],
           measurement[:freeze]
         )
       }
     end
   end
 
-  def total_to_severity(total, after_november_first, freezing)
+  def total_to_severity(total, freezing)
     return 0
   end
 
