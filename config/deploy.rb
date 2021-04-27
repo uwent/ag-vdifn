@@ -60,17 +60,8 @@ namespace :deploy do
     end
   end
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within release_path do
-        execute :rake, 'tmp:clear'
-      end
-    end
-  end
-
-  after :clear_cache, :seed do
-    on roles(:web) do
+  after :restart, :seed do
+    on roles(:app) do
       within release_path do
         execute :rake, 'db:seed RAILS_ENV=production'
       end
