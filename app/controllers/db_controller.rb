@@ -1,5 +1,6 @@
 # coding: utf-8
 class DbController < ApplicationController
+
   def severities
     render json: strategy.severities_from_totals(strategy.severities)
   end
@@ -143,7 +144,7 @@ class DbController < ApplicationController
       "build_custom_strategy"
     when "LateBlight"
       "build_late_blight_strategy"
-    when "EarlyBlight", "CercosporaLeafSpot"
+    when "EarlyBlight", "CercosporaLeafSpot", "FoliarDisease"
       "build_disease_strategy"
     else
       "build_pest_strategy"
