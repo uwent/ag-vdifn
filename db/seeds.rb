@@ -396,6 +396,9 @@ melon.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_c
 mint = Crop.create!(name: "Mint")
 mint.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, flea_beetle_mint,  japanese_beetle, mint_root_borer]
 
+oak = Crop.create!(name: "Oak")
+oak.pests = [oak_wilt]
+
 onion = Crop.create!(name: "Onion")
 onion.pests = [onion_maggot]
 

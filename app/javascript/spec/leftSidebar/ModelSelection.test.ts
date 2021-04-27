@@ -6,6 +6,7 @@ import SetContextTest from '../testComponents/SetContextTest.svelte'
 let data
 let getRole
 let getQuery
+let getId
 
 describe('when data present', () => {
   beforeEach(() => {
@@ -13,20 +14,22 @@ describe('when data present', () => {
       {
         id: 1,
         name: 'corn',
-        afflictions: [{ id: 5, name: 'bug' }],
+        afflictions: [
+          { id: 11, name: 'bug' }
+        ],
       },
       {
         id: 2,
         name: 'carrots',
         afflictions: [
-          { id: 15, name: 'ladybug' },
-          { id: 6, name: 'grasshopper' },
-          { id: 10, name: 'fly' },
+          { id: 21, name: 'ladybug' },
+          { id: 22, name: 'grasshopper' },
+          { id: 23, name: 'fly' },
         ],
       },
     ]
 
-    const { getByRole, queryByRole } = render(SetContextTest, {
+    const { getByRole, queryByRole, getByTestId } = render(SetContextTest, {
       props: {
         Component: ModelSelection,
         context_key: panelKey,
@@ -36,19 +39,20 @@ describe('when data present', () => {
         },
       },
     })
+    
     getRole = getByRole
     getQuery = queryByRole
+    getId = getByTestId
   })
 
   it('defaults crop and affliction values to first in their respective lists', () => {
-    expect(getRole('combobox', { name: 'Crop' })).toHaveValue('1')
-    expect(getRole('combobox', { name: 'Disease' })).toHaveValue('5')
+    expect(getId('crop-select')).toHaveValue('1')
+    expect(getId('affliction-select')).toHaveValue('11')
   })
 
   it('updates afflictions for selected crop', async () => {
-    const select: HTMLElement = getRole('combobox', { name: 'Crop' })
-    await fireEvent.change(select, { target: { value: '2' } })
-    expect(getRole('combobox', { name: 'Disease' })).toHaveValue('15')
+    await fireEvent.change(getId('crop-select'), { target: { value: '2' } })
+    expect(getId('affliction-select')).toHaveValue('21')
   })
 
   it('shows modal when button is clicked', async () => {
@@ -69,7 +73,7 @@ describe('when data not present', () => {
   beforeEach(() => {
     data = []
 
-    const { getByRole, queryByRole } = render(SetContextTest, {
+    const { getByRole, queryByRole, getByTestId } = render(SetContextTest, {
       props: {
         Component: ModelSelection,
         context_key: panelKey,
@@ -79,13 +83,15 @@ describe('when data not present', () => {
         },
       },
     })
+
     getRole = getByRole
     getQuery = queryByRole
+    getId = getByTestId
   })
 
   it('renders empty select box', () => {
-    expect(getRole('combobox', { name: 'Crop' })).toBeInTheDocument()
-    expect(getRole('combobox', { name: 'Disease' })).toBeInTheDocument()
+    expect(getId('crop-select')).toBeInTheDocument()
+    expect(getId('affliction-select')).toBeInTheDocument()
   })
 
   it('does not contain modal button', () => {

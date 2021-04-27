@@ -135,13 +135,14 @@
 
 <fieldset id="model-selection">
   <legend>Model Selection</legend>
-  <label for="crop-select">Crop</label>
+  <label for="crop-select">Crop/Host</label>
   <!-- svelte-ignore a11y-no-onchange -->
   <select
     on:change={getAfflictionsForCrop}
     bind:value={selectedCropValue}
     id="crop-select"
     name="crop-select"
+    data-testid="crop-select"
     title="Select crop">
     {#each crops as { id, name }}
       <option value={id} name="crop_id">{name}</option>
@@ -156,6 +157,7 @@
       class="affliction-select"
       id="affliction-select"
       name="affliction-select"
+      data-testid="affliction-select"
       title="Select model">
       {#each afflictionsForCrop as { id, name }}
         <option value={id} name="affliction_id">{name}</option>
