@@ -337,6 +337,18 @@ aphid_pvy = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/aphids/"
 )
 
+oak_wilt = DegreeDayPest.create!(
+  name: "Oak Wilt vectors",
+  remote_name: "dd_41_none",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 41, t_max: nil,
+  risk_start: 128, risk_peak: 507, risk_end: 1207,
+  info: "Oak Wilt is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 128 FDD, peaks around 507 FDD, and continues through either 1207 FDD or Jul 15, whichever is later. Wounding/pruning/harvesting oaks should be avoided during this period of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection. <b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
+  severity_info: "Oak Wilt transmission risk begins at 128 FDD, peaks around 507 FDD, and continues through either 1207 FDD or Jul 15, whichever is later. Wounding/pruning/harvesting oaks should be avoided during this period of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps.",
+  photo: "oak_wilt.png",
+  link: "https://agweather.cals.wisc.edu/thermal_models/oak_wilt"
+)
+
 
 ## Crop filters ##
 alfalfa = Crop.create!(name: "Alfalfa")
