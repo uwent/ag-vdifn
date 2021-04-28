@@ -7,6 +7,7 @@
     endDate,
     panelKey,
     startDate,
+    tMinTmax,
     diseasePanelParams,
     selectedPanel,
     diseasePanelState,
@@ -16,6 +17,7 @@
   import { get } from 'svelte/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
+  import TminMaxDisplay from './TminMaxDisplay.svelte'
   import DatePicker from './DatePicker.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
@@ -42,6 +44,7 @@
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       pest_id: $afflictionValue,
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
   }
 
@@ -62,6 +65,7 @@
   <ModelSelection />
   <ModelParameters>
     <DatePicker />
+    <TminMaxDisplay />
   </ModelParameters>
   <Button disabled={$overlayLoading} click={submit} />
   {#if $overlayLoading}

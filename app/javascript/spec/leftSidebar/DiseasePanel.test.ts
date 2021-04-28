@@ -41,6 +41,7 @@ it('should dispatch submit params when button is clicked', () => {
   expect(get(diseasePanelParams)).toEqual({
     start_date: '2000-10-10',
     end_date: '2000-11-10',
+    in_fahrenheit: true,
     pest_id: 1,
   })
 })
