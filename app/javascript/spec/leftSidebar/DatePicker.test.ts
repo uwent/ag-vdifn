@@ -46,13 +46,11 @@ describe('common behavior for all panels', () => {
     })
     startPicker = getByTestId('datepicker-start')
     endPicker = getByTestId('datepicker-end')
-    startTooltip = getByTestId('start-date-tooltip')
-    endTooltip = getByTestId('end-date-tooltip')
   })
   
   it('renders tooltips', () => {
-    expect(startTooltip.getAttribute('aria-label')).toEqual('Start date')
-    expect(endTooltip.getAttribute('aria-label')).toEqual('End date')
+    expect(startPicker.getAttribute('title')).toEqual('Start date')
+    expect(endPicker.getAttribute('title')).toEqual('End date')
   })
   
   it('defaults max of start date and end date to today', () => {
