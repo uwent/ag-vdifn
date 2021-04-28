@@ -71,6 +71,10 @@
     startDateValue = defaultStartDateValue
   }
 
+  function isPastYear(date: string) {
+    return moment.utc(date).format('YYYY') != moment.utc().format('YYYY')
+  }
+
   // panel and pest-specific tweaks to datepicker
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
     if (affliction.name) {
@@ -87,6 +91,7 @@
       }
     }
 
+    // if biofix has yet to occur default to last year
     if (affliction.biofix_date) {
       if (affliction.biofix_date < today) {
         defaultStartDateValue = affliction.biofix_date
@@ -96,7 +101,7 @@
           .utc(affliction.biofix_date)
           .subtract(1, 'year')
           .format('YYYY-MM-DD')
-        defaultEndDateValue = moment.utc(startDateValue).format('YYYY') + '-12-31'
+        defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31'
       }
       startDateValue = defaultStartDateValue
       endDateValue = defaultEndDateValue
@@ -134,7 +139,9 @@
 
   .datepicker-tooltip {
     margin-left: 8px;
-    border: none;
+    margin: auto;
+    font-size: 0.75em;
+    width: 50%;
   }
 
   .clear {
@@ -168,42 +175,34 @@
     <input
       type="date"
       class="datepicker"
-      title="Start date/biofix"
+      title={dateToolTip.startDate}
       id="datepicker-start"
       data-testid="datepicker-start"
       bind:value={startDateValue}
       on:change={updateEndDateInput}
       max={today} />
-    <button
-      class="datepicker-tooltip"
-      id="datepicker-start-information"
-      data-testid="start-date-tooltip"
-      data-balloon-length="small"
-      data-balloon-pos="right"
-      aria-label={dateToolTip.startDate}>
-      <QuestionSvg />
-    </button>
+    {#if isPastYear(startDateValue)}
+      <div class="datepicker-tooltip">
+        &lt;- Not current year
+      </div>
+    {/if}
   </div>
   <label for="datepicker-end">End Date</label>
   <div class="select-wrapper" id="datepicker-end-wrapper">
     <input
       type="date"
       class="datepicker"
-      title="End date"
+      title={dateToolTip.endDate}
       id="datepicker-end"
       data-testid="datepicker-end"
       bind:value={endDateValue}
       on:change={updateStartDateInput}
       max={today} />
-    <button
-      class="datepicker-tooltip"
-      id="datepicker-end-information"
-      data-testid="end-date-tooltip"
-      data-balloon-length="small"
-      data-balloon-pos="right"
-      aria-label={dateToolTip.endDate}>
-      <QuestionSvg />
-    </button>
+    {#if isPastYear(startDateValue)}
+      <div class="datepicker-tooltip">
+        &lt;- Not current year
+      </div>
+    {/if}
   </div>
   <div class="clear" />
   <label for="preset-buttons">Quick date ranges:</label>
