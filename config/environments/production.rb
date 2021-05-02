@@ -96,6 +96,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   
+  # Relative URL root on production server
   config.relative_url_root = "/vdifn"
 
   # Inserts middleware to perform automatic connection switching.
