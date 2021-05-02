@@ -52,6 +52,18 @@ alfalfa_weevil = DegreeDayPest.create!(
   link: "https://en.wikipedia.org/wiki/Hypera_postica"
 )
 
+aphid_pvy = DegreeDayPest.create!(
+  name: "Aphid PVY Vectors",
+  remote_name: "dd_39p2_86",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 39.2, t_max: 86,
+  risk_start: 1967, risk_peak: 2473, risk_end: 3228,
+  info: "<p>Of principal interest to potato seed growers in Wisconsin is the prevention of PVY in seed potato lots. PVY is transmitted by aphid feeding activity and can be prevented in part by the timely application of crop oils, which discourage aphids from probing leaf tissues in search of their preferred host and inadvertently transmitting the virus.</p><p>The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after 14 years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.</p><p>We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin.</p>",
+  severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD. PVY transmission risk is calculated from a combination of several aphid species, the relative abundance of each species in Wisconsin, and the estimated PVY transmission efficiency of each species. Aphid vectors include Soybean aphid, Bird cherry-oat aphid, Green peach aphid, Pea aphid, Corn leaf aphid, and Potato aphid.",
+  photo: "pea-aphid.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/aphids/"
+)
+
 asparagus_beetle = DegreeDayPest.create!(
   name: "Asparagus Beetle (Common)",
   remote_name: "dd_50_86",
@@ -215,7 +227,7 @@ japanese_beetle = DegreeDayPest.create!(
 )
 
 lygus_bug = DegreeDayPest.create!(
-  name: "Lygus Bug",
+  name: "Tarnished Plant Bug (Lygus Bug)",
   remote_name: "dd_52_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
@@ -236,6 +248,18 @@ mint_root_borer = DegreeDayPest.create!(
   severity_info: "First moth catch expected around 430 FDD, with peak egg hatch occurring around 1280 FDD. End of risk is approximately 2150 FDD when hibernaculum formation completes.",
   photo: "mint-root-borer.jpg",
   link: "https://en.wikipedia.org/wiki/Fumibotys"
+)
+
+oak_wilt = OakWilt.create!(
+  name: "Oak Wilt vectors",
+  remote_name: "dd_41_none",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 41, t_max: nil,
+  risk_start: 128, risk_peak: 507, risk_end: 1207,
+  info: "Oak Wilt is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 5% beetle flight (128.3 FDD) and remains elevated through 95% beetle flight (2343.5 FDD). Extreme risk occurs during the 25%-75% beetle flight period (215.8-1461.8 FDD). Wounding/pruning/harvesting oaks should be avoided during this period of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection.</p><p><b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
+  severity_info: "Oak Wilt transmission risk begins at 5% beetle flight (128.3 FDD) and remains elevated through 95% beetle flight (2343.5 FDD). Extreme risk occurs during the 25%-75% beetle flight period (215.8-1461.8 FDD). Wounding, pruning, or harvesting oaks should be avoided during this period of elevated risk.",
+  photo: "oak_wilt.png",
+  link: "https://agweather.cals.wisc.edu/thermal_models/oak_wilt"
 )
 
 onion_maggot = DegreeDayPest2.create!(
@@ -264,6 +288,18 @@ seedcorn_maggot = SeedcornMaggot.create!(
   link: "https://vegento.russell.wisc.edu/pests/seedcorn-maggot/"
 )
 
+spotted_wing = DegreeDayPest.create!(
+  name: "Spotted Wing Drosophila",
+  remote_name: "dd_45_86",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 45, t_max: 86,
+  risk_start: 1276, risk_peak: 3180, risk_end: 4000,
+  info: "<p>Spotted wing drosophila (SWD, <i>Drosophila suzukii</i>), is an invasive pest of many of Wisconsin's soft-skinned fruit crops. Since it was first detected in Wisconsin in 2010, SWD has rapidly expanded its range and increased in population density. Unlike many other fruit flies, which can only lay eggs in overripe or rotting fruit, SWD has a serrated ovipositor and can lay eggs directly into economically viable fruit, potentially causing a large proportion of a crop to be unmarketable. SWD targets raspberry, blackberry, strawberry, blueberry, cherry, and other Wisconsin fruit crops.</p><p>SWD eggs and larvae are less than 1/8 inch long and indistinguishable from other fruit flies. An adult female typically lays one to three eggs in each fruit, and during her lifespan will lay up to several hundred eggs. Eggs hatch after 12-72 hours, and larvae feed within the fruit for 5-7 days. Pupation generally takes place outside of the fruit, with the majority of larvae dropping to the ground to pupate in or under leaf litter.</p><p>SWD adults can be distinguished from other fruit flies under at least 10x hand lens magnification. Adults are 1/16 to 1/8 inch long with red eyes and a striped abdomen. Males have a single dark spot near the tip of each wing. Females do not have wing spots but they can be distinguished from other flies based on the two rows of dark, blade-like serrations on the ovipositor.</p><p>At optimal temperatures (68-77F), SWD can complete a generation in 8 to 12 days. Populations build up very quickly given this rapid generational turnover, providing only a short time span from first detection to economically significant damage. For this reason, monitoring and implementation of immediate control measures at the first sign of adult activity is critical.",
+  severity_info: "In Wisconsin, overwintering adult Spotted Wing Drosophila begin egg-laying in mid to late June (around 1276 FDD), and will complete a generation every 8-12 days. Populations peak around 3100 FDD, and will continue to be a threat to soft-skinned fruit through the end of the season.",
+  photo: "swd.png",
+  link: "https://fruit.wisc.edu"
+)
+
 squash_vine_borer = DegreeDayPest.create!(
   name: "Squash Vine Borer",
   remote_name: "dd_50_none",
@@ -284,7 +320,7 @@ stalk_borer = DegreeDayPest.create!(
   risk_start: 1110, risk_peak: 1400, risk_end: 1700,
   info: "<p>Eggs of the common stalk borer (<i>Paipanema nebris</i>), a cutworm relative, are laid in grassy weeds in September. In late May to July, the brown-and-white striped caterpillars migrate into fields and burrow into the stems of tomatoes, potatoes, beans, and other thick-stemmed plants. Once inside the stem, the insect cannot be controlled. Fall grass control will prevent egg laying and is the best control method for common stalk borer.</p>",
   severity_info: "Adult flight begins around 1110 FDD and peaks around 1650 FDD. Control is best between 1400 and 1700 FDD.",
-  photo: "common-stalk-borer.jpg",
+  photo: "common-stalk-borer.png",
   link: "https://vegento.russell.wisc.edu/pests/"
 )
 
@@ -325,30 +361,6 @@ western_flower_thrips = Thrips.create!(
   link: "https://vegento.russell.wisc.edu/pests/onion-thrips/"
 )
 
-aphid_pvy = DegreeDayPest.create!(
-  name: "Aphid PVY Vectors",
-  remote_name: "dd_39p2_86",
-  biofix_mm: 1, biofix_dd: 1,
-  t_min: 39.2, t_max: 86,
-  risk_start: 1967, risk_peak: 2473, risk_end: 3228,
-  info: "<p>Of principal interest to potato seed growers in Wisconsin is the prevention of PVY in seed potato lots. PVY is transmitted by aphid feeding activity and can be prevented in part by the timely application of crop oils, which discourage aphids from probing leaf tissues in search of their preferred host and inadvertently transmitting the virus.</p><p>The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after 14 years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.</p><p>We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin.</p>",
-  severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD. PVY transmission risk is calculated from a combination of several aphid species, the relative abundance of each species in Wisconsin, and the estimated PVY transmission efficiency of each species. Aphid vectors include Soybean aphid, Bird cherry-oat aphid, Green peach aphid, Pea aphid, Corn leaf aphid, and Potato aphid.",
-  photo: "pea-aphid.jpg",
-  link: "https://vegento.russell.wisc.edu/pests/aphids/"
-)
-
-oak_wilt = OakWilt.create!(
-  name: "Oak Wilt vectors",
-  remote_name: "dd_41_none",
-  biofix_mm: 1, biofix_dd: 1,
-  t_min: 41, t_max: nil,
-  risk_start: 128, risk_peak: 507, risk_end: 1207,
-  info: "Oak Wilt is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 5% beetle flight (128.3 FDD) and remains elevated through 95% beetle flight (2343.5 FDD). Extreme risk occurs during the 25%-75% beetle flight period (215.8-1461.8 FDD). Wounding/pruning/harvesting oaks should be avoided during this period of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection.</p><p><b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
-  severity_info: "Oak Wilt transmission risk begins at 5% beetle flight (128.3 FDD) and remains elevated through 95% beetle flight (2343.5 FDD). Extreme risk occurs during the 25%-75% beetle flight period (215.8-1461.8 FDD). Wounding, pruning, or harvesting oaks should be avoided during this period of elevated risk.",
-  photo: "oak_wilt.png",
-  link: "https://agweather.cals.wisc.edu/thermal_models/oak_wilt"
-)
-
 
 ## Crop filters ##
 alfalfa = Crop.create!(name: "Alfalfa")
@@ -363,11 +375,17 @@ bean.pests = [corn_earworm, black_cutworm, western_bean_cutworm, variegated_cutw
 beet = Crop.create!(name: "Beet")
 beet.pests = [cercospora_leaf_spot, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
 
+blackberry = Crop.create!(name: "Blackberry")
+blackberry.pests = [stink_bug, japanese_beetle, spotted_wing]
+
 carrot = Crop.create!(name: "Carrot")
 carrot.pests = [foliar_disease, black_cutworm, western_bean_cutworm, variegated_cutworm]
 
 celery = Crop.create!(name: "Celery")
 celery.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, lygus_bug]
+
+cherry = Crop.create!(name: "Cherry")
+cherry.pests = [spotted_wing]
 
 cole = Crop.create!(name: "Cole Crops")
 cole.pests = [cabbage_looper, flea_beetle_crucifer, imported_cabbageworm, japanese_beetle, cabbage_maggot]
@@ -413,6 +431,9 @@ potato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetl
 
 pumpkin_squash = Crop.create!(name: "Pumpkin and Squash")
 pumpkin_squash.pests = [japanese_beetle, seedcorn_maggot, squash_vine_borer]
+
+raspberry = Crop.create!(name: "Raspberry")
+raspberry.pests = [japanese_beetle, lygus_bug, spotted_wing]
 
 tomato = Crop.create!(name: "Tomato")
 tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
