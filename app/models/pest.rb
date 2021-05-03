@@ -2,20 +2,20 @@ class Pest < ApplicationRecord
   has_many :crop_pests, dependent: :destroy
   has_many :crops, through: :crop_pests
 
-  def severities_from_totals(totals)
+  def severities_from_totals(totals, end_date)
     totals.map do |measurement|
       {
         lat: measurement[:lat],
         long: measurement[:long],
         severity: total_to_severity(
           measurement[:total].to_f,
-          measurement[:freeze]
-        )
+          measurement[:freeze],
+          end_date)
       }
     end
   end
 
-  def total_to_severity(total, freezing)
+  def total_to_severity(total, freezing, end_date)
     return 0
   end
 

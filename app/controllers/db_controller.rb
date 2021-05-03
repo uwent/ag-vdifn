@@ -178,13 +178,13 @@ class DbController < ApplicationController
           start_date: start_date,
           end_date: end_date)
       rescue Exception => e
-        puts e
+        logger.error("DB Controller :: #{e}")
         []
       end
     end
 
     def severities_from_totals(totals)
-      pest.severities_from_totals(totals)
+      pest.severities_from_totals(totals, end_date)
     end
 
     private

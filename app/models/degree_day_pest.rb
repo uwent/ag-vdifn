@@ -1,6 +1,6 @@
 class DegreeDayPest < Pest
 
-  def total_to_severity(total, freezing)
+  def total_to_severity(total, freezing, end_date)
     return 0 if freezing
     return sev_ramp(risk_start, risk_peak, risk_end, total) if total.between?(risk_start, risk_end)
     return 0
