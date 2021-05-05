@@ -14,10 +14,9 @@ class OakWilt < DegreeDayPest
     sev = 4 if total.between?(215.8, 1461.8) # 25-75% emergence
 
     # severity reduction based on time after July 15
-    sev -= 1 if end_date.yday >= 196
+    sev = [2, sev].min if end_date.yday >= 196
     sev -= 1 if end_date.yday >= 203
     sev -= 1 if end_date.yday >= 210
-    sev -= 1 if end_date.yday >= 217
 
     return [0, sev].max
   end
