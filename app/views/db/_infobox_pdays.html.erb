@@ -39,8 +39,8 @@
           <% @weather.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
-              <td><%= convert_temp(day[:min_temp]) %>&deg;<%= temp_symbol() %></td>
-              <td class="odd"><%= convert_temp(day[:max_temp]) %>&deg;<%= temp_symbol() %></td>
+              <td><%= convert_temp(day[:min_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
+              <td class="odd"><%= convert_temp(day[:max_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
               <td><%= day[:value] %></td>
               <td class="odd"><%= day[:cumulative_value] %></td>
             </tr>

@@ -8,6 +8,15 @@ module ApplicationHelper
     end
   end
 
+  # degree-days by default in fahrenheit
+  def convert_dds(dds)
+    if params[:in_fahrenheit]
+      dds.to_f
+    else
+      dds.to_f * 5.0/9.0
+    end
+  end
+
   def temp_symbol()
     if params[:in_fahrenheit]
       "F"

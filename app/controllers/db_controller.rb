@@ -106,7 +106,7 @@ class DbController < ApplicationController
 
   def t_min
     if (!params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit])
-      c_to_f(params[:t_min].to_f)
+      c_to_f(params[:t_min])
     else
       params[:t_min].nil? ? 0 : params[:t_min].to_f
     end
@@ -114,7 +114,7 @@ class DbController < ApplicationController
 
   def t_max
     if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None")
-      c_to_f(params[:t_max].to_f)
+      c_to_f(params[:t_max])
     else
       params[:t_max].nil? || params[:t_max] === "None" ? nil : params[:t_max].to_f
     end
@@ -122,12 +122,12 @@ class DbController < ApplicationController
 
   def c_to_f(temp)
     return 0 if temp.nil?
-    ((temp * 9.0/5.0) + 32).round(1)
+    ((temp.to_f * 9.0/5.0) + 32.0).round(1)
   end
 
   def f_to_c(temp)
     return 0 if temp.nil?
-    ((temp - 32) * 5.0/9.0).round(1)
+    ((temp.to_f - 32.0) * 5.0/9.0).round(1)
   end
 
   def ag_weather_client

@@ -1,20 +1,16 @@
 class FoliarDisease < DsvPest
 
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
-    selected_dates.zip(last_7_days, last_2_days).map do |pair|
+    last_7_days.map do |d|
       {
-        lat: pair[0][:lat],
-        long: pair[0][:long],
-        severity: total_to_severity(
-          pair[0][:total],
-          pair[1][:total],
-          pair[2][:total]
-        )
+        lat: d[:lat],
+        long: d[:long],
+        severity: total_to_severity(d[:total])
       }
     end
   end
 
-  def total_to_severity(selected_dates, last_7_days, last_2_days)
+  def total_to_severity(last_7_days)
     return 4 if last_7_days >= 20
     return 3 if last_7_days >= 15
     return 2 if last_7_days >= 10
