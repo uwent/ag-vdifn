@@ -65,8 +65,8 @@ class DbController < ApplicationController
       pest_link: pest.link,
       biofix: pest.biofix_date,
       end_date_enabled: pest.end_date_enabled,
-      tmin: in_f ? pest.t_min : convert_temp(pest.t_min),
-      tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : convert_temp(pest.t_max))
+      tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
+      tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : f_to_c(pest.t_max))
     }
   end
 
@@ -106,7 +106,7 @@ class DbController < ApplicationController
 
   def t_min
     if (!params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit])
-      convert_to_fahrenheit(params[:t_min].to_f)
+      c_to_f(params[:t_min].to_f)
     else
       params[:t_min].nil? ? 0 : params[:t_min].to_f
     end
@@ -114,18 +114,18 @@ class DbController < ApplicationController
 
   def t_max
     if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None")
-      convert_to_fahrenheit(params[:t_max].to_f)
+      c_to_f(params[:t_max].to_f)
     else
       params[:t_max].nil? || params[:t_max] === "None" ? nil : params[:t_max].to_f
     end
   end
 
-  def convert_to_fahrenheit(temp)
+  def c_to_f(temp)
     return 0 if temp.nil?
-    ((temp * 9.0/5.0) + 32.0).round(1)
+    ((temp * 9.0/5.0) + 32).round(1)
   end
 
-  def convert_temp(temp)
+  def f_to_c(temp)
     return 0 if temp.nil?
     ((temp - 32) * 5.0/9.0).round(1)
   end

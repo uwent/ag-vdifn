@@ -2,9 +2,9 @@ module ApplicationHelper
 
   def convert_temp(temp)
     if params[:in_fahrenheit]
-      (temp.to_f * 9.0/5.0 + 32.0).round(1)
+      temp.to_f * 9.0/5.0 + 32.0
     else
-      temp
+      temp.to_f
     end
   end
 

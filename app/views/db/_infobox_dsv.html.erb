@@ -44,12 +44,12 @@
           <% @weather.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
-              <td><%= convert_temp(day[:avg_temp]) %>&deg;<%= temp_symbol() %></td>
+              <td><%= convert_temp(day[:avg_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
               <td class="odd"><%= day[:hours_hi_rh] %></td>
               <% if day[:hours_hi_rh] == 0 %>
                 <td>-</td>
               <% else %>
-                <td><%= convert_temp(day[:avg_temp_hi_rh].to_f.round(1)) %>&deg;<%= temp_symbol() %></td>
+                <td><%= convert_temp(day[:avg_temp_hi_rh].to_f).round(1) %>&deg;<%= temp_symbol() %></td>
               <% end %>
               <td class="odd"><%= day[:value] %></td>
               <td><%= day[:cumulative_value] %></td>
