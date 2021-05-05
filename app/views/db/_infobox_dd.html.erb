@@ -8,7 +8,7 @@
     <div class="information" style="padding-bottom: 1em;">
       <div>
         <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
-        <br><b>Degree-day total:</b> <%= convert_dds(@weather.inject(0) { |sum, h| sum += h[:value]}).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
+        <br><b>Degree-day total:</b> <%= convert_dds(@weather.last[:cumulative_value]).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
         <% if @weather.size >= 14 %>
           <br><b>14-day average:</b> <%= convert_dds(@weather.last(14).inject(0) { |sum, h| sum += h[:value] } / 14.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
         <% end %>
