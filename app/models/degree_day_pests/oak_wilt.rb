@@ -8,10 +8,10 @@ class OakWilt < DegreeDayPest
 
     # severity based on degree-day
     sev = 0
-    sev = 1 if total.between?(100, 3221) # 0-100% C. truncatus, 0-90% C. sayi
-    sev = 2 if total.between?(231, 2631) # 5-100% C. truncatus, 0-75% C. sayi
-    sev = 3 if total.between?(283, 2172) # 10-95% C. truncatus, 0-50% C. sayi
-    sev = 4 if total.between?(388, 1792) # 25-90% C. truncatus, 0-40% C. sayi
+    sev = 1 if total.between?(50, 3221) # 0-100% C. truncatus, 0-90% C. sayi
+    sev = 2 if total.between?(150, 2631) # 0-100% C. truncatus, 0-75% C. sayi
+    sev = 3 if total.between?(231, 2172) # 5-95% C. truncatus
+    sev = 4 if total.between?(388, 913) # 25-90% C. truncatus
 
     # severity reduction based on time after July 15
     if end_date.yday >= 196
