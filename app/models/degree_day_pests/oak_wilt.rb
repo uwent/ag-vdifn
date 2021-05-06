@@ -5,13 +5,13 @@ class OakWilt < DegreeDayPest
 
   def total_to_severity(total, freezing, end_date)
     return 0 if freezing
-    sev = 0
 
     # severity based on degree-day
-    sev = 1 if total > 50
-    sev = 2 if total.between?(128.3, 2343.5) # 5-95% emergence
-    sev = 3 if total.between?(157.4, 1789.7) # 10-90% emergence
-    sev = 4 if total.between?(215.8, 1461.8) # 25-75% emergence
+    sev = 0
+    sev = 1 if total.between?(100, 3221) # 0-100% C. truncatus, 0-90% C. sayi
+    sev = 2 if total.between?(231, 2631) # 5-100% C. truncatus, 0-75% C. sayi
+    sev = 3 if total.between?(283, 2172) # 10-95% C. truncatus, 0-50% C. sayi
+    sev = 4 if total.between?(388, 1792) # 25-90% C. truncatus, 0-40% C. sayi
 
     # severity reduction based on time after July 15
     if end_date.yday >= 196
