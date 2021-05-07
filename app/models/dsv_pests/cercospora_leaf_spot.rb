@@ -1,20 +1,29 @@
 class CercosporaLeafSpot < DsvPest
 
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
-    selected_dates.zip(last_7_days, last_2_days).map do |pair|
-      {
-        lat: pair[0][:lat],
-        long: pair[0][:long],
-        severity: total_to_severity(
-          pair[0][:total],
-          pair[1][:total],
-          pair[2][:total]
-        )
-      }
+    if last_2_days == []
+      logger.warn("Cercospora Leaf Spot :: No weather data for last 2 days!")
+      last_7_days.map do |point|
+        {
+          lat: point[:lat],
+          long: point[:long],
+          severity: total_to_severity(point[:total], 0)
+        }
+      end
+    elsif last_7_days == []
+      logger.error("Cercospora Leaf Spot :: No weather data for last 7 days!")
+    else
+      last_7_days.zip(last_2_days).map do |pair|
+        {
+          lat: pair[0][:lat],
+          long: pair[0][:long],
+          severity: total_to_severity(pair[0][:total], pair[1][:total])
+        }
+      end
     end
   end
 
-  def total_to_severity(selected_dates, last_7_days, last_2_days)
+  def total_to_severity(last_7_days, last_2_days)
     avg7 = last_7_days / 7
     avg2 = last_2_days / 2
 
