@@ -88,14 +88,14 @@ black_cutworm = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/black-cutworm/"
 )
 
-stink_bug = DegreeDayPest.create!(
+bmsb = DegreeDayPest.create!(
   name: "Brown Marmorated Stink Bug",
-  remote_name: "dd_54_92",
-  biofix_mm: 1, biofix_dd: 1,
-  t_min: 54, t_max: 92,
-  risk_start: 1608, risk_peak: 1734, risk_end: 2022,
+  remote_name: "dd_50_none",
+  biofix_mm: 4, biofix_dd: 15,
+  t_min: 50, t_max: nil,
+  risk_start: 148, risk_peak: 686, risk_end: 3000,
   info: "<p>Adult brown marmorated stink bugs are approximately 1.7 cm (0.67 in) long and about as wide, forming the heraldic shield shape characteristic of bugs in the superfamily Pentatomoidea. They are generally a dark brown when viewed from above, with a creamy white-brown underside. Individual coloration may vary, with some bugs being various shades of red, grey, light brown, copper, or black. The term 'marmorated' means variegated or veined, like marble, which refers to the markings unique to this species, includes alternating light-colored bands on the antennae and alternating dark bands on the thin outer edge of the abdomen. The legs are brown with faint white mottling or banding.</p><p>The nymph stages are black or very dark brown, with red integument between the sclerites. First instar nymphs have no white markings, but second through fifth instar nymphs have black antennae with a single white band. The legs of nymphs are black with varying amounts of white banding. Freshly molted individuals of all stages are pale white with red markings. Eggs are normally laid on the underside of leaves in masses of 28 eggs, and are light green when laid, gradually turning white.</p><p>Like all stink bugs, the glands that produce the defensive chemicals (the 'stink') are located on the underside of the thorax, between the first and second pair of legs.</p>",
-  severity_info: "First generation adults typically develop by around 1608 FDD. Adult feeding is most damaging. Only one generation per year is typical in Wisconsin.",
+  severity_info: "Overwintering adult BMSBs emerge when day length reaches 13.5 hours in the spring (approx. mid-April). Adults will begin laying eggs at around 148 FDDs after spring emergence. Egg hatch occurs at around 686 FDDs. All life stages can damage plants and fruit. Only one generation per year is typical in Wisconsin.",
   photo: "bmsb.jpg",
   link: "https://en.wikipedia.org/wiki/Brown_marmorated_stink_bug"
 )
@@ -375,7 +375,7 @@ beet = Crop.create!(name: "Beet")
 beet.pests = [cercospora_leaf_spot, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
 
 blackberry = Crop.create!(name: "Blackberry")
-blackberry.pests = [stink_bug, japanese_beetle, spotted_wing]
+blackberry.pests = [bmsb, japanese_beetle, spotted_wing]
 
 carrot = Crop.create!(name: "Carrot")
 carrot.pests = [foliar_disease, black_cutworm, western_bean_cutworm, variegated_cutworm]
@@ -390,7 +390,7 @@ cole = Crop.create!(name: "Cole Crops")
 cole.pests = [cabbage_looper, flea_beetle_crucifer, imported_cabbageworm, japanese_beetle, cabbage_maggot]
 
 corn = Crop.create!(name: "Corn (Field and Sweet)")
-corn.pests = [stink_bug, corn_earworm, corn_rootworm, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, seedcorn_maggot, stalk_borer]
+corn.pests = [bmsb, corn_earworm, corn_rootworm, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, seedcorn_maggot, stalk_borer]
 
 cucumber = Crop.create!(name: "Cucumber")
 cucumber.pests = [black_cutworm, western_bean_cutworm, variegated_cutworm, seedcorn_maggot, squash_vine_borer]
