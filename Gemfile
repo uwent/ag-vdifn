@@ -22,7 +22,7 @@ gem 'sdoc', '~> 2.1.0', group: :doc
 group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rspec-rails', '~> 5.0'
-  gem 'webmock', '~> 3.12'
+  gem 'webmock', '~> 3.13'
   gem 'simplecov', '~> 0.21'
   gem 'shoulda-matchers', '~> 4.5'
   gem 'byebug', '~> 11.1'
