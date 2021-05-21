@@ -1,6 +1,6 @@
 <script lang="ts">
   export let click
-  export let text = 'Select'
+  export let text = "Submit"
   export let disabled: boolean = false
 </script>
 

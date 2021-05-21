@@ -22,7 +22,7 @@
   } from '../../store/store'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  const buttonText = 'Submit'
+  // const buttonText = 'Submit'
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
   const _ = require('lodash')
@@ -145,7 +145,6 @@
     {/if}
     <Button
       disabled={submitDisabled || $overlayLoading}
-      text={buttonText}
       click={submit} />
   </ModelParameters>
   {#if $customOverlaySubmitted && $overlayLoading}
