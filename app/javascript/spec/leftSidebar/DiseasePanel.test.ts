@@ -36,7 +36,7 @@ it('sets selectedPanel state to disease panel on mount', () => {
 })
 
 it('should dispatch submit params when button is clicked', () => {
-  const button = getText('Select')
+  const button = getText('Submit')
   fireEvent.click(button)
   expect(get(diseasePanelParams)).toEqual({
     start_date: '2000-10-10',
@@ -47,7 +47,7 @@ it('should dispatch submit params when button is clicked', () => {
 })
 
 it('should update disease panel state', async () => {
-  const button = getText('Select')
+  const button = getText('Submit')
   fireEvent.click(button)
   expect(get(diseasePanelState)).toEqual({ currentAffliction: { name: 'bug' } })
 })

@@ -36,7 +36,7 @@ it('should set selected panel to insect on mount', () => {
 })
 
 it('should update insect panels state when submit button clicked', async () => {
-  const button = getText('Select')
+  const button = getText('Submit')
   await fireEvent.click(button)
 
   expect(get(insectPanelState)).toEqual({
@@ -45,7 +45,7 @@ it('should update insect panels state when submit button clicked', async () => {
 })
 
 it('should dispatch submit params when button is clicked', async () => {
-  const button = getText('Select')
+  const button = getText('Submit')
   await fireEvent.click(button)
   expect(get(insectPanelParams)).toEqual({
     start_date: '2000-10-10',
