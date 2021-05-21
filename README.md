@@ -1,4 +1,5 @@
 # Ag-Vdifn
+[![Circle CI](https://circleci.com/gh/uwent/ag-vdifn.svg?style=svg&circle-token=f8cd109ae0fe656784844b0870aeb501ade6bfa6)](https://circleci.com/gh/uwent/ag-vdifn)
 
 ## Description
 University of Wisconsin Vegetable Disease & Insect Forecasting Network
