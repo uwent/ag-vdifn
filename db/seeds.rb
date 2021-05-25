@@ -2,6 +2,9 @@
 Pest.delete_all
 Crop.delete_all
 
+Pest.connection.execute('ALTER SEQUENCE pests_id_seq RESTART WITH 1')
+Crop.connection.execute('ALTER SEQUENCE crops_id_seq RESTART WITH 1')
+
 ## Foliar diseases ##
 early_blight = EarlyBlight.create!(
   name: "Early Blight (Potato, Tomato)",
