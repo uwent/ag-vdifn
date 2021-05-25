@@ -19,6 +19,14 @@ gem 'webpacker', '~> 5.4.0'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'sdoc', '~> 2.2.0', group: :doc
 
+group :development do
+  gem 'capistrano', '~> 3.16'
+  gem 'capistrano-rbenv', '~> 2.2'
+  gem 'capistrano-rails',   '~> 1.6', require: false
+  gem 'capistrano-bundler', '~> 2.0', require: false
+  gem 'web-console', '~> 4.1'
+end
+
 group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rspec-rails', '~> 5.0'
@@ -28,14 +36,6 @@ group :development, :test do
   gem 'pry-rails', '~> 0.3'
   gem 'ed25519', '~> 1.2'
   gem 'bcrypt_pbkdf', '~> 1.1'
-end
-
-group :development do
-  gem 'capistrano', '~> 3.16'
-  gem 'capistrano-rbenv', '~> 2.2'
-  gem 'capistrano-rails',   '~> 1.6', require: false
-  gem 'capistrano-bundler', '~> 2.0', require: false
-  gem 'web-console', '~> 4.1'
   gem 'guard-rspec', '~> 4.7', require: false
   gem 'spring', '~> 2.1'
   gem 'spring-commands-rspec', '~> 1.0'
