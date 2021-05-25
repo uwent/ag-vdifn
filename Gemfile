@@ -23,7 +23,6 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rspec-rails', '~> 5.0'
   gem 'webmock', '~> 3.13'
-  gem 'simplecov', '~> 0.21'
   gem 'shoulda-matchers', '~> 4.5'
   gem 'byebug', '~> 11.1'
   gem 'pry-rails', '~> 0.3'
@@ -37,6 +36,8 @@ group :development do
   gem 'capistrano-rails',   '~> 1.6', require: false
   gem 'capistrano-bundler', '~> 2.0', require: false
   gem 'web-console', '~> 4.1'
+  gem 'guard-rspec', '~> 4.7', require: false
   gem 'spring', '~> 2.1'
-  gem 'listen', '~> 3.5'
+  gem 'spring-commands-rspec', '~> 1.0'
+  gem 'simplecov', '~> 0.21'
 end
