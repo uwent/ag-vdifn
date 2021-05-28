@@ -99,7 +99,7 @@ class DbController < ApplicationController
 
   def create_any_option(pest_type)
     any_crop = Crop.new(id: 0, name: 'Any')
-    any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name <=> y.name }
+    any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name.to_s <=> y.name.to_s }
     any_crop
   end
 

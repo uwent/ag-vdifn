@@ -2,8 +2,11 @@ class Insect < Pest
 
   def total_to_severity(total, freezing, end_date)
     return 0 if freezing
-    return sev_ramp(risk_start, risk_peak, risk_end, total) if total.between?(risk_start, risk_end)
-    return 0
+    sev = 0
+    risk_array.each do |gen|
+      sev = sev_ramp(gen[0], gen[1], gen[2], total) if total.between?(gen[0], gen[2])
+    end
+    return sev
   end
 
   def severity_legend

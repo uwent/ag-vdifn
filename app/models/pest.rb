@@ -3,13 +3,13 @@ class Pest < ApplicationRecord
   has_many :crops, through: :crop_pests
 
   def severities_from_totals(totals, end_date)
-    totals.map do |measurement|
+    totals.map do |grid|
       {
-        lat: measurement[:lat],
-        long: measurement[:long],
+        lat: grid[:lat],
+        long: grid[:long],
         severity: total_to_severity(
-          measurement[:total].to_f,
-          measurement[:freeze],
+          grid[:total].to_f,
+          grid[:freeze],
           end_date)
       }
     end
@@ -20,7 +20,7 @@ class Pest < ApplicationRecord
   end
 
   def biofix_date
-    Date.new(Date.current.year, biofix_mm, biofix_dd)
+    Date.new(Date.current.year, (biofix_mm || 1), (biofix_dd || 1))
   end
 
   def end_date_enabled
