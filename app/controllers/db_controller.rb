@@ -2,6 +2,13 @@
 class DbController < ApplicationController
 
   def severities
+    if params[:pest_id]
+      pest = Pest.find(params[:pest_id])
+      Rails.logger.info ">> db#severities ==> Pest name: #{pest.local_name}, Type: #{pest.type}, Super: #{pest.class.superclass.name}"
+    else
+      Rails.logger.info ">> db#severities ==> Custom tab"
+    end
+    
     render json: strategy.severities_from_totals(strategy.severities)
   end
 
@@ -83,16 +90,16 @@ class DbController < ApplicationController
   private
 
   def create_crops_for_disease_panel
-    Crop.includes(:pests).references(:pests).all.select {|crop| crop.diseases.count > 0 }
+    Crop.includes(:pests).references(:pests).all.select { |crop| crop.diseases.count > 0 }
   end
 
   def create_crops_for_insect_panel
-    Crop.includes(:pests).references(:pests).all.select {|crop| crop.insects }
+    Crop.includes(:pests).references(:pests).all.select { |crop| crop.insects }
   end
 
   def create_any_option(pest_type)
     any_crop = Crop.new(id: 0, name: 'Any')
-    any_crop.pests = Pest.all.select {|pest| pest.is_a? pest_type }.sort { |x, y| x.name <=> y.name }
+    any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name <=> y.name }
     any_crop
   end
 

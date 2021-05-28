@@ -7,8 +7,9 @@ Crop.connection.execute('ALTER SEQUENCE crops_id_seq RESTART WITH 1')
 
 ## Foliar diseases ##
 early_blight = EarlyBlight.create!(
-  name: "Early Blight (Potato, Tomato)",
-  remote_name: "potato_p_days",
+  name: 'Early Blight (Potato, Tomato)',
+  local_name: 'early-blight',
+  remote_name: 'potato_p_days',
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Early blight</b> is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. Early blight can also be a serious disease on other popular Solanaceous vegetables including eggplants, and peppers. Symptoms of early blight first appear at the base of affected plants, where roughly circular brown spots appear on leaves and stems. As these spots enlarge, concentric rings appear giving the areas a target-like appearance. Often spots have a yellow halo. Eventually multiple spots on a single leaf will merge, leading to extensive destruction of leaf tissue. Early blight can lead to total defoliation of lower leaves and even the death of an infected plant. Early blight is caused by the fungus <i>Alternaria solani</i>, which survives in plant debris or on infected plants. Early blight symptoms typically begin as plant canopies start to close. Denser foliage leads to high humidity and longer periods of leaf wetness that favor the disease. The risk of Early Blight is greatest after the accumulation of 300 physiological days (P-Days) after crop emergence in a season.</p>",
   photo: "tomato-early-blight.jpg",
@@ -16,8 +17,9 @@ early_blight = EarlyBlight.create!(
 )
 
 late_blight = LateBlight.create!(
-  name: "Late Blight (Potato, Tomato)",
-  remote_name: "potato_blight_dsv",
+  name: 'Late Blight (Potato, Tomato)',
+  local_name: 'late-blight',
+  remote_name: 'potato_blight_dsv',
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
   photo: "potato-late-blight.png",
@@ -25,8 +27,9 @@ late_blight = LateBlight.create!(
 )
 
 foliar_disease = FoliarDisease.create!(
-  name: "Foliar Disease (Carrot)",
-  remote_name: "carrot_foliar_dsv",
+  name: 'Foliar Disease (Carrot)',
+  local_name: 'carrot-foliar',
+  remote_name: 'carrot_foliar_dsv',
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Alternaria leaf blight</b>: the seedborne <i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. Disease management includes using certified or heat-treated seed, crop rotation, in-furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
   photo: "carrot-foliar-disease.png",
@@ -34,8 +37,9 @@ foliar_disease = FoliarDisease.create!(
 )
 
 cercospora_leaf_spot = CercosporaLeafSpot.create!(
-  name: "Cercospora Leaf Spot (Beet)",
-  remote_name: "cercospora_div",
+  name: 'Cercospora Leaf Spot (Beet)',
+  local_name: 'cercospora-leaf-spot',
+  remote_name: 'cercospora_div',
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Cercospora leaf spot (CLS)</b> and resultant defoliation is caused by the fungus <i>Cercospora beticola</i> Sacc. and is one of the most damaging diseases of table and sugar beet crops worldwide.  Disease symptoms are initially discrete and necrotic lesions with red to purple margins red table beets. Lesions have gray centers and contain diagnostic fungal structures (pseudostromata). For large scale table beet production, defoliation may lead to challenges with mechanical harvest and crop loss. For fresh market, 'bunched beet' sale, foliar lesions can result in rejection. CLS control in conventional table beet requires preventative fungicide applications. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.</p>",
   link: "https://vegpath.plantpath.wisc.edu/"
@@ -44,7 +48,8 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
 
 ## Insect models ##
 alfalfa_weevil = DegreeDayPest.create!(
-  name: "Alfalfa Weevil",
+  name: 'Alfalfa Weevil',
+  local_name: 'alfalfa-weevil',
   remote_name: 'dd_48_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 48, t_max: nil,
@@ -56,8 +61,9 @@ alfalfa_weevil = DegreeDayPest.create!(
 )
 
 aphid_pvy = DegreeDayPest.create!(
-  name: "Aphid PVY Vectors",
-  remote_name: "dd_39p2_86",
+  name: 'Aphid PVY Vectors',
+  local_name: 'pvy-vectors',
+  remote_name: 'dd_39p2_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_start: 1967, risk_peak: 2473, risk_end: 3228,
@@ -68,8 +74,9 @@ aphid_pvy = DegreeDayPest.create!(
 )
 
 asparagus_beetle = DegreeDayPest.create!(
-  name: "Asparagus Beetle (Common)",
-  remote_name: "dd_50_86",
+  name: 'Asparagus Beetle (Common)',
+  local_name: 'common-asparagus-beetle',
+  remote_name: 'dd_50_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_start: 105, risk_peak: 250, risk_end: 405,
@@ -80,8 +87,9 @@ asparagus_beetle = DegreeDayPest.create!(
 )
 
 black_cutworm = DegreeDayPest.create!(
-  name: "Black Cutworm",
-  remote_name: "dd_50_86",
+  name: 'Black Cutworm',
+  local_name: 'black-cutworm',
+  remote_name: 'dd_50_86',
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 86,
   risk_start: 300, risk_peak: 700, risk_end: 1000,
@@ -92,8 +100,9 @@ black_cutworm = DegreeDayPest.create!(
 )
 
 bmsb = DegreeDayPest.create!(
-  name: "Brown Marmorated Stink Bug",
-  remote_name: "dd_50_none",
+  name: 'Brown Marmorated Stink Bug',
+  local_name: 'bmsb',
+  remote_name: 'dd_50_none',
   biofix_mm: 4, biofix_dd: 15,
   t_min: 50, t_max: nil,
   risk_start: 148, risk_peak: 686, risk_end: 3000,
@@ -104,8 +113,9 @@ bmsb = DegreeDayPest.create!(
 )
 
 cabbage_looper = DegreeDayPest2.create!(
-  name: "Cabbage Looper",
-  remote_name: "dd_50_90",
+  name: 'Cabbage Looper',
+  local_name: 'cabbage-looper',
+  remote_name: 'dd_50_90',
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 90,
   risk_start: 325, risk_peak: 520, risk_end: 750,
@@ -117,8 +127,9 @@ cabbage_looper = DegreeDayPest2.create!(
 )
 
 cabbage_maggot = DegreeDayPest2.create!(
-  name: "Cabbage Maggot",
-  remote_name: "dd_42p8_86",
+  name: 'Cabbage Maggot',
+  local_name: 'cabbage-maggot',
+  remote_name: 'dd_42p8_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 42.8, t_max: 86,
   risk_start: 360, risk_peak: 600, risk_end: 1521,
@@ -130,8 +141,9 @@ cabbage_maggot = DegreeDayPest2.create!(
 )
 
 colorado_potato_beetle = DegreeDayPest2.create!(
-  name: "Colorado Potato Beetle",
-  remote_name: "dd_52_none",
+  name: 'Colorado Potato Beetle',
+  local_name: 'cpb',
+  remote_name: 'dd_52_none',
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 120, risk_peak: 400, risk_end: 675,
@@ -143,8 +155,9 @@ colorado_potato_beetle = DegreeDayPest2.create!(
 )
 
 corn_earworm = DegreeDayPest.create!(
-  name: "Corn Earworm",
-  remote_name: "dd_55_92",
+  name: 'Corn Earworm',
+  local_name: 'corn-earworm',
+  remote_name: 'dd_55_92',
   biofix_mm: 8, biofix_dd: 1,
   t_min: 55, t_max: 92,
   risk_start: 70, risk_peak: 275, risk_end: 440,
@@ -155,8 +168,9 @@ corn_earworm = DegreeDayPest.create!(
 )
 
 corn_rootworm = DegreeDayPest.create!(
-  name: "Corn Rootworm",
-  remote_name: "dd_52_none",
+  name: 'Corn Rootworm',
+  local_name: 'corn-rootworm',
+  remote_name: 'dd_52_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 329, risk_peak: 472, risk_end: 636,
@@ -167,8 +181,9 @@ corn_rootworm = DegreeDayPest.create!(
 )
 
 european_corn_borer = DegreeDayPest2.create!(
-  name: "European Corn Borer",
-  remote_name: "dd_50_86",
+  name: 'European Corn Borer',
+  local_name: 'european-corn-borer',
+  remote_name: 'dd_50_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_start: 550, risk_peak: 740, risk_end: 900,
@@ -180,8 +195,9 @@ european_corn_borer = DegreeDayPest2.create!(
 )
 
 flea_beetle_crucifer = DegreeDayPest2.create!(
-  name: "Flea Beetle (Crucifer)",
-  remote_name: "dd_50_none",
+  name: 'Flea Beetle (Crucifer)',
+  local_name: 'crucifer-flea-beetle',
+  remote_name: 'dd_50_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 820, risk_peak: 965, risk_end: 1155,
@@ -193,8 +209,9 @@ flea_beetle_crucifer = DegreeDayPest2.create!(
 )
 
 flea_beetle_mint = DegreeDayPest.create!(
-  name: "Flea Beetle (Mint)",
-  remote_name: "dd_41_none",
+  name: 'Flea Beetle (Mint)',
+  local_name: 'mint-flea-beetle',
+  remote_name: 'dd_41_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   risk_start: 550, risk_peak: 740, risk_end: 900,
@@ -205,8 +222,9 @@ flea_beetle_mint = DegreeDayPest.create!(
 )
 
 imported_cabbageworm = DegreeDayPest2.create!(
-  name: "Imported Cabbageworm",
-  remote_name: "dd_50_none",
+  name: 'Imported Cabbageworm',
+  local_name: 'imported-cabbageworm',
+  remote_name: 'dd_50_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 150, risk_peak: 240, risk_end: 630,
@@ -218,8 +236,9 @@ imported_cabbageworm = DegreeDayPest2.create!(
 )
 
 japanese_beetle = DegreeDayPest.create!(
-  name: "Japanese Beetle",
-  remote_name: "dd_50_none",
+  name: 'Japanese Beetle',
+  local_name: 'japanese-beetle',
+  remote_name: 'dd_50_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 970, risk_peak: 1600, risk_end: 2150,
@@ -230,8 +249,9 @@ japanese_beetle = DegreeDayPest.create!(
 )
 
 lygus_bug = DegreeDayPest.create!(
-  name: "Tarnished Plant Bug (Lygus Bug)",
-  remote_name: "dd_52_none",
+  name: 'Tarnished Plant Bug (Lygus Bug)',
+  local_name: 'tarnished-plant-bug',
+  remote_name: 'dd_52_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_start: 275, risk_peak: 1000, risk_end: 2000,
@@ -242,8 +262,9 @@ lygus_bug = DegreeDayPest.create!(
 )
 
 mint_root_borer = DegreeDayPest.create!(
-  name: "Mint Root Borer",
-  remote_name: "dd_50_none",
+  name: 'Mint Root Borer',
+  local_name: 'mint-root-borer',
+  remote_name: 'dd_50_none',
   biofix_mm: 4, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 430, risk_peak: 1280, risk_end: 2150,
@@ -254,8 +275,9 @@ mint_root_borer = DegreeDayPest.create!(
 )
 
 oak_wilt = OakWilt.create!(
-  name: "Oak Wilt vectors",
-  remote_name: "dd_41_none",
+  name: 'Oak Wilt vectors',
+  local_name: 'oak-wilt',
+  remote_name: 'dd_41_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   info: "<p><b>Oak Wilt</b> is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 5% <i>C. truncatus</i> beetle flight (231 FDD) and remains elevated through 95% beetle flight (2172 FDD) or July 15, whichever is earlier. Extreme risk occurs during the 10%-90% beetle flight period of <i>C. truncatus</i> (283-1792 FDD). Transmission risk is substantially reduced after July 15 due to reduction in fungal spore abundance and changes in beetle behavior.</p><p>Wounding, pruning, or harvesting oaks should be avoided during periods of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection.</p><p><b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
@@ -265,7 +287,8 @@ oak_wilt = OakWilt.create!(
 )
 
 onion_maggot = DegreeDayPest2.create!(
-  name: "Onion Maggot",
+  name: 'Onion Maggot',
+  local_name: 'onion-maggot',
   remote_name: 'dd_39p2_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
@@ -278,8 +301,9 @@ onion_maggot = DegreeDayPest2.create!(
 )
 
 seedcorn_maggot = SeedcornMaggot.create!(
-  name: "Seedcorn Maggot",
-  remote_name: "dd_39p2_86",
+  name: 'Seedcorn Maggot',
+  local_name: 'seedcorn-maggot',
+  remote_name: 'dd_39p2_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_start: 295, risk_peak: 360, risk_end: 425,
@@ -291,8 +315,9 @@ seedcorn_maggot = SeedcornMaggot.create!(
 )
 
 spotted_wing = DegreeDayPest.create!(
-  name: "Spotted Wing Drosophila",
-  remote_name: "dd_45_86",
+  name: 'Spotted Wing Drosophila',
+  local_name: 'spotted-wing-drosophila',
+  remote_name: 'dd_45_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: 86,
   risk_start: 1276, risk_peak: 3180, risk_end: 4000,
@@ -303,8 +328,9 @@ spotted_wing = DegreeDayPest.create!(
 )
 
 squash_vine_borer = DegreeDayPest.create!(
-  name: "Squash Vine Borer",
-  remote_name: "dd_50_none",
+  name: 'Squash Vine Borer',
+  local_name: 'squash-vine-borer',
+  remote_name: 'dd_50_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 750, risk_peak: 900, risk_end: 1000,
@@ -315,8 +341,9 @@ squash_vine_borer = DegreeDayPest.create!(
 )
 
 stalk_borer = DegreeDayPest.create!(
-  name: "Stalk Borer",
-  remote_name: "dd_41_86",
+  name: 'Stalk Borer',
+  local_name: 'stalk-borer',
+  remote_name: 'dd_41_86',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: 86,
   risk_start: 1110, risk_peak: 1400, risk_end: 1700,
@@ -327,8 +354,9 @@ stalk_borer = DegreeDayPest.create!(
 )
 
 variegated_cutworm = DegreeDayPest.create!(
-  name: "Variegated Cutworm",
-  remote_name: "dd_41_88",
+  name: 'Variegated Cutworm',
+  local_name: 'variegated-cutworm',
+  remote_name: 'dd_41_88',
   biofix_mm: 5, biofix_dd: 1,
   t_min: 41, t_max: 88,
   risk_start: 900, risk_peak: 1450, risk_end: 2100,
@@ -339,8 +367,9 @@ variegated_cutworm = DegreeDayPest.create!(
 )
 
 western_bean_cutworm = DegreeDayPest.create!(
-  name: "Western Bean Cutworm",
-  remote_name: "dd_50_none",
+  name: 'Western Bean Cutworm',
+  local_name: 'western-bean-cutworm',
+  remote_name: 'dd_50_none',
   biofix_mm: 5, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_start: 1320, risk_peak: 1420, risk_end: 1535,
@@ -351,8 +380,9 @@ western_bean_cutworm = DegreeDayPest.create!(
 )
 
 western_flower_thrips = Thrips.create!(
-  name: "Western Flower Thrips",
-  remote_name: "dd_45_none",
+  name: 'Western Flower Thrips',
+  local_name: 'western-flower-thrips',
+  remote_name: 'dd_45_none',
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: nil,
   risk_start: 340, risk_peak: 675, risk_end: 1010,
