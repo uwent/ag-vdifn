@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_170224) do
+ActiveRecord::Schema.define(version: 2021_05_28_225808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,12 +41,8 @@ ActiveRecord::Schema.define(version: 2021_01_13_170224) do
     t.string "link"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "risk_start"
-    t.integer "risk_peak"
-    t.integer "risk_end"
-    t.integer "risk_start2"
-    t.integer "risk_peak2"
-    t.integer "risk_end2"
+    t.string "local_name"
+    t.integer "risk_array", array: true
   end
 
 end

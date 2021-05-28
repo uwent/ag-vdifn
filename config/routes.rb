@@ -16,6 +16,12 @@ Rails.application.routes.draw do
 
   # get 'service-worker.js', to: 'service_worker#index'
 
-  get '/maps', to: "application#index"
+  get '/?model=:local_name', to: "application#index"
+  get '/maps?model=:local_name', to: "application#index"
+
   root to: "application#index"
+
+  # redirect all wayward routes to home
+  get '*path', to: redirect('/')
+
 end

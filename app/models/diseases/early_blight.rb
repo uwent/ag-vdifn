@@ -1,6 +1,6 @@
-class EarlyBlight < DsvPest
+class EarlyBlight < Disease
 
-  def severities_from_totals(selected_dates, last_7_days, last_2_days)
+  def severities_from_totals(selected_dates, last_7_days, last_2_days = nil)
     selected_dates.zip(last_7_days).map do | pair |
       {
         lat: pair[0][:lat],

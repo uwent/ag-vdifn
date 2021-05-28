@@ -1,11 +1,11 @@
-class FoliarDisease < DsvPest
+class FoliarDisease < Disease
 
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
-    last_7_days.map do |d|
+    last_7_days.map do |grid|
       {
-        lat: d[:lat],
-        long: d[:long],
-        severity: total_to_severity(d[:total])
+        lat: grid[:lat],
+        long: grid[:long],
+        severity: total_to_severity(grid[:total])
       }
     end
   end
@@ -29,6 +29,6 @@ class FoliarDisease < DsvPest
   end
 
   def biofix_date
-    7.days.ago.to_date
+    14.days.ago.to_date
   end
 end
