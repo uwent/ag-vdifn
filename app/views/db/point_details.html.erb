@@ -2,7 +2,7 @@
   <%= render 'infobox_pdays' %>
 <% elsif @pest.is_a?(CercosporaLeafSpot) %>
   <%= render 'infobox_div' %>
-<% elsif @pest.is_a?(DsvPest) %>
+<% elsif @pest.is_a?(Disease) %>
   <%= render 'infobox_dsv' %>
 <% else %>
   <%= render 'infobox_dd' %>

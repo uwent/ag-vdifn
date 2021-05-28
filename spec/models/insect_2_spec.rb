@@ -2,8 +2,8 @@ require "spec_helper"
 
 today = Date.today
 
-RSpec.describe DegreeDayPest2, type: :model do
-  pest = DegreeDayPest2.create!(
+RSpec.describe Insect2, type: :model do
+  pest = Insect2.create!(
     name: "bug",
     biofix_mm: 1, biofix_dd: 1,
     risk_start: 100, risk_peak: 200, risk_end: 300,

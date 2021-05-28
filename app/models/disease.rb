@@ -1,0 +1,2 @@
+class Disease < Pest
+end

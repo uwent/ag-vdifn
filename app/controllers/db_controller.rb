@@ -78,12 +78,12 @@ class DbController < ApplicationController
   end
 
   def disease_panel
-    @crops = create_crops_for_disease_panel.unshift(create_any_option(DsvPest))
+    @crops = create_crops_for_disease_panel.unshift(create_any_option(Disease))
     render json: @crops, include: { diseases: { methods: [ :end_date_enabled, :biofix_date] } }
   end
 
   def insect_panel
-    @crops = create_crops_for_insect_panel.unshift(create_any_option(DegreeDayPest))
+    @crops = create_crops_for_insect_panel.unshift(create_any_option(Insect))
     render json: @crops, include: { insects: { methods: [ :end_date_enabled, :biofix_date] } }
   end
 

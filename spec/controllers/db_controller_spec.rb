@@ -22,8 +22,8 @@ RSpec.describe DbController, type: :request do
   describe "GET ==> insect_panel" do
     it "returns success response" do
       crop = Crop.create!(name: "crop")
-      crop.pests << DegreeDayPest.create!(name: "test1", biofix_mm: 1, biofix_dd: 2)
-      crop.pests << DegreeDayPest.create!(name: "test2", biofix_mm: 1, biofix_dd: 2)
+      crop.pests << Insect.create!(name: "test1", biofix_mm: 1, biofix_dd: 2)
+      crop.pests << Insect.create!(name: "test2", biofix_mm: 1, biofix_dd: 2)
 
       get insect_panel_db_index_path
 
@@ -77,8 +77,8 @@ RSpec.describe DbController, type: :request do
   end
 
   describe "POST ==> severities ==> degree_day_pests" do
-    it "returns success response when DegreeDayPest" do
-      pest = DegreeDayPest.create!(
+    it "returns success response when Insect" do
+      pest = Insect.create!(
         risk_start: 100, risk_peak: 200, risk_end: 300
       )
       allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
@@ -87,8 +87,8 @@ RSpec.describe DbController, type: :request do
       expect(response.body).to eq([{lat: 20, long: 40, severity: 4}].to_json)
     end
 
-    it "returns success response when DegreeDayPest2" do
-      pest = DegreeDayPest2.create!(
+    it "returns success response when Insect2" do
+      pest = Insect2.create!(
         risk_start: 100, risk_peak: 200, risk_end: 300,
         risk_start2: 400, risk_peak2: 500, risk_end2: 600
       )
@@ -262,7 +262,7 @@ RSpec.describe DbController, type: :request do
 
   describe "POST ==> severity_legend_info" do
     it "returns success response" do
-      pest = DegreeDayPest.create!
+      pest = Insect.create!
 
       post severity_legend_info_db_index_path, params: { pest_id: pest.id }
 

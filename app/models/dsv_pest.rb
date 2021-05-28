@@ -1,2 +1,0 @@
-class DsvPest < Pest
-end

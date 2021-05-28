@@ -1,4 +1,4 @@
-class SeedcornMaggot < DegreeDayPest
+class SeedcornMaggot < Insect
 
   def total_to_severity(total, freezing, end_date)
     return 0 if freezing

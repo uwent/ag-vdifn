@@ -47,7 +47,7 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
 
 
 ## Insect models ##
-alfalfa_weevil = DegreeDayPest.create!(
+alfalfa_weevil = Insect.create!(
   name: 'Alfalfa Weevil',
   local_name: 'alfalfa-weevil',
   remote_name: 'dd_48_none',
@@ -60,7 +60,7 @@ alfalfa_weevil = DegreeDayPest.create!(
   link: "https://en.wikipedia.org/wiki/Hypera_postica"
 )
 
-aphid_pvy = DegreeDayPest.create!(
+aphid_pvy = Insect.create!(
   name: 'Aphid PVY Vectors',
   local_name: 'pvy-vectors',
   remote_name: 'dd_39p2_86',
@@ -73,7 +73,7 @@ aphid_pvy = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/aphids/"
 )
 
-asparagus_beetle = DegreeDayPest.create!(
+asparagus_beetle = Insect.create!(
   name: 'Asparagus Beetle (Common)',
   local_name: 'common-asparagus-beetle',
   remote_name: 'dd_50_86',
@@ -86,7 +86,7 @@ asparagus_beetle = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/asparagus-beetle/"
 )
 
-black_cutworm = DegreeDayPest.create!(
+black_cutworm = Insect.create!(
   name: 'Black Cutworm',
   local_name: 'black-cutworm',
   remote_name: 'dd_50_86',
@@ -99,7 +99,7 @@ black_cutworm = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/black-cutworm/"
 )
 
-bmsb = DegreeDayPest.create!(
+bmsb = Insect.create!(
   name: 'Brown Marmorated Stink Bug',
   local_name: 'bmsb',
   remote_name: 'dd_50_none',
@@ -112,7 +112,7 @@ bmsb = DegreeDayPest.create!(
   link: "https://en.wikipedia.org/wiki/Brown_marmorated_stink_bug"
 )
 
-cabbage_looper = DegreeDayPest2.create!(
+cabbage_looper = Insect2.create!(
   name: 'Cabbage Looper',
   local_name: 'cabbage-looper',
   remote_name: 'dd_50_90',
@@ -126,7 +126,7 @@ cabbage_looper = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/"
 )
 
-cabbage_maggot = DegreeDayPest2.create!(
+cabbage_maggot = Insect2.create!(
   name: 'Cabbage Maggot',
   local_name: 'cabbage-maggot',
   remote_name: 'dd_42p8_86',
@@ -140,7 +140,7 @@ cabbage_maggot = DegreeDayPest2.create!(
   link: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD. Second generation adult emergence begins around 1880 FDD and peaks around 2120 FDD, with egg-laying occurring from 2270 FDD through 3040 FDD."
 )
 
-colorado_potato_beetle = DegreeDayPest2.create!(
+colorado_potato_beetle = Insect2.create!(
   name: 'Colorado Potato Beetle',
   local_name: 'cpb',
   remote_name: 'dd_52_none',
@@ -154,7 +154,7 @@ colorado_potato_beetle = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
 )
 
-corn_earworm = DegreeDayPest.create!(
+corn_earworm = Insect.create!(
   name: 'Corn Earworm',
   local_name: 'corn-earworm',
   remote_name: 'dd_55_92',
@@ -167,7 +167,7 @@ corn_earworm = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/corn-earworm/"
 )
 
-corn_rootworm = DegreeDayPest.create!(
+corn_rootworm = Insect.create!(
   name: 'Corn Rootworm',
   local_name: 'corn-rootworm',
   remote_name: 'dd_52_none',
@@ -180,7 +180,7 @@ corn_rootworm = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/corn-rootworms/"
 )
 
-european_corn_borer = DegreeDayPest2.create!(
+european_corn_borer = Insect2.create!(
   name: 'European Corn Borer',
   local_name: 'european-corn-borer',
   remote_name: 'dd_50_86',
@@ -194,7 +194,7 @@ european_corn_borer = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/european-corn-borer/"
 )
 
-flea_beetle_crucifer = DegreeDayPest2.create!(
+flea_beetle_crucifer = Insect2.create!(
   name: 'Flea Beetle (Crucifer)',
   local_name: 'crucifer-flea-beetle',
   remote_name: 'dd_50_none',
@@ -208,7 +208,7 @@ flea_beetle_crucifer = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/flea-beetles/"
 )
 
-flea_beetle_mint = DegreeDayPest.create!(
+flea_beetle_mint = Insect.create!(
   name: 'Flea Beetle (Mint)',
   local_name: 'mint-flea-beetle',
   remote_name: 'dd_41_none',
@@ -221,7 +221,7 @@ flea_beetle_mint = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/flea-beetles/"
 )
 
-imported_cabbageworm = DegreeDayPest2.create!(
+imported_cabbageworm = Insect2.create!(
   name: 'Imported Cabbageworm',
   local_name: 'imported-cabbageworm',
   remote_name: 'dd_50_none',
@@ -235,7 +235,7 @@ imported_cabbageworm = DegreeDayPest2.create!(
   link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/"
 )
 
-japanese_beetle = DegreeDayPest.create!(
+japanese_beetle = Insect.create!(
   name: 'Japanese Beetle',
   local_name: 'japanese-beetle',
   remote_name: 'dd_50_none',
@@ -248,7 +248,7 @@ japanese_beetle = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/japanese-beetle/"
 )
 
-lygus_bug = DegreeDayPest.create!(
+lygus_bug = Insect.create!(
   name: 'Tarnished Plant Bug (Lygus Bug)',
   local_name: 'tarnished-plant-bug',
   remote_name: 'dd_52_none',
@@ -261,7 +261,7 @@ lygus_bug = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/"
 )
 
-mint_root_borer = DegreeDayPest.create!(
+mint_root_borer = Insect.create!(
   name: 'Mint Root Borer',
   local_name: 'mint-root-borer',
   remote_name: 'dd_50_none',
@@ -286,7 +286,7 @@ oak_wilt = OakWilt.create!(
   link: "https://agweather.cals.wisc.edu/thermal_models/oak_wilt"
 )
 
-onion_maggot = DegreeDayPest2.create!(
+onion_maggot = Insect2.create!(
   name: 'Onion Maggot',
   local_name: 'onion-maggot',
   remote_name: 'dd_39p2_86',
@@ -314,7 +314,7 @@ seedcorn_maggot = SeedcornMaggot.create!(
   link: "https://vegento.russell.wisc.edu/pests/seedcorn-maggot/"
 )
 
-spotted_wing = DegreeDayPest.create!(
+spotted_wing = Insect.create!(
   name: 'Spotted Wing Drosophila',
   local_name: 'spotted-wing-drosophila',
   remote_name: 'dd_45_86',
@@ -327,7 +327,7 @@ spotted_wing = DegreeDayPest.create!(
   link: "https://fruit.wisc.edu"
 )
 
-squash_vine_borer = DegreeDayPest.create!(
+squash_vine_borer = Insect.create!(
   name: 'Squash Vine Borer',
   local_name: 'squash-vine-borer',
   remote_name: 'dd_50_none',
@@ -340,7 +340,7 @@ squash_vine_borer = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/squash-vine-borer/"
 )
 
-stalk_borer = DegreeDayPest.create!(
+stalk_borer = Insect.create!(
   name: 'Stalk Borer',
   local_name: 'stalk-borer',
   remote_name: 'dd_41_86',
@@ -353,7 +353,7 @@ stalk_borer = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/"
 )
 
-variegated_cutworm = DegreeDayPest.create!(
+variegated_cutworm = Insect.create!(
   name: 'Variegated Cutworm',
   local_name: 'variegated-cutworm',
   remote_name: 'dd_41_88',
@@ -366,7 +366,7 @@ variegated_cutworm = DegreeDayPest.create!(
   link: "https://vegento.russell.wisc.edu/pests/black-cutworm/"
 )
 
-western_bean_cutworm = DegreeDayPest.create!(
+western_bean_cutworm = Insect.create!(
   name: 'Western Bean Cutworm',
   local_name: 'western-bean-cutworm',
   remote_name: 'dd_50_none',

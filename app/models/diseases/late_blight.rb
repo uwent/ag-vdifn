@@ -1,4 +1,4 @@
-class LateBlight < DsvPest
+class LateBlight < Disease
   def severities_from_totals(past_week, season_to_date)
     if past_week.count != season_to_date.count
       logger.error("Late Blight :: past week and season mismatch")

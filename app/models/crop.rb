@@ -3,10 +3,10 @@ class Crop < ApplicationRecord
   has_many :pests,  -> { order "name" }, through: :crop_pests
 
   def diseases
-    pests.select { |p| p.is_a? DsvPest }
+    pests.select { |p| p.is_a? Disease }
   end
 
   def insects
-    pests.select { |p| p.is_a? DegreeDayPest }
+    pests.select { |p| p.is_a? Insect }
   end
 end

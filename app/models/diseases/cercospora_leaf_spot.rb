@@ -1,4 +1,4 @@
-class CercosporaLeafSpot < DsvPest
+class CercosporaLeafSpot < Disease
 
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
     if last_2_days == []

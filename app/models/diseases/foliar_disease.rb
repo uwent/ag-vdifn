@@ -1,4 +1,4 @@
-class FoliarDisease < DsvPest
+class FoliarDisease < Disease
 
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
     last_7_days.map do |d|

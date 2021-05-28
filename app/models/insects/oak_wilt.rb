@@ -1,7 +1,7 @@
 # The oak wilt model tracks the combined abundance of two beetle vectors
 # See Jagemann et al 2018
 
-class OakWilt < DegreeDayPest
+class OakWilt < Insect
 
   def total_to_severity(total, freezing, end_date)
     return 0 if freezing
