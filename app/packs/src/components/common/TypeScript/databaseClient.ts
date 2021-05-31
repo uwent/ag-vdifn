@@ -9,7 +9,7 @@ import {
   CropWithAfflictions,
   CropWithDiseases,
   CropWithInsects,
-} from '../../common/TypeScript/types'
+} from './types'
 import axios from 'axios'
 import DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
