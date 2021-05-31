@@ -11932,10 +11932,10 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-svelte-awesome@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.3.1.tgz#b69cc16048ac3da50afebfc134c71a1ed1bfead0"
-  integrity sha512-n+6u0hMTUHvDR+pBbVghEr7TxA1lLoTE3ZuySteDChNGxpW1GMjN2cm6sZ1yr+868HOzoSS529YG02YuwFpxbw==
+svelte-awesome@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.3.2.tgz#aed33e0b0714565bb0ce925e7c972ea73b70c5a4"
+  integrity sha512-odkwkVSYEARI/4CskjwoI7KIhds1Ui74H1VFAifWuDoczY+JpPeJuBwDqgo8imM7Bd76U+ns7Yf1iQqveHnx5Q==
   dependencies:
     svelte "^3.15.0"
 
