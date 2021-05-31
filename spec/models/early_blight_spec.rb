@@ -2,10 +2,10 @@ require "spec_helper"
 
 RSpec.describe EarlyBlight, type: :model do
 
-  BIOFIX_MM = 2
-  BIOFIX_DD = 15
+  biofix_mm = 2
+  biofix_dd = 15
 
-  pest = EarlyBlight.create!(biofix_mm: BIOFIX_MM, biofix_dd: BIOFIX_DD)
+  pest = EarlyBlight.create!(biofix_mm: biofix_mm, biofix_dd: biofix_dd)
 
   selected_dates = [
     {lat: 1, long: 1, total: rand(500)},
@@ -48,7 +48,7 @@ RSpec.describe EarlyBlight, type: :model do
   end
 
   it "sets biofix date from seeds" do
-    expect(pest.biofix_date).to eq(Date.new(Date.current.year, BIOFIX_MM, BIOFIX_DD))
+    expect(pest.biofix_date).to eq(Date.new(Date.current.year, biofix_mm, biofix_dd))
   end
 
 end
