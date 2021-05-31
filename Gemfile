@@ -16,6 +16,7 @@ gem 'httparty', '~> 0.18.0'
 gem 'pikaday-gem', '~> 1.4.0' # datepicker
 gem 'js-routes', '~> 2.0.3'
 # gem 'webpacker', '~> 5.4.0'
+# gem 'webpacker', '~> 6.0.0.pre.2'
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'sdoc', '~> 2.2.0', group: :doc

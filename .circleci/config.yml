@@ -8,7 +8,6 @@ jobs:
       - image: circleci/ruby:2.7.3-node
         environment:
           RAILS_ENV: test
-          BUNDLER_VERSION: 2.2.10
       - image: circleci/postgres:12.2 # database image
         environment: # environment variables for database
           POSTGRES_USER: postgres
@@ -19,7 +18,7 @@ jobs:
       - checkout
       - run:
           name: Get Bundler
-          command: gem install bundler:2.2.10
+          command: gem install bundler
       - run:
           name: Which bundler?
           command: bundle -v
@@ -56,3 +55,6 @@ jobs:
       - run:
           name: RSpec
           command: bundle exec rspec
+      - run:
+          name: Compile
+          command: rails webpacker:compile

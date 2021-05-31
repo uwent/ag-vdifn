@@ -3,8 +3,8 @@ const railsWebpackEnv = require("../config/webpack/environment");
 
 module.exports = {
   stories: [
-    "../app/javascript/stories/*.stories.mdx",
-    "../app/javascript/stories/*.stories.@(js|jsx|ts|tsx)"
+    "../app/packs/stories/*.stories.mdx",
+    "../app/packs/stories/*.stories.@(js|jsx|ts|tsx)"
   ],
   addons: [
     "@storybook/addon-links",
