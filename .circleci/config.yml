@@ -57,4 +57,4 @@ jobs:
           command: bundle exec rspec
       - run:
           name: Compile
-          command: rails webpacker:compile
+          command: bundle exec rails webpacker:compile
