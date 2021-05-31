@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   def index
     begin
       model = params[:model]
-      Rails.logger.info ">> Application#index ==> Launching with model: #{model}"
+      Rails.logger.debug ">> Application#index ==> Launching with model: #{model}"
       pest = Pest.where(local_name: model).first
       if pest
-        Rails.logger.info ">> Pest found! ID: #{pest.id}, Name: #{pest.name}"
+        Rails.logger.debug ">> Pest found! ID: #{pest.id}, Name: #{pest.name}"
       else
-        Rails.logger.info ">> No matching pest found for model: #{model}"
+        Rails.logger.debug ">> No matching pest found for model: #{model}"
       end
     end
   end

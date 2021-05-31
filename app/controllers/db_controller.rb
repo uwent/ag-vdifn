@@ -4,9 +4,9 @@ class DbController < ApplicationController
   def severities
     if params[:pest_id]
       pest = Pest.find(params[:pest_id])
-      Rails.logger.info ">> db#severities ==> Pest name: #{pest.local_name}, Type: #{pest.type}, Super: #{pest.class.superclass.name}"
+      Rails.logger.debug ">> db#severities ==> Pest name: #{pest.local_name}, Type: #{pest.type}, Super: #{pest.class.superclass.name}"
     else
-      Rails.logger.info ">> db#severities ==> Custom tab"
+      Rails.logger.debug ">> db#severities ==> Custom tab"
     end
     
     render json: strategy.severities_from_totals(strategy.severities)
