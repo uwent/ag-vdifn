@@ -11969,10 +11969,10 @@ svelte-hmr@^0.12.3:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.12.9.tgz#e323b71062a59bf4b73d2d5a7cc80dba256217e1"
   integrity sha512-SGE7Odznj4dqZtUVIWcoPCvZ9gHImxVIIjrz+O3DDSi0j4OaSLim6MRF4UdhlBKeW3glSRc+tXNSKYvM5x+Dyw==
 
-svelte-jester@^1.5.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-1.6.0.tgz#e5b6e7c96ae2a07a4c4d1cd4f5e3647126dc5b75"
-  integrity sha512-P5YlGOzqJvwQu7PfGZf/No2PMwk/g4kNYsWjy60G5k+4VsB5tBR9ipDW4K7zEnzvHMKwmN+wuj7vhaFOW4ZzyQ==
+svelte-jester@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/svelte-jester/-/svelte-jester-1.7.0.tgz#b773e6a3857b3867086f81ea24d94689e5f78aa1"
+  integrity sha512-eWJSmxGXR/jetU+gpuAvrSEZT7PpNxrhV2GoUm/WQUtXFjGJcy6sZTq3kKaUz7q8VddHU1/yt9cxDRxo8IUsLA==
 
 svelte-loader@^3.1.1:
   version "3.1.1"
