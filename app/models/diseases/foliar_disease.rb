@@ -29,6 +29,6 @@ class FoliarDisease < Disease
   end
 
   def biofix_date
-    14.days.ago.to_date
+    Date.today - 14.days
   end
 end
