@@ -1,6 +1,7 @@
 <script lang="ts">
   const moment = require('moment')
   import { onMount, setContext } from 'svelte'
+  import { get } from 'svelte/store'
   import {
     overlayLoading,
     afflictionValue,
@@ -14,15 +15,16 @@
     selectedAffliction,
     PANELS,
   } from '../../store/store'
-  import { get } from 'svelte/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
   import TminMaxDisplay from './TminMaxDisplay.svelte'
   import DatePicker from './DatePicker.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  export let data
+  export let data: any
+  const thisPanel = PANELS.DISEASE
 
+  // TODO: change 'Disease' to thisPanelName
   setContext(panelKey, {
     panelType: 'Disease',
     getCrops: () => data,
@@ -49,7 +51,8 @@
   }
 
   onMount(() => {
-    selectedPanel.set(PANELS.DISEASE)
+    selectedPanel.set(thisPanel)
+    window.history.pushState({}, null, "?panel=" + thisPanel)
     submit()
   })
 </script>
