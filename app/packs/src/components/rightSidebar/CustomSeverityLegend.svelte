@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let gradientMapping
+  export let gradientMapping = []
   let legend = []
 
   // converts color/cutoff gradient into legend

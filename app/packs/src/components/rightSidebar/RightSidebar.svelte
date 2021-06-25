@@ -184,14 +184,11 @@
 
 <div id="right-sidebar" aria-expanded={expanded}>
   {#if $selectedPanel === PANELS.CUSTOM}
-    <CustomSeverityLegend
-      mapMin={$mapMinMapMax.min}
-      mapMax={$mapMinMapMax.max}
-      gradientMapping={gradient} />
+    <CustomSeverityLegend gradientMapping={gradient} />
   {:else}
     {#if $selectedPanel === PANELS.INSECT}
       {#if showModal}
-        <Modal on:close={() => (showModal = false)}>
+        <Modal name="Pest Info" on:close={() => (showModal = false)}>
           {@html $selectedAffliction.info}
         </Modal>
       {/if}

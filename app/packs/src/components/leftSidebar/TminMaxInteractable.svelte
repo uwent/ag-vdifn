@@ -26,7 +26,7 @@
     }
   }
 
-  function convert(event) {
+  function convert(event: any) {
     in_f = event.target.checked
     if (in_f) {
       tMin = c_to_f(tMin)
@@ -37,7 +37,7 @@
     }
   }
 
-  function tMaxToggle(event) {
+  function tMaxToggle(event: any) {
     tMaxDisabled = event.target.checked
     if (tMaxDisabled) {
       valid = true
@@ -46,7 +46,7 @@
     }
   }
 
-  function validateTmin(event) {
+  function validateTmin(event: any) {
     const {
       target,
       target: { value },
@@ -66,7 +66,7 @@
     }
   }
 
-  function validateTmax(event) {
+  function validateTmax(event: any) {
     const {
       target,
       target: { value },
@@ -86,7 +86,7 @@
     }
   }
 
-  function updateTminTmax(tMin, tMax, in_f, tMaxDisabled) {
+  function updateTminTmax(tMin: number, tMax: number, in_f: boolean, tMaxDisabled: boolean) {
     if (tMaxDisabled) {
       tMinTmax.set({
         t_min: tMin,
