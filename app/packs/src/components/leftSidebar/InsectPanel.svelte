@@ -54,9 +54,14 @@
 
   onMount(() => {
     selectedPanel.set(thisPanelName)
-    window.history.pushState({}, null, "?panel=" + thisPanelName)
     submit()
   })
+
+  $: {
+    if ($insectPanelState.currentAffliction) {
+      console.log("Selected model: '" + $insectPanelState.currentAffliction.local_name + "'")
+    }
+  }
 </script>
 
 <div data-testid="insect-panel">

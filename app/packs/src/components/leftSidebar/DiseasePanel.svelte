@@ -52,9 +52,14 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    window.history.pushState({}, null, "?panel=" + thisPanel)
     submit()
   })
+
+  $: {
+    if ($diseasePanelState.currentAffliction) {
+      console.log("Selected model: '" + $diseasePanelState.currentAffliction.local_name + "'")
+    }
+  }
 </script>
 
 <style>

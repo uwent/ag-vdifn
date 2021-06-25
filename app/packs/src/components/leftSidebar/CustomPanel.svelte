@@ -63,7 +63,6 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    window.history.pushState({}, null, "?panel=" + thisPanel)
     submit()
   })
 </script>

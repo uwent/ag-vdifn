@@ -7,7 +7,7 @@
   } from '../../store/store'
   import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
   import Modal from '../common/Modal.svelte'
-  let showModal: boolean = false
+  let showModal = false
   let selectedCropValue: number
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []

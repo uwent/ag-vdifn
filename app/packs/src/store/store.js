@@ -77,6 +77,7 @@ export const customPanelState = writable({
  })
 
 export const selectedPanel = writable('')
+export const selectedModel = writable('')
 
 export const PANELS = {
   INSECT: 'insect',

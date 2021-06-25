@@ -10,20 +10,47 @@
   import Help from './Help.svelte'
   export let diseasePanelData: any
   export let insectPanelData: any
-  let selectedPanel = 'disease'
-  let showHelp = false
   const databaseClient = new DatabaseClient()
   const urlParams = new URLSearchParams(window.location.search)
   const panelNames = ['disease', 'insect', 'custom']
-
+  const defaultPanel = 'disease'
+  let selectedPanel = defaultPanel
+  let showHelp = false
 
   if (panelNames.includes(urlParams.get('panel'))) selectedPanel = urlParams.get('panel')
+
+  function changeTitle(panel: string) {
+    console.log("Current panel: '" + panel + "'")
+    const baseTitle = 'AgVDIFN'
+    let title = baseTitle
+    let query = ""
+    switch (panel) {
+      case defaultPanel:
+        query = "/"
+        break
+      case 'disease':
+        title = baseTitle + ': Disease Models'
+        query = "?panel=" + panel
+        break
+      case 'insect':
+        title = baseTitle + ': Insect Models'
+        query = "?panel=" + panel
+        break
+      case 'custom':
+        title = baseTitle + ': Degree Day Viewer'
+        query = "?panel=" + panel
+        break
+    }
+    document.title = title
+    window.history.replaceState({}, title, query)
+  }
 
   onMount(async () => {
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
-    window.history.pushState({}, null, "?panel=" + selectedPanel)
   })
+
+  $: changeTitle(selectedPanel)
 </script>
 
 <style>
