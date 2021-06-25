@@ -28,7 +28,7 @@ jobs:
             - agvdifn-bundle-v1-
       - run:
           name: Bundle Install
-          command: bundle config set --local path './vendor/bundle' --local deployment 'true' || bundle install
+          command: bundle config set --local path './vendor/bundle' || bundle config set --local deployment 'true' || bundle install
       - save_cache:
           key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
