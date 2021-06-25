@@ -21,15 +21,16 @@ jobs:
           command: gem install bundler
       - run:
           name: Configure Bundler
-          command: bundle config set --local path './vendor/bundle'
-          command: bundle config set --local deployment 'true'
+          command: |
+            bundle config set --local path './vendor/bundle'
+            bundle config set --local deployment 'true'
       - restore_cache:
           keys:
             - agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
             - agvdifn-bundle-v1-
       - run:
           name: Bundle Install
-          command: bundle install
+          command: bundle check || bundle install
       - save_cache:
           key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
