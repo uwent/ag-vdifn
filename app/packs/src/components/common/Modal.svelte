@@ -1,12 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
   import Button from './Button.svelte'
-  export let name
+  export let name: string
 
   const dispatch = createEventDispatcher()
   const close = () => dispatch('close')
 
-  let modal
+  let modal: any
 
   const handle_keydown = (e) => {
     if (e.key === 'Escape') {

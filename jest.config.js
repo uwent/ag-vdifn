@@ -13,6 +13,6 @@ module.exports = {
     },
   setupFilesAfterEnv: ["./app/packs/spec/spec_setup.ts"],
   transformIgnorePatterns: ["node_modules"],
-  testPathIgnorePatterns: ["/node_modules/", "/build/", "/storybook-static/"],
+  testPathIgnorePatterns: ["/node_modules/", "/build/"],
   verbose: true,
 }

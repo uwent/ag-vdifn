@@ -1,6 +1,7 @@
 <script lang="ts">
   const moment = require('moment')
   import { onMount, setContext } from 'svelte'
+  import { get } from 'svelte/store'
   import {
     overlayLoading,
     afflictionValue,
@@ -20,9 +21,10 @@
   import TminMaxDisplay from './TminMaxDisplay.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  import { get } from 'svelte/store'
-  export let data
+  export let data: any
+  const thisPanelName = PANELS.INSECT
 
+  // TODO: change 'Insect' to thisPanelName
   setContext(panelKey, {
     panelType: 'Insect',
     getCrops: () => data,
@@ -51,9 +53,15 @@
   }
 
   onMount(() => {
-    selectedPanel.set(PANELS.INSECT)
+    selectedPanel.set(thisPanelName)
     submit()
   })
+
+  $: {
+    if ($insectPanelState.currentAffliction) {
+      console.log("Selected model: '" + $insectPanelState.currentAffliction.local_name + "'")
+    }
+  }
 </script>
 
 <div data-testid="insect-panel">

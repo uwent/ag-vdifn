@@ -1,13 +1,7 @@
 <script lang="ts">
   const moment = require('moment')
-  export let data
+  const _ = require('lodash')
   import { onMount, setContext } from 'svelte'
-  import ModelParameters from './ModelParameters.svelte'
-  import DatePicker from './DatePicker.svelte'
-  import TminMaxInteractable from './TminMaxInteractable.svelte'
-  import SeverityGradient from './SeverityGradient.svelte'
-  import CustomModelSelection from './CustomModelSelection.svelte'
-  import TminMaxDisplay from './TminMaxDisplay.svelte'
   import {
     customOverlaySubmitted,
     endDate,
@@ -20,13 +14,20 @@
     PANELS,
     customPanelState,
   } from '../../store/store'
+  import ModelParameters from './ModelParameters.svelte'
+  import DatePicker from './DatePicker.svelte'
+  import TminMaxInteractable from './TminMaxInteractable.svelte'
+  import SeverityGradient from './SeverityGradient.svelte'
+  import CustomModelSelection from './CustomModelSelection.svelte'
+  import TminMaxDisplay from './TminMaxDisplay.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  // const buttonText = 'Submit'
+  export let data: any
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
-  const _ = require('lodash')
+  const thisPanel = PANELS.CUSTOM
 
+  // TODO: change 'Custom' to thisPanelName
   setContext(panelKey, {
     panelType: 'Custom',
     getCrops: () => data,
@@ -61,7 +62,7 @@
   }
 
   onMount(() => {
-    selectedPanel.set(PANELS.CUSTOM)
+    selectedPanel.set(thisPanel)
     submit()
   })
 </script>

@@ -20,7 +20,6 @@
 /public/packs
 /public/packs-test
 /node_modules
-/storybook-static
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
