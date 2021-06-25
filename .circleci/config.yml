@@ -8,8 +8,8 @@ jobs:
       - image: circleci/ruby:2.7.3-node
         environment:
           RAILS_ENV: test
-      - image: circleci/postgres:12.2 # database image
-        environment: # environment variables for database
+      - image: circleci/postgres:12.2
+        environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
           POSTGRES_PASSWORD: "password"
@@ -28,7 +28,7 @@ jobs:
             - agvdifn-bundle-v1-
       - run:
           name: Bundle Install
-          command: bundle check --path ./vendor/bundle || bundle install --deployment
+          command: bundle config set --local path './vendor/bundle' --local deployment 'true' || bundle install
       - save_cache:
           key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
