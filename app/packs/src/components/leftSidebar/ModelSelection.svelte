@@ -12,6 +12,7 @@
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
+  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
 
   const { getCrops, getAfflictionName } = getContext(panelKey)
 
@@ -66,7 +67,7 @@
 
   function buildModalImage(photo) {
     if (photo != null) {
-      return `<img src="vdifn/images/${photo}" width="150px" align="left" style="margin-top: 1em; margin-right: 10px;"/>`
+      return `<img src="${productionURL}/images/${photo}" width="150px" align="left" style="margin-top: 1em; margin-right: 10px;"/>`
     } else {
       return ""
     }

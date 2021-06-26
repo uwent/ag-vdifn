@@ -84,3 +84,5 @@ export const PANELS = {
   DISEASE: 'disease',
   CUSTOM: 'custom',
 }
+
+export const mapsAPIKey = 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4'

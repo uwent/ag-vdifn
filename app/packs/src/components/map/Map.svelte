@@ -3,7 +3,7 @@
   import { onMount, setContext } from 'svelte'
   import mapOptions from './TypeScript/mapOptions'
   import Loading from '../common/Loading.svelte'
-  import { mapKey } from '../../store/store'
+  import { mapKey, mapsAPIKey } from '../../store/store'
   import GoogleWrapper from './TypeScript/googleWrapper'
   let container
   let promise
@@ -11,7 +11,7 @@
   let googleInstance: GoogleWrapper
 
   const loader = new Loader({
-    apiKey: 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4',
+    apiKey: mapsAPIKey,
   })
 
   setContext(mapKey, {
@@ -37,7 +37,8 @@
     width: 100%;
     position: absolute;
   }
-  :global(#map-pan-zoom-controls, #map-google-logo) {
+
+  :global(#map-pan-zoom-controls #map-google-logo) {
     left: 335px;
   }
 

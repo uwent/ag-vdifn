@@ -11,6 +11,7 @@
   export let diseasePanelData: any
   export let insectPanelData: any
   const databaseClient = new DatabaseClient()
+  const urlBase = window.location.pathname
   const urlParams = new URLSearchParams(window.location.search)
   const panelNames = ['disease', 'insect', 'custom']
   const defaultPanel = 'disease'
@@ -20,29 +21,29 @@
   if (panelNames.includes(urlParams.get('panel'))) selectedPanel = urlParams.get('panel')
 
   function changeTitle(panel: string) {
+    console.log("Base URL: " + urlBase)
     console.log("Current panel: '" + panel + "'")
     const baseTitle = 'AgVDIFN'
     let title = baseTitle
-    let query = ""
-    switch (panel) {
-      case defaultPanel:
-        query = "/"
-        break
-      case 'disease':
-        title = baseTitle + ': Disease Models'
-        query = "?panel=" + panel
-        break
-      case 'insect':
-        title = baseTitle + ': Insect Models'
-        query = "?panel=" + panel
-        break
-      case 'custom':
-        title = baseTitle + ': Degree Day Viewer'
-        query = "?panel=" + panel
-        break
+    let url = urlBase
+    if (panel != defaultPanel) {
+      switch (panel) {
+        case 'disease':
+          title = baseTitle + ': Disease Models'
+          break
+        case 'insect':
+          title = baseTitle + ': Insect Models'
+          break
+        case 'custom':
+          title = baseTitle + ': Degree Day Viewer'
+          break
+      }
+      url = urlBase + "?panel=" + panel
     }
+    console.log("Setting page title to: " + title)
     document.title = title
-    window.history.replaceState({}, title, query)
+    console.log("Setting URL to: " + url)
+    window.history.replaceState({}, title, url)
   }
 
   onMount(async () => {
