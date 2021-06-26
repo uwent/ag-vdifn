@@ -15,14 +15,17 @@
     insectPanelState,
     selectedAffliction,
   } from '../../store/store'
+  import UrlHelper from './TypeScript/urlHelper'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
   import DatePicker from './DatePicker.svelte'
   import TminMaxDisplay from './TminMaxDisplay.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  export let data: any
+  export let data
   const thisPanelName = PANELS.INSECT
+  const defaultPest = 'alfalfa-weevil'
+  const urlHelper = new UrlHelper()
 
   // TODO: change 'Insect' to thisPanelName
   setContext(panelKey, {
@@ -52,6 +55,12 @@
     })
   }
 
+  function changeTitle(model: string) {
+    const urlBase = window.location.pathname
+    const baseTitle = 'AgVDIFN: Insect Models'
+
+  }
+
   onMount(() => {
     selectedPanel.set(thisPanelName)
     submit()
@@ -59,7 +68,10 @@
 
   $: {
     if ($insectPanelState.currentAffliction) {
-      console.log("Selected model: '" + $insectPanelState.currentAffliction.local_name + "'")
+      console.log("Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
+      let query = urlHelper.setParam('model', $insectPanelState.currentAffliction.local_name, window.location.search)
+      console.log(query)
+      window.history.replaceState({}, document.title, window.location.pathname + query)
     }
   }
 </script>

@@ -11,6 +11,7 @@ export const customOverlaySubmitted = writable(false)
 export const selectedAffliction = writable({
   id: undefined,
   name: undefined,
+  local_name: undefined,
   photo: undefined,
   info: undefined,
   link: undefined,

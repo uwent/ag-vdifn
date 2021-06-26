@@ -8,8 +8,8 @@
   import CustomPanel from './CustomPanel.svelte'
   import Modal from '../common/Modal.svelte'
   import Help from './Help.svelte'
-  export let diseasePanelData: any
-  export let insectPanelData: any
+  export let diseasePanelData
+  export let insectPanelData
   const databaseClient = new DatabaseClient()
   const urlBase = window.location.pathname
   const urlParams = new URLSearchParams(window.location.search)

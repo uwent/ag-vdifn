@@ -12,17 +12,10 @@
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
+  let defaultModelAlias = 'cpb'
+  let defaultModelId: number
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
-
   const { getCrops, getAfflictionName } = getContext(panelKey)
-
-  onMount(() => {
-    crops = getCrops()
-    if (crops.length <= 0) return
-    afflictionsForCrop = crops[0].afflictions
-    afflictionValue.update((_) => afflictionsForCrop[0].id)
-    selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[0].id))
-  })
 
   afflictionName = getAfflictionName()
 
@@ -72,6 +65,27 @@
       return ""
     }
   }
+
+  function getAfflictionId(alias: string) {
+    const affliction = afflictionsForCrop.find((affliction) => {
+      return affliction.local_name === alias
+    })
+    return affliction ? affliction.id : afflictionsForCrop[0].id
+  }
+
+  onMount(() => {
+    crops = getCrops()
+    if (crops.length <= 0) return
+    afflictionsForCrop = crops[0].afflictions
+    defaultModelId = getAfflictionId(defaultModelAlias)
+    console.log("Model selection launching with alias '" + defaultModelAlias + "' and id '" + defaultModelId + "'")
+    // afflictionValue.update((_) => afflictionsForCrop[2].id)
+    afflictionValue.update((_) => defaultModelId)
+    // selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[2].id))
+    selectedAffliction.set(getCurrentAffliction(defaultModelId))
+  })
+
+  $: console.log("Selected model: " + $selectedAffliction.local_name)
 </script>
 
 <style>
@@ -159,7 +173,8 @@
       id="affliction-select"
       name="affliction-select"
       data-testid="affliction-select"
-      title="Select model">
+      title="Select model"
+      value={$afflictionValue}>
       {#each afflictionsForCrop as { id, name }}
         <option value={id} name="affliction_id">{name}</option>
       {/each}

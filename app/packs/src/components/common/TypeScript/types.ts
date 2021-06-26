@@ -75,17 +75,12 @@ export type CropWithAfflictions = {
 export type Pest = {
   id: number
   name: string
+  local_name: string
   biofix_mm: number
-  biofix_dd: 1
+  biofix_dd: number
   end_date_enabled: boolean
   t_max: number
   t_min: number
-  risk_start: number
-  risk_peak: number
-  risk_end: number
-  risk_start2: number
-  risk_peak2: number
-  risk_end2: number
   info: string
   severity_info: string
   photo: string
