@@ -12,8 +12,8 @@ class EarlyBlight < Disease
 
   def total_to_severity(selected_dates, last_7_days)
     if selected_dates >= 300
-      avg = last_7_days / 7
-      return 4 if avg >= 8
+      avg = last_7_days / 7.0
+      return 4 if avg > 8
       return 3 if avg >= 5
       return 2 if avg >= 3
       return 1 if avg >= 1
