@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import {
     panelKey,
     selectedAffliction,
     afflictionValue,
+    afflictionAlias,
   } from '../../store/store'
   import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
   import Modal from '../common/Modal.svelte'
@@ -12,10 +13,12 @@
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
-  let defaultModelAlias = 'cpb'
+  export let defaultModel: string
+  let desiredModel: string
   let defaultModelId: number
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
+  const urlParams = new URLSearchParams(window.location.search)
 
   afflictionName = getAfflictionName()
 
@@ -73,19 +76,37 @@
     return affliction ? affliction.id : afflictionsForCrop[0].id
   }
 
+  function handleUrlParams() {
+    desiredModel = urlParams.get('model')
+    if (desiredModel) {
+      defaultModelId = getAfflictionId(desiredModel)
+    } else {
+      defaultModelId = getAfflictionId(defaultModel)
+    }
+  }
+
   onMount(() => {
     crops = getCrops()
     if (crops.length <= 0) return
     afflictionsForCrop = crops[0].afflictions
-    defaultModelId = getAfflictionId(defaultModelAlias)
-    console.log("Model selection launching with alias '" + defaultModelAlias + "' and id '" + defaultModelId + "'")
-    // afflictionValue.update((_) => afflictionsForCrop[2].id)
+
+    handleUrlParams()
+
+    console.log("Model selection >> Launching with alias '" + defaultModel + "' and id '" + defaultModelId + "'")
+
     afflictionValue.update((_) => defaultModelId)
-    // selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[2].id))
     selectedAffliction.set(getCurrentAffliction(defaultModelId))
   })
 
-  $: console.log("Selected model: " + $selectedAffliction.local_name)
+  onDestroy(() => {
+    urlParams.delete('model')
+  })
+
+  $: {
+    if ($selectedAffliction) {
+      console.log("Model Selection >> Selected model: " + $selectedAffliction.local_name)
+    }
+  }
 </script>
 
 <style>

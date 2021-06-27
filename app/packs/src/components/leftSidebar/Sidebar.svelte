@@ -114,6 +114,11 @@
     margin: -8px 0 0;
     font-size: 0.85em;
   }
+
+  h1 a {
+    color: inherit;
+    text-decoration: inherit;
+  }
 </style>
 
 <div id="sidebar" aria-expanded={expanded}>
@@ -142,8 +147,10 @@
       </a>
     </div>
     <h1>
-      <span>Vegetable Disease &amp;</span>
-      <span>Insect Forecasting Network</span>
+      <a id="home" href={window.location.pathname}>
+        <span>Vegetable Disease &amp;</span>
+        <span>Insect Forecasting Network</span>
+      </a>
     </h1>
   </header>
 

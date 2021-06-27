@@ -47,6 +47,7 @@
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
+      loaded: true,
     }))
     customPanelParams.set({
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
@@ -63,7 +64,7 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    submit()
+    if (!$customPanelState.loaded) submit()
   })
 </script>
 

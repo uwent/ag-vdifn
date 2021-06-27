@@ -4,6 +4,7 @@ import { writable } from 'svelte/store'
 export const startDate = writable('')
 export const endDate = writable('')
 export const afflictionValue = writable()
+export const afflictionAlias = writable('')
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
@@ -62,11 +63,13 @@ export const diseasePanelState = writable({
   currentAffliction: undefined,
   severities: undefined,
   severityParams: undefined,
+  loaded: false,
 })
 export const insectPanelState = writable({
   currentAffliction: undefined,
   severities: undefined,
   severityParams: undefined,
+  loaded: false,
 })
 export const customPanelState = writable({
   severities: undefined,
@@ -75,6 +78,7 @@ export const customPanelState = writable({
   t_min: undefined,
   t_max: undefined,
   in_fahrenheit: undefined,
+  loaded: false,
  })
 
 export const selectedPanel = writable('')
