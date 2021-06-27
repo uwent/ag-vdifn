@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onMount, setContext } from 'svelte'
+  import { onDestroy, onMount, setContext } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -21,10 +21,12 @@
   import DatePicker from './DatePicker.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  export let data: any
+  export let data
+  export let defaultModel = ''
   const thisPanel = PANELS.DISEASE
+  const urlParams = new URLSearchParams(window.location.search)
 
-  // TODO: change 'Disease' to thisPanelName
+  // TODO: change 'Disease' to thisPanel
   setContext(panelKey, {
     panelType: 'Disease',
     getCrops: () => data,
@@ -41,6 +43,7 @@
     diseasePanelState.update((state) => ({
       ...state,
       currentAffliction: get(selectedAffliction),
+      loaded: true,
     }))
     diseasePanelParams.set({
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
@@ -50,14 +53,32 @@
     })
   }
 
+  function updateParams(affliction) {
+    urlParams.set('panel', thisPanel)
+    urlParams.set('model', affliction.local_name)
+    setUrlParams()
+  }
+
+  function setUrlParams() {
+    let newUrl = window.location.pathname + "?" + urlParams.toString()
+    console.log("Disease panel >> Setting url to " + newUrl)
+    window.history.replaceState({}, null, newUrl)
+  }
+
   onMount(() => {
     selectedPanel.set(thisPanel)
-    submit()
+    if (!$diseasePanelState.loaded) submit()
+  })
+
+  onDestroy(() => {
+    // urlParams.delete('model')
+    // setUrlParams()
   })
 
   $: {
     if ($diseasePanelState.currentAffliction) {
-      console.log("Selected model: '" + $diseasePanelState.currentAffliction.local_name + "'")
+      console.log("Disease Panel >> Submitted model: '" + $diseasePanelState.currentAffliction.local_name + "'")
+      updateParams($diseasePanelState.currentAffliction)
     }
   }
 </script>
@@ -70,7 +91,7 @@
 </style>
 
 <div data-testid="disease-panel">
-  <ModelSelection />
+  <ModelSelection defaultModel={defaultModel}/>
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />

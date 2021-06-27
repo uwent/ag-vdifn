@@ -41,6 +41,7 @@ it('should update insect panels state when submit button clicked', async () => {
 
   expect(get(insectPanelState)).toEqual({
     currentAffliction: { name: 'bug', t_min: 42, t_max: null },
+    loaded: true,
   })
 })
 

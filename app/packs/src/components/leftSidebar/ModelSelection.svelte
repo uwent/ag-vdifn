@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import {
     panelKey,
     selectedAffliction,
     afflictionValue,
+    afflictionAlias,
   } from '../../store/store'
   import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
   import Modal from '../common/Modal.svelte'
@@ -12,17 +13,12 @@
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
+  export let defaultModel: string
+  let desiredModel: string
+  let defaultModelId: number
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
-
   const { getCrops, getAfflictionName } = getContext(panelKey)
-
-  onMount(() => {
-    crops = getCrops()
-    if (crops.length <= 0) return
-    afflictionsForCrop = crops[0].afflictions
-    afflictionValue.update((_) => afflictionsForCrop[0].id)
-    selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[0].id))
-  })
+  const urlParams = new URLSearchParams(window.location.search)
 
   afflictionName = getAfflictionName()
 
@@ -70,6 +66,45 @@
       return `<img src="${productionURL}/images/${photo}" width="150px" align="left" style="margin-top: 1em; margin-right: 10px;"/>`
     } else {
       return ""
+    }
+  }
+
+  function getAfflictionId(alias: string) {
+    const affliction = afflictionsForCrop.find((affliction) => {
+      return affliction.local_name === alias
+    })
+    return affliction ? affliction.id : afflictionsForCrop[0].id
+  }
+
+  function handleUrlParams() {
+    desiredModel = urlParams.get('model')
+    if (desiredModel) {
+      defaultModelId = getAfflictionId(desiredModel)
+      console.log("Model selection >> Specified model '" + desiredModel + "' matched to id " + defaultModelId)
+    } else {
+      defaultModelId = getAfflictionId(defaultModel)
+      console.log("Model selection >> No model param specified, choosing default model '" + defaultModel + "'")
+    }
+  }
+
+  onMount(() => {
+    crops = getCrops()
+    if (crops.length <= 0) return
+    afflictionsForCrop = crops[0].afflictions
+
+    handleUrlParams()
+
+    afflictionValue.update((_) => defaultModelId)
+    selectedAffliction.set(getCurrentAffliction(defaultModelId))
+  })
+
+  onDestroy(() => {
+    urlParams.delete('model')
+  })
+
+  $: {
+    if ($selectedAffliction.local_name) {
+      console.log("Model Selection >> Selected model: " + $selectedAffliction.local_name)
     }
   }
 </script>
@@ -159,7 +194,8 @@
       id="affliction-select"
       name="affliction-select"
       data-testid="affliction-select"
-      title="Select model">
+      title="Select model"
+      value={$afflictionValue}>
       {#each afflictionsForCrop as { id, name }}
         <option value={id} name="affliction_id">{name}</option>
       {/each}

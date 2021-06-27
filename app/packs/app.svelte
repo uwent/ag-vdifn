@@ -9,7 +9,7 @@
 </script>
 
 <style global type="scss">
-  @import 'node_modules/balloon-css/src/balloon.scss';
+  @import '../../node_modules/balloon-css/src/balloon.scss';
 
   html,
   body {

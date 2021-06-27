@@ -8,50 +8,69 @@
   import CustomPanel from './CustomPanel.svelte'
   import Modal from '../common/Modal.svelte'
   import Help from './Help.svelte'
-  export let diseasePanelData: any
-  export let insectPanelData: any
+  export let diseasePanelData
+  export let insectPanelData
   const databaseClient = new DatabaseClient()
   const urlBase = window.location.pathname
   const urlParams = new URLSearchParams(window.location.search)
   const panelNames = ['disease', 'insect', 'custom']
   const defaultPanel = 'disease'
+  const defaultDisease = 'late-blight'
+  const defaultInsect = 'cpb'
   let selectedPanel = defaultPanel
+  let queryModel: string
   let showHelp = false
 
   if (panelNames.includes(urlParams.get('panel'))) selectedPanel = urlParams.get('panel')
 
-  function changeTitle(panel: string) {
-    console.log("Base URL: " + urlBase)
-    console.log("Current panel: '" + panel + "'")
+  function handleParams() {
+    if (urlParams.has('panel') || urlParams.has('model')) {
+      let url = urlBase
+      if (panelNames.includes(urlParams.get('panel'))) {
+        selectedPanel = urlParams.get('panel')
+        url += "?panel=" + selectedPanel
+        if (urlParams.has('model')) {
+          queryModel = urlParams.get('model')
+          url += "&model=" + queryModel
+        }
+      }
+      console.log("Interface >> Setting url to " + url)
+      window.history.replaceState({}, null, url)
+    }
+  }
+
+  function handlePanelChange(panel) {
     const baseTitle = 'AgVDIFN'
     let title = baseTitle
-    let url = urlBase
-    if (panel != defaultPanel) {
-      switch (panel) {
-        case 'disease':
-          title = baseTitle + ': Disease Models'
-          break
-        case 'insect':
-          title = baseTitle + ': Insect Models'
-          break
-        case 'custom':
-          title = baseTitle + ': Degree Day Viewer'
-          break
-      }
-      url = urlBase + "?panel=" + panel
+    switch (panel) {
+      // case defaultPanel:
+      //   break
+      case 'disease':
+        title = baseTitle + ': Disease Models'
+        break
+      case 'insect':
+        title = baseTitle + ': Insect Models'
+        break
+      case 'custom':
+        title = baseTitle + ': Degree Day Viewer'
+
+        urlParams.delete('model')
+        break
     }
-    console.log("Setting page title to: " + title)
     document.title = title
-    console.log("Setting URL to: " + url)
-    window.history.replaceState({}, title, url)
+    console.log("Interface >> Setting page title to " + title)
+    window.history.replaceState({}, title, null)
+    urlParams.set('panel', panel)
+    handleParams()
   }
 
   onMount(async () => {
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
+    handleParams()
   })
 
-  $: changeTitle(selectedPanel)
+  $: handlePanelChange(selectedPanel)
 </script>
 
 <style>
@@ -146,9 +165,13 @@
     </fieldset>
     {#if diseasePanelData && insectPanelData}
       {#if selectedPanel === 'disease'}
-        <DiseasePanel data={diseasePanelData} />
+        <DiseasePanel
+          data={diseasePanelData}
+          defaultModel={queryModel ? queryModel : defaultDisease} />
       {:else if selectedPanel === 'insect'}
-        <InsectPanel data={insectPanelData} />
+        <InsectPanel
+          data={insectPanelData}
+          defaultModel={queryModel ? queryModel : defaultInsect} />
       {:else if selectedPanel === 'custom'}
         <CustomPanel data={insectPanelData} />
       {/if}

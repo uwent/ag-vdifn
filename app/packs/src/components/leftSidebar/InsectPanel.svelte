@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onMount, setContext } from 'svelte'
+  import { onDestroy, onMount, setContext } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -21,10 +21,12 @@
   import TminMaxDisplay from './TminMaxDisplay.svelte'
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
-  export let data: any
-  const thisPanelName = PANELS.INSECT
+  export let data
+  export let defaultModel = ''
+  const thisPanel = PANELS.INSECT
+  const urlParams = new URLSearchParams(window.location.search)
 
-  // TODO: change 'Insect' to thisPanelName
+  // TODO: change 'Insect' to thisPanel
   setContext(panelKey, {
     panelType: 'Insect',
     getCrops: () => data,
@@ -41,6 +43,7 @@
     insectPanelState.update((state) => ({
       ...state,
       currentAffliction: get(selectedAffliction),
+      loaded: true,
     }))
     insectPanelParams.set({
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
@@ -52,20 +55,38 @@
     })
   }
 
+  function updateParams(affliction) {
+    urlParams.set('panel', thisPanel)
+    urlParams.set('model', affliction.local_name)
+    setUrlParams()
+  }
+
+  function setUrlParams() {
+    let newUrl = window.location.pathname + "?" + urlParams.toString()
+    console.log("Insect panel >> Setting url to " + newUrl)
+    window.history.replaceState({}, null, newUrl)
+  }
+
   onMount(() => {
-    selectedPanel.set(thisPanelName)
-    submit()
+    selectedPanel.set(thisPanel)
+    if (!$insectPanelState.loaded) submit()
+  })
+
+  onDestroy(() => {
+    // urlParams.delete('model')
+    // setUrlParams()
   })
 
   $: {
     if ($insectPanelState.currentAffliction) {
-      console.log("Selected model: '" + $insectPanelState.currentAffliction.local_name + "'")
+      console.log("Insect Panel >> Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
+      updateParams($insectPanelState.currentAffliction)
     }
   }
 </script>
 
 <div data-testid="insect-panel">
-  <ModelSelection />
+  <ModelSelection defaultModel={defaultModel}/>
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />
