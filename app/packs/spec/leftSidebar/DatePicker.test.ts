@@ -7,8 +7,8 @@ import { tick } from 'svelte'
 
 let startPicker
 let endPicker
-let startTooltip: HTMLElement
-let endTooltip: HTMLElement
+// let startTooltip: HTMLElement
+// let endTooltip: HTMLElement
 let buttonPastWeek: HTMLElement
 let buttonPastMonth: HTMLElement
 let buttonThisYear: HTMLElement
@@ -17,6 +17,7 @@ let buttonDefaults: HTMLElement
 Date.now = jest.fn(() => +new Date('2020-06-01'))
 
 const today = moment.utc().format('YYYY-MM-DD')
+const yesterday = moment.utc().subtract(1, 'day').format('YYYY-MM-DD')
 const lastWeek = moment.utc().subtract(1, 'week').format('YYYY-MM-DD')
 const nextWeek = moment.utc().add(1, 'week').format('YYYY-MM-DD')
 const twoWeeksAgo = moment.utc().subtract(2, 'week').format('YYYY-MM-DD')
@@ -53,9 +54,9 @@ describe('common behavior for all panels', () => {
     expect(endPicker.getAttribute('title')).toEqual('End date')
   })
   
-  it('defaults max of start date and end date to today', () => {
-    expect(startPicker.max).toEqual(today)
-    expect(endPicker.max).toEqual(today)
+  it('defaults max of start date and end date to yesterday', () => {
+    expect(startPicker.max).toEqual(yesterday)
+    expect(endPicker.max).toEqual(yesterday)
   })
 
   it('enforces max date values', async () => {
@@ -79,7 +80,7 @@ describe('common behavior for all panels', () => {
     })
     await tick()
     expect(startPicker.value).toEqual(twoWeeksAgo)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
   })
 
   it('moves start date back when end date passes it', async () => {
@@ -120,27 +121,27 @@ describe('Quick date range buttons', () => {
   it('sets date range to one week on click', async () => {
     await fireEvent.click(buttonPastWeek)
     expect(startPicker.value).toEqual(lastWeek)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
   })
 
   it('sets date range to one month on click', async () => {
     await fireEvent.click(buttonPastMonth)
     expect(startPicker.value).toEqual(lastMonth)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
   })
 
   it('sets date range to current year on click', async () => {
     await fireEvent.click(buttonThisYear)
     expect(startPicker.value).toEqual(startOfYear)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
   })
 
   it('restores default dates on click', async () => {
     await fireEvent.click(buttonThisYear)
     expect(startPicker.value).toEqual(startOfYear)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
     await fireEvent.click(buttonDefaults)
     expect(startPicker.value).toEqual(twoWeeksAgo)
-    expect(endPicker.value).toEqual(today)
+    expect(endPicker.value).toEqual(yesterday)
   })
 })

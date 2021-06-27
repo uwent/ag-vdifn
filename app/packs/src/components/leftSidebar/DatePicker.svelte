@@ -12,7 +12,7 @@
   const moment = require('moment')
   const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey)
 
-  let today: string = moment.utc().format('YYYY-MM-DD')
+  let today: string = moment.utc().subtract(1, 'day').format('YYYY-MM-DD')
   let endDateValue: string = today
   let defaultEndDateValue = endDateValue
   let startDateValue: string = defaultStartDate
