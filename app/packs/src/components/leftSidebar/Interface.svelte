@@ -43,8 +43,8 @@
     const baseTitle = 'AgVDIFN'
     let title = baseTitle
     switch (panel) {
-      case defaultPanel:
-        break
+      // case defaultPanel:
+      //   break
       case 'disease':
         title = baseTitle + ': Disease Models'
         break

@@ -80,8 +80,10 @@
     desiredModel = urlParams.get('model')
     if (desiredModel) {
       defaultModelId = getAfflictionId(desiredModel)
+      console.log("Model selection >> Specified model '" + desiredModel + "' matched to id " + defaultModelId)
     } else {
       defaultModelId = getAfflictionId(defaultModel)
+      console.log("Model selection >> No model param specified, choosing default model '" + defaultModel + "'")
     }
   }
 
@@ -92,8 +94,6 @@
 
     handleUrlParams()
 
-    console.log("Model selection >> Launching with alias '" + defaultModel + "' and id '" + defaultModelId + "'")
-
     afflictionValue.update((_) => defaultModelId)
     selectedAffliction.set(getCurrentAffliction(defaultModelId))
   })
@@ -103,7 +103,7 @@
   })
 
   $: {
-    if ($selectedAffliction) {
+    if ($selectedAffliction.local_name) {
       console.log("Model Selection >> Selected model: " + $selectedAffliction.local_name)
     }
   }
