@@ -49,7 +49,10 @@ it('should dispatch submit params when button is clicked', () => {
 it('should update disease panel state', async () => {
   const button = getText('Submit')
   fireEvent.click(button)
-  expect(get(diseasePanelState)).toEqual({ currentAffliction: { name: 'bug' } })
+  expect(get(diseasePanelState)).toEqual({
+    currentAffliction: { name: 'bug' },
+    loaded: true,
+  })
 })
 
 it('sets context data for child elements', () => {

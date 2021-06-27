@@ -67,6 +67,7 @@ it('updates state on submit', async () => {
     selectedGradient: 1,
     t_max: 2,
     t_min: 1,
+    loaded: true,
   })
 })
 
