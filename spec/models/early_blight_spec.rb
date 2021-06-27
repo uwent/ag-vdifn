@@ -35,10 +35,10 @@ RSpec.describe EarlyBlight, type: :model do
   end
 
   it "renders severity from selected date range when total > 300" do
-    expect(pest.total_to_severity(300, 2 * 7)).to eq(1)
-    expect(pest.total_to_severity(300, 4 * 7)).to eq(2)
-    expect(pest.total_to_severity(300, 6 * 7)).to eq(3)
-    expect(pest.total_to_severity(300, 9 * 7)).to eq(4)
+    expect(pest.total_to_severity(300, 1.8)).to eq(1)
+    expect(pest.total_to_severity(300, 4)).to eq(2)
+    expect(pest.total_to_severity(300, 6.1)).to eq(3)
+    expect(pest.total_to_severity(300, 9.3)).to eq(4)
   end
 
   it "generates severities from weather" do

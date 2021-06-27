@@ -104,11 +104,11 @@ class DbController < ApplicationController
   end
 
   def start_date
-    params[:start_date].blank? ? Date.current - 7.days : Date.parse(params[:start_date])
+    params[:start_date].blank? ? Date.yesterday - 7.days : Date.parse(params[:start_date])
   end
 
   def end_date
-    params[:end_date].blank? ? Date.current : Date.parse(params[:end_date])
+    params[:end_date].blank? ? Date.yesterday : Date.parse(params[:end_date])
   end
 
   def t_min
