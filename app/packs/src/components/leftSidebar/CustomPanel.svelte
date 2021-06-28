@@ -72,8 +72,7 @@
 
   onMount(() => {
     selectedPanel.set('custom')
-    if (!$customPanelState.loaded) submit()
-    updateUrlParams()
+    $customPanelState.loaded ? updateUrlParams() : submit()
   })
 </script>
 

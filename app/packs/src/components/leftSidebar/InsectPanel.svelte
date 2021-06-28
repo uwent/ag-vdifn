@@ -59,6 +59,8 @@
     let title = "AgVDIFN: Insect Models"
     url += "?panel=" + thisPanel
     url += "&model=" + $insectPanelState.currentAffliction.local_name
+    title += " - " + $insectPanelState.currentAffliction.name
+    console.log("Insect panel >> Setting title to " + title)
     console.log("Insect panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
     document.title = title
@@ -66,8 +68,7 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    if (!$insectPanelState.loaded) submit()
-    updateUrlParams()
+    $insectPanelState.loaded ? updateUrlParams() : submit()
   })
 </script>
 

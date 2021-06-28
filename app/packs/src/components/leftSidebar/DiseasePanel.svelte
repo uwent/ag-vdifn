@@ -14,6 +14,7 @@
     diseasePanelState,
     selectedAffliction,
     panelNames,
+    defaults,
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -54,14 +55,15 @@
   }
 
   function updateUrlParams() {
+    let model = $diseasePanelState.currentAffliction
     let url = window.location.pathname
     let title = "AgVDIFN"
-    if (!window.location.search) {
+    if (!window.location.search && model.local_name === defaults.disease) {
       console.log("Disease panel >> Default panel launched, clearing URL")
     } else {
       url += "?panel=" + thisPanel
-      url += "&model=" + $diseasePanelState.currentAffliction.local_name
-      title += ": Disease Models"
+      url += "&model=" + model.local_name
+      title += ": Disease Models - " + model.name
     }
     console.log("Disease panel >> Setting title to " + title)
     console.log("Disease panel >> Setting url to " + url)
@@ -71,8 +73,7 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    if (!$diseasePanelState.loaded) submit()
-    updateUrlParams()
+    $diseasePanelState.loaded ? updateUrlParams() : submit()
   })
 
 </script>

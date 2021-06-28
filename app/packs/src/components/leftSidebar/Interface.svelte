@@ -17,11 +17,9 @@
   const databaseClient = new DatabaseClient()
   const urlParams = new URLSearchParams(window.location.search)
   let panel = defaults.panel
-  let queryModel: string
   let showHelp = false
   let diseaseParams = { model: defaults.disease }
   let insectParams = { model: defaults.insect }
-  let customParams = {}
 
   function parseUrlParams() {
     if (panelNames.all.includes(urlParams.get('panel'))) {
