@@ -11,7 +11,7 @@
     tMinTmax,
     overlayLoading,
     selectedPanel,
-    PANELS,
+    panelNames,
     customPanelState,
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
@@ -25,7 +25,7 @@
   export let data: any
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
-  const thisPanel = PANELS.CUSTOM
+  const thisPanel = panelNames.custom
 
   // TODO: change 'Custom' to thisPanelName
   setContext(panelKey, {

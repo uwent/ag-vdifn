@@ -11,7 +11,8 @@
     tMinTmax,
     insectPanelParams,
     selectedPanel,
-    PANELS,
+    panelNames,
+    defaults,
     insectPanelState,
     selectedAffliction,
   } from '../../store/store'
@@ -22,8 +23,8 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data
-  export let defaultModel = ''
-  const thisPanel = PANELS.INSECT
+  export let defaultModel: string
+  const thisPanel = panelNames.insect
   const urlParams = new URLSearchParams(window.location.search)
 
   // TODO: change 'Insect' to thisPanel
@@ -56,25 +57,16 @@
   }
 
   function updateParams(affliction) {
-    urlParams.set('panel', thisPanel)
-    urlParams.set('model', affliction.local_name)
-    setUrlParams()
-  }
-
-  function setUrlParams() {
-    let newUrl = window.location.pathname + "?" + urlParams.toString()
-    console.log("Insect panel >> Setting url to " + newUrl)
-    window.history.replaceState({}, null, newUrl)
+    let url = window.location.pathname
+    url += "?panel=" + thisPanel
+    url += "&model=" + affliction.local_name
+    console.log("Insect panel >> Setting url to " + url)
+    window.history.replaceState({}, null, url)
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
     if (!$insectPanelState.loaded) submit()
-  })
-
-  onDestroy(() => {
-    // urlParams.delete('model')
-    // setUrlParams()
   })
 
   $: {

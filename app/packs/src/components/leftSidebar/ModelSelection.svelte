@@ -13,8 +13,7 @@
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
   export let defaultModel: string
-  let desiredModel: string
-  let defaultModelId: number
+  let modelId: number
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
   const urlParams = new URLSearchParams(window.location.search)
@@ -76,13 +75,13 @@
   }
 
   function handleUrlParams() {
-    desiredModel = urlParams.get('model')
-    if (desiredModel) {
-      defaultModelId = getAfflictionId(desiredModel)
-      console.log("Model selection >> Specified model '" + desiredModel + "' matched to id " + defaultModelId)
+    const queryModel = urlParams.get('model')
+    if (queryModel) {
+      modelId = getAfflictionId(queryModel)
+      console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
     } else {
-      defaultModelId = getAfflictionId(defaultModel)
-      console.log("Model selection >> No model param specified, choosing default model '" + defaultModel + "'")
+      modelId = getAfflictionId(defaultModel)
+      console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
     }
   }
 
@@ -93,8 +92,8 @@
 
     handleUrlParams()
 
-    afflictionValue.update((_) => defaultModelId)
-    selectedAffliction.set(getCurrentAffliction(defaultModelId))
+    afflictionValue.update((_) => modelId)
+    selectedAffliction.set(getCurrentAffliction(modelId))
   })
 
   onDestroy(() => {

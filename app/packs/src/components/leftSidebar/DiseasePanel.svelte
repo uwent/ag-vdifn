@@ -13,7 +13,8 @@
     selectedPanel,
     diseasePanelState,
     selectedAffliction,
-    PANELS,
+    panelNames,
+    defaults,
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -22,8 +23,8 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data
-  export let defaultModel = ''
-  const thisPanel = PANELS.DISEASE
+  export let defaultModel: string
+  const thisPanel = panelNames.disease
   const urlParams = new URLSearchParams(window.location.search)
 
   // TODO: change 'Disease' to thisPanel
@@ -54,25 +55,20 @@
   }
 
   function updateParams(affliction) {
-    urlParams.set('panel', thisPanel)
-    urlParams.set('model', affliction.local_name)
-    setUrlParams()
-  }
-
-  function setUrlParams() {
-    let newUrl = window.location.pathname + "?" + urlParams.toString()
-    console.log("Disease panel >> Setting url to " + newUrl)
-    window.history.replaceState({}, null, newUrl)
+    let url = window.location.pathname
+    if (!urlParams.has('panel') && affliction.local_name === defaults.disease) {
+      console.log("Disease panel >> Default panel launched with default model, clearing URL")
+    } else {
+      url += "?panel=" + thisPanel
+      url += "&model=" + affliction.local_name
+    }
+    console.log("Disease panel >> Setting url to " + url)
+    window.history.replaceState({}, null, url)
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
     if (!$diseasePanelState.loaded) submit()
-  })
-
-  onDestroy(() => {
-    // urlParams.delete('model')
-    // setUrlParams()
   })
 
   $: {

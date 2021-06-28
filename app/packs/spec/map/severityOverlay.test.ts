@@ -10,7 +10,7 @@ import {
   insectPanelState,
   customPanelState,
   selectedPanel,
-  PANELS,
+  panelNames,
   overlayGradient,
   overlayLoading,
   mapMinMapMax,
@@ -40,7 +40,7 @@ const mockUpdateOverlay = jest.fn()
 const mockUpdateOverlayGradient = jest.fn()
 const mockShowOverlay = jest.fn()
 
-jest.mock('../../src/components/map/overlayHelper')
+jest.mock('../../src/components/map/TypeScript/overlayHelper')
 
 const overlayLoadingSpy = jest.spyOn(overlayLoading, 'set')
 const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, 'set')
@@ -87,7 +87,7 @@ describe('updating overlay for disease panel params', () => {
     diseasePanelParams.set(severityParams)
     expect(mockUpdateOverlay).toHaveBeenCalledWith(
       severityParams,
-      PANELS.DISEASE,
+      panelNames.disease,
     )
   })
 
@@ -111,7 +111,7 @@ describe('updating overlay for insect panel params', () => {
     insectPanelParams.set(severityParams)
     expect(mockUpdateOverlay).toHaveBeenCalledWith(
       severityParams,
-      PANELS.INSECT,
+      panelNames.insect,
     )
   })
 

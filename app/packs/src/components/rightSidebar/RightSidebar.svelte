@@ -2,7 +2,7 @@
   import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
   import {
     selectedPanel,
-    PANELS,
+    panelNames,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
@@ -66,13 +66,13 @@
 
   function swapSeverities(selectedPanel) {
     switch (selectedPanel) {
-      case PANELS.DISEASE:
+      case panelNames.disease:
         currentSeverities = diseaseSeverities
         break
-      case PANELS.INSECT:
+      case panelNames.insect:
         currentSeverities = insectSeverities
         break
-      case PANELS.CUSTOM:
+      case panelNames.custom:
         currentSeverities = []
         break
     }
@@ -183,10 +183,10 @@
 </button>
 
 <div id="right-sidebar" aria-expanded={expanded}>
-  {#if $selectedPanel === PANELS.CUSTOM}
+  {#if $selectedPanel === panelNames.custom}
     <CustomSeverityLegend gradientMapping={gradient} />
   {:else}
-    {#if $selectedPanel === PANELS.INSECT}
+    {#if $selectedPanel === panelNames.insect}
       {#if showModal}
         <Modal name="Pest Info" on:close={() => (showModal = false)}>
           {@html $selectedAffliction.info}
@@ -196,7 +196,7 @@
     <SeverityLegend severities={currentSeverities} />
   {/if}
 
-  {#if $selectedPanel === PANELS.DISEASE}
+  {#if $selectedPanel === panelNames.disease}
     <fieldset id="definitions">
       <legend>Terms</legend>
       <ul>
@@ -249,7 +249,7 @@
     </fieldset>
   {/if}
 
-  {#if $selectedPanel === PANELS.INSECT}
+  {#if $selectedPanel === panelNames.insect}
     <fieldset title="more-info">
       <legend>More Information</legend>
       <p>{severityInfo}</p>

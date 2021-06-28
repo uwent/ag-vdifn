@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { overlayLoading } from '../../store/store'
+  import { overlayLoading, panelNames, defaults } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
   import DatabaseClient from '../common/TypeScript/databaseClient'
@@ -13,20 +13,18 @@
   const databaseClient = new DatabaseClient()
   const urlBase = window.location.pathname
   const urlParams = new URLSearchParams(window.location.search)
-  const panelNames = ['disease', 'insect', 'custom']
-  const defaultPanel = 'disease'
-  const defaultDisease = 'late-blight'
-  const defaultInsect = 'cpb'
-  let selectedPanel = defaultPanel
+  let selectedPanel = defaults.panel
   let queryModel: string
   let showHelp = false
 
-  if (panelNames.includes(urlParams.get('panel'))) selectedPanel = urlParams.get('panel')
+  if (panelNames.all.includes(urlParams.get('panel'))) {
+    selectedPanel = urlParams.get('panel')
+  }
 
   function handleParams() {
     if (urlParams.has('panel') || urlParams.has('model')) {
       let url = urlBase
-      if (panelNames.includes(urlParams.get('panel'))) {
+      if (panelNames.all.includes(urlParams.get('panel'))) {
         selectedPanel = urlParams.get('panel')
         url += "?panel=" + selectedPanel
         if (urlParams.has('model')) {
@@ -34,17 +32,17 @@
           url += "&model=" + queryModel
         }
       }
-      console.log("Interface >> Setting url to " + url)
-      window.history.replaceState({}, null, url)
+    console.log("Interface >> Setting url to " + url)
+    window.history.replaceState({}, null, url)
     }
   }
 
-  function handlePanelChange(panel) {
+  function handlePanelChange() {
     const baseTitle = 'AgVDIFN'
     let title = baseTitle
-    switch (panel) {
-      // case defaultPanel:
-      //   break
+    switch (selectedPanel) {
+      case defaults.panel:
+        if (!urlParams.has('panel')) break
       case 'disease':
         title = baseTitle + ': Disease Models'
         break
@@ -53,15 +51,12 @@
         break
       case 'custom':
         title = baseTitle + ': Degree Day Viewer'
-
-        urlParams.delete('model')
         break
     }
     document.title = title
+    urlParams.set('panel', selectedPanel)
     console.log("Interface >> Setting page title to " + title)
     window.history.replaceState({}, title, null)
-    urlParams.set('panel', panel)
-    handleParams()
   }
 
   onMount(async () => {
@@ -70,7 +65,6 @@
     handleParams()
   })
 
-  $: handlePanelChange(selectedPanel)
 </script>
 
 <style>
@@ -141,7 +135,7 @@
           id="disease"
           value="disease"
           bind:group={selectedPanel}
-          checked={true}
+          on:change={handlePanelChange}
           disabled={$overlayLoading} />
         <label for="disease">Disease</label>
         <input
@@ -150,6 +144,7 @@
           id="insect"
           value="insect" 
           bind:group={selectedPanel}
+          on:change={handlePanelChange}
           disabled={$overlayLoading}/>
         <label for="insect">Insect</label>
         <input
@@ -158,21 +153,22 @@
           id="custom"
           value="custom"
           bind:group={selectedPanel}
+          on:change={handlePanelChange}
           disabled={$overlayLoading}/>
         <label for="custom">Custom</label>
         <button on:click={() => (showHelp = true)}>?</button>
       </div>
     </fieldset>
     {#if diseasePanelData && insectPanelData}
-      {#if selectedPanel === 'disease'}
+      {#if selectedPanel === panelNames.disease}
         <DiseasePanel
           data={diseasePanelData}
-          defaultModel={queryModel ? queryModel : defaultDisease} />
-      {:else if selectedPanel === 'insect'}
+          defaultModel={queryModel ? queryModel : defaults.disease} />
+      {:else if selectedPanel === panelNames.insect}
         <InsectPanel
           data={insectPanelData}
-          defaultModel={queryModel ? queryModel : defaultInsect} />
-      {:else if selectedPanel === 'custom'}
+          defaultModel={queryModel ? queryModel : defaults.insect} />
+      {:else if selectedPanel === panelNames.custom}
         <CustomPanel data={insectPanelData} />
       {/if}
     {:else}
