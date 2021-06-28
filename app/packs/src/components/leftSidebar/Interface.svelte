@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { overlayLoading, panelNames, defaults } from '../../store/store'
+  import {
+    overlayLoading,
+    panelNames,
+    defaults,
+  } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
   import DatabaseClient from '../common/ts/databaseClient'
@@ -11,60 +15,65 @@
   export let diseasePanelData
   export let insectPanelData
   const databaseClient = new DatabaseClient()
-  const urlBase = window.location.pathname
   const urlParams = new URLSearchParams(window.location.search)
-  let selectedPanel = defaults.panel
+  let panel = defaults.panel
   let queryModel: string
   let showHelp = false
 
   if (panelNames.all.includes(urlParams.get('panel'))) {
-    selectedPanel = urlParams.get('panel')
+    panel = urlParams.get('panel')
+  } else {
+    window.history.replaceState({}, null, window.location.pathname)
   }
 
-  function handleParams() {
-    if (urlParams.has('panel') || urlParams.has('model')) {
-      let url = urlBase
-      if (panelNames.all.includes(urlParams.get('panel'))) {
-        selectedPanel = urlParams.get('panel')
-        url += "?panel=" + selectedPanel
-        if (urlParams.has('model')) {
-          queryModel = urlParams.get('model')
-          url += "&model=" + queryModel
-        }
-      }
-    console.log("Interface >> Setting url to " + url)
-    window.history.replaceState({}, null, url)
-    }
+  if (urlParams.has('model')) {
+    queryModel = urlParams.get('model')
   }
 
-  function handlePanelChange() {
-    const baseTitle = 'AgVDIFN'
-    let title = baseTitle
-    switch (selectedPanel) {
-      case defaults.panel:
-        if (!urlParams.has('panel')) break
-      case 'disease':
-        title = baseTitle + ': Disease Models'
-        break
-      case 'insect':
-        title = baseTitle + ': Insect Models'
-        break
-      case 'custom':
-        title = baseTitle + ': Degree Day Viewer'
-        break
-    }
-    document.title = title
-    urlParams.set('panel', selectedPanel)
-    console.log("Interface >> Setting page title to " + title)
-    window.history.replaceState({}, title, null)
-  }
+  // function readParams() {
+  //   if (urlParams.has('panel') || urlParams.has('model')) {
+  //     let url = urlBase
+  //     if (panelNames.all.includes(urlParams.get('panel'))) {
+  //       panel = urlParams.get('panel')
+  //       url += "?panel=" + panel
+  //       if (urlParams.has('model')) {
+  //         queryModel = urlParams.get('model')
+  //         url += "&model=" + queryModel
+  //       }
+  //     }
+  //   console.log("Interface >> Setting url to " + url)
+  //   window.history.replaceState({}, null, url)
+  //   }
+  // }
+
+  // function handlePanelChange(panel) {
+  //   const baseTitle = 'AgVDIFN'
+  //   let title = baseTitle
+  //   let url = window.location.pathname
+  //   switch (panel) {
+  //     case defaults.panel:
+  //       if (!urlParams.has('panel')) break
+  //     case 'disease':
+  //       title = baseTitle + ': Disease Models'
+  //       break
+  //     case 'insect':
+  //       title = baseTitle + ': Insect Models'
+  //       break
+  //     case 'custom':
+  //       title = baseTitle + ': Degree Day Viewer'
+  //       break
+  //   }
+  //   document.title = title
+  //   console.log("Interface >> Setting page title to " + title)
+  //   window.history.replaceState({}, title, null)
+  // }
 
   onMount(async () => {
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
-    handleParams()
   })
 
+  // $: handlePanelChange(panel)
 </script>
 
 <style>
@@ -134,8 +143,7 @@
           type="radio"
           id="disease"
           value="disease"
-          bind:group={selectedPanel}
-          on:change={handlePanelChange}
+          bind:group={panel}
           disabled={$overlayLoading} />
         <label for="disease">Disease</label>
         <input
@@ -143,8 +151,7 @@
           type="radio"
           id="insect"
           value="insect" 
-          bind:group={selectedPanel}
-          on:change={handlePanelChange}
+          bind:group={panel}
           disabled={$overlayLoading}/>
         <label for="insect">Insect</label>
         <input
@@ -152,23 +159,22 @@
           type="radio"
           id="custom"
           value="custom"
-          bind:group={selectedPanel}
-          on:change={handlePanelChange}
+          bind:group={panel}
           disabled={$overlayLoading}/>
         <label for="custom">Custom</label>
         <button on:click={() => (showHelp = true)}>?</button>
       </div>
     </fieldset>
     {#if diseasePanelData && insectPanelData}
-      {#if selectedPanel === panelNames.disease}
+      {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
           defaultModel={queryModel ? queryModel : defaults.disease} />
-      {:else if selectedPanel === panelNames.insect}
+      {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
           defaultModel={queryModel ? queryModel : defaults.insect} />
-      {:else if selectedPanel === panelNames.custom}
+      {:else if panel === 'custom'}
         <CustomPanel data={insectPanelData} />
       {/if}
     {:else}

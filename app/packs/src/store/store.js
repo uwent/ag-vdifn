@@ -82,7 +82,6 @@ export const customPanelState = writable({
  })
 
 export const selectedPanel = writable('')
-export const selectedModel = writable('')
 
 export const mapsAPIKey = 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4'
 

@@ -52,31 +52,36 @@
       pest_id: $afflictionValue,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
+    updateUrlParams()
   }
 
-  function updateParams(affliction) {
+  function updateUrlParams() {
     let url = window.location.pathname
-    if (!urlParams.has('panel') && affliction.local_name === defaults.disease) {
-      console.log("Disease panel >> Default panel launched with default model, clearing URL")
+    let title = "AgVDIFN"
+    if (!window.location.search) {
+      console.log("Disease panel >> Default panel launched, clearing URL")
     } else {
       url += "?panel=" + thisPanel
-      url += "&model=" + affliction.local_name
+      url += "&model=" + $diseasePanelState.currentAffliction.local_name
+      title += ": Disease Models"
     }
+    console.log("Disease panel >> Setting title to " + title)
     console.log("Disease panel >> Setting url to " + url)
-    window.history.replaceState({}, null, url)
+    window.history.replaceState({}, title, url)
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
     if (!$diseasePanelState.loaded) submit()
+    updateUrlParams()
   })
 
-  $: {
-    if ($diseasePanelState.currentAffliction) {
-      console.log("Disease Panel >> Submitted model: '" + $diseasePanelState.currentAffliction.local_name + "'")
-      updateParams($diseasePanelState.currentAffliction)
-    }
-  }
+  // $: {
+  //   if ($diseasePanelState.currentAffliction) {
+  //     console.log("Disease Panel >> Submitted model: '" + $diseasePanelState.currentAffliction.local_name + "'")
+  //     updateParams($diseasePanelState.currentAffliction)
+  //   }
+  // }
 </script>
 
 <style>

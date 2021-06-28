@@ -12,7 +12,6 @@
     insectPanelParams,
     selectedPanel,
     panelNames,
-    defaults,
     insectPanelState,
     selectedAffliction,
   } from '../../store/store'
@@ -25,7 +24,6 @@
   export let data
   export let defaultModel: string
   const thisPanel = panelNames.insect
-  const urlParams = new URLSearchParams(window.location.search)
 
   // TODO: change 'Insect' to thisPanel
   setContext(panelKey, {
@@ -54,27 +52,30 @@
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
+    updateUrlParams()
   }
 
-  function updateParams(affliction) {
+  function updateUrlParams() {
     let url = window.location.pathname
+    let title = "AgVDIFN: Insect Models"
     url += "?panel=" + thisPanel
-    url += "&model=" + affliction.local_name
+    url += "&model=" + $insectPanelState.currentAffliction.local_name
     console.log("Insect panel >> Setting url to " + url)
-    window.history.replaceState({}, null, url)
+    window.history.replaceState({}, title, url)
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
     if (!$insectPanelState.loaded) submit()
+    updateUrlParams()
   })
 
-  $: {
-    if ($insectPanelState.currentAffliction) {
-      console.log("Insect Panel >> Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
-      updateParams($insectPanelState.currentAffliction)
-    }
-  }
+  // $: {
+  //   if ($insectPanelState.currentAffliction) {
+  //     console.log("Insect Panel >> Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
+  //     updateParams($insectPanelState.currentAffliction)
+  //   }
+  // }
 </script>
 
 <div data-testid="insect-panel">

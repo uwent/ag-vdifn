@@ -25,9 +25,7 @@
   export let data: any
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
-  const thisPanel = panelNames.custom
 
-  // TODO: change 'Custom' to thisPanelName
   setContext(panelKey, {
     panelType: 'Custom',
     getCrops: () => data,
@@ -56,15 +54,26 @@
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
+    updateUrlParams()
   }
 
   function handleCustomTminTMax(event) {
     submitDisabled = !event.detail.valid
   }
 
+  function updateUrlParams() {
+    let url = window.location.pathname
+    let title = "AgVDIFN: Degree-day Map Viewer"
+    url += "?panel=custom"
+    console.log("Custom Panel >> Setting page title to " + title)
+    console.log("Custom Panel >> Setting url to " + url)
+    window.history.replaceState({}, title, url)
+  }
+
   onMount(() => {
-    selectedPanel.set(thisPanel)
+    selectedPanel.set('custom')
     if (!$customPanelState.loaded) submit()
+    updateUrlParams()
   })
 </script>
 
