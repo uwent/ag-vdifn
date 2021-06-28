@@ -1,7 +1,6 @@
-import { COLORS } from '../../common/TypeScript/colors'
+import { COLORS } from '../../common/ts/colors'
 
-export default class RectangleOption {
-  severityLevel: number
+export default class DataPoint {
   latitude: number
   longitude: number
   strokeColor: string = COLORS.brightRed
@@ -14,12 +13,7 @@ export default class RectangleOption {
   private latitudeOffset = 0.05
   private longitudeOffset = 0.05
 
-  bounds: {
-    north: number,
-    south: number,
-    east: number,
-    west: number,
-  }
+  bounds: { north: number; south: number; east: number; west: number }
 
   constructor(
     latitude: number,

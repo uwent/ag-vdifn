@@ -1,6 +1,6 @@
 const _ = require('lodash')
-import { SeverityParams, Severity } from '../../common/TypeScript/types'
-import DatabaseClient from '../../common/TypeScript/databaseClient'
+import { SeverityParams, Severity } from '../../common/ts/types'
+import DatabaseClient from '../../common/ts/databaseClient'
 import GoogleWrapper from './googleWrapper'
 import RectangleOption from './rectangleOption'
 import infoWindowLoadingTemplate from './templates/infoWindowLoading'

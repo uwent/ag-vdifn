@@ -1,13 +1,13 @@
-import GoogleWrapper from '../../src/components/map/TypeScript/googleWrapper'
-import ColorHelper from '../../src/components/map/TypeScript/colorHelper'
-import RectangleOption from '../../src/components/map/TypeScript/rectangleOption'
-import infoWindowLoadingTemplate from '../../src/components/map/TypeScript/templates/infoWindowLoading'
-import DatabaseClient from '../../src/components/common/TypeScript/databaseClient'
-import OverlayHelper from '../../src/components/map/TypeScript/overlayHelper'
+import GoogleWrapper from '../../src/components/map/ts/googleWrapper'
+import ColorHelper from '../../src/components/map/ts/colorHelper'
+import RectangleOption from '../../src/components/map/ts/rectangleOption'
+import infoWindowLoadingTemplate from '../../src/components/map/ts/templates/infoWindowLoading'
+import DatabaseClient from '../../src/components/common/ts/databaseClient'
+import OverlayHelper from '../../src/components/map/ts/overlayHelper'
 
-jest.mock('../../src/components/map/TypeScript/googleWrapper')
-jest.mock('../../src/components/map/TypeScript/rectangleOption')
-jest.mock('../../src/components/map/TypeScript/colorHelper')
+jest.mock('../../src/components/map/ts/googleWrapper')
+jest.mock('../../src/components/map/ts/rectangleOption')
+jest.mock('../../src/components/map/ts/colorHelper')
 
 let overlayHelper
 const firstSeverity = { lat: 5, long: 10, level: 10 }

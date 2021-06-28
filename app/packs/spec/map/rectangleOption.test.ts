@@ -1,5 +1,5 @@
-import { COLORS } from '../../src/components/common/TypeScript/colors'
-import RectangleOption from '../../src/components/map/TypeScript/rectangleOption'
+import { COLORS } from '../../src/components/common/ts/colors'
+import RectangleOption from '../../src/components/map/ts/rectangleOption'
 
 const latitude = 41.88
 const longitude = -87.62

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import GradientHelper from './TypeScript/gradientHelper'
-  import ColorHelper from '../../components/map/TypeScript/colorHelper'
+  import GradientHelper from './ts/gradientHelper'
+  import ColorHelper from '../../components/map/ts/colorHelper'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import { mapMinMapMax, threePointGradientState } from '../../store/store'
   import { get } from 'svelte/store'

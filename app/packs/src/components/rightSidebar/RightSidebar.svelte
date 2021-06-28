@@ -1,5 +1,5 @@
 <script lang="ts">
-  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+  import QuestionSvg from '../common/svg/QuestionSvg.svelte'
   import {
     selectedPanel,
     panelNames,
@@ -9,8 +9,8 @@
     mapMinMapMax,
     selectedAffliction,
   } from '../../store/store'
-  import { SeverityParams } from '../common/TypeScript/types'
-  import DatabaseClient from '../common/TypeScript/databaseClient'
+  import { SeverityParams } from '../common/ts/types'
+  import DatabaseClient from '../common/ts/databaseClient'
   import { onDestroy } from 'svelte'
   import SeverityLegend from './SeverityLegend.svelte'
   import CustomSeverityLegend from './CustomSeverityLegend.svelte'

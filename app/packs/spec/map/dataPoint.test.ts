@@ -1,5 +1,5 @@
-import { COLORS } from '../../src/components/common/TypeScript/colors'
-import DataPoint from '../../src/components/map/TypeScript/dataPoint'
+import { COLORS } from '../../src/components/common/ts/colors'
+import DataPoint from '../../src/components/map/ts/dataPoint'
 
 const latitude = 41.88
 const longitude = -87.62

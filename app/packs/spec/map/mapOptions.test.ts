@@ -1,4 +1,4 @@
-import MapOptions from '../../src/components/map/TypeScript/mapOptions'
+import MapOptions from '../../src/components/map/ts/mapOptions'
 it('returns map options object', () => {
   expect(MapOptions).toEqual({
     center: {

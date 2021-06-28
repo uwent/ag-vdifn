@@ -17,8 +17,8 @@
     threePointGradientState,
     customOverlaySubmitted,
   } from '../../store/store'
-  import OverlayHelper from './TypeScript/overlayHelper'
-  import { SeverityParams } from '../common/TypeScript/types'
+  import OverlayHelper from './ts/overlayHelper'
+  import { SeverityParams } from '../common/ts/types'
   import { get } from 'svelte/store'
 
   const { getMap, getGoogle } = getContext(mapKey)

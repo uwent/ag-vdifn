@@ -3,7 +3,7 @@
   import { overlayLoading, panelNames, defaults } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
-  import DatabaseClient from '../common/TypeScript/databaseClient'
+  import DatabaseClient from '../common/ts/databaseClient'
   import Loading from '../common/Loading.svelte'
   import CustomPanel from './CustomPanel.svelte'
   import Modal from '../common/Modal.svelte'

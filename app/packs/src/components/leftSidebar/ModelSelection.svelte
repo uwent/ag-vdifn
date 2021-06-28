@@ -5,7 +5,7 @@
     selectedAffliction,
     afflictionValue,
   } from '../../store/store'
-  import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
+  import { CropWithAfflictions, Pest } from '../common/ts/types'
   import Modal from '../common/Modal.svelte'
   let showModal = false
   let selectedCropValue: number

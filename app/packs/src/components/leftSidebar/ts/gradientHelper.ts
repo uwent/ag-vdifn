@@ -1,5 +1,5 @@
 import _ from "lodash"
-import ColorHelper from "../../map/TypeScript/colorHelper";
+import ColorHelper from "../../map/ts/colorHelper"
 
 export default class GradientHelper {
 

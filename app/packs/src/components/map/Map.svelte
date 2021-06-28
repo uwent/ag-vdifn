@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Loader } from '@googlemaps/js-api-loader'
   import { onMount, setContext } from 'svelte'
-  import mapOptions from './TypeScript/mapOptions'
+  import mapOptions from './ts/mapOptions'
   import Loading from '../common/Loading.svelte'
   import { mapKey, mapsAPIKey } from '../../store/store'
-  import GoogleWrapper from './TypeScript/googleWrapper'
+  import GoogleWrapper from './ts/googleWrapper'
   let container: any
   let promise: any
   let map: any

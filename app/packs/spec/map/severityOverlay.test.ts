@@ -15,8 +15,8 @@ import {
   overlayLoading,
   mapMinMapMax,
 } from '../../src/store/store'
-import OverlayHelper from '../../src/components/map/TypeScript/overlayHelper'
-import { Severity } from '../../src/components/common/TypeScript/types'
+import OverlayHelper from '../../src/components/map/ts/overlayHelper'
+import { Severity } from '../../src/components/common/ts/types'
 import { get } from 'svelte/store'
 
 const severityParams = {
@@ -40,7 +40,7 @@ const mockUpdateOverlay = jest.fn()
 const mockUpdateOverlayGradient = jest.fn()
 const mockShowOverlay = jest.fn()
 
-jest.mock('../../src/components/map/TypeScript/overlayHelper')
+jest.mock('../../src/components/map/ts/overlayHelper')
 
 const overlayLoadingSpy = jest.spyOn(overlayLoading, 'set')
 const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, 'set')

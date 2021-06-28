@@ -1,4 +1,4 @@
-import { COLORS } from '../../common/TypeScript/colors'
+import { COLORS } from '../../common/ts/colors'
 import chroma from 'chroma-js'
 
 export default class ColorHelper {

@@ -1,9 +1,9 @@
-import DatabaseClient from "../../src/components/common/TypeScript/databaseClient"
+import DatabaseClient from "../../src/components/common/ts/databaseClient"
 import {
   PointDetailsParams,
   SeverityParams,
   // StationDetailsParams,
-} from "../../src/components/common/TypeScript/types"
+} from "../../src/components/common/ts/types"
 
 describe("fetchSeverities", () => {
   it("calls correct url and returns data", async () => {
