@@ -17,7 +17,7 @@
     threePointGradientState,
     customOverlaySubmitted,
   } from '../../store/store'
-  import OverlayHelper from './overlayHelper'
+  import OverlayHelper from './TypeScript/overlayHelper'
   import { SeverityParams } from '../common/TypeScript/types'
   import { get } from 'svelte/store'
 

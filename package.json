@@ -27,6 +27,7 @@
     "turbolinks": "^5.2.0"
   },
   "scripts": {
+    "lint": "eslint ./app/**/*{.ts,.tsx,.svelte}",
     "svelte-check": "svelte-check",
     "test": "jest",
     "test-watch": "jest --watch"
@@ -42,8 +43,13 @@
     "@types/jest": "^26.0.22",
     "@types/lodash": "^4.14.170",
     "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
     "@webpack-cli/serve": "^1.5.1",
     "babel-loader": "^8.2.2",
+    "eslint": "^7.29.0",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-svelte3": "^3.2.0",
     "fork-ts-checker-webpack-plugin": "^6.2.12",
     "jest": "^26.6.3",
     "jest-google-maps-mock": "^1.0.7",

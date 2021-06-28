@@ -3,24 +3,24 @@ import ColorHelper from '../../src/components/map/TypeScript/colorHelper'
 import RectangleOption from '../../src/components/map/TypeScript/rectangleOption'
 import infoWindowLoadingTemplate from '../../src/components/map/TypeScript/templates/infoWindowLoading'
 import DatabaseClient from '../../src/components/common/TypeScript/databaseClient'
-import OverlayHelper from '../../src/components/map/overlayHelper'
+import OverlayHelper from '../../src/components/map/TypeScript/overlayHelper'
 
 jest.mock('../../src/components/map/TypeScript/googleWrapper')
 jest.mock('../../src/components/map/TypeScript/rectangleOption')
 jest.mock('../../src/components/map/TypeScript/colorHelper')
 
 let overlayHelper
-let firstSeverity = { lat: 5, long: 10, level: 10 }
-let secondSeverity = { lat: 50, long: 60, level: 5 }
-let severityResults = [firstSeverity, secondSeverity]
-let googleWrapper = new GoogleWrapper({})
-let map = {}
-let severityParams = {
+const firstSeverity = { lat: 5, long: 10, level: 10 }
+const secondSeverity = { lat: 50, long: 60, level: 5 }
+const severityResults = [firstSeverity, secondSeverity]
+const googleWrapper = new GoogleWrapper({})
+const map = {}
+const severityParams = {
   start_date: '2020-10-10',
   end_date: '2020-10-11',
   pest_id: 2,
 }
-let panelType = 'Disease'
+const panelType = 'Disease'
 
 beforeEach(() => {
   overlayHelper = new OverlayHelper(googleWrapper, map)

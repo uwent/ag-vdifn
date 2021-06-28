@@ -5,9 +5,9 @@
   import Loading from '../common/Loading.svelte'
   import { mapKey, mapsAPIKey } from '../../store/store'
   import GoogleWrapper from './TypeScript/googleWrapper'
-  let container
-  let promise
-  let map
+  let container: any
+  let promise: any
+  let map: any
   let googleInstance: GoogleWrapper
 
   const loader = new Loader({

@@ -5,16 +5,21 @@ export default class RectangleOption {
   latitude: number
   longitude: number
   strokeColor: string = COLORS.brightRed
-  strokeOpacity: number = 1.0
-  strokeWeight: number = 0.05
+  strokeOpacity = 1.0
+  strokeWeight = 0.05
   fillColor: string
-  fillOpacity: number = 0.25
+  fillOpacity = 0.25
   map: any
 
-  private latitudeOffset: number = 0.05
-  private longitudeOffset: number = 0.05
+  private latitudeOffset = 0.05
+  private longitudeOffset = 0.05
 
-  bounds: { north: number; south: number; east: number; west: number }
+  bounds: {
+    north: number,
+    south: number,
+    east: number,
+    west: number,
+  }
 
   constructor(
     latitude: number,

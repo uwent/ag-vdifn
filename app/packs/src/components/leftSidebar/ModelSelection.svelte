@@ -4,7 +4,6 @@
     panelKey,
     selectedAffliction,
     afflictionValue,
-    afflictionAlias,
   } from '../../store/store'
   import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
   import Modal from '../common/Modal.svelte'

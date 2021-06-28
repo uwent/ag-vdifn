@@ -1,12 +1,12 @@
 import { COLORS } from '../../src/components/common/TypeScript/colors'
 import DataPoint from '../../src/components/map/TypeScript/dataPoint'
 
-const latitude: number = 41.88
-const longitude: number = -87.62
-const strokeOpacity: number = 1.0
-const strokeWeight: number = 0.05
-const color: string = '#ffff'
-const fillOpacity: number = 0.25
+const latitude = 41.88
+const longitude = -87.62
+const strokeOpacity = 1.0
+const strokeWeight = 0.05
+const color = '#ffff'
+const fillOpacity = 0.25
 const map: any = {}
 
 it('returns properties', () => {
