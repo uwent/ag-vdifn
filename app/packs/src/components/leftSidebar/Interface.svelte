@@ -19,56 +19,34 @@
   let panel = defaults.panel
   let queryModel: string
   let showHelp = false
+  let diseaseParams = { model: defaults.disease }
+  let insectParams = { model: defaults.insect }
+  let customParams = {}
 
-  if (panelNames.all.includes(urlParams.get('panel'))) {
-    panel = urlParams.get('panel')
-  } else {
-    window.history.replaceState({}, null, window.location.pathname)
+  function parseUrlParams() {
+    if (panelNames.all.includes(urlParams.get('panel'))) {
+      panel = urlParams.get('panel')
+      switch (panel) {
+        case 'disease':
+          if (urlParams.has('model')) {
+            diseaseParams.model = urlParams.get('model')
+          }
+          break
+        case 'insect':
+          if (urlParams.has('model')) {
+            insectParams.model = urlParams.get('model')
+          }
+          break
+        case 'custom':
+          break
+      }
+    } else {
+      window.history.replaceState({}, null, window.location.pathname)
+    }
   }
-
-  if (urlParams.has('model')) {
-    queryModel = urlParams.get('model')
-  }
-
-  // function readParams() {
-  //   if (urlParams.has('panel') || urlParams.has('model')) {
-  //     let url = urlBase
-  //     if (panelNames.all.includes(urlParams.get('panel'))) {
-  //       panel = urlParams.get('panel')
-  //       url += "?panel=" + panel
-  //       if (urlParams.has('model')) {
-  //         queryModel = urlParams.get('model')
-  //         url += "&model=" + queryModel
-  //       }
-  //     }
-  //   console.log("Interface >> Setting url to " + url)
-  //   window.history.replaceState({}, null, url)
-  //   }
-  // }
-
-  // function handlePanelChange(panel) {
-  //   const baseTitle = 'AgVDIFN'
-  //   let title = baseTitle
-  //   let url = window.location.pathname
-  //   switch (panel) {
-  //     case defaults.panel:
-  //       if (!urlParams.has('panel')) break
-  //     case 'disease':
-  //       title = baseTitle + ': Disease Models'
-  //       break
-  //     case 'insect':
-  //       title = baseTitle + ': Insect Models'
-  //       break
-  //     case 'custom':
-  //       title = baseTitle + ': Degree Day Viewer'
-  //       break
-  //   }
-  //   document.title = title
-  //   console.log("Interface >> Setting page title to " + title)
-  //   window.history.replaceState({}, title, null)
-  // }
 
   onMount(async () => {
+    parseUrlParams()
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
   })
@@ -169,13 +147,14 @@
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
-          defaultModel={queryModel ? queryModel : defaults.disease} />
+          defaultModel={diseaseParams.model} />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
-          defaultModel={queryModel ? queryModel : defaults.insect} />
+          defaultModel={insectParams.model} />
       {:else if panel === 'custom'}
-        <CustomPanel data={insectPanelData} />
+        <CustomPanel
+          data={insectPanelData} />
       {/if}
     {:else}
       <Loading />

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { getContext, onMount } from 'svelte'
   import {
     panelKey,
     selectedAffliction,
@@ -16,7 +16,6 @@
   let modelId: number
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
-  const urlParams = new URLSearchParams(window.location.search)
 
   afflictionName = getAfflictionName()
 
@@ -75,7 +74,7 @@
   }
 
   function handleUrlParams() {
-    const queryModel = urlParams.get('model')
+    const queryModel = defaultModel
     if (queryModel) {
       modelId = getAfflictionId(queryModel)
       console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
@@ -95,16 +94,6 @@
     afflictionValue.update((_) => modelId)
     selectedAffliction.set(getCurrentAffliction(modelId))
   })
-
-  onDestroy(() => {
-    urlParams.delete('model')
-  })
-
-  $: {
-    if ($selectedAffliction.local_name) {
-      console.log("Model Selection >> Selected model: " + $selectedAffliction.local_name)
-    }
-  }
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import { onMount, setContext } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -14,7 +14,6 @@
     diseasePanelState,
     selectedAffliction,
     panelNames,
-    defaults,
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -25,7 +24,6 @@
   export let data
   export let defaultModel: string
   const thisPanel = panelNames.disease
-  const urlParams = new URLSearchParams(window.location.search)
 
   // TODO: change 'Disease' to thisPanel
   setContext(panelKey, {
@@ -68,6 +66,7 @@
     console.log("Disease panel >> Setting title to " + title)
     console.log("Disease panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
+    document.title = title
   }
 
   onMount(() => {
@@ -76,12 +75,6 @@
     updateUrlParams()
   })
 
-  // $: {
-  //   if ($diseasePanelState.currentAffliction) {
-  //     console.log("Disease Panel >> Submitted model: '" + $diseasePanelState.currentAffliction.local_name + "'")
-  //     updateParams($diseasePanelState.currentAffliction)
-  //   }
-  // }
 </script>
 
 <style>
@@ -92,12 +85,15 @@
 </style>
 
 <div data-testid="disease-panel">
-  <ModelSelection defaultModel={defaultModel}/>
+  <ModelSelection
+    defaultModel={defaultModel} />
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />
   </ModelParameters>
-  <Button disabled={$overlayLoading} click={submit} />
+  <Button
+    disabled={$overlayLoading}
+    click={submit} />
   {#if $overlayLoading}
     <Loading />
   {/if}

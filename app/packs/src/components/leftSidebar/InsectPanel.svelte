@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import { onMount, setContext } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -25,7 +25,6 @@
   export let defaultModel: string
   const thisPanel = panelNames.insect
 
-  // TODO: change 'Insect' to thisPanel
   setContext(panelKey, {
     panelType: 'Insect',
     getCrops: () => data,
@@ -62,6 +61,7 @@
     url += "&model=" + $insectPanelState.currentAffliction.local_name
     console.log("Insect panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
+    document.title = title
   }
 
   onMount(() => {
@@ -69,22 +69,18 @@
     if (!$insectPanelState.loaded) submit()
     updateUrlParams()
   })
-
-  // $: {
-  //   if ($insectPanelState.currentAffliction) {
-  //     console.log("Insect Panel >> Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
-  //     updateParams($insectPanelState.currentAffliction)
-  //   }
-  // }
 </script>
 
 <div data-testid="insect-panel">
-  <ModelSelection defaultModel={defaultModel}/>
+  <ModelSelection
+    defaultModel={defaultModel} />
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />
   </ModelParameters>
-  <Button disabled={$overlayLoading} click={submit} />
+  <Button
+    disabled={$overlayLoading}
+    click={submit} />
   {#if $overlayLoading}
     <Loading />
   {/if}

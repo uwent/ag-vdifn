@@ -11,7 +11,6 @@
     tMinTmax,
     overlayLoading,
     selectedPanel,
-    panelNames,
     customPanelState,
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
@@ -68,6 +67,7 @@
     console.log("Custom Panel >> Setting page title to " + title)
     console.log("Custom Panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
+    document.title = title
   }
 
   onMount(() => {
