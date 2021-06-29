@@ -13,11 +13,15 @@ export const selectedAffliction = writable({
   id: undefined,
   name: undefined,
   local_name: undefined,
-  photo: undefined,
-  info: undefined,
-  link: undefined,
-  biofix_date: undefined,
+  biofix_mm: undefined,
+  biofix_dd: undefined,
   end_date_enabled: undefined,
+  t_max: undefined,
+  t_min: undefined,
+  info: undefined,
+  severity_info: undefined,
+  photo: undefined,
+  link: undefined,
 })
 
 export const twoPointGradientState = writable({

@@ -2,6 +2,7 @@
   svg {
     width: 15px;
     height: 15px;
+    vertical-align: middle;
   }
 </style>
 

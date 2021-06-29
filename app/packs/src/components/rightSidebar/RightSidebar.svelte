@@ -1,28 +1,27 @@
 <script lang="ts">
-  import QuestionSvg from '../common/svg/QuestionSvg.svelte'
+  const _ = require('lodash')
+  import { onDestroy } from 'svelte'
+  import { SeverityParams } from '../common/ts/types'
   import {
     selectedPanel,
     panelNames,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    mapMinMapMax,
     selectedAffliction,
   } from '../../store/store'
-  import { SeverityParams } from '../common/ts/types'
   import DatabaseClient from '../common/ts/databaseClient'
-  import { onDestroy } from 'svelte'
+  import QuestionSvg from '../common/QuestionSvg.svelte'
   import SeverityLegend from './SeverityLegend.svelte'
   import CustomSeverityLegend from './CustomSeverityLegend.svelte'
   import Modal from '../common/Modal.svelte'
-  let expanded = false
   export let currentSeverities = []
+  let expanded = false
   let diseaseSeverities = []
   let insectSeverities = []
   let severityInfo = ''
   let gradient = []
   let showModal = false
-  const _ = require('lodash')
 
   const diseaseUnsubscribe = diseasePanelParams.subscribe(
     async (severityParams: SeverityParams) => {

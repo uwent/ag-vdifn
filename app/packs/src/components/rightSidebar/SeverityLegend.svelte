@@ -1,5 +1,5 @@
 <script lang="ts">
-  import QuestionSvg from '../common/svg/QuestionSvg.svelte'
+  import QuestionSvg from '../common/QuestionSvg.svelte'
   export let severities = []
 </script>
 

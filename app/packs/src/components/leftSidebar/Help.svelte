@@ -1,4 +1,9 @@
+<script lang="ts">
+  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
+</script>
+
 <div class="modal__pest-info">
+  <img src="{productionURL}/favicon.png" width="150px" style="margin-top: 1em; margin-right: 10px; float: left;" alt=""/>
   <h4>Introduction</h4>
   <p>One of the pillars of modern integrated pest and disease management strategies is the use of local climatic and environmental variables to model disease and insect pest risk for a particular field or region. Rather than treating for pests on a preset schedule or waiting for symptoms to appear, growers can anticipate the onset of increased pest risk using predictive models developed and tested for specific disease and insect risks to crops. The outcomes of the use of such models would be increased awareness of current and near future pest and disease risk, as well as the reduction in the use of pesticides and increased profits. This website, VDIFN, is a free tool for growers and residents of Wisconsin that currently includes plant disease models, insect growing degree-day models, and a custom degree-day map generator.</p>
   <p>VDIFN uses gridded weather data downloaded daily from National Oceanographic and Atmospheric Administration (NOAA) servers. Data include daily min/max temperatures and relative humidity, which are fed into various models and converted into daily disease severity values (or equivalents) or degree-days. These disease severity value and degree-day accumulations are then displayed on the map as color-coded risk scores based on the estimated risk to susceptible crops. Unfortunately VDIFN does not currently have the ability to use weather forecasts to run the models out into the future.</p>

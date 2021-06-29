@@ -108,6 +108,10 @@
     background-color: #a5dc86;
     box-shadow: none;
   }
+
+  button {
+    cursor: pointer;
+  }
 </style>
 
 <div class="options">
@@ -160,7 +164,10 @@
   </div>
 </div>
 {#if showHelp}
-  <Modal on:close={() => (showHelp = false)} name="How to use VDIFN">
+  <Modal
+    name="How to use VDIFN"
+    maxWidth="40em"
+    on:close={() => (showHelp = false)} >
     <Help />
   </Modal>
 {/if}
