@@ -2,7 +2,7 @@ import { render } from '@testing-library/svelte'
 import { tick } from 'svelte'
 import {
   selectedPanel,
-  PANELS,
+  panelNames,
   insectPanelState,
   diseasePanelState,
   customPanelState,
@@ -18,13 +18,13 @@ beforeEach(() => {
 
 describe('when insect panel selected', () => {
   it('shows feedback when no model is submitted', async () => {
-    selectedPanel.set(PANELS.INSECT)
+    selectedPanel.set(panelNames.insect)
     await tick()
     expect(getText('No Model Submitted')).toBeInTheDocument()
   })
 
   it('shows current affliction name', async () => {
-    selectedPanel.set(PANELS.INSECT)
+    selectedPanel.set(panelNames.insect)
     insectPanelState.set({ currentAffliction: { name: 'insect name' } })
     await tick()
     expect(getText('insect name')).toBeInTheDocument()
@@ -33,13 +33,13 @@ describe('when insect panel selected', () => {
 
 describe('when disease panel selected', () => {
   it('shows feedback when no model is submitted', async () => {
-    selectedPanel.set(PANELS.DISEASE)
+    selectedPanel.set(panelNames.disease)
     await tick()
     expect(getText('No Model Submitted')).toBeInTheDocument()
   })
 
   it('shows current affliction name', async () => {
-    selectedPanel.set(PANELS.DISEASE)
+    selectedPanel.set(panelNames.disease)
     diseasePanelState.set({ currentAffliction: { name: 'disease name' } })
     await tick()
     expect(getText('disease name')).toBeInTheDocument()
@@ -48,7 +48,7 @@ describe('when disease panel selected', () => {
 
 describe('when custom panel selected', () => {
   it('shows tMin and TMax and temp scale', async () => {
-    selectedPanel.set(PANELS.CUSTOM)
+    selectedPanel.set(panelNames.custom)
     customPanelState.set({ t_min: 5, t_max: 10, in_fahrenheit: true })
     await tick()
     expect(getText('Custom model: 5/10 \u2109')).toBeInTheDocument()

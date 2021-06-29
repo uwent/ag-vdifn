@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/svelte'
 import {
   selectedAffliction,
   selectedPanel,
-  PANELS,
+  panelNames,
   insectPanelState,
   panelKey,
   insectPanelParams,
@@ -32,7 +32,7 @@ beforeEach(() => {
 })
 
 it('should set selected panel to insect on mount', () => {
-  expect(get(selectedPanel)).toEqual(PANELS.INSECT)
+  expect(get(selectedPanel)).toEqual(panelNames.insect)
 })
 
 it('should update insect panels state when submit button clicked', async () => {

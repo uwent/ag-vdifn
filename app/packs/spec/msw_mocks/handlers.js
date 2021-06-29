@@ -1,5 +1,5 @@
 import { rest } from "msw"
-import ENDPOINTS from "../../src/components/common/TypeScript/endpoints"
+import ENDPOINTS from "../../src/components/common/ts/endpoints"
 
 export const handlers = [
   rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {

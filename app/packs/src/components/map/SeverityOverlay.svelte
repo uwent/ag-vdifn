@@ -9,7 +9,7 @@
     insectPanelState,
     customPanelState,
     selectedPanel,
-    PANELS,
+    panelNames,
     overlayGradient,
     overlayLoading,
     mapMinMapMax,
@@ -17,8 +17,8 @@
     threePointGradientState,
     customOverlaySubmitted,
   } from '../../store/store'
-  import OverlayHelper from './overlayHelper'
-  import { SeverityParams } from '../common/TypeScript/types'
+  import OverlayHelper from './ts/overlayHelper'
+  import { SeverityParams } from '../common/ts/types'
   import { get } from 'svelte/store'
 
   const { getMap, getGoogle } = getContext(mapKey)
@@ -38,19 +38,19 @@
     currentOverlay.closeInfoWindow()
     overlayLoading.set(true)
     switch (selectedSeverity) {
-      case PANELS.DISEASE:
+      case panelNames.disease:
         severities = get(diseasePanelState).severities
         severityParams = get(diseasePanelState).severityParams
         if (!severities && !severityParams) return
         currentOverlay = diseaseOverlay
         break
-      case PANELS.INSECT:
+      case panelNames.insect:
         severities = get(insectPanelState).severities
         severityParams = get(insectPanelState).severityParams
         if (!severities && !severityParams) return
         currentOverlay = insectOverlay
         break
-      case PANELS.CUSTOM:
+      case panelNames.custom:
         severities = get(customPanelState).severities
         severityParams = get(customPanelState).severityParams
         if (!severities && !severityParams) return
@@ -68,7 +68,7 @@
   })
 
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(diseaseOverlay, severityParams, PANELS.DISEASE)
+    await updateOverlay(diseaseOverlay, severityParams, panelNames.disease)
     diseasePanelState.update((state) => ({
       ...state,
       severities: diseaseOverlay.severities,
@@ -77,7 +77,7 @@
   })
 
   insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(insectOverlay, severityParams, PANELS.INSECT)
+    await updateOverlay(insectOverlay, severityParams, panelNames.insect)
     insectPanelState.update((state) => ({
       ...state,
       severities: insectOverlay.severities,
@@ -86,7 +86,7 @@
   })
 
   customPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(customOverlay, severityParams, PANELS.CUSTOM)
+    await updateOverlay(customOverlay, severityParams, panelNames.custom)
     mapMinMapMax.set({
       min: customOverlay.min || 0,
       max: customOverlay.max || 0,

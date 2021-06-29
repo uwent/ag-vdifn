@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { tMinTmax } from '../../store/store'
-  let tMin: number = 50
-  let tMax: number = null
+  import { tMinTmax, defaults } from '../../store/store'
+  let tMin = defaults.t_min
+  let tMax = defaults.t_max
   let in_f = true
   let tMaxDisabled = true
   let valid = true

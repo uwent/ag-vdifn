@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/svelte'
 import {
   selectedAffliction,
   diseasePanelState,
-  PANELS,
+  panelNames,
   selectedPanel,
   panelKey,
   diseasePanelParams,
@@ -32,7 +32,7 @@ beforeEach(() => {
 })
 
 it('sets selectedPanel state to disease panel on mount', () => {
-  expect(get(selectedPanel)).toEqual(PANELS.DISEASE)
+  expect(get(selectedPanel)).toEqual(panelNames.disease)
 })
 
 it('should dispatch submit params when button is clicked', () => {

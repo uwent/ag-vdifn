@@ -1,24 +1,21 @@
 <script lang="ts">
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { getContext, onMount } from 'svelte'
+  import { CropWithAfflictions, Pest } from '../common/ts/types'
   import {
     panelKey,
     selectedAffliction,
     afflictionValue,
-    afflictionAlias,
   } from '../../store/store'
-  import { CropWithAfflictions, Pest } from '../common/TypeScript/types'
   import Modal from '../common/Modal.svelte'
+  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
+  const { getCrops, getAfflictionName } = getContext(panelKey)
+  export let defaultModel: string
   let showModal = false
   let selectedCropValue: number
   let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
   let afflictionName: string
-  export let defaultModel: string
-  let desiredModel: string
-  let defaultModelId: number
-  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
-  const { getCrops, getAfflictionName } = getContext(panelKey)
-  const urlParams = new URLSearchParams(window.location.search)
+  let modelId: number
 
   afflictionName = getAfflictionName()
 
@@ -42,7 +39,8 @@
     if (affliction) {
       return affliction
     } else if (crops[0] === undefined) {
-      return []
+      // return []
+      return undefined
     } else {
       return crops[0].afflictions[0]
     }
@@ -63,7 +61,7 @@
 
   function buildModalImage(photo) {
     if (photo != null) {
-      return `<img src="${productionURL}/images/${photo}" width="150px" align="left" style="margin-top: 1em; margin-right: 10px;"/>`
+      return `<img src="${productionURL}/images/${photo}" width="150px" style="margin-top: 1em; margin-right: 10px; float: left;"/>`
     } else {
       return ""
     }
@@ -77,13 +75,13 @@
   }
 
   function handleUrlParams() {
-    desiredModel = urlParams.get('model')
-    if (desiredModel) {
-      defaultModelId = getAfflictionId(desiredModel)
-      console.log("Model selection >> Specified model '" + desiredModel + "' matched to id " + defaultModelId)
+    const queryModel = defaultModel
+    if (queryModel) {
+      modelId = getAfflictionId(queryModel)
+      console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
     } else {
-      defaultModelId = getAfflictionId(defaultModel)
-      console.log("Model selection >> No model param specified, choosing default model '" + defaultModel + "'")
+      modelId = getAfflictionId(defaultModel)
+      console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
     }
   }
 
@@ -94,19 +92,9 @@
 
     handleUrlParams()
 
-    afflictionValue.update((_) => defaultModelId)
-    selectedAffliction.set(getCurrentAffliction(defaultModelId))
+    afflictionValue.update((_) => modelId)
+    selectedAffliction.set(getCurrentAffliction(modelId))
   })
-
-  onDestroy(() => {
-    urlParams.delete('model')
-  })
-
-  $: {
-    if ($selectedAffliction.local_name) {
-      console.log("Model Selection >> Selected model: " + $selectedAffliction.local_name)
-    }
-  }
 </script>
 
 <style>
@@ -132,11 +120,11 @@
 
   button {
     margin-left: 10px;
-    background: rgb(225, 225, 225);
+    /* background: rgb(225, 225, 225); */
     border: 1px solid #d0d0d0;
     border-radius: 3px;
     cursor: pointer;
-    appearance: none;
+    /* appearance: none; */
   }
 
   select {
@@ -206,7 +194,9 @@
   </div>
 </fieldset>
 {#if showModal}
-  <Modal on:close={() => (showModal = false)} name={$selectedAffliction.name}>
+  <Modal
+    name={$selectedAffliction.name}
+    on:close={() => (showModal = false)} >
     <div class="modal__pest-info">
       {@html buildModalImage($selectedAffliction.photo)}
       <p>

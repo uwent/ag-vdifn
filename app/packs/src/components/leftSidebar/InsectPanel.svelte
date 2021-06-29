@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import { onMount, setContext } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -11,7 +11,7 @@
     tMinTmax,
     insectPanelParams,
     selectedPanel,
-    PANELS,
+    panelNames,
     insectPanelState,
     selectedAffliction,
   } from '../../store/store'
@@ -22,11 +22,9 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data
-  export let defaultModel = ''
-  const thisPanel = PANELS.INSECT
-  const urlParams = new URLSearchParams(window.location.search)
+  export let defaultModel: string
+  const thisPanel = panelNames.insect
 
-  // TODO: change 'Insect' to thisPanel
   setContext(panelKey, {
     panelType: 'Insect',
     getCrops: () => data,
@@ -53,45 +51,37 @@
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
+    updateUrlParams()
   }
 
-  function updateParams(affliction) {
-    urlParams.set('panel', thisPanel)
-    urlParams.set('model', affliction.local_name)
-    setUrlParams()
-  }
-
-  function setUrlParams() {
-    let newUrl = window.location.pathname + "?" + urlParams.toString()
-    console.log("Insect panel >> Setting url to " + newUrl)
-    window.history.replaceState({}, null, newUrl)
+  function updateUrlParams() {
+    let url = window.location.pathname
+    let title = "AgVDIFN: Insect Models"
+    url += "?panel=" + thisPanel
+    url += "&model=" + $insectPanelState.currentAffliction.local_name
+    title += " - " + $insectPanelState.currentAffliction.name
+    console.log("Insect panel >> Setting title to " + title)
+    console.log("Insect panel >> Setting url to " + url)
+    window.history.replaceState({}, title, url)
+    document.title = title
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    if (!$insectPanelState.loaded) submit()
+    $insectPanelState.loaded ? updateUrlParams() : submit()
   })
-
-  onDestroy(() => {
-    // urlParams.delete('model')
-    // setUrlParams()
-  })
-
-  $: {
-    if ($insectPanelState.currentAffliction) {
-      console.log("Insect Panel >> Submitted model: '" + $insectPanelState.currentAffliction.local_name + "'")
-      updateParams($insectPanelState.currentAffliction)
-    }
-  }
 </script>
 
 <div data-testid="insect-panel">
-  <ModelSelection defaultModel={defaultModel}/>
+  <ModelSelection
+    defaultModel={defaultModel} />
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />
   </ModelParameters>
-  <Button disabled={$overlayLoading} click={submit} />
+  <Button
+    disabled={$overlayLoading}
+    click={submit} />
   {#if $overlayLoading}
     <Loading />
   {/if}

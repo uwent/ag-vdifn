@@ -1,4 +1,4 @@
-import GradientHelper from '../../src/components/leftSidebar/TypeScript/gradientHelper'
+import GradientHelper from '../../src/components/leftSidebar/ts/gradientHelper'
 let gradientHelper
 
 beforeEach(() => {

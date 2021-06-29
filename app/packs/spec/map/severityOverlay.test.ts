@@ -10,13 +10,13 @@ import {
   insectPanelState,
   customPanelState,
   selectedPanel,
-  PANELS,
+  panelNames,
   overlayGradient,
   overlayLoading,
   mapMinMapMax,
 } from '../../src/store/store'
-import OverlayHelper from '../../src/components/map/overlayHelper'
-import { Severity } from '../../src/components/common/TypeScript/types'
+import OverlayHelper from '../../src/components/map/ts/overlayHelper'
+import { Severity } from '../../src/components/common/ts/types'
 import { get } from 'svelte/store'
 
 const severityParams = {
@@ -36,18 +36,18 @@ const severities: Severity[] = [
   { lat: 2, long: 4, level: 2 },
 ]
 
-let mockUpdateOverlay = jest.fn()
-let mockUpdateOverlayGradient = jest.fn()
-let mockShowOverlay = jest.fn()
+const mockUpdateOverlay = jest.fn()
+const mockUpdateOverlayGradient = jest.fn()
+const mockShowOverlay = jest.fn()
 
-jest.mock('../../src/components/map/overlayHelper')
+jest.mock('../../src/components/map/ts/overlayHelper')
 
 const overlayLoadingSpy = jest.spyOn(overlayLoading, 'set')
 const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, 'set')
 // const customPanelStateSpy = jest.spyOn(customPanelState, 'set')
 
 beforeEach(() => {
-  ;(OverlayHelper as jest.Mock).mockImplementation(() => {
+  (OverlayHelper as jest.Mock).mockImplementation(() => {
     return {
       updateOverlay: mockUpdateOverlay,
       updateOverlayGradient: mockUpdateOverlayGradient,
@@ -87,7 +87,7 @@ describe('updating overlay for disease panel params', () => {
     diseasePanelParams.set(severityParams)
     expect(mockUpdateOverlay).toHaveBeenCalledWith(
       severityParams,
-      PANELS.DISEASE,
+      panelNames.disease,
     )
   })
 
@@ -111,7 +111,7 @@ describe('updating overlay for insect panel params', () => {
     insectPanelParams.set(severityParams)
     expect(mockUpdateOverlay).toHaveBeenCalledWith(
       severityParams,
-      PANELS.INSECT,
+      panelNames.insect,
     )
   })
 

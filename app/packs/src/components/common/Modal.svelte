@@ -1,11 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
   import Button from './Button.svelte'
-  export let name: string
-
+  export let name = 'Information'
+  export let maxWidth = '32em'
   const dispatch = createEventDispatcher()
   const close = () => dispatch('close')
-
   let modal: any
 
   const handle_keydown = (e) => {
@@ -87,7 +86,8 @@
   role="dialog"
   aria-modal="true"
   bind:this={modal}
-  aria-labelledby="affliction-modal">
+  aria-labelledby="affliction-modal"
+  style={"max-width: " + maxWidth} >
   <h2 id="affliction-modal">{name}</h2>
   <slot name="header" />
   <slot />

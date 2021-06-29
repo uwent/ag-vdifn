@@ -1,28 +1,27 @@
 <script lang="ts">
-  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+  const _ = require('lodash')
+  import { onDestroy } from 'svelte'
+  import { SeverityParams } from '../common/ts/types'
   import {
     selectedPanel,
-    PANELS,
+    panelNames,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    mapMinMapMax,
     selectedAffliction,
   } from '../../store/store'
-  import { SeverityParams } from '../common/TypeScript/types'
-  import DatabaseClient from '../common/TypeScript/databaseClient'
-  import { onDestroy } from 'svelte'
+  import DatabaseClient from '../common/ts/databaseClient'
+  import QuestionSvg from '../common/QuestionSvg.svelte'
   import SeverityLegend from './SeverityLegend.svelte'
   import CustomSeverityLegend from './CustomSeverityLegend.svelte'
   import Modal from '../common/Modal.svelte'
-  let expanded = false
   export let currentSeverities = []
+  let expanded = false
   let diseaseSeverities = []
   let insectSeverities = []
   let severityInfo = ''
   let gradient = []
   let showModal = false
-  const _ = require('lodash')
 
   const diseaseUnsubscribe = diseasePanelParams.subscribe(
     async (severityParams: SeverityParams) => {
@@ -66,13 +65,13 @@
 
   function swapSeverities(selectedPanel) {
     switch (selectedPanel) {
-      case PANELS.DISEASE:
+      case panelNames.disease:
         currentSeverities = diseaseSeverities
         break
-      case PANELS.INSECT:
+      case panelNames.insect:
         currentSeverities = insectSeverities
         break
-      case PANELS.CUSTOM:
+      case panelNames.custom:
         currentSeverities = []
         break
     }
@@ -183,10 +182,10 @@
 </button>
 
 <div id="right-sidebar" aria-expanded={expanded}>
-  {#if $selectedPanel === PANELS.CUSTOM}
+  {#if $selectedPanel === panelNames.custom}
     <CustomSeverityLegend gradientMapping={gradient} />
   {:else}
-    {#if $selectedPanel === PANELS.INSECT}
+    {#if $selectedPanel === panelNames.insect}
       {#if showModal}
         <Modal name="Pest Info" on:close={() => (showModal = false)}>
           {@html $selectedAffliction.info}
@@ -196,7 +195,7 @@
     <SeverityLegend severities={currentSeverities} />
   {/if}
 
-  {#if $selectedPanel === PANELS.DISEASE}
+  {#if $selectedPanel === panelNames.disease}
     <fieldset id="definitions">
       <legend>Terms</legend>
       <ul>
@@ -249,7 +248,7 @@
     </fieldset>
   {/if}
 
-  {#if $selectedPanel === PANELS.INSECT}
+  {#if $selectedPanel === panelNames.insect}
     <fieldset title="more-info">
       <legend>More Information</legend>
       <p>{severityInfo}</p>

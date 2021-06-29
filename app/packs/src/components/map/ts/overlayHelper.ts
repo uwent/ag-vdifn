@@ -1,10 +1,10 @@
-import { SeverityParams, Severity } from '../common/TypeScript/types'
-import DatabaseClient from '../common/TypeScript/databaseClient'
-import GoogleWrapper from './TypeScript/googleWrapper'
-import RectangleOption from './TypeScript/rectangleOption'
-import infoWindowLoadingTemplate from './TypeScript/templates/infoWindowLoading'
-import ColorHelper from './TypeScript/colorHelper'
-import _ from 'lodash'
+const _ = require('lodash')
+import { SeverityParams, Severity } from '../../common/ts/types'
+import DatabaseClient from '../../common/ts/databaseClient'
+import GoogleWrapper from './googleWrapper'
+import RectangleOption from './rectangleOption'
+import infoWindowLoadingTemplate from './templates/infoWindowLoading'
+import ColorHelper from './colorHelper'
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper
@@ -90,12 +90,12 @@ export default class OverlayHelper {
   }
 
   convertSeveritiesToRectangleOptions(): RectangleOption[] {
-    let rectangleOptions: RectangleOption[] = []
+    const rectangleOptions: RectangleOption[] = []
     this.severities.forEach((severity: Severity) => {
-      let latLang = this.googleWrapper.latLng(severity.lat, severity.long)
-      let rectangleOption = new RectangleOption(
-        latLang.lat(),
-        latLang.lng(),
+      const latLng = this.googleWrapper.latLng(severity.lat, severity.long)
+      const rectangleOption = new RectangleOption(
+        latLng.lat(),
+        latLng.lng(),
         ColorHelper.color(severity.level, 5),
         this.map,
       )
@@ -106,7 +106,7 @@ export default class OverlayHelper {
 
   drawDataPoints(rectangleOptions: RectangleOption[]) {
     rectangleOptions.forEach((rectangleOption) => {
-      let rectangle = this.googleWrapper.createRectangle(rectangleOption)
+      const rectangle = this.googleWrapper.createRectangle(rectangleOption)
       this.rectangles.push(rectangle)
     })
   }

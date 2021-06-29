@@ -2,7 +2,7 @@
   import {
     insectPanelState,
     selectedPanel,
-    PANELS,
+    panelNames,
     diseasePanelState,
     customPanelState,
   } from '../../store/store'
@@ -29,11 +29,11 @@
   }
 </style>
 
-{#if $selectedPanel === PANELS.DISEASE}
+{#if $selectedPanel === panelNames.disease}
   <div class="model-status">
     {$diseasePanelState.currentAffliction === undefined ? 'No Model Submitted' : $diseasePanelState.currentAffliction.name}
   </div>
-{:else if $selectedPanel === PANELS.INSECT}
+{:else if $selectedPanel === panelNames.insect}
   <div class="model-status">
     {$insectPanelState.currentAffliction === undefined ? 'No Model Submitted' : $insectPanelState.currentAffliction.name}
   </div>

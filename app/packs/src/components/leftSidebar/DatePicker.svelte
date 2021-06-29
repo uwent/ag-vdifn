@@ -6,8 +6,8 @@
     startDate,
     selectedAffliction,
   } from '../../store/store'
-  import { PestInfo } from '../common/TypeScript/types'
-  import QuestionSvg from '../common/SVG/QuestionSvg.svelte'
+  import { PestInfo } from '../common/ts/types'
+  // import QuestionSvg from '../common/svg/QuestionSvg.svelte'
 
   const moment = require('moment')
   const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey)

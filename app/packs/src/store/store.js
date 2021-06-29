@@ -13,11 +13,15 @@ export const selectedAffliction = writable({
   id: undefined,
   name: undefined,
   local_name: undefined,
-  photo: undefined,
-  info: undefined,
-  link: undefined,
-  biofix_date: undefined,
+  biofix_mm: undefined,
+  biofix_dd: undefined,
   end_date_enabled: undefined,
+  t_max: undefined,
+  t_min: undefined,
+  info: undefined,
+  severity_info: undefined,
+  photo: undefined,
+  link: undefined,
 })
 
 export const twoPointGradientState = writable({
@@ -82,12 +86,21 @@ export const customPanelState = writable({
  })
 
 export const selectedPanel = writable('')
-export const selectedModel = writable('')
-
-export const PANELS = {
-  INSECT: 'insect',
-  DISEASE: 'disease',
-  CUSTOM: 'custom',
-}
 
 export const mapsAPIKey = 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4'
+
+export const panelNames = {
+  disease: 'disease',
+  insect: 'insect',
+  custom: 'custom',
+  all: ['disease', 'insect', 'custom']
+}
+
+export const defaults = {
+  panel: 'disease',
+  disease: 'late-blight',
+  insect: 'cpb',
+  t_min: 50,
+  t_max: null,
+  in_f: true
+}

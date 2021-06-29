@@ -11,7 +11,6 @@
     tMinTmax,
     overlayLoading,
     selectedPanel,
-    PANELS,
     customPanelState,
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
@@ -25,9 +24,7 @@
   export let data: any
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
-  const thisPanel = PANELS.CUSTOM
 
-  // TODO: change 'Custom' to thisPanelName
   setContext(panelKey, {
     panelType: 'Custom',
     getCrops: () => data,
@@ -56,15 +53,26 @@
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
     })
+    updateUrlParams()
   }
 
   function handleCustomTminTMax(event) {
     submitDisabled = !event.detail.valid
   }
 
+  function updateUrlParams() {
+    let url = window.location.pathname
+    let title = "AgVDIFN: Degree-day Map Viewer"
+    url += "?panel=custom"
+    console.log("Custom Panel >> Setting page title to " + title)
+    console.log("Custom Panel >> Setting url to " + url)
+    window.history.replaceState({}, title, url)
+    document.title = title
+  }
+
   onMount(() => {
-    selectedPanel.set(thisPanel)
-    if (!$customPanelState.loaded) submit()
+    selectedPanel.set('custom')
+    $customPanelState.loaded ? updateUrlParams() : submit()
   })
 </script>
 

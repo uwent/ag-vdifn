@@ -2,7 +2,7 @@ import CustomPanel from '../../src/components/leftSidebar/CustomPanel.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
 import {
   customPanelState,
-  PANELS,
+  panelNames,
   panelKey,
   selectedPanel,
   overlayLoading,
@@ -42,7 +42,7 @@ beforeEach(() => {
 })
 
 it('should set the selected panel state on mount', () => {
-  expect(selectedPanelSpy).toHaveBeenCalledWith(PANELS.CUSTOM)
+  expect(selectedPanelSpy).toHaveBeenCalledWith(panelNames.custom)
 })
 
 it('should dispatch submit params when button is clicked', async () => {

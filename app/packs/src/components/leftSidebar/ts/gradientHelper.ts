@@ -1,5 +1,5 @@
 import _ from "lodash"
-import ColorHelper from "../../map/TypeScript/colorHelper";
+import ColorHelper from "../../map/ts/colorHelper"
 
 export default class GradientHelper {
 
@@ -49,19 +49,19 @@ export default class GradientHelper {
   }
 
   private calculateRanges(min: number, max: number, levels: number): number[][] {
-    if (levels <= 0) return [];
-    let ranges: number[][] = [];
-    let length_of_range = (max - min) / levels;
+    if (levels <= 0) return []
+    let ranges: number[][] = []
+    const length_of_range = (max - min) / levels
     ranges.push([min, _.round(min + length_of_range, 1)])
     for(let i = 0; i < levels - 1; i ++) {
-      let latestRange = _.last<number[]>(ranges);
+      const latestRange = _.last<number[]>(ranges)
       ranges.push([
         _.round(_.last<number>(latestRange), 1),
         _.round(_.last<number>(latestRange) + length_of_range, 1)
       ])
     }
     const lastRangeIndex = _.findLastIndex(ranges)
-    ranges[lastRangeIndex][1] = max;
-    return ranges;
+    ranges[lastRangeIndex][1] = max
+    return ranges
   }
 }
