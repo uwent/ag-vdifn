@@ -33,7 +33,7 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.7'
   gem 'rspec-rails', '~> 5.0'
   gem 'webmock', '~> 3.13'
-  gem 'shoulda-matchers', '~> 4.5'
+  gem 'shoulda-matchers', '~> 5.0'
   gem 'byebug', '~> 11.1'
   gem 'pry-rails', '~> 0.3'
   gem 'ed25519', '~> 1.2'
