@@ -12,7 +12,7 @@ it('returns map options object', () => {
     },
     mapTypeId: 'terrain',
     maxZoom: 12,
-    minZoom: 6,
+    minZoom: 5,
     streetViewControl: false,
     zoomControl: true,
     zoomControlOptions: {
