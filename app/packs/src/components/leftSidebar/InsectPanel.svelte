@@ -80,6 +80,7 @@
     <TminMaxDisplay />
   </ModelParameters>
   <Button
+    title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}
     click={submit} />
   {#if $overlayLoading}

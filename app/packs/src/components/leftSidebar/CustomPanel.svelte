@@ -154,6 +154,7 @@
       <TminMaxInteractable on:tMinMaxValid={handleCustomTminTMax} />
     {/if}
     <Button
+      title="Submit parameters. Data load may take several seconds."
       disabled={submitDisabled || $overlayLoading}
       click={submit} />
   </ModelParameters>

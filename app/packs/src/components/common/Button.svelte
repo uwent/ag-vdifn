@@ -1,6 +1,7 @@
 <script lang="ts">
   export let click
   export let text = "Submit"
+  export let title = ""
   export let disabled: boolean = false
 </script>
 
@@ -34,6 +35,10 @@
   }
 </style>
 
-<button class="button button-primary" {disabled} on:click={click}>
+<button
+  class="button button-primary"
+  title={title}
+  on:click={click}
+  {disabled} >
   {text}
 </button>

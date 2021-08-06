@@ -9,7 +9,7 @@
   import Modal from '../common/Modal.svelte'
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
-  export let defaultModel: string
+  export let defaultModel = ""
   let showModal = false
   let selectedCropValue: number
   let afflictionsForCrop: Pest[] = []

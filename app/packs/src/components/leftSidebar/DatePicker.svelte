@@ -182,9 +182,7 @@
       on:change={updateEndDateInput}
       max={today} />
     {#if isPastYear(startDateValue)}
-      <div class="datepicker-tooltip">
-        &lt;- Not current year
-      </div>
+      <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
   </div>
   <label for="datepicker-end">End Date</label>
@@ -199,33 +197,27 @@
       on:change={updateStartDateInput}
       max={today} />
     {#if isPastYear(startDateValue)}
-      <div class="datepicker-tooltip">
-        &lt;- Not current year
-      </div>
+      <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
   </div>
   <div class="clear" />
   <label for="preset-buttons">Quick date ranges:</label>
   <div class="preset-buttons">
     <button
-    data-testid="button-past-week"
-    on:click={selectPastWeek}>
-      Past week
-    </button>
+      title="Set date range to past week"
+      data-testid="button-past-week"
+      on:click={selectPastWeek}>Past week</button>
     <button
-    data-testid="button-past-month"
-    on:click={selectPastMonth}>
-      Past month
-    </button>
+      title="Set date range to past month"
+      data-testid="button-past-month"
+      on:click={selectPastMonth}>Past month</button>
     <button
-    data-testid="button-this-year"
-    on:click={selectThisYear}>
-      This year
-    </button>
+      title="Set date range to Jan 1 -> today"
+      data-testid="button-this-year"
+      on:click={selectThisYear}>This year</button>
     <button
-    data-testid="button-defaults"
-    on:click={selectDefaults}>
-      Defaults
-    </button>
+      title="Restore default date settings for this model"
+      data-testid="button-defaults"
+      on:click={selectDefaults}>Defaults</button>
   </div>
 </fieldset>
