@@ -1,5 +1,7 @@
 <script lang="ts">
+  import moment from 'moment'
   let expanded = true
+  let host = window.location.host
 </script>
 
 <style type="scss">
@@ -61,6 +63,19 @@
 
       button {
         background-image: url('../../../../assets/images/open.svg');
+      }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 5px;
+      width: inherit;
+      text-align: center;
+      font-size: smaller;
+      color: grey;
+
+      a:hover, a:visited, a:link, a:active {
+        text-decoration: none;
       }
     }
   }
@@ -126,13 +141,15 @@
     <div>
       <a
         id="uw-madison"
+        title="Ag-Weather"
         class="logo"
-        href="https://www.wisc.edu"
+        href={host || "https://agweather.cals.wisc.edu"}
         target="_blank">
-        Wisc Edu
+        Agweather
       </a>
       <a
         id="plantpath-logo"
+        title="UW-Madison Plant Pathology"
         class="logo"
         href="https://vegpath.plantpath.wisc.edu/"
         target="_blank">
@@ -140,6 +157,7 @@
       </a>
       <a
         id="vegento-logo"
+        title="UW-Madison Vegetable Entomology"
         class="logo"
         href="https://vegento.russell.wisc.edu/"
         target="_blank">
@@ -155,6 +173,11 @@
   </header>
 
   <slot />
+
+  <footer>
+    <a href="mailto:bbradford@wisc.edu">Contact Us</a><br>
+    Copyright &copy;{moment.utc().format('YYYY')} University of Wisconsin-Madison
+  </footer>
 
   <button on:click={() => (expanded = !expanded)} />
 </div>
