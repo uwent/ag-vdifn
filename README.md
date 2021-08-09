@@ -6,25 +6,23 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 ## Dependencies
 
-Ruby version `2.7.x`
+Ruby version `3.0.x`
 
 Rails version `6.1.x`
 
 ## Setup
 1. Install [Yarn](https://classic.yarnpkg.com/en/)
-2. Install dependencies with `bundle install`
-3. Setup database with `rails db:setup`
-4. Load db schema with `rails db:schema:load`
-5. Seed db with `rails db:seed`
+2. Install dependencies with `bundle install` and `yarn install`
+3. Setup database with `rails db:setup db:schema:load db:seed`
 
 ## Launch local instance
 1. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
 2. Run ag-vdifn server with `rails s`
-3. Visit `localhost:3030` in browser
+3. Visit `localhost:3000` in browser
 
 ## Running Tests
 1. RSpec: `bundle exec rspec`
-2. Jest: `jest` or `yarn jest`
+2. Jest: `yarn jest`
 
 ## Deployment
 Work with db admin to authorize your ssh key for the deploy user, then run the following commands from the master branch:
