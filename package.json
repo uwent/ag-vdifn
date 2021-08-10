@@ -70,6 +70,7 @@
   },
   "resolutions": {
     "css-what": "^5.0.1",
-    "glob-parent": "^5.1.2"
+    "glob-parent": "^5.1.2",
+    "xmldom": "https://github.com/xmldom/xmldom"
   }
 }
