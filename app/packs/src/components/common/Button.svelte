@@ -31,6 +31,7 @@
     font-size: 0.85em;
     width: 100%;
     margin-top: 13px;
+    margin-bottom: 13px;
     padding: 10px;
   }
 </style>

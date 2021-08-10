@@ -1,5 +1,5 @@
 import CustomPanel from '../../src/components/leftSidebar/CustomPanel.svelte'
-import { fireEvent, render } from '@testing-library/svelte'
+import { fireEvent, getByTestId, render } from '@testing-library/svelte'
 import {
   customPanelState,
   panelNames,
@@ -18,14 +18,14 @@ import { tick } from 'svelte'
 import moment from 'moment'
 
 let getText
-let getTitle
+let getTestId
 let customPanel
 let submitSpy
 let selectedPanelSpy
 
 beforeEach(() => {
   selectedPanelSpy = spyOn(selectedPanel, 'set')
-  const { getByText, getByTitle, component } = render(CustomPanel, {
+  const { getByText, getByTestId, component } = render(CustomPanel, {
     props: {
       data: [{ id: 1, name: 'potato', afflictions: [{ id: 1, name: 'bug' }] }],
     },
@@ -33,7 +33,7 @@ beforeEach(() => {
   submitSpy = spyOn(customPanelParams, 'set')
   customPanel = component
   getText = getByText
-  getTitle = getByTitle
+  getTestId = getByTestId
   startDate.set('2000-10-10')
   endDate.set('2000-11-10')
   afflictionValue.set(1)
@@ -81,7 +81,7 @@ it('displays loading component if options are submitted and the overlay is loadi
   customOverlaySubmitted.set(true)
   overlayLoading.set(true)
   await tick()
-  expect(getTitle('loading')).toBeInTheDocument()
+  expect(getTestId('loading')).toBeInTheDocument()
 })
 
 it('displays severity gradient options if options have been submitted', async () => {

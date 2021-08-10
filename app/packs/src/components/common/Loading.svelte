@@ -3,6 +3,7 @@
     display: flex;
     height: 80px;
     justify-content: center;
+    margin: 10px;
   }
   :global(.lds-ring div) {
     box-sizing: border-box;
@@ -35,7 +36,7 @@
   }
 </style>
 
-<div class="lds-ring" title="loading">
+<div class="lds-ring" title="Loading" data-testid="loading">
   <div />
   <div />
   <div />

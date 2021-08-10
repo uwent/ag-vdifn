@@ -9,6 +9,8 @@
 
   #sidebar {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: calc(100% - 50px);
     top: 0;
@@ -65,19 +67,6 @@
         background-image: url('../../../../assets/images/open.svg');
       }
     }
-
-    footer {
-      position: absolute;
-      bottom: 5px;
-      width: inherit;
-      text-align: center;
-      font-size: smaller;
-      color: grey;
-
-      a:hover, a:visited, a:link, a:active {
-        text-decoration: none;
-      }
-    }
   }
 
   header {
@@ -86,6 +75,23 @@
     width: 100%;
     padding: 0 0 10px;
     text-align: center;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  footer {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: smaller;
+    color: grey;
+
+    a:hover, a:visited, a:link, a:active {
+      color: #249dde;
+      text-decoration: none;
+    }
   }
 
   .logo {
@@ -172,7 +178,9 @@
     </h1>
   </header>
 
-  <slot />
+  <div class="content">
+    <slot />
+  </div>
 
   <footer>
     <a href="mailto:bbradford@wisc.edu">Contact Us</a><br>
