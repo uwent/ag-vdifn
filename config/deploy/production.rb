@@ -21,7 +21,10 @@ role :app, %w{deploy@agweather.cals.wisc.edu:216}
 role :web, %w{deploy@agweather.cals.wisc.edu:216}
 role :db,  %w{deploy@agweather.cals.wisc.edu:216}
 
+set :rails_env, 'production'
+
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle", "node_modules"
+
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
