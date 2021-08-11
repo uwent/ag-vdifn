@@ -1,4 +1,4 @@
-branch = ENV['BRANCH'] || 'master'
+branch = ENV['VDIFN_BRANCH'] || 'main'
 
 set :application, 'ag-vdifn'
 set :repo_url, 'git@agvdifn.github.com:uwent/ag-vdifn.git'
