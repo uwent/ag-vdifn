@@ -21,6 +21,8 @@
   let diseaseParams = { model: defaults.disease }
   let insectParams = { model: defaults.insect }
 
+  console.log("Launching VDIFN in " + process.env.NODE_ENV + " environment")
+
   function parseUrlParams() {
     if (panelNames.all.includes(urlParams.get('panel'))) {
       panel = urlParams.get('panel')

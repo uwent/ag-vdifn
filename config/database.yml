@@ -17,14 +17,11 @@ test:
   <<: *default
   database: vdifn_test
 
-production:
+production: &production
   <<: *default
   database: vdifn_production
   username: vdifn
   password: <%= ENV['VDIFN_DATABASE_PASSWORD'] %>
 
 staging:
-  <<: *default
-  database: vdifn_staging
-  username: vdifn
-  password: <%= ENV['VDIFN_DATABASE_PASSWORD'] %>
+  <<: *production
