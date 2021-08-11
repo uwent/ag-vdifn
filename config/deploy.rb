@@ -63,7 +63,7 @@ namespace :deploy do
   after :restart, :seed do
     on roles(:app) do
       within release_path do
-        execute :rake, 'db:seed RAILS_ENV=production'
+        execute :rake, 'db:seed'
       end
     end
   end
