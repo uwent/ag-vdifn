@@ -183,7 +183,7 @@
   </div>
 
   <footer>
-    <a href="mailto:bbradford@wisc.edu">Contact Us</a><br>
+    <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br>
     Copyright &copy;{moment.utc().format('YYYY')} University of Wisconsin-Madison
   </footer>
 
