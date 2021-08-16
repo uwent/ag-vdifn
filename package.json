@@ -43,7 +43,7 @@
     "@types/googlemaps": "^3.43.3",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.172",
-    "@types/node": "^16.4.13",
+    "@types/node": "^16.6.1",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "@webpack-cli/serve": "^1.5.1",
