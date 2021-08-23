@@ -4,7 +4,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@googlemaps/js-api-loader": "^1.12.2",
     "@rails/ujs": "^6.1.4",
-    "@rails/webpacker": "^6.0.0-beta.7",
+    "@rails/webpacker": "^6.0.0-rc.1",
     "axios": "^0.21.1",
     "balloon-css": "^1.2.0",
     "chroma-js": "^2.1.2",
