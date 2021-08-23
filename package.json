@@ -2,7 +2,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@googlemaps/js-api-loader": "^1.12.1",
+    "@googlemaps/js-api-loader": "^1.12.2",
     "@rails/ujs": "^6.1.4",
     "@rails/webpacker": "^6.0.0-beta.7",
     "axios": "^0.21.1",
