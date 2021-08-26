@@ -20,20 +20,20 @@ RSpec.describe AgWeather::Client do
     end
   end
 
-  describe "#stations" do
-    it "calls correct endpoint and returns success" do
-      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/stations"
-      stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
-      response = client.stations()
+  # describe "#stations" do
+  #   it "calls correct endpoint and returns success" do
+  #     request_url = "#{ENV['AG_WEATHER_BASE_URL']}/stations"
+  #     stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
+  #     response = client.stations()
 
-      expect(response[:data]).to eq("data")
-    end
-  end
+  #     expect(response[:data]).to eq("data")
+  #   end
+  # end
 
   describe "#point_details" do
     it  "calls correct endpoint and returns success" do
-      options = { pest: "pest_name", start_date: start_date, end_date: end_date, longitude: 10.0, latitude: 11.0 }
-      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/point_details?pest=#{options[:pest]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}&longitude=#{options[:longitude]}&latitude=#{options[:latitude]}"
+      options = { pest: "pest_name", start_date: start_date, end_date: end_date, long: 10.0, lat: 11.0 }
+      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/point_details?pest=#{options[:pest]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}&long=#{options[:long]}&lat=#{options[:lat]}"
       stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
       response = client.point_details(options)
 
@@ -41,22 +41,22 @@ RSpec.describe AgWeather::Client do
     end
   end
 
-  describe "#station_observations" do
-    it  "calls correct endpoint and returns success" do
-      options = { name: "name", start_date: start_date, end_date: end_date }
-      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/station_observations?name=#{options[:name]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
-      stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
+  # describe "#station_observations" do
+  #   it  "calls correct endpoint and returns success" do
+  #     options = { name: "name", start_date: start_date, end_date: end_date }
+  #     request_url = "#{ENV['AG_WEATHER_BASE_URL']}/station_observations?name=#{options[:name]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
+  #     stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
 
-      response = client.station_observations(options)
+  #     response = client.station_observations(options)
 
-      expect(response[:data]).to eq("data")
-    end
-  end
+  #     expect(response[:data]).to eq("data")
+  #   end
+  # end
 
   describe "#custom" do
     it "calls correct endpoint and returns success" do
-      options = { start_date: start_date, end_date: end_date, t_min: 10, t_max: 50}
-      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom?start_date=#{options[:start_date]}&end_date=#{options[:end_date]}&t_min=#{options[:t_min]}&t_max=#{options[:t_max]}"
+      options = { start_date: start_date, end_date: end_date, base: 10, upper: 50 }
+      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom?start_date=#{options[:start_date]}&end_date=#{options[:end_date]}&base=#{options[:base]}&upper=#{options[:upper]}"
       stub_request(:get, request_url).to_return(status: 200, body: data)
       response = client.custom(options)
 
@@ -66,8 +66,8 @@ RSpec.describe AgWeather::Client do
 
   describe "#custom_point_details" do
     it "calls correct endpoint and returns success" do
-      options = { latitude: 10, longitude: -90, start_date: start_date, end_date: end_date, t_min: 10, t_max: 50}
-      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom_point_details?latitude=#{options[:latitude]}&longitude=#{options[:longitude]}&t_min=#{options[:t_min]}&t_max=#{options[:t_max]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
+      options = { lat: 10, long: -90, start_date: start_date, end_date: end_date, base: 10, upper: 50}
+      request_url = "#{ENV['AG_WEATHER_BASE_URL']}/pest_forecasts/custom_point_details?lat=#{options[:lat]}&long=#{options[:long]}&base=#{options[:base]}&upper=#{options[:upper]}&start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
       stub_request(:get, request_url).to_return(status: 200, body: data)
       response = client.custom_point_details(options)
 

@@ -3,7 +3,11 @@ require "spec_helper"
 RSpec.describe DbController, type: :request do
   let(:fake_response) { { data: "data" } }
   let(:severity_data) { [{ lat: 20, long: 40, total: 200 }] }
-  let(:days_data) { [{ value: 10, date: "data", avg_temp: "100"}] }
+  let(:days_data) { {
+    status: "OK",
+    info: {},
+    data: [{ value: 10, date: "date", avg_temp: "100"}]
+    } }
   # let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temp: "100"}] }
 
   describe "GET db/disease_panel" do
@@ -120,22 +124,22 @@ RSpec.describe DbController, type: :request do
       pest = Pest.create!(remote_name: "pest")
       start_date = Date.current
       end_date = Date.current - 20.days
-      latitude = 10
-      longitude = 20
+      lat = 10
+      long = 20
       allow_any_instance_of(AgWeather::Client).to receive(:point_details).and_return(days_data)
 
       expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
         start_date: start_date,
         end_date: end_date,
-        latitude: latitude.to_f,
-        longitude: longitude.to_f,
+        lat: lat.to_f,
+        long: long.to_f,
         pest: "pest",
       })
 
       post point_details_db_index_path, params: {
         pest_id: pest.id,
-        latitude: latitude,
-        longitude: longitude,
+        latitude: lat,
+        longitude: long,
         start_date: start_date,
         end_date: end_date,
         panel: "disease"
@@ -148,22 +152,22 @@ RSpec.describe DbController, type: :request do
       pest = Pest.create!(remote_name: "pest")
       start_date = Date.current
       end_date = Date.current - 20.days
-      latitude = 10
-      longitude = 20
+      lat = 10
+      long = 20
       allow_any_instance_of(AgWeather::Client).to receive(:point_details).and_return(days_data)
 
       expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
         start_date: start_date,
         end_date: end_date,
-        latitude: latitude.to_f,
-        longitude: longitude.to_f,
+        lat: lat.to_f,
+        long: long.to_f,
         pest: "pest",
       })
 
       post point_details_db_index_path, params: {
         pest_id: pest.id,
-        latitude: latitude,
-        longitude: longitude,
+        latitude: lat,
+        longitude: long,
         start_date: start_date,
         end_date: end_date,
         panel: "insect"
@@ -178,24 +182,24 @@ RSpec.describe DbController, type: :request do
       t_max = 100
       start_date = Date.current
       end_date = Date.current - 20.days
-      latitude = 10
-      longitude = 20
+      lat = 10
+      long = 20
       allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).and_return(days_data)
 
       expect_any_instance_of(AgWeather::Client).to receive(:custom_point_details).with({
         start_date: start_date,
         end_date: end_date,
-        latitude: latitude.to_f,
-        longitude: longitude.to_f,
-        t_min: t_min,
-        t_max: t_max
+        lat: lat.to_f,
+        long: long.to_f,
+        base: t_min,
+        upper: t_max
       })
 
       post point_details_db_index_path, params: {
         t_min: t_min,
         t_max: t_max,
-        latitude: latitude,
-        longitude: longitude,
+        latitude: lat,
+        longitude: long,
         start_date: start_date,
         end_date: end_date,
         panel: "custom"

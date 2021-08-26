@@ -29,15 +29,18 @@ class DbController < ApplicationController
       @model_value = "Custom"
       options = { lat: @latitude, long: @longitude, base: t_min, upper: t_max, start_date: start_date, end_date: end_date }
       response = ag_weather_client.custom_point_details(options)
+      puts response
       @weather = response[:data]
     when "insect"
       @model_value = @pest.name
       options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
       response = ag_weather_client.point_details(options)
+      puts response
       @weather = response[:data]
     when "disease"
       options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
       response = ag_weather_client.point_details(options)
+      puts response
       @weather = response[:data]
     end
     render layout: false
@@ -188,7 +191,7 @@ class DbController < ApplicationController
           end_date: end_date
         )[:data]
       rescue Exception => e
-        logger.error("DB Controller :: #{e}")
+        Rails.logger.error("DB Controller :: #{e}")
         []
       end
     end
