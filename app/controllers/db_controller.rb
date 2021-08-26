@@ -28,14 +28,17 @@ class DbController < ApplicationController
     when "custom"
       @model_value = "Custom"
       options = { lat: @latitude, long: @longitude, base: t_min, upper: t_max, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.custom_point_details(options)
+      response = ag_weather_client.custom_point_details(options)
+      @weather = response[:data]
     when "insect"
       @model_value = @pest.name
       options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.point_details(options)
+      response = ag_weather_client.point_details(options)
+      @weather = response[:data]
     when "disease"
       options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.point_details(options)
+      response = ag_weather_client.point_details(options)
+      @weather = response[:data]
     end
     render layout: false
   end
@@ -182,7 +185,8 @@ class DbController < ApplicationController
         client.pest_forecasts(
           pest: pest.remote_name,
           start_date: start_date,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
       rescue Exception => e
         logger.error("DB Controller :: #{e}")
         []
@@ -258,11 +262,13 @@ class DbController < ApplicationController
         past_week = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 7.days,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
         season_to_date = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date.beginning_of_year,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
       rescue Exception
       end
       return { past_week: past_week, season_to_date: season_to_date }
@@ -297,17 +303,17 @@ class DbController < ApplicationController
           pest: pest.remote_name,
           start_date: start_date,
           end_date: end_date
-        )
+        )[:data]
         last_7_days = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 7.days,
           end_date: end_date
-        )
+        )[:data]
         last_2_days = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 2.days,
           end_date: end_date
-        )
+        )[:data]
       rescue Exception
       end
       return {

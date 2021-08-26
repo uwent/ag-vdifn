@@ -11,8 +11,7 @@ module AgWeather
         query: get_options(options),
         timeout: 10
       )
-      response = JSON.parse(forecasts.body, symbolize_names: true)
-      response[:data]
+      JSON.parse(forecasts.body, symbolize_names: true)
     end
 
     def custom(options)
@@ -30,8 +29,7 @@ module AgWeather
         query: get_options(options),
         timeout: 10
       )
-      response = JSON.parse(point_details.body, symbolize_names: true)
-      response[:data]
+      JSON.parse(point_details.body, symbolize_names: true)
     end
 
     def custom_point_details(options)
@@ -40,8 +38,7 @@ module AgWeather
         query: get_options(options),
         timeout: 1000
       )
-      response = JSON.parse(point_details.body, symbolize_names: true)
-      response[:data]
+      JSON.parse(point_details.body, symbolize_names: true)
     end
 
     # def stations
