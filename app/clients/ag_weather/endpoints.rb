@@ -2,10 +2,10 @@
 module AgWeather
   module Endpoints
     PEST_FORECASTS = '/pest_forecasts'
-    STATIONS = '/stations'
-    STATION_OBSERVATIONS = '/station_observations'
+    CUSTOM = '/pest_forecasts/custom'
     POINT_DETAILS = '/pest_forecasts/point_details'
     CUSTOM_POINT_DETAILS = '/pest_forecasts/custom_point_details'
-    CUSTOM = '/pest_forecasts/custom'
+    # STATIONS = '/stations'
+    # STATION_OBSERVATIONS = '/station_observations'
   end
 end

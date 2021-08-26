@@ -12,10 +12,10 @@ class DbController < ApplicationController
     render json: strategy.severities_from_totals(strategy.severities)
   end
 
-  def stations
-    @stations = ag_weather_client.stations
-    render json: @stations
-  end
+  # def stations
+  #   @stations = ag_weather_client.stations
+  #   render json: @stations
+  # end
 
   def point_details
     @pest = get_pest
@@ -27,26 +27,25 @@ class DbController < ApplicationController
     case params[:panel]
     when "custom"
       @model_value = "Custom"
-      options = { latitude: @latitude, longitude: @longitude, t_min: t_min, t_max: t_max, start_date: start_date, end_date: end_date }
+      options = { lat: @latitude, long: @longitude, base: t_min, upper: t_max, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.custom_point_details(options)
     when "insect"
       @model_value = @pest.name
-      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
+      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.point_details(options)
     when "disease"
-      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
+      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
       @weather = ag_weather_client.point_details(options)
     end
     render layout: false
   end
 
-  def station_details
-    @name = params[:name]
-
-    options = { name: @name, start_date: start_date, end_date: end_date }
-    @weather = ag_weather_client.station_observations(options)
-    render layout: false
-  end
+  # def station_details
+  #   @name = params[:name]
+  #   options = { name: @name, start_date: start_date, end_date: end_date }
+  #   @weather = ag_weather_client.station_observations(options)
+  #   render layout: false
+  # end
 
   def severity_legend
     pest = Pest.find(params[:pest_id])
