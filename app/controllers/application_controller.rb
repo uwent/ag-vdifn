@@ -4,16 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def index
-    # begin
-    #   model = params[:model]
-    #   Rails.logger.debug ">> Application#index ==> Launching with model: #{model}"
-    #   pest = Pest.where(local_name: model).first
-    #   if pest
-    #     Rails.logger.debug ">> Pest found! ID: #{pest.id}, Name: #{pest.name}"
-    #   else
-    #     Rails.logger.debug ">> No matching pest found for model: #{model}"
-    #   end
-    # end
   end
   
 end

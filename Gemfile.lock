@@ -349,7 +349,7 @@ DEPENDENCIES
   pry-rails (~> 0.3)
   puma (~> 5.4)
   rails (~> 6.1.4)
-  railties (= 6.1.4.1)
+  railties (~> 6.1.4)
   rspec-rails (~> 5.0)
   sassc-rails (~> 2.1)
   sdoc (~> 2.2)

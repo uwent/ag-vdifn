@@ -23,9 +23,12 @@ export default class DatabaseClient implements DatabaseClientInterface {
   }
 
   async fetchDiseasePanel(): Promise<CropWithAfflictions[]> {
+    console.log("DB >> Fetching disease data")
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(ENDPOINTS.DISEASE_PANEL)
+      console.log("DB >> Response received")
+      console.log(response)
       cropsWithAfflictions = response.data.map(
         (cropWithDisease: CropWithDiseases) => {
           const { diseases, ...newData } = {
@@ -42,9 +45,12 @@ export default class DatabaseClient implements DatabaseClientInterface {
   }
 
   async fetchInsectPanel(): Promise<CropWithAfflictions[]> {
+    console.log("DB >> Fetching insect data")
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(ENDPOINTS.INSECT_PANEL)
+      console.log("DB >> Response received")
+      console.log(response)
       cropsWithAfflictions = response.data.map(
         (cropWithInsect: CropWithInsects) => {
           const { insects, ...newData } = {
@@ -61,17 +67,20 @@ export default class DatabaseClient implements DatabaseClientInterface {
   }
 
   async fetchSeverities(severityParams: SeverityParams): Promise<Severity[]> {
+    console.log("DB >> Fetching custom data")
     const severities: Severity[] = []
     try {
       const response = await axios.post(ENDPOINTS.SEVERITIES, severityParams)
-      if (response.data.results) {
-        response.data.results.forEach((result) => {
+      console.log("DB >> Response received")
+      console.log(response)
+      if (response.data.data) {
+        response.data.data.forEach((data) => {
           severities.push({
-            level: result.total,
-            lat: result.lat,
-            long: result.long,
-            min: response.data.min,
-            max: response.data.max,
+            level: data.total,
+            lat: data.lat,
+            long: data.long,
+            min: response.data.info.min_value,
+            max: response.data.info.max_value,
           })
         })
         return severities

@@ -12,10 +12,10 @@ class DbController < ApplicationController
     render json: strategy.severities_from_totals(strategy.severities)
   end
 
-  def stations
-    @stations = ag_weather_client.stations
-    render json: @stations
-  end
+  # def stations
+  #   @stations = ag_weather_client.stations
+  #   render json: @stations
+  # end
 
   def point_details
     @pest = get_pest
@@ -27,26 +27,31 @@ class DbController < ApplicationController
     case params[:panel]
     when "custom"
       @model_value = "Custom"
-      options = { latitude: @latitude, longitude: @longitude, t_min: t_min, t_max: t_max, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.custom_point_details(options)
+      options = { lat: @latitude, long: @longitude, base: t_min, upper: t_max, start_date: start_date, end_date: end_date }
+      response = ag_weather_client.custom_point_details(options)
+      puts response
+      @weather = response[:data]
     when "insect"
       @model_value = @pest.name
-      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.point_details(options)
+      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
+      response = ag_weather_client.point_details(options)
+      puts response
+      @weather = response[:data]
     when "disease"
-      options = { pest: @pest.remote_name, latitude: @latitude, longitude: @longitude, start_date: start_date, end_date: end_date }
-      @weather = ag_weather_client.point_details(options)
+      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
+      response = ag_weather_client.point_details(options)
+      puts response
+      @weather = response[:data]
     end
     render layout: false
   end
 
-  def station_details
-    @name = params[:name]
-
-    options = { name: @name, start_date: start_date, end_date: end_date }
-    @weather = ag_weather_client.station_observations(options)
-    render layout: false
-  end
+  # def station_details
+  #   @name = params[:name]
+  #   options = { name: @name, start_date: start_date, end_date: end_date }
+  #   @weather = ag_weather_client.station_observations(options)
+  #   render layout: false
+  # end
 
   def severity_legend
     pest = Pest.find(params[:pest_id])
@@ -183,9 +188,10 @@ class DbController < ApplicationController
         client.pest_forecasts(
           pest: pest.remote_name,
           start_date: start_date,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
       rescue Exception => e
-        logger.error("DB Controller :: #{e}")
+        Rails.logger.error("DB Controller :: #{e}")
         []
       end
     end
@@ -259,11 +265,13 @@ class DbController < ApplicationController
         past_week = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 7.days,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
         season_to_date = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date.beginning_of_year,
-          end_date: end_date)
+          end_date: end_date
+        )[:data]
       rescue Exception
       end
       return { past_week: past_week, season_to_date: season_to_date }
@@ -298,17 +306,17 @@ class DbController < ApplicationController
           pest: pest.remote_name,
           start_date: start_date,
           end_date: end_date
-        )
+        )[:data]
         last_7_days = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 7.days,
           end_date: end_date
-        )
+        )[:data]
         last_2_days = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date - 2.days,
           end_date: end_date
-        )
+        )[:data]
       rescue Exception
       end
       return {
