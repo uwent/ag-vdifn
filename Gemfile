@@ -14,7 +14,7 @@ gem 'jbuilder', '~> 2.11'
 gem 'uglifier', '~> 4.2'
 gem 'httparty', '~> 0.18'
 gem 'pikaday-gem', '~> 1.4' # datepicker
-gem 'js-routes', '~> 2.0'
+gem 'js-routes', '~> 2.1'
 # gem 'webpacker', '~> 5.4.0'
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 gem 'active_model_serializers', '~> 0.10'
