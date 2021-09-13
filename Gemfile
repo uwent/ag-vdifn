@@ -39,7 +39,7 @@ group :development, :test do
   gem 'ed25519', '~> 1.2'
   gem 'bcrypt_pbkdf', '~> 1.1'
   gem 'guard-rspec', '~> 4.7', require: false
-  gem 'spring', '~> 2.1'
+  gem 'spring', '~> 3.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'simplecov', '~> 0.21'
 end
