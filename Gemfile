@@ -21,7 +21,7 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'sdoc', '~> 2.2', group: :doc
 
 group :development do
-  gem 'puma', '~> 5.4'
+  gem 'puma', '~> 5.5'
   gem 'capistrano', '~> 3.16'
   gem 'capistrano-rbenv', '~> 2.2'
   gem 'capistrano-rails',   '~> 1.6', require: false
