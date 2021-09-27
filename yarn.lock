@@ -1091,10 +1091,10 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.36"
 
-"@googlemaps/js-api-loader@^1.12.3":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.12.3.tgz#fb329f750399850d6a938a2c02b703b3a22fea47"
-  integrity sha512-u+MA+iZ2863YgugRRJH2EgI6exUIFq9yC7QEOj2VZkWE9d/FR4QmxNW5zaJBu4scglkI9O+E6yByj+7d06N7Sg==
+"@googlemaps/js-api-loader@^1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.12.4.tgz#9248ed6ca3ab5055158b2ea1d7eabd54251849ab"
+  integrity sha512-CG2ldySYFP+Pf6ymtAp9fUQGltEdOJCv2+LEiQjVZySqSN9QhqVbIFdFDKOu6cirqXXvpVcKYYLsg/K1H8XN0Q==
   dependencies:
     fast-deep-equal "^3.1.3"
 
