@@ -12,16 +12,16 @@ gem 'momentjs-rails', '~> 2.20'
 gem 'turbolinks', '~> 5.2'
 gem 'jbuilder', '~> 2.11'
 gem 'uglifier', '~> 4.2'
-gem 'httparty', '~> 0.18'
+gem 'httparty', '~> 0.19'
 gem 'pikaday-gem', '~> 1.4' # datepicker
-gem 'js-routes', '~> 2.0'
+gem 'js-routes', '~> 2.1'
 # gem 'webpacker', '~> 5.4.0'
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 gem 'active_model_serializers', '~> 0.10'
 gem 'sdoc', '~> 2.2', group: :doc
 
 group :development do
-  gem 'puma', '~> 5.4'
+  gem 'puma', '~> 5.5'
   gem 'capistrano', '~> 3.16'
   gem 'capistrano-rbenv', '~> 2.2'
   gem 'capistrano-rails',   '~> 1.6', require: false
@@ -39,7 +39,7 @@ group :development, :test do
   gem 'ed25519', '~> 1.2'
   gem 'bcrypt_pbkdf', '~> 1.1'
   gem 'guard-rspec', '~> 4.7', require: false
-  gem 'spring', '~> 2.1'
+  gem 'spring', '~> 3.0'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'simplecov', '~> 0.21'
 end
