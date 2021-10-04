@@ -12,7 +12,7 @@ gem 'momentjs-rails', '~> 2.20'
 gem 'turbolinks', '~> 5.2'
 gem 'jbuilder', '~> 2.11'
 gem 'uglifier', '~> 4.2'
-gem 'httparty', '~> 0.19'
+gem 'httparty', '~> 0.20'
 gem 'pikaday-gem', '~> 1.4' # datepicker
 gem 'js-routes', '~> 2.1'
 # gem 'webpacker', '~> 5.4.0'
