@@ -11,13 +11,11 @@
   const { getCrops, getAfflictionName } = getContext(panelKey)
   export let defaultModel = ""
   let showModal = false
-  let selectedCropValue: number
-  let afflictionsForCrop: Pest[] = []
   let crops: CropWithAfflictions[] = []
-  let afflictionName: string
+  let selectedCropValue = 0
+  let afflictionsForCrop: Pest[] = []
+  let afflictionName = getAfflictionName()
   let modelId: number
-
-  afflictionName = getAfflictionName()
 
   function getAfflictionsForCrop(event) {
     const cropId = parseInt(event.target.value)
@@ -88,6 +86,7 @@
   onMount(() => {
     crops = getCrops()
     if (crops.length <= 0) return
+    selectedCropValue = crops[0].id
     afflictionsForCrop = crops[0].afflictions
 
     handleUrlParams()
@@ -160,7 +159,6 @@
 <fieldset id="model-selection">
   <legend>Model Selection</legend>
   <label for="crop-select">Crop/Host</label>
-  <!-- svelte-ignore a11y-no-onchange -->
   <select
     on:change={getAfflictionsForCrop}
     bind:value={selectedCropValue}
@@ -175,7 +173,6 @@
   <div class="clear" />
   <label for="affliction-select">{afflictionName}</label>
   <div class="affliction-container">
-    <!-- svelte-ignore a11y-no-onchange -->
     <select
       on:change={setAfflictionValue}
       class="affliction-select"
