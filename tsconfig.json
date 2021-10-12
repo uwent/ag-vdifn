@@ -14,7 +14,7 @@
       "*": ["node_modules/*", "app/packs/*"]
     },
     "sourceMap": true,
-    "target": "es5",
+    "target": "es6",
     "noEmit": true,
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
