@@ -23,7 +23,7 @@
     "svelte": "^3.43.2",
     "svelte-awesome": "^2.4.1",
     "svelte-loader": "^3.1.2",
-    "svelte-preprocess": "^4.9.5",
+    "svelte-preprocess": "^4.9.8",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
@@ -44,7 +44,7 @@
     "@types/jest": "^27.0.2",
     "@types/lodash": "^4.14.175",
     "@types/node": "^16.10.4",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@webpack-cli/serve": "^1.5.2",
     "babel-loader": "^8.2.2",
