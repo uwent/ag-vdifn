@@ -1,14 +1,14 @@
-branch = ENV['BRANCH'] || 'main'
+branch = ENV["BRANCH"] || "main"
 
-set :application, 'ag-vdifn'
-set :repo_url, 'git@agvdifn.github.com:uwent/ag-vdifn.git'
+set :application, "ag-vdifn"
+set :repo_url, "git@agvdifn.github.com:uwent/ag-vdifn.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :branch, branch
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/deploy/ag-vdifn'
+set :deploy_to, "/home/deploy/ag-vdifn"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -36,11 +36,12 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 # set :keep_releases, 5
 
 # rbenv
-set :deploy_user, 'deploy'
+set :deploy_user, "deploy"
 set :rbenv_type, :user
-set :rbenv_ruby, '3.0.1'
+set :rbenv_ruby, "3.0.2"
 
 before "deploy:assets:precompile", "deploy:yarn_install"
+
 namespace :deploy do
 
   desc "Run rake yarn install"
@@ -52,14 +53,15 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
+  desc "Restart application"
   after :publishing, :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join("tmp/restart.txt")
     end
   end
 
+  desc "Reseed the pests db"
   after :restart, :seed do
     on roles(:app) do
       within release_path do
