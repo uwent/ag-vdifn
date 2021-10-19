@@ -19,6 +19,7 @@ gem 'js-routes', '~> 2.1'
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 gem 'active_model_serializers', '~> 0.10'
 gem 'sdoc', '~> 2.2', group: :doc
+gem 'ffi', '~> 1.5' # fix circleci error?
 
 group :development do
   gem 'puma', '~> 5.5'
