@@ -1,14 +1,17 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2
+  ruby: circleci/ruby@1.2.0
 
 jobs:
   build:
     docker:
       - image: circleci/ruby:3.0.2-node
         environment:
+          PG_HOST: localhost
+          PG_USER: ag_weather
           RAILS_ENV: test
-      - image: circleci/postgres:12.2
+          RACK_ENV: test
+      - image: circleci/postgres:12.8
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
@@ -24,13 +27,13 @@ jobs:
           command: bundle config set --local path './vendor/bundle'
       - restore_cache:
           keys:
-            - agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
-            - agvdifn-bundle-v1-
+            - agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+            - agvdifn-bundle
       - run:
           name: Bundle Install
           command: bundle check || bundle install
       - save_cache:
-          key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
+          key: agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
       - restore_cache:
@@ -47,14 +50,14 @@ jobs:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          name: Setup database
+          name: Set up database
           command: bin/rails db:setup
+      - run:
+          name: Rspec
+          command: bundle exec rspec
       - run:
           name: Jest
           command: yarn test --maxWorkers=4
-      - run:
-          name: RSpec
-          command: bundle exec rspec
       - run:
           name: Compile
           command: bundle exec rails webpacker:compile
