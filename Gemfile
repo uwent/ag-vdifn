@@ -20,13 +20,12 @@ gem 'turbolinks', '~> 5.2'
 gem 'uglifier', '~> 4.2'
 gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 
-
 group :development do
   gem 'puma', '~> 5.5'
   gem 'capistrano', '~> 3.16'
+  gem 'capistrano-bundler', '~> 2.0'
+  gem 'capistrano-rails', '~> 1.6'
   gem 'capistrano-rbenv', '~> 2.2'
-  gem 'capistrano-rails', '~> 1.6', require: false
-  gem 'capistrano-bundler', '~> 2.0', require: false
   gem 'web-console', '~> 4.1'
 end
 
