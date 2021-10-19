@@ -7,7 +7,10 @@ jobs:
     docker:
       - image: circleci/ruby:3.0.2-node
         environment:
+          PG_HOST: localhost
+          PG_USER: ag_weather
           RAILS_ENV: test
+          RACK_ENV: test
       - image: circleci/postgres:12.8
         environment:
           POSTGRES_USER: postgres
@@ -47,14 +50,14 @@ jobs:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          name: Setup database
+          name: Set up database
           command: bin/rails db:setup
+      - run:
+          name: Rspec
+          command: bundle exec rspec
       - run:
           name: Jest
           command: yarn test --maxWorkers=4
-      - run:
-          name: RSpec
-          command: bundle exec rspec
       - run:
           name: Compile
           command: bundle exec rails webpacker:compile
