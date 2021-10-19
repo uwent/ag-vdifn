@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2
+  ruby: circleci/ruby@1.2.0
 
 jobs:
   build:
@@ -8,7 +8,7 @@ jobs:
       - image: circleci/ruby:3.0.2-node
         environment:
           RAILS_ENV: test
-      - image: circleci/postgres:12.2
+      - image: circleci/postgres:12.8
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
@@ -24,13 +24,13 @@ jobs:
           command: bundle config set --local path './vendor/bundle'
       - restore_cache:
           keys:
-            - agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
-            - agvdifn-bundle-v1-
+            - agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+            - agvdifn-bundle
       - run:
           name: Bundle Install
           command: bundle check || bundle install
       - save_cache:
-          key: agvdifn-bundle-v1-{{ checksum "Gemfile.lock" }}
+          key: agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
       - restore_cache:
