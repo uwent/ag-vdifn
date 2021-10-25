@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: e039a2f27e6bb684e921081295d3408625d25799
+  revision: 77231548ee9981568ffbcadd7256a3ededcee834
   specs:
     webpacker (6.0.0.rc.5)
       activesupport (>= 5.2)
@@ -192,6 +192,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     pg (1.2.3)
+    pg (1.2.3-x64-mingw32)
     pikaday-gem (1.4.0)
       railties (>= 3.1)
     pry (0.14.1)
@@ -202,7 +203,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-proxy (0.7.0)
       rack
@@ -317,7 +318,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
