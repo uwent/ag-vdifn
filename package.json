@@ -21,7 +21,7 @@
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
     "sass": "^1.43.3",
-    "svelte": "^3.43.2",
+    "svelte": "^3.44.1",
     "svelte-awesome": "^2.4.2",
     "svelte-loader": "^3.1.2",
     "svelte-preprocess": "^4.9.8",
