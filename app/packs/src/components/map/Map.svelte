@@ -11,7 +11,7 @@
   let googleInstance: GoogleWrapper
 
   const loader = new Loader({
-    apiKey: mapsAPIKey,
+    apiKey: process.env.GOOGLE_MAPS_KEY
   })
 
   setContext(mapKey, {

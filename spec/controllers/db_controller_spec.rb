@@ -191,8 +191,8 @@ RSpec.describe DbController, type: :request do
         end_date: end_date,
         lat: lat.to_f,
         long: long.to_f,
-        base: t_min,
-        upper: t_max
+        t_base: t_min,
+        t_upper: t_max
       })
 
       post point_details_db_index_path, params: {

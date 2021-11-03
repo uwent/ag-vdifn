@@ -87,8 +87,6 @@ export const customPanelState = writable({
 
 export const selectedPanel = writable('')
 
-export const mapsAPIKey = 'AIzaSyCswFVxc5h41yNLuKhdDutScL6sfyc5XE4'
-
 export const panelNames = {
   disease: 'disease',
   insect: 'insect',

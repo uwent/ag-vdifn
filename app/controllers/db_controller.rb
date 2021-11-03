@@ -2,13 +2,6 @@
 class DbController < ApplicationController
 
   def severities
-    # if params[:pest_id]
-    #   pest = Pest.find(params[:pest_id])
-    #   Rails.logger.debug ">> db#severities ==> Pest name: #{pest.local_name}, Type: #{pest.type}, Super: #{pest.class.superclass.name}"
-    # else
-    #   Rails.logger.debug ">> db#severities ==> Custom tab"
-    # end
-    
     render json: strategy.severities_from_totals(strategy.severities)
   end
 
@@ -24,23 +17,43 @@ class DbController < ApplicationController
     @t_min = params[:t_min]
     @t_max = params[:t_max].nil? ? "None" : params[:t_max]
     @in_fahrenheit = params[:in_fahrenheit]
+
     case params[:panel]
+
     when "custom"
       @model_value = "Custom"
-      options = { lat: @latitude, long: @longitude, base: t_min, upper: t_max, start_date: start_date, end_date: end_date }
-      response = ag_weather_client.custom_point_details(options)
-      puts response
+      params = {
+        lat: @latitude,
+        long: @longitude,
+        t_base: t_min,
+        t_upper: t_max,
+        start_date: start_date,
+        end_date: end_date
+      }
+      response = ag_weather_client.custom_point_details(params)
       @weather = response[:data]
+
     when "insect"
       @model_value = @pest.name
-      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
-      response = ag_weather_client.point_details(options)
-      puts response
+      params = {
+        pest: @pest.remote_name,
+        lat: @latitude,
+        long: @longitude,
+        start_date: start_date,
+        end_date: end_date
+      }
+      response = ag_weather_client.point_details(params)
       @weather = response[:data]
+
     when "disease"
-      options = { pest: @pest.remote_name, lat: @latitude, long: @longitude, start_date: start_date, end_date: end_date }
-      response = ag_weather_client.point_details(options)
-      puts response
+      params = {
+        pest: @pest.remote_name,
+        lat: @latitude,
+        long: @longitude,
+        start_date: start_date,
+        end_date: end_date
+      }
+      response = ag_weather_client.point_details(params)
       @weather = response[:data]
     end
     render layout: false
@@ -229,8 +242,8 @@ class DbController < ApplicationController
           client.custom(
             start_date: start_date,
             end_date: end_date,
-            t_min: t_min,
-            t_max: t_max)
+            t_base: t_min,
+            t_upper: t_max)
         end
       rescue Exception => e
         puts e

@@ -4,7 +4,6 @@ import {
   PestInfo,
   PointDetailsParams,
   SeverityParams,
-  StationDetailsParams,
   CropWithAfflictions,
 } from '../types'
 

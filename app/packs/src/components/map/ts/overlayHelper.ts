@@ -86,7 +86,8 @@ export default class OverlayHelper {
   }
 
   async getSeverities(severityParams: SeverityParams): Promise<Severity[]> {
-    return await new DatabaseClient().fetchSeverities(severityParams)
+    const severities = await new DatabaseClient().fetchSeverities(severityParams)
+    return severities
   }
 
   convertSeveritiesToRectangleOptions(): RectangleOption[] {
