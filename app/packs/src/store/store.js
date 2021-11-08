@@ -96,7 +96,7 @@ export const panelNames = {
 
 export const defaults = {
   panel: 'disease',
-  disease: 'late-blight',
+  disease: 'early-blight',
   insect: 'cpb',
   t_min: 50,
   t_max: null,
