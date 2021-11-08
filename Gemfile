@@ -34,7 +34,7 @@ group :development, :test do
   gem 'byebug', '~> 11.1'
   gem 'dotenv-rails', '~> 2.7'
   gem 'ed25519', '~> 1.2'
-  gem 'guard-rspec', '~> 4.7', require: false
+  gem 'guard-rspec', '~> 4.7'
   gem 'pry-rails', '~> 0.3'
   gem 'rspec-rails', '~> 5.0'
   gem 'shoulda-matchers', '~> 5.0'

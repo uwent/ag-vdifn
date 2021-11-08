@@ -3,7 +3,7 @@
   import { onMount, setContext } from 'svelte'
   import mapOptions from './ts/mapOptions'
   import Loading from '../common/Loading.svelte'
-  import { mapKey, mapsAPIKey } from '../../store/store'
+  import { mapKey } from '../../store/store'
   import GoogleWrapper from './ts/googleWrapper'
   let container: any
   let promise: any
@@ -11,7 +11,7 @@
   let googleInstance: GoogleWrapper
 
   const loader = new Loader({
-    apiKey: process.env.GOOGLE_MAPS_KEY
+    apiKey: process.env.GOOGLE_MAPS_API_KEY
   })
 
   setContext(mapKey, {
