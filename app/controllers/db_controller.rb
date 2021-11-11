@@ -277,7 +277,7 @@ class DbController < ApplicationController
       begin
         past_week = client.pest_forecasts(
           pest: pest.remote_name,
-          start_date: end_date - 7.days,
+          start_date: [start_date, end_date - 7.days].max,
           end_date: end_date
         )[:data]
         season_to_date = client.pest_forecasts(
