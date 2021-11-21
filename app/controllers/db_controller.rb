@@ -1,6 +1,4 @@
-# coding: utf-8
 class DbController < ApplicationController
-
   def severities
     render json: strategy.severities_from_totals(strategy.severities)
   end
@@ -79,9 +77,9 @@ class DbController < ApplicationController
 
   def pest_info
     pest = Pest.find(params[:pest_id])
-    in_f = params[:in_fahrenheit] == 'true'
+    in_f = params[:in_fahrenheit] == "true"
     info = pest.info
-    info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: '100px')) unless pest.photo.blank?
+    info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: "100px")) unless pest.photo.blank?
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
     render json: {
@@ -91,18 +89,22 @@ class DbController < ApplicationController
       biofix: pest.biofix_date,
       end_date_enabled: pest.end_date_enabled,
       tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
-      tmax: pest.t_max.nil? ? '' : (in_f ? pest.t_max : f_to_c(pest.t_max))
+      tmax: if pest.t_max.nil?
+              ""
+            else
+              (in_f ? pest.t_max : f_to_c(pest.t_max))
+            end
     }
   end
 
   def disease_panel
     @crops = create_crops_for_disease_panel.unshift(create_any_option(Disease))
-    render json: @crops, include: { diseases: { methods: [ :end_date_enabled, :biofix_date] } }
+    render json: @crops, include: {diseases: {methods: [:end_date_enabled, :biofix_date]}}
   end
 
   def insect_panel
     @crops = create_crops_for_insect_panel.unshift(create_any_option(Insect))
-    render json: @crops, include: { insects: { methods: [ :end_date_enabled, :biofix_date] } }
+    render json: @crops, include: {insects: {methods: [:end_date_enabled, :biofix_date]}}
   end
 
   private
@@ -116,7 +118,7 @@ class DbController < ApplicationController
   end
 
   def create_any_option(pest_type)
-    any_crop = Crop.new(id: 0, name: 'Any')
+    any_crop = Crop.new(id: 0, name: "Any")
     any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name.to_s <=> y.name.to_s }
     any_crop
   end
@@ -130,7 +132,7 @@ class DbController < ApplicationController
   end
 
   def t_min
-    if (!params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit])
+    if !params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit]
       c_to_f(params[:t_min])
     else
       params[:t_min].nil? ? 0 : params[:t_min].to_f
@@ -138,7 +140,7 @@ class DbController < ApplicationController
   end
 
   def t_max
-    if (!params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None")
+    if !params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None"
       c_to_f(params[:t_max])
     else
       params[:t_max].nil? || params[:t_max] === "None" ? nil : params[:t_max].to_f
@@ -147,12 +149,12 @@ class DbController < ApplicationController
 
   def c_to_f(temp)
     return 0 if temp.nil?
-    ((temp.to_f * 9.0/5.0) + 32.0).round(1)
+    ((temp.to_f * 9.0 / 5.0) + 32.0).round(1)
   end
 
   def f_to_c(temp)
     return 0 if temp.nil?
-    ((temp.to_f - 32.0) * 5.0/9.0).round(1)
+    ((temp.to_f - 32.0) * 5.0 / 9.0).round(1)
   end
 
   def ag_weather_client
@@ -160,10 +162,11 @@ class DbController < ApplicationController
   end
 
   def strategy
-    @strategy ||= send(pick_strategy(get_pest()).to_sym)
+    @strategy ||= send(pick_strategy(get_pest).to_sym)
   end
 
   def pick_strategy(pest)
+    Rails.logger.debug ">>> Picking strategy for #{pest}"
     case pest.class.name
     when "Custom"
       "build_custom_strategy"
@@ -197,16 +200,14 @@ class DbController < ApplicationController
     end
 
     def severities
-      begin
-        client.pest_forecasts(
-          pest: pest.remote_name,
-          start_date: start_date,
-          end_date: end_date
-        )[:data]
-      rescue Exception => e
-        Rails.logger.error("DB Controller :: #{e}")
-        []
-      end
+      client.pest_forecasts(
+        pest: pest.remote_name,
+        start_date: start_date,
+        end_date: end_date
+      )[:data]
+    rescue => e
+      Rails.logger.error "DB Controller :: #{e}"
+      []
     end
 
     def severities_from_totals(totals)
@@ -214,6 +215,7 @@ class DbController < ApplicationController
     end
 
     private
+
     attr_reader :pest, :client, :start_date, :end_date
   end
 
@@ -237,25 +239,28 @@ class DbController < ApplicationController
           client.custom(
             start_date: start_date,
             end_date: end_date,
-            pest: pests.first.remote_name)
+            pest: pests.first.remote_name
+          )
         else
           client.custom(
             start_date: start_date,
             end_date: end_date,
             t_base: t_min,
-            t_upper: t_max)
+            t_upper: t_max
+          )
         end
-      rescue Exception => e
-        puts e
+      rescue => e
+        Rails.logger.error "CustomStrategy :: Error: #{e.message}"
         []
       end
     end
 
     def severities_from_totals(totals)
-      return totals
+      totals
     end
 
     private
+
     attr_reader :client, :start_date, :end_date, :t_min, :t_max
   end
 
@@ -265,6 +270,7 @@ class DbController < ApplicationController
 
   class LateBlightStrategy
     def initialize(pest, client, start_date, end_date)
+      Rails.logger.debug ">>> Launching Late Blight Strategy"
       @pest = pest
       @client = client
       @start_date = start_date
@@ -285,9 +291,10 @@ class DbController < ApplicationController
           start_date: end_date.beginning_of_year,
           end_date: end_date
         )[:data]
-      rescue Exception
+      rescue => e
+        Rails.logger.error "LateBlightStrategy :: Error: #{e.message}"
       end
-      return { past_week: past_week, season_to_date: season_to_date }
+      {past_week: past_week, season_to_date: season_to_date}
     end
 
     def severities_from_totals(totals)
@@ -295,6 +302,7 @@ class DbController < ApplicationController
     end
 
     private
+
     attr_reader :pest, :client, :start_date, :end_date
   end
 
@@ -304,6 +312,7 @@ class DbController < ApplicationController
 
   class DiseaseStrategy
     def initialize(pest, client, start_date, end_date)
+      Rails.logger.debug ">>> Launching Disease Strategy"
       @pest = pest
       @client = client
       @start_date = start_date
@@ -330,9 +339,10 @@ class DbController < ApplicationController
           start_date: end_date - 2.days,
           end_date: end_date
         )[:data]
-      rescue Exception
+      rescue => e
+        Rails.logger.error "DiseaseStrategy :: Error: #{e.message}"
       end
-      return {
+      {
         selected_dates: selected_dates,
         last_7_days: last_7_days,
         last_2_days: last_2_days
@@ -348,6 +358,7 @@ class DbController < ApplicationController
     end
 
     private
+
     attr_reader :pest, :client, :start_date, :end_date
   end
 end

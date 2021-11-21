@@ -1,7 +1,6 @@
 require "spec_helper"
 
 RSpec.describe EarlyBlight, type: :model do
-
   biofix_mm = 2
   biofix_dd = 15
 
@@ -50,5 +49,4 @@ RSpec.describe EarlyBlight, type: :model do
   it "sets biofix date from seeds" do
     expect(pest.biofix_date).to eq(Date.new(Date.current.year, biofix_mm, biofix_dd))
   end
-
 end

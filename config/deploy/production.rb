@@ -7,8 +7,6 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-
-
 # role-based syntax
 # ==================
 
@@ -17,11 +15,11 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{deploy@agweather.cals.wisc.edu:216}
-role :web, %w{deploy@agweather.cals.wisc.edu:216}
-role :db,  %w{deploy@agweather.cals.wisc.edu:216}
+role :app, %w[deploy@agweather.cals.wisc.edu:216]
+role :web, %w[deploy@agweather.cals.wisc.edu:216]
+role :db, %w[deploy@agweather.cals.wisc.edu:216]
 
-set :rails_env, 'production'
+set :rails_env, "production"
 
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle", "node_modules"
 
@@ -32,8 +30,6 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/pack
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================

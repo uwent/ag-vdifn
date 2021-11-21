@@ -1,9 +1,8 @@
 require "spec_helper"
 
 RSpec.describe ApplicationHelper, type: :helper do
-
   describe "when expected in Fahrenheit" do
-    let(:params) {{in_fahrenheit: true}}
+    let(:params) { {in_fahrenheit: true} }
 
     # weather temps are stored internally in C
     it "converts temps from C to F" do
@@ -16,12 +15,12 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it "renders the right symbol" do
-      expect(temp_symbol()).to eq("F")
+      expect(temp_symbol).to eq("F")
     end
   end
 
   describe "when expected in Celcius" do
-    let(:params) {{in_fahrenheit: false}}
+    let(:params) { {in_fahrenheit: false} }
 
     # weather temps are stored internally in C
     it "keeps temps in C" do
@@ -34,8 +33,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it "renders the right symbol" do
-      expect(temp_symbol()).to eq("C")
+      expect(temp_symbol).to eq("C")
     end
   end
-
 end

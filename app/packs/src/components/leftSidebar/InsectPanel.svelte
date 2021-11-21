@@ -14,6 +14,7 @@
     panelNames,
     insectPanelState,
     selectedAffliction,
+    dev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -22,7 +23,7 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data
-  export let defaultModel: string
+  export let defaultModel = ""
   const thisPanel = panelNames.insect
 
   setContext(panelKey, {
@@ -60,8 +61,8 @@
     url += "?panel=" + thisPanel
     url += "&model=" + $insectPanelState.currentAffliction.local_name
     title += " - " + $insectPanelState.currentAffliction.name
-    console.log("Insect panel >> Setting title to " + title)
-    console.log("Insect panel >> Setting url to " + url)
+    if (dev) console.log("Insect panel >> Setting title to " + title)
+    if (dev) console.log("Insect panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
     document.title = title
   }

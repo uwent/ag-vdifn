@@ -17,7 +17,7 @@ module AgVDIFN
     # in config/environments, which are processed later.
     #
     config.time_zone = "Central Time (US & Canada)"
-    config.eager_load_paths += %W(#{Rails.root}/app/models/diseases)
-    config.eager_load_paths += %W(#{Rails.root}/app/models/insects)
+    config.eager_load_paths += %W[#{Rails.root}/app/models/diseases]
+    config.eager_load_paths += %W[#{Rails.root}/app/models/insects]
   end
 end

@@ -1,7 +1,6 @@
 class EarlyBlight < Disease
-
   def severities_from_totals(selected_dates, past_week, last_2_days = nil)
-    selected_dates.zip(past_week).map do | pair |
+    selected_dates.zip(past_week).map do |pair|
       {
         lat: pair[0][:lat],
         long: pair[0][:long],
@@ -16,13 +15,12 @@ class EarlyBlight < Disease
       return 3 if past_week_avg >= 5
       return 2 if past_week_avg >= 3
       return 1 if past_week_avg >= 1
-      return 0
     else
       return 3 if selected_dates >= 250
       return 2 if selected_dates >= 200
       return 1 if selected_dates >= 150
-      return 0
     end
+    0
   end
 
   def severity_legend
@@ -34,5 +32,4 @@ class EarlyBlight < Disease
       {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (accumulated P-Days < 150 or P-Days > 300 and 7-day average < 1)"}
     ]
   end
-
 end

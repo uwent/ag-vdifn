@@ -1,10 +1,9 @@
 require "spec_helper"
 
 RSpec.describe CercosporaLeafSpot, type: :model do
-
   biofix = Date.today - 14.days
 
-  pest = CercosporaLeafSpot.create!()
+  pest = CercosporaLeafSpot.create!
 
   selected_dates = [
     {lat: 1, long: 1, total: rand(500)},
@@ -56,5 +55,4 @@ RSpec.describe CercosporaLeafSpot, type: :model do
   it "sets biofix date" do
     expect(pest.biofix_date).to eq(biofix)
   end
-
 end

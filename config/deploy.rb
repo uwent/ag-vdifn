@@ -27,7 +27,7 @@ set :deploy_to, "/home/deploy/ag-vdifn"
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
+set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets]
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -43,7 +43,6 @@ set :rbenv_ruby, "3.0.2"
 before "deploy:assets:precompile", "deploy:yarn_install"
 
 namespace :deploy do
-
   desc "Run rake yarn install"
   task :yarn_install do
     on roles(:web) do
@@ -65,9 +64,8 @@ namespace :deploy do
   after :restart, :seed do
     on roles(:app) do
       within release_path do
-        execute :rake, 'db:seed'
+        execute :rake, "db:seed"
       end
     end
   end
-
 end

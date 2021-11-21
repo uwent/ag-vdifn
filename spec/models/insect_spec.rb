@@ -3,7 +3,6 @@ require "spec_helper"
 today = Date.today
 
 RSpec.describe Insect, type: :model do
-
   pest = Insect.create!(
     name: "bug",
     biofix_mm: 1, biofix_dd: 15,
@@ -49,5 +48,4 @@ RSpec.describe Insect, type: :model do
     expect(pest.biofix_date).to eq(Date.new(Date.current.year, 1, 15))
     expect(pest2.biofix_date).to eq(Date.new(Date.current.year, 2, 15))
   end
-
 end

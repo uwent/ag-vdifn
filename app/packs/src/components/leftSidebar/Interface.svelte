@@ -4,6 +4,7 @@
     overlayLoading,
     panelNames,
     defaults,
+    env
   } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
@@ -21,7 +22,7 @@
   let diseaseParams = { model: defaults.disease }
   let insectParams = { model: defaults.insect }
 
-  console.log("Launching VDIFN in " + process.env.NODE_ENV + " environment")
+  console.log("Launching VDIFN in " + env + " environment")
 
   function parseUrlParams() {
     if (panelNames.all.includes(urlParams.get('panel'))) {

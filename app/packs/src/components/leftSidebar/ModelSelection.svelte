@@ -5,6 +5,7 @@
     panelKey,
     selectedAffliction,
     afflictionValue,
+    dev
   } from '../../store/store'
   import Modal from '../common/Modal.svelte'
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
@@ -76,10 +77,10 @@
     const queryModel = defaultModel
     if (queryModel) {
       modelId = getAfflictionId(queryModel)
-      console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
+      if (dev) console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
     } else {
       modelId = getAfflictionId(defaultModel)
-      console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
+      if (dev) console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
     }
   }
 

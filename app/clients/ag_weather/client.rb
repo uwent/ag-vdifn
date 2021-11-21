@@ -3,12 +3,14 @@ module AgWeather
     include AgWeather::Endpoints
     include HTTParty
 
-    base_uri ENV['AG_WEATHER_BASE_URL']
+    base_uri ENV["AG_WEATHER_BASE_URL"]
 
     def pest_forecasts(options)
+      Rails.logger.debug ">>> Getting Pest Forecasts"
+      Rails.logger.debug "options: #{options}"
       forecasts = self.class.get(
         AgWeather::Endpoints::PEST_FORECASTS,
-        query: get_options(options),
+        query: options,
         timeout: 10
       )
       JSON.parse(forecasts.body, symbolize_names: true)
@@ -17,8 +19,8 @@ module AgWeather
     def custom(options)
       forecasts = self.class.get(
         AgWeather::Endpoints::CUSTOM,
-        query: get_options(options),
-        timeout: 12000
+        query: options,
+        timeout: 10
       )
       JSON.parse(forecasts.body, symbolize_names: true)
     end
@@ -26,7 +28,7 @@ module AgWeather
     def point_details(options)
       point_details = self.class.get(
         AgWeather::Endpoints::POINT_DETAILS,
-        query: get_options(options),
+        query: options,
         timeout: 10
       )
       JSON.parse(point_details.body, symbolize_names: true)
@@ -35,8 +37,8 @@ module AgWeather
     def custom_point_details(options)
       point_details = self.class.get(
         AgWeather::Endpoints::CUSTOM_POINT_DETAILS,
-        query: get_options(options),
-        timeout: 1000
+        query: options,
+        timeout: 10
       )
       JSON.parse(point_details.body, symbolize_names: true)
     end
@@ -61,7 +63,9 @@ module AgWeather
     private
 
     def get_options(options)
-      options.inject({}) { |h, q| h[q[0].to_s.underscore] = q[1]; h }
+      options.each_with_object({}) { |q, h|
+        h[q[0].to_s.underscore] = q[1]
+      }
     end
   end
 end

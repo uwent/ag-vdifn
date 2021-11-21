@@ -1,5 +1,4 @@
 class FoliarDisease < Disease
-
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
     last_7_days.map do |grid|
       {
@@ -15,7 +14,7 @@ class FoliarDisease < Disease
     return 3 if last_7_days >= 15
     return 2 if last_7_days >= 10
     return 1 if last_7_days >= 5
-    return 0
+    0
   end
 
   def severity_legend

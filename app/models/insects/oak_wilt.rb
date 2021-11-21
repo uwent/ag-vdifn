@@ -2,7 +2,6 @@
 # See Jagemann et al 2018
 
 class OakWilt < Insect
-
   def total_to_severity(total, freezing, end_date)
     return 0 if freezing
 
@@ -21,7 +20,7 @@ class OakWilt < Insect
     sev -= 1 if end_date.yday >= 203
     sev -= 1 if end_date.yday >= 210
 
-    return [0, sev].max
+    [0, sev].max
   end
 
   def severity_legend
@@ -33,5 +32,4 @@ class OakWilt < Insect
       {name: "Very Low", slug: "very_low", description: "Very low risk of oak wilt"}
     ]
   end
-
 end

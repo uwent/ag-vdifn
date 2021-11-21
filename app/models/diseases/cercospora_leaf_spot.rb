@@ -1,5 +1,4 @@
 class CercosporaLeafSpot < Disease
-
   def severities_from_totals(selected_dates, last_7_days, last_2_days)
     if last_2_days == []
       logger.warn("Cercospora Leaf Spot :: No weather data for last 2 days!")
@@ -31,7 +30,7 @@ class CercosporaLeafSpot < Disease
     return 3 if avg2 >= 3.5 || avg7 >= 3
     return 2 if avg2 >= 2 || avg7 >= 1.5
     return 1 if avg2 >= 1 || avg7 >= 0.5
-    return 0
+    0
   end
 
   def severity_legend

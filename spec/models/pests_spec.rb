@@ -1,7 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Pest, type: :model do
-
   it { should have_many(:crop_pests) }
   it { should have_many(:crops) }
 
@@ -13,5 +12,4 @@ RSpec.describe Pest, type: :model do
   it "generates a biofix date" do
     expect(pest.biofix_date).to eq(Date.new(Date.current.year, 1, 1))
   end
-  
 end

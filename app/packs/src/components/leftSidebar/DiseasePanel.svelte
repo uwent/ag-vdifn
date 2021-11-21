@@ -15,6 +15,7 @@
     selectedAffliction,
     panelNames,
     defaults,
+    dev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -23,7 +24,7 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data
-  export let defaultModel: string
+  export let defaultModel = ""
   const thisPanel = panelNames.disease
 
   // TODO: change 'Disease' to thisPanel
@@ -59,14 +60,14 @@
     let url = window.location.pathname
     let title = "AgVDIFN"
     if (!window.location.search && model.local_name === defaults.disease) {
-      console.log("Disease panel >> Default panel launched, clearing URL")
+      if (dev) console.log("Disease panel >> Default panel launched, clearing URL")
     } else {
       url += "?panel=" + thisPanel
       url += "&model=" + model.local_name
       title += ": Disease Models - " + model.name
     }
-    console.log("Disease panel >> Setting title to " + title)
-    console.log("Disease panel >> Setting url to " + url)
+    if (dev) console.log("Disease panel >> Setting title to " + title)
+    if (dev) console.log("Disease panel >> Setting url to " + url)
     window.history.replaceState({}, title, url)
     document.title = title
   }

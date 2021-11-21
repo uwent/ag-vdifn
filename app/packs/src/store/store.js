@@ -8,6 +8,7 @@ export const afflictionAlias = writable('')
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
+export const env =  process.env.NODE_ENV
 
 export const selectedAffliction = writable({
   id: undefined,
@@ -96,7 +97,7 @@ export const panelNames = {
 
 export const defaults = {
   panel: 'disease',
-  disease: 'early-blight',
+  disease: 'late-blight',
   insect: 'cpb',
   t_min: 50,
   t_max: null,

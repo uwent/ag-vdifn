@@ -1,10 +1,9 @@
 require "spec_helper"
 
 RSpec.describe LateBlight, type: :model do
-
   biofix = Date.today - 14.days
 
-  pest = LateBlight.create!()
+  pest = LateBlight.create!
 
   past_week = [
     {lat: 1, long: 1, total: rand(28)},
@@ -43,5 +42,4 @@ RSpec.describe LateBlight, type: :model do
   it "sets biofix date" do
     expect(pest.biofix_date).to eq(biofix)
   end
-  
 end

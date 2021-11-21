@@ -10,13 +10,14 @@ class Pest < ApplicationRecord
         severity: total_to_severity(
           grid[:total].to_f,
           grid[:freeze],
-          end_date)
+          end_date
+        )
       }
     end
   end
 
   def total_to_severity(total, freezing, end_date)
-    return 0
+    0
   end
 
   def biofix_date
@@ -26,5 +27,4 @@ class Pest < ApplicationRecord
   def end_date_enabled
     true
   end
-
 end

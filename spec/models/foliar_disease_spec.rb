@@ -1,10 +1,9 @@
 require "spec_helper"
 
 RSpec.describe FoliarDisease, type: :model do
-
   biofix = Date.today - 14.days
 
-  pest = FoliarDisease.create!()
+  pest = FoliarDisease.create!
 
   selected_dates = [
     {lat: 1, long: 1, total: rand(28)},
@@ -50,5 +49,4 @@ RSpec.describe FoliarDisease, type: :model do
   it "sets biofix date" do
     expect(pest.biofix_date).to eq(biofix)
   end
-  
 end

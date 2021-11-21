@@ -3,15 +3,15 @@ Pest.delete_all
 Crop.delete_all
 CropPest.delete_all
 
-Pest.connection.execute('ALTER SEQUENCE pests_id_seq RESTART WITH 1')
-Crop.connection.execute('ALTER SEQUENCE crops_id_seq RESTART WITH 1')
-CropPest.connection.execute('ALTER SEQUENCE crop_pests_id_seq RESTART WITH 1')
+Pest.connection.execute("ALTER SEQUENCE pests_id_seq RESTART WITH 1")
+Crop.connection.execute("ALTER SEQUENCE crops_id_seq RESTART WITH 1")
+CropPest.connection.execute("ALTER SEQUENCE crop_pests_id_seq RESTART WITH 1")
 
 ## Foliar diseases ##
 early_blight = EarlyBlight.create!(
-  name: 'Early Blight (Potato, Tomato)',
-  local_name: 'early-blight',
-  remote_name: 'potato_p_days',
+  name: "Early Blight (Potato, Tomato)",
+  local_name: "early-blight",
+  remote_name: "potato_p_days",
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Early blight</b> is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. Early blight can also be a serious disease on other popular Solanaceous vegetables including eggplants, and peppers. Symptoms of early blight first appear at the base of affected plants, where roughly circular brown spots appear on leaves and stems. As these spots enlarge, concentric rings appear giving the areas a target-like appearance. Often spots have a yellow halo. Eventually multiple spots on a single leaf will merge, leading to extensive destruction of leaf tissue. Early blight can lead to total defoliation of lower leaves and even the death of an infected plant. Early blight is caused by the fungus <i>Alternaria solani</i>, which survives in plant debris or on infected plants. Early blight symptoms typically begin as plant canopies start to close. Denser foliage leads to high humidity and longer periods of leaf wetness that favor the disease. The risk of Early Blight is greatest after the accumulation of 300 physiological days (P-Days) after crop emergence in a season.</p>",
   photo: "tomato-early-blight.jpg",
@@ -19,37 +19,36 @@ early_blight = EarlyBlight.create!(
 )
 
 late_blight = LateBlight.create!(
-  name: 'Late Blight (Potato, Tomato)',
-  local_name: 'late-blight',
-  remote_name: 'potato_blight_dsv',
+  name: "Late Blight (Potato, Tomato)",
+  local_name: "late-blight",
+  remote_name: "potato_blight_dsv",
   info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
   photo: "potato-late-blight.png",
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
 foliar_disease = FoliarDisease.create!(
-  name: 'Foliar Disease (Carrot)',
-  local_name: 'carrot-foliar',
-  remote_name: 'carrot_foliar_dsv',
+  name: "Foliar Disease (Carrot)",
+  local_name: "carrot-foliar",
+  remote_name: "carrot_foliar_dsv",
   info: "<p><b>Alternaria leaf blight</b>: the seedborne <i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. Disease management includes using certified or heat-treated seed, crop rotation, in-furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
   photo: "carrot-foliar-disease.png",
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
 cercospora_leaf_spot = CercosporaLeafSpot.create!(
-  name: 'Cercospora Leaf Spot (Beet)',
-  local_name: 'cercospora-leaf-spot',
-  remote_name: 'cercospora_div',
+  name: "Cercospora Leaf Spot (Beet)",
+  local_name: "cercospora-leaf-spot",
+  remote_name: "cercospora_div",
   info: "<p><b>Cercospora leaf spot (CLS)</b> and resultant defoliation is caused by the fungus <i>Cercospora beticola</i> Sacc. and is one of the most damaging diseases of table and sugar beet crops worldwide.  Disease symptoms are initially discrete and necrotic lesions with red to purple margins red table beets. Lesions have gray centers and contain diagnostic fungal structures (pseudostromata). For large scale table beet production, defoliation may lead to challenges with mechanical harvest and crop loss. For fresh market, 'bunched beet' sale, foliar lesions can result in rejection. CLS control in conventional table beet requires preventative fungicide applications. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.</p>",
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
-
 ## Insect models ##
 alfalfa_weevil = Insect.create!(
-  name: 'Alfalfa Weevil',
-  local_name: 'alfalfa-weevil',
-  remote_name: 'dd_48_none',
+  name: "Alfalfa Weevil",
+  local_name: "alfalfa-weevil",
+  remote_name: "dd_48_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 48, t_max: nil,
   risk_array: [[300, 504, 814]],
@@ -60,9 +59,9 @@ alfalfa_weevil = Insect.create!(
 )
 
 aphid_pvy = Insect.create!(
-  name: 'Aphid PVY Vectors',
-  local_name: 'pvy-vectors',
-  remote_name: 'dd_39p2_86',
+  name: "Aphid PVY Vectors",
+  local_name: "pvy-vectors",
+  remote_name: "dd_39p2_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_array: [[1967, 2473, 3228]],
@@ -73,9 +72,9 @@ aphid_pvy = Insect.create!(
 )
 
 asparagus_beetle = Insect.create!(
-  name: 'Asparagus Beetle (Common)',
-  local_name: 'common-asparagus-beetle',
-  remote_name: 'dd_50_86',
+  name: "Asparagus Beetle (Common)",
+  local_name: "common-asparagus-beetle",
+  remote_name: "dd_50_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_array: [[105, 250, 405]],
@@ -86,9 +85,9 @@ asparagus_beetle = Insect.create!(
 )
 
 black_cutworm = Insect.create!(
-  name: 'Black Cutworm',
-  local_name: 'black-cutworm',
-  remote_name: 'dd_50_86',
+  name: "Black Cutworm",
+  local_name: "black-cutworm",
+  remote_name: "dd_50_86",
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 86,
   risk_array: [[300, 700, 1000]],
@@ -99,9 +98,9 @@ black_cutworm = Insect.create!(
 )
 
 bmsb = Insect.create!(
-  name: 'Brown Marmorated Stink Bug',
-  local_name: 'bmsb',
-  remote_name: 'dd_50_none',
+  name: "Brown Marmorated Stink Bug",
+  local_name: "bmsb",
+  remote_name: "dd_50_none",
   biofix_mm: 4, biofix_dd: 15,
   t_min: 50, t_max: nil,
   risk_array: [[148, 686, 3000]],
@@ -112,9 +111,9 @@ bmsb = Insect.create!(
 )
 
 cabbage_looper = Insect.create!(
-  name: 'Cabbage Looper',
-  local_name: 'cabbage-looper',
-  remote_name: 'dd_50_90',
+  name: "Cabbage Looper",
+  local_name: "cabbage-looper",
+  remote_name: "dd_50_90",
   biofix_mm: 5, biofix_dd: 15,
   t_min: 50, t_max: 90,
   risk_array: [
@@ -128,9 +127,9 @@ cabbage_looper = Insect.create!(
 )
 
 cabbage_maggot = Insect.create!(
-  name: 'Cabbage Maggot',
-  local_name: 'cabbage-maggot',
-  remote_name: 'dd_42p8_86',
+  name: "Cabbage Maggot",
+  local_name: "cabbage-maggot",
+  remote_name: "dd_42p8_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 42.8, t_max: 86,
   risk_array: [
@@ -144,9 +143,9 @@ cabbage_maggot = Insect.create!(
 )
 
 colorado_potato_beetle = Insect.create!(
-  name: 'Colorado Potato Beetle',
-  local_name: 'cpb',
-  remote_name: 'dd_52_none',
+  name: "Colorado Potato Beetle",
+  local_name: "cpb",
+  remote_name: "dd_52_none",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [
@@ -160,9 +159,9 @@ colorado_potato_beetle = Insect.create!(
 )
 
 corn_earworm = Insect.create!(
-  name: 'Corn Earworm',
-  local_name: 'corn-earworm',
-  remote_name: 'dd_55_92',
+  name: "Corn Earworm",
+  local_name: "corn-earworm",
+  remote_name: "dd_55_92",
   biofix_mm: 8, biofix_dd: 1,
   t_min: 55, t_max: 92,
   risk_array: [[70, 275, 440]],
@@ -173,9 +172,9 @@ corn_earworm = Insect.create!(
 )
 
 corn_rootworm = Insect.create!(
-  name: 'Corn Rootworm',
-  local_name: 'corn-rootworm',
-  remote_name: 'dd_52_none',
+  name: "Corn Rootworm",
+  local_name: "corn-rootworm",
+  remote_name: "dd_52_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [[329, 472, 636]],
@@ -186,9 +185,9 @@ corn_rootworm = Insect.create!(
 )
 
 european_corn_borer = Insect.create!(
-  name: 'European Corn Borer',
-  local_name: 'european-corn-borer',
-  remote_name: 'dd_50_86',
+  name: "European Corn Borer",
+  local_name: "european-corn-borer",
+  remote_name: "dd_50_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: 86,
   risk_array: [
@@ -202,9 +201,9 @@ european_corn_borer = Insect.create!(
 )
 
 flea_beetle_crucifer = Insect.create!(
-  name: 'Flea Beetle (Crucifer)',
-  local_name: 'crucifer-flea-beetle',
-  remote_name: 'dd_50_none',
+  name: "Flea Beetle (Crucifer)",
+  local_name: "crucifer-flea-beetle",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [
@@ -218,9 +217,9 @@ flea_beetle_crucifer = Insect.create!(
 )
 
 flea_beetle_mint = Insect.create!(
-  name: 'Flea Beetle (Mint)',
-  local_name: 'mint-flea-beetle',
-  remote_name: 'dd_41_none',
+  name: "Flea Beetle (Mint)",
+  local_name: "mint-flea-beetle",
+  remote_name: "dd_41_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   risk_array: [[550, 740, 900]],
@@ -231,9 +230,9 @@ flea_beetle_mint = Insect.create!(
 )
 
 imported_cabbageworm = Insect.create!(
-  name: 'Imported Cabbageworm',
-  local_name: 'imported-cabbageworm',
-  remote_name: 'dd_50_none',
+  name: "Imported Cabbageworm",
+  local_name: "imported-cabbageworm",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [
@@ -247,9 +246,9 @@ imported_cabbageworm = Insect.create!(
 )
 
 japanese_beetle = Insect.create!(
-  name: 'Japanese Beetle',
-  local_name: 'japanese-beetle',
-  remote_name: 'dd_50_none',
+  name: "Japanese Beetle",
+  local_name: "japanese-beetle",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[970, 1600, 2150]],
@@ -260,9 +259,9 @@ japanese_beetle = Insect.create!(
 )
 
 lygus_bug = Insect.create!(
-  name: 'Tarnished Plant Bug (Lygus Bug)',
-  local_name: 'tarnished-plant-bug',
-  remote_name: 'dd_52_none',
+  name: "Tarnished Plant Bug (Lygus Bug)",
+  local_name: "tarnished-plant-bug",
+  remote_name: "dd_52_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [[275, 1000, 2000]],
@@ -273,9 +272,9 @@ lygus_bug = Insect.create!(
 )
 
 mint_root_borer = Insect.create!(
-  name: 'Mint Root Borer',
-  local_name: 'mint-root-borer',
-  remote_name: 'dd_50_none',
+  name: "Mint Root Borer",
+  local_name: "mint-root-borer",
+  remote_name: "dd_50_none",
   biofix_mm: 4, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[430, 1280, 2150]],
@@ -286,9 +285,9 @@ mint_root_borer = Insect.create!(
 )
 
 oak_wilt = OakWilt.create!(
-  name: 'Oak Wilt vectors',
-  local_name: 'oak-wilt',
-  remote_name: 'dd_41_none',
+  name: "Oak Wilt vectors",
+  local_name: "oak-wilt",
+  remote_name: "dd_41_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   info: "<p><b>Oak Wilt</b> is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 5% <i>C. truncatus</i> beetle flight (231 FDD) and remains elevated through 95% beetle flight (2172 FDD) or July 15, whichever is earlier. Extreme risk occurs during the 10%-90% beetle flight period of <i>C. truncatus</i> (283-1792 FDD). Transmission risk is substantially reduced after July 15 due to reduction in fungal spore abundance and changes in beetle behavior.</p><p>Wounding, pruning, or harvesting oaks should be avoided during periods of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection.</p><p><b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
@@ -298,9 +297,9 @@ oak_wilt = OakWilt.create!(
 )
 
 onion_maggot = Insect.create!(
-  name: 'Onion Maggot',
-  local_name: 'onion-maggot',
-  remote_name: 'dd_39p2_86',
+  name: "Onion Maggot",
+  local_name: "onion-maggot",
+  remote_name: "dd_39p2_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_array: [
@@ -314,9 +313,9 @@ onion_maggot = Insect.create!(
 )
 
 seedcorn_maggot = Insect.create!(
-  name: 'Seedcorn Maggot',
-  local_name: 'seedcorn-maggot',
-  remote_name: 'dd_39p2_86',
+  name: "Seedcorn Maggot",
+  local_name: "seedcorn-maggot",
+  remote_name: "dd_39p2_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_array: [
@@ -333,9 +332,9 @@ seedcorn_maggot = Insect.create!(
 )
 
 spotted_wing = Insect.create!(
-  name: 'Spotted Wing Drosophila',
-  local_name: 'spotted-wing-drosophila',
-  remote_name: 'dd_45_86',
+  name: "Spotted Wing Drosophila",
+  local_name: "spotted-wing-drosophila",
+  remote_name: "dd_45_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: 86,
   risk_array: [[1276, 3180, 4000]],
@@ -346,9 +345,9 @@ spotted_wing = Insect.create!(
 )
 
 squash_vine_borer = Insect.create!(
-  name: 'Squash Vine Borer',
-  local_name: 'squash-vine-borer',
-  remote_name: 'dd_50_none',
+  name: "Squash Vine Borer",
+  local_name: "squash-vine-borer",
+  remote_name: "dd_50_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[750, 900, 1000]],
@@ -359,9 +358,9 @@ squash_vine_borer = Insect.create!(
 )
 
 stalk_borer = Insect.create!(
-  name: 'Stalk Borer',
-  local_name: 'stalk-borer',
-  remote_name: 'dd_41_86',
+  name: "Stalk Borer",
+  local_name: "stalk-borer",
+  remote_name: "dd_41_86",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: 86,
   risk_array: [[1110, 1400, 1700]],
@@ -372,9 +371,9 @@ stalk_borer = Insect.create!(
 )
 
 variegated_cutworm = Insect.create!(
-  name: 'Variegated Cutworm',
-  local_name: 'variegated-cutworm',
-  remote_name: 'dd_41_88',
+  name: "Variegated Cutworm",
+  local_name: "variegated-cutworm",
+  remote_name: "dd_41_88",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 41, t_max: 88,
   risk_array: [[900, 1450, 2100]],
@@ -385,9 +384,9 @@ variegated_cutworm = Insect.create!(
 )
 
 western_bean_cutworm = Insect.create!(
-  name: 'Western Bean Cutworm',
-  local_name: 'western-bean-cutworm',
-  remote_name: 'dd_50_none',
+  name: "Western Bean Cutworm",
+  local_name: "western-bean-cutworm",
+  remote_name: "dd_50_none",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[1320, 1420, 1535]],
@@ -398,9 +397,9 @@ western_bean_cutworm = Insect.create!(
 )
 
 western_flower_thrips = Insect.create!(
-  name: 'Western Flower Thrips',
-  local_name: 'western-flower-thrips',
-  remote_name: 'dd_45_none',
+  name: "Western Flower Thrips",
+  local_name: "western-flower-thrips",
+  remote_name: "dd_45_none",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: nil,
   risk_array: [
@@ -414,7 +413,6 @@ western_flower_thrips = Insect.create!(
   photo: "thrips.png",
   link: "https://vegento.russell.wisc.edu/pests/onion-thrips/"
 )
-
 
 ## Crop filters ##
 alfalfa = Crop.create!(name: "Alfalfa")
@@ -448,10 +446,10 @@ corn = Crop.create!(name: "Corn (Field and Sweet)")
 corn.pests = [bmsb, corn_earworm, corn_rootworm, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, seedcorn_maggot, stalk_borer]
 
 cucumber = Crop.create!(name: "Cucumber")
-cucumber.pests = [black_cutworm, western_bean_cutworm, variegated_cutworm, seedcorn_maggot, squash_vine_borer]
+cucumber.pests = [black_cutworm, western_bean_cutworm, variegated_cutworm, seedcorn_maggot, squash_vine_borer, western_flower_thrips]
 
 eggplant = Crop.create!(name: "Eggplant")
-eggplant.pests = [colorado_potato_beetle, european_corn_borer, japanese_beetle]
+eggplant.pests = [colorado_potato_beetle, european_corn_borer, japanese_beetle, western_flower_thrips]
 
 hops = Crop.create!(name: "Hops")
 hops.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
@@ -466,19 +464,19 @@ melon = Crop.create!(name: "Melon")
 melon.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle, seedcorn_maggot, squash_vine_borer]
 
 mint = Crop.create!(name: "Mint")
-mint.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, flea_beetle_mint,  japanese_beetle, mint_root_borer]
+mint.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, flea_beetle_mint, japanese_beetle, mint_root_borer]
 
 oak = Crop.create!(name: "Oak")
 oak.pests = [oak_wilt]
 
 onion = Crop.create!(name: "Onion")
-onion.pests = [onion_maggot]
+onion.pests = [onion_maggot, western_flower_thrips]
 
 pea = Crop.create!(name: "Pea")
 pea.pests = [cabbage_looper, black_cutworm, japanese_beetle]
 
 pepper = Crop.create!(name: "Pepper")
-pepper.pests = [european_corn_borer, japanese_beetle]
+pepper.pests = [european_corn_borer, japanese_beetle, western_flower_thrips]
 
 potato = Crop.create!(name: "Potato")
 potato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, lygus_bug, aphid_pvy]
@@ -490,4 +488,4 @@ raspberry = Crop.create!(name: "Raspberry")
 raspberry.pests = [japanese_beetle, lygus_bug, spotted_wing]
 
 tomato = Crop.create!(name: "Tomato")
-tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
+tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle, western_flower_thrips]

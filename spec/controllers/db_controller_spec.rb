@@ -1,13 +1,15 @@
 require "spec_helper"
 
 RSpec.describe DbController, type: :request do
-  let(:fake_response) { { data: "data" } }
-  let(:severity_data) { [{ lat: 20, long: 40, total: 200 }] }
-  let(:days_data) { {
-    status: "OK",
-    info: {},
-    data: [{ value: 10, date: "date", avg_temp: "100"}]
-    } }
+  let(:fake_response) { {data: "data"} }
+  let(:severity_data) { [{lat: 20, long: 40, total: 200}] }
+  let(:days_data) {
+    {
+      status: "OK",
+      info: {},
+      data: [{value: 10, date: "date", avg_temp: "100"}]
+    }
+  }
   # let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temp: "100"}] }
 
   describe "GET db/disease_panel" do
@@ -35,12 +37,11 @@ RSpec.describe DbController, type: :request do
   end
 
   describe "POST db/severities" do
-
     describe "Pest models" do
       it "returns success response when Pest" do
         pest = Pest.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: pest.id }
+        post severities_db_index_path, params: {pest_id: pest.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -50,7 +51,7 @@ RSpec.describe DbController, type: :request do
       it "returns success response when CercosporaLeafSpot" do
         leaf_spot = CercosporaLeafSpot.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: leaf_spot.id }
+        post severities_db_index_path, params: {pest_id: leaf_spot.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -58,7 +59,7 @@ RSpec.describe DbController, type: :request do
       it "returns success response when EarlyBlight" do
         early_blight = EarlyBlight.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: early_blight.id }
+        post severities_db_index_path, params: {pest_id: early_blight.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -66,7 +67,7 @@ RSpec.describe DbController, type: :request do
       it "returns success response when FoliarDisease" do
         foliar_disease = FoliarDisease.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: foliar_disease.id }
+        post severities_db_index_path, params: {pest_id: foliar_disease.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -74,7 +75,7 @@ RSpec.describe DbController, type: :request do
       it "returns success response when LateBlight" do
         late_blight = LateBlight.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: late_blight.id }
+        post severities_db_index_path, params: {pest_id: late_blight.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -84,15 +85,15 @@ RSpec.describe DbController, type: :request do
       it "returns success response when Insect" do
         pest = Insect.create!(risk_array: [[100, 200, 300]])
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: pest.id }
+        post severities_db_index_path, params: {pest_id: pest.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
 
       it "returns success response when OakWilt" do
-        pest = OakWilt.create!()
+        pest = OakWilt.create!
         allow_any_instance_of(AgWeather::Client).to receive(:pest_forecasts).and_return(severity_data)
-        post severities_db_index_path, params: { pest_id: pest.id }
+        post severities_db_index_path, params: {pest_id: pest.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
       end
@@ -101,7 +102,7 @@ RSpec.describe DbController, type: :request do
     describe "Custom tab" do
       it "returns success response when custom params sent" do
         allow_any_instance_of(AgWeather::Client).to receive(:custom).and_return(severity_data)
-        post severities_db_index_path, params: { start_date: "2020-10-01", end_date: "2020-10-10", t_min: "10.0", t_max: "50.0" }
+        post severities_db_index_path, params: {start_date: "2020-10-01", end_date: "2020-10-10", t_min: "10.0", t_max: "50.0"}
         expect(response).to have_http_status(:success)
         expect(response.body).to eq(severity_data.to_json)
       end
@@ -133,7 +134,7 @@ RSpec.describe DbController, type: :request do
         end_date: end_date,
         lat: lat.to_f,
         long: long.to_f,
-        pest: "pest",
+        pest: "pest"
       })
 
       post point_details_db_index_path, params: {
@@ -161,7 +162,7 @@ RSpec.describe DbController, type: :request do
         end_date: end_date,
         lat: lat.to_f,
         long: long.to_f,
-        pest: "pest",
+        pest: "pest"
       })
 
       post point_details_db_index_path, params: {
@@ -223,7 +224,7 @@ RSpec.describe DbController, type: :request do
   describe "POST db/severity_legend" do
     it "returns success response" do
       pest = FoliarDisease.create!
-      post severity_legend_db_index_path, params: { pest_id: pest.id }
+      post severity_legend_db_index_path, params: {pest_id: pest.id}
       expect(response).to have_http_status(:success)
     end
   end
@@ -231,7 +232,7 @@ RSpec.describe DbController, type: :request do
   describe "POST db/severity_legend_info" do
     it "returns success response" do
       pest = Insect.create!
-      post severity_legend_info_db_index_path, params: { pest_id: pest.id }
+      post severity_legend_info_db_index_path, params: {pest_id: pest.id}
       expect(response).to have_http_status(:success)
     end
   end
@@ -239,7 +240,7 @@ RSpec.describe DbController, type: :request do
   describe "POST db/pest_info" do
     it "returns success response" do
       pest = Pest.create!(biofix_mm: 10, biofix_dd: 22)
-      post pest_info_db_index_path, params: { pest_id: pest.id, in_fahrenheit: "true" }
+      post pest_info_db_index_path, params: {pest_id: pest.id, in_fahrenheit: "true"}
       expect(response).to have_http_status(:success)
     end
   end
