@@ -8,7 +8,8 @@ export const afflictionAlias = writable('')
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
-export const env =  process.env.NODE_ENV
+export const env = process.env.NODE_ENV
+export const dev = process.env.NODE_ENV === "development"
 
 export const selectedAffliction = writable({
   id: undefined,
