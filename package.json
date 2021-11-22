@@ -19,7 +19,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.1.1",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.0.1",
     "sass": "^1.43.4",
     "svelte": "^3.44.2",
     "svelte-awesome": "^2.4.2",
