@@ -15,7 +15,7 @@ class LateBlight < Disease
       {
         lat: pair[0][:lat],
         long: pair[0][:long],
-        severity: total_to_severity(last_week, season)
+        severity: pair[0][:freeze] ? 0 : total_to_severity(last_week, season)
       }
     end
   end

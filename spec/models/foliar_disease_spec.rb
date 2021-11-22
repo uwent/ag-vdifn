@@ -5,12 +5,12 @@ RSpec.describe FoliarDisease, type: :model do
 
   pest = FoliarDisease.create!
 
-  selected_dates = [
-    {lat: 1, long: 1, total: rand(28)},
-    {lat: 1, long: 2, total: rand(28)},
-    {lat: 2, long: 1, total: rand(28)},
-    {lat: 2, long: 2, total: rand(28)}
-  ]
+  # selected_dates = [
+  #   {lat: 1, long: 1, total: rand(28)},
+  #   {lat: 1, long: 2, total: rand(28)},
+  #   {lat: 2, long: 1, total: rand(28)},
+  #   {lat: 2, long: 2, total: rand(28)}
+  # ]
 
   last_7_days = [
     {lat: 1, long: 1, total: rand(28)},
@@ -19,12 +19,12 @@ RSpec.describe FoliarDisease, type: :model do
     {lat: 2, long: 2, total: rand(28)}
   ]
 
-  last_2_days = [
-    {lat: 1, long: 1, total: rand(8)},
-    {lat: 1, long: 2, total: rand(8)},
-    {lat: 2, long: 1, total: rand(8)},
-    {lat: 2, long: 2, total: rand(8)}
-  ]
+  # last_2_days = [
+  #   {lat: 1, long: 1, total: rand(8)},
+  #   {lat: 1, long: 2, total: rand(8)},
+  #   {lat: 2, long: 1, total: rand(8)},
+  #   {lat: 2, long: 2, total: rand(8)}
+  # ]
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend
@@ -43,7 +43,7 @@ RSpec.describe FoliarDisease, type: :model do
   it "generates severities from weather" do
     expect(pest).to receive(:total_to_severity).exactly(4).times
 
-    pest.severities_from_totals(selected_dates, last_7_days, last_2_days)
+    pest.severities_from_totals(last_7_days)
   end
 
   it "sets biofix date" do

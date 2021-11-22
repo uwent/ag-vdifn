@@ -1,12 +1,12 @@
 class CercosporaLeafSpot < Disease
-  def severities_from_totals(selected_dates, last_7_days, last_2_days)
+  def severities_from_totals(last_7_days, last_2_days)
     if last_2_days == []
       logger.warn("Cercospora Leaf Spot :: No weather data for last 2 days!")
       last_7_days.map do |point|
         {
           lat: point[:lat],
           long: point[:long],
-          severity: total_to_severity(point[:total], 0)
+          severity: point[:freeze] ? 0 : total_to_severity(point[:total], 0)
         }
       end
     elsif last_7_days == []
@@ -16,7 +16,7 @@ class CercosporaLeafSpot < Disease
         {
           lat: pair[0][:lat],
           long: pair[0][:long],
-          severity: total_to_severity(pair[0][:total], pair[1][:total])
+          severity: pair[0][:freeze] ? 0 : total_to_severity(pair[0][:total], pair[1][:total])
         }
       end
     end

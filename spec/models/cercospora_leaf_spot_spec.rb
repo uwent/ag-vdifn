@@ -5,12 +5,12 @@ RSpec.describe CercosporaLeafSpot, type: :model do
 
   pest = CercosporaLeafSpot.create!
 
-  selected_dates = [
-    {lat: 1, long: 1, total: rand(500)},
-    {lat: 1, long: 2, total: rand(500)},
-    {lat: 2, long: 1, total: rand(500)},
-    {lat: 2, long: 2, total: rand(500)}
-  ]
+  # selected_dates = [
+  #   {lat: 1, long: 1, total: rand(500)},
+  #   {lat: 1, long: 2, total: rand(500)},
+  #   {lat: 2, long: 1, total: rand(500)},
+  #   {lat: 2, long: 2, total: rand(500)}
+  # ]
 
   last_7_days = [
     {lat: 1, long: 1, total: rand(100)},
@@ -43,13 +43,13 @@ RSpec.describe CercosporaLeafSpot, type: :model do
   it "generates severities from weather" do
     expect(pest).to receive(:total_to_severity).exactly(4).times
 
-    pest.severities_from_totals(selected_dates, last_7_days, last_2_days)
+    pest.severities_from_totals(last_7_days, last_2_days)
   end
 
   it "warns when 2-day weather is missing" do
     expect(Rails.logger).to receive(:warn)
 
-    pest.severities_from_totals(selected_dates, last_7_days, [])
+    pest.severities_from_totals(last_7_days, [])
   end
 
   it "sets biofix date" do

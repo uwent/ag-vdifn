@@ -89,11 +89,7 @@ class DbController < ApplicationController
       biofix: pest.biofix_date,
       end_date_enabled: pest.end_date_enabled,
       tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
-      tmax: if pest.t_max.nil?
-              ""
-            else
-              (in_f ? pest.t_max : f_to_c(pest.t_max))
-            end
+      tmax: pest.t_max.nil? ? "" : (in_f ? pest.t_max : f_to_c(pest.t_max))
     }
   end
 
@@ -170,10 +166,14 @@ class DbController < ApplicationController
     case pest.class.name
     when "Custom"
       "build_custom_strategy"
+    when "CercosporaLeafSpot"
+      "build_cercospora_strategy"
+    when "EarlyBlight"
+      "build_early_blight_strategy"
+    when "FoliarDisease"
+      "build_foliar_disease_strategy"
     when "LateBlight"
       "build_late_blight_strategy"
-    when "EarlyBlight", "CercosporaLeafSpot", "FoliarDisease"
-      "build_disease_strategy"
     else
       "build_pest_strategy"
     end
@@ -264,6 +264,144 @@ class DbController < ApplicationController
     attr_reader :client, :start_date, :end_date, :t_min, :t_max
   end
 
+  def build_cercospora_strategy
+    CercosporaStrategy.new(get_pest, ag_weather_client, start_date, end_date)
+  end
+
+  class CercosporaStrategy
+    def initialize(pest, client, start_date, end_date)
+      Rails.logger.debug ">>> Launching Cercospora Leaf Spot Strategy"
+      @pest = pest
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+    end
+
+    def severities
+      last_7_days = []
+      last_2_days = []
+      begin
+        last_7_days = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 7.days,
+          end_date: end_date
+        )[:data]
+        last_2_days = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 2.days,
+          end_date: end_date
+        )[:data]
+      rescue => e
+        Rails.logger.error "DiseaseStrategy :: Error: #{e.message}"
+      end
+      {
+        last_7_days: last_7_days,
+        last_2_days: last_2_days
+      }
+    end
+
+    def severities_from_totals(totals)
+      pest.severities_from_totals(
+        totals[:last_7_days],
+        totals[:last_2_days]
+      )
+    end
+
+    private
+
+    attr_reader :pest, :client, :start_date, :end_date
+  end
+
+  def build_early_blight_strategy
+    EarlyBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
+  end
+
+  class EarlyBlightStrategy
+    def initialize(pest, client, start_date, end_date)
+      Rails.logger.debug ">>> Launching Early Blight Strategy"
+      @pest = pest
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+    end
+
+    def severities
+      selected_dates = []
+      last_7_days = []
+      begin
+        selected_dates = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: start_date,
+          end_date: end_date
+        )[:data]
+        last_7_days = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 7.days,
+          end_date: end_date
+        )[:data]
+      rescue => e
+        Rails.logger.error "DiseaseStrategy :: Error: #{e.message}"
+      end
+      {
+        selected_dates: selected_dates,
+        last_7_days: last_7_days
+      }
+    end
+
+    def severities_from_totals(totals)
+      pest.severities_from_totals(
+        totals[:selected_dates],
+        totals[:last_7_days]
+      )
+    end
+
+    private
+
+    attr_reader :pest, :client, :start_date, :end_date
+  end
+
+  def build_foliar_disease_strategy
+    FoliarDiseaseStrategy.new(get_pest, ag_weather_client, start_date, end_date)
+  end
+
+  class FoliarDiseaseStrategy
+    def initialize(pest, client, start_date, end_date)
+      Rails.logger.debug ">>> Launching Foliar Disease Strategy"
+      @pest = pest
+      @client = client
+      @start_date = start_date
+      @end_date = end_date
+    end
+
+    def severities
+      selected_dates = []
+      last_7_days = []
+      last_2_days = []
+      begin
+        last_7_days = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: end_date - 7.days,
+          end_date: end_date
+        )[:data]
+      rescue => e
+        Rails.logger.error "DiseaseStrategy :: Error: #{e.message}"
+      end
+      {
+        last_7_days: last_7_days
+      }
+    end
+
+    def severities_from_totals(totals)
+      pest.severities_from_totals(
+        totals[:last_7_days]
+      )
+    end
+
+    private
+
+    attr_reader :pest, :client, :start_date, :end_date
+  end
+
   def build_late_blight_strategy
     LateBlightStrategy.new(get_pest, ag_weather_client, start_date, end_date)
   end
@@ -281,79 +419,29 @@ class DbController < ApplicationController
       past_week = []
       season_to_date = []
       begin
-        past_week = client.pest_forecasts(
-          pest: pest.remote_name,
-          start_date: [start_date, end_date - 7.days].max,
-          end_date: end_date
-        )[:data]
         season_to_date = client.pest_forecasts(
           pest: pest.remote_name,
           start_date: end_date.beginning_of_year,
           end_date: end_date
         )[:data]
+        past_week = client.pest_forecasts(
+          pest: pest.remote_name,
+          start_date: [start_date, end_date - 7.days].max,
+          end_date: end_date
+        )[:data]
       rescue => e
         Rails.logger.error "LateBlightStrategy :: Error: #{e.message}"
       end
-      {past_week: past_week, season_to_date: season_to_date}
-    end
-
-    def severities_from_totals(totals)
-      pest.severities_from_totals(totals[:past_week], totals[:season_to_date])
-    end
-
-    private
-
-    attr_reader :pest, :client, :start_date, :end_date
-  end
-
-  def build_disease_strategy
-    DiseaseStrategy.new(get_pest, ag_weather_client, start_date, end_date)
-  end
-
-  class DiseaseStrategy
-    def initialize(pest, client, start_date, end_date)
-      Rails.logger.debug ">>> Launching Disease Strategy"
-      @pest = pest
-      @client = client
-      @start_date = start_date
-      @end_date = end_date
-    end
-
-    def severities
-      selected_dates = []
-      last_7_days = []
-      last_2_days = []
-      begin
-        selected_dates = client.pest_forecasts(
-          pest: pest.remote_name,
-          start_date: start_date,
-          end_date: end_date
-        )[:data]
-        last_7_days = client.pest_forecasts(
-          pest: pest.remote_name,
-          start_date: end_date - 7.days,
-          end_date: end_date
-        )[:data]
-        last_2_days = client.pest_forecasts(
-          pest: pest.remote_name,
-          start_date: end_date - 2.days,
-          end_date: end_date
-        )[:data]
-      rescue => e
-        Rails.logger.error "DiseaseStrategy :: Error: #{e.message}"
-      end
       {
-        selected_dates: selected_dates,
-        last_7_days: last_7_days,
-        last_2_days: last_2_days
+        season_to_date: season_to_date,
+        past_week: past_week
       }
     end
 
     def severities_from_totals(totals)
       pest.severities_from_totals(
-        totals[:selected_dates],
-        totals[:last_7_days],
-        totals[:last_2_days]
+        totals[:past_week],
+        totals[:season_to_date]
       )
     end
 

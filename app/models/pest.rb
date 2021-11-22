@@ -3,15 +3,11 @@ class Pest < ApplicationRecord
   has_many :crops, through: :crop_pests
 
   def severities_from_totals(totals, end_date)
-    totals.map do |grid|
+    totals.map do |point|
       {
-        lat: grid[:lat],
-        long: grid[:long],
-        severity: total_to_severity(
-          grid[:total].to_f,
-          grid[:freeze],
-          end_date
-        )
+        lat: point[:lat],
+        long: point[:long],
+        severity: total_to_severity(point[:total].to_f, point[:freeze], end_date)
       }
     end
   end

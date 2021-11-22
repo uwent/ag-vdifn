@@ -1,10 +1,10 @@
 class EarlyBlight < Disease
-  def severities_from_totals(selected_dates, past_week, last_2_days = nil)
+  def severities_from_totals(selected_dates, past_week)
     selected_dates.zip(past_week).map do |pair|
       {
         lat: pair[0][:lat],
         long: pair[0][:long],
-        severity: total_to_severity(pair[0][:total], pair[1][:avg])
+        severity: pair[0][:freeze] ? 0 : total_to_severity(pair[0][:total], pair[1][:avg])
       }
     end
   end

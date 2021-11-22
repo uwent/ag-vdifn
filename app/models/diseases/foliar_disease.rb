@@ -1,10 +1,10 @@
 class FoliarDisease < Disease
-  def severities_from_totals(selected_dates, last_7_days, last_2_days)
-    last_7_days.map do |grid|
+  def severities_from_totals(last_7_days)
+    last_7_days.map do |point|
       {
-        lat: grid[:lat],
-        long: grid[:long],
-        severity: total_to_severity(grid[:total])
+        lat: point[:lat],
+        long: point[:long],
+        severity: point[:freeze] ? 0 : total_to_severity(point[:total])
       }
     end
   end
