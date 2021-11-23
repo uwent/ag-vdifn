@@ -11,7 +11,7 @@ module AgWeather
       forecasts = self.class.get(
         AgWeather::Endpoints::PEST_FORECASTS,
         query: options,
-        timeout: 10
+        timeout: 30
       )
       JSON.parse(forecasts.body, symbolize_names: true)
     end
@@ -20,7 +20,7 @@ module AgWeather
       forecasts = self.class.get(
         AgWeather::Endpoints::CUSTOM,
         query: options,
-        timeout: 10
+        timeout: 30
       )
       JSON.parse(forecasts.body, symbolize_names: true)
     end
@@ -29,7 +29,7 @@ module AgWeather
       point_details = self.class.get(
         AgWeather::Endpoints::POINT_DETAILS,
         query: options,
-        timeout: 10
+        timeout: 30
       )
       JSON.parse(point_details.body, symbolize_names: true)
     end
@@ -38,7 +38,7 @@ module AgWeather
       point_details = self.class.get(
         AgWeather::Endpoints::CUSTOM_POINT_DETAILS,
         query: options,
-        timeout: 10
+        timeout: 30
       )
       JSON.parse(point_details.body, symbolize_names: true)
     end
@@ -47,7 +47,7 @@ module AgWeather
       response = self.class.get(
         AgWeather::Endpoints::FREEZE,
         query: options,
-        timeout: 10
+        timeout: 30
       )
       JSON.parse(response.body, symbolize_names: true)
     end
