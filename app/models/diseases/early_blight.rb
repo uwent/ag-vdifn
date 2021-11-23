@@ -1,24 +1,24 @@
 class EarlyBlight < Disease
-  def severities_from_totals(selected_dates, past_week)
-    selected_dates.zip(past_week).map do |pair|
+  def severities_from_totals(grid)
+    grid.map do |point|
       {
-        lat: pair[0][:lat],
-        long: pair[0][:long],
-        severity: pair[0][:freeze] ? 0 : total_to_severity(pair[0][:total], pair[1][:avg])
+        lat: point[:lat],
+        long: point[:long],
+        severity: total_to_severity(point[:total], point[:past_week_avg])
       }
     end
   end
 
-  def total_to_severity(selected_dates, past_week_avg)
-    if selected_dates >= 300
+  def total_to_severity(total, past_week_avg)
+    if total >= 300
       return 4 if past_week_avg > 8
       return 3 if past_week_avg >= 5
       return 2 if past_week_avg >= 3
       return 1 if past_week_avg >= 1
     else
-      return 3 if selected_dates >= 250
-      return 2 if selected_dates >= 200
-      return 1 if selected_dates >= 150
+      return 3 if total >= 250
+      return 2 if total >= 200
+      return 1 if total >= 150
     end
     0
   end

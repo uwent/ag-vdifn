@@ -27,7 +27,7 @@ late_blight = LateBlight.create!(
   link: "https://vegpath.plantpath.wisc.edu/"
 )
 
-foliar_disease = FoliarDisease.create!(
+carrot_foliar = CarrotFoliar.create!(
   name: "Foliar Disease (Carrot)",
   local_name: "carrot-foliar",
   remote_name: "carrot_foliar_dsv",
@@ -431,7 +431,7 @@ blackberry = Crop.create!(name: "Blackberry")
 blackberry.pests = [bmsb, japanese_beetle, spotted_wing]
 
 carrot = Crop.create!(name: "Carrot")
-carrot.pests = [foliar_disease, black_cutworm, western_bean_cutworm, variegated_cutworm]
+carrot.pests = [carrot_foliar, black_cutworm, western_bean_cutworm, variegated_cutworm]
 
 celery = Crop.create!(name: "Celery")
 celery.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, lygus_bug]

@@ -135,6 +135,7 @@ export default class OverlayHelper {
   }
 
   severityToColor(severityNumber: number, gradientMapping): string {
+    console.log(severityNumber)
     const key = _.find(
       _.keys(gradientMapping)
         .map((value) => parseFloat(value))

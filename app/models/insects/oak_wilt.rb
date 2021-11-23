@@ -2,8 +2,19 @@
 # See Jagemann et al 2018
 
 class OakWilt < Insect
-  def total_to_severity(total, freezing, end_date)
-    return 0 if freezing
+
+  def severities_from_totals(totals, end_date)
+    totals.map do |point|
+      {
+        lat: point[:lat],
+        long: point[:long],
+        severity: total_to_severity(point[:total].to_f, point[:freeze], end_date)
+      }
+    end
+  end
+
+  def total_to_severity(total, freeze_days, end_date)
+    return 0 if freeze_days > 0
 
     # severity based on degree-day
     sev = 0

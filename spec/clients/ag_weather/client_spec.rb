@@ -19,6 +19,18 @@ RSpec.describe AgWeather::Client do
     end
   end
 
+  describe "#freeze" do
+    it "calls correct endpoint and returns success" do
+      options = {start_date: start_date, end_date: end_date}
+      request_url = "#{ENV["AG_WEATHER_BASE_URL"]}/pest_forecasts/freeze?start_date=#{options[:start_date]}&end_date=#{options[:end_date]}"
+      stub_request(:get, request_url).to_return(status: 200, body: data, headers: {})
+
+      response = client.freeze_days(options)
+
+      expect(response[:data]).to eq("data")
+    end
+  end
+
   # describe "#stations" do
   #   it "calls correct endpoint and returns success" do
   #     request_url = "#{ENV['AG_WEATHER_BASE_URL']}/stations"

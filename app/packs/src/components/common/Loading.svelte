@@ -1,3 +1,13 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  let time = 0;
+  onMount(() => {
+    setInterval(() => {
+      time += 0.1;
+    }, 100);
+  });
+</script>
+
 <style>
   :global(.lds-ring) {
     display: flex;
@@ -34,6 +44,11 @@
       transform: rotate(360deg);
     }
   }
+
+  .loading-timer {
+    text-align: center;
+    font-style: italic;
+  }
 </style>
 
 <div class="lds-ring" title="Loading" data-testid="loading">
@@ -42,3 +57,5 @@
   <div />
   <div />
 </div>
+
+<div class="loading-timer">Loading: {time.toFixed(1)} seconds</div>

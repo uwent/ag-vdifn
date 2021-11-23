@@ -1,35 +1,19 @@
 class CercosporaLeafSpot < Disease
-  def severities_from_totals(last_7_days, last_2_days)
-    if last_2_days == []
-      logger.warn("Cercospora Leaf Spot :: No weather data for last 2 days!")
-      last_7_days.map do |point|
-        {
-          lat: point[:lat],
-          long: point[:long],
-          severity: point[:freeze] ? 0 : total_to_severity(point[:total], 0)
-        }
-      end
-    elsif last_7_days == []
-      logger.error("Cercospora Leaf Spot :: No weather data for last 7 days!")
-    else
-      last_7_days.zip(last_2_days).map do |pair|
-        {
-          lat: pair[0][:lat],
-          long: pair[0][:long],
-          severity: pair[0][:freeze] ? 0 : total_to_severity(pair[0][:total], pair[1][:total])
-        }
-      end
+  def severities_from_totals(grid)
+    grid.map do |point|
+      {
+        lat: point[:lat],
+        long: point[:long],
+        severity: total_to_severity(point[:avg7], point[:avg2])
+      }
     end
   end
 
-  def total_to_severity(last_7_days, last_2_days)
-    avg7 = last_7_days / 7
-    avg2 = last_2_days / 2
-
-    return 4 if avg2 >= 5.5 || avg7 >= 5
-    return 3 if avg2 >= 3.5 || avg7 >= 3
-    return 2 if avg2 >= 2 || avg7 >= 1.5
-    return 1 if avg2 >= 1 || avg7 >= 0.5
+  def total_to_severity(avg7, avg2)
+    return 4 if avg7 >= 5 || avg2 >= 5.5
+    return 3 if avg7 >= 3 || avg2 >= 3.5
+    return 2 if avg7 >= 1.5 || avg2 >= 2
+    return 1 if avg7 >= 0.5 || avg2 >= 1
     0
   end
 

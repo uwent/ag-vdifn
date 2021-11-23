@@ -5,9 +5,11 @@ export const COLORS = {
   orange: '#ff8000',
   red: '#cc0000',
   brightRed: '#FF0000',
+  grey: '#808080'
 }
 
 export const severityColors = {
+  error: COLORS.grey,
   very_low: COLORS.lightGreen,
   low: COLORS.brightGreen,
   medium: COLORS.yellow,
@@ -15,10 +17,10 @@ export const severityColors = {
   very_high: COLORS.red
 }
 
-export const defaultSpectrum = [
-  COLORS.lightGreen,
-  COLORS.brightGreen,
-  COLORS.yellow,
-  COLORS.orange,
-  COLORS.red,
-]
+// export const defaultSpectrum = [
+//   COLORS.lightGreen,
+//   COLORS.brightGreen,
+//   COLORS.yellow,
+//   COLORS.orange,
+//   COLORS.red,
+// ]

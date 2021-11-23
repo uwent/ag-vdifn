@@ -1,30 +1,21 @@
 # This model needs to use selected_dates
 
 class LateBlight < Disease
-  def severities_from_totals(past_week, season_to_date)
-    if past_week.count != season_to_date.count
-      logger.error(">> LateBlight :: Past week and season mismatch")
-      return []
-    end
-
-    past_week.zip(season_to_date).map do |pair|
-      logger.error(">> LateBlight :: Latitude mismatch") if pair[0][:lat] != pair[1][:lat]
-      logger.error(">> LateBlight :: Longitude mismatch") if pair[0][:long] != pair[1][:long]
-      last_week = pair[0][:total]
-      season = pair[1][:total]
+  def severities_from_totals(grid)
+    grid.map do |point|
       {
-        lat: pair[0][:lat],
-        long: pair[0][:long],
-        severity: pair[0][:freeze] ? 0 : total_to_severity(last_week, season)
+        lat: point[:lat],
+        long: point[:long],
+        severity: point[:freeze] > 0 ? 0 : total_to_severity(point[:total], point[:seven_day])
       }
     end
   end
 
-  def total_to_severity(last_week, season)
-    return 4 if last_week >= 21 && season >= 30
-    return 3 if last_week >= 14 && season >= 30
-    return 2 if last_week >= 3 || season >= 30
-    return 1 if last_week >= 1 && season < 30
+  def total_to_severity(total, seven_day)
+    return 4 if seven_day >= 21 && total >= 30
+    return 3 if seven_day >= 14 && total >= 30
+    return 2 if seven_day >= 3 || total >= 30
+    return 1 if seven_day >= 1 && total < 30
     0
   end
 

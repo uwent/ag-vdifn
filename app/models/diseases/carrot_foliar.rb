@@ -1,19 +1,19 @@
-class FoliarDisease < Disease
-  def severities_from_totals(last_7_days)
-    last_7_days.map do |point|
+class CarrotFoliar < Disease
+  def severities_from_totals(seven_day)
+    seven_day.map do |point|
       {
         lat: point[:lat],
         long: point[:long],
-        severity: point[:freeze] ? 0 : total_to_severity(point[:total])
+        severity: total_to_severity(point[:total])
       }
     end
   end
 
-  def total_to_severity(last_7_days)
-    return 4 if last_7_days >= 20
-    return 3 if last_7_days >= 15
-    return 2 if last_7_days >= 10
-    return 1 if last_7_days >= 5
+  def total_to_severity(seven_day)
+    return 4 if seven_day >= 20
+    return 3 if seven_day >= 15
+    return 2 if seven_day >= 10
+    return 1 if seven_day >= 5
     0
   end
 

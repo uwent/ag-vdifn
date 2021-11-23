@@ -1,6 +1,15 @@
 class Insect < Pest
-  def total_to_severity(total, freezing, end_date)
-    return 0 if freezing
+  def severities_from_totals(totals, end_date)
+    totals.map do |point|
+      {
+        lat: point[:lat],
+        long: point[:long],
+        severity: point[:freeze] > 0 ? 0 : total_to_severity(point[:total].to_f)
+      }
+    end
+  end
+
+  def total_to_severity(total)
     sev = 0
     risk_array.each do |gen|
       sev = sev_ramp(gen[0], gen[1], gen[2], total) if total.between?(gen[0], gen[2])

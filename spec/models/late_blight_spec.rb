@@ -1,23 +1,20 @@
 require "spec_helper"
 
 RSpec.describe LateBlight, type: :model do
-  biofix = Date.today - 14.days
-
-  pest = LateBlight.create!
-
-  past_week = [
-    {lat: 1, long: 1, total: rand(28)},
-    {lat: 1, long: 2, total: rand(28)},
-    {lat: 2, long: 1, total: rand(28)},
-    {lat: 2, long: 2, total: rand(28)}
-  ]
-
-  season_to_date = [
-    {lat: 1, long: 1, total: rand(50)},
-    {lat: 1, long: 2, total: rand(50)},
-    {lat: 2, long: 1, total: rand(50)},
-    {lat: 2, long: 2, total: rand(50)}
-  ]
+  let(:biofix) { Date.today - 14.days }
+  let(:pest) { LateBlight.new }
+  let(:grid) { [
+    {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 0 },
+    {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 },
+    {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 0 },
+    {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 }
+  ] }
+  let(:grid2) { [
+    {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 1 },
+    {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 },
+    {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 3 },
+    {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 }
+  ] }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend
@@ -27,16 +24,20 @@ RSpec.describe LateBlight, type: :model do
 
   it "renders severity from selected date range" do
     expect(pest.total_to_severity(0, 0)).to eq(0)
-    expect(pest.total_to_severity(1, 10)).to eq(1)
-    expect(pest.total_to_severity(5, 35)).to eq(2)
-    expect(pest.total_to_severity(14, 40)).to eq(3)
-    expect(pest.total_to_severity(21, 50)).to eq(4)
+    expect(pest.total_to_severity(10, 1)).to eq(1)
+    expect(pest.total_to_severity(35, 5)).to eq(2)
+    expect(pest.total_to_severity(40, 14)).to eq(3)
+    expect(pest.total_to_severity(50, 21)).to eq(4)
   end
 
   it "generates severities from weather" do
     expect(pest).to receive(:total_to_severity).exactly(4).times
+    pest.severities_from_totals(grid)
+  end
 
-    pest.severities_from_totals(past_week, season_to_date)
+  it "returns no severities when freezing" do
+    expect(pest).to receive(:total_to_severity).exactly(2).times
+    pest.severities_from_totals(grid2)
   end
 
   it "sets biofix date" do

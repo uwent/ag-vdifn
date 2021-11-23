@@ -43,6 +43,15 @@ module AgWeather
       JSON.parse(point_details.body, symbolize_names: true)
     end
 
+    def freeze_days(options)
+      response = self.class.get(
+        AgWeather::Endpoints::FREEZE,
+        query: options,
+        timeout: 10
+      )
+      JSON.parse(response.body, symbolize_names: true)
+    end
+
     # def stations
     #   stations = self.class.get(
     #     AgWeather::Endpoints::STATIONS,

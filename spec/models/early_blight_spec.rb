@@ -1,24 +1,17 @@
 require "spec_helper"
 
 RSpec.describe EarlyBlight, type: :model do
-  biofix_mm = 2
-  biofix_dd = 15
-
-  pest = EarlyBlight.create!(biofix_mm: biofix_mm, biofix_dd: biofix_dd)
-
-  selected_dates = [
-    {lat: 1, long: 1, total: rand(500)},
-    {lat: 1, long: 2, total: rand(500)},
-    {lat: 2, long: 1, total: rand(500)},
-    {lat: 2, long: 2, total: rand(500)}
-  ]
-
-  last_7_days = [
-    {lat: 1, long: 1, total: rand(100)},
-    {lat: 1, long: 2, total: rand(100)},
-    {lat: 2, long: 1, total: rand(100)},
-    {lat: 2, long: 2, total: rand(100)}
-  ]
+  let(:biofix_mm) { 2 }
+  let(:biofix_dd) { 15 }
+  let(:pest) {
+    EarlyBlight.new(biofix_mm: biofix_mm, biofix_dd: biofix_dd)
+  } 
+  let(:grid) { [
+    { lat: 1, long: 1, total: rand(500), past_week_avg: rand(10) },
+    { lat: 1, long: 2, total: rand(500), past_week_avg: rand(10) },
+    { lat: 2, long: 1, total: rand(500), past_week_avg: rand(10) },
+    { lat: 2, long: 2, total: rand(500), past_week_avg: rand(10) }
+  ] }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend
@@ -40,10 +33,9 @@ RSpec.describe EarlyBlight, type: :model do
     expect(pest.total_to_severity(300, 9.3)).to eq(4)
   end
 
-  it "generates severities from weather" do
+  it "generates severities from totals" do
     expect(pest).to receive(:total_to_severity).exactly(4).times
-
-    pest.severities_from_totals(selected_dates, last_7_days)
+    pest.severities_from_totals(grid)
   end
 
   it "sets biofix date from seeds" do
