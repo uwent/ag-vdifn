@@ -1,13 +1,22 @@
 require "spec_helper"
 
 RSpec.describe SeveritiesController, type: :request do
+  let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:end_date) { Date.today }
-  let(:pest_forecast) {
-    { data: [{lat: 20, long: 40, total: 200, avg: 10}] }
-  }
-  let(:freeze_data) {
-    { data: [{lat: 20, long: 40, freeze: 0}] }
-  }
+  let(:pest_forecast) {{
+    data: [
+      { lat: 1, long: 1, total: 10, avg: 1 },
+      { lat: 2, long: 2, total: 100, avg: 10 },
+      { lat: 3, long: 3, total: 1000, avg: 100 }
+    ]
+  }}
+  let(:freeze_data) {{
+    data: [
+      { lat: 1, long: 1, freeze: 1 },
+      { lat: 2, long: 2, freeze: 0 },
+      { lat: 3, long: 3, freeze: 0 }
+    ]
+  }}
 
   describe "POST severities" do
     describe "Disease models" do
@@ -17,6 +26,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: leaf_spot.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
 
       it "returns success response when EarlyBlight" do
@@ -25,6 +35,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: early_blight.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
 
       it "returns success response when FoliarDisease" do
@@ -33,6 +44,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: foliar_disease.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
 
       it "returns success response when LateBlight" do
@@ -42,6 +54,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: late_blight.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
     end
 
@@ -53,6 +66,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: pest.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
 
       it "returns success response when OakWilt" do
@@ -62,6 +76,7 @@ RSpec.describe SeveritiesController, type: :request do
         post severities_path, params: {pest_id: pest.id}
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
+        expect(json.first.keys).to match([:lat, :long, :severity])
       end
     end
 

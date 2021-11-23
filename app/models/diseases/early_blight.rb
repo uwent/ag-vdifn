@@ -4,17 +4,17 @@ class EarlyBlight < Disease
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:total], point[:past_week_avg])
+        severity: total_to_severity(point[:total], point[:seven_day_avg])
       }
     end
   end
 
-  def total_to_severity(total, past_week_avg)
+  def total_to_severity(total, seven_day_avg)
     if total >= 300
-      return 4 if past_week_avg > 8
-      return 3 if past_week_avg >= 5
-      return 2 if past_week_avg >= 3
-      return 1 if past_week_avg >= 1
+      return 4 if seven_day_avg > 8
+      return 3 if seven_day_avg >= 5
+      return 2 if seven_day_avg >= 3
+      return 1 if seven_day_avg >= 1
     else
       return 3 if total >= 250
       return 2 if total >= 200
