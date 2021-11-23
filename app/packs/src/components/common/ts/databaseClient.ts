@@ -72,11 +72,9 @@ export default class DatabaseClient implements DatabaseClientInterface {
       if (response.data.data) {
         response.data.data.forEach((data) => {
           severities.push({
-            level: data.total,
             lat: data.lat,
             long: data.long,
-            min: response.data.info.min_value,
-            max: response.data.info.max_value,
+            level: data.total,
           })
         })
         return severities

@@ -43,16 +43,8 @@ export default class OverlayHelper {
     this.closeInfoWindow()
     this.severities = await this.getSeverities(severityParams)
     if (this.severities.length > 0) {
-      if (this.severities[0].min) {
-        this.min = this.severities[0].min
-      } else {
-        this.min = 0
-      }
-      if (this.severities[0].max) {
-        this.max = this.severities[0].max
-      } else {
-        this.max = 0
-      }
+      this.min = Math.min(...this.severities.map(point => point.level))
+      this.max = Math.max(...this.severities.map(point => point.level))
     }
     const rectangleOptions = this.convertSeveritiesToRectangleOptions()
     this.drawDataPoints(rectangleOptions)
@@ -135,7 +127,6 @@ export default class OverlayHelper {
   }
 
   severityToColor(severityNumber: number, gradientMapping): string {
-    console.log(severityNumber)
     const key = _.find(
       _.keys(gradientMapping)
         .map((value) => parseFloat(value))

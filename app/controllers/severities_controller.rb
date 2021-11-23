@@ -65,19 +65,20 @@ class SeveritiesController < ApplicationController
   def get_custom_data
     pests = Pest.where(t_max: t_max, t_min: t_min)
     if pests.any?
-      ag_weather_client.custom(
-        pest: pests.first.remote_name,
+      options = {
         start_date: start_date,
-        end_date: end_date
-      )
+        end_date: end_date,
+        pest: pests.first.remote_name
+      }
     else
-      ag_weather_client.custom(
+      options = {
         start_date: start_date,
         end_date: end_date,
         t_base: t_min,
         t_upper: t_max
-      )
+      }
     end
+    ag_weather_client.custom(options)
   end
 
   def get_cercospora_data
