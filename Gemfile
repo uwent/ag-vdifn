@@ -40,7 +40,7 @@ group :development, :test do
   gem "rspec-rails", "~> 5.0"
   gem "shoulda-matchers", "~> 5.0"
   gem "simplecov", "~> 0.21"
-  gem "spring", "~> 3.0"
+  gem "spring", "~> 3.1"
   gem "spring-commands-rspec", "~> 1.0"
   gem "webmock", "~> 3.14"
 end
