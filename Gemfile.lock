@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/webpacker.git
-  revision: 65c799fe760ac602f4de6375c40b96ccc24e97ed
+  revision: 275fbb56e6b0c837ae4b214a276891558147d861
   specs:
     webpacker (6.0.0.rc.6)
       activesupport (>= 5.2)
@@ -196,6 +196,7 @@ GEM
     parser (3.0.3.0)
       ast (~> 2.4.1)
     pg (1.2.3)
+    pg (1.2.3-x64-mingw32)
     pikaday-gem (1.4.0)
       railties (>= 3.1)
     pry (0.14.1)
