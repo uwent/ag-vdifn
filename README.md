@@ -64,7 +64,7 @@ yarn -v
 3. Setup database with `bundle exec rails db:setup`
 4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
 5. Run ag-vdifn server with `bundle exec rails s`
-6. Visit `localhost:3000` in browser
+6. Launch site by visiting `localhost:3000` in browser
 
 ## Running Tests
 
