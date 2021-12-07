@@ -75,5 +75,6 @@
     "glob-parent": "^5.1.2",
     "xmldom": "https://github.com/xmldom/xmldom",
     "set-value": "^4.0.1"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }
