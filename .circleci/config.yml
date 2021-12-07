@@ -27,25 +27,28 @@ jobs:
           command: bundle config set --local path './vendor/bundle'
       - restore_cache:
           keys:
-            - agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
-            - agvdifn-bundle
+            - vdifn-bundle-{{ checksum "Gemfile.lock" }}-{{ checksum ".ruby-version" }}
+            - vdifn-bundle
       - run:
           name: Bundle Install
           command: bundle check || bundle install
       - save_cache:
-          key: agvdifn-bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+          key: vdifn-bundle-{{ checksum "Gemfile.lock" }}-{{ checksum ".ruby-version" }}
           paths:
             - ./vendor/bundle
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - agvdifn-yarn-{{ checksum "yarn.lock" }}
+            - vdifn-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Yarn install
-          command: yarn install --check-files --cache-folder ~/.cache/yarn
+          name: Install Dependencies
+          command: yarn install --immutable
       - save_cache:
-          key: agvdifn-yarn-{{ checksum "yarn.lock" }}
+          name: Save Yarn Package Cache
+          key: vdifn-yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - .yarn/cache
+            - .yarn/unplugged
       - run:
           name: Set up database
           command: bin/rails db:setup
