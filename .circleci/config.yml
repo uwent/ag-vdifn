@@ -42,7 +42,7 @@ jobs:
             - vdifn-yarn-packages-{{ checksum "package.json" }}
       - run:
           name: Install Dependencies
-          command: rm yarn.lock && yarn install
+          command: rm yarn.lock && yarn install --no-immutable
       - save_cache:
           name: Save Yarn Package Cache
           key: vdifn-yarn-packages-{{ checksum "yarn.lock" }}
