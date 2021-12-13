@@ -21,26 +21,29 @@ gem "uglifier", "~> 4.2"
 gem "webpacker", git: "https://github.com/rails/webpacker.git"
 
 group :development do
-  gem "puma", "~> 5.5"
-  gem "capistrano", "~> 3.16"
-  gem "capistrano-bundler", "~> 2.0"
-  gem "capistrano-rails", "~> 1.6"
-  gem "capistrano-rbenv", "~> 2.2"
-  gem "web-console", "~> 4.1"
+  gem "puma"
+  gem "capistrano"
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano-rbenv"
+  gem "web-console"
   gem "standard"
 end
 
 group :development, :test do
-  gem "bcrypt_pbkdf", "~> 1.1"
-  gem "byebug", "~> 11.1"
-  gem "dotenv-rails", "~> 2.7"
-  gem "ed25519", "~> 1.2"
-  gem "guard-rspec", "~> 4.7"
-  gem "pry-rails", "~> 0.3"
-  gem "rspec-rails", "~> 5.0"
-  gem "shoulda-matchers", "~> 5.0"
-  gem "simplecov", "~> 0.21"
-  gem "spring", "~> 4.0"
-  gem "spring-commands-rspec", "~> 1.0"
-  gem "webmock", "~> 3.14"
+  gem "bcrypt_pbkdf"
+  gem "byebug"
+  gem "dotenv-rails"
+  gem "ed25519"
+  gem "guard-rspec"
+  gem "pry-rails"
+  gem "rspec-rails"
+  gem "shoulda-matchers"
+  gem "spring"
+  gem "spring-commands-rspec"
+end
+
+group :test do
+  gem "simplecov"
+  gem "webmock"
 end

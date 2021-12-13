@@ -160,7 +160,7 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.12.0)
+    loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
@@ -193,10 +193,9 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     parallel (1.21.0)
-    parser (3.0.3.1)
+    parser (3.0.3.2)
       ast (~> 2.4.1)
     pg (1.2.3)
-    pg (1.2.3-x64-mingw32)
     pikaday-gem (1.4.0)
       railties (>= 3.1)
     pry (0.14.1)
@@ -277,7 +276,7 @@ GEM
       rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.14.0)
+    rubocop-ast (1.15.0)
       parser (>= 3.0.1.1)
     rubocop-performance (1.12.0)
       rubocop (>= 1.7.0, < 2.0)
@@ -311,7 +310,7 @@ GEM
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.4.1)
+    sprockets-rails (3.4.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
@@ -353,16 +352,16 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10)
   activesupport (~> 6.1.4)
-  bcrypt_pbkdf (~> 1.1)
-  byebug (~> 11.1)
-  capistrano (~> 3.16)
-  capistrano-bundler (~> 2.0)
-  capistrano-rails (~> 1.6)
-  capistrano-rbenv (~> 2.2)
+  bcrypt_pbkdf
+  byebug
+  capistrano
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rbenv
   coffee-rails (~> 5.0)
-  dotenv-rails (~> 2.7)
-  ed25519 (~> 1.2)
-  guard-rspec (~> 4.7)
+  dotenv-rails
+  ed25519
+  guard-rspec
   httparty (~> 0.20)
   jbuilder (~> 2.11)
   jquery-rails (~> 4.4)
@@ -372,23 +371,23 @@ DEPENDENCIES
   nokogiri (>= 1.12.5)
   pg (~> 1.2)
   pikaday-gem (~> 1.4)
-  pry-rails (~> 0.3)
-  puma (~> 5.5)
+  pry-rails
+  puma
   rails (~> 6.1.4)
   railties (~> 6.1.4)
-  rspec-rails (~> 5.0)
+  rspec-rails
   sassc-rails (~> 2.1)
   sdoc (~> 2.2)
-  shoulda-matchers (~> 5.0)
-  simplecov (~> 0.21)
-  spring (~> 4.0)
-  spring-commands-rspec (~> 1.0)
+  shoulda-matchers
+  simplecov
+  spring
+  spring-commands-rspec
   standard
   turbolinks (~> 5.2)
   uglifier (~> 4.2)
-  web-console (~> 4.1)
-  webmock (~> 3.14)
+  web-console
+  webmock
   webpacker!
 
 BUNDLED WITH
-   2.2.29
+   2.2.32
