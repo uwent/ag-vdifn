@@ -1,63 +1,41 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@1.2.0
-
+  node: circleci/node@4.9.0
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.0.3-node
+      - image: 'cimg/ruby:3.0.3-node'
         environment:
-          PG_HOST: localhost
-          PG_USER: postgres
+          BUNDLE_JOBS: '3'
+          BUNDLE_RETRY: '3'
+          PGHOST: 127.0.0.1
+          PGPASSWORD: 'password'
+          PGUSER: vdifn_test
           RAILS_ENV: test
-          RACK_ENV: test
-      - image: circleci/postgres:12.8
+      - image: 'circleci/postgres:12.8'
         environment:
-          POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
-          POSTGRES_PASSWORD: "password"
+          POSTGRES_PASSWORD: 'password'
+          POSTGRES_USER: postgres
     executor: ruby/default
     steps:
       - checkout
+      - ruby/install-deps
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
-          name: Get Bundler
-          command: gem install bundler
+          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
+          name: Wait for DB
       - run:
-          name: Configure Bundler
-          command: bundle config set --local path './vendor/bundle'
-      - restore_cache:
-          keys:
-            - vdifn-bundle-{{ checksum "Gemfile.lock" }}-{{ checksum ".ruby-version" }}
-            - vdifn-bundle
+          command: 'bundle exec rails db:schema:load --trace'
+          name: Database setup
       - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-      - save_cache:
-          key: vdifn-bundle-{{ checksum "Gemfile.lock" }}-{{ checksum ".ruby-version" }}
-          paths:
-            - ./vendor/bundle
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - vdifn-yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --immutable
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: vdifn-yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - .yarn/cache
-            - .yarn/unplugged
-      - run:
-          name: Set up database
-          command: bin/rails db:setup
-      - run:
-          name: Rspec
+          name: Rspec tests
           command: bundle exec rspec
       - run:
-          name: Jest
-          command: yarn test --maxWorkers=4
+          name: Node tests
+          command: yarn test
       - run:
           name: Compile
           command: bundle exec rails webpacker:compile
