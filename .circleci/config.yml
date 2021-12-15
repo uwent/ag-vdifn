@@ -1,3 +1,7 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.9.0
+  ruby: circleci/ruby@1.2.0
 jobs:
   build:
     docker:
@@ -6,7 +10,6 @@ jobs:
       - checkout
       - ruby/install-deps
       - node/install-packages:
-          cache-key: yarn.lock
           pkg-manager: yarn
   checking:
     docker:
@@ -37,7 +40,6 @@ jobs:
       - checkout
       - ruby/install-deps
       - node/install-packages:
-          cache-key: yarn.lock
           pkg-manager: yarn
       - run:
           command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
@@ -54,10 +56,6 @@ jobs:
       - run:
           name: Compile
           command: bundle exec rails webpacker:compile
-orbs:
-  node: circleci/node@4.9.0
-  ruby: circleci/ruby@1.2.0
-version: 2.1
 workflows:
   build_and_test:
     jobs:
