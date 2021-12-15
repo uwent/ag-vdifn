@@ -1,41 +1,24 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.9.0
   ruby: circleci/ruby@1.2.0
+  node: circleci/node@4.9.0
 jobs:
   build:
     docker:
       - image: 'cimg/ruby:3.0.3-node'
-    steps:
-      - checkout
-      - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-  checking:
-    docker:
-      - image: 'cimg/ruby:3.0.3-node'
-    steps:
-      - checkout
-      - ruby/install-deps
-      - ruby/rubocop-check:
-          format: progress
-          label: Inspecting with Rubocop
-  test:
-    docker:
-      - image: 'cimg/ruby:3.0.3-node'
-      - environment:
+        environment:
+          BUNDLE_JOBS: '3'
+          BUNDLE_RETRY: '3'
+          PGHOST: 127.0.0.1
+          PGPASSWORD: 'password'
+          PGUSER: vdifn_test
+          RAILS_ENV: test
+      - image: 'circleci/postgres:12.8'
+        environment:
           POSTGRES_DB: vdifn_test
           POSTGRES_PASSWORD: 'password'
           POSTGRES_USER: postgres
-        image: 'circleci/postgres:12.8'
-    environment:
-      BUNDLE_JOBS: '3'
-      BUNDLE_RETRY: '3'
-      PGHOST: 127.0.0.1
-      PGPASSWORD: 'password'
-      PGUSER: vdifn_test
-      RAILS_ENV: test
-    parallelism: 3
+    executor: ruby/default
     steps:
       - checkout
       - ruby/install-deps
@@ -48,19 +31,11 @@ jobs:
           command: 'bundle exec rails db:schema:load --trace'
           name: Database setup
       - run:
-          name: Rspec
+          name: Rspec tests
           command: bundle exec rspec
       - run:
-          name: Jest
-          command: yarn test --maxWorkers=4
+          name: Node tests
+          command: yarn test
       - run:
           name: Compile
           command: bundle exec rails webpacker:compile
-workflows:
-  build_and_test:
-    jobs:
-      - build
-      - checking
-      - test:
-          requires:
-            - build
