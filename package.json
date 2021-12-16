@@ -42,7 +42,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/svelte": "^3.0.3",
     "@types/color": "^3.0.2",
-    "@types/google.maps": "^3.47.0",
+    "@types/google.maps": "^3.47.2",
     "@types/jest": "^27.0.3",
     "@types/lodash": "^4.14.177",
     "@types/node": "^16.11.11",
