@@ -1,9 +1,3 @@
-<script lang="ts">
-  import moment from 'moment'
-  let expanded = true
-  let host = window.location.host
-</script>
-
 <style type="scss">
   @import '../../scss/settings.scss';
 
@@ -17,8 +11,7 @@
     overflow-y: auto;
     max-height: 100vh;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
-      4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
     z-index: $z-index-modal;
     transition: $duration-promptly ease-in-out;
@@ -88,7 +81,10 @@
     font-size: smaller;
     color: grey;
 
-    a:hover, a:visited, a:link, a:active {
+    a:hover,
+    a:visited,
+    a:link,
+    a:active {
       color: #249dde;
       text-decoration: none;
     }
@@ -142,6 +138,12 @@
   }
 </style>
 
+<script lang="ts">
+  import moment from 'moment'
+  let expanded = true
+  let host = window.location.host
+</script>
+
 <div id="sidebar" aria-expanded={expanded}>
   <header>
     <div>
@@ -149,8 +151,9 @@
         id="uw-madison"
         title="Ag-Weather"
         class="logo"
-        href={host || "https://agweather.cals.wisc.edu"}
-        target="_blank">
+        href={host || 'https://agweather.cals.wisc.edu'}
+        target="_blank"
+      >
         Agweather
       </a>
       <a
@@ -158,7 +161,8 @@
         title="UW-Madison Plant Pathology"
         class="logo"
         href="https://vegpath.plantpath.wisc.edu/"
-        target="_blank">
+        target="_blank"
+      >
         UW-Madison Plant Pathology
       </a>
       <a
@@ -166,7 +170,8 @@
         title="UW-Madison Vegetable Entomology"
         class="logo"
         href="https://vegento.russell.wisc.edu/"
-        target="_blank">
+        target="_blank"
+      >
         UW-Madison Vegetable Crop Entomology
       </a>
     </div>
@@ -183,7 +188,7 @@
   </div>
 
   <footer>
-    <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br>
+    <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br />
     Copyright &copy;{moment.utc().format('YYYY')} University of Wisconsin-Madison
   </footer>
 

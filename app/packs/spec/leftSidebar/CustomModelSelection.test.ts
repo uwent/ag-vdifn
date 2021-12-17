@@ -15,17 +15,17 @@ describe('when data present', () => {
         name: 'corn',
         afflictions: [
           { id: 11, name: 'bug', t_min: 50, t_max: 86 },
-          { id: 12, name: 'beetle', t_min: 40, t_max: null },
-        ],
+          { id: 12, name: 'beetle', t_min: 40, t_max: null }
+        ]
       },
       {
         id: 2,
         name: 'carrots',
         afflictions: [
           { id: 21, name: 'ladybug' },
-          { id: 22, name: 'fly' },
-        ],
-      },
+          { id: 22, name: 'fly' }
+        ]
+      }
     ]
 
     const { getByRole, queryByRole } = render(SetContextTest, {
@@ -34,9 +34,9 @@ describe('when data present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          getAfflictionName: () => 'Model',
-        },
-      },
+          getAfflictionName: () => 'Model'
+        }
+      }
     })
     getRole = getByRole
     getQuery = queryByRole
@@ -54,10 +54,10 @@ describe('when data present', () => {
   })
 
   it('shows tmin and tmax in the model selection box', () => {
-    expect(getRole('combobox', { name: 'Model'})).toHaveTextContent('bug')
-    expect(getRole('combobox', { name: 'Model'})).toHaveTextContent('(50/86')
-    expect(getRole('combobox', { name: 'Model'})).toHaveTextContent('beetle')
-    expect(getRole('combobox', { name: 'Model'})).toHaveTextContent('(40/None')
+    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('bug')
+    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('(50/86')
+    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('beetle')
+    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('(40/None')
   })
 })
 
@@ -71,9 +71,9 @@ describe('when data not present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          getAfflictionName: () => 'Model',
-        },
-      },
+          getAfflictionName: () => 'Model'
+        }
+      }
     })
     getRole = getByRole
     getQuery = queryByRole

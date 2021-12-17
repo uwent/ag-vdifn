@@ -1,36 +1,3 @@
-<script lang="ts">
-  import { Loader } from '@googlemaps/js-api-loader'
-  import { onMount, setContext } from 'svelte'
-  import mapOptions from './ts/mapOptions'
-  import Loading from '../common/Loading.svelte'
-  import { mapKey } from '../../store/store'
-  import GoogleWrapper from './ts/googleWrapper'
-  let container: any
-  let promise: any
-  let map: any
-  let googleInstance: GoogleWrapper
-
-  const loader = new Loader({
-    apiKey: process.env.GOOGLE_MAPS_API_KEY
-  })
-
-  setContext(mapKey, {
-    getMap: () => map,
-    getGoogle: () => googleInstance,
-  })
-
-  async function loadMap() {
-    await loader.load().then(() => {
-      googleInstance = new GoogleWrapper(google)
-      map = googleInstance.createMap(container, mapOptions)
-    })
-  }
-
-  onMount(() => {
-    promise = loadMap()
-  })
-</script>
-
 <style>
   #google-map {
     height: 100%;
@@ -64,6 +31,39 @@
     font-size: 9px;
   }
 </style>
+
+<script lang="ts">
+  import { Loader } from '@googlemaps/js-api-loader'
+  import { onMount, setContext } from 'svelte'
+  import mapOptions from './ts/mapOptions'
+  import Loading from '../common/Loading.svelte'
+  import { mapKey } from '../../store/store'
+  import GoogleWrapper from './ts/googleWrapper'
+  let container: any
+  let promise: any
+  let map: any
+  let googleInstance: GoogleWrapper
+
+  const loader = new Loader({
+    apiKey: process.env.GOOGLE_MAPS_API_KEY
+  })
+
+  setContext(mapKey, {
+    getMap: () => map,
+    getGoogle: () => googleInstance
+  })
+
+  async function loadMap() {
+    await loader.load().then(() => {
+      googleInstance = new GoogleWrapper(google)
+      map = googleInstance.createMap(container, mapOptions)
+    })
+  }
+
+  onMount(() => {
+    promise = loadMap()
+  })
+</script>
 
 {#await promise}
   <Loading />

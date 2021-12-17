@@ -53,7 +53,7 @@ describe('without save state', () => {
     })
 
     it('sets initial input values based on map range', () => {
-      const x = to_tenths((mapMax - mapMin) / (defaultSeverityLevels))
+      const x = to_tenths((mapMax - mapMin) / defaultSeverityLevels)
       expect(userMinInput.value).toEqual(`${mapMin + x}`)
       expect(userMaxInput.value).toEqual(`${mapMax - x}`)
     })
@@ -63,7 +63,7 @@ describe('without save state', () => {
       const userMax = Number(userMaxInput.value)
       const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
       expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${userMin} - ${userMin + x}`,
+        ` ${userMin} - ${userMin + x}`
       )
     })
   })
@@ -77,29 +77,33 @@ describe('without save state', () => {
       await fireEvent.click(minusButton)
       expect(queryId('severity-row').length).toEqual(5)
     })
-  
+
     it('cannot decrement when there are 3 severity levels', async () => {
       await fireEvent.click(minusButton)
       await fireEvent.click(minusButton)
       expect(minusButton.disabled).toEqual(true)
     })
-  
+
     it('cannot add when there are 8 levels', async () => {
       await fireEvent.click(addButton)
       await fireEvent.click(addButton)
       await fireEvent.click(addButton)
       expect(addButton.disabled).toEqual(true)
     })
-  
+
     it('updates intermediate values when severity levels change', async () => {
       const userMin = Number(userMinInput.value)
       const userMax = Number(userMaxInput.value)
       const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + x}`)
+      expect(queryId('severity-row')[1].textContent).toEqual(
+        ` ${userMin} - ${userMin + x}`
+      )
       await fireEvent.click(addButton)
       const severityLevels = defaultSeverityLevels + 1
       const y = to_tenths((userMax - userMin) / (severityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${userMin} - ${userMin + y}`)
+      expect(queryId('severity-row')[1].textContent).toEqual(
+        ` ${userMin} - ${userMin + y}`
+      )
     })
   })
 
@@ -107,7 +111,9 @@ describe('without save state', () => {
     it('disables buttons when min is less than zero', async () => {
       const newMin = -10
       await fireEvent.change(userMinInput, { target: { value: newMin } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the maximum')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the maximum'
+      )
       expect(userMaxInput.validationMessage).toEqual('')
       expect(updateButton.disabled).toEqual(true)
     })
@@ -115,16 +121,24 @@ describe('without save state', () => {
     it('disables buttons when min is greater than max', async () => {
       const newMin = 1000
       await fireEvent.change(userMinInput, { target: { value: newMin } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the maximum')
-      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the maximum'
+      )
+      expect(userMaxInput.validationMessage).toEqual(
+        'This value must be greater than the minimum'
+      )
       expect(updateButton.disabled).toEqual(true)
     })
 
     it('disables buttons when min is greater than max', async () => {
       const newMax = -10
       await fireEvent.change(userMaxInput, { target: { value: newMax } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the maximum')
-      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the maximum'
+      )
+      expect(userMaxInput.validationMessage).toEqual(
+        'This value must be greater than the minimum'
+      )
       expect(updateButton.disabled).toEqual(true)
     })
   })
@@ -137,13 +151,15 @@ describe('without save state', () => {
       const x = to_tenths((userMax - newMin) / (defaultSeverityLevels - 2))
       expect(queryId('severity-row')[1].textContent).toEqual(` ${newMin} - ${newMin + x}`)
     })
-  
+
     it('updates intermediate values when userMax is changed', async () => {
       const newMax = 1000
       const userMin = Number(userMinInput.value)
       await fireEvent.change(userMaxInput, { target: { value: newMax } })
       const x = to_tenths((newMax - userMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[defaultSeverityLevels - 2].textContent).toEqual(` ${newMax - x} - ${newMax}`)
+      expect(queryId('severity-row')[defaultSeverityLevels - 2].textContent).toEqual(
+        ` ${newMax - x} - ${newMax}`
+      )
     })
   })
 
@@ -155,7 +171,7 @@ describe('without save state', () => {
       expect(userMaxInput.value).toEqual(newMax.toString())
       await fireEvent.click(resetButton)
       expect(userMaxInput.value).toEqual(oldMax)
-    }) 
+    })
   })
 })
 
@@ -169,11 +185,11 @@ describe('saving valid state', () => {
       severityLevels: severityLevels,
       userValues: userValues,
       mapMax: mapMax,
-      mapMin: mapMin,
+      mapMin: mapMin
     })
 
     const { queryAllByTestId, getByTestId } = render(TwoPointGradient)
-    
+
     queryId = queryAllByTestId
     userMinInput = getByTestId('userMinInput') as HTMLInputElement
     userMaxInput = getByTestId('userMaxInput') as HTMLInputElement

@@ -23,6 +23,6 @@ it('returns properties', () => {
     north: 41.830000000000005,
     south: 41.93,
     east: -87.57000000000001,
-    west: -87.67,
+    west: -87.67
   })
 })

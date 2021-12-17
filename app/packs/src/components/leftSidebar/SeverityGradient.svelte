@@ -1,36 +1,3 @@
-<script lang="ts">
-  import TwoPointGradient from './TwoPointGradient.svelte'
-  import ThreePointGradient from './ThreePointGradient.svelte'
-  import {
-    overlayGradient,
-    customPanelParams,
-    customOverlaySubmitted,
-    customPanelState,
-  } from '../../store/store'
-  import { onMount } from 'svelte'
-  import { get } from 'svelte/store'
-  const moment = require('moment')
-  let gradient = 1
-
-  function updateOverlay(event) {
-    overlayGradient.set(event.detail)
-    updateCustomPanelState()
-  }
-
-  function updateCustomPanelState() {
-    customPanelState.update((state) => ({
-      ...state,
-      selectedGradient: gradient,
-    }))
-  }
-
-  onMount(() => {
-    if (get(customOverlaySubmitted)) {
-      gradient = get(customPanelState).selectedGradient
-    }
-  })
-</script>
-
 <style type="scss">
   #gradient-2-point-display {
     background: linear-gradient(
@@ -129,6 +96,39 @@
   }
 </style>
 
+<script lang="ts">
+  import TwoPointGradient from './TwoPointGradient.svelte'
+  import ThreePointGradient from './ThreePointGradient.svelte'
+  import {
+    overlayGradient,
+    customPanelParams,
+    customOverlaySubmitted,
+    customPanelState
+  } from '../../store/store'
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
+  const moment = require('moment')
+  let gradient = 1
+
+  function updateOverlay(event) {
+    overlayGradient.set(event.detail)
+    updateCustomPanelState()
+  }
+
+  function updateCustomPanelState() {
+    customPanelState.update(state => ({
+      ...state,
+      selectedGradient: gradient
+    }))
+  }
+
+  onMount(() => {
+    if (get(customOverlaySubmitted)) {
+      gradient = get(customPanelState).selectedGradient
+    }
+  })
+</script>
+
 {#if $customPanelParams.start_date}
   <div class="submitted-params" title="submitted-params">
     <div>Start Date:</div>
@@ -152,7 +152,8 @@
       name="gradient-type"
       title="gradient-2-point"
       bind:group={gradient}
-      value={1} />
+      value={1}
+    />
     <span id="gradient-2-point-display" class="gradient" />
   </label>
   <label for="gradient-3-point" class="container">
@@ -162,7 +163,8 @@
       name="gradient-type"
       title="gradient-3-point"
       bind:group={gradient}
-      value={2} />
+      value={2}
+    />
     <span id="gradient-3-point-display" class="gradient" />
   </label>
 </fieldset>

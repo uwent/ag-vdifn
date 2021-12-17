@@ -1,19 +1,24 @@
-import _ from "lodash"
-import ColorHelper from "../../map/ts/colorHelper"
+import _ from 'lodash'
+import ColorHelper from '../../map/ts/colorHelper'
 
 export default class GradientHelper {
-
   mapRangeToColors(options) {
-    const { min, middleMin, middleMax, max, totalLevels }: {
-      min: number,
-      middleMin: number,
-      middleMax: number,
-      max: number,
-      totalLevels: number,
+    const {
+      min,
+      middleMin,
+      middleMax,
+      max,
+      totalLevels
+    }: {
+      min: number
+      middleMin: number
+      middleMax: number
+      max: number
+      totalLevels: number
     } = options
 
-    let result = {}
-    
+    const result = {}
+
     result[min] = ColorHelper.color(0, totalLevels)
 
     if (min === max) return result
@@ -40,7 +45,11 @@ export default class GradientHelper {
   }
 
   gradientValues(options) {
-    const { min, max, intermediateLevels }: { min: number, max: number, intermediateLevels: number} = options
+    const {
+      min,
+      max,
+      intermediateLevels
+    }: { min: number; max: number; intermediateLevels: number } = options
     return {
       userMin: min,
       userMax: max,
@@ -50,10 +59,10 @@ export default class GradientHelper {
 
   private calculateRanges(min: number, max: number, levels: number): number[][] {
     if (levels <= 0) return []
-    let ranges: number[][] = []
+    const ranges: number[][] = []
     const length_of_range = (max - min) / levels
     ranges.push([min, _.round(min + length_of_range, 1)])
-    for(let i = 0; i < levels - 1; i ++) {
+    for (let i = 0; i < levels - 1; i++) {
       const latestRange = _.last<number[]>(ranges)
       ranges.push([
         _.round(_.last<number>(latestRange), 1),

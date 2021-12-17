@@ -1,89 +1,3 @@
-<script lang="ts">
-  const _ = require('lodash')
-  import { onDestroy } from 'svelte'
-  import { SeverityParams } from '../common/ts/types'
-  import {
-    selectedPanel,
-    panelNames,
-    diseasePanelParams,
-    insectPanelParams,
-    overlayGradient,
-    selectedAffliction,
-  } from '../../store/store'
-  import DatabaseClient from '../common/ts/databaseClient'
-  import QuestionSvg from '../common/QuestionSvg.svelte'
-  import SeverityLegend from './SeverityLegend.svelte'
-  import CustomSeverityLegend from './CustomSeverityLegend.svelte'
-  import Modal from '../common/Modal.svelte'
-  export let currentSeverities = []
-  let expanded = false
-  let diseaseSeverities = []
-  let insectSeverities = []
-  let severityInfo = ''
-  let gradient = []
-  let showModal = false
-
-  const diseaseUnsubscribe = diseasePanelParams.subscribe(
-    async (severityParams: SeverityParams) => {
-      if (Object.entries(severityParams).length === 0) return
-      diseaseSeverities = await updateSeverities(severityParams)
-      currentSeverities = diseaseSeverities
-    },
-  )
-
-  const insectUnsubscribe = insectPanelParams.subscribe(
-    async (severityParams: SeverityParams) => {
-      if (Object.entries(severityParams).length === 0) return
-      insectSeverities = await updateSeverities(severityParams)
-      currentSeverities = insectSeverities
-      severityInfo = await updateSeverityInfo(severityParams)
-    },
-  )
-
-  const overlayGradientUnsubscribe = overlayGradient.subscribe(
-    (gradientMapping) => {
-      if (Object.entries(gradientMapping).length === 0) return
-      const temp = []
-      _.forEach(gradientMapping, (value, key) => {
-        temp.push({ number: key, color: value })
-      })
-      gradient = temp.sort((x, y) => {
-        return x.number - y.number
-      })
-    },
-  )
-
-  async function updateSeverities(severityParams) {
-    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id)
-  }
-
-  async function updateSeverityInfo(severityParams) {
-    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id)
-  }
-
-  $: swapSeverities($selectedPanel)
-
-  function swapSeverities(selectedPanel) {
-    switch (selectedPanel) {
-      case panelNames.disease:
-        currentSeverities = diseaseSeverities
-        break
-      case panelNames.insect:
-        currentSeverities = insectSeverities
-        break
-      case panelNames.custom:
-        currentSeverities = []
-        break
-    }
-  }
-
-  onDestroy(() => {
-    diseaseUnsubscribe()
-    insectUnsubscribe()
-    overlayGradientUnsubscribe()
-  })
-</script>
-
 <style type="scss">
   @import '../../scss/settings.scss';
 
@@ -120,8 +34,7 @@
     padding: 5px 10px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 3px;
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3),
-      4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
 
     @media #{$medium-up} {
       bottom: 30px;
@@ -174,10 +87,95 @@
   }
 </style>
 
+<script lang="ts">
+  const _ = require('lodash')
+  import { onDestroy } from 'svelte'
+  import { SeverityParams } from '../common/ts/types'
+  import {
+    selectedPanel,
+    panelNames,
+    diseasePanelParams,
+    insectPanelParams,
+    overlayGradient,
+    selectedAffliction
+  } from '../../store/store'
+  import DatabaseClient from '../common/ts/databaseClient'
+  import QuestionSvg from '../common/QuestionSvg.svelte'
+  import SeverityLegend from './SeverityLegend.svelte'
+  import CustomSeverityLegend from './CustomSeverityLegend.svelte'
+  import Modal from '../common/Modal.svelte'
+  export let currentSeverities = []
+  let expanded = false
+  let diseaseSeverities = []
+  let insectSeverities = []
+  let severityInfo = ''
+  let gradient = []
+  let showModal = false
+
+  const diseaseUnsubscribe = diseasePanelParams.subscribe(
+    async (severityParams: SeverityParams) => {
+      if (Object.entries(severityParams).length === 0) return
+      diseaseSeverities = await updateSeverities(severityParams)
+      currentSeverities = diseaseSeverities
+    }
+  )
+
+  const insectUnsubscribe = insectPanelParams.subscribe(
+    async (severityParams: SeverityParams) => {
+      if (Object.entries(severityParams).length === 0) return
+      insectSeverities = await updateSeverities(severityParams)
+      currentSeverities = insectSeverities
+      severityInfo = await updateSeverityInfo(severityParams)
+    }
+  )
+
+  const overlayGradientUnsubscribe = overlayGradient.subscribe(gradientMapping => {
+    if (Object.entries(gradientMapping).length === 0) return
+    const temp = []
+    _.forEach(gradientMapping, (value, key) => {
+      temp.push({ number: key, color: value })
+    })
+    gradient = temp.sort((x, y) => {
+      return x.number - y.number
+    })
+  })
+
+  async function updateSeverities(severityParams) {
+    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id)
+  }
+
+  async function updateSeverityInfo(severityParams) {
+    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id)
+  }
+
+  $: swapSeverities($selectedPanel)
+
+  function swapSeverities(selectedPanel) {
+    switch (selectedPanel) {
+      case panelNames.disease:
+        currentSeverities = diseaseSeverities
+        break
+      case panelNames.insect:
+        currentSeverities = insectSeverities
+        break
+      case panelNames.custom:
+        currentSeverities = []
+        break
+    }
+  }
+
+  onDestroy(() => {
+    diseaseUnsubscribe()
+    insectUnsubscribe()
+    overlayGradientUnsubscribe()
+  })
+</script>
+
 <button
   id="right-sidebar-expand-button"
   aria-expanded={expanded}
-  on:click={() => (expanded = !expanded)}>
+  on:click={() => (expanded = !expanded)}
+>
   {expanded ? '\u2716' : 'Show Legend'}
 </button>
 
@@ -211,7 +209,8 @@
             onset and potential severity of crop diseases. Current and
             forecasted weather conditions determine the risk for disease, and
             prompts disease management decisions (preventative pesticide
-            applications).">
+            applications)."
+          >
             <QuestionSvg />
           </button>
         </li>
@@ -226,7 +225,8 @@
             model) used to predict the development of carrot foliar blights
             caused by Alternaria and Cercospora fungi, based on an accumulation
             of DSVs from past temperature and leaf wetness data combined with
-            forecasted weather conditions.">
+            forecasted weather conditions."
+          >
             <QuestionSvg />
           </button>
         </li>
@@ -240,7 +240,8 @@
             aria-label="Disease forecasting model used to predict the
             development of late blight of potato/tomato caused by Phytophthora
             infestans, based on an accumulation of DSVs, which are generated
-            from air temperature and relative humidity data.">
+            from air temperature and relative humidity data."
+          >
             <QuestionSvg />
           </button>
         </li>

@@ -58,10 +58,14 @@ describe('without save state', () => {
     })
 
     it('sets initial input values based on map range', () => {
-      const x = (mapMax - mapMin) / (defaultSeverityRows)
+      const x = (mapMax - mapMin) / defaultSeverityRows
       expect(userMinInput.value).toEqual(`${to_tenths(mapMin + x)}`)
-      expect(userMiddleMinInput.value).toEqual(`${to_tenths((mapMin + mapMax) / 2 - x / 2)}`)
-      expect(userMiddleMaxInput.value).toEqual(`${to_tenths((mapMin + mapMax) / 2 + x / 2)}`)
+      expect(userMiddleMinInput.value).toEqual(
+        `${to_tenths((mapMin + mapMax) / 2 - x / 2)}`
+      )
+      expect(userMiddleMaxInput.value).toEqual(
+        `${to_tenths((mapMin + mapMax) / 2 + x / 2)}`
+      )
       expect(userMaxInput.value).toEqual(`${to_tenths(mapMax - x)}`)
     })
 
@@ -69,20 +73,27 @@ describe('without save state', () => {
       const min = Number(userMinInput.value)
       const middleMin = Number(userMiddleMinInput.value)
       const x = (middleMin - min) / (defaultSeverityLevels - 2)
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${min} - ${to_tenths(min + x)}`)
-      expect(queryId('severity-row')[2].textContent).toEqual(` ${min + x} - ${to_tenths(min + x * 2)}`)
+      expect(queryId('severity-row')[1].textContent).toEqual(
+        ` ${min} - ${to_tenths(min + x)}`
+      )
+      expect(queryId('severity-row')[2].textContent).toEqual(
+        ` ${min + x} - ${to_tenths(min + x * 2)}`
+      )
     })
 
     it('generates intermediate values divided between middle max and max', async () => {
       const middleMax = Number(userMiddleMaxInput.value)
       const max = Number(userMaxInput.value)
       const x = to_tenths((max - middleMax) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[defaultSeverityRows - 3].textContent).toEqual(` ${max - x * 2} - ${max - x}`)
-      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(` ${max - x} - ${max}`)
+      expect(queryId('severity-row')[defaultSeverityRows - 3].textContent).toEqual(
+        ` ${max - x * 2} - ${max - x}`
+      )
+      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(
+        ` ${max - x} - ${max}`
+      )
     })
-
   })
-  
+
   describe('can change severity levels', () => {
     it('adds and decrements severity levels', async () => {
       await fireEvent.click(addButton)
@@ -92,13 +103,13 @@ describe('without save state', () => {
       await fireEvent.click(minusButton)
       expect(queryId('severity-row').length).toEqual(defaultSeverityRows)
     })
-  
+
     it('cannot decrement when there are 3 severity levels', async () => {
       await fireEvent.click(minusButton)
       await fireEvent.click(minusButton)
       expect(minusButton.disabled).toEqual(true)
     })
-  
+
     it('cannot add when there are 8 levels', async () => {
       await fireEvent.click(addButton)
       await fireEvent.click(addButton)
@@ -123,7 +134,9 @@ describe('without save state', () => {
     it('disables buttons when min is less than zero', async () => {
       const newMin = -1
       await fireEvent.change(userMinInput, { target: { value: newMin } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the middle min')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the middle min'
+      )
       expect(userMiddleMinInput.validationMessage).toEqual('')
       expect(userMiddleMaxInput.validationMessage).toEqual('')
       expect(userMaxInput.validationMessage).toEqual('')
@@ -133,8 +146,12 @@ describe('without save state', () => {
     it('disables buttons when min is greater than middle min', async () => {
       const newMin = Number(userMiddleMinInput.value) + 1
       await fireEvent.change(userMinInput, { target: { value: newMin } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the middle min')
-      expect(userMiddleMinInput.validationMessage).toEqual('This value must be between the min and middle max')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the middle min'
+      )
+      expect(userMiddleMinInput.validationMessage).toEqual(
+        'This value must be between the min and middle max'
+      )
       expect(userMiddleMaxInput.validationMessage).toEqual('')
       expect(userMaxInput.validationMessage).toEqual('')
       expect(updateButton.disabled).toEqual(true)
@@ -143,8 +160,12 @@ describe('without save state', () => {
     it('disables buttons when middle min is less than the min', async () => {
       const newMiddleMin = Number(userMinInput.value) - 1
       await fireEvent.change(userMiddleMinInput, { target: { value: newMiddleMin } })
-      expect(userMinInput.validationMessage).toEqual('This value must be between 0 and the middle min')
-      expect(userMiddleMinInput.validationMessage).toEqual('This value must be between the min and middle max')
+      expect(userMinInput.validationMessage).toEqual(
+        'This value must be between 0 and the middle min'
+      )
+      expect(userMiddleMinInput.validationMessage).toEqual(
+        'This value must be between the min and middle max'
+      )
       expect(userMiddleMaxInput.validationMessage).toEqual('')
       expect(userMaxInput.validationMessage).toEqual('')
       expect(updateButton.disabled).toEqual(true)
@@ -154,8 +175,12 @@ describe('without save state', () => {
       const newMiddleMin = Number(userMiddleMaxInput.value) + 1
       await fireEvent.change(userMiddleMinInput, { target: { value: newMiddleMin } })
       expect(userMinInput.validationMessage).toEqual('')
-      expect(userMiddleMinInput.validationMessage).toEqual('This value must be between the min and middle max')
-      expect(userMiddleMaxInput.validationMessage).toEqual('This value must be between the middle min and the max')
+      expect(userMiddleMinInput.validationMessage).toEqual(
+        'This value must be between the min and middle max'
+      )
+      expect(userMiddleMaxInput.validationMessage).toEqual(
+        'This value must be between the middle min and the max'
+      )
       expect(userMaxInput.validationMessage).toEqual('')
       expect(updateButton.disabled).toEqual(true)
     })
@@ -165,8 +190,12 @@ describe('without save state', () => {
       await fireEvent.change(userMiddleMaxInput, { target: { value: newMiddleMax } })
       expect(userMinInput.validationMessage).toEqual('')
       expect(userMiddleMinInput.validationMessage).toEqual('')
-      expect(userMiddleMaxInput.validationMessage).toEqual('This value must be between the middle min and the max')
-      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the middle max')
+      expect(userMiddleMaxInput.validationMessage).toEqual(
+        'This value must be between the middle min and the max'
+      )
+      expect(userMaxInput.validationMessage).toEqual(
+        'This value must be greater than the middle max'
+      )
       expect(updateButton.disabled).toEqual(true)
     })
   })
@@ -200,15 +229,19 @@ describe('without save state', () => {
       const middleMax = Number(userMiddleMaxInput.value)
       const max = Number(userMaxInput.value)
       const x = to_tenths((max - middleMax) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(` ${max - x} - ${max}`)
+      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(
+        ` ${max - x} - ${max}`
+      )
 
       const newMiddleMax = middleMax + 150
       await fireEvent.change(userMiddleMaxInput, { target: { value: newMiddleMax } })
       const y = to_tenths((max - newMiddleMax) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(` ${max - y} - ${max}`)
+      expect(queryId('severity-row')[defaultSeverityRows - 2].textContent).toEqual(
+        ` ${max - y} - ${max}`
+      )
     })
   })
-  
+
   describe('resets user values', () => {
     it('resets values to default when reset is pushed', async () => {
       const oldMax = userMaxInput.value
@@ -217,7 +250,7 @@ describe('without save state', () => {
       expect(userMaxInput.value).toEqual(newMax.toString())
       await fireEvent.click(resetButton)
       expect(userMaxInput.value).toEqual(oldMax)
-    }) 
+    })
   })
 })
 
@@ -231,7 +264,7 @@ describe('saving valid state', () => {
       severityLevels: severityLevels,
       userValues: userValues,
       mapMin: mapMin,
-      mapMax: mapMax,
+      mapMax: mapMax
     })
 
     const { queryAllByTestId, getByTestId } = render(ThreePointGradient)
@@ -251,4 +284,3 @@ describe('saving valid state', () => {
     expect(queryId('severity-row').length).toEqual(defaultSeverityRows + 2)
   })
 })
-

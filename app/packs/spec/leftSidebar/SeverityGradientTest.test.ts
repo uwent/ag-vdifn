@@ -4,7 +4,7 @@ import {
   mapMinMapMax,
   twoPointGradientState,
   threePointGradientState,
-  customPanelParams,
+  customPanelParams
 } from '../../src/store/store'
 import { render } from '@testing-library/svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte'
@@ -18,7 +18,7 @@ describe('when data present', () => {
   beforeEach(() => {
     mapMinMapMax.set({
       max: 10,
-      min: 5,
+      min: 5
     })
     twoPointGradientState.set({})
     threePointGradientState.set({})
@@ -26,7 +26,7 @@ describe('when data present', () => {
       {
         id: 1,
         name: 'corn',
-        afflictions: [{ id: 5, name: 'bug' }],
+        afflictions: [{ id: 5, name: 'bug' }]
       },
       {
         id: 2,
@@ -34,17 +34,17 @@ describe('when data present', () => {
         afflictions: [
           { id: 15, name: 'ladybug' },
           { id: 6, name: 'grasshopper' },
-          { id: 10, name: 'fly' },
-        ],
-      },
+          { id: 10, name: 'fly' }
+        ]
+      }
     ]
 
     const { getByRole, getByTitle } = render(SetContextTest, {
       props: {
         Component: SeverityGradient,
         context_key: panelKey,
-        context_value: {},
-      },
+        context_value: {}
+      }
     })
     getRole = getByRole
     getTitle = getByTitle
@@ -62,11 +62,11 @@ describe('when data present', () => {
       end_date: '2020-10-20',
       t_min: 50,
       t_max: null,
-      in_fahrenheit: true,
+      in_fahrenheit: true
     })
     await tick()
     expect(getTitle('submitted-params').textContent).toContain(
-      `Start Date: 10/10/2020 End Date: 10/20/2020 Tmin: 50 Tmax: None Units: Fahrenheit`,
+      'Start Date: 10/10/2020 End Date: 10/20/2020 Tmin: 50 Tmax: None Units: Fahrenheit'
     )
   })
 })

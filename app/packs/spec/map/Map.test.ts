@@ -15,7 +15,7 @@ beforeEach(() => {
 it('sets context', () => {
   expect(mapComponent.$$.context.get(mapKey)).toEqual({
     getMap: expect.any(Function),
-    getGoogle: expect.any(Function),
+    getGoogle: expect.any(Function)
   })
 })
 

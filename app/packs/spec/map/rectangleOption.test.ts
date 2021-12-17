@@ -25,6 +25,6 @@ it('returns properties', () => {
     north: latitude - latitudeOffset,
     south: latitude + latitudeOffset,
     east: longitude + longitudeOffset,
-    west: longitude - longitudeOffset,
+    west: longitude - longitudeOffset
   })
 })

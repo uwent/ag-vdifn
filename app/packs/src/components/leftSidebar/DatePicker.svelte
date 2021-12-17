@@ -1,11 +1,55 @@
+<style type="scss">
+  @import '../../scss/settings.scss';
+
+  .select-wrapper {
+    display: flex;
+  }
+
+  fieldset {
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  label {
+    color: #484848;
+    font-size: 0.75em;
+    padding: 0 5px;
+  }
+
+  .datepicker-tooltip {
+    margin-left: 8px;
+    margin: auto;
+    font-size: 0.75em;
+    width: 50%;
+  }
+
+  .clear {
+    clear: both;
+    height: 0.5em;
+  }
+
+  .preset-buttons {
+    font-size: 0.75em;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .preset-buttons button {
+    padding: 5px 8px;
+    margin: 5px;
+    background: rgb(225, 225, 225);
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    appearance: none;
+    cursor: pointer;
+    font-size: 1em;
+  }
+</style>
+
 <script lang="ts">
   import { getContext, onDestroy, onMount } from 'svelte'
-  import {
-    endDate,
-    panelKey,
-    startDate,
-    selectedAffliction,
-  } from '../../store/store'
+  import { endDate, panelKey, startDate, selectedAffliction } from '../../store/store'
   import { PestInfo } from '../common/ts/types'
   // import QuestionSvg from '../common/svg/QuestionSvg.svelte'
 
@@ -25,9 +69,9 @@
   function updateStartDateInput() {
     const start = moment.utc(startDateValue)
     const end = moment.utc(endDateValue)
-    
+
     if (end < start) startDateValue = endDateValue
-    
+
     if (end.format('YYYY') != start.format('YYYY')) {
       startDateValue = end.format('YYYY') + '-01-01'
     }
@@ -85,7 +129,7 @@
           moment.utc(affliction.biofix_date).format('MMM D') +
           ')'
       } else if (affliction.name.includes('Early Blight')) {
-        startLabel = "Date of emergence"
+        startLabel = 'Date of emergence'
       } else {
         startLabel = dateToolTip.startLabel
       }
@@ -119,55 +163,6 @@
   $: endDate.set(endDateValue)
 </script>
 
-<style type="scss">
-  @import '../../scss/settings.scss';
-
-  .select-wrapper {
-    display: flex;
-  }
-
-  fieldset {
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-
-  label {
-    color: #484848;
-    font-size: 0.75em;
-    padding: 0 5px;
-  }
-
-  .datepicker-tooltip {
-    margin-left: 8px;
-    margin: auto;
-    font-size: 0.75em;
-    width: 50%;
-  }
-
-  .clear {
-    clear: both;
-    height: 0.5em;
-  }
-
-  .preset-buttons {
-    font-size: 0.75em;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .preset-buttons button {
-    padding: 5px 8px;
-    margin: 5px;
-    background: rgb(225, 225, 225);
-    border: 1px solid #d0d0d0;
-    border-radius: 3px;
-    appearance: none;
-    cursor: pointer;
-    font-size: 1em;
-  }
-</style>
-
 <fieldset id="datepicker">
   <legend>Date Range</legend>
   <label for="datepicker-start">{startLabel}</label>
@@ -180,7 +175,8 @@
       data-testid="datepicker-start"
       bind:value={startDateValue}
       on:change={updateEndDateInput}
-      max={today} />
+      max={today}
+    />
     {#if isPastYear(startDateValue)}
       <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
@@ -195,7 +191,8 @@
       data-testid="datepicker-end"
       bind:value={endDateValue}
       on:change={updateStartDateInput}
-      max={today} />
+      max={today}
+    />
     {#if isPastYear(startDateValue)}
       <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
@@ -206,18 +203,22 @@
     <button
       title="Set date range to past week"
       data-testid="button-past-week"
-      on:click={selectPastWeek}>Past week</button>
+      on:click={selectPastWeek}>Past week</button
+    >
     <button
       title="Set date range to past month"
       data-testid="button-past-month"
-      on:click={selectPastMonth}>Past month</button>
+      on:click={selectPastMonth}>Past month</button
+    >
     <button
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
-      on:click={selectThisYear}>This year</button>
+      on:click={selectThisYear}>This year</button
+    >
     <button
       title="Restore default date settings for this model"
       data-testid="button-defaults"
-      on:click={selectDefaults}>Defaults</button>
+      on:click={selectDefaults}>Defaults</button
+    >
   </div>
 </fieldset>

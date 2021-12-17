@@ -15,7 +15,7 @@
     mapMinMapMax,
     twoPointGradientState,
     threePointGradientState,
-    customOverlaySubmitted,
+    customOverlaySubmitted
   } from '../../store/store'
   import OverlayHelper from './ts/overlayHelper'
   import { SeverityParams } from '../common/ts/types'
@@ -27,7 +27,7 @@
   const diseaseOverlay = new OverlayHelper(google, map)
   const insectOverlay = new OverlayHelper(google, map)
   const customOverlay = new OverlayHelper(google, map)
-  
+
   let currentOverlay = insectOverlay
 
   selectedPanel.subscribe((selectedSeverity: string) => {
@@ -69,19 +69,19 @@
 
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
     await updateOverlay(diseaseOverlay, severityParams, panelNames.disease)
-    diseasePanelState.update((state) => ({
+    diseasePanelState.update(state => ({
       ...state,
       severities: diseaseOverlay.severities,
-      severityParams,
+      severityParams
     }))
   })
 
   insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
     await updateOverlay(insectOverlay, severityParams, panelNames.insect)
-    insectPanelState.update((state) => ({
+    insectPanelState.update(state => ({
       ...state,
       severities: insectOverlay.severities,
-      severityParams,
+      severityParams
     }))
   })
 
@@ -89,16 +89,16 @@
     await updateOverlay(customOverlay, severityParams, panelNames.custom)
     mapMinMapMax.set({
       min: customOverlay.min || 0,
-      max: customOverlay.max || 0,
+      max: customOverlay.max || 0
     })
-    customPanelState.update((state) => ({
+    customPanelState.update(state => ({
       ...state,
       severities: customOverlay.severities,
-      severityParams,
+      severityParams
     }))
   })
 
-  overlayGradient.subscribe((gradientMapping) => {
+  overlayGradient.subscribe(gradientMapping => {
     if (Object.entries(gradientMapping).length === 0) return
     customOverlay.updateOverlayGradient(gradientMapping)
   })
@@ -106,7 +106,7 @@
   async function updateOverlay(
     overlayHelper: OverlayHelper,
     severityParams: SeverityParams,
-    panelType,
+    panelType
   ) {
     if (Object.entries(severityParams).length === 0) return
     overlayLoading.set(true)

@@ -5,7 +5,7 @@ import {
   panelNames,
   insectPanelState,
   diseasePanelState,
-  customPanelState,
+  customPanelState
 } from '../../src/store/store'
 import Status from '../../src/components/map/Status.svelte'
 

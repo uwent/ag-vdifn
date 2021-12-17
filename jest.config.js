@@ -15,4 +15,5 @@ module.exports = {
   transformIgnorePatterns: ["node_modules"],
   testPathIgnorePatterns: ["/node_modules/", "/build/"],
   verbose: true,
+  testEnvironment: "jsdom"
 }

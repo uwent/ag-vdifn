@@ -1,117 +1,3 @@
-<script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte'
-  import { tMinTmax, defaults } from '../../store/store'
-  let tMin = defaults.t_min
-  let tMax = defaults.t_max
-  let in_f = true
-  let tMaxDisabled = true
-  let valid = true
-  const dispatch = createEventDispatcher()
-
-  // convert fahrenheit to celcius
-  function f_to_c(f: number) {
-    if (f === null) {
-      return null
-    } else {
-      return Math.round((f - 32) * (5 / 9) * 10) / 10
-    }
-  }
-
-  // convert celcius to fahrenheit
-  function c_to_f(c: number) {
-    if (c === null) {
-      return null
-    } else {
-      return Math.round((c * (9 / 5) + 32) * 10) / 10
-    }
-  }
-
-  function convert(event: any) {
-    in_f = event.target.checked
-    if (in_f) {
-      tMin = c_to_f(tMin)
-      tMax = c_to_f(tMax)
-    } else {
-      tMin = f_to_c(tMin)
-      tMax = f_to_c(tMax)
-    }
-  }
-
-  function tMaxToggle(event: any) {
-    tMaxDisabled = event.target.checked
-    if (tMaxDisabled) {
-      valid = true
-    } else if (!tMaxDisabled && !tMax) {
-      valid = false
-    }
-  }
-
-  function validateTmin(event: any) {
-    const {
-      target,
-      target: { value },
-    } = event
-    if (tMaxDisabled) {
-      target.setCustomValidity('')
-      valid = true
-      return
-    }
-    if (value >= tMax) {
-      target.setCustomValidity('This value must be less than the tMax')
-      valid = false
-    } else {
-      target.setCustomValidity('')
-      tMin = Number(event.target.value)
-      valid = true
-    }
-  }
-
-  function validateTmax(event: any) {
-    const {
-      target,
-      target: { value },
-    } = event
-    if (tMaxDisabled) {
-      target.setCustomValidity('')
-      valid = true
-      return
-    }
-    if (value <= tMin) {
-      target.setCustomValidity('This value must be greater than the tMin')
-      valid = false
-    } else {
-      target.setCustomValidity('')
-      tMax = Number(event.target.value)
-      valid = true
-    }
-  }
-
-  function updateTminTmax(tMin: number, tMax: number, in_f: boolean, tMaxDisabled: boolean) {
-    if (tMaxDisabled) {
-      tMinTmax.set({
-        t_min: tMin,
-        t_max: null,
-        in_fahrenheit: in_f,
-      })
-    } else {
-      tMinTmax.set({
-        t_min: tMin,
-        t_max: tMax,
-        in_fahrenheit: in_f,
-      })
-    }
-  }
-
-  onMount(() => {
-    tMin = 50
-    tMax = null
-    tMaxDisabled = true
-  })
-
-  $: dispatch('tMinMaxValid', { valid: valid })
-  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled)
-</script>
-
 <style>
   input[type='number'] {
     -webkit-appearance: none;
@@ -227,6 +113,125 @@
   }
 </style>
 
+<script lang="ts">
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { tMinTmax, defaults } from '../../store/store'
+  let tMin = defaults.t_min
+  let tMax = defaults.t_max
+  let in_f = true
+  let tMaxDisabled = true
+  let valid = true
+  const dispatch = createEventDispatcher()
+
+  // convert fahrenheit to celcius
+  function f_to_c(f: number) {
+    if (f === null) {
+      return null
+    } else {
+      return Math.round((f - 32) * (5 / 9) * 10) / 10
+    }
+  }
+
+  // convert celcius to fahrenheit
+  function c_to_f(c: number) {
+    if (c === null) {
+      return null
+    } else {
+      return Math.round((c * (9 / 5) + 32) * 10) / 10
+    }
+  }
+
+  function convert(event: any) {
+    in_f = event.target.checked
+    if (in_f) {
+      tMin = c_to_f(tMin)
+      tMax = c_to_f(tMax)
+    } else {
+      tMin = f_to_c(tMin)
+      tMax = f_to_c(tMax)
+    }
+  }
+
+  function tMaxToggle(event: any) {
+    tMaxDisabled = event.target.checked
+    if (tMaxDisabled) {
+      valid = true
+    } else if (!tMaxDisabled && !tMax) {
+      valid = false
+    }
+  }
+
+  function validateTmin(event: any) {
+    const {
+      target,
+      target: { value }
+    } = event
+    if (tMaxDisabled) {
+      target.setCustomValidity('')
+      valid = true
+      return
+    }
+    if (value >= tMax) {
+      target.setCustomValidity('This value must be less than the tMax')
+      valid = false
+    } else {
+      target.setCustomValidity('')
+      tMin = Number(event.target.value)
+      valid = true
+    }
+  }
+
+  function validateTmax(event: any) {
+    const {
+      target,
+      target: { value }
+    } = event
+    if (tMaxDisabled) {
+      target.setCustomValidity('')
+      valid = true
+      return
+    }
+    if (value <= tMin) {
+      target.setCustomValidity('This value must be greater than the tMin')
+      valid = false
+    } else {
+      target.setCustomValidity('')
+      tMax = Number(event.target.value)
+      valid = true
+    }
+  }
+
+  function updateTminTmax(
+    tMin: number,
+    tMax: number,
+    in_f: boolean,
+    tMaxDisabled: boolean
+  ) {
+    if (tMaxDisabled) {
+      tMinTmax.set({
+        t_min: tMin,
+        t_max: null,
+        in_fahrenheit: in_f
+      })
+    } else {
+      tMinTmax.set({
+        t_min: tMin,
+        t_max: tMax,
+        in_fahrenheit: in_f
+      })
+    }
+  }
+
+  onMount(() => {
+    tMin = 50
+    tMax = null
+    tMaxDisabled = true
+  })
+
+  $: dispatch('tMinMaxValid', { valid: valid })
+  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled)
+</script>
+
 <div id="degree_day_info">
   <div class="t-minmax-wrapper">
     <div class="temp-group" id="t-min-wrapper">
@@ -237,7 +242,8 @@
         id="tmin"
         maxlength="4"
         step="0.1"
-        bind:value={tMin} />
+        bind:value={tMin}
+      />
     </div>
     <div class="temp-group-tmax">
       <div class="temp-group" id="t-max-wrapper">
@@ -249,14 +255,16 @@
           maxlength="4"
           step="0.1"
           disabled={tMaxDisabled}
-          bind:value={tMax} />
+          bind:value={tMax}
+        />
       </div>
       <div class="tMaxToggle">
         <input
           id="tMaxToggle"
           type="checkbox"
           on:change={tMaxToggle}
-          bind:checked={tMaxDisabled} />
+          bind:checked={tMaxDisabled}
+        />
         <label for="tMaxToggle">No Tmax</label>
       </div>
     </div>
@@ -271,7 +279,8 @@
         type="checkbox"
         title="temp-unit-toggle"
         on:change={convert}
-        bind:checked={in_f} />
+        bind:checked={in_f}
+      />
       <span class="slider round" />
     </label>
   </div>

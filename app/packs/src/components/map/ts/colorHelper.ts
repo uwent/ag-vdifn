@@ -6,7 +6,7 @@ export default class ColorHelper {
     return this.getColor(severity, severityLevels, [
       COLORS.lightGreen,
       COLORS.yellow,
-      COLORS.red,
+      COLORS.red
     ])
   }
 
@@ -14,7 +14,7 @@ export default class ColorHelper {
     return this.getColor(severity, severityLevels, [
       COLORS.red,
       COLORS.yellow,
-      COLORS.lightGreen,
+      COLORS.lightGreen
     ])
   }
 

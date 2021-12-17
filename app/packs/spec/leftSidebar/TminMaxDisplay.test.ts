@@ -1,8 +1,7 @@
 import TminMaxDisplay from '../../src/components/leftSidebar/TminMaxDisplay.svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte'
-import { panelKey } from '../../src/store/store'
+import { panelKey, selectedAffliction } from '../../src/store/store'
 import { fireEvent, render } from '@testing-library/svelte'
-import { selectedAffliction } from '../../src/store/store'
 import { tick } from 'svelte'
 
 let getLabelText
@@ -18,18 +17,16 @@ describe('TminMaxDisplay component', () => {
       {
         id: 1,
         name: 'corn',
-        afflictions: [
-          { id: 5, name: 'bug', t_min: firstCropTmin, t_max: firstCropTmax },
-        ],
+        afflictions: [{ id: 5, name: 'bug', t_min: firstCropTmin, t_max: firstCropTmax }]
       },
       {
         id: 2,
         name: 'carrots',
         afflictions: [
           { id: 15, name: 'ladybug', t_min: 50, t_max: 86 },
-          { id: 6, name: 'grasshopper', t_min: 48, t_max: null },
-        ],
-      },
+          { id: 6, name: 'grasshopper', t_min: 48, t_max: null }
+        ]
+      }
     ]
 
     const { getByLabelText, getByTitle, getByRole } = render(SetContextTest, {
@@ -38,9 +35,9 @@ describe('TminMaxDisplay component', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          tMinMaxDisabled: () => true,
-        },
-      },
+          tMinMaxDisabled: () => true
+        }
+      }
     })
     getLabelText = getByLabelText
     getTitle = getByTitle
@@ -62,7 +59,7 @@ describe('TminMaxDisplay component', () => {
       id: 15,
       name: 'ladybug',
       t_min: t_min,
-      t_max: t_max,
+      t_max: t_max
     })
     await tick()
     expect(getTitle('Min temp')).toHaveTextContent(`${t_min}`)

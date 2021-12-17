@@ -1,44 +1,3 @@
-<script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte'
-  import Button from './Button.svelte'
-  export let name = 'Information'
-  export let maxWidth = '32em'
-  const dispatch = createEventDispatcher()
-  const close = () => dispatch('close')
-  let modal: any
-
-  const handle_keydown = (e) => {
-    if (e.key === 'Escape') {
-      close()
-      return
-    }
-
-    if (e.key === 'Tab') {
-      // trap focus
-      const nodes = modal.querySelectorAll('*')
-      const tabbable = Array.from(nodes).filter((n) => n.tabIndex >= 0)
-
-      let index = tabbable.indexOf(document.activeElement)
-      if (index === -1 && e.shiftKey) index = 0
-
-      index += tabbable.length + (e.shiftKey ? -1 : 1)
-      index %= tabbable.length
-
-      tabbable[index].focus()
-      e.preventDefault()
-    }
-  }
-
-  const previously_focused =
-    typeof document !== 'undefined' && document.activeElement
-
-  if (previously_focused) {
-    onDestroy(() => {
-      previously_focused.focus()
-    })
-  }
-</script>
-
 <style type="scss">
   @import '../../scss/settings.scss';
 
@@ -77,6 +36,46 @@
   }
 </style>
 
+<script lang="ts">
+  import { createEventDispatcher, onDestroy } from 'svelte'
+  import Button from './Button.svelte'
+  export let name = 'Information'
+  export let maxWidth = '32em'
+  const dispatch = createEventDispatcher()
+  const close = () => dispatch('close')
+  let modal: any
+
+  const handle_keydown = e => {
+    if (e.key === 'Escape') {
+      close()
+      return
+    }
+
+    if (e.key === 'Tab') {
+      // trap focus
+      const nodes = modal.querySelectorAll('*')
+      const tabbable = Array.from(nodes).filter(n => n.tabIndex >= 0)
+
+      let index = tabbable.indexOf(document.activeElement)
+      if (index === -1 && e.shiftKey) index = 0
+
+      index += tabbable.length + (e.shiftKey ? -1 : 1)
+      index %= tabbable.length
+
+      tabbable[index].focus()
+      e.preventDefault()
+    }
+  }
+
+  const previously_focused = typeof document !== 'undefined' && document.activeElement
+
+  if (previously_focused) {
+    onDestroy(() => {
+      previously_focused.focus()
+    })
+  }
+</script>
+
 <svelte:window on:keydown={handle_keydown} />
 
 <div class="modal-background" on:click={close} />
@@ -87,7 +86,8 @@
   aria-modal="true"
   bind:this={modal}
   aria-labelledby="affliction-modal"
-  style={"max-width: " + maxWidth} >
+  style={'max-width: ' + maxWidth}
+>
   <h2 id="affliction-modal">{name}</h2>
   <slot name="header" />
   <slot />

@@ -1,7 +1,7 @@
 const MapOptions = {
   center: {
     lat: 45.05,
-    lng: -90.275,
+    lng: -90.275
   },
   mapTypeControl: true,
   mapTypeControlOptions: {
@@ -14,9 +14,9 @@ const MapOptions = {
   streetViewControl: false,
   zoomControl: true,
   zoomControlOptions: {
-    position: 7,
+    position: 7
   },
-  zoom: 7,
+  zoom: 7
 }
 
 export default MapOptions

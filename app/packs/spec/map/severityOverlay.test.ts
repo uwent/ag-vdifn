@@ -13,7 +13,7 @@ import {
   panelNames,
   overlayGradient,
   overlayLoading,
-  mapMinMapMax,
+  mapMinMapMax
 } from '../../src/store/store'
 import OverlayHelper from '../../src/components/map/ts/overlayHelper'
 import { Severity } from '../../src/components/common/ts/types'
@@ -22,18 +22,18 @@ import { get } from 'svelte/store'
 const severityParams = {
   start_date: '2020-10-10',
   end_date: '2020-10-15',
-  pest_id: 1,
+  pest_id: 1
 }
 const customSeverityParams = {
   start_date: '2020-10-10',
   end_date: '2020-10-15',
   t_min: '10',
   t_max: '15',
-  in_fahrenheit: true,
+  in_fahrenheit: true
 }
 const severities: Severity[] = [
   { lat: 5, long: 10, level: 1 },
-  { lat: 2, long: 4, level: 2 },
+  { lat: 2, long: 4, level: 2 }
 ]
 
 const mockUpdateOverlay = jest.fn()
@@ -56,7 +56,7 @@ beforeEach(() => {
       showOverlay: mockShowOverlay,
       severities: severities,
       min: 10,
-      max: 15,
+      max: 15
     }
   })
   render(SetContextTest, {
@@ -65,9 +65,9 @@ beforeEach(() => {
       context_key: mapKey,
       context_value: {
         getMap: () => {},
-        getGoogle: () => {},
-      },
-    },
+        getGoogle: () => {}
+      }
+    }
   })
 })
 
@@ -85,10 +85,7 @@ afterAll(() => {
 describe('updating overlay for disease panel params', () => {
   it('updates overlay when afflictionParams is updated', () => {
     diseasePanelParams.set(severityParams)
-    expect(mockUpdateOverlay).toHaveBeenCalledWith(
-      severityParams,
-      panelNames.disease,
-    )
+    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, panelNames.disease)
   })
 
   it('sets overlay loading to true, then false after update overlay finished loading', async () => {
@@ -109,10 +106,7 @@ describe('updating overlay for disease panel params', () => {
 describe('updating overlay for insect panel params', () => {
   it('updates overlay when afflictionParams is updated', () => {
     insectPanelParams.set(severityParams)
-    expect(mockUpdateOverlay).toHaveBeenCalledWith(
-      severityParams,
-      panelNames.insect,
-    )
+    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, panelNames.insect)
   })
 
   it('sets overlay loading to true, then false after update overlay finished loading', async () => {

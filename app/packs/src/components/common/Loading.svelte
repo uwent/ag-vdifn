@@ -1,13 +1,3 @@
-<script lang="ts">
-  import { onMount } from "svelte";
-  let time = 0;
-  onMount(() => {
-    setInterval(() => {
-      time += 0.1;
-    }, 100);
-  });
-</script>
-
 <style>
   :global(.lds-ring) {
     display: flex;
@@ -50,6 +40,16 @@
     font-style: italic;
   }
 </style>
+
+<script lang="ts">
+  import { onMount } from 'svelte'
+  let time = 0
+  onMount(() => {
+    setInterval(() => {
+      time += 0.1
+    }, 100)
+  })
+</script>
 
 <div class="lds-ring" title="Loading" data-testid="loading">
   <div />

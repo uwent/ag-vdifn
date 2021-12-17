@@ -1,12 +1,12 @@
-import DatabaseClient from "../../src/components/common/ts/databaseClient"
+import DatabaseClient from '../../src/components/common/ts/databaseClient'
 import {
   PointDetailsParams,
-  SeverityParams,
+  SeverityParams
   // StationDetailsParams,
-} from "../../src/components/common/ts/types"
+} from '../../src/components/common/ts/types'
 
-describe("fetchSeverities", () => {
-  it("calls correct url and returns data", async () => {
+describe('fetchSeverities', () => {
+  it('calls correct url and returns data', async () => {
     const start_date = new Date().toDateString()
     const end_date = new Date().toDateString()
     const pest_id = 1
@@ -17,11 +17,11 @@ describe("fetchSeverities", () => {
 
     expect(response).toEqual([
       { lat: 5, long: 10, level: 10 },
-      { lat: 50, long: 60, level: 5 },
+      { lat: 50, long: 60, level: 5 }
     ])
   })
 
-  it("returns empty list if call fails", async () => {
+  it('returns empty list if call fails', async () => {
     const start_date = new Date().toDateString()
     const end_date = new Date().toDateString()
     const pest_id = 101
@@ -34,32 +34,35 @@ describe("fetchSeverities", () => {
   })
 })
 
-describe("fetchSeverityLegend", () => {
-  it("calls correct url and returns data", async () => {
+describe('fetchSeverityLegend', () => {
+  it('calls correct url and returns data', async () => {
     const database = new DatabaseClient()
     const pestId = 1
     const response = await database.fetchSeverityLegend(pestId)
 
     expect(response).toEqual([
       {
-        name: "High",
-        slug: "very_high",
-        description: "High likelihood of disease\n(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)",
+        name: 'High',
+        slug: 'very_high',
+        description:
+          'High likelihood of disease\n(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)'
       },
       {
-        name: "Medium",
-        slug: "medium",
-        description: "Medium likelihood of disease\n(7-day accumulated DSVs ≥ 3 or season accumulated DSVs \u003e 30)",
+        name: 'Medium',
+        slug: 'medium',
+        description:
+          'Medium likelihood of disease\n(7-day accumulated DSVs ≥ 3 or season accumulated DSVs \u003e 30)'
       },
       {
-        name: "Low",
-        slug: "very_low",
-        description: "Low likelihood of disease\n(7-day accumulated DSVs ≤ 3 and season accumulated DSVs \u003c 30)",
-      },
+        name: 'Low',
+        slug: 'very_low',
+        description:
+          'Low likelihood of disease\n(7-day accumulated DSVs ≤ 3 and season accumulated DSVs \u003c 30)'
+      }
     ])
   })
 
-  it("returns empty list on failure", async () => {
+  it('returns empty list on failure', async () => {
     const database = new DatabaseClient()
     const pestId = 101
 
@@ -69,71 +72,71 @@ describe("fetchSeverityLegend", () => {
   })
 })
 
-describe("fetchSeverityLegendInfo", () => {
-  it("calls correct url and returns data", async () => {
+describe('fetchSeverityLegendInfo', () => {
+  it('calls correct url and returns data', async () => {
     const database = new DatabaseClient()
     const pestId = 1
     const response = await database.fetchSeverityLegendInfo(pestId)
-    expect(response).toEqual("Alfalfa Weevil Info")
+    expect(response).toEqual('Alfalfa Weevil Info')
   })
 
-  it("returns empty string failure", async () => {
+  it('returns empty string failure', async () => {
     const database = new DatabaseClient()
     const pestId = 101
     const response = await database.fetchSeverityLegendInfo(pestId)
 
-    expect(response).toEqual("")
+    expect(response).toEqual('')
   })
 })
 
-describe("fetchPointDetails", () => {
-  it("calls correct url and returns data", async () => {
+describe('fetchPointDetails', () => {
+  it('calls correct url and returns data', async () => {
     const database = new DatabaseClient()
     const latitude = 100
     const longitude = 200
     const start_date = new Date().toDateString()
     const end_date = new Date().toDateString()
     const pest_id = 1
-    const panel = "disease"
+    const panel = 'disease'
     const params: PointDetailsParams = {
       latitude,
       longitude,
       start_date,
       end_date,
       pest_id,
-      panel,
+      panel
     }
 
     const response = await database.fetchPointDetails(params)
 
-    expect(response).toEqual("string")
+    expect(response).toEqual('string')
   })
 
-  it("returns empty string on failure", async () => {
+  it('returns empty string on failure', async () => {
     const database = new DatabaseClient()
     const latitude = 100
     const longitude = 200
     const start_date = new Date().toDateString()
     const end_date = new Date().toDateString()
     const pest_id = 101
-    const panel = "disease"
+    const panel = 'disease'
     const params: PointDetailsParams = {
       latitude,
       longitude,
       start_date,
       end_date,
       pest_id,
-      panel,
+      panel
     }
 
     const response = await database.fetchPointDetails(params)
 
-    expect(response).toEqual("")
+    expect(response).toEqual('')
   })
 })
 
-describe("fetchPestInfo", () => {
-  it("calls correct url and returns data", async () => {
+describe('fetchPestInfo', () => {
+  it('calls correct url and returns data', async () => {
     const database = new DatabaseClient()
     const pestId = 1
     const inFahrenheit = true
@@ -141,17 +144,17 @@ describe("fetchPestInfo", () => {
     const response = await database.fetchPestInfo(pestId, inFahrenheit)
 
     expect(response).toEqual({
-      info: "info",
-      name: "pest name",
-      pest_link: "www.example.com",
+      info: 'info',
+      name: 'pest name',
+      pest_link: 'www.example.com',
       biofix_date: new Date().toDateString(),
       end_date_enabled: true,
       tmin: 0,
-      tmax: 100,
+      tmax: 100
     })
   })
 
-  it("returns empty object on failure", async () => {
+  it('returns empty object on failure', async () => {
     const database = new DatabaseClient()
     const pestId = 101
     const inFahrenheit = true
@@ -165,7 +168,7 @@ describe("fetchPestInfo", () => {
       biofix_date: null,
       end_date_enabled: null,
       tmin: null,
-      tmax: null,
+      tmax: null
     })
   })
 })
@@ -196,8 +199,8 @@ describe("fetchPestInfo", () => {
 //   })
 // })
 
-describe("fetchDiseasePanel", () => {
-  it("converts diseases into afflictions", async () => {
+describe('fetchDiseasePanel', () => {
+  it('converts diseases into afflictions', async () => {
     const database = new DatabaseClient()
 
     const response = await database.fetchDiseasePanel()
@@ -205,15 +208,15 @@ describe("fetchDiseasePanel", () => {
     expect(response).toEqual([
       {
         id: 1,
-        name: "potatoes",
-        afflictions: [{ id: 2, name: "late blight" }],
-      },
+        name: 'potatoes',
+        afflictions: [{ id: 2, name: 'late blight' }]
+      }
     ])
   })
 })
 
-describe("fetchInsectPanel", () => {
-  it("converts diseases into afflictions", async () => {
+describe('fetchInsectPanel', () => {
+  it('converts diseases into afflictions', async () => {
     const database = new DatabaseClient()
 
     const response = await database.fetchInsectPanel()
@@ -221,26 +224,26 @@ describe("fetchInsectPanel", () => {
     expect(response).toEqual([
       {
         id: 1,
-        name: "potato",
+        name: 'potato',
         afflictions: [
           {
             id: 10,
-            name: "grasshopper",
-            biofix_date: "2020-10-10",
+            name: 'grasshopper',
+            biofix_date: '2020-10-10',
             end_date_enabled: true,
             t_min: 2,
-            t_max: 3,
+            t_max: 3
           },
           {
             id: 45,
-            name: "caterpillar",
-            biofix_date: "2020-11-10",
+            name: 'caterpillar',
+            biofix_date: '2020-11-10',
             end_date_enabled: false,
             t_min: 4,
-            t_max: 5,
-          },
-        ],
-      },
+            t_max: 5
+          }
+        ]
+      }
     ])
   })
 })

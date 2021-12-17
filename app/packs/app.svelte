@@ -1,13 +1,3 @@
-<script lang="ts">
-  import Map from './src/components/map/Map.svelte'
-  import SeverityOverlay from './src/components/map/SeverityOverlay.svelte'
-  import Sidebar from './src/components/leftSidebar/Sidebar.svelte'
-  import Interface from './src/components/leftSidebar/Interface.svelte'
-  import RightSidebar from './src/components/rightSidebar/RightSidebar.svelte'
-  import SeverityLegend from './src/components/rightSidebar/SeverityLegend.svelte'
-  import Status from './src/components/map/Status.svelte'
-</script>
-
 <style global type="scss">
   @import '../../node_modules/balloon-css/src/balloon.scss';
 
@@ -114,6 +104,16 @@
     border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
   }
 </style>
+
+<script lang="ts">
+  import Map from './src/components/map/Map.svelte'
+  import SeverityOverlay from './src/components/map/SeverityOverlay.svelte'
+  import Sidebar from './src/components/leftSidebar/Sidebar.svelte'
+  import Interface from './src/components/leftSidebar/Interface.svelte'
+  import RightSidebar from './src/components/rightSidebar/RightSidebar.svelte'
+  import SeverityLegend from './src/components/rightSidebar/SeverityLegend.svelte'
+  import Status from './src/components/map/Status.svelte'
+</script>
 
 <main class="main">
   <Sidebar>

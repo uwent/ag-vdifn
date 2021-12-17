@@ -39,21 +39,21 @@ describe('common behavior for all panels', () => {
           dateToolTip: {
             startDate: 'Start date',
             endDate: 'End date',
-            startLabel: 'Application',
+            startLabel: 'Application'
           },
-          defaultStartDate: lastWeek,
-        },
-      },
+          defaultStartDate: lastWeek
+        }
+      }
     })
     startPicker = getByTestId('datepicker-start')
     endPicker = getByTestId('datepicker-end')
   })
-  
+
   it('renders tooltips', () => {
     expect(startPicker.getAttribute('title')).toEqual('Start date')
     expect(endPicker.getAttribute('title')).toEqual('End date')
   })
-  
+
   it('defaults max of start date and end date to yesterday', () => {
     expect(startPicker.max).toEqual(yesterday)
     expect(endPicker.max).toEqual(yesterday)
@@ -65,18 +65,18 @@ describe('common behavior for all panels', () => {
     await fireEvent.change(startPicker, { target: { value: nextWeek } })
     expect(startPicker.validationMessage).toEqual('Constraints not satisfied')
   })
-  
+
   it('defaults start date to whatever is set in the context', async () => {
     await tick()
     expect(startPicker.value).toEqual(lastWeek)
   })
-  
+
   it('sets the start date to the biofix', async () => {
     selectedAffliction.set({
       id: 1,
       name: 'insect',
       biofix_date: twoWeeksAgo,
-      end_date_enabled: true,
+      end_date_enabled: true
     })
     await tick()
     expect(startPicker.value).toEqual(twoWeeksAgo)
@@ -100,11 +100,11 @@ describe('Quick date range buttons', () => {
           dateToolTip: {
             startDate: 'Start date',
             endDate: 'End date',
-            startLabel: 'Application',
+            startLabel: 'Application'
           },
-          defaultStartDate: twoWeeksAgo,
-        },
-      },
+          defaultStartDate: twoWeeksAgo
+        }
+      }
     })
     startPicker = getByTestId('datepicker-start')
     endPicker = getByTestId('datepicker-end')

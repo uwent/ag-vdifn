@@ -1,10 +1,3 @@
-<script lang="ts">
-  export let click
-  export let text = "Submit"
-  export let title = ""
-  export let disabled: boolean = false
-</script>
-
 <style>
   button:disabled {
     background: grey;
@@ -36,10 +29,13 @@
   }
 </style>
 
-<button
-  class="button button-primary"
-  title={title}
-  on:click={click}
-  {disabled} >
+<script lang="ts">
+  export let click
+  export let text = 'Submit'
+  export let title = ''
+  export let disabled: boolean = false
+</script>
+
+<button class="button button-primary" {title} on:click={click} {disabled}>
   {text}
 </button>

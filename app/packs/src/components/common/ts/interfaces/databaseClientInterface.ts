@@ -4,7 +4,7 @@ import {
   PestInfo,
   PointDetailsParams,
   SeverityParams,
-  CropWithAfflictions,
+  CropWithAfflictions
 } from '../types'
 
 export default interface DatabaseClientInterface {

@@ -15,18 +15,13 @@ export default class RectangleOption {
   private longitudeOffset = 0.05
 
   bounds: {
-    north: number,
-    south: number,
-    east: number,
-    west: number,
+    north: number
+    south: number
+    east: number
+    west: number
   }
 
-  constructor(
-    latitude: number,
-    longitude: number,
-    fillColor: string,
-    map: any,
-  ) {
+  constructor(latitude: number, longitude: number, fillColor: string, map: any) {
     this.latitude = latitude
     this.longitude = longitude
     this.fillColor = fillColor
@@ -39,7 +34,7 @@ export default class RectangleOption {
       north: this.latitude - this.latitudeOffset,
       south: this.latitude + this.latitudeOffset,
       east: this.longitude + this.longitudeOffset,
-      west: this.longitude - this.longitudeOffset,
+      west: this.longitude - this.longitudeOffset
     }
   }
 }

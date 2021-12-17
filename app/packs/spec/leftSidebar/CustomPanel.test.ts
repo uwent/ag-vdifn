@@ -1,5 +1,5 @@
 import CustomPanel from '../../src/components/leftSidebar/CustomPanel.svelte'
-import { fireEvent, getByTestId, render } from '@testing-library/svelte'
+import { fireEvent, render } from '@testing-library/svelte'
 import {
   customPanelState,
   panelNames,
@@ -11,7 +11,7 @@ import {
   endDate,
   afflictionValue,
   tMinTmax,
-  customOverlaySubmitted,
+  customOverlaySubmitted
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
@@ -24,13 +24,13 @@ let submitSpy
 let selectedPanelSpy
 
 beforeEach(() => {
-  selectedPanelSpy = spyOn(selectedPanel, 'set')
+  selectedPanelSpy = jest.spyOn(selectedPanel, 'set')
   const { getByText, getByTestId, component } = render(CustomPanel, {
     props: {
-      data: [{ id: 1, name: 'potato', afflictions: [{ id: 1, name: 'bug' }] }],
-    },
+      data: [{ id: 1, name: 'potato', afflictions: [{ id: 1, name: 'bug' }] }]
+    }
   })
-  submitSpy = spyOn(customPanelParams, 'set')
+  submitSpy = jest.spyOn(customPanelParams, 'set')
   customPanel = component
   getText = getByText
   getTestId = getByTestId
@@ -67,7 +67,7 @@ it('updates state on submit', async () => {
     selectedGradient: 1,
     t_max: 2,
     t_min: 1,
-    loaded: true,
+    loaded: true
   })
 })
 
@@ -99,9 +99,9 @@ it('sets context data for child elements', () => {
     dateToolTip: {
       startDate: 'Biofix',
       endDate: 'Date through which degree-days are accumulated',
-      startLabel: 'Start Date',
+      startLabel: 'Start Date'
     },
     getAfflictionName: expect.any(Function),
-    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
+    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD')
   })
 })

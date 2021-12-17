@@ -12,9 +12,9 @@ beforeEach(() => {
         { color: 'green', number: 100 },
         { color: 'yellow', number: 200 },
         { color: 'orange', number: 300 },
-        { color: 'red', number: Infinity },
-      ],
-    },
+        { color: 'red', number: Infinity }
+      ]
+    }
   })
   getId = getByTestId
   queryId = queryAllByTestId

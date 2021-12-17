@@ -6,13 +6,13 @@ import {
   SeverityParams,
   CropWithAfflictions,
   CropWithDiseases,
-  CropWithInsects,
+  CropWithInsects
 } from './types'
 import axios from 'axios'
 import DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
 
-let dev = process.env.NODE_ENV === "development"
+const dev = process.env.NODE_ENV === 'development'
 
 export default class DatabaseClient implements DatabaseClientInterface {
   constructor() {
@@ -25,16 +25,21 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (dev) console.log("DB >> fetchDiseasePanel", "\nEndpoint:", endpoint, "\nResponse:", response)
-      cropsWithAfflictions = response.data.map(
-        (cropWithDisease: CropWithDiseases) => {
-          const { diseases, ...newData } = {
-            ...cropWithDisease,
-            afflictions: cropWithDisease.diseases,
-          }
-          return newData
-        },
-      )
+      if (dev)
+        console.log(
+          'DB >> fetchDiseasePanel',
+          '\nEndpoint:',
+          endpoint,
+          '\nResponse:',
+          response
+        )
+      cropsWithAfflictions = response.data.map((cropWithDisease: CropWithDiseases) => {
+        const { diseases, ...newData } = {
+          ...cropWithDisease,
+          afflictions: cropWithDisease.diseases
+        }
+        return newData
+      })
       return cropsWithAfflictions
     } catch (e) {
       return []
@@ -46,16 +51,21 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (dev) console.log("DB >> fetchInsectPanel", "\nEndpoint:", endpoint, "\nResponse:", response)
-      cropsWithAfflictions = response.data.map(
-        (cropWithInsect: CropWithInsects) => {
-          const { insects, ...newData } = {
-            ...cropWithInsect,
-            afflictions: cropWithInsect.insects,
-          }
-          return newData
-        },
-      )
+      if (dev)
+        console.log(
+          'DB >> fetchInsectPanel',
+          '\nEndpoint:',
+          endpoint,
+          '\nResponse:',
+          response
+        )
+      cropsWithAfflictions = response.data.map((cropWithInsect: CropWithInsects) => {
+        const { insects, ...newData } = {
+          ...cropWithInsect,
+          afflictions: cropWithInsect.insects
+        }
+        return newData
+      })
       return cropsWithAfflictions
     } catch (e) {
       return []
@@ -68,20 +78,29 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const severities: Severity[] = []
     try {
       const response = await axios.post(endpoint, params)
-      if (dev) console.log("DB >> fetchSeverities", "\nEndpoint:", endpoint, "\nParams:", params, "\nResponse:", response)
+      if (dev)
+        console.log(
+          'DB >> fetchSeverities',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response
+        )
       if (response.data.data) {
-        response.data.data.forEach((data) => {
+        response.data.data.forEach(data => {
           severities.push({
             lat: data.lat,
             long: data.long,
-            level: data.total,
+            level: data.total
           })
         })
         return severities
       } else {
         return response.data.map(({ severity: severityLevel, ...data }) => ({
           ...data,
-          level: severityLevel,
+          level: severityLevel
         }))
       }
     } catch (e) {
@@ -95,7 +114,16 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (dev) console.log("DB >> fetchSeverityLegend", "\nEndpoint:", endpoint, "\nParams:", params, "\nResponse:", response)
+      if (dev)
+        console.log(
+          'DB >> fetchSeverityLegend',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response
+        )
       return response.data
     } catch (e) {
       return []
@@ -108,7 +136,16 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (dev) console.log("DB >> fetchSeverityLegendInfo", "\nEndpoint:", endpoint, "\nParams:", params, "\nResponse:", response)
+      if (dev)
+        console.log(
+          'DB >> fetchSeverityLegendInfo',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response
+        )
       return response.data
     } catch (e) {
       return ''
@@ -120,7 +157,16 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams }
     try {
       const response = await axios.post(endpoint, params)
-      if (dev) console.log("DB >> fetchPointDetails", "\nEndpoint:", endpoint, "\nParams:", params, "\nResponse:", response)
+      if (dev)
+        console.log(
+          'DB >> fetchPointDetails',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response
+        )
       return response.data
     } catch (e) {
       return ''
@@ -131,11 +177,20 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.PEST_INFO
     const params = {
       pest_id: pestId,
-      in_fahrenheit: inFahrenheit,
+      in_fahrenheit: inFahrenheit
     }
     try {
       const response = await axios.post(endpoint, params)
-      if (dev) console.log("DB >> fetchPestInfo", "\nEndpoint:", endpoint, "\nParams:", params, "\nResponse:", response)
+      if (dev)
+        console.log(
+          'DB >> fetchPestInfo',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response
+        )
       return response.data
     } catch (e) {
       return {
@@ -145,7 +200,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
         biofix_date: null,
         end_date_enabled: null,
         tmin: null,
-        tmax: null,
+        tmax: null
       }
     }
   }

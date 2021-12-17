@@ -9,7 +9,7 @@ import {
   insectPanelParams,
   startDate,
   endDate,
-  afflictionValue,
+  afflictionValue
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
@@ -20,8 +20,8 @@ let insectPanel
 beforeEach(() => {
   const { getByText, component } = render(InsectPanel, {
     props: {
-      data: [],
-    },
+      data: []
+    }
   })
   getText = getByText
   insectPanel = component
@@ -41,7 +41,7 @@ it('should update insect panels state when submit button clicked', async () => {
 
   expect(get(insectPanelState)).toEqual({
     currentAffliction: { name: 'bug', t_min: 42, t_max: null },
-    loaded: true,
+    loaded: true
   })
 })
 
@@ -54,7 +54,7 @@ it('should dispatch submit params when button is clicked', async () => {
     pest_id: 1,
     t_min: 42,
     t_max: null,
-    in_fahrenheit: true,
+    in_fahrenheit: true
   })
 })
 
@@ -65,9 +65,9 @@ it('sets context data for child elements', () => {
     dateToolTip: {
       startDate: 'Biofix date for insect',
       endDate: 'Date through which degree days are accumulated',
-      startLabel: 'Biofix',
+      startLabel: 'Biofix'
     },
     getAfflictionName: expect.any(Function),
-    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
+    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD')
   })
 })

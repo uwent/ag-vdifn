@@ -1,10 +1,10 @@
-const _ = require('lodash')
 import { SeverityParams, Severity } from '../../common/ts/types'
 import DatabaseClient from '../../common/ts/databaseClient'
 import GoogleWrapper from './googleWrapper'
 import RectangleOption from './rectangleOption'
 import infoWindowLoadingTemplate from './templates/infoWindowLoading'
 import ColorHelper from './colorHelper'
+const _ = require('lodash')
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper
@@ -23,17 +23,17 @@ export default class OverlayHelper {
   }
 
   hideOverlay() {
-    this.rectangles.forEach((rectangle) => {
+    this.rectangles.forEach(rectangle => {
       rectangle.setOptions({
-        visible: false,
+        visible: false
       })
     })
   }
 
   showOverlay() {
-    this.rectangles.forEach((rectangle) => {
+    this.rectangles.forEach(rectangle => {
       rectangle.setOptions({
-        visible: true,
+        visible: true
       })
     })
   }
@@ -55,17 +55,14 @@ export default class OverlayHelper {
     _.zip(this.severities, this.rectangles).forEach(
       (severityWithRect: [Severity, any]) => {
         severityWithRect[1].setOptions({
-          fillColor: this.severityToColor(
-            severityWithRect[0].level,
-            gradientMapping,
-          ),
+          fillColor: this.severityToColor(severityWithRect[0].level, gradientMapping)
         })
-      },
+      }
     )
   }
 
   clearRectangles() {
-    this.rectangles.forEach((rectangle) => {
+    this.rectangles.forEach(rectangle => {
       rectangle.setMap(null)
     })
     this.rectangles = []
@@ -90,7 +87,7 @@ export default class OverlayHelper {
         latLng.lat(),
         latLng.lng(),
         ColorHelper.color(severity.level, 5),
-        this.map,
+        this.map
       )
       rectangleOptions.push(rectangleOption)
     })
@@ -98,28 +95,28 @@ export default class OverlayHelper {
   }
 
   drawDataPoints(rectangleOptions: RectangleOption[]) {
-    rectangleOptions.forEach((rectangleOption) => {
+    rectangleOptions.forEach(rectangleOption => {
       const rectangle = this.googleWrapper.createRectangle(rectangleOption)
       this.rectangles.push(rectangle)
     })
   }
 
   addInfoWindowEvents(severityParams: SeverityParams, panelType: string) {
-    this.rectangles.forEach((rectangle) => {
-      rectangle.addListener('click', async (event) => {
+    this.rectangles.forEach(rectangle => {
+      rectangle.addListener('click', async event => {
         if (this.infoWindow) {
           this.infoWindow.close()
         }
         this.infoWindow = this.googleWrapper.createInfoWindow({
           content: infoWindowLoadingTemplate,
-          position: event.latLng,
+          position: event.latLng
         })
         this.infoWindow.open(this.map)
         const newContent = await this.fetchPointDetails(
           event.latLng.lat(),
           event.latLng.lng(),
           severityParams,
-          panelType,
+          panelType
         )
         this.infoWindow.setContent(newContent)
       })
@@ -129,9 +126,9 @@ export default class OverlayHelper {
   severityToColor(severityNumber: number, gradientMapping): string {
     const key = _.find(
       _.keys(gradientMapping)
-        .map((value) => parseFloat(value))
+        .map(value => parseFloat(value))
         .sort((x, y) => x - y),
-      (rangeMax) => severityNumber <= rangeMax,
+      rangeMax => severityNumber <= rangeMax
     )
     return gradientMapping[key]
   }
@@ -140,7 +137,7 @@ export default class OverlayHelper {
     latitude,
     longitude,
     severityParams: SeverityParams,
-    panelType,
+    panelType
   ): Promise<string> {
     return new DatabaseClient().fetchPointDetails({
       latitude: latitude,
@@ -151,7 +148,7 @@ export default class OverlayHelper {
       t_min: severityParams.t_min,
       t_max: severityParams.t_max,
       in_fahrenheit: severityParams.in_fahrenheit,
-      panel: panelType,
+      panel: panelType
     })
   }
 }

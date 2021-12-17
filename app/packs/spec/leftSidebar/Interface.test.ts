@@ -14,9 +14,9 @@ beforeEach(() => {
           name: 'potato',
           afflictions: [
             { id: 5, name: 'late blight', t_min: 5, t_max: 10 },
-            { id: 10, name: 'black death', t_min: 10, t_max: 100 },
-          ],
-        },
+            { id: 10, name: 'black death', t_min: 10, t_max: 100 }
+          ]
+        }
       ],
       insectPanelData: [
         {
@@ -24,11 +24,11 @@ beforeEach(() => {
           name: 'potato',
           afflictions: [
             { id: 10, name: 'grasshopper' },
-            { id: 45, name: 'caterpillar' },
-          ],
-        },
-      ],
-    },
+            { id: 45, name: 'caterpillar' }
+          ]
+        }
+      ]
+    }
   })
   getRole = getByRole
   getTestId = getByTestId

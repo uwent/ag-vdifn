@@ -1,60 +1,3 @@
-<script lang="ts">
-  import { onMount } from 'svelte'
-  import {
-    overlayLoading,
-    panelNames,
-    defaults,
-    env
-  } from '../../store/store'
-  import DiseasePanel from './DiseasePanel.svelte'
-  import InsectPanel from './InsectPanel.svelte'
-  import DatabaseClient from '../common/ts/databaseClient'
-  import Loading from '../common/Loading.svelte'
-  import CustomPanel from './CustomPanel.svelte'
-  import Modal from '../common/Modal.svelte'
-  import Help from './Help.svelte'
-  export let diseasePanelData
-  export let insectPanelData
-  const databaseClient = new DatabaseClient()
-  const urlParams = new URLSearchParams(window.location.search)
-  let panel = defaults.panel
-  let showHelp = false
-  let diseaseParams = { model: defaults.disease }
-  let insectParams = { model: defaults.insect }
-
-  console.log("Launching VDIFN in " + env + " environment")
-
-  function parseUrlParams() {
-    if (panelNames.all.includes(urlParams.get('panel'))) {
-      panel = urlParams.get('panel')
-      switch (panel) {
-        case 'disease':
-          if (urlParams.has('model')) {
-            diseaseParams.model = urlParams.get('model')
-          }
-          break
-        case 'insect':
-          if (urlParams.has('model')) {
-            insectParams.model = urlParams.get('model')
-          }
-          break
-        case 'custom':
-          break
-      }
-    } else {
-      window.history.replaceState({}, null, window.location.pathname)
-    }
-  }
-
-  onMount(async () => {
-    parseUrlParams()
-    if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
-    if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
-  })
-
-  // $: handlePanelChange(panel)
-</script>
-
 <style>
   .options {
     width: 100%;
@@ -117,6 +60,58 @@
   }
 </style>
 
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { overlayLoading, panelNames, defaults, env } from '../../store/store'
+  import DiseasePanel from './DiseasePanel.svelte'
+  import InsectPanel from './InsectPanel.svelte'
+  import DatabaseClient from '../common/ts/databaseClient'
+  import Loading from '../common/Loading.svelte'
+  import CustomPanel from './CustomPanel.svelte'
+  import Modal from '../common/Modal.svelte'
+  import Help from './Help.svelte'
+  export let diseasePanelData
+  export let insectPanelData
+  const databaseClient = new DatabaseClient()
+  const urlParams = new URLSearchParams(window.location.search)
+  let panel = defaults.panel
+  let showHelp = false
+  let diseaseParams = { model: defaults.disease }
+  let insectParams = { model: defaults.insect }
+
+  console.log('Launching VDIFN in ' + env + ' environment')
+
+  function parseUrlParams() {
+    if (panelNames.all.includes(urlParams.get('panel'))) {
+      panel = urlParams.get('panel')
+      switch (panel) {
+        case 'disease':
+          if (urlParams.has('model')) {
+            diseaseParams.model = urlParams.get('model')
+          }
+          break
+        case 'insect':
+          if (urlParams.has('model')) {
+            insectParams.model = urlParams.get('model')
+          }
+          break
+        case 'custom':
+          break
+      }
+    } else {
+      window.history.replaceState({}, null, window.location.pathname)
+    }
+  }
+
+  onMount(async () => {
+    parseUrlParams()
+    if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
+    if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
+  })
+
+  // $: handlePanelChange(panel)
+</script>
+
 <div class="options">
   <div class="inner">
     <fieldset id="interface">
@@ -127,15 +122,17 @@
           id="disease"
           value="disease"
           bind:group={panel}
-          disabled={$overlayLoading} />
+          disabled={$overlayLoading}
+        />
         <label for="disease">Disease</label>
         <input
           name="interface"
           type="radio"
           id="insect"
-          value="insect" 
+          value="insect"
           bind:group={panel}
-          disabled={$overlayLoading}/>
+          disabled={$overlayLoading}
+        />
         <label for="insect">Insect</label>
         <input
           name="interface"
@@ -143,23 +140,19 @@
           id="custom"
           value="custom"
           bind:group={panel}
-          disabled={$overlayLoading}/>
+          disabled={$overlayLoading}
+        />
         <label for="custom">Custom</label>
         <button on:click={() => (showHelp = true)}>?</button>
       </div>
     </fieldset>
     {#if diseasePanelData && insectPanelData}
       {#if panel === 'disease'}
-        <DiseasePanel
-          data={diseasePanelData}
-          defaultModel={diseaseParams.model} />
+        <DiseasePanel data={diseasePanelData} defaultModel={diseaseParams.model} />
       {:else if panel === 'insect'}
-        <InsectPanel
-          data={insectPanelData}
-          defaultModel={insectParams.model} />
+        <InsectPanel data={insectPanelData} defaultModel={insectParams.model} />
       {:else if panel === 'custom'}
-        <CustomPanel
-          data={insectPanelData} />
+        <CustomPanel data={insectPanelData} />
       {/if}
     {:else}
       <Loading />
@@ -167,10 +160,7 @@
   </div>
 </div>
 {#if showHelp}
-  <Modal
-    name="How to use VDIFN"
-    maxWidth="40em"
-    on:close={() => (showHelp = false)} >
+  <Modal name="How to use VDIFN" maxWidth="40em" on:close={() => (showHelp = false)}>
     <Help />
   </Modal>
 {/if}

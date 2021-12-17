@@ -21,7 +21,7 @@ beforeEach(() => {
   const { getByTestId, component } = render(SeverityLegend, {
     props: {
       severities: severities
-    },
+    }
   })
   getTestId = getByTestId
   legend = component
@@ -39,8 +39,8 @@ it('show the right severity colors', async () => {
   mapMinMapMax.set(null)
   await tick()
   for (severity of severities) {
-    let div = getTestId('severity-color-' + severity.slug)
-    let expectedColor = Color(severityColors[severity.slug]).toString()
+    const div = getTestId('severity-color-' + severity.slug)
+    const expectedColor = Color(severityColors[severity.slug]).toString()
     expect(getComputedStyle(div)).toHaveProperty('background', expectedColor)
   }
 })

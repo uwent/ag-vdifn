@@ -1,8 +1,3 @@
-<script lang="ts">
-  import QuestionSvg from '../common/QuestionSvg.svelte'
-  export let severities = []
-</script>
-
 <style type="scss">
   @import '../../scss/settings.scss';
 
@@ -43,6 +38,11 @@
   }
 </style>
 
+<script lang="ts">
+  import QuestionSvg from '../common/QuestionSvg.svelte'
+  export let severities = []
+</script>
+
 <fieldset id="dsv-legend">
   <legend>Severity Legend:</legend>
   {#each severities as { name, description, slug }}
@@ -50,17 +50,17 @@
       id="dsv-{slug}"
       class="dsv"
       data-color="#ff0000"
-      data-testid="severity-level-{slug}">
-      <div
-        class="dsv-threshold dsv-{slug}"
-        data-testid="severity-color-{slug}" />
+      data-testid="severity-level-{slug}"
+    >
+      <div class="dsv-threshold dsv-{slug}" data-testid="severity-color-{slug}" />
       <label>
         {name}
         <button
           title=""
           data-balloon-length="medium"
           data-balloon-pos="up-right"
-          aria-label={description}>
+          aria-label={description}
+        >
           <QuestionSvg />
         </button>
       </label>

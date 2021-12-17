@@ -9,7 +9,7 @@ import {
   diseasePanelParams,
   startDate,
   endDate,
-  afflictionValue,
+  afflictionValue
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
@@ -20,8 +20,8 @@ let diseasePanel
 beforeEach(() => {
   const { getByText, component } = render(DiseasePanel, {
     props: {
-      data: [],
-    },
+      data: []
+    }
   })
   getText = getByText
   diseasePanel = component
@@ -42,7 +42,7 @@ it('should dispatch submit params when button is clicked', () => {
     start_date: '2000-10-10',
     end_date: '2000-11-10',
     in_fahrenheit: true,
-    pest_id: 1,
+    pest_id: 1
   })
 })
 
@@ -51,7 +51,7 @@ it('should update disease panel state', async () => {
   fireEvent.click(button)
   expect(get(diseasePanelState)).toEqual({
     currentAffliction: { name: 'bug' },
-    loaded: true,
+    loaded: true
   })
 })
 
@@ -62,9 +62,9 @@ it('sets context data for child elements', () => {
     dateToolTip: {
       startDate: 'Date of Emergence/Last Fungicide Application',
       endDate: 'Date through which disease severity values are accumulated',
-      startLabel: 'Date of Emergence/Last Fungicide Application',
+      startLabel: 'Date of Emergence/Last Fungicide Application'
     },
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
-    getAfflictionName: expect.any(Function),
+    getAfflictionName: expect.any(Function)
   })
 })

@@ -14,9 +14,7 @@ describe('when data present', () => {
       {
         id: 1,
         name: 'corn',
-        afflictions: [
-          { id: 11, name: 'bug' }
-        ],
+        afflictions: [{ id: 11, name: 'bug' }]
       },
       {
         id: 2,
@@ -24,9 +22,9 @@ describe('when data present', () => {
         afflictions: [
           { id: 21, name: 'ladybug' },
           { id: 22, name: 'grasshopper' },
-          { id: 23, name: 'fly' },
-        ],
-      },
+          { id: 23, name: 'fly' }
+        ]
+      }
     ]
 
     const { getByRole, queryByRole, getByTestId } = render(SetContextTest, {
@@ -35,11 +33,11 @@ describe('when data present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          getAfflictionName: () => 'Disease',
-        },
-      },
+          getAfflictionName: () => 'Disease'
+        }
+      }
     })
-    
+
     getRole = getByRole
     getQuery = queryByRole
     getId = getByTestId
@@ -79,9 +77,9 @@ describe('when data not present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          getAfflictionName: () => 'Disease',
-        },
-      },
+          getAfflictionName: () => 'Disease'
+        }
+      }
     })
 
     getRole = getByRole

@@ -18,22 +18,19 @@ describe('TminMaxInteractable component', () => {
       {
         id: 1,
         name: 'corn',
-        afflictions: [
-          { id: 5, name: 'bug', t_min: firstCropTmin, t_max: firstCropTmax },
-        ],
+        afflictions: [{ id: 5, name: 'bug', t_min: firstCropTmin, t_max: firstCropTmax }]
       },
       {
         id: 2,
         name: 'carrots',
         afflictions: [
           { id: 15, name: 'ladybug', t_min: 50, t_max: 86 },
-          { id: 6, name: 'grasshopper', t_min: 48, t_max: null },
-        ],
-      },
+          { id: 6, name: 'grasshopper', t_min: 48, t_max: null }
+        ]
+      }
     ]
-    const { getByLabelText, getByTitle, getByRole, component } = render(
-      TminMaxInteractable,
-    )
+    const { getByLabelText, getByTitle, getByRole, component } =
+      render(TminMaxInteractable)
     getLabelText = getByLabelText
     getTitle = getByTitle
     getRole = getByRole
@@ -92,7 +89,9 @@ describe('TminMaxInteractable component', () => {
     it('shows validation when tMin is greater than tMin', async () => {
       const tMaxInput: HTMLInputElement = getRole('spinbutton', { name: 'Tmax' })
       await fireEvent.change(tMaxInput, { target: { value: 0 } })
-      expect(tMaxInput.validationMessage).toEqual('This value must be greater than the tMin')
+      expect(tMaxInput.validationMessage).toEqual(
+        'This value must be greater than the tMin'
+      )
     })
 
     it('does not validate if tMax is disabled', async () => {
