@@ -3,7 +3,7 @@
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@googlemaps/js-api-loader": "^1.12.11",
-    "@rails/ujs": "^6.1.4",
+    "@rails/ujs": "^7.0.0",
     "@rails/webpacker": "^6.0.0-rc.6",
     "axios": "^0.24.0",
     "babel-plugin-macros": "^3.1.0",
