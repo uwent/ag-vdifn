@@ -11,7 +11,7 @@ gem "jbuilder", "~> 2.11"
 gem "jquery-rails", "~> 4.4"
 gem "jquery-ui-rails", "~> 6.0"
 gem "js-routes", "~> 2.2"
-gem "momentjs-rails", "~> 2.20"
+gem "momentjs-rails", "~> 2.29"
 gem "nokogiri", ">= 1.12.5" # per security vulnerability
 gem "pikaday-gem", "~> 1.4" # datepicker
 gem "sassc-rails", "~> 2.1"
