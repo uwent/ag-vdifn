@@ -47,7 +47,7 @@ namespace :deploy do
   task :yarn_install do
     on roles(:web) do
       within release_path do
-        execute("cd #{release_path} && yarn install --silent --immutable")
+        execute("cd #{release_path} && yarn install --immutable > /dev/null")
       end
     end
   end
