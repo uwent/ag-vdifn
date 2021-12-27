@@ -10,7 +10,7 @@ gem "httparty", "~> 0.20"
 gem "jbuilder", "~> 2.11"
 gem "jquery-rails", "~> 4.4"
 gem "jquery-ui-rails", "~> 6.0"
-gem "js-routes", "~> 2.1"
+gem "js-routes", "~> 2.2"
 gem "momentjs-rails", "~> 2.20"
 gem "nokogiri", ">= 1.12.5" # per security vulnerability
 gem "pikaday-gem", "~> 1.4" # datepicker
