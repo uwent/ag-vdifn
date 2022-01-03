@@ -31,7 +31,7 @@ jobs:
           command: bundle exec rspec
       - run:
           name: Jest
-          command: yarn test --maxWorkers=4
+          command: yarn test
       - run:
           name: Webpacker compile
           command: bundle exec rails webpacker:compile
