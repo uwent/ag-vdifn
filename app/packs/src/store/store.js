@@ -88,7 +88,7 @@ export const customPanelState = writable({
  })
 
 export const selectedPanel = writable('')
-
+// export const selectedPanelName = writable('')
 export const panelNames = {
   disease: 'disease',
   insect: 'insect',

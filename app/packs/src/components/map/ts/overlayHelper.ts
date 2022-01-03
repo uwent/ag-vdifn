@@ -30,6 +30,19 @@ export default class OverlayHelper {
     })
   }
 
+  // hideOverlay() {
+  //   let startTime = new Date().getTime()
+  //   let i = 0
+  //   this.rectangles.forEach(rectangle => {
+  //     rectangle.setOptions({
+  //       visible: false
+  //     })
+  //     i++
+  //   })
+  //   let endTime = new Date().getTime()
+  //   console.log("Hid " + i + " rectangles in " + (endTime - startTime) + "ms")
+  // }
+
   showOverlay() {
     this.rectangles.forEach(rectangle => {
       rectangle.setOptions({
@@ -37,6 +50,19 @@ export default class OverlayHelper {
       })
     })
   }
+
+  // showOverlay() {
+  //   let startTime = new Date().getTime()
+  //   let i = 0
+  //   this.rectangles.forEach(rectangle => {
+  //     rectangle.setOptions({
+  //       visible: true
+  //     })
+  //     i++
+  //   })
+  //   let endTime = new Date().getTime()
+  //   console.log("Showed " + i + " rectangles in " + (endTime - startTime) + "ms")
+  // }
 
   async updateOverlay(severityParams: SeverityParams, panelType) {
     this.clearRectangles()

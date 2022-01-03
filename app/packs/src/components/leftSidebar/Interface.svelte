@@ -105,6 +105,7 @@
 
   onMount(async () => {
     parseUrlParams()
+    // TODO: shouldn't load both of these datasets at once since it reloads on panel switch anyway
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
   })

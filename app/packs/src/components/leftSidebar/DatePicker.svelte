@@ -193,7 +193,7 @@
       on:change={updateStartDateInput}
       max={today}
     />
-    {#if isPastYear(startDateValue)}
+    {#if isPastYear(endDateValue)}
       <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
   </div>

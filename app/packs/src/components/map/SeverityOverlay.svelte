@@ -28,15 +28,44 @@
   const insectOverlay = new OverlayHelper(google, map)
   const customOverlay = new OverlayHelper(google, map)
 
-  let currentOverlay = insectOverlay
+  let currentOverlay: OverlayHelper
 
+  async function closeInfoWindows() {
+    diseaseOverlay.closeInfoWindow()
+    insectOverlay.closeInfoWindow()
+    customOverlay.closeInfoWindow()
+  }
+
+  async function updateOverlay(
+    overlayHelper: OverlayHelper,
+    severityParams: SeverityParams,
+    panelType
+  ) {
+    if (Object.entries(severityParams).length === 0) return
+    overlayLoading.set(true)
+    await overlayHelper.updateOverlay(severityParams, panelType)
+    overlayLoading.set(false)
+  }
+
+  // TODO: switching panels that already have loaded data takes a long time
   selectedPanel.subscribe((selectedSeverity: string) => {
     let severities
     let severityParams
     let gradientStore
+    // let startTime = new Date().getTime()
+    console.log("Selected severity: " + selectedSeverity)
+    if (!currentOverlay) {
+      if (selectedSeverity == panelNames.insect) {
+        currentOverlay = insectOverlay
+      } else if (selectedSeverity == panelNames.custom) {
+        currentOverlay = customOverlay
+      } else {
+        selectedSeverity = panelNames.disease
+        currentOverlay = diseaseOverlay
+      }
+    }
+    closeInfoWindows()
     currentOverlay.hideOverlay()
-    currentOverlay.closeInfoWindow()
-    overlayLoading.set(true)
     switch (selectedSeverity) {
       case panelNames.disease:
         severities = get(diseasePanelState).severities
@@ -65,6 +94,7 @@
     }
     currentOverlay.showOverlay()
     overlayLoading.set(false)
+    // console.log("Switched to " + selectedSeverity + " panel in " + (new Date().getTime() - startTime) + "ms")
   })
 
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
@@ -102,15 +132,4 @@
     if (Object.entries(gradientMapping).length === 0) return
     customOverlay.updateOverlayGradient(gradientMapping)
   })
-
-  async function updateOverlay(
-    overlayHelper: OverlayHelper,
-    severityParams: SeverityParams,
-    panelType
-  ) {
-    if (Object.entries(severityParams).length === 0) return
-    overlayLoading.set(true)
-    await overlayHelper.updateOverlay(severityParams, panelType)
-    overlayLoading.set(false)
-  }
 </script>
