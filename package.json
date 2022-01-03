@@ -20,7 +20,7 @@
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.1.0",
-    "sass": "^1.45.1",
+    "sass": "^1.45.2",
     "svelte": "^3.44.3",
     "svelte-awesome": "^2.4.2",
     "svelte-loader": "^3.1.2",
