@@ -107,11 +107,11 @@
   let updateOverlayButton: HTMLButtonElement
   let resetOverlayButton: HTMLButtonElement
 
-  let severityLevels: number = 5
+  let severityLevels = 5
   let userValues: number[] = [0, 0]
   let userInputs: number[] = [0, 0]
   let intermediateRanges: number[][] = []
-  let buttonsDisabled: boolean = false
+  let buttonsDisabled = false
 
   $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
 

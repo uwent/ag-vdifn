@@ -33,7 +33,7 @@
   export let click
   export let text = 'Submit'
   export let title = ''
-  export let disabled: boolean = false
+  export let disabled = false
 </script>
 
 <button class="button button-primary" {title} on:click={click} {disabled}>
