@@ -60,7 +60,7 @@
     "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-svelte3": "^3.2.1",
+    "eslint-plugin-svelte3": "^3.3.0",
     "fork-ts-checker-webpack-plugin": "^6.5.0",
     "jest": "^27.4.5",
     "jest-google-maps-mock": "^1.0.7",
