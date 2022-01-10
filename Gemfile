@@ -4,19 +4,8 @@ gem "rails", "~> 7.0"
 gem "railties", "~> 7.0"
 gem "activesupport", "~> 7.0"
 gem "pg", "~> 1.2"
-# gem "active_model_serializers", "~> 0.10"
-gem "coffee-rails", "~> 5.0"
 gem "httparty", "~> 0.20"
-gem "jbuilder", "~> 2.11"
-gem "jquery-rails", "~> 4.4"
-gem "jquery-ui-rails", "~> 6.0"
-gem "js-routes", "~> 2.2"
-gem "momentjs-rails", "~> 2.29"
-gem "nokogiri", ">= 1.12.5" # per security vulnerability
-gem "pikaday-gem", "~> 1.4" # datepicker
 gem "sassc-rails", "~> 2.1"
-gem "sdoc", "~> 2.2", group: :doc
-gem "turbolinks", "~> 5.2"
 gem "webpacker", "6.0.0.rc.6"
 gem "terser", "~> 1.1" # for js compression
 
@@ -31,10 +20,8 @@ group :development do
 end
 
 group :development, :test do
-  gem "bcrypt_pbkdf"
   gem "byebug"
   gem "dotenv-rails"
-  gem "ed25519"
   gem "guard-rspec"
   gem "pry-rails"
   gem "rspec-rails"
