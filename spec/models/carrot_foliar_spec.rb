@@ -3,12 +3,14 @@ require "spec_helper"
 RSpec.describe CarrotFoliar, type: :model do
   let(:biofix) { Date.today - 14.days }
   let(:pest) { CarrotFoliar.new }
-  let(:grid) { [
-    {lat: 1, long: 1, total: rand(28)},
-    {lat: 1, long: 2, total: rand(28)},
-    {lat: 2, long: 1, total: rand(28)},
-    {lat: 2, long: 2, total: rand(28)}
-  ] }
+  let(:grid) {
+    [
+      {lat: 1, long: 1, total: rand(28)},
+      {lat: 1, long: 2, total: rand(28)},
+      {lat: 2, long: 1, total: rand(28)},
+      {lat: 2, long: 2, total: rand(28)}
+    ]
+  }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend

@@ -3,18 +3,22 @@ require "spec_helper"
 RSpec.describe LateBlight, type: :model do
   let(:biofix) { Date.today - 14.days }
   let(:pest) { LateBlight.new }
-  let(:grid) { [
-    {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 0 },
-    {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 },
-    {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 0 },
-    {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 }
-  ] }
-  let(:grid2) { [
-    {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 1 },
-    {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 },
-    {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 3 },
-    {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0 }
-  ] }
+  let(:grid) {
+    [
+      {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 0},
+      {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0},
+      {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 0},
+      {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0}
+    ]
+  }
+  let(:grid2) {
+    [
+      {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 1},
+      {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0},
+      {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 3},
+      {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0}
+    ]
+  }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend

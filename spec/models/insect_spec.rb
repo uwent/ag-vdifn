@@ -11,7 +11,7 @@ RSpec.describe Insect, type: :model do
   }
 
   let(:pest2) {
-    pest2 = Insect.new(
+    Insect.new(
       name: "beetle",
       biofix_mm: 2, biofix_dd: 15,
       risk_array: [
@@ -21,19 +21,23 @@ RSpec.describe Insect, type: :model do
     )
   }
 
-  let(:grid1) { [
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-  ] }
+  let(:grid1) {
+    [
+      {lat: 1, long: 1, total: rand(500), freeze: 0},
+      {lat: 1, long: 1, total: rand(500), freeze: 0},
+      {lat: 1, long: 1, total: rand(500), freeze: 0},
+      {lat: 1, long: 1, total: rand(500), freeze: 0}
+    ]
+  }
 
-  let(:grid2) { [
-    { lat: 1, long: 1, total: rand(500), freeze: 1 },
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-    { lat: 1, long: 1, total: rand(500), freeze: 2 },
-    { lat: 1, long: 1, total: rand(500), freeze: 0 },
-  ] }
+  let(:grid2) {
+    [
+      {lat: 1, long: 1, total: rand(500), freeze: 1},
+      {lat: 1, long: 1, total: rand(500), freeze: 0},
+      {lat: 1, long: 1, total: rand(500), freeze: 2},
+      {lat: 1, long: 1, total: rand(500), freeze: 0}
+    ]
+  }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend

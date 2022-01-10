@@ -2,7 +2,6 @@
 # See Jagemann et al 2018
 
 class OakWilt < Insect
-
   def severities_from_totals(totals, end_date)
     totals.map do |point|
       {

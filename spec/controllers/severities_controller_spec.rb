@@ -3,20 +3,24 @@ require "spec_helper"
 RSpec.describe SeveritiesController, type: :request do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
   let(:end_date) { Date.today }
-  let(:pest_forecast) {{
-    data: [
-      { lat: 1, long: 1, total: 10, avg: 1 },
-      { lat: 2, long: 2, total: 100, avg: 10 },
-      { lat: 3, long: 3, total: 1000, avg: 100 }
-    ]
-  }}
-  let(:freeze_data) {{
-    data: [
-      { lat: 1, long: 1, freeze: 1 },
-      { lat: 2, long: 2, freeze: 0 },
-      { lat: 3, long: 3, freeze: 0 }
-    ]
-  }}
+  let(:pest_forecast) {
+    {
+      data: [
+        {lat: 1, long: 1, total: 10, avg: 1},
+        {lat: 2, long: 2, total: 100, avg: 10},
+        {lat: 3, long: 3, total: 1000, avg: 100}
+      ]
+    }
+  }
+  let(:freeze_data) {
+    {
+      data: [
+        {lat: 1, long: 1, freeze: 1},
+        {lat: 2, long: 2, freeze: 0},
+        {lat: 3, long: 3, freeze: 0}
+      ]
+    }
+  }
 
   describe "POST severities" do
     describe "Disease models" do

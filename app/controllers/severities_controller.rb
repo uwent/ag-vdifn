@@ -29,9 +29,9 @@ class SeveritiesController < ApplicationController
 
   def get_totals(pest, start_date, end_date)
     json = ag_weather_client.pest_forecasts(
-      pest: pest,
-      start_date: start_date,
-      end_date: end_date
+      pest:,
+      start_date:,
+      end_date:
     )
     json[:data]
   end
@@ -39,7 +39,7 @@ class SeveritiesController < ApplicationController
   def get_freeze_data(end_date)
     json = ag_weather_client.freeze_days(
       start_date: end_date - 7.days,
-      end_date: end_date
+      end_date:
     )
     hash = {}
     json[:data].each do |point|
@@ -63,17 +63,17 @@ class SeveritiesController < ApplicationController
   end
 
   def get_custom_data
-    pests = Pest.where(t_max: t_max, t_min: t_min)
-    if pests.any?
-      options = {
-        start_date: start_date,
-        end_date: end_date,
+    pests = Pest.where(t_max:, t_min:)
+    options = if pests.any?
+      {
+        start_date:,
+        end_date:,
         pest: pests.first.remote_name
       }
     else
-      options = {
-        start_date: start_date,
-        end_date: end_date,
+      {
+        start_date:,
+        end_date:,
         t_base: t_min,
         t_upper: t_max
       }
@@ -89,7 +89,7 @@ class SeveritiesController < ApplicationController
     two_day.map do |point|
       two_day_hash[[point[:lat], point[:long]]] = point[:avg]
     end
-    
+
     grid = seven_day.map do |point|
       {
         lat: point[:lat],
@@ -110,7 +110,7 @@ class SeveritiesController < ApplicationController
     seven_day.map do |point|
       seven_day_hash[[point[:lat], point[:long]]] = point[:avg]
     end
-    
+
     grid = selected_dates.map do |point|
       {
         lat: point[:lat],
@@ -150,5 +150,4 @@ class SeveritiesController < ApplicationController
 
     @pest.severities_from_totals(grid)
   end
-
 end
