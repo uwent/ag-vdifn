@@ -326,6 +326,8 @@ GEM
       rubocop-performance (= 1.13.1)
     stringio (3.0.1)
     strscan (3.0.1)
+    terser (1.1.8)
+      execjs (>= 0.3.0, < 3)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
@@ -334,8 +336,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.1.0)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -394,8 +394,8 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   standard
+  terser (~> 1.1)
   turbolinks (~> 5.2)
-  uglifier (~> 4.2)
   web-console
   webmock
   webpacker (= 6.0.0.rc.6)
