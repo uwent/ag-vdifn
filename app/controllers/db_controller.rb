@@ -25,8 +25,8 @@ class DbController < ApplicationController
         long: @longitude,
         t_base: t_min,
         t_upper: t_max,
-        start_date: start_date,
-        end_date: end_date
+        start_date:,
+        end_date:
       }
       response = ag_weather_client.custom_point_details(params)
       @weather = response[:data]
@@ -37,8 +37,8 @@ class DbController < ApplicationController
         pest: @pest.remote_name,
         lat: @latitude,
         long: @longitude,
-        start_date: start_date,
-        end_date: end_date
+        start_date:,
+        end_date:
       }
       response = ag_weather_client.point_details(params)
       @weather = response[:data]
@@ -48,8 +48,8 @@ class DbController < ApplicationController
         pest: @pest.remote_name,
         lat: @latitude,
         long: @longitude,
-        start_date: start_date,
-        end_date: end_date
+        start_date:,
+        end_date:
       }
       response = ag_weather_client.point_details(params)
       @weather = response[:data]
@@ -83,13 +83,17 @@ class DbController < ApplicationController
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
     render json: {
-      info: info,
+      info:,
       name: pest.name,
       pest_link: pest.link,
       biofix: pest.biofix_date,
       end_date_enabled: pest.end_date_enabled,
       tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
-      tmax: pest.t_max.nil? ? "" : (in_f ? pest.t_max : f_to_c(pest.t_max))
+      tmax: if pest.t_max.nil?
+              ""
+            else
+              (in_f ? pest.t_max : f_to_c(pest.t_max))
+            end
     }
   end
 
@@ -118,5 +122,4 @@ class DbController < ApplicationController
     any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name.to_s <=> y.name.to_s }
     any_crop
   end
-
 end

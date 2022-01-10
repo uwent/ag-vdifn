@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 6.1.4"
-gem "railties", "~> 6.1.4"
-gem "activesupport", "~> 6.1.4"
+gem "rails", "~> 7.0"
+gem "railties", "~> 7.0"
+gem "activesupport", "~> 7.0"
 gem "pg", "~> 1.2"
-gem "active_model_serializers", "~> 0.10"
+# gem "active_model_serializers", "~> 0.10"
 gem "coffee-rails", "~> 5.0"
 gem "httparty", "~> 0.20"
 gem "jbuilder", "~> 2.11"
@@ -18,7 +18,7 @@ gem "sassc-rails", "~> 2.1"
 gem "sdoc", "~> 2.2", group: :doc
 gem "turbolinks", "~> 5.2"
 gem "uglifier", "~> 4.2"
-gem "webpacker", git: "https://github.com/rails/webpacker.git"
+gem "webpacker", "6.0.0.rc.6"
 
 group :development do
   gem "puma"

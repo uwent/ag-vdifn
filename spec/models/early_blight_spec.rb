@@ -4,14 +4,16 @@ RSpec.describe EarlyBlight, type: :model do
   let(:biofix_mm) { 2 }
   let(:biofix_dd) { 15 }
   let(:pest) {
-    EarlyBlight.new(biofix_mm: biofix_mm, biofix_dd: biofix_dd)
-  } 
-  let(:grid) { [
-    { lat: 1, long: 1, total: rand(500), seven_day_avg: rand(10) },
-    { lat: 1, long: 2, total: rand(500), seven_day_avg: rand(10) },
-    { lat: 2, long: 1, total: rand(500), seven_day_avg: rand(10) },
-    { lat: 2, long: 2, total: rand(500), seven_day_avg: rand(10) }
-  ] }
+    EarlyBlight.new(biofix_mm:, biofix_dd:)
+  }
+  let(:grid) {
+    [
+      {lat: 1, long: 1, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 1, long: 2, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 2, long: 1, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 2, long: 2, total: rand(500), seven_day_avg: rand(10)}
+    ]
+  }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend

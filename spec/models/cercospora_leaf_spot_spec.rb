@@ -3,12 +3,14 @@ require "spec_helper"
 RSpec.describe CercosporaLeafSpot, type: :model do
   let(:biofix) { Date.today - 14.days }
   let(:pest) { CercosporaLeafSpot.new }
-  let(:grid) { [
-    { lat: 1, long: 1, avg7: rand(100), avg2: rand(10) },
-    { lat: 1, long: 2, avg7: rand(100), avg2: rand(10) },
-    { lat: 2, long: 1, avg7: rand(100), avg2: rand(10) },
-    { lat: 2, long: 2, avg7: rand(100), avg2: rand(10) }
-  ] }
+  let(:grid) {
+    [
+      {lat: 1, long: 1, avg7: rand(100), avg2: rand(10)},
+      {lat: 1, long: 2, avg7: rand(100), avg2: rand(10)},
+      {lat: 2, long: 1, avg7: rand(100), avg2: rand(10)},
+      {lat: 2, long: 2, avg7: rand(100), avg2: rand(10)}
+    ]
+  }
 
   it "has a severity legend with 5 levels" do
     legend = pest.severity_legend
