@@ -18,7 +18,7 @@ gem "sassc-rails", "~> 2.1"
 gem "sdoc", "~> 2.2", group: :doc
 gem "turbolinks", "~> 5.2"
 gem "uglifier", "~> 4.2"
-gem "webpacker", git: "https://github.com/rails/webpacker.git"
+gem "webpacker", "6.0.0.rc.6"
 
 group :development do
   gem "puma"
