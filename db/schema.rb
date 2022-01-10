@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_220838) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_220838) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_220838) do
 
   create_table "crops", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "pests", force: :cascade do |t|
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_220838) do
     t.string "severity_info"
     t.string "photo"
     t.string "link"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string "local_name"
     t.integer "risk_array", array: true
   end
