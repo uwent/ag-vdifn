@@ -15,7 +15,7 @@ gem "momentjs-rails", "~> 2.29"
 gem "nokogiri", ">= 1.12.5" # per security vulnerability
 gem "pikaday-gem", "~> 1.4" # datepicker
 gem "sassc-rails", "~> 2.1"
-gem "sdoc", "~> 2.2", group: :doc
+gem "sdoc", "~> 2.3", group: :doc
 gem "turbolinks", "~> 5.2"
 gem "webpacker", "6.0.0.rc.6"
 gem "terser", "~> 1.1" # for js compression
