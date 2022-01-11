@@ -44,7 +44,12 @@
     appearance: none;
     cursor: pointer;
     font-size: 1em;
+
+    &:hover {
+      background: rgb(200, 200, 200);
+    }
   }
+
 </style>
 
 <script lang="ts">

@@ -4,6 +4,11 @@
   input {
     text-align: center;
   }
+  
+  input:invalid {
+    border-color: #900;
+    background-color: #fdd;
+  }
 
   .severity-row {
     display: grid;
@@ -32,7 +37,8 @@
   }
 
   %severity-button {
-    background: #249dde;
+    background: $btn-color-2;
+    background: linear-gradient(to bottom, $btn-color-1 0%, $btn-color-2);
     border-radius: 3px;
     box-shadow: 0px 1px 3px rgba(000, 000, 000, 0),
       inset 0px 0px 1px rgba(255, 255, 255, 1);
@@ -40,12 +46,21 @@
     font-size: 0.85em;
     padding: 10px;
     margin-top: 13px;
-    border: none;
+    border: 1px solid grey;
+    cursor: pointer;
+
+    &:hover {
+      background: linear-gradient(to bottom, $btn-color-2 0%, $btn-color-3);
+    }
+  }
+
+  button:disabled {
+    background: grey;
+    cursor: not-allowed;
   }
 
   .severity-value-end {
     @extend %severity-value;
-
     background-color: #d0d0d0;
   }
 
@@ -55,14 +70,8 @@
 
   .severity-value-intermediate {
     @extend %severity-value;
-
     grid-column: 2 / span 2;
     background-color: #d0d0d0;
-  }
-
-  input:invalid {
-    border-color: #900;
-    background-color: #fdd;
   }
 
   .button-row {
@@ -73,13 +82,11 @@
 
   .level-quantity-button {
     @extend %severity-button;
-
     width: 20%;
   }
 
   .update-overlay-button {
     @extend %severity-button;
-
     width: 50%;
   }
 
