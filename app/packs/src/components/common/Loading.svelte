@@ -38,6 +38,7 @@
   .loading-timer {
     text-align: center;
     font-style: italic;
+    font-size: smaller;
   }
 </style>
 
@@ -58,4 +59,4 @@
   <div />
 </div>
 
-<div class="loading-timer">Loading: {time.toFixed(1)} seconds</div>
+<div class="loading-timer">Fetching data: {time.toFixed(1)} seconds</div>
