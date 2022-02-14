@@ -1,8 +1,8 @@
 {
   "private": true,
   "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@googlemaps/js-api-loader": "^1.13.4",
+    "@fortawesome/free-regular-svg-icons": "^6.0.0",
+    "@googlemaps/js-api-loader": "^1.13.5",
     "@rails/ujs": "^7.0.2-2",
     "@rails/webpacker": "^6.0.0-rc.6",
     "axios": "^0.26.0",
@@ -37,7 +37,7 @@
     "test:watch": "jest --max-workers=4 --watchAll"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.0",
+    "@babel/core": "^7.17.2",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
@@ -45,12 +45,12 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/svelte": "^3.0.3",
     "@types/color": "^3.0.3",
-    "@types/google.maps": "^3.47.3",
+    "@types/google.maps": "^3.47.4",
     "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
-    "@types/node": "^17.0.15",
-    "@typescript-eslint/eslint-plugin": "^5.11.0",
-    "@typescript-eslint/parser": "^5.11.0",
+    "@types/node": "^17.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
     "@webpack-cli/serve": "^1.6.1",
     "babel-loader": "^8.2.3",
     "color": "^4.2.1",
