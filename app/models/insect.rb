@@ -36,4 +36,8 @@ class Insect < Pest
     return 1 if total.between?(start, stop)
     0
   end
+
+  def biofix_label
+    "Start date (Default: #{biofix_date.strftime('%b %d')})"
+  end
 end

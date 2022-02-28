@@ -99,8 +99,7 @@ describe('Quick date range buttons', () => {
         context_value: {
           dateToolTip: {
             startDate: 'Start date',
-            endDate: 'End date',
-            startLabel: 'Application'
+            endDate: 'End date'
           },
           defaultStartDate: twoWeeksAgo
         }

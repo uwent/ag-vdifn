@@ -32,4 +32,8 @@ class EarlyBlight < Disease
       {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (accumulated P-Days < 150 or P-Days > 300 and 7-day average < 1)"}
     ]
   end
+
+  def biofix_label
+    "Emergence date"
+  end
 end
