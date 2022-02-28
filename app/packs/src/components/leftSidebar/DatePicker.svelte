@@ -66,7 +66,7 @@
   let defaultEndDateValue = endDateValue
   let startDateValue: string = defaultStartDate
   let defaultStartDateValue = startDateValue
-  let startLabel = dateToolTip.startLabel
+  let startLabel = "Start date"
 
   // handle end date changes
   // allow end date to push start date forward and update
@@ -126,20 +126,13 @@
 
   // panel and pest-specific tweaks to datepicker
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
-    if (affliction.name) {
-      if (panelType === 'Insect') {
-        startLabel =
-          dateToolTip.startLabel +
-          ' (Default: ' +
-          moment.utc(affliction.biofix_date).format('MMM D') +
-          ')'
-      } else if (affliction.name.includes('Early Blight')) {
-        startLabel = 'Date of emergence'
-      } else {
-        startLabel = dateToolTip.startLabel
-      }
-    }
+    console.log(panelType)
+    console.log(affliction)
 
+    if (panelType != 'Custom') {
+      startLabel = affliction.biofix_label || "Start date"
+    }
+    
     // if biofix has yet to occur default to last year
     if (affliction.biofix_date) {
       if (affliction.biofix_date < today) {

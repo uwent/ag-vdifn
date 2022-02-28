@@ -20,6 +20,10 @@ class Pest < ApplicationRecord
     Date.new(Date.current.year, (biofix_mm || 1), (biofix_dd || 1))
   end
 
+  def biofix_label
+    "Start date"
+  end
+
   def end_date_enabled
     true
   end

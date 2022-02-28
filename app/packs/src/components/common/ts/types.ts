@@ -17,6 +17,7 @@ export type PestInfo = {
   name: string
   pest_link: string
   biofix_date: string
+  biofix_label: string
   end_date_enabled: boolean
   tmin: number
   tmax: number

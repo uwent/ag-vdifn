@@ -79,8 +79,7 @@
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Biofix',
-      endDate: 'Date through which degree-days are accumulated',
-      startLabel: 'Start Date'
+      endDate: 'Date through which degree-days are accumulated'
     },
     getAfflictionName: () => 'Custom Model',
     defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD')

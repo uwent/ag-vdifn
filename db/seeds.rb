@@ -15,7 +15,7 @@ early_blight = EarlyBlight.create!(
   biofix_mm: 1, biofix_dd: 1,
   info: "<p><b>Early blight</b> is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. Early blight can also be a serious disease on other popular Solanaceous vegetables including eggplants, and peppers. Symptoms of early blight first appear at the base of affected plants, where roughly circular brown spots appear on leaves and stems. As these spots enlarge, concentric rings appear giving the areas a target-like appearance. Often spots have a yellow halo. Eventually multiple spots on a single leaf will merge, leading to extensive destruction of leaf tissue. Early blight can lead to total defoliation of lower leaves and even the death of an infected plant. Early blight is caused by the fungus <i>Alternaria solani</i>, which survives in plant debris or on infected plants. Early blight symptoms typically begin as plant canopies start to close. Denser foliage leads to high humidity and longer periods of leaf wetness that favor the disease. The risk of Early Blight is greatest after the accumulation of 300 physiological days (P-Days) after crop emergence in a season.</p>",
   photo: "tomato-early-blight.jpg",
-  link: "https://vegpath.plantpath.wisc.edu/"
+  link: "https://vegpath.plantpath.wisc.edu/resources/early-blight/"
 )
 
 late_blight = LateBlight.create!(
@@ -24,7 +24,7 @@ late_blight = LateBlight.create!(
   remote_name: "potato_blight_dsv",
   info: "<p><b>Late blight</b>: <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.</p>",
   photo: "potato-late-blight.png",
-  link: "https://vegpath.plantpath.wisc.edu/"
+  link: "https://vegpath.plantpath.wisc.edu/resources/potato-late-blight/"
 )
 
 carrot_foliar = CarrotFoliar.create!(
@@ -33,7 +33,7 @@ carrot_foliar = CarrotFoliar.create!(
   remote_name: "carrot_foliar_dsv",
   info: "<p><b>Alternaria leaf blight</b>: the seedborne <i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. Disease management includes using certified or heat-treated seed, crop rotation, in-furrow irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p><p><b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.</p>",
   photo: "carrot-foliar-disease.png",
-  link: "https://vegpath.plantpath.wisc.edu/"
+  link: "https://vegpath.plantpath.wisc.edu/resources/carrot-diseases/"
 )
 
 cercospora_leaf_spot = CercosporaLeafSpot.create!(
@@ -41,7 +41,18 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
   local_name: "cercospora-leaf-spot",
   remote_name: "cercospora_div",
   info: "<p><b>Cercospora leaf spot (CLS)</b> and resultant defoliation is caused by the fungus <i>Cercospora beticola</i> Sacc. and is one of the most damaging diseases of table and sugar beet crops worldwide.  Disease symptoms are initially discrete and necrotic lesions with red to purple margins red table beets. Lesions have gray centers and contain diagnostic fungal structures (pseudostromata). For large scale table beet production, defoliation may lead to challenges with mechanical harvest and crop loss. For fresh market, 'bunched beet' sale, foliar lesions can result in rejection. CLS control in conventional table beet requires preventative fungicide applications. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.</p>",
-  link: "https://vegpath.plantpath.wisc.edu/"
+  photo: "cercospora-leaf-spot.jpg",
+  link: "https://vegpath.plantpath.wisc.edu/resources/carrot-diseases/"
+)
+
+botrytis_leaf_blight = BotrytisLeafBlight.create!(
+  name: "Botrytis leaf blight (Onion)",
+  local_name: "botrytis-leaf-blight",
+  remote_name: "botcast_dsi",
+  biofix_mm: 5, biofix_dd: 1,
+  info: "<p><b>Onion Botrytis leaf blight/leaf spot</b> is a fungal disease of alliums. Symptoms first appear as small whitish spots on the leaf. These spots are oval-shaped, and sometimes surrounded by a light green or silver halo that often appears water-soaked. Leaf tips will begin to dry and wither as the disease progresses, sometimes until the whole leaf dies back. Progressed infection can stunt bulb growth and reduce yield. Heavily infected fields often appear yellowish and blighted. Favorable conditions include relative humidity and rainfall, prolonged leaf wetness, and warm temperatures.",
+  photo: "onion-botrytis.png",
+  link: "https://vegpath.plantpath.wisc.edu/resources/onion-botrytis/"
 )
 
 ## Insect models ##
@@ -470,7 +481,7 @@ oak = Crop.create!(name: "Oak")
 oak.pests = [oak_wilt]
 
 onion = Crop.create!(name: "Onion")
-onion.pests = [onion_maggot, western_flower_thrips]
+onion.pests = [botrytis_leaf_blight, onion_maggot, western_flower_thrips]
 
 pea = Crop.create!(name: "Pea")
 pea.pests = [cabbage_looper, black_cutworm, japanese_beetle]

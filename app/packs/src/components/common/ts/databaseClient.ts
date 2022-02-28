@@ -198,6 +198,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
         name: null,
         pest_link: null,
         biofix_date: null,
+        biofix_label: null,
         end_date_enabled: null,
         tmin: null,
         tmax: null
