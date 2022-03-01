@@ -38,10 +38,13 @@ class SeveritiesController < ApplicationController
     json[:data]
   end
 
+  # fetch number of days below 28F in date range
   def get_freeze_data(end_date)
+    nov_1 = Date.new(end_date.year, 11, 1)
+    start_date = (end_date > nov_1) ? nov_1 : end_date - 1.week
     json = ag_weather_client.freeze_days(
-      start_date: end_date - 7.days,
-      end_date:
+      start_date: start_date,
+      end_date: end_date
     )
     hash = {}
     json[:data].each do |point|
@@ -50,6 +53,7 @@ class SeveritiesController < ApplicationController
     hash
   end
 
+  # appends freeze data to totals grid
   def add_freeze_data(data, freeze_data)
     data.each do |point|
       freeze = freeze_data[[point[:lat], point[:long]]]
@@ -65,8 +69,12 @@ class SeveritiesController < ApplicationController
   end
 
   def get_botrytis_data
-    total = get_totals(@pest.remote_name, @start_date, @end_date)
-    @pest.severities_from_totals(total)
+    totals = get_totals(@pest.remote_name, @start_date, @end_date)
+    if @end_date.month > 7
+      freeze_data = get_freeze_data(@end_date)
+      totals = add_freeze_data(totals, freeze_data)
+    end
+    @pest.severities_from_totals(totals)
   end
 
   def get_carrot_foliar_data

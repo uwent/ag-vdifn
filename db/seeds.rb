@@ -50,7 +50,7 @@ botrytis_leaf_blight = BotrytisLeafBlight.create!(
   local_name: "botrytis-leaf-blight",
   remote_name: "botcast_dsi",
   biofix_mm: 5, biofix_dd: 1,
-  info: "<p><b>Onion Botrytis leaf blight/leaf spot</b> is a fungal disease of alliums. Symptoms first appear as small whitish spots on the leaf. These spots are oval-shaped, and sometimes surrounded by a light green or silver halo that often appears water-soaked. Leaf tips will begin to dry and wither as the disease progresses, sometimes until the whole leaf dies back. Progressed infection can stunt bulb growth and reduce yield. Heavily infected fields often appear yellowish and blighted. Favorable conditions include relative humidity and rainfall, prolonged leaf wetness, and warm temperatures.",
+  info: "<p><b>Onion Botrytis leaf blight/leaf spot</b> is a fungal disease of alliums. Symptoms first appear as small whitish spots on the leaf. These spots are oval-shaped, and sometimes surrounded by a light green or silver halo that often appears water-soaked. Leaf tips will begin to dry and wither as the disease progresses, sometimes until the whole leaf dies back. Progressed infection can stunt bulb growth and reduce yield. Heavily infected fields often appear yellowish and blighted. Favorable conditions include relative humidity and rainfall, prolonged leaf wetness, and warm temperatures.</p><p>The Botrytis risk model on this website is based the Botcast decision tool described in Sutton et al. 1986. This tool is useful for timing the initial fungicide spray to combat the development of Botrytis leaf blight, which should begin after Threshold 1 or Threshold 2 are reached.</p>",
   photo: "onion-botrytis.png",
   link: "https://vegpath.plantpath.wisc.edu/resources/onion-botrytis/"
 )
