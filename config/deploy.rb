@@ -47,7 +47,7 @@ namespace :deploy do
   task :yarn_install do
     on roles(:app) do
       within release_path do
-        execute "yarn install --silent"
+        execute "cd #{release_path} && yarn install --production --silent"
       end
     end
   end
