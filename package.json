@@ -1,6 +1,10 @@
 {
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
     "@fortawesome/free-regular-svg-icons": "^6.0.0",
     "@googlemaps/js-api-loader": "^1.13.7",
     "@rails/ujs": "^7.0.2-2",
@@ -48,17 +52,12 @@
     "test:watch": "jest --max-workers=4 --watchAll"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
     "@babel/eslint-parser": "^7.17.0",
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-typescript": "^7.16.7",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/svelte": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "eslint": "^8.10.0",
-    "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-node": "^11.1.0",
