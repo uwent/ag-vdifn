@@ -78,7 +78,6 @@
   "resolutions": {
     "css-what": ">=5.0.1",
     "glob-parent": ">=5.1.2",
-    "xmldom": ">=0.6.0",
     "set-value": ">=4.0.1",
     "json-schema": ">=0.4.0",
     "follow-redirects": ">=1.14.8"
