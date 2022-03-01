@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["googlemaps", "jest", "node", "lodash"],
+    "types": ["google.maps", "jest", "node", "lodash"],
     "downlevelIteration": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
@@ -17,6 +17,6 @@
     "target": "es6",
     "noEmit": true,
   },
-  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
+  "exclude": ["node_modules", "vendor", "public", "spec", "app/packs/spec"],
   "compileOnSave": false,
 }

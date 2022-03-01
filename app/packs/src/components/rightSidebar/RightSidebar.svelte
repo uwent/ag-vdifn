@@ -193,7 +193,7 @@
     <SeverityLegend severities={currentSeverities} />
   {/if}
 
-  {#if $selectedPanel === panelNames.disease}
+  <!-- {#if $selectedPanel === panelNames.disease}
     <fieldset id="definitions">
       <legend>Terms</legend>
       <ul>
@@ -247,7 +247,7 @@
         </li>
       </ul>
     </fieldset>
-  {/if}
+  {/if} -->
 
   {#if $selectedPanel === panelNames.insect}
     <fieldset title="more-info">
