@@ -1581,10 +1581,10 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/google.maps@^3.48.1":
-  version "3.48.1"
-  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.48.1.tgz#7f21554e75ac929e17896fc42d201b5f5e69837f"
-  integrity sha512-omUrHt83oSngRD0/pk3JW5dvTeSUVMmAFp6b2Btj5LFqPKc09f0OeHk2LIGPz12T3sRAtwkSvgmzwVMqPrIW9A==
+"@types/google.maps@^3.48.2":
+  version "3.48.2"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.48.2.tgz#9e6ca624494b80fc0c0d456d77ff3c163f2fc087"
+  integrity sha512-ulxQ3eLy3s/l5KChx040FzsecC/2+JFWaF+FxGp628bJjqDL50vkzkRNEy1QlWOxHk5wKFfJvBonQrla/z82oA==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
