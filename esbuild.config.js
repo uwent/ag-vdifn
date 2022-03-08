@@ -30,7 +30,6 @@ let opts = {
         },
       }),
     }),
-    // svgrPlugin(),
   ],
   loader: {
     ".png": "file",
