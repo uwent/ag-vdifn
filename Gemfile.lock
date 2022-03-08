@@ -342,7 +342,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   standard
-  terser
+  terser (~> 1.1)
   web-console
   webmock
 
