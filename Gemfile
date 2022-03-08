@@ -8,6 +8,7 @@ gem "httparty", "~> 0.20"
 gem "sassc-rails", "~> 2.1"
 gem "jsbundling-rails", "~> 1.0"
 gem "cssbundling-rails", "~> 1.1"
+gem "terser", "~> 1.1"
 
 group :development do
   gem "puma"

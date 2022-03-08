@@ -102,6 +102,7 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.10.0)
+    execjs (2.8.1)
     ffi (1.15.5)
     foreman (0.87.2)
     formatador (1.1.0)
@@ -291,6 +292,8 @@ GEM
       rubocop (= 1.25.1)
       rubocop-performance (= 1.13.2)
     strscan (3.0.1)
+    terser (1.1.8)
+      execjs (>= 0.3.0, < 3)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
@@ -339,6 +342,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   standard
+  terser
   web-console
   webmock
 
