@@ -1,10 +1,10 @@
 <style type="scss">
   @import '../../scss/settings.scss';
 
-  .tooltip {
-    border: none;
-    background-color: transparent;
-  }
+  // .tooltip {
+  //   border: none;
+  //   background-color: transparent;
+  // }
 
   #right-sidebar-expand-button {
     position: fixed;
@@ -76,15 +76,15 @@
     padding: 0 5px;
   }
 
-  ul {
-    margin: 0;
-    padding-left: 20px;
-    font-size: 0.8em;
-  }
+  // ul {
+  //   margin: 0;
+  //   padding-left: 20px;
+  //   font-size: 0.8em;
+  // }
 
-  ul li {
-    color: #424242;
-  }
+  // ul li {
+  //   color: #424242;
+  // }
 </style>
 
 <script lang="ts">

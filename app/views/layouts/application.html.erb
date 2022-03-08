@@ -4,9 +4,9 @@
   <title>AgVDIFN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="<%= Rails.configuration.relative_url_root %>/favicon.png">
-  <%= javascript_pack_tag "svelte" %>
-  <%= stylesheet_pack_tag "svelte" %>
   <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZX93CQC5RQ"></script>
   <script>
