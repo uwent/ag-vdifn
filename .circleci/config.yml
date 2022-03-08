@@ -34,5 +34,5 @@ jobs:
           name: Jest
           command: yarn test
       - run:
-          name: Webpacker compile
-          command: bundle exec rails webpacker:compile
+          name: Build
+          command: yarn build

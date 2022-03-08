@@ -22,7 +22,7 @@
     selectedAffliction,
     panelNames,
     defaults,
-    dev
+    isDev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -67,14 +67,14 @@
     let url = window.location.pathname
     let title = 'AgVDIFN'
     if (!window.location.search && model.local_name === defaults.disease) {
-      if (dev) console.log('Disease panel >> Default panel launched, clearing URL')
+      if (isDev) console.log('Disease panel >> Default panel launched, clearing URL')
     } else {
       url += '?panel=' + thisPanel
       url += '&model=' + model.local_name
       title += ': Disease Models - ' + model.name
     }
-    if (dev) console.log('Disease panel >> Setting title to ' + title)
-    if (dev) console.log('Disease panel >> Setting url to ' + url)
+    if (isDev) console.log('Disease panel >> Setting title to ' + title)
+    if (isDev) console.log('Disease panel >> Setting url to ' + url)
     window.history.replaceState({}, title, url)
     document.title = title
   }

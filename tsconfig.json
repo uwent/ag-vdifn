@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["google.maps", "jest", "node", "lodash"],
+    "types": ["google.maps", "jest", "node", "lodash", "@testing-library/jest-dom"],
     "downlevelIteration": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
@@ -11,12 +11,12 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "app/packs/*"]
+      "*": ["node_modules/*", "app/javascript/*"]
     },
     "sourceMap": true,
-    "target": "es6",
+    "target": "esnext",
     "noEmit": true,
   },
-  "exclude": ["node_modules", "vendor", "public", "spec", "app/packs/spec"],
+  "exclude": ["node_modules", "vendor", "public", "spec", "app/javascript/spec"],
   "compileOnSave": false,
 }

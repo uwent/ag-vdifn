@@ -60,7 +60,7 @@
     overlayLoading,
     selectedPanel,
     customPanelState,
-    dev
+    isDev
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
   import DatePicker from './DatePicker.svelte'
@@ -112,8 +112,8 @@
     let url = window.location.pathname
     let title = 'AgVDIFN: Degree-day Map Viewer'
     url += '?panel=custom'
-    if (dev) console.log('Custom Panel >> Setting page title to ' + title)
-    if (dev) console.log('Custom Panel >> Setting url to ' + url)
+    if (isDev) console.log('Custom Panel >> Setting page title to ' + title)
+    if (isDev) console.log('Custom Panel >> Setting url to ' + url)
     window.history.replaceState({}, title, url)
     document.title = title
   }

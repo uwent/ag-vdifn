@@ -14,7 +14,7 @@
     panelNames,
     insectPanelState,
     selectedAffliction,
-    dev
+    isDev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -61,8 +61,8 @@
     url += '?panel=' + thisPanel
     url += '&model=' + $insectPanelState.currentAffliction.local_name
     title += ' - ' + $insectPanelState.currentAffliction.name
-    if (dev) console.log('Insect panel >> Setting title to ' + title)
-    if (dev) console.log('Insect panel >> Setting url to ' + url)
+    if (isDev) console.log('Insect panel >> Setting title to ' + title)
+    if (isDev) console.log('Insect panel >> Setting url to ' + url)
     window.history.replaceState({}, title, url)
     document.title = title
   }
