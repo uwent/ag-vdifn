@@ -67,7 +67,7 @@
     "jest-google-maps-mock": "^1.0.7",
     "jest-mock-extended": "^2.0.4",
     "jest-transform-svelte": "^2.1.1",
-    "msw": "^0.38.1",
+    "msw": "^0.39.0",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.6.0",
     "svelte-check": "^2.4.5",
