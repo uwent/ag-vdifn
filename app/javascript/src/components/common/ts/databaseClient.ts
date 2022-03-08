@@ -8,11 +8,10 @@ import {
   CropWithDiseases,
   CropWithInsects
 } from './types'
+import { isDev } from '../../../store/store'
 import axios from 'axios'
 import DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
-
-const dev = process.env.NODE_ENV === 'development'
 
 export default class DatabaseClient implements DatabaseClientInterface {
   constructor() {
@@ -25,7 +24,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchDiseasePanel',
           '\nEndpoint:',
@@ -51,7 +50,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchInsectPanel',
           '\nEndpoint:',
@@ -78,7 +77,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const severities: Severity[] = []
     try {
       const response = await axios.post(endpoint, params)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchSeverities',
           '\nEndpoint:',
@@ -114,7 +113,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchSeverityLegend',
           '\nEndpoint:',
@@ -136,7 +135,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchSeverityLegendInfo',
           '\nEndpoint:',
@@ -157,7 +156,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams }
     try {
       const response = await axios.post(endpoint, params)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchPointDetails',
           '\nEndpoint:',
@@ -181,7 +180,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
     try {
       const response = await axios.post(endpoint, params)
-      if (dev)
+      if (isDev)
         console.log(
           'DB >> fetchPestInfo',
           '\nEndpoint:',

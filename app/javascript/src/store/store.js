@@ -9,7 +9,7 @@ export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
 export const env = process.env.NODE_ENV
-export const dev = process.env.NODE_ENV === "development"
+export const isDev = env === "development"
 export const mapsApiKey = process.env.GOOGLE_MAPS_API_KEY
 
 export const selectedAffliction = writable({

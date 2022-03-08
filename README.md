@@ -62,8 +62,8 @@ yarn -v
 1. Install core dependencies listed above.
 2. Install ruby gems with `bundle install` and node packages with `yarn install`
 3. Setup database with `bundle exec rails db:setup`
-4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s -p 8080`
-5. Run ag-vdifn server with `bundle exec rails s`
+4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s`
+5. Run ag-vdifn server with `bin/dev`
 6. Launch site by visiting `localhost:3000` in browser
 
 ## Running Tests
@@ -84,7 +84,13 @@ bundle exec rspec
 ### Jest (Node tests)
 
 ```bash
-yarn jest
+yarn test
+```
+
+### Build
+
+```bash
+yarn build
 ```
 
 ## Deployment

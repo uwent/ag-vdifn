@@ -61,7 +61,7 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
   import { CropWithAfflictions, Pest } from '../common/ts/types'
-  import { panelKey, selectedAffliction, afflictionValue, dev } from '../../store/store'
+  import { panelKey, selectedAffliction, afflictionValue, isDev } from '../../store/store'
   import Modal from '../common/Modal.svelte'
   const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
@@ -132,7 +132,7 @@
     const queryModel = defaultModel
     if (queryModel) {
       modelId = getAfflictionId(queryModel)
-      if (dev)
+      if (isDev)
         console.log(
           "Model selection >> Specified model '" +
             queryModel +
@@ -141,7 +141,7 @@
         )
     } else {
       modelId = getAfflictionId(defaultModel)
-      if (dev)
+      if (isDev)
         console.log(
           "Model selection >> No model param specified, choosing default model '" +
             queryModel +
