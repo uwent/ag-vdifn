@@ -3,6 +3,8 @@ class SeveritiesController < ApplicationController
     @pest = get_pest
     @start_date = start_date
     @end_date = end_date
+    @lat_range = lat_range
+    @long_range = long_range
 
     pest_name = @pest.class.name
     grid = []
@@ -31,9 +33,11 @@ class SeveritiesController < ApplicationController
 
   def get_totals(pest, start_date, end_date)
     json = ag_weather_client.pest_forecasts(
-      pest: pest,
-      start_date: start_date,
-      end_date: end_date
+      pest:,
+      start_date:,
+      end_date:,
+      lat_range: @lat_range,
+      long_range: @long_range
     )
     json[:data]
   end
@@ -44,7 +48,9 @@ class SeveritiesController < ApplicationController
     start_date = (end_date > nov_1) ? nov_1 : end_date - 1.week
     json = ag_weather_client.freeze_days(
       start_date: start_date,
-      end_date: end_date
+      end_date: end_date,
+      lat_range: @lat_range,
+      long_range: @long_range
     )
     hash = {}
     json[:data].each do |point|
@@ -149,20 +155,22 @@ class SeveritiesController < ApplicationController
 
   def get_custom_data
     pests = Pest.where(t_max:, t_min:)
-    options = if pests.any?
-      {
-        start_date:,
-        end_date:,
+    opts = {
+      start_date:,
+      end_date:,
+      lat_range: @lat_range,
+      long_range: @long_range
+    }
+    if pests.any?
+      opts = opts.merge({
         pest: pests.first.remote_name
-      }
+      })
     else
-      {
-        start_date:,
-        end_date:,
+      opts = opts.merge({
         t_base: t_min,
         t_upper: t_max
-      }
+      })
     end
-    ag_weather_client.custom(options)
+    ag_weather_client.custom(opts)
   end
 end

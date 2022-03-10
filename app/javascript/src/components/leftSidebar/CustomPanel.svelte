@@ -60,6 +60,8 @@
     overlayLoading,
     selectedPanel,
     customPanelState,
+    defaults,
+    extents,
     isDev
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
@@ -71,6 +73,7 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data: any
+  export let selectedExtent = defaults.extent
   let submitDisabled = false
   let tMinTmaxSelection = 'custom'
 
@@ -89,6 +92,7 @@
     customOverlaySubmitted.set(true)
     customPanelState.update(state => ({
       ...state,
+      selectedExtent: selectedExtent,
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
@@ -99,7 +103,8 @@
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
-      in_fahrenheit: $tMinTmax.in_fahrenheit
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
+      ...extents[selectedExtent]
     })
     updateUrlParams()
   }
@@ -122,6 +127,8 @@
     selectedPanel.set('custom')
     $customPanelState.loaded ? updateUrlParams() : submit()
   })
+
+  $: if ($customPanelState.selectedExtent && $customPanelState.selectedExtent != selectedExtent) { submit() }
 </script>
 
 <div data-testid="custom-panel">

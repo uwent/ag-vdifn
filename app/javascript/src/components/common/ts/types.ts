@@ -42,6 +42,8 @@ export type SeverityParams = {
   t_max?: number
   t_min?: number
   in_fahrenheit?: boolean
+  lat_range?: string,
+  long_range?: string
 }
 
 export type StationDetailsParams = {

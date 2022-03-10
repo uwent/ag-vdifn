@@ -18,6 +18,16 @@
     overflow: hidden;
     display: flex;
     justify-content: space-evenly;
+    gap: 10px;
+  }
+
+  .switch-field label:hover {
+    cursor: pointer;
+  }
+
+  .switch-field input:checked + label {
+    background-color: #a5dc86;
+    box-shadow: none;
   }
 
   input {
@@ -33,7 +43,7 @@
   }
 
   label {
-    width: 20%;
+    width: 100%;
     background-color: #e4e4e4;
     color: rgba(0, 0, 0, 0.6);
     font-size: 12px;
@@ -44,15 +54,6 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
     transition: all 0.1s ease-in-out;
-  }
-
-  .switch-field label:hover {
-    cursor: pointer;
-  }
-
-  .switch-field input:checked + label {
-    background-color: #a5dc86;
-    box-shadow: none;
   }
 
   button {
@@ -75,6 +76,7 @@
   const databaseClient = new DatabaseClient()
   const urlParams = new URLSearchParams(window.location.search)
   let panel = defaults.panel
+  let extent = defaults.extent
   let showHelp = false
   let diseaseParams = { model: defaults.disease }
   let insectParams = { model: defaults.insect }
@@ -147,13 +149,42 @@
         <button on:click={() => (showHelp = true)}>?</button>
       </div>
     </fieldset>
+    <fieldset id="extents">
+      <legend>Data range</legend>
+      <div class="switch-field">
+        <input
+          name="extent"
+          type="radio"
+          id="wisconsin"
+          value="wisconsin"
+          bind:group={extent}
+          disabled={$overlayLoading}>
+        <label for="wisconsin">Wisconsin</label>
+        <input
+          name="extent"
+          type="radio"
+          id="midwest"
+          value="midwest"
+          bind:group={extent}
+          disabled={$overlayLoading}>
+        <label for="midwest">Upper Midwest</label>
+      </div>
+    </fieldset>
     {#if diseasePanelData && insectPanelData}
       {#if panel === 'disease'}
-        <DiseasePanel data={diseasePanelData} defaultModel={diseaseParams.model} />
+        <DiseasePanel
+          data={diseasePanelData}
+          defaultModel={diseaseParams.model}
+          selectedExtent={extent} />
       {:else if panel === 'insect'}
-        <InsectPanel data={insectPanelData} defaultModel={insectParams.model} />
+        <InsectPanel
+          data={insectPanelData}
+          defaultModel={insectParams.model}
+          selectedExtent={extent} />
       {:else if panel === 'custom'}
-        <CustomPanel data={insectPanelData} />
+        <CustomPanel
+          data={insectPanelData}
+          selectedExtent={extent} />
       {/if}
     {:else}
       <Loading />

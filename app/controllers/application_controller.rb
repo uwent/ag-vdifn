@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
     params[:end_date].blank? ? Date.yesterday : Date.parse(params[:end_date])
   end
 
+  def lat_range
+    params[:lat_range]
+  end
+
+  def long_range
+    params[:long_range]
+  end
+
   def t_min
     if !params[:in_fahrenheit].nil? && params[:t_min].present? && !params[:in_fahrenheit]
       c_to_f(params[:t_min])
