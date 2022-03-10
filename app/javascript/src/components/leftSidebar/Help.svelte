@@ -1,11 +1,11 @@
 <script lang="ts">
-  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
+  import { baseURL } from '../../store/store'
 </script>
 
 <div class="modal__pest-info">
   <img
-    src="{productionURL}/favicon.png"
-    width="150px"
+    src="{baseURL}/favicon.png"
+    width=150px
     style="margin-top: 1em; margin-right: 10px; float: left;"
     alt=""
   />

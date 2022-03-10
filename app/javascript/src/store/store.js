@@ -8,8 +8,9 @@ export const afflictionAlias = writable('')
 export const overlayGradient = writable({})
 export const overlayLoading = writable(false)
 export const customOverlaySubmitted = writable(false)
-export const env = process.env.NODE_ENV
-export const isDev = env === "development"
+export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production'
+export const isDev = env === 'development'
+export const baseURL = isDev ? '' : '/vdifn'
 export const mapsApiKey = process.env.GOOGLE_MAPS_API_KEY
 
 export const panelKey = {}

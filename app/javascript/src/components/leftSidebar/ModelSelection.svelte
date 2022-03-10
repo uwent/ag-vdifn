@@ -61,9 +61,8 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
   import { CropWithAfflictions, Pest } from '../common/ts/types'
-  import { panelKey, selectedAffliction, afflictionValue, isDev } from '../../store/store'
+  import { panelKey, selectedAffliction, afflictionValue, isDev, baseURL } from '../../store/store'
   import Modal from '../common/Modal.svelte'
-  const productionURL = process.env.NODE_ENV === `production` ? `/vdifn` : ``
   const { getCrops, getAfflictionName } = getContext(panelKey)
   export let defaultModel = ''
   let showModal = false
@@ -115,7 +114,7 @@
 
   function buildModalImage(photo) {
     if (photo != null) {
-      return `<img src="${productionURL}/images/${photo}" width="150px" style="margin-top: 1em; margin-right: 10px; float: left;"/>`
+      return `<img src="${baseURL}/images/${photo}" width="150px" style="margin-top: 1em; margin-right: 10px; float: left;"/>`
     } else {
       return ''
     }
