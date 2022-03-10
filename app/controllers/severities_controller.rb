@@ -68,8 +68,10 @@ class SeveritiesController < ApplicationController
   end
 
   def get_insect_data
-    freeze_data = get_freeze_data(@end_date)
-    totals = get_totals(@pest.remote_name, @start_date, @end_date)
+    freeze_data, totals = [
+      Thread.new { get_freeze_data(@end_date) },
+      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) }
+    ].map(&:value)
     totals = add_freeze_data(totals, freeze_data)
     @pest.severities_from_totals(totals, @end_date)
   end
@@ -89,8 +91,10 @@ class SeveritiesController < ApplicationController
   end
 
   def get_cercospora_data
-    two_day = get_totals(@pest.remote_name, @end_date - 2.days, @end_date)
-    seven_day = get_totals(@pest.remote_name, @end_date - 7.days, @end_date)
+    two_day, seven_day = [
+      Thread.new {get_totals(@pest.remote_name, @end_date - 2.days, @end_date)},
+      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)}
+    ].map(&:value)
 
     two_day_hash = {}
     two_day.map do |point|
@@ -110,8 +114,10 @@ class SeveritiesController < ApplicationController
   end
 
   def get_early_blight_data
-    seven_day = get_totals(@pest.remote_name, @end_date - 7.days, @end_date)
-    selected_dates = get_totals(@pest.remote_name, @start_date, @end_date)
+    seven_day, selected_dates = [
+      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)},
+      Thread.new {get_totals(@pest.remote_name, @start_date, @end_date)}
+    ].map(&:value)
 
     seven_day_hash = {}
     seven_day.map do |point|
@@ -131,9 +137,10 @@ class SeveritiesController < ApplicationController
   end
 
   def get_late_blight_data
-    season_total = get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date)
-    seven_day = get_totals(@pest.remote_name, @end_date - 7.days, @end_date)
-    freeze_data = get_freeze_data(@end_date)
+    seven_day, season_total = [
+      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)},
+      Thread.new {get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date)}
+    ].map(&:value)
 
     seven_day_hash = {}
     seven_day.map do |point|
@@ -148,7 +155,11 @@ class SeveritiesController < ApplicationController
         seven_day: seven_day_hash[[point[:lat], point[:long]]] || 0
       }
     end
-    grid = add_freeze_data(grid, freeze_data)
+
+    if @end_date.month > 7
+      freeze_data = get_freeze_data(@end_date)
+      grid = add_freeze_data(grid, freeze_data)
+    end
 
     @pest.severities_from_totals(grid)
   end

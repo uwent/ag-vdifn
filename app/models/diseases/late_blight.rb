@@ -6,7 +6,7 @@ class LateBlight < Disease
       {
         lat: point[:lat],
         long: point[:long],
-        severity: point[:freeze] > 0 ? 0 : total_to_severity(point[:total], point[:seven_day])
+        severity: (point[:freeze] || 0) > 0 ? 0 : total_to_severity(point[:total], point[:seven_day])
       }
     end
   end
