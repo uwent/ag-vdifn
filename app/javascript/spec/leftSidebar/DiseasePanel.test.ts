@@ -9,7 +9,9 @@ import {
   diseasePanelParams,
   startDate,
   endDate,
-  afflictionValue
+  afflictionValue,
+  defaults,
+  extents
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
@@ -42,7 +44,8 @@ it('should dispatch submit params when button is clicked', () => {
     start_date: '2000-10-10',
     end_date: '2000-11-10',
     in_fahrenheit: true,
-    pest_id: 1
+    pest_id: 1,
+    ...extents[defaults.extent]
   })
 })
 
@@ -51,7 +54,8 @@ it('should update disease panel state', async () => {
   fireEvent.click(button)
   expect(get(diseasePanelState)).toEqual({
     currentAffliction: { name: 'bug' },
-    loaded: true
+    loaded: true,
+    selectedExtent: defaults.extent
   })
 })
 

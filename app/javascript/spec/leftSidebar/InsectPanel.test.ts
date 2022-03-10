@@ -9,7 +9,9 @@ import {
   insectPanelParams,
   startDate,
   endDate,
-  afflictionValue
+  afflictionValue,
+  defaults,
+  extents
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import moment from 'moment'
@@ -41,7 +43,8 @@ it('should update insect panels state when submit button clicked', async () => {
 
   expect(get(insectPanelState)).toEqual({
     currentAffliction: { name: 'bug', t_min: 42, t_max: null },
-    loaded: true
+    loaded: true,
+    selectedExtent: defaults.extent
   })
 })
 
@@ -54,7 +57,8 @@ it('should dispatch submit params when button is clicked', async () => {
     pest_id: 1,
     t_min: 42,
     t_max: null,
-    in_fahrenheit: true
+    in_fahrenheit: true,
+    ...extents[defaults.extent]
   })
 })
 

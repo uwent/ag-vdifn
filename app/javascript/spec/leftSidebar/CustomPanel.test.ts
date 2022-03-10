@@ -11,7 +11,8 @@ import {
   endDate,
   afflictionValue,
   tMinTmax,
-  customOverlaySubmitted
+  customOverlaySubmitted,
+  defaults
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
@@ -67,7 +68,8 @@ it('updates state on submit', async () => {
     selectedGradient: 1,
     t_max: 2,
     t_min: 1,
-    loaded: true
+    loaded: true,
+    selectedExtent: defaults.extent
   })
 })
 
