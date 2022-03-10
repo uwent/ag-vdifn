@@ -91,8 +91,9 @@ export const defaults = {
   disease: 'late-blight',
   insect: 'cpb',
   t_min: 50,
-  t_max: null,
-  in_f: true
+  t_max: 86,
+  in_f: true,
+  tMaxDisabled: false
 }
 
 // min lat, max lat, min long, max long

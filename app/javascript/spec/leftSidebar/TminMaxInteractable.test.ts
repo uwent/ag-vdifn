@@ -1,6 +1,6 @@
 import TminMaxInteractable from '../../src/components/leftSidebar/TminMaxInteractable.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
-import { tMinTmax } from '../../src/store/store'
+import { tMinTmax, defaults } from '../../src/store/store'
 
 let getLabelText
 let getTitle
@@ -41,9 +41,10 @@ describe('TminMaxInteractable component', () => {
 
   it('sets tMin and tMax to default values', () => {
     const checkbox = getRole('checkbox', { name: 'No Tmax' })
-    expect(getRole('spinbutton', { name: 'Tmin' }).value).toEqual('50')
-    expect(getRole('spinbutton', { name: 'Tmax' }).disabled).toEqual(true)
-    expect(checkbox.checked).toEqual(true)
+    expect(getRole('spinbutton', { name: 'Tmin' }).value).toEqual(defaults.t_min.toString())
+    expect(getRole('spinbutton', { name: 'Tmax' }).value).toEqual(defaults.t_max.toString())
+    expect(getRole('spinbutton', { name: 'Tmax' }).disabled).toEqual(defaults.tMaxDisabled)
+    expect(checkbox.checked).toEqual(defaults.tMaxDisabled)
   })
 
   it('defaults temp to fahrenheit', () => {
@@ -55,7 +56,7 @@ describe('TminMaxInteractable component', () => {
     const tMax = getRole('spinbutton', { name: 'Tmax' })
     const tMin = getRole('spinbutton', { name: 'Tmin' })
     const tempToggle: HTMLInputElement = getTitle('temp-unit-toggle')
-    await fireEvent.click(checkbox)
+    // await fireEvent.click(checkbox)
     await fireEvent.change(tMax, { target: { value: 80 } })
     await fireEvent.click(tempToggle)
     expect(tempToggle.checked).toEqual(false)
@@ -71,27 +72,25 @@ describe('TminMaxInteractable component', () => {
   it('unchecking "no Tmax" button enables tMax input', async () => {
     const tMaxInput: HTMLInputElement = getRole('spinbutton', { name: 'Tmax' })
     await fireEvent.click(getRole('checkbox', { name: 'No Tmax' }))
-    expect(tMaxInput.disabled).toEqual(false)
+    expect(tMaxInput.disabled).toEqual(!defaults.tMaxDisabled)
   })
 
   describe('validations', () => {
-    beforeEach(async () => {
-      const checkbox = getRole('checkbox', { name: 'No Tmax' })
-      await fireEvent.click(checkbox)
-    })
+    // beforeEach(async () => {
+    //   const checkbox = getRole('checkbox', { name: 'No Tmax' })
+    //   await fireEvent.click(checkbox)
+    // })
 
     it('shows validation when tMax is less than tMin', async () => {
       const tMinInput: HTMLInputElement = getRole('spinbutton', { name: 'Tmin' })
       await fireEvent.change(tMinInput, { target: { value: 100 } })
-      expect(tMinInput.validationMessage).toEqual('This value must be less than the tMax')
+      expect(tMinInput.validationMessage).toEqual('This value must be less than the Tmax')
     })
 
     it('shows validation when tMin is greater than tMin', async () => {
       const tMaxInput: HTMLInputElement = getRole('spinbutton', { name: 'Tmax' })
       await fireEvent.change(tMaxInput, { target: { value: 0 } })
-      expect(tMaxInput.validationMessage).toEqual(
-        'This value must be greater than the tMin'
-      )
+      expect(tMaxInput.validationMessage).toEqual('This value must be greater than the Tmin')
     })
 
     it('does not validate if tMax is disabled', async () => {

@@ -16,6 +16,10 @@
     cursor: default;
   }
 
+  input:invalid {
+    background: lightcoral;
+  }
+
   #degree_day_info {
     display: flex;
     justify-content: space-evenly;
@@ -118,8 +122,8 @@
   import { tMinTmax, defaults } from '../../store/store'
   let tMin = defaults.t_min
   let tMax = defaults.t_max
-  let in_f = true
-  let tMaxDisabled = true
+  let in_f = defaults.in_f
+  let tMaxDisabled = defaults.tMaxDisabled
   let valid = true
   const dispatch = createEventDispatcher()
 
@@ -162,43 +166,41 @@
   }
 
   function validateTmin(event: any) {
+    let msg = ''
     const {
       target,
       target: { value }
     } = event
     if (tMaxDisabled) {
-      target.setCustomValidity('')
       valid = true
-      return
-    }
-    if (value >= tMax) {
-      target.setCustomValidity('This value must be less than the tMax')
+    } else if (value >= tMax) {
+      msg = 'This value must be less than the Tmax'
       valid = false
     } else {
-      target.setCustomValidity('')
       tMin = Number(event.target.value)
       valid = true
     }
+    target.setCustomValidity(msg)
+    target.title = msg
   }
 
   function validateTmax(event: any) {
+    let msg = ''
     const {
       target,
       target: { value }
     } = event
     if (tMaxDisabled) {
-      target.setCustomValidity('')
       valid = true
-      return
-    }
-    if (value <= tMin) {
-      target.setCustomValidity('This value must be greater than the tMin')
+    } else if (value <= tMin) {
+      msg = 'This value must be greater than the Tmin'
       valid = false
     } else {
-      target.setCustomValidity('')
       tMax = Number(event.target.value)
       valid = true
     }
+    target.setCustomValidity(msg)
+    target.title = msg
   }
 
   function updateTminTmax(
@@ -222,11 +224,8 @@
     }
   }
 
-  onMount(() => {
-    tMin = 50
-    tMax = null
-    tMaxDisabled = true
-  })
+  // onMount(() => {
+  // })
 
   $: dispatch('tMinMaxValid', { valid: valid })
   $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled)
@@ -240,9 +239,10 @@
         on:change={validateTmin}
         type="number"
         id="tmin"
-        maxlength="4"
-        step="0.1"
+        maxlength=4
+        step=0.1
         bind:value={tMin}
+        title={this.validationMessage}
       />
     </div>
     <div class="temp-group-tmax">

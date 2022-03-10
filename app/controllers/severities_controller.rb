@@ -165,7 +165,9 @@ class SeveritiesController < ApplicationController
   end
 
   def get_custom_data
-    pests = Pest.where(t_max:, t_min:)
+    # puts "===> TMIN: #{t_min}, TMAX: #{t_max} <==="
+    pests = Pest.where(t_min:, t_max:)
+    # puts pests.pluck(:remote_name)
     opts = {
       start_date:,
       end_date:,
