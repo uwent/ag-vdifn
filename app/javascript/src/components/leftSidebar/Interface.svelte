@@ -118,6 +118,7 @@
 <div class="options">
   <div class="inner">
     <fieldset id="interface">
+      <legend>Model Type</legend>
       <div class="switch-field">
         <input
           name="interface"
@@ -150,7 +151,7 @@
       </div>
     </fieldset>
     <fieldset id="extents">
-      <legend>Data range</legend>
+      <legend>Data Range</legend>
       <div class="switch-field">
         <input
           name="extent"
