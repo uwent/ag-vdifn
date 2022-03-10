@@ -98,8 +98,8 @@ export const defaults = {
 // min lat, max lat, min long, max long
 export const extents = {
   wisconsin: {
-    lat_range: '42.4,47.2',
-    long_range: '-93.0,-86.7'
+    lat_range: '42.4,47.1',
+    long_range: '-93.0,-86.8'
   },
   midwest: {
     lat_range: '',
