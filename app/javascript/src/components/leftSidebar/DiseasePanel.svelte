@@ -22,7 +22,8 @@
     selectedAffliction,
     panelNames,
     defaults,
-    isDev
+    isDev,
+    extents
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -32,6 +33,7 @@
   import Loading from '../common/Loading.svelte'
   export let data
   export let defaultModel = ''
+  export let selectedExtent = defaults.extent
   const thisPanel = panelNames.disease
 
   // TODO: change 'Disease' to thisPanel
@@ -51,14 +53,17 @@
     diseasePanelState.update(state => ({
       ...state,
       currentAffliction: get(selectedAffliction),
+      selectedExtent: selectedExtent,
       loaded: true
     }))
-    diseasePanelParams.set({
+    let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       pest_id: $afflictionValue,
-      in_fahrenheit: $tMinTmax.in_fahrenheit
-    })
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
+      ...extents[selectedExtent]
+    }
+    diseasePanelParams.set(params)
     updateUrlParams()
   }
 
@@ -83,6 +88,8 @@
     selectedPanel.set(thisPanel)
     $diseasePanelState.loaded ? updateUrlParams() : submit()
   })
+
+  $: if ($diseasePanelState.selectedExtent && $diseasePanelState.selectedExtent != selectedExtent) { submit() }
 </script>
 
 <div data-testid="disease-panel">

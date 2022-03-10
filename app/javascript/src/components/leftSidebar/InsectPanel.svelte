@@ -14,6 +14,8 @@
     panelNames,
     insectPanelState,
     selectedAffliction,
+    defaults,
+    extents,
     isDev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
@@ -24,6 +26,7 @@
   import Loading from '../common/Loading.svelte'
   export let data
   export let defaultModel = ''
+  export let selectedExtent = defaults.extent
   const thisPanel = panelNames.insect
 
   setContext(panelKey, {
@@ -42,6 +45,7 @@
     insectPanelState.update(state => ({
       ...state,
       currentAffliction: get(selectedAffliction),
+      selectedExtent: selectedExtent,
       loaded: true
     }))
     insectPanelParams.set({
@@ -50,7 +54,8 @@
       pest_id: $afflictionValue,
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
-      in_fahrenheit: $tMinTmax.in_fahrenheit
+      in_fahrenheit: $tMinTmax.in_fahrenheit,
+      ...extents[selectedExtent]
     })
     updateUrlParams()
   }
@@ -71,6 +76,8 @@
     selectedPanel.set(thisPanel)
     $insectPanelState.loaded ? updateUrlParams() : submit()
   })
+
+  $: if ($insectPanelState.selectedExtent && $insectPanelState.selectedExtent != selectedExtent) { submit() }
 </script>
 
 <div data-testid="insect-panel">

@@ -8,7 +8,7 @@ import {
   CropWithDiseases,
   CropWithInsects
 } from './types'
-import { isDev } from '../../../store/store'
+import { isDev, extents } from '../../../store/store'
 import axios from 'axios'
 import DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
@@ -27,10 +27,8 @@ export default class DatabaseClient implements DatabaseClientInterface {
       if (isDev)
         console.log(
           'DB >> fetchDiseasePanel',
-          '\nEndpoint:',
-          endpoint,
-          '\nResponse:',
-          response
+          '\nEndpoint:', endpoint,
+          '\nResponse:', response
         )
       cropsWithAfflictions = response.data.map((cropWithDisease: CropWithDiseases) => {
         const { diseases, ...newData } = {
@@ -53,10 +51,8 @@ export default class DatabaseClient implements DatabaseClientInterface {
       if (isDev)
         console.log(
           'DB >> fetchInsectPanel',
-          '\nEndpoint:',
-          endpoint,
-          '\nResponse:',
-          response
+          '\nEndpoint:', endpoint,
+          '\nResponse:', response
         )
       cropsWithAfflictions = response.data.map((cropWithInsect: CropWithInsects) => {
         const { insects, ...newData } = {
@@ -80,12 +76,9 @@ export default class DatabaseClient implements DatabaseClientInterface {
       if (isDev)
         console.log(
           'DB >> fetchSeverities',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response
+          '\nEndpoint:', endpoint,
+          '\nParams:', params,
+          '\nResponse:', response
         )
       if (response.data.data) {
         response.data.data.forEach(data => {
