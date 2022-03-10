@@ -263,7 +263,7 @@ japanese_beetle = Insect.create!(
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[970, 1600, 2150]],
-  info: "<p>Japanese beetle (<i>Popillia japonica</i>) adults are slightly less than 1∕2 inch long, and are shiny, metallic green. They have coppery-brown wing covers that do not entirely cover the abdomen. There are six pairs of patches of white hairs along the sides and back of the body, under the edges of the wings. Males and females have the same markings, but females are typically slightly larger. Newly hatched larvae are approximately 1∕8 inch long and a translucent, creamy white. Once feeding begins, the hindguts of larvae appears gray to black. The typical C-shape of Japanese beetle larvae is similar to that of other white grub species.</p><p>Japanese beetle adults do not damage turf, but are an important pest of many other plants. They feed on foliage or flowers, and are a major pest of over 350 species of plants, including fruits, vegetables, ornamentals, field and forage crops, and weeds. Norway and Japanese maple, birch, crabapple, purple-leaf plum, rose, mountain ash, and linden are highly preferred ornamental hosts. Adults feed on the upper surface of the foliage of most plants, consuming soft tissues (mesophyll) between the veins, and leaving a lace-like skeleton. Often the upper canopy is defoliated first or most severely. Trees with extensive feeding damage turn brown and become partially defoliated.</p><p>Japanese beetle grubs feed below ground and chew on the roots of turf and ornamentals. As a result, they reduce a plant’s ability to take up enough water and nutrients to withstand stresses of hot, dry weather. The first evidence of grub injury in turf is the development of localized-patches of pale, dying grass that displays symptoms of drought stress. As grubs develop further and feeding increases, damaged areas rapidly enlarge and coalesce (merge) to a point where the turf is not well-anchored and can be rolled back like carpet.</p>",
+  info: "<p>Japanese beetle (<i>Popillia japonica</i>) adults are slightly less than 1/2 inch long, and are shiny, metallic green. They have coppery-brown wing covers that do not entirely cover the abdomen. There are six pairs of patches of white hairs along the sides and back of the body, under the edges of the wings. Males and females have the same markings, but females are typically slightly larger. Newly hatched larvae are approximately 1/8 inch long and a translucent, creamy white. Once feeding begins, the hindguts of larvae appears gray to black. The typical C-shape of Japanese beetle larvae is similar to that of other white grub species.</p><p>Japanese beetle adults do not damage turf, but are an important pest of many other plants. They feed on foliage or flowers, and are a major pest of over 350 species of plants, including fruits, vegetables, ornamentals, field and forage crops, and weeds. Norway and Japanese maple, birch, crabapple, purple-leaf plum, rose, mountain ash, and linden are highly preferred ornamental hosts. Adults feed on the upper surface of the foliage of most plants, consuming soft tissues (mesophyll) between the veins, and leaving a lace-like skeleton. Often the upper canopy is defoliated first or most severely. Trees with extensive feeding damage turn brown and become partially defoliated.</p><p>Japanese beetle grubs feed below ground and chew on the roots of turf and ornamentals. As a result, they reduce a plant's ability to take up enough water and nutrients to withstand stresses of hot, dry weather. The first evidence of grub injury in turf is the development of localized-patches of pale, dying grass that displays symptoms of drought stress. As grubs develop further and feeding increases, damaged areas rapidly enlarge and coalesce (merge) to a point where the turf is not well-anchored and can be rolled back like carpet.</p>",
   severity_info: "Adults emerge starting around 970 FDD, with peak feeding around 1600 FDD, and end of feeding by around 2150 FDD.",
   photo: "japanese-beetle.jpg",
   link: "https://vegento.russell.wisc.edu/pests/japanese-beetle/"
@@ -424,6 +424,34 @@ western_flower_thrips = Insect.create!(
   photo: "thrips.png",
   link: "https://vegento.russell.wisc.edu/pests/onion-thrips/"
 )
+
+## Generic DD models ###
+insect_models = Insect.all.pluck(:remote_name).uniq
+all_models = %w[
+  dd_32_none
+  dd_39p2_86
+  dd_41_86
+  dd_41_88
+  dd_41_none
+  dd_42p8_86
+  dd_45_86
+  dd_45_none
+  dd_48_none
+  dd_50_86
+  dd_50_88
+  dd_50_90
+  dd_50_none
+  dd_52_none
+  dd_54_92
+  dd_55_92
+]
+
+(all_models - insect_models).each do |remote_name|
+  _, t_min, t_max = remote_name.split("_")
+  t_min = t_min.gsub("p", ".").to_f
+  t_max = (t_max == "none") ? nil : t_max.gsub("p", ".").to_f
+  Pest.create!(remote_name:, t_min:, t_max:)
+end
 
 ## Crop filters ##
 alfalfa = Crop.create!(name: "Alfalfa")
