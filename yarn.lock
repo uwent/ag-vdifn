@@ -6513,10 +6513,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-svelte-awesome@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.4.4.tgz#bd38d9ea17150f9356b362201d1eabc41a67b393"
-  integrity sha512-z0OLl6WoTMkOdtjcFEmOGisLedbGioxA+mPXQFjcL6BhFsMte6dBUrQpibowz/eKkxRQLFp8eUl86G0SqE2Rkw==
+svelte-awesome@^2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.4.6.tgz#d1e3a647d00ea06d026bccb5259573f2014578f3"
+  integrity sha512-l3TUuAvFUT3KOD0NiMi0y2oN+GuTvO/K8muk9nupgITHMXEJCvZ/wsejSH3vJI1pjb3vLkD00upvUQ9QgX9NhA==
 
 svelte-check@^2.4.5:
   version "2.4.5"
