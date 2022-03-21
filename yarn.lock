@@ -6518,10 +6518,10 @@ svelte-awesome@^2.4.6:
   resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-2.4.6.tgz#d1e3a647d00ea06d026bccb5259573f2014578f3"
   integrity sha512-l3TUuAvFUT3KOD0NiMi0y2oN+GuTvO/K8muk9nupgITHMXEJCvZ/wsejSH3vJI1pjb3vLkD00upvUQ9QgX9NhA==
 
-svelte-check@^2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-2.4.5.tgz#a2001993034d495118980bd95577fb3e7980661a"
-  integrity sha512-nRft8BbG2wcxyCdHDZ7X43xLcvDzua3xLwq6wzHGcAF3ka3Jyhv2rvgq0+SF9NwHLMefp9C2XkM6etzsxK/cMQ==
+svelte-check@^2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-2.4.6.tgz#dfdb6b4a68d9b2cececdedd4e17d895eb82314b3"
+  integrity sha512-luzdly7RJhyXucQe8ID/7CqDgXdMrPYXmyZBjCbp+cixzTopZotuWevrB5hWDOnOU19m2cyetigIIa7WDHnCmQ==
   dependencies:
     chokidar "^3.4.1"
     fast-glob "^3.2.7"
