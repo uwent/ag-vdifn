@@ -41,8 +41,8 @@
     "lint": "eslint './app/javascript/**/*{.js,svelte,html,ts,tsx}'",
     "lint:fix": "eslint --fix './app/javascript/**/*{.js,svelte,html,ts,tsx}'",
     "svelte-check": "svelte-check",
-    "test": "jest --max-workers=4",
-    "test:watch": "jest --max-workers=4 --watchAll",
+    "test": "jest --max-workers=8",
+    "test:watch": "jest --max-workers=8 --watchAll",
     "build": "node ./esbuild.config.js"
   },
   "devDependencies": {
