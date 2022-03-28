@@ -16,7 +16,7 @@ import {
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
-import moment from 'moment'
+import * as moment from 'moment'
 
 let getText
 let getTestId

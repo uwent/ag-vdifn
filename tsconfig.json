@@ -17,6 +17,7 @@
     "target": "esnext",
     "noEmit": true,
   },
+  "include": ["app/javascript"],
   "exclude": ["node_modules", "vendor", "public", "spec", "app/javascript/spec"],
   "compileOnSave": false,
 }
