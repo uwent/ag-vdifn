@@ -20,7 +20,7 @@
     "esbuild-plugin-svgr": "^1.0.0",
     "esbuild-svelte": "^0.6.3",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "node-sass": "^7.0.1",
     "postcss": "^8.4.8",
     "postcss-flexbugs-fixes": "^5.0.2",
