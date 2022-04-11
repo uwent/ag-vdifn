@@ -1,14 +1,12 @@
-import { COLORS } from '../../common/ts/colors'
-
 export default class RectangleOption {
   severityLevel: number
   latitude: number
   longitude: number
-  strokeColor: string = COLORS.brightRed
-  strokeOpacity = 1.0
-  strokeWeight = 0.05
+  strokeColor: string = "6c6c6c"
+  strokeOpacity = 0.75
+  strokeWeight = 0.025
   fillColor: string
-  fillOpacity = 0.25
+  fillOpacity = 0.4
   map: any
 
   private latitudeOffset = 0.05

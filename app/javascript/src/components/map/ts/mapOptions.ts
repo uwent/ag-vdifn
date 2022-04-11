@@ -1,3 +1,5 @@
+import { LightGreyStyle } from "./mapStyles"
+
 const MapOptions = {
   center: {
     lat: 45.05,
@@ -5,7 +7,7 @@ const MapOptions = {
   },
   mapTypeControl: true,
   mapTypeControlOptions: {
-    mapTypeIds: ['terrain', 'satellite', 'hybrid'],
+    mapTypeIds: ['roadmap', 'terrain', 'satellite'],
     position: 3
   },
   mapTypeId: 'terrain',
@@ -16,7 +18,8 @@ const MapOptions = {
   zoomControlOptions: {
     position: 7
   },
-  zoom: 7
+  zoom: 7,
+  styles: LightGreyStyle
 }
 
 export default MapOptions
