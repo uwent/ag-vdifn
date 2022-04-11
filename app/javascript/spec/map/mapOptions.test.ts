@@ -1,4 +1,5 @@
 import MapOptions from '../../src/components/map/ts/mapOptions'
+
 it('returns map options object', () => {
   expect(MapOptions).toEqual({
     center: {
@@ -7,7 +8,7 @@ it('returns map options object', () => {
     },
     mapTypeControl: true,
     mapTypeControlOptions: {
-      mapTypeIds: ['terrain', 'satellite', 'hybrid'],
+      mapTypeIds: ['roadmap', 'terrain', 'satellite'],
       position: 3
     },
     mapTypeId: 'terrain',
@@ -18,6 +19,7 @@ it('returns map options object', () => {
     zoomControlOptions: {
       position: 7
     },
-    zoom: 7
+    zoom: 7,
+    styles: expect.anything()
   })
 })
