@@ -205,15 +205,6 @@ export const LightGreyStyle = [
         "visibility": "off"
       }
     ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#dadada"
-      }
-    ]
   }
 ]
 
