@@ -10,6 +10,15 @@ export const LightGreyStyle = [
     ]
   },
   {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
     "featureType": "transit",
     "stylers": [
       {
