@@ -13,7 +13,7 @@
     "axios": "^0.26.1",
     "balloon-css": "^1.2.0",
     "chroma-js": "^2.4.2",
-    "color": "^4.2.1",
+    "color": "^4.2.3",
     "dotenv": "^16.0.0",
     "esbuild": "^0.14.31",
     "esbuild-envfile-plugin": "^1.0.2",
