@@ -3083,10 +3083,10 @@ esbuild-openbsd-64@0.14.36:
   resolved "https://registry.yarnpkg.com/esbuild-openbsd-64/-/esbuild-openbsd-64-0.14.36.tgz#c94c04c557fae516872a586eae67423da6d2fabb"
   integrity sha512-NvGB2Chf8GxuleXRGk8e9zD3aSdRO5kLt9coTQbCg7WMGXeX471sBgh4kSg8pjx0yTXRt0MlrUDnjVYnetyivg==
 
-esbuild-plugin-svgr@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/esbuild-plugin-svgr/-/esbuild-plugin-svgr-1.0.0.tgz#7484234682e9525a6abab5278e3a0c36e7de3887"
-  integrity sha512-ILJ/Pk/e0sCNNnmoxMwqIUFR+91Vb456EQzVv+d8RS18P3xisfP82qoxjpNYBK2QwRi9pVzvLWNg1zzIo0eq1g==
+esbuild-plugin-svgr@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/esbuild-plugin-svgr/-/esbuild-plugin-svgr-1.0.1.tgz#e02805a65cc2c63ea47b794228e7d0d7f44fb113"
+  integrity sha512-TSUgwDq1chtikM1rMRAngpoKGGC1rTSXj35zweFdG4lnvPpBaqnvMrOJRuVVPelfeadZEhfHHnys7vm+tY+krw==
   dependencies:
     "@svgr/core" "^6.1.2"
 
