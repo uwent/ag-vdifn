@@ -448,8 +448,8 @@ all_models = %w[
 
 (all_models - insect_models).each do |remote_name|
   _, t_min, t_max = remote_name.split("_")
-  t_min = t_min.gsub("p", ".").to_f
-  t_max = (t_max == "none") ? nil : t_max.gsub("p", ".").to_f
+  t_min = t_min.tr("p", ".").to_f
+  t_max = t_max == "none" ? nil : t_max.tr("p", ".").to_f
   Pest.create!(remote_name:, t_min:, t_max:)
 end
 

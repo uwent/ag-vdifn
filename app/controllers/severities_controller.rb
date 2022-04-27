@@ -45,7 +45,7 @@ class SeveritiesController < ApplicationController
   # fetch number of days below 28F in date range
   def get_freeze_data(end_date)
     nov_1 = Date.new(end_date.year, 11, 1)
-    start_date = (end_date > nov_1) ? nov_1 : end_date - 1.week
+    start_date = end_date > nov_1 ? nov_1 : end_date - 1.week
     json = ag_weather_client.freeze_days(
       start_date: start_date,
       end_date: end_date,
@@ -92,8 +92,8 @@ class SeveritiesController < ApplicationController
 
   def get_cercospora_data
     two_day, seven_day = [
-      Thread.new {get_totals(@pest.remote_name, @end_date - 2.days, @end_date)},
-      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)}
+      Thread.new { get_totals(@pest.remote_name, @end_date - 2.days, @end_date) },
+      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) }
     ].map(&:value)
 
     two_day_hash = {}
@@ -115,8 +115,8 @@ class SeveritiesController < ApplicationController
 
   def get_early_blight_data
     seven_day, selected_dates = [
-      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)},
-      Thread.new {get_totals(@pest.remote_name, @start_date, @end_date)}
+      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) },
+      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) }
     ].map(&:value)
 
     seven_day_hash = {}
@@ -138,8 +138,8 @@ class SeveritiesController < ApplicationController
 
   def get_late_blight_data
     seven_day, season_total = [
-      Thread.new {get_totals(@pest.remote_name, @end_date - 7.days, @end_date)},
-      Thread.new {get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date)}
+      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) },
+      Thread.new { get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date) }
     ].map(&:value)
 
     seven_day_hash = {}
@@ -174,12 +174,12 @@ class SeveritiesController < ApplicationController
       lat_range: @lat_range,
       long_range: @long_range
     }
-    if pests.any?
-      opts = opts.merge({
+    opts = if pests.any?
+      opts.merge({
         pest: pests.first.remote_name
       })
     else
-      opts = opts.merge({
+      opts.merge({
         t_base: t_min,
         t_upper: t_max
       })

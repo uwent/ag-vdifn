@@ -20,7 +20,7 @@ class EarlyBlight < Disease
       return 2 if total >= 200
       return 1 if total >= 150
     end
-    return 0
+    0
   end
 
   def severity_legend

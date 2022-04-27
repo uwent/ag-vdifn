@@ -38,6 +38,6 @@ class Insect < Pest
   end
 
   def biofix_label
-    "Start date (Default: #{biofix_date.strftime('%b %d')})"
+    "Start date (Default: #{biofix_date.strftime("%b %d")})"
   end
 end

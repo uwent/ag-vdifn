@@ -23,7 +23,7 @@ RSpec.describe BotrytisLeafBlight, type: :model do
     expect(pest.total_to_severity(1)).to eq(1)
     expect(pest.total_to_severity(21)).to eq(2)
     expect(pest.total_to_severity(31)).to eq(3)
-    expect(pest.total_to_severity(40))).to eq(4)
+    expect(pest.total_to_severity(40)).to eq(4)
   end
 
   it "generates severities from weather" do

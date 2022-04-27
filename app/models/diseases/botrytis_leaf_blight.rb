@@ -15,7 +15,7 @@ class BotrytisLeafBlight < Disease
     return 2 if total < 31
     return 3 if total < 40
     return 4 if total >= 40
-    return 0
+    0
   end
 
   def severity_legend

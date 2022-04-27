@@ -90,7 +90,11 @@ class DbController < ApplicationController
       biofix_label: pest.biofix_label,
       end_date_enabled: pest.end_date_enabled,
       tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
-      tmax: pest.t_max.nil? ? "" : (in_f ? pest.t_max : f_to_c(pest.t_max))
+      tmax: if pest.t_max.nil?
+              ""
+            else
+              (in_f ? pest.t_max : f_to_c(pest.t_max))
+            end
     }
   end
 
