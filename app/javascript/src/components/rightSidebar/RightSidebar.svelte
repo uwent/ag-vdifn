@@ -93,14 +93,13 @@
   import { SeverityParams } from '../common/ts/types'
   import {
     selectedPanel,
-    panelNames,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
     selectedAffliction
   } from '../../store/store'
   import DatabaseClient from '../common/ts/databaseClient'
-  import QuestionSvg from '../common/QuestionSvg.svelte'
+  // import QuestionSvg from '../common/QuestionSvg.svelte'
   import SeverityLegend from './SeverityLegend.svelte'
   import CustomSeverityLegend from './CustomSeverityLegend.svelte'
   import Modal from '../common/Modal.svelte'
@@ -152,15 +151,9 @@
 
   function swapSeverities(selectedPanel) {
     switch (selectedPanel) {
-      case panelNames.disease:
-        currentSeverities = diseaseSeverities
-        break
-      case panelNames.insect:
-        currentSeverities = insectSeverities
-        break
-      case panelNames.custom:
-        currentSeverities = []
-        break
+      case 'disease': currentSeverities = diseaseSeverities
+      case 'insect': currentSeverities = insectSeverities
+      case 'custom': currentSeverities = []
     }
   }
 
@@ -174,85 +167,28 @@
 <button
   id="right-sidebar-expand-button"
   aria-expanded={expanded}
-  on:click={() => (expanded = !expanded)}
->
+  on:click={() => (expanded = !expanded)}>
   {expanded ? '\u2716' : 'Show Legend'}
 </button>
 
-<div id="right-sidebar" aria-expanded={expanded}>
-  {#if $selectedPanel === panelNames.custom}
+{#if showModal}
+  <Modal name="Pest Info" on:close={() => (showModal = false)}>
+    {@html $selectedAffliction.info}
+  </Modal>
+{/if}
+
+{#if $selectedPanel === "custom" && gradient && gradient.length}
+  <div id="right-sidebar" aria-expanded={expanded}>
     <CustomSeverityLegend gradientMapping={gradient} />
-  {:else}
-    {#if $selectedPanel === panelNames.insect}
-      {#if showModal}
-        <Modal name="Pest Info" on:close={() => (showModal = false)}>
-          {@html $selectedAffliction.info}
-        </Modal>
-      {/if}
-    {/if}
+  </div>
+{:else if currentSeverities && currentSeverities.length}
+  <div id="right-sidebar" aria-expanded={expanded}>
     <SeverityLegend severities={currentSeverities} />
-  {/if}
-
-  <!-- {#if $selectedPanel === panelNames.disease}
-    <fieldset id="definitions">
-      <legend>Terms</legend>
-      <ul>
-        <li id="disease-forecasting">
-          Disease Forecasting
-          <button
-            class="tooltip"
-            id="disease-forecasting-information"
-            data-balloon-length="medium"
-            data-balloon-pos="up-right"
-            aria-label="A plant disease management system that uses
-            computer-based models to collect field weather data and predict the
-            onset and potential severity of crop diseases. Current and
-            forecasted weather conditions determine the risk for disease, and
-            prompts disease management decisions (preventative pesticide
-            applications)."
-          >
-            <QuestionSvg />
-          </button>
-        </li>
-        <li id="tomcast">
-          TOMCAST
-          <button
-            class="tooltip"
-            id="tomcast-information"
-            data-balloon-length="medium"
-            data-balloon-pos="up-right"
-            aria-label="Disease forecasting model (adapted from a tomato disease
-            model) used to predict the development of carrot foliar blights
-            caused by Alternaria and Cercospora fungi, based on an accumulation
-            of DSVs from past temperature and leaf wetness data combined with
-            forecasted weather conditions."
-          >
-            <QuestionSvg />
-          </button>
-        </li>
-        <li id="blitecast">
-          Blitecast
-          <button
-            class="tooltip"
-            id="blitecast-information"
-            data-balloon-length="medium"
-            data-balloon-pos="up-right"
-            aria-label="Disease forecasting model used to predict the
-            development of late blight of potato/tomato caused by Phytophthora
-            infestans, based on an accumulation of DSVs, which are generated
-            from air temperature and relative humidity data."
-          >
-            <QuestionSvg />
-          </button>
-        </li>
-      </ul>
-    </fieldset>
-  {/if} -->
-
-  {#if $selectedPanel === panelNames.insect}
-    <fieldset title="more-info">
-      <legend>More Information</legend>
-      <p>{severityInfo}</p>
-    </fieldset>
-  {/if}
-</div>
+    {#if $selectedPanel === "insect"}
+      <fieldset title="more-info">
+        <legend>More Information</legend>
+        <p>{severityInfo}</p>
+      </fieldset>
+    {/if}
+  </div>
+{/if}

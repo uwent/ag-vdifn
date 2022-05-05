@@ -63,7 +63,7 @@
 
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { overlayLoading, panelNames, defaults, env } from '../../store/store'
+  import { overlayLoading, mapExtent, defaults, env } from '../../store/store'
   import DiseasePanel from './DiseasePanel.svelte'
   import InsectPanel from './InsectPanel.svelte'
   import DatabaseClient from '../common/ts/databaseClient'
@@ -75,6 +75,7 @@
   export let insectPanelData
   const databaseClient = new DatabaseClient()
   const urlParams = new URLSearchParams(window.location.search)
+  const validPanels = ['disease', 'insect', 'custom']
   let panel = defaults.panel
   let extent = defaults.extent
   let showHelp = false
@@ -84,21 +85,13 @@
   console.log('Launching VDIFN in ' + env + ' environment')
 
   function parseUrlParams() {
-    if (panelNames.all.includes(urlParams.get('panel'))) {
+    if (validPanels.includes(urlParams.get('panel'))) {
       panel = urlParams.get('panel')
-      switch (panel) {
-        case 'disease':
-          if (urlParams.has('model')) {
-            diseaseParams.model = urlParams.get('model')
-          }
-          break
-        case 'insect':
-          if (urlParams.has('model')) {
-            insectParams.model = urlParams.get('model')
-          }
-          break
-        case 'custom':
-          break
+      if (panel === 'disease' && urlParams.has('model')) {
+        diseaseParams.model = urlParams.get('model')
+      }
+      if (panel === 'insect' && urlParams.has('model')) {
+        insectParams.model = urlParams.get('model')
       }
     } else {
       window.history.replaceState({}, null, window.location.pathname)
@@ -107,12 +100,11 @@
 
   onMount(async () => {
     parseUrlParams()
-    // TODO: shouldn't load both of these datasets at once since it reloads on panel switch anyway
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
   })
 
-  // $: handlePanelChange(panel)
+  $: mapExtent.set(extent)
 </script>
 
 <div class="options">
@@ -175,17 +167,14 @@
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
-          defaultModel={diseaseParams.model}
-          selectedExtent={extent} />
+          defaultModel={diseaseParams.model} />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
-          defaultModel={insectParams.model}
-          selectedExtent={extent} />
+          defaultModel={insectParams.model} />
       {:else if panel === 'custom'}
         <CustomPanel
-          data={insectPanelData}
-          selectedExtent={extent} />
+          data={insectPanelData} />
       {/if}
     {:else}
       <Loading />

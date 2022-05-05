@@ -9,10 +9,11 @@
     insectPanelState,
     customPanelState,
     selectedPanel,
-    panelNames,
     overlayGradient,
     overlayLoading,
     mapMinMapMax,
+    mapExtent,
+    bounds,
     twoPointGradientState,
     threePointGradientState,
     customOverlaySubmitted
@@ -52,34 +53,38 @@
     let severities
     let severityParams
     let gradientStore
-    // let startTime = new Date().getTime()
-    console.log("Selected severity: " + selectedSeverity)
+
     if (!currentOverlay) {
-      if (selectedSeverity == panelNames.insect) {
-        currentOverlay = insectOverlay
-      } else if (selectedSeverity == panelNames.custom) {
-        currentOverlay = customOverlay
-      } else {
-        selectedSeverity = panelNames.disease
-        currentOverlay = diseaseOverlay
+      switch(selectedSeverity) {
+        case 'insect':
+          currentOverlay = insectOverlay
+          break
+        case 'custom':
+          currentOverlay = customOverlay
+          break
+        default:
+          selectedSeverity = 'disease'
+          currentOverlay = diseaseOverlay
+          break
       }
     }
     closeInfoWindows()
     currentOverlay.hideOverlay()
+
     switch (selectedSeverity) {
-      case panelNames.disease:
+      case 'disease':
         severities = get(diseasePanelState).severities
         severityParams = get(diseasePanelState).severityParams
         if (!severities && !severityParams) return
         currentOverlay = diseaseOverlay
         break
-      case panelNames.insect:
+      case 'insect':
         severities = get(insectPanelState).severities
         severityParams = get(insectPanelState).severityParams
         if (!severities && !severityParams) return
         currentOverlay = insectOverlay
         break
-      case panelNames.custom:
+      case 'custom':
         severities = get(customPanelState).severities
         severityParams = get(customPanelState).severityParams
         if (!severities && !severityParams) return
@@ -98,7 +103,7 @@
   })
 
   diseasePanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(diseaseOverlay, severityParams, panelNames.disease)
+    await updateOverlay(diseaseOverlay, severityParams, 'disease')
     diseasePanelState.update(state => ({
       ...state,
       severities: diseaseOverlay.severities,
@@ -107,7 +112,7 @@
   })
 
   insectPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(insectOverlay, severityParams, panelNames.insect)
+    await updateOverlay(insectOverlay, severityParams, 'insect')
     insectPanelState.update(state => ({
       ...state,
       severities: insectOverlay.severities,
@@ -116,7 +121,7 @@
   })
 
   customPanelParams.subscribe(async (severityParams: SeverityParams) => {
-    await updateOverlay(customOverlay, severityParams, panelNames.custom)
+    await updateOverlay(customOverlay, severityParams, 'custom')
     mapMinMapMax.set({
       min: customOverlay.min || 0,
       max: customOverlay.max || 0
@@ -132,4 +137,6 @@
     if (Object.entries(gradientMapping).length === 0) return
     customOverlay.updateOverlayGradient(gradientMapping)
   })
+
+  $: currentOverlay.showBounds(bounds[$mapExtent])
 </script>

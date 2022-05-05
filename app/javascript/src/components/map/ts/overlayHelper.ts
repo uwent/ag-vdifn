@@ -9,12 +9,14 @@ const _ = require('lodash')
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper
   rectangles: any
+  bounds: any
   infoWindow: any
   map
   severities: Severity[]
   min: number
   max: number
   severityParams: SeverityParams
+
   constructor(googleWrapper: GoogleWrapper, map: any) {
     this.googleWrapper = googleWrapper
     this.rectangles = []
@@ -22,51 +24,30 @@ export default class OverlayHelper {
     this.severities = []
   }
 
-  hideOverlay() {
-    this.rectangles.forEach(rectangle => {
-      rectangle.setOptions({
-        visible: false
-      })
-    })
+  showBounds(bounds) {
+    if (this.bounds) this.bounds.setMap(null)
+    this.bounds = this.googleWrapper.createBounds(bounds, this.map)
+    this.map.fitBounds(bounds)
   }
 
-  // hideOverlay() {
-  //   let startTime = new Date().getTime()
-  //   let i = 0
-  //   this.rectangles.forEach(rectangle => {
-  //     rectangle.setOptions({
-  //       visible: false
-  //     })
-  //     i++
-  //   })
-  //   let endTime = new Date().getTime()
-  //   console.log("Hid " + i + " rectangles in " + (endTime - startTime) + "ms")
-  // }
+  hideOverlay() {
+    this.rectangles.forEach(rectangle => {
+      rectangle.setOptions({visible: false})
+    })
+    if (this.bounds) this.bounds.setOptions({visible: false})
+  }
 
   showOverlay() {
     this.rectangles.forEach(rectangle => {
-      rectangle.setOptions({
-        visible: true
-      })
+      rectangle.setOptions({visible: true})
     })
+    if (this.bounds) this.bounds.setOptions({visible: true})
   }
-
-  // showOverlay() {
-  //   let startTime = new Date().getTime()
-  //   let i = 0
-  //   this.rectangles.forEach(rectangle => {
-  //     rectangle.setOptions({
-  //       visible: true
-  //     })
-  //     i++
-  //   })
-  //   let endTime = new Date().getTime()
-  //   console.log("Showed " + i + " rectangles in " + (endTime - startTime) + "ms")
-  // }
 
   async updateOverlay(severityParams: SeverityParams, panelType) {
     this.clearRectangles()
     this.closeInfoWindow()
+
     this.severities = await this.getSeverities(severityParams)
     if (this.severities.length > 0) {
       this.min = Math.min(...this.severities.map(point => point.level))
@@ -95,9 +76,7 @@ export default class OverlayHelper {
   }
 
   closeInfoWindow() {
-    if (this.infoWindow) {
-      this.infoWindow.close()
-    }
+    if (this.infoWindow) this.infoWindow.close()
   }
 
   async getSeverities(severityParams: SeverityParams): Promise<Severity[]> {

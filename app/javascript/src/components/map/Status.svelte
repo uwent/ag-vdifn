@@ -2,7 +2,7 @@
   @import '../../scss/settings.scss';
 
   .model-status {
-    text-transform: capitalize;
+    // text-transform: capitalize;
     font-style: italic;
     position: fixed;
     left: 0px;
@@ -22,31 +22,23 @@
   import {
     insectPanelState,
     selectedPanel,
-    panelNames,
     diseasePanelState,
     customPanelState
   } from '../../store/store'
 </script>
 
-{#if $selectedPanel === panelNames.disease}
-  <div class="model-status">
-    {$diseasePanelState.currentAffliction === undefined
-      ? 'No Model Submitted'
-      : $diseasePanelState.currentAffliction.name}
-  </div>
-{:else if $selectedPanel === panelNames.insect}
-  <div class="model-status">
-    {$insectPanelState.currentAffliction === undefined
-      ? 'No Model Submitted'
-      : $insectPanelState.currentAffliction.name}
-  </div>
-{:else}
-  <div class="model-status">
-    Custom model: {!$customPanelState.t_min === undefined
-      ? 'None'
-      : $customPanelState.t_min}/{!$customPanelState.t_max
-      ? 'None'
-      : $customPanelState.t_max}
-    {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
-  </div>
-{/if}
+<div class="model-status">
+  {#if $selectedPanel == 'disease'}
+    {$diseasePanelState.currentAffliction === undefined ? 'No model submitted' : $diseasePanelState.currentAffliction.name}
+  {:else if $selectedPanel == 'insect'}
+    {$insectPanelState.currentAffliction === undefined ? 'No model submitted' : $insectPanelState.currentAffliction.name}
+  {:else}
+    {#if $customPanelState.t_min === undefined}
+      No model submitted
+    {:else}
+      Custom model: 
+        {$customPanelState.t_min}/{!$customPanelState.t_max ? 'None' : $customPanelState.t_max}
+        {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
+    {/if}
+  {/if}
+</div>

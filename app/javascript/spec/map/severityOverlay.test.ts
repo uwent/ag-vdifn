@@ -10,7 +10,6 @@ import {
   insectPanelState,
   customPanelState,
   selectedPanel,
-  panelNames,
   overlayGradient,
   overlayLoading,
   mapMinMapMax
@@ -39,6 +38,7 @@ const severities: Severity[] = [
 const mockUpdateOverlay = jest.fn()
 const mockUpdateOverlayGradient = jest.fn()
 const mockShowOverlay = jest.fn()
+const mockShowBounds = jest.fn()
 
 jest.mock('../../src/components/map/ts/overlayHelper')
 
@@ -54,6 +54,7 @@ beforeEach(() => {
       hideOverlay: jest.fn(),
       closeInfoWindow: jest.fn(),
       showOverlay: mockShowOverlay,
+      showBounds: mockShowBounds,
       severities: severities,
       min: 10,
       max: 15
@@ -85,7 +86,7 @@ afterAll(() => {
 describe('updating overlay for disease panel params', () => {
   it('updates overlay when afflictionParams is updated', () => {
     diseasePanelParams.set(severityParams)
-    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, panelNames.disease)
+    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, 'disease')
   })
 
   it('sets overlay loading to true, then false after update overlay finished loading', async () => {
@@ -106,7 +107,7 @@ describe('updating overlay for disease panel params', () => {
 describe('updating overlay for insect panel params', () => {
   it('updates overlay when afflictionParams is updated', () => {
     insectPanelParams.set(severityParams)
-    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, panelNames.insect)
+    expect(mockUpdateOverlay).toHaveBeenCalledWith(severityParams, 'insect')
   })
 
   it('sets overlay loading to true, then false after update overlay finished loading', async () => {

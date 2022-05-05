@@ -19,6 +19,18 @@ export default class GoogleWrapper {
     return new this.google.maps.Rectangle(RectangleOption)
   }
 
+  createBounds(bounds, map) {
+    return new this.google.maps.Rectangle({
+      strokeColor: "#000000",
+      strokeOpacity: 0.8,
+      strokeWeight: 1,
+      fillOpacity: 0,
+      map: map,
+      bounds: bounds,
+      clickable: false,
+    })
+  }
+
   createInfoWindow(options) {
     return new this.google.maps.InfoWindow(options)
   }

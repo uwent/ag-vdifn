@@ -2,6 +2,7 @@
   .affliction-container {
     display: flex;
   }
+  
   fieldset {
     margin-bottom: 10px;
     padding: 10px;

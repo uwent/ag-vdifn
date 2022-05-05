@@ -79,12 +79,6 @@ export const mapMinMapMax = writable({
 })
 
 export const selectedPanel = writable('')
-export const panelNames = {
-  disease: 'disease',
-  insect: 'insect',
-  custom: 'custom',
-  all: ['disease', 'insect', 'custom']
-}
 
 export const defaults = {
   panel: 'disease',
@@ -97,16 +91,34 @@ export const defaults = {
   tMaxDisabled: false
 }
 
-// min lat, max lat, min long, max long
+export const mapExtent = writable(defaults.extent)
+
+// for AgWeather queries
 export const extents = {
   wisconsin: {
     lat_range: '42.4,47.1',
     long_range: '-93.0,-86.8'
   },
   midwest: {
-    lat_range: '',
-    long_range: ''
-  }
+    lat_range: '38,50',
+    long_range: '-82,-98'
+  },
+}
+
+// for drawing google map shapes
+export const bounds = {
+  wisconsin: {
+    north: 47.1 + 0.05,
+    south: 42.4 - 0.05,
+    east: -86.8 + 0.05,
+    west: -93.0 - 0.05
+  },
+  midwest: {
+    north: 50 + 0.05,
+    south: 38 - 0.05,
+    east: -82 + 0.05,
+    west: -98 - 0.05
+  },
 }
 
 // Custom tab
