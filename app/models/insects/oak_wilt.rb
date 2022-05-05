@@ -13,8 +13,6 @@ class OakWilt < Insect
   end
 
   def total_to_severity(total, freeze_days, end_date)
-    return 0 if freeze_days > 0
-
     # severity based on degree-day
     sev = 0
     sev = 1 if total.between?(50, 3221) # 0-100% C. truncatus, 0-90% C. sayi
@@ -30,6 +28,10 @@ class OakWilt < Insect
     sev -= 1 if end_date.yday >= 203
     sev -= 1 if end_date.yday >= 210
 
+    # severity reduction from hard freeze
+    sev -= freeze_days
+
+    # clip at zero
     [0, sev].max
   end
 

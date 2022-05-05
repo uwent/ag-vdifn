@@ -34,7 +34,7 @@ export const LightGreyStyle = [
     "elementType": "geometry.stroke",
     "stylers": [
       {
-        "visibility": "on"
+        "visibility": "off"
       },
       {
         "color": "#b3b3b3"
@@ -100,10 +100,10 @@ export const LightGreyStyle = [
     "elementType": "geometry.stroke",
     "stylers": [
       {
-        "color": "#dadada"
+        "color": "#a0a0a0"
       },
       {
-        "weight": 2
+        "weight": 1.5
       }
     ]
   },

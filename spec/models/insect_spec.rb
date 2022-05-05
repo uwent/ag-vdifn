@@ -46,19 +46,19 @@ RSpec.describe Insect, type: :model do
   end
 
   it "creates severity levels from risk points" do
-    expect(pest.total_to_severity(50)).to eq(0)
-    expect(pest.total_to_severity(125)).to eq(1)
-    expect(pest.total_to_severity(200)).to eq(4)
-    expect(pest.total_to_severity(275)).to eq(1)
-    expect(pest.total_to_severity(350)).to eq(0)
+    expect(pest.total_to_severity(50, 0)).to eq 0
+    expect(pest.total_to_severity(125, 0)).to eq 1
+    expect(pest.total_to_severity(200, 0)).to eq 4
+    expect(pest.total_to_severity(275, 0)).to eq 1
+    expect(pest.total_to_severity(350, 0)).to eq 0
   end
 
   it "creates severity levels for multiple generations" do
-    expect(pest2.total_to_severity(50)).to eq(0)
-    expect(pest2.total_to_severity(200)).to eq(4)
-    expect(pest2.total_to_severity(400)).to eq(0)
-    expect(pest2.total_to_severity(600)).to eq(4)
-    expect(pest2.total_to_severity(800)).to eq(0)
+    expect(pest2.total_to_severity(50, 0)).to eq 0
+    expect(pest2.total_to_severity(200, 0)).to eq 4
+    expect(pest2.total_to_severity(400, 0)).to eq 0
+    expect(pest2.total_to_severity(600, 0)).to eq 4
+    expect(pest2.total_to_severity(800, 0)).to eq 0
   end
 
   it "generates severities from grid" do
@@ -66,9 +66,11 @@ RSpec.describe Insect, type: :model do
     pest.severities_from_totals(grid1, today)
   end
 
-  it "returns no severities when freezing" do
-    expect(pest).to receive(:total_to_severity).exactly(2).times
-    pest.severities_from_totals(grid2, today)
+  it "reduces severity by amount of freezing days" do
+    expect(pest.total_to_severity(200, 0)).to eq 4
+    expect(pest.total_to_severity(200, 1)).to eq 3
+    expect(pest.total_to_severity(200, 2)).to eq 2
+    expect(pest.total_to_severity(200, 10)).to eq 0
   end
 
   it "creates biofix dates" do

@@ -126,9 +126,6 @@
 
   // panel and pest-specific tweaks to datepicker
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
-    console.log(panelType)
-    console.log(affliction)
-
     if (panelType != 'Custom') {
       startLabel = affliction.biofix_label || "Start date"
     }
