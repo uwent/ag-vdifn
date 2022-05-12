@@ -3137,12 +3137,10 @@ esbuild-sunos-64@0.14.39:
   resolved "https://registry.yarnpkg.com/esbuild-sunos-64/-/esbuild-sunos-64-0.14.39.tgz#0e7aa82b022a2e6d55b0646738b2582c2d72c3c0"
   integrity sha512-qHq0t5gePEDm2nqZLb+35p/qkaXVS7oIe32R0ECh2HOdiXXkj/1uQI9IRogGqKkK+QjDG+DhwiUw7QoHur/Rwg==
 
-esbuild-svelte@^0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.6.3.tgz#b378197a42a9aeec4c089806d4e20fc2d0ca17fa"
-  integrity sha512-WzDnkVeTwoyMPHHAqEkfy8aRkgK4YmpFcOOq9Cs6gdufPvH39K051mgmLSoqORqbjep7br4KXpDd0NUSSYFtKg==
-  dependencies:
-    svelte "^3.46.4"
+esbuild-svelte@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.7.0.tgz#866639d78266f82e42c59301f4889798e4989955"
+  integrity sha512-hfiauhEXtGocUf7oVcxTrLhhF57ajBbvNCCClsS3KntEeITddKU+1WFhmsCt9SO0dQJlCFzJtpPu2dI7dRkXBw==
 
 esbuild-windows-32@0.14.39:
   version "0.14.39"
