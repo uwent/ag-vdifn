@@ -317,12 +317,13 @@ onion_maggot = Insect.create!(
     [510, 680, 850],
     [1460, 1950, 2435]
   ],
-  info: "<p>Onion maggots (<i>Delia antiqua</i>) are tiny maggots that feed below ground on onion bulbs, making tunnels in the bulbs and potentially allowing disease organisms to enter. These maggots are often the most serious pests of onions, especially where continuous production is practiced. Onion maggots are highly host-specific to plants in the onion family, including onions, leeks, shallots, garlic, and chives.</p><p>Onion maggot adults are about 1/3-inch long and resemble small houseflies. Larvae taper to a point at the head and are only ¼-inch long. Their wings overlap with their bodies while at rest. Adults lay white, elongated eggs at the base of the onion plant. Cream-colored onion maggot larvae develop over the course of 3 stages that last a total of 2-3 weeks.</p><p>Larvae feed on the hypocotyl (below ground) tissue of seedlings, resulting in various types of damage. Damage appears as wilted and yellowed foliage, followed by collapsed leaves. Leaves can become rotten, and plants may die. Onion plants are most vulnerable during the seedling stage, and larval feeding may kill seedlings. Poor plant stands may indicate an onion maggot problem. Onion maggots can cause damage throughout the season, although they are often an early season pest during stand establishment. At the end of the season, maggot feeding can lead to storage rots. Onion types differ in susceptibility to onion maggot damage, with set onions most susceptible, followed by white varieties, yellow varieties, and finally red varieties which are least susceptible.</p>",
+  info: "<p>Onion maggots (<i>Delia antiqua</i>) are tiny maggots that feed below ground on onion bulbs, making tunnels in the bulbs and potentially allowing disease organisms to enter. These maggots are often the most serious pests of onions, especially where continuous production is practiced. Onion maggots are highly host-specific to plants in the onion family, including onions, leeks, shallots, garlic, and chives.</p><p>Onion maggot adults are about 1/3-inch long and resemble small houseflies. Larvae taper to a point at the head and are only ¼-inch long. Their wings overlap with their bodies while at rest. Adults lay white, elongated eggs at the base of the onion plant. Cream-colored onion maggot larvae develop over the course of 3 stages that last a total of 2-3 weeks.</p><p>Larvae feed on the hypocotyl (below ground) tissue of seedlings, resulting in various types of damage. Damage appears as wilted and yellowed foliage, followed by collapsed leaves. Leaves can become rotten, and plants may die. Onion plants are most vulnerable during the seedling stage, and larval feeding may kill seedlings. Poor plant stands may indicate an onion maggot problem. Onion maggots can cause damage throughout the season, although they are often an early season pest during stand establishment. At the end of the season, maggot feeding can lead to storage rots. Onion types differ in susceptibility to onion maggot damage, with set onions most susceptible, followed by white varieties, yellow varieties, and finally red varieties which are least susceptible.</p>",
   severity_info: "First generation adult flight peaks around 680 FDD and second generation adult flight peaks around 1950. Controlling adults is the best way to protect against damage from this pest.",
   photo: "onion-maggot.jpg",
   link: "https://vegento.russell.wisc.edu/pests/onion-maggot/"
 )
 
+# risk persists for 7 days after peak which is about 200 dd
 seedcorn_maggot = Insect.create!(
   name: "Seedcorn Maggot",
   local_name: "seedcorn-maggot",
@@ -330,14 +331,14 @@ seedcorn_maggot = Insect.create!(
   biofix_mm: 1, biofix_dd: 1,
   t_min: 39.2, t_max: 86,
   risk_array: [
-    [295, 360, 425],
-    [1015, 1080, 1145],
-    [1735, 1800, 1865],
-    [2455, 2520, 2585],
-    [3175, 3240, 3305]
+    [295, 360, 810],
+    [1015, 1080, 1530],
+    [1735, 1800, 2250],
+    [2455, 2520, 2970],
+    [3175, 3240, 3690]
   ],
   info: "<p>The seedcorn maggot (<i>Delia platura</i>) is a perennial pest of the germinating seeds and young seedlings of a wide range of vegetable and agronomic crops. In addition to corn, seedcorn maggots (SCM) has a large host range including numerous common vegetable crops. SCM can cause economic damage to seeds of artichoke, beet, Brussels sprouts, cabbage, cantaloupe, carrot, cauliflower, cucumber, kale, lettuce, bean (lima, snap, red), onion, pea, pumpkin, tomato, and turnip. In high numbers SCM can decimate entire crop stands if left untreated. SCM can be an increasing problem when susceptible crop crops are planted in succession.</p><p>Larvae are typical of many other fly maggots: 7 mm when fully grown, cream–colored, legless, and wedge-shaped. The head of the maggot is sharply pointed. SCM pupae are dark brown, 5 mm long, cylindrical in shape, and evenly rounded on both ends. SCM spends between 7-14 days in the pupal stage at normal summer time temperatures (~70°F). Adult flies resemble miniature houseflies. They are dark gray with black legs, 4-5 mm long and commonly hold their opaque wings flat over their abdomen when at rest.</p>Seed corn maggots overwinter as pupae in the soil. Adult flies begin emerging in the late spring, peak emergence for the first generation occurs in early to mid-May. Adult SCM often swarm over recently tilled fields or gardens. Preferred egg deposition sites are locations with germinating or decaying seeds, plant residue, incorporated green manures or where organic fertilizers have been recently applied. Adults often mate and lay eggs within 2-3 days of emergence. Eggs hatch 2-4 days later depending on soil temperature. The larval portion of the SCM life cycle occurs below ground over the course of a few weeks. Once hatched larvae burrow into the soil 6-8 cm to locate food resources. A complete life cycle for SCM can range from 15-77 days, in a typical season 16-21 days is sufficient. In Wisconsin, there are typically 3-5 generations per year.</p>",
-  severity_info: "In Wisconsin there are typically 3-5 generations per year, with maximum risk coinciding with peak adult flight times: First (overwintering) generation flight peaks around 360 FDD, second generation flight peaks around 1080 FDD, third generation peaks around 1800 FDD, fourth generation peaks around 2520 FDD, and the fifth generation peaks around 3240.",
+  severity_info: "In Wisconsin there are typically 3-5 generations per year, with maximum risk coinciding with peak adult flight times: First (overwintering) generation flight peaks around 360 FDD, second generation flight peaks around 1080 FDD, third generation peaks around 1800 FDD, fourth generation peaks around 2520 FDD, and the fifth generation peaks around 3240. Wait 450 FDD after peak flight for larval pupation and minimum risk to crops.",
   photo: "seedcorn-maggot.jpg",
   link: "https://vegento.russell.wisc.edu/pests/seedcorn-maggot/"
 )
