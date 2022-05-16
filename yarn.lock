@@ -6638,17 +6638,17 @@ svelte-awesome@^3.0.0:
   resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-3.0.0.tgz#50581a26b140c5baed34e20421284ac1c2e7e85e"
   integrity sha512-jfK+vc7f2kTFbBCk3dR1C3JA72cugh5bZHILc0gHbaSC3f1PkwPpA4OwpCRCT1Zf0hv6oaSZKxR8V2m1SKHj3Q==
 
-svelte-check@^2.4.6:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-2.7.0.tgz#10d579dc89bf2e145a04786cc9fa8dabfb018a2a"
-  integrity sha512-GrvG24j0+i8AOm0k0KyJ6Dqc+TAR2yzB7rtS4nljHStunVxCTr/1KYlv4EsOeoqtHLzeWMOd5D2O6nDdP/yw4A==
+svelte-check@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/svelte-check/-/svelte-check-2.7.1.tgz#ecb89d11fcd67a46e750dba289fffb17e7597ddd"
+  integrity sha512-vHVu2+SQ6ibt77iTQaq2oiOjBgGL48qqcg0ZdEOsP5pPOjgeyR9QbnaEdzdBs9nsVYBc/42haKtzb2uFqS8GVw==
   dependencies:
+    "@jridgewell/trace-mapping" "^0.3.9"
     chokidar "^3.4.1"
     fast-glob "^3.2.7"
     import-fresh "^3.2.1"
     picocolors "^1.0.0"
     sade "^1.7.4"
-    source-map "^0.7.3"
     svelte-preprocess "^4.0.0"
     typescript "*"
 
@@ -6958,12 +6958,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@*:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
-  integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
-
-typescript@^4.6.3:
+typescript@*, typescript@^4.6.3:
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
   integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
