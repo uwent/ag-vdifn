@@ -1507,10 +1507,10 @@
     lz-string "^1.4.4"
     pretty-format "^27.0.2"
 
-"@testing-library/jest-dom@5.16.3":
-  version "5.16.3"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.16.3.tgz#b76851a909586113c20486f1679ffb4d8ec27bfa"
-  integrity sha512-u5DfKj4wfSt6akfndfu1eG06jsdyA/IUrlX2n3pyq5UXgXMhXY+NJb8eNK/7pqPWAhCKsCGWDdDO0zKMKAYkEA==
+"@testing-library/jest-dom@5.16.4":
+  version "5.16.4"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.16.4.tgz#938302d7b8b483963a3ae821f1c0808f872245cd"
+  integrity sha512-Gy+IoFutbMQcky0k+bqqumXZ1cTGswLsFqmNLzNdSKkU9KGV2u9oXhukCbbJ9/LRPKiqwxEE8VpV/+YZlfkPUA==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.9.1"
@@ -4432,10 +4432,10 @@ jest-message-util@^27.5.1:
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
-jest-mock-extended@2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/jest-mock-extended/-/jest-mock-extended-2.0.5.tgz#1feca6866ecbb4e5e79e57d9286969fde53a07cf"
-  integrity sha512-cQjKRqzZ/hUyy3AdmB7Aa+0DB45dt/eEApwfZFZzup9oefGnw2QodW/BLR39aCpPkK0Qb54P5OKYRXJ98kQ8cQ==
+jest-mock-extended@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/jest-mock-extended/-/jest-mock-extended-2.0.6.tgz#a41c4e97036859846a893e3572abe5400e82d9e7"
+  integrity sha512-KoDdjqwIp2phaOWB0hr4O+9HF7hIJx7O+Reefi3iGrNhUpzVkod9UozYTSanvbNvjFYIEH6noA2tIjc8IDpadw==
   dependencies:
     ts-essentials "^7.0.3"
 
