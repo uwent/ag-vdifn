@@ -18,7 +18,7 @@
     "esbuild": "0.14.42",
     "esbuild-envfile-plugin": "1.0.2",
     "esbuild-plugin-svgr": "1.0.1",
-    "esbuild-svelte": "0.7.0",
+    "esbuild-svelte": "0.7.1",
     "lodash": "4.17.21",
     "moment": "2.29.3",
     "node-sass": "7.0.1",
