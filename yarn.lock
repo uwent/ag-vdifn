@@ -1459,10 +1459,10 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@rails/ujs@7.0.2-2":
-  version "7.0.2-2"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.2-2.tgz#9f2f114f4777627034be541151a1240ebe585199"
-  integrity sha512-2M+stexFdUwVXMo4sborFkGEI7A7qEl8iIZX9oqW/JOjEyl6jpjpKAtPCAvKrXQAduX8lBQKHj/eTQKqONVB0Q==
+"@rails/ujs@7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.0.3.tgz#3bb98db34460ad61ef3cd2684401a444a0347bbb"
+  integrity sha512-u/F5LOFD1255859xEmb+3dHEI9Gnh5zVsjp6Pc++GGoMUei8vfOEPE9pvWuK01PbarIFfZz5D658gFRhs3dVpw==
 
 "@sinclair/typebox@^0.23.3":
   version "0.23.5"
