@@ -4,7 +4,7 @@
 
 <div id='iw-content'>
   <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
-  <% if @weather %>
+  <% if @weather.size > 0 %>
     <div class="information" style="padding-bottom: 1em;">
       <div>
         <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)

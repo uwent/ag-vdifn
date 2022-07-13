@@ -34,6 +34,6 @@ class EarlyBlight < Disease
   end
 
   def biofix_label
-    "Emergence date"
+    "Crop emergence date"
   end
 end

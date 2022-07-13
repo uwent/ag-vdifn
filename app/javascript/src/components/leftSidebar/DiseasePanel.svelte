@@ -40,9 +40,9 @@
     panelType: 'Disease',
     getCrops: () => data,
     dateToolTip: {
-      startDate: 'Date of Emergence/Last Fungicide Application',
+      startDate: 'Start of date range',
       endDate: 'Date through which disease severity values are accumulated',
-      startLabel: 'Date of Emergence/Last Fungicide Application'
+      startLabel: 'Start date'
     },
     getAfflictionName: () => 'Disease',
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD')

@@ -4,19 +4,32 @@
 
 <div id='iw-content'>
   <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
-  <% if @weather %>
+  <% if @weather.size > 0 %>
     <div class="information" style="padding-bottom: 1em;">
       <div>
-        <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
-        <br><b>DSV total:</b> <%= @weather.last[:cumulative_value].round(1) %>
+        <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.size %> days)
+        <% total = @weather.last[:cumulative_value] %>
+        <br><b>DSV total:</b> <%= total.round(1) %>
         <% if @weather.size >= 14 %>
-          <br><b>14-day average:</b> <%= ((@weather.last(14).inject(0) { |sum, h| sum += h[:value] }) / 14.0).round(1) %> <span style="font-size: smaller">DSV / day</span>
+          <% total = @weather.last(14).inject(0) { |sum, h| sum += h[:value] } %>
+          <br><b>14-day total:</b> <%= total.round(1) %>
+          <% if total > 0 %>
+            &nbsp;<span style="font-size: smaller">(<%= (total / 14.0).round(1) %> / day)</span>
+          <% end %>
         <% end %>
         <% if @weather.size >= 7 %>
-          <br><b>7-day average:</b> <%= ((@weather.last(7).inject(0) { |sum, h| sum += h[:value] }) / 7.0).round(1) %> <span style="font-size: smaller">DSV / day</span>
+          <% total = @weather.last(7).inject(0) { |sum, h| sum += h[:value] } %>
+          <br><b>7-day total:</b> <%= total.round(1) %>
+          <% if total > 0 %>
+            &nbsp;<span style="font-size: smaller">(<%= (total / 7.0).round(1) %> / day)</span>
+          <% end %>
         <% end %>
         <% if @weather.size >= 2 %>
-          <br><b>2-day average:</b> <%= ((@weather.last(2).inject(0) { |sum, h| sum += h[:value] }) / 2.0).round(1) %> <span style="font-size: smaller">DSV / day</span>
+          <% total = @weather.last(2).inject(0) { |sum, h| sum += h[:value] } %>
+          <br><b>2-day total:</b> <%= total.round(1) %>
+          <% if total > 0 %>
+            &nbsp;<span style="font-size: smaller">(<%= (total / 2.0).round(1) %> / day)</span>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -137,26 +137,27 @@ class SeveritiesController < ApplicationController
   end
 
   def get_late_blight_data
-    seven_day, season_total = [
-      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) },
+    total, season_total = [
+      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) },
       Thread.new { get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date) }
     ].map(&:value)
 
-    seven_day_hash = {}
-    seven_day.map do |point|
-      seven_day_hash[[point[:lat], point[:long]]] = point[:avg]
+    total_hash = {}
+    total.map do |point|
+      total_hash[[point[:lat], point[:long]]] = point[:total]
     end
 
     grid = season_total.map do |point|
       {
         lat: point[:lat],
         long: point[:long],
-        total: point[:total],
-        seven_day: seven_day_hash[[point[:lat], point[:long]]] || 0
+        total: total_hash[[point[:lat], point[:long]]] || 0,
+        season_total: point[:total]
       }
     end
 
-    if @end_date.month > 7
+    # get freezing data in the fall/winter
+    unless (4..8) === @end_date.month
       freeze_data = get_freeze_data(@end_date)
       grid = add_freeze_data(grid, freeze_data)
     end
