@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe EarlyBlight, type: :model do
-  let(:biofix_mm) { 2 }
-  let(:biofix_dd) { 15 }
+  let(:biofix_mm) { 5 }
+  let(:biofix_dd) { 1 }
   let(:pest) {
     EarlyBlight.new(biofix_mm:, biofix_dd:)
   }

@@ -1,22 +1,22 @@
 require "spec_helper"
 
 RSpec.describe LateBlight, type: :model do
-  let(:biofix) { Date.today - 14.days }
+  let(:biofix) { Date.today - 7.days }
   let(:pest) { LateBlight.new }
   let(:grid) {
     [
-      {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 0},
-      {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0},
-      {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 0},
-      {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0}
+      {lat: 1, long: 1, total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 1, long: 2, total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 2, long: 1, total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 2, long: 2, total: rand(25), season_total: rand(50), freeze: 0}
     ]
   }
   let(:grid2) {
     [
-      {lat: 1, long: 1, total: rand(50), seven_day: rand(25), freeze: 1},
-      {lat: 1, long: 2, total: rand(50), seven_day: rand(25), freeze: 0},
-      {lat: 2, long: 1, total: rand(50), seven_day: rand(25), freeze: 3},
-      {lat: 2, long: 2, total: rand(50), seven_day: rand(25), freeze: 0}
+      {lat: 1, long: 1, total: rand(25), season_total: rand(50), freeze: 1},
+      {lat: 1, long: 2, total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 2, long: 1, total: rand(25), season_total: rand(50), freeze: 3},
+      {lat: 2, long: 2, total: rand(25), season_total: rand(50), freeze: 0}
     ]
   }
 
@@ -28,10 +28,10 @@ RSpec.describe LateBlight, type: :model do
 
   it "renders severity from selected date range" do
     expect(pest.total_to_severity(0, 0)).to eq(0)
-    expect(pest.total_to_severity(10, 1)).to eq(1)
-    expect(pest.total_to_severity(35, 5)).to eq(2)
-    expect(pest.total_to_severity(40, 14)).to eq(3)
-    expect(pest.total_to_severity(50, 21)).to eq(4)
+    expect(pest.total_to_severity(1, 10)).to eq(1)
+    expect(pest.total_to_severity(5, 35)).to eq(2)
+    expect(pest.total_to_severity(14, 40)).to eq(3)
+    expect(pest.total_to_severity(21, 50)).to eq(4)
   end
 
   it "generates severities from weather" do

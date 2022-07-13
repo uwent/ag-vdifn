@@ -52,7 +52,7 @@ class DbController < ApplicationController
         end_date: end_date
       }
       response = ag_weather_client.point_details(params)
-      @weather = response[:data]
+      @weather = response[:data] || []
     end
     render layout: false
   end

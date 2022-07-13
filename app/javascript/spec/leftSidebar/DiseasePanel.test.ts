@@ -63,9 +63,9 @@ it('sets context data for child elements', () => {
     panelType: 'Disease',
     getCrops: expect.any(Function),
     dateToolTip: {
-      startDate: 'Date of Emergence/Last Fungicide Application',
-      endDate: 'Date through which disease severity values are accumulated',
-      startLabel: 'Date of Emergence/Last Fungicide Application'
+      startDate: expect.any(String),
+      endDate: expect.any(String),
+      startLabel: expect.any(String)
     },
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
     getAfflictionName: expect.any(Function)
