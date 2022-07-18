@@ -72,7 +72,7 @@
     "prettier-plugin-svelte": "2.7.0",
     "svelte-check": "2.8.0",
     "svelte-jester": "2.3.2",
-    "ts-jest": "28.0.5"
+    "ts-jest": "28.0.7"
   },
   "resolutions": {
     "css-what": ">=5.0.1",
