@@ -8,7 +8,7 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 ## Dependencies
 
-`Ruby 3.0.x`
+`Ruby`
 ```bash
 # install rbenv
 sudo apt -y install rbenv
@@ -29,12 +29,18 @@ rbenv install 3.1.2 # or latest version
 
 # update bundler to latest
 gem install bundler
+
+# install gems
+bundle install
+
+# or update gems
+bundle update
 ```
 
-`Postgres 12` and `gem pg`
+`Postgres` and `gem pg`
 ```bash
 # install postgres
-sudo apt -y install postgresql-12 postgresql-client-12 libpq-dev
+sudo apt -y install postgresql-14 postgresql-client-14 libpq-dev
 sudo service postgresql start
 
 # install gem pg
@@ -59,6 +65,12 @@ npm -v
 # install yarn
 sudo npm install --global yarn
 yarn -v
+
+# install packages
+yarn install
+
+# or update packages to latest - be sure to test compatibility after updates
+yarn upgrade-interactive --latest
 ```
 
 ## Setup
@@ -66,7 +78,7 @@ yarn -v
 1. Install core dependencies listed above.
 2. Install ruby gems with `bundle install` and node packages with `yarn install`
 3. Setup database with `bundle exec rails db:setup`
-4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> rails s`
+4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> bundle exec rails s`
 5. Run ag-vdifn server with `bin/dev`
 6. Launch site by visiting `localhost:3000` in browser
 
