@@ -75,6 +75,7 @@
   import Loading from '../common/Loading.svelte'
   export let data: any
   let submitDisabled = false
+  let thisPanel = 'custom'
   let tMinTmaxSelection = 'custom'
 
   setContext(panelKey, {
@@ -114,9 +115,8 @@
   }
 
   function updateUrlParams() {
-    let url = window.location.pathname
     let title = 'AgVDIFN: Degree-day Map Viewer'
-    url += '?panel=custom'
+    let url = window.location.pathname + '?panel=custom'
     if (isDev) console.log('Custom Panel >> Setting page title to ' + title)
     if (isDev) console.log('Custom Panel >> Setting url to ' + url)
     window.history.replaceState({}, title, url)
@@ -124,11 +124,15 @@
   }
 
   onMount(() => {
-    selectedPanel.set('custom')
-    if ($customPanelState.loaded) updateUrlParams()
+    selectedPanel.set(thisPanel)
+    updateUrlParams()
   })
 
-  $: if ($customPanelState.selectedExtent && $customPanelState.selectedExtent != $mapExtent) submit()
+  $: if (
+    $selectedPanel == thisPanel &&
+    $customPanelState.loaded &&
+    $customPanelState.selectedExtent != $mapExtent
+  ) submit()
 </script>
 
 <div data-testid="custom-panel">

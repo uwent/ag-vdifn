@@ -59,11 +59,15 @@
   }
 
   function updateUrlParams() {
+    let model = $insectPanelState.currentAffliction
     let url = window.location.pathname
     let title = 'AgVDIFN: Insect Models'
+
     url += '?panel=' + thisPanel
-    url += '&model=' + $insectPanelState.currentAffliction.local_name
-    title += ' - ' + $insectPanelState.currentAffliction.name
+    if (model) {
+      url += '&model=' + model.local_name
+      title += ' - ' + model.name
+    }
     if (isDev) console.log('Insect panel >> Setting title to ' + title)
     if (isDev) console.log('Insect panel >> Setting url to ' + url)
     window.history.replaceState({}, title, url)
@@ -72,10 +76,14 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    if ($insectPanelState.loaded) updateUrlParams()
+    updateUrlParams()
   })
 
-  $: if ($insectPanelState.selectedExtent && $insectPanelState.selectedExtent != $mapExtent) submit()
+  $: if (
+    $selectedPanel == thisPanel &&
+    $insectPanelState.loaded &&
+    $insectPanelState.selectedExtent != $mapExtent
+    ) submit()
 </script>
 
 <div data-testid="insect-panel">

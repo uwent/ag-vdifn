@@ -68,11 +68,9 @@
 
   function updateUrlParams() {
     let model = $diseasePanelState.currentAffliction
-    let url = window.location.pathname
     let title = 'AgVDIFN'
-    if (!window.location.search && model.local_name === defaults.disease) {
-      if (isDev) console.log('Disease panel >> Default panel launched, clearing URL')
-    } else {
+    let url = window.location.pathname
+    if (model) {
       url += '?panel=' + thisPanel
       url += '&model=' + model.local_name
       title += ': Disease Models - ' + model.name
@@ -85,10 +83,14 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    if ($diseasePanelState.loaded) updateUrlParams()
+    updateUrlParams()
   })
 
-  $: if ($diseasePanelState.selectedExtent && $diseasePanelState.selectedExtent != $mapExtent) submit()
+  $: if (
+    $selectedPanel == thisPanel &&
+    $diseasePanelState.loaded &&
+    $diseasePanelState.selectedExtent != $mapExtent
+  ) submit()
 </script>
 
 <div data-testid="disease-panel">
