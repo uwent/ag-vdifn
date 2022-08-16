@@ -1,11 +1,6 @@
 <style type="scss">
   @import '../../scss/settings.scss';
-
-  // .tooltip {
-  //   border: none;
-  //   background-color: transparent;
-  // }
-
+  
   #right-sidebar-expand-button {
     position: fixed;
     right: 10px;
@@ -75,16 +70,6 @@
   legend {
     padding: 0 5px;
   }
-
-  // ul {
-  //   margin: 0;
-  //   padding-left: 20px;
-  //   font-size: 0.8em;
-  // }
-
-  // ul li {
-  //   color: #424242;
-  // }
 </style>
 
 <script lang="ts">
@@ -96,35 +81,32 @@
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    selectedAffliction
+    selectedAffliction,
+    diseaseLegend,
+    insectLegend,
+    customLegend
   } from '../../store/store'
   import DatabaseClient from '../common/ts/databaseClient'
-  // import QuestionSvg from '../common/QuestionSvg.svelte'
   import SeverityLegend from './SeverityLegend.svelte'
   import CustomSeverityLegend from './CustomSeverityLegend.svelte'
   import Modal from '../common/Modal.svelte'
-  export let currentSeverities = []
   let expanded = false
-  let diseaseSeverities = []
-  let insectSeverities = []
-  let severityInfo = ''
-  let gradient = []
   let showModal = false
 
   const diseaseUnsubscribe = diseasePanelParams.subscribe(
     async (severityParams: SeverityParams) => {
       if (Object.entries(severityParams).length === 0) return
-      diseaseSeverities = await updateSeverities(severityParams)
-      currentSeverities = diseaseSeverities
+      let legend = await updateSeverities(severityParams)
+      diseaseLegend.set(legend)
     }
   )
 
   const insectUnsubscribe = insectPanelParams.subscribe(
     async (severityParams: SeverityParams) => {
       if (Object.entries(severityParams).length === 0) return
-      insectSeverities = await updateSeverities(severityParams)
-      currentSeverities = insectSeverities
-      severityInfo = await updateSeverityInfo(severityParams)
+      let legend = await updateSeverities(severityParams)
+      let info = await updateSeverityInfo(severityParams)
+      insectLegend.set({legend: legend, info: info})
     }
   )
 
@@ -134,9 +116,10 @@
     _.forEach(gradientMapping, (value, key) => {
       temp.push({ number: key, color: value })
     })
-    gradient = temp.sort((x, y) => {
+    let gradient = temp.sort((x, y) => {
       return x.number - y.number
     })
+    customLegend.set(gradient)
   })
 
   async function updateSeverities(severityParams) {
@@ -145,16 +128,6 @@
 
   async function updateSeverityInfo(severityParams) {
     return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id)
-  }
-
-  $: swapSeverities($selectedPanel)
-
-  function swapSeverities(selectedPanel) {
-    switch (selectedPanel) {
-      case 'disease': currentSeverities = diseaseSeverities
-      case 'insect': currentSeverities = insectSeverities
-      case 'custom': currentSeverities = []
-    }
   }
 
   onDestroy(() => {
@@ -177,18 +150,24 @@
   </Modal>
 {/if}
 
-{#if $selectedPanel === "custom" && gradient && gradient.length}
+{#if $selectedPanel === "disease" && $diseaseLegend.length}
   <div id="right-sidebar" aria-expanded={expanded}>
-    <CustomSeverityLegend gradientMapping={gradient} />
+    <SeverityLegend severities={$diseaseLegend} />
   </div>
-{:else if currentSeverities && currentSeverities.length}
+{/if}
+
+{#if $selectedPanel === "insect" && $insectLegend.legend.length}
   <div id="right-sidebar" aria-expanded={expanded}>
-    <SeverityLegend severities={currentSeverities} />
-    {#if $selectedPanel === "insect"}
-      <fieldset title="more-info">
-        <legend>More Information</legend>
-        <p>{severityInfo}</p>
-      </fieldset>
-    {/if}
+    <SeverityLegend severities={$insectLegend.legend} />
+    <fieldset title="more-info">
+      <legend>More Information</legend>
+      <p>{$insectLegend.info}</p>
+    </fieldset>
+  </div>
+{/if}
+
+{#if $selectedPanel === "custom" && $customLegend.length}
+  <div id="right-sidebar" aria-expanded={expanded}>
+    <CustomSeverityLegend gradientMapping={$customLegend} />
   </div>
 {/if}

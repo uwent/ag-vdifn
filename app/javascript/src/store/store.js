@@ -25,6 +25,14 @@ export const diseasePanelParams = writable({})
 export const insectPanelParams = writable({})
 export const customPanelParams = writable({})
 
+// legend store
+export const diseaseLegend = writable([])
+export const insectLegend = writable({
+  legend: [],
+  info: ''
+})
+export const customLegend = writable([])
+
 export const selectedAffliction = writable({
   id: undefined,
   name: undefined,
