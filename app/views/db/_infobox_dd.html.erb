@@ -4,19 +4,19 @@
 
 <div id='iw-content'>
   <h3 class="weather-details-title"><%= @model_value %> (<%= @t_min %>/<%= @t_max %> &deg;<%= temp_symbol() %>)</h3>
-  <% if @weather.size > 0 %>
+  <% if @data.size > 0 %>
     <div class="information" style="padding-bottom: 1em;">
       <div>
-        <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.count %> days)
-        <br><b>Degree-day total:</b> <%= convert_dds(@weather.last[:cumulative_value]).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
-        <% if @weather.size >= 14 %>
-          <br><b>14-day average:</b> <%= convert_dds(@weather.last(14).inject(0) { |sum, h| sum += h[:value] } / 14.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+        <b>Date range:</b> <%= @data.first[:date] %> to <%= @data.last[:date] %> (<%= @data.count %> days)
+        <br><b>Degree-day total:</b> <%= convert_dds(@data.last[:cumulative_value]).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
+        <% if @data.size >= 14 %>
+          <br><b>14-day average:</b> <%= convert_dds(@data.last(14).inject(0) { |sum, h| sum += h[:value] } / 14.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
         <% end %>
-        <% if @weather.size >= 7 %>
-          <br><b>7-day average:</b> <%= convert_dds(@weather.last(7).inject(0) { |sum, h| sum += h[:value] } / 7.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+        <% if @data.size >= 7 %>
+          <br><b>7-day average:</b> <%= convert_dds(@data.last(7).inject(0) { |sum, h| sum += h[:value] } / 7.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
         <% end %>
-        <% if @weather.size >= 2 %>
-          <br><b>2-day average:</b> <%= convert_dds(@weather.last(2).inject(0) { |sum, h| sum += h[:value] } / 2.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+        <% if @data.size >= 2 %>
+          <br><b>2-day average:</b> <%= convert_dds(@data.last(2).inject(0) { |sum, h| sum += h[:value] } / 2.0).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
         <% end %>
       </div>
     </div>
@@ -36,7 +36,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @weather.each do |day| %>
+          <% @data.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
               <td><%= convert_temp(day[:min_temp]).round(1) %>&deg;<%= temp_symbol() %></td>

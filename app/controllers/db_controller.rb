@@ -30,7 +30,7 @@ class DbController < ApplicationController
         end_date: end_date
       }
       response = ag_weather_client.custom_point_details(params)
-      @weather = response[:data] || []
+      @data = response[:data] || []
 
     when "insect"
       @model_value = @pest.name
@@ -42,7 +42,7 @@ class DbController < ApplicationController
         end_date: end_date
       }
       response = ag_weather_client.point_details(params)
-      @weather = response[:data] || []
+      @data = response[:data] || []
 
     when "disease"
       params = {
@@ -55,7 +55,11 @@ class DbController < ApplicationController
       response = ag_weather_client.point_details(params)
       data = response[:data] || []
       @data = data.collect do |d|
-        d[:date] = d[:date].to_date
+        d[:date] = begin
+          d[:date].to_date
+        rescue
+          d[:date]
+        end
         d
       end
       @selected = @data.select { |h| h[:date] >= @start_date }

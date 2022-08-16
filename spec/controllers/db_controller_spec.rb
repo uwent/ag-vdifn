@@ -7,7 +7,7 @@ RSpec.describe DbController, type: :request do
     {
       status: "OK",
       info: {},
-      data: [{value: 10, date: "date", avg_temp: "100"}]
+      data: [{value: 10, date: Date.current.to_s, avg_temp: 69}]
     }
   }
   # let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temp: "100"}] }
@@ -50,14 +50,14 @@ RSpec.describe DbController, type: :request do
   describe "POST db/point_details" do
     it "returns success response when standard pest from disease panel" do
       pest = Pest.create(remote_name: "pest")
-      start_date = Date.current
-      end_date = Date.current - 20.days
+      start_date = Date.current - 20.days
+      end_date = Date.current
       lat = 10
       long = 20
       allow_any_instance_of(AgWeather::Client).to receive(:point_details).and_return(days_data)
 
       expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
-        start_date:,
+        start_date: end_date.beginning_of_year,
         end_date:,
         lat: lat.to_f,
         long: long.to_f,
@@ -108,8 +108,8 @@ RSpec.describe DbController, type: :request do
       Pest.create
       t_min = 50
       t_max = 100
-      start_date = Date.current
-      end_date = Date.current - 20.days
+      start_date = Date.current - 20.days
+      end_date = Date.current
       lat = 10
       long = 20
       allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).and_return(days_data)
