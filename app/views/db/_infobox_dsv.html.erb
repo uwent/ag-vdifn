@@ -3,29 +3,33 @@
 </div>
 
 <div id='iw-content'>
-  <h3 class="weather-details-title">Weather Summary - <%= @pest.name %></h3>
-  <% if @weather.size > 0 %>
+  <h3 class="weather-details-title"><%= @pest.name %></h3>
+  <% if @data.size > 0 %>
     <div class="information" style="padding-bottom: 1em;">
       <div>
-        <b>Date range:</b> <%= @weather.first[:date] %> to <%= @weather.last[:date] %> (<%= @weather.size %> days)
-        <% total = @weather.last[:cumulative_value] %>
-        <br><b>DSV total:</b> <%= total.round(1) %>
-        <% if @weather.size >= 14 %>
-          <% total = @weather.last(14).inject(0) { |sum, h| sum += h[:value] } %>
+        <b>Current season:</b> <%= "#{@data.first[:date].strftime('%b %-d')} to #{@data.last[:date].strftime('%b %-d, %Y')} (#{@data.size} days)" %>
+        <% total = @data.last[:cumulative_value] %><br>
+        <b>Season total DSVs:</b> <%= total.round(1) %><br>
+        <br>
+        <b>Selected dates:</b> <%= "#{@selected.first[:date].strftime('%b %-d')} to #{@selected.last[:date].strftime('%b %-d')} (#{@selected.size} days)" %><br>
+        <b>Selected total DSVs:</b> <%= @selected.inject(0) { |sum, h| sum += h[:value] } %><br>
+        
+        <% if @data.size >= 14 %>
+          <% total = @data.last(14).inject(0) { |sum, h| sum += h[:value] } %>
           <br><b>14-day total:</b> <%= total.round(1) %>
           <% if total > 0 %>
             &nbsp;<span style="font-size: smaller">(<%= (total / 14.0).round(1) %> / day)</span>
           <% end %>
         <% end %>
-        <% if @weather.size >= 7 %>
-          <% total = @weather.last(7).inject(0) { |sum, h| sum += h[:value] } %>
+        <% if @data.size >= 7 %>
+          <% total = @data.last(7).inject(0) { |sum, h| sum += h[:value] } %>
           <br><b>7-day total:</b> <%= total.round(1) %>
           <% if total > 0 %>
             &nbsp;<span style="font-size: smaller">(<%= (total / 7.0).round(1) %> / day)</span>
           <% end %>
         <% end %>
-        <% if @weather.size >= 2 %>
-          <% total = @weather.last(2).inject(0) { |sum, h| sum += h[:value] } %>
+        <% if @data.size >= 2 %>
+          <% total = @data.last(2).inject(0) { |sum, h| sum += h[:value] } %>
           <br><b>2-day total:</b> <%= total.round(1) %>
           <% if total > 0 %>
             &nbsp;<span style="font-size: smaller">(<%= (total / 2.0).round(1) %> / day)</span>
@@ -54,7 +58,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @weather.each do |day| %>
+          <% @data.reverse.each do |day| %>
             <tr>
               <td class="odd"><%= day[:date] %></td>
               <td><%= convert_temp(day[:avg_temp]).round(1) %>&deg;<%= temp_symbol() %></td>

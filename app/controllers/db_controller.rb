@@ -15,6 +15,7 @@ class DbController < ApplicationController
     @t_min = params[:t_min]
     @t_max = params[:t_max].nil? ? "None" : params[:t_max]
     @in_fahrenheit = params[:in_fahrenheit]
+    @start_date = start_date
 
     case params[:panel]
 
@@ -25,11 +26,11 @@ class DbController < ApplicationController
         long: @longitude,
         t_base: t_min,
         t_upper: t_max,
-        start_date: start_date,
+        start_date: @start_date,
         end_date: end_date
       }
       response = ag_weather_client.custom_point_details(params)
-      @weather = response[:data]
+      @weather = response[:data] || []
 
     when "insect"
       @model_value = @pest.name
@@ -37,22 +38,27 @@ class DbController < ApplicationController
         pest: @pest.remote_name,
         lat: @latitude,
         long: @longitude,
-        start_date: start_date,
+        start_date: @start_date,
         end_date: end_date
       }
       response = ag_weather_client.point_details(params)
-      @weather = response[:data]
+      @weather = response[:data] || []
 
     when "disease"
       params = {
         pest: @pest.remote_name,
         lat: @latitude,
         long: @longitude,
-        start_date: start_date,
+        start_date: end_date.beginning_of_year,
         end_date: end_date
       }
       response = ag_weather_client.point_details(params)
-      @weather = response[:data] || []
+      data = response[:data] || []
+      @data = data.collect do |d|
+        d[:date] = d[:date].to_date
+        d
+      end
+      @selected = @data.select { |h| h[:date] >= @start_date }
     end
     render layout: false
   end
