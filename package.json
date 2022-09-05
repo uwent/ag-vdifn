@@ -2,7 +2,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/eslint-parser": "7.18.9",
-    "@fortawesome/free-regular-svg-icons": "6.1.2",
+    "@fortawesome/free-regular-svg-icons": "6.2.0",
     "@googlemaps/js-api-loader": "1.14.3",
     "@rails/ujs": "7.0.3",
     "@types/color": "3.0.3",
