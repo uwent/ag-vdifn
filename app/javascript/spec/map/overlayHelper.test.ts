@@ -24,6 +24,7 @@ const panelType = 'Disease'
 
 beforeEach(() => {
   overlayHelper = new OverlayHelper(googleWrapper, map)
+  overlayHelper.map.addListener = jest.fn()
 })
 
 afterEach(jest.clearAllMocks)
@@ -60,9 +61,7 @@ describe('creates and updates overlay', () => {
     const rectangleOptions = [{ data: 'data' }, { data: 'data2' }]
     overlayHelper.getSeverities = jest.fn().mockResolvedValue(severities)
     overlayHelper.severities = severities
-    overlayHelper.convertSeveritiesToRectangleOptions = jest
-      .fn()
-      .mockReturnValue(rectangleOptions)
+    overlayHelper.convertSeveritiesToRectangleOptions = jest.fn().mockReturnValue(rectangleOptions)
     overlayHelper.drawDataPoints = jest.fn().mockReturnValue('rectangle')
     jest.spyOn(OverlayHelper.prototype, 'clearRectangles')
     jest.spyOn(OverlayHelper.prototype, 'closeInfoWindow')

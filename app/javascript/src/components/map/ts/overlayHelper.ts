@@ -107,11 +107,12 @@ export default class OverlayHelper {
   }
 
   addInfoWindowEvents(severityParams: SeverityParams, panelType: string) {
+    this.map.addListener('click', async () => {
+      this.closeInfoWindow()
+    })
     this.rectangles.forEach(rectangle => {
       rectangle.addListener('click', async event => {
-        if (this.infoWindow) {
-          this.infoWindow.close()
-        }
+        this.closeInfoWindow()
         this.infoWindow = this.googleWrapper.createInfoWindow({
           content: infoWindowLoadingTemplate,
           position: event.latLng
