@@ -153,6 +153,7 @@
         class="logo"
         href={host || 'https://agweather.cals.wisc.edu'}
         target="_blank"
+        rel="noreferrer"
       >
         Agweather
       </a>
@@ -162,6 +163,7 @@
         class="logo"
         href="https://vegpath.plantpath.wisc.edu/"
         target="_blank"
+        rel="noreferrer"
       >
         UW-Madison Plant Pathology
       </a>
@@ -171,6 +173,7 @@
         class="logo"
         href="https://vegento.russell.wisc.edu/"
         target="_blank"
+        rel="noreferrer"
       >
         UW-Madison Vegetable Crop Entomology
       </a>
