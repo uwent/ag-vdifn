@@ -9,7 +9,7 @@
     "@types/google.maps": "3.50.4",
     "@types/lodash": "4.14.186",
     "@types/node": "18.11.4",
-    "autoprefixer": "10.4.12",
+    "autoprefixer": "10.4.13",
     "axios": "0.27.2",
     "balloon-css": "1.2.0",
     "chroma-js": "2.4.2",
