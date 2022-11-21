@@ -54,23 +54,26 @@ exit
 
 `node` and `yarn`
 ```bash
-# install nodejs
-sudo apt install nodejs
-node -v
-
 # install npm
 sudo apt install npm
 npm -v
 
+# install n, Node's version manager
+sudo npm install -g n
+
+# install the latest stable version of Node
+sudo n stable
+node -v
+
 # install yarn
-sudo npm install --global yarn
+sudo npm install -g yarn
 yarn -v
 
 # install packages
 yarn install
 
 # or update packages to latest - be sure to test compatibility after updates
-yarn upgrade-interactive --latest
+yarn upgrade-interactive --latest # or run: yarn bump
 ```
 
 ## Setup
