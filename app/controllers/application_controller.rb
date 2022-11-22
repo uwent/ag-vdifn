@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     if !params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None"
       c_to_f(params[:t_max])
     else
-      params[:t_max].nil? || params[:t_max] === "None" ? nil : params[:t_max].to_f
+      (params[:t_max].nil? || params[:t_max] === "None") ? nil : params[:t_max].to_f
     end
   end
 

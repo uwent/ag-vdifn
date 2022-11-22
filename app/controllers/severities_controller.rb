@@ -45,7 +45,7 @@ class SeveritiesController < ApplicationController
   # fetch number of days below 28F in date range
   def get_freeze_data(end_date)
     nov_1 = Date.new(end_date.year, 11, 1)
-    start_date = end_date > nov_1 ? nov_1 : end_date - 1.week
+    start_date = (end_date > nov_1) ? nov_1 : end_date - 1.week
     json = ag_weather_client.freeze_days(
       start_date: start_date,
       end_date: end_date,
