@@ -7537,10 +7537,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-svelte-awesome@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-3.0.0.tgz#50581a26b140c5baed34e20421284ac1c2e7e85e"
-  integrity sha512-jfK+vc7f2kTFbBCk3dR1C3JA72cugh5bZHILc0gHbaSC3f1PkwPpA4OwpCRCT1Zf0hv6oaSZKxR8V2m1SKHj3Q==
+svelte-awesome@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/svelte-awesome/-/svelte-awesome-3.0.1.tgz#ec54821af7b605dcc05281891a2a656a0e52a7d6"
+  integrity sha512-wFMOREy4hRsUbWUhOCnilg7i2F50uKSu2dOnuXj+9TZh0wuBDo+5XIB5TCSzDbLfV8DVtSKb0Jv37yNYSxvGbQ==
 
 svelte-check@2.10.0:
   version "2.10.0"
