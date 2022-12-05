@@ -8,7 +8,7 @@
     "@types/color": "3.0.3",
     "@types/google.maps": "3.50.5",
     "@types/lodash": "4.14.190",
-    "@types/node": "18.11.9",
+    "@types/node": "18.11.10",
     "autoprefixer": "10.4.13",
     "axios": "1.2.0",
     "balloon-css": "1.2.0",
