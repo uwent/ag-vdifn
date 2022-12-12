@@ -128,31 +128,26 @@
   const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
     if (panelType != 'Custom') {
       startLabel = affliction.biofix_label || "Start date"
-    }
-    
-    // if biofix has yet to occur default to last year
-    if (affliction.biofix_date) {
-      if (affliction.biofix_date < today) {
-        defaultStartDateValue = affliction.biofix_date
-        defaultEndDateValue = today
-      } else {
-        defaultStartDateValue = moment
-          .utc(affliction.biofix_date)
-          .subtract(1, 'year')
-          .format('YYYY-MM-DD')
-        defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31'
+
+      // if biofix has yet to occur default to last year
+      if (affliction.biofix_date) {
+        if (affliction.biofix_date < today) {
+          defaultStartDateValue = affliction.biofix_date
+          defaultEndDateValue = today
+        } else {
+          defaultStartDateValue = moment
+            .utc(affliction.biofix_date)
+            .subtract(1, 'year')
+            .format('YYYY-MM-DD')
+          defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31'
+        }
+        startDateValue = defaultStartDateValue
+        endDateValue = defaultEndDateValue
       }
-      startDateValue = defaultStartDateValue
-      endDateValue = defaultEndDateValue
     }
   })
 
   onDestroy(unsubscribe)
-
-  onMount(() => {
-    startDate.set(startDateValue)
-    endDate.set(endDateValue)
-  })
 
   $: startDate.set(startDateValue)
   $: endDate.set(endDateValue)
