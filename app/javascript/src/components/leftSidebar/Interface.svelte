@@ -73,6 +73,7 @@
   import Help from './Help.svelte'
   export let diseasePanelData
   export let insectPanelData
+  export let customPanelData
   const databaseClient = new DatabaseClient()
   const urlParams = new URLSearchParams(window.location.search)
   const validPanels = ['disease', 'insect', 'custom']
@@ -102,6 +103,7 @@
     parseUrlParams()
     if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
     if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
+    if (!customPanelData) customPanelData = await databaseClient.fetchCustomPanel()
   })
 
   $: mapExtent.set(extent)
@@ -163,7 +165,7 @@
         <label for="midwest">Upper Midwest</label>
       </div>
     </fieldset>
-    {#if diseasePanelData && insectPanelData}
+    {#if diseasePanelData && insectPanelData && customPanelData}
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
@@ -174,7 +176,7 @@
           defaultModel={insectParams.model} />
       {:else if panel === 'custom'}
         <CustomPanel
-          data={insectPanelData} />
+          data={customPanelData} />
       {/if}
     {:else}
       <Loading />

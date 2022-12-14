@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       # post "station_details"
       get "disease_panel"
       get "insect_panel"
+      get "dd_models"
     end
   end
 

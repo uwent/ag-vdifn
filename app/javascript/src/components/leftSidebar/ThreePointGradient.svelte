@@ -393,9 +393,7 @@
         bind:this={addButton}
         on:click={addLevel}
         disabled={buttonsDisabled || severityLevels >= 8}
-      >
-        +
-      </button>
+      >+</button>
       <button
         class="update-overlay-button"
         title="Update grid overlay with new values"
@@ -403,18 +401,14 @@
         bind:this={updateOverlayButton}
         on:click={updateOverlay}
         disabled={buttonsDisabled}
-      >
-        Update
-      </button>
+      >Update</button>
       <button
         class="update-overlay-button"
         title="Reset to defaults"
         data-testid="resetButton"
         bind:this={resetOverlayButton}
         on:click={resetOverlay}
-      >
-        Reset
-      </button>
+      >Reset</button>
       <button
         class="level-quantity-button"
         title="Remove levels from gradient"
@@ -422,12 +416,7 @@
         bind:this={minusButton}
         on:click={decrementLevel}
         disabled={buttonsDisabled || severityLevels <= 3}
-      >
-        -
-      </button>
+      >-</button>
     </div>
   </div>
 </fieldset>
-<div title="Map range">
-  Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
-</div>

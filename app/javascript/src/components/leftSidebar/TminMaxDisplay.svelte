@@ -115,30 +115,22 @@
 
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
-  import { panelKey, selectedAffliction, tMinTmax } from '../../store/store'
-  let in_f = true
+  import { panelKey, selectedAffliction, selectedDDModel, tMinTmax } from '../../store/store'
+  import { f_to_c } from '../common/ts/utils'
+  const { panelType } = getContext(panelKey)
+  let in_f = $tMinTmax.in_fahrenheit
   let tMinF: number
   let tMaxF: number
   let tMinC: number
   let tMaxC: number
   let tMinText: string
   let tMaxText: string
-  const { getCrops } = getContext(panelKey)
-
-  function f_to_c(f) {
-    if (f === null) return null
-    return Math.round((f - 32) * (5 / 9) * 10) / 10
-  }
 
   // generate the temperature display text
   function makeText(temp) {
-    if (temp === null || temp === undefined) {
-      return 'None'
-    } else if (Number.isInteger(temp)) {
-      return temp.toFixed(0)
-    } else {
-      return temp.toFixed(1)
-    }
+    if (temp === null || temp === undefined) return 'None'
+    if (Number.isInteger(temp)) return temp.toFixed(0)
+    return temp.toFixed(1)
   }
 
   // convert between units and update text
@@ -146,30 +138,28 @@
     if (in_f) {
       tMinText = makeText(tMinF)
       tMaxText = makeText(tMaxF)
-      tMinTmax.update(state => ({
-        ...state,
+      tMinTmax.set({
         t_min: tMinF,
         t_max: tMaxF,
         in_fahrenheit: true
-      }))
+      })
     } else {
       tMinText = makeText(tMinC)
       tMaxText = makeText(tMaxC)
-      tMinTmax.update(state => ({
-        ...state,
+      tMinTmax.set({
         t_min: tMinC,
         t_max: tMaxC,
         in_fahrenheit: false
-      }))
+      })
     }
   }
 
   // Sets temperature values and updates display text
-  function setTminTmax(affliction) {
-    if (affliction) {
-      in_f = true
-      tMinF = affliction.t_min
-      tMaxF = affliction.t_max
+  function setTminTmax(model) {
+    if (model) {
+      // in_f = $tMinTmax.in_fahrenheit || true
+      tMinF = model.t_min
+      tMaxF = model.t_max
       tMinC = f_to_c(tMinF)
       tMaxC = f_to_c(tMaxF)
       updateText(in_f)
@@ -177,15 +167,12 @@
   }
 
   onMount(() => {
-    if (getCrops().length > 0) {
-      setTminTmax(getCrops()[0].afflictions[0])
-    } else {
-      setTminTmax($selectedAffliction)
-    }
+
+    setTminTmax((panelType == 'custom') ? $selectedDDModel : $selectedAffliction)
   })
 
   $: updateText(in_f)
-  $: setTminTmax($selectedAffliction)
+  $: setTminTmax((panelType == 'custom') ? $selectedDDModel : $selectedAffliction)
 </script>
 
 <div id="degree_day_info">

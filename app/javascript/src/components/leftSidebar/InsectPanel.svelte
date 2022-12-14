@@ -28,7 +28,7 @@
   const thisPanel = 'insect'
 
   setContext(panelKey, {
-    panelType: 'Insect',
+    panelType: 'insect',
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Biofix date for insect',

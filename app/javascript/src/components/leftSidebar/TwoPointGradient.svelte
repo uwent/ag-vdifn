@@ -335,6 +335,3 @@
     </button>
   </div>
 </fieldset>
-<div title="Map range">
-  Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
-</div>

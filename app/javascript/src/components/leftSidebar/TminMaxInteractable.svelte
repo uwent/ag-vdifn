@@ -120,30 +120,13 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
   import { tMinTmax, defaults } from '../../store/store'
-  let tMin = defaults.t_min
-  let tMax = defaults.t_max
-  let in_f = defaults.in_f
-  let tMaxDisabled = defaults.tMaxDisabled
+  import { f_to_c, c_to_f } from '../common/ts/utils'
+  let in_f = $tMinTmax.in_fahrenheit
+  let tMin = $tMinTmax.t_min || defaults.t_min
+  let tMax = $tMinTmax.t_max
+  let tMaxDisabled = ($tMinTmax.t_max === null)
   let valid = true
   const dispatch = createEventDispatcher()
-
-  // convert fahrenheit to celcius
-  function f_to_c(f: number) {
-    if (f === null) {
-      return null
-    } else {
-      return Math.round((f - 32) * (5 / 9) * 10) / 10
-    }
-  }
-
-  // convert celcius to fahrenheit
-  function c_to_f(c: number) {
-    if (c === null) {
-      return null
-    } else {
-      return Math.round((c * (9 / 5) + 32) * 10) / 10
-    }
-  }
 
   function convert(event: any) {
     in_f = event.target.checked

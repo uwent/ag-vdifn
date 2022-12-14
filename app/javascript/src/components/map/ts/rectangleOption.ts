@@ -1,23 +1,25 @@
 export default class RectangleOption {
-  severityLevel: number
+  map: any
   latitude: number
   longitude: number
-  strokeColor: string = "6c6c6c"
-  strokeOpacity = 0.75
-  strokeWeight = 0.025
+  severityLevel: number
   fillColor: string
-  fillOpacity = 0.4
-  map: any
-
-  private latitudeOffset = 0.05
-  private longitudeOffset = 0.05
-
   bounds: {
     north: number
     south: number
     east: number
     west: number
   }
+
+  // strokeColor: string = "6c6c6c"
+  strokeColor = "000000"
+  strokeOpacity = 1
+  // strokeWeight = 0.025
+  strokeWeight = 0.04
+  fillOpacity = 0.5
+
+  private latitudeOffset = 0.05
+  private longitudeOffset = 0.05
 
   constructor(latitude: number, longitude: number, fillColor: string, map: any) {
     this.latitude = latitude

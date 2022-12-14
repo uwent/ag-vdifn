@@ -1,7 +1,8 @@
 <style>
-  .affliction-container {
+  .dd-container {
     display: flex;
   }
+
   fieldset {
     margin-bottom: 10px;
     padding: 10px;
@@ -34,94 +35,61 @@
   select::-ms-expand {
     display: none;
   }
-
-  .clear {
-    clear: both;
-    height: 0.5em;
-  }
 </style>
 
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
-  import { CropWithAfflictions, Pest } from '../common/ts/types'
-  import { panelKey, selectedAffliction, afflictionValue } from '../../store/store'
-  const { getCrops, getAfflictionName } = getContext(panelKey)
-  let crops: CropWithAfflictions[] = []
-  let selectedCropValue = 0
-  let afflictionsForCrop: Pest[] = []
-  let afflictionName = getAfflictionName()
-
-  function getAfflictionsForCrop(event) {
-    const cropId = parseInt(event.target.value)
-    const cropWithAfflictions = crops.find(crop => {
-      return crop.id === cropId
-    })
-    if (cropWithAfflictions) {
-      afflictionsForCrop = cropWithAfflictions.afflictions
-      afflictionValue.update(_ => afflictionsForCrop[0].id)
-      afflictionValue.set(afflictionsForCrop[0].id)
-      selectedAffliction.set(afflictionsForCrop[0])
-    }
+  import { DegreeDayModel } from '../common/ts/types'
+  import { panelKey, selectedDDModel, tMinTmax } from '../../store/store'
+  const { getModels } = getContext(panelKey)
+  let ddModels: DegreeDayModel[] = []
+  let defaultModel = "dd_50_86"
+  
+  function setDegreeDayModel(event) {
+    const id = parseInt(event.target.value)
+    const model = ddModels.find(model => { return model.id === id })
+    selectedDDModel.set(model)
   }
 
-  function getCurrentAffliction(afflictionId) {
-    const affliction = afflictionsForCrop.find(affliction => {
-      return affliction.id === afflictionId
-    })
-    if (affliction) {
-      return affliction
-    } else if (crops[0] === undefined) {
-      return []
-    } else {
-      return crops[0].afflictions[0]
-    }
-  }
+  function getCurrentModel(model: DegreeDayModel) {
+    let tmin = $tMinTmax.t_min
+    let tmax = $tMinTmax.t_max
 
-  function setAfflictionValue(event) {
-    const value = parseInt(event.target.value)
-    afflictionValue.update(value => value)
-    afflictionValue.set(value)
-    selectedAffliction.set(getCurrentAffliction(value))
+    if (model.id === undefined || model.t_min != tmin || model.t_max != tmax) {
+      let match = ddModels.find(model => {
+        return (model.t_min === tmin) && (model.t_max === tmax)
+      })
+      if (match) return match
+
+      match = ddModels.find(model => { return model.t_min === tmin })
+      if (match) return match
+
+      return ddModels.find(model => { return model.remote_name === defaultModel })
+    }
+    return model
   }
 
   onMount(() => {
-    crops = getCrops()
-    if (crops.length <= 0) return
-    selectedCropValue = crops[0].id
-    afflictionsForCrop = crops[0].afflictions
-
-    afflictionValue.update(_ => afflictionsForCrop[0].id)
-    selectedAffliction.set(getCurrentAffliction(afflictionsForCrop[0].id))
+    ddModels = getModels()
+    if (!ddModels) return
+    selectedDDModel.set(getCurrentModel($selectedDDModel))
   })
 </script>
 
 <fieldset id="model-selection">
-  <legend>Model Selection</legend>
-  <label for="crop-select">Crop</label>
-  <select
-    on:change={getAfflictionsForCrop}
-    bind:value={selectedCropValue}
-    id="crop-select"
-    name="crop-select"
-    title="Select crop"
-  >
-    {#each crops as { id, name }}
-      <option value={id} name="crop_id">{name}</option>
-    {/each}
-  </select>
-  <div class="clear" />
-  <label for="affliction-select">{afflictionName}</label>
-  <div class="affliction-container">
+  <legend>Degree Day Model</legend>
+  <label for="dd-select">Choose model</label>
+  <div class="dd-container">
     <select
-      on:change={setAfflictionValue}
-      class="affliction-select"
-      id="affliction-select"
-      name="affliction-select"
+      on:change={setDegreeDayModel}
+      class="dd-select"
+      id="dd-select"
+      name="dd-select"
       title="Select model"
+      value={$selectedDDModel.id}
     >
-      {#each afflictionsForCrop as { id, name, t_min, t_max }}
-        <option value={id} name="affliction_id"
-          >{name} ({t_min}/{!t_max ? 'None' : t_max}&deg;F)</option
+      {#each ddModels as { id, name, name_c }}
+        <option value={id} name="dd-id">{$tMinTmax.in_fahrenheit ? name : name_c}</option
         >
       {/each}
     </select>

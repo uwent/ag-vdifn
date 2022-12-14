@@ -92,6 +92,9 @@ class DbController < ApplicationController
     info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: "100px")) unless pest.photo.blank?
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
+    tmin = in_f ? pest.t_min : f_to_c(pest.t_min)
+    tmax = pest.t_max.nil? ? "" : (in_f ? pest.t_max : f_to_c(pest.t_max))
+
     render json: {
       info: info,
       name: pest.name,
@@ -99,12 +102,8 @@ class DbController < ApplicationController
       biofix: pest.biofix_date,
       biofix_label: pest.biofix_label,
       end_date_enabled: pest.end_date_enabled,
-      tmin: in_f ? pest.t_min : f_to_c(pest.t_min),
-      tmax: if pest.t_max.nil?
-              ""
-            else
-              (in_f ? pest.t_max : f_to_c(pest.t_max))
-            end
+      tmin:,
+      tmax:
     }
   end
 
@@ -116,6 +115,11 @@ class DbController < ApplicationController
   def insect_panel
     @crops = create_crops_for_insect_panel.unshift(create_any_option(Insect))
     render json: @crops, include: {insects: {methods: [:end_date_enabled, :biofix_date, :biofix_label]}}
+  end
+
+  def dd_models
+    @models = DegreeDay.all.select(:id, :name, :remote_name, :t_min, :t_max)
+    render json: @models, methods: :name_c
   end
 
   private

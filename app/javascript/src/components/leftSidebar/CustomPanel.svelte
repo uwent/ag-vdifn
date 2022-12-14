@@ -1,5 +1,5 @@
 <style>
-  .tMinTMaxOptions {
+  /* .tMinTMaxOptions {
     display: flex;
     margin: 15px;
     overflow: hidden;
@@ -43,12 +43,11 @@
 
   .tMinTMaxOptions label:last-of-type {
     border-radius: 0 4px 4px 0;
-  }
+  } */
 </style>
 
 <script lang="ts">
   const moment = require('moment')
-  const _ = require('lodash')
   import { onMount, setContext } from 'svelte'
   import {
     customOverlaySubmitted,
@@ -60,14 +59,13 @@
     overlayLoading,
     selectedPanel,
     customPanelState,
-    defaults,
+    selectedDDModel,
     extents,
     mapExtent,
     isDev
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
   import DatePicker from './DatePicker.svelte'
-  import TminMaxInteractable from './TminMaxInteractable.svelte'
   import SeverityGradient from './SeverityGradient.svelte'
   import CustomModelSelection from './CustomModelSelection.svelte'
   import TminMaxDisplay from './TminMaxDisplay.svelte'
@@ -76,37 +74,35 @@
   export let data: any
   let submitDisabled = false
   let thisPanel = 'custom'
-  let tMinTmaxSelection = 'custom'
 
   setContext(panelKey, {
-    panelType: 'Custom',
-    getCrops: () => data,
+    panelType: 'custom',
+    getModels: () => data,
     dateToolTip: {
       startDate: 'Biofix',
       endDate: 'Date through which degree-days are accumulated'
     },
-    getAfflictionName: () => 'Custom Model',
     defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD')
   })
 
   function submit() {
     customOverlaySubmitted.set(true)
-    customPanelState.update(state => ({
-      ...state,
-      selectedExtent: $mapExtent,
-      t_min: $tMinTmax.t_min,
-      t_max: $tMinTmax.t_max,
-      in_fahrenheit: $tMinTmax.in_fahrenheit,
-      loaded: true
-    }))
-    customPanelParams.set({
+    let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
       ...extents[$mapExtent]
-    })
+    }
+    customPanelState.update(state => ({
+      ...state,
+      selectedExtent: $mapExtent,
+      selectedModel: $selectedDDModel,
+      loaded: true,
+      params: params,
+    }))
+    customPanelParams.set(params)
     updateUrlParams()
   }
 
@@ -125,9 +121,11 @@
 
   onMount(() => {
     selectedPanel.set(thisPanel)
+    if ($customPanelState.loaded) selectedDDModel.set($customPanelState.selectedModel)
     updateUrlParams()
   })
 
+  // Submit if map extent doesn't match stored data
   $: if (
     $selectedPanel == thisPanel &&
     $customPanelState.loaded &&
@@ -138,31 +136,8 @@
 <div data-testid="custom-panel">
   <ModelParameters>
     <DatePicker />
-    <label class="tMinTMaxOptions" for="TminTMaxOptions"> Choose Tmin/Tmax from: </label>
-    <div class="tMinTMaxOptions">
-      <input
-        type="radio"
-        name="customTminTmax"
-        id="customTminTmax"
-        value="custom"
-        bind:group={tMinTmaxSelection}
-      />
-      <label for="customTminTmax">Custom values</label>
-      <input
-        type="radio"
-        name="tMinMaxModelSelection"
-        id="tMinMaxModelSelection"
-        value="modelSelection"
-        bind:group={tMinTmaxSelection}
-      />
-      <label for="tMinMaxModelSelection">Existing model</label>
-    </div>
-    {#if tMinTmaxSelection === 'modelSelection'}
-      <CustomModelSelection />
-      <TminMaxDisplay />
-    {:else}
-      <TminMaxInteractable on:tMinMaxValid={handleCustomTminTMax} />
-    {/if}
+    <CustomModelSelection />
+    <TminMaxDisplay />
     <Button
       title="Submit parameters. Data load may take several seconds."
       disabled={submitDisabled || $overlayLoading}
@@ -174,10 +149,6 @@
   {:else if $customOverlaySubmitted}
     <ModelParameters title={'Current Overlay Parameters'}>
       <SeverityGradient />
-    </ModelParameters>
-  {:else}
-    <ModelParameters title={'Gradient Type'}>
-      <p>Please submit model parameters</p>
     </ModelParameters>
   {/if}
 </div>

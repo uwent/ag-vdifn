@@ -427,31 +427,32 @@ western_flower_thrips = Insect.create!(
 )
 
 ## Generic DD models ###
-insect_models = Insect.all.pluck(:remote_name).uniq
-all_models = %w[
+# insect_models = Insect.all.pluck(:remote_name).uniq
+dd_models = %w[
   dd_32_none
   dd_39p2_86
+  dd_41_none
   dd_41_86
   dd_41_88
-  dd_41_none
   dd_42p8_86
-  dd_45_86
   dd_45_none
+  dd_45_86
   dd_48_none
+  dd_50_none
   dd_50_86
   dd_50_88
   dd_50_90
-  dd_50_none
   dd_52_none
   dd_54_92
   dd_55_92
 ]
 
-(all_models - insect_models).each do |remote_name|
+# Units in F
+dd_models.each do |remote_name|
   _, t_min, t_max = remote_name.split("_")
   t_min = t_min.tr("p", ".").to_f
   t_max = (t_max == "none") ? nil : t_max.tr("p", ".").to_f
-  Pest.create!(remote_name:, t_min:, t_max:)
+  DegreeDay.create!(remote_name:, t_min:, t_max:)
 end
 
 ## Crop filters ##

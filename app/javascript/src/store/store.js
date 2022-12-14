@@ -48,6 +48,15 @@ export const selectedAffliction = writable({
   link: undefined,
 })
 
+export const selectedDDModel = writable({
+  id: undefined,
+  name: undefined,
+  name_c: undefined,
+  remote_name: undefined,
+  t_max: undefined,
+  t_min: undefined
+})
+
 export const diseasePanelState = writable({
   currentAffliction: undefined,
   selectedExtent: undefined,
@@ -68,17 +77,16 @@ export const customPanelState = writable({
   severities: undefined,
   severityParams: undefined,
   selectedExtent: undefined,
+  selectedModel: undefined,
   selectedGradient: 1,
-  t_min: undefined,
-  t_max: undefined,
-  in_fahrenheit: undefined,
   loaded: false,
+  params: undefined,
  })
 
 export const tMinTmax = writable({
   t_min: undefined,
   t_max: undefined,
-  in_fahrenheit: undefined,
+  in_fahrenheit: true,
 })
 
 export const mapMinMapMax = writable({
