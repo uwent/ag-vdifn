@@ -20,7 +20,6 @@
   } from '../../store/store'
   import OverlayHelper from './ts/overlayHelper'
   import { SeverityParams } from '../common/ts/types'
-  import { get } from 'svelte/store'
 
   const { getMap, getGoogle } = getContext(mapKey)
   const map = getMap()
@@ -48,7 +47,7 @@
     overlayLoading.set(false)
   }
 
-  // TODO: switching panels that already have loaded data takes a long time
+  // Handle switching panel overlays
   selectedPanel.subscribe((selectedSeverity: string) => {
     let severities
     let severityParams
@@ -73,27 +72,27 @@
 
     switch (selectedSeverity) {
       case 'disease':
-        severities = get(diseasePanelState).severities
-        severityParams = get(diseasePanelState).severityParams
+        severities = $diseasePanelState.severities
+        severityParams = $diseasePanelState.severityParams
         if (!severities && !severityParams) return
         currentOverlay = diseaseOverlay
         break
       case 'insect':
-        severities = get(insectPanelState).severities
-        severityParams = get(insectPanelState).severityParams
+        severities = $insectPanelState.severities
+        severityParams = $insectPanelState.severityParams
         if (!severities && !severityParams) return
         currentOverlay = insectOverlay
         break
       case 'custom':
-        severities = get(customPanelState).severities
-        severityParams = get(customPanelState).severityParams
+        severities = $customPanelState.severities
+        severityParams = $customPanelState.severityParams
         if (!severities && !severityParams) return
-        let selectedGradient = get(customPanelState).selectedGradient
         currentOverlay = customOverlay
-        if (customOverlaySubmitted)
-          selectedGradient === 1
-            ? (gradientStore = get(twoPointGradientState))
-            : (gradientStore = get(threePointGradientState))
+        if (customOverlaySubmitted) {
+          gradientStore = ($customPanelState.selectedGradient == 1) ? 
+            $twoPointGradientState :
+            $threePointGradientState
+        }
         currentOverlay.updateOverlayGradient(gradientStore.gradient)
         break
     }

@@ -27,6 +27,16 @@ beforeEach(() => {
             { id: 45, name: 'caterpillar' }
           ]
         }
+      ],
+      customPanelData: [
+        {
+          id: 40,
+          name: "Base 50.0°F",
+          remote_name: "dd_50_none",
+          t_min: 50.0,
+          t_max: null,
+          name_c: "Base 10.0°C"
+        }
       ]
     }
   })

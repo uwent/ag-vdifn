@@ -100,15 +100,14 @@
       selectedExtent: $mapExtent,
       selectedModel: $selectedDDModel,
       loaded: true,
-      params: params,
     }))
     customPanelParams.set(params)
     updateUrlParams()
   }
 
-  function handleCustomTminTMax(event) {
-    submitDisabled = !event.detail.valid
-  }
+  // function handleCustomTminTMax(event) {
+  //   submitDisabled = !event.detail.valid
+  // }
 
   function updateUrlParams() {
     let title = 'AgVDIFN: Degree-day Map Viewer'

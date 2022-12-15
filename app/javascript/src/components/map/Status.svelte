@@ -2,7 +2,6 @@
   @import '../../scss/settings.scss';
 
   .model-status {
-    // text-transform: capitalize;
     font-style: italic;
     position: fixed;
     left: 0px;
@@ -23,7 +22,8 @@
     insectPanelState,
     selectedPanel,
     diseasePanelState,
-    customPanelState
+    customPanelState,
+    customPanelParams
   } from '../../store/store'
 </script>
 
@@ -33,12 +33,10 @@
   {:else if $selectedPanel == 'insect'}
     {$insectPanelState.currentAffliction === undefined ? 'No model submitted' : $insectPanelState.currentAffliction.name}
   {:else}
-    {#if $customPanelState.t_min === undefined}
+    {#if !$customPanelState.loaded}
       No model submitted
     {:else}
-      Custom model: 
-        {$customPanelState.t_min}/{!$customPanelState.t_max ? 'None' : $customPanelState.t_max}
-        {$customPanelState.in_fahrenheit ? '\u2109' : '\u2103'}
+      Degree day model: {$customPanelParams.t_min}{!$customPanelParams.t_max ? '' : `/${$customPanelParams.t_max}`}{$customPanelParams.in_fahrenheit ? '\u2109' : '\u2103'}
     {/if}
   {/if}
 </div>
