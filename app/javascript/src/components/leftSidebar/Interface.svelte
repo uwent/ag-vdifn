@@ -83,7 +83,7 @@
   let diseaseParams = { model: defaults.disease }
   let insectParams = { model: defaults.insect }
 
-  console.log('Launching VDIFN in ' + env + ' environment')
+  // console.log('Launching VDIFN in ' + env + ' environment')
 
   function parseUrlParams() {
     if (validPanels.includes(urlParams.get('panel'))) {

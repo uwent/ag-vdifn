@@ -40,10 +40,16 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
   import { DegreeDayModel } from '../common/ts/types'
-  import { panelKey, selectedDDModel, tMinTmax } from '../../store/store'
+  import {
+    panelKey,
+    customPanelState,
+    selectedDDModel,
+    tMinTmax,
+  } from '../../store/store'
   const { getModels } = getContext(panelKey)
   let ddModels: DegreeDayModel[] = []
   let defaultModel = "dd_50_86"
+  let modelId = 0
   
   function setDegreeDayModel(event) {
     const id = parseInt(event.target.value)
@@ -51,28 +57,25 @@
     selectedDDModel.set(model)
   }
 
-  function getCurrentModel(model: DegreeDayModel) {
-    let tmin = $tMinTmax.t_min
-    let tmax = $tMinTmax.t_max
-
-    if (model.id === undefined || model.t_min != tmin || model.t_max != tmax) {
-      let match = ddModels.find(model => {
-        return (model.t_min === tmin) && (model.t_max === tmax)
-      })
-      if (match) return match
-
-      match = ddModels.find(model => { return model.t_min === tmin })
-      if (match) return match
-
-      return ddModels.find(model => { return model.remote_name === defaultModel })
+  function getCurrentModel() {
+    // If loaded select the loaded model
+    if ($customPanelState.loaded) return $customPanelState.selectedModel
+    // If not loaded, select the model that was last selected
+    if ($selectedDDModel.id) return $selectedDDModel
+    // Try to find the default model
+    if (ddModels) {
+      let match = ddModels.find(model => { return model.remote_name === defaultModel })
+      return match ? match : ddModels[0]
     }
-    return model
   }
 
   onMount(() => {
     ddModels = getModels()
-    if (!ddModels) return
-    selectedDDModel.set(getCurrentModel($selectedDDModel))
+    let model = getCurrentModel()
+    if (model.id) {
+      selectedDDModel.set(model)
+      modelId = model.id
+    }
   })
 </script>
 
@@ -86,7 +89,7 @@
       id="dd-select"
       name="dd-select"
       title="Select model"
-      value={$selectedDDModel.id}
+      value={modelId}
     >
       {#each ddModels as { id, name, name_c }}
         <option value={id} name="dd-id">{$tMinTmax.in_fahrenheit ? name : name_c}</option
