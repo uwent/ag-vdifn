@@ -1,12 +1,17 @@
 class DegreeDay < Pest
   def f_to_c(temp)
-    return 0 if temp.nil?
-    ((temp.to_f - 32.0) * 5.0 / 9.0).round(1)
+    return if temp.nil?
+    val = ((temp.to_f - 32) * 5 / 9).round(1)
+    fmt(val)
   end
 
+  def fmt(num)
+    (num == num.to_i) ? num.to_i : num
+  end
+  
   def name
-    n = "Base #{t_min}°F"
-    n += ", Upper #{t_max}°F" unless t_max.nil?
+    n = "Base #{fmt(t_min)}°F"
+    n += ", Upper #{fmt(t_max)}°F" unless t_max.nil?
     n
   end
 
