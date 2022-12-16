@@ -9,7 +9,7 @@ import {
   CropWithInsects,
   DegreeDayModel
 } from './types'
-import { isDev, extents } from '../../../store/store'
+import { isDev } from '../../../store/store'
 import axios from 'axios'
 import DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
@@ -25,12 +25,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (isDev)
-        console.log(
-          'DB >> fetchDiseasePanel',
-          '\nEndpoint:', endpoint,
-          '\nResponse:', response
-        )
+      if (isDev) console.log('DB >> fetchDiseasePanel', '\nEndpoint:', endpoint, '\nResponse:', response)
       cropsWithAfflictions = response.data.map((cropWithDisease: CropWithDiseases) => {
         const { diseases, ...newData } = {
           ...cropWithDisease,
@@ -49,12 +44,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithAfflictions: CropWithAfflictions[] = []
       const response = await axios.get(endpoint)
-      if (isDev)
-        console.log(
-          'DB >> fetchInsectPanel',
-          '\nEndpoint:', endpoint,
-          '\nResponse:', response
-        )
+      if (isDev) console.log('DB >> fetchInsectPanel', '\nEndpoint:', endpoint, '\nResponse:', response)
       cropsWithAfflictions = response.data.map((cropWithInsect: CropWithInsects) => {
         const { insects, ...newData } = {
           ...cropWithInsect,
@@ -72,11 +62,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.DD_MODELS
     try {
       const response = await axios.get(endpoint)
-      if (isDev) console.log(
-        'DB >> fetchDDModels',
-        '\nEndpoint:', endpoint,
-        '\nResponse:', response
-      )
+      if (isDev) console.log('DB >> fetchDDModels', '\nEndpoint:', endpoint, '\nResponse:', response)
       let ddModels: DegreeDayModel[] = []
       ddModels = response.data.map((ddModel: DegreeDayModel) => {
         return ddModel
@@ -93,13 +79,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const severities: Severity[] = []
     try {
       const response = await axios.post(endpoint, params)
-      if (isDev)
-        console.log(
-          'DB >> fetchSeverities',
-          '\nEndpoint:', endpoint,
-          '\nParams:', params,
-          '\nResponse:', response
-        )
+      if (isDev) console.log('DB >> fetchSeverities', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       if (response.data.data) {
         response.data.data.forEach(data => {
           severities.push({
@@ -126,16 +106,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (isDev)
-        console.log(
-          'DB >> fetchSeverityLegend',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response
-        )
+      if (isDev) console.log('DB >> fetchSeverityLegend', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
       return []
@@ -148,16 +119,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.post(endpoint, params)
-      if (isDev)
-        console.log(
-          'DB >> fetchSeverityLegendInfo',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response
-        )
+      if (isDev) console.log('DB >> fetchSeverityLegendInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
       return ''
@@ -169,16 +131,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams }
     try {
       const response = await axios.post(endpoint, params)
-      if (isDev)
-        console.log(
-          'DB >> fetchPointDetails',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response
-        )
+      if (isDev) console.log('DB >> fetchPointDetails', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
       return ''
@@ -193,16 +146,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
     try {
       const response = await axios.post(endpoint, params)
-      if (isDev)
-        console.log(
-          'DB >> fetchPestInfo',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response
-        )
+      if (isDev) console.log('DB >> fetchPestInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
       return {

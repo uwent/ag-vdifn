@@ -132,21 +132,10 @@
     const queryModel = defaultModel
     if (queryModel) {
       modelId = getAfflictionId(queryModel)
-      if (isDev)
-        console.log(
-          "Model selection >> Specified model '" +
-            queryModel +
-            "' matched to id " +
-            modelId
-        )
+      if (isDev) console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
     } else {
       modelId = getAfflictionId(defaultModel)
-      if (isDev)
-        console.log(
-          "Model selection >> No model param specified, choosing default model '" +
-            queryModel +
-            "'"
-        )
+      if (isDev) console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
     }
   }
 
