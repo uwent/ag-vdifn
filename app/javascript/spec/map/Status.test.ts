@@ -15,21 +15,6 @@ beforeEach(() => {
   getText = getByText
 })
 
-describe('when insect panel selected', () => {
-  it('shows feedback when no model is submitted', async () => {
-    selectedPanel.set('insect')
-    await tick()
-    expect(getText('No model submitted')).toBeInTheDocument()
-  })
-
-  it('shows current affliction name', async () => {
-    selectedPanel.set('insect')
-    insectPanelState.set({ currentAffliction: { name: 'insect name' } })
-    await tick()
-    expect(getText('insect name')).toBeInTheDocument()
-  })
-})
-
 describe('when disease panel selected', () => {
   it('shows feedback when no model is submitted', async () => {
     selectedPanel.set('disease')
@@ -45,11 +30,29 @@ describe('when disease panel selected', () => {
   })
 })
 
-describe('when custom panel selected', () => {
-  it('shows tMin and TMax and temp scale', async () => {
-    selectedPanel.set('custom')
-    customPanelState.set({ t_min: 5, t_max: 10, in_fahrenheit: true })
+describe('when insect panel selected', () => {
+  it('shows feedback when no model is submitted', async () => {
+    selectedPanel.set('insect')
     await tick()
-    expect(getText('Custom model: 5/10 \u2109')).toBeInTheDocument()
+    expect(getText('No model submitted')).toBeInTheDocument()
+  })
+
+  it('shows current affliction name', async () => {
+    selectedPanel.set('insect')
+    insectPanelState.set({ currentAffliction: { name: 'insect name' } })
+    await tick()
+    expect(getText('insect name')).toBeInTheDocument()
+  })
+})
+
+describe('when custom panel selected', () => {
+  it('shows Tmin and Tmax and temp units', async () => {
+    selectedPanel.set('custom')
+    customPanelState.set({
+      loaded: true,
+      params: { t_min: 5, t_max: 10, in_fahrenheit: true },
+    })
+    await tick()
+    expect(getText('Degree day model: 5/10\u2109')).toBeInTheDocument()
   })
 })

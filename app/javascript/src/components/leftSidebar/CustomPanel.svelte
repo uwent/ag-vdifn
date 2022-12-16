@@ -99,6 +99,7 @@
       ...state,
       selectedExtent: $mapExtent,
       selectedModel: $selectedDDModel,
+      params: params,
       loaded: true,
     }))
     customPanelParams.set(params)

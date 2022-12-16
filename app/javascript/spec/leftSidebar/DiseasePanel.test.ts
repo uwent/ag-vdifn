@@ -60,7 +60,7 @@ it('should update disease panel state', async () => {
 
 it('sets context data for child elements', () => {
   expect(diseasePanel.$$.context.get(panelKey)).toEqual({
-    panelType: 'Disease',
+    panelType: 'disease',
     getCrops: expect.any(Function),
     dateToolTip: {
       startDate: expect.any(String),

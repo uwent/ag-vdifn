@@ -1,6 +1,6 @@
 import TwoPointGradient from '../../src/components/leftSidebar/TwoPointGradient.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
-import { mapMinMapMax, twoPointGradientState } from '../../src/store/store'
+import { mapRange, twoPointGradientState } from '../../src/store/store'
 
 let queryId
 let userMinInput: HTMLInputElement
@@ -9,7 +9,6 @@ let addButton
 let minusButton
 let updateButton
 let resetButton
-let mapRange
 
 const mapMin = 300
 const mapMax = 800
@@ -21,7 +20,7 @@ function to_tenths(x: number) {
 
 describe('without save state', () => {
   beforeEach(() => {
-    mapMinMapMax.set({ min: mapMin, max: mapMax })
+    mapRange.set({ min: mapMin, max: mapMax })
     twoPointGradientState.set({})
 
     const { queryAllByTestId, getByTitle, getByTestId } = render(TwoPointGradient)
@@ -33,14 +32,9 @@ describe('without save state', () => {
     minusButton = getByTestId('minusButton')
     updateButton = getByTestId('updateButton')
     resetButton = getByTestId('resetButton')
-    mapRange = getByTitle('Map range')
   })
 
   describe('sets up in initial state', () => {
-    it('displays map min and map max', () => {
-      expect(mapRange.textContent).toContain(`${mapMin} - ${mapMax}`)
-    })
-
     it('defaults to 5 severity levels', () => {
       expect(queryId('severity-row').length).toEqual(defaultSeverityLevels)
     })
@@ -180,7 +174,7 @@ describe('saving valid state', () => {
   const userValues = [350, 650]
 
   beforeEach(() => {
-    mapMinMapMax.set({ min: mapMin, max: mapMax })
+    mapRange.set({ min: mapMin, max: mapMax })
     twoPointGradientState.set({
       severityLevels: severityLevels,
       userValues: userValues,

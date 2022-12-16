@@ -79,9 +79,9 @@ export const customPanelState = writable({
   selectedExtent: undefined,
   selectedModel: undefined,
   selectedGradient: 1,
+  params: {},
   loaded: false,
-  params: undefined,
- })
+})
 
 export const tMinTmax = writable({
   t_min: undefined,
@@ -89,7 +89,7 @@ export const tMinTmax = writable({
   in_fahrenheit: true,
 })
 
-export const mapMinMapMax = writable({
+export const mapRange = writable({
   min: 0,
   max: 0,
 })

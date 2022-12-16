@@ -23,20 +23,39 @@
     selectedPanel,
     diseasePanelState,
     customPanelState,
-    customPanelParams
   } from '../../store/store'
+  let defaultStatus = 'No model submitted'
+  let status = defaultStatus
+
+  function getStatus(state) {
+    if (state.currentAffliction) return state.currentAffliction.name
+    return defaultStatus
+  }
+
+  function getDDStatus(state) {
+    if (state.loaded) {
+      let units = state.params.in_fahrenheit ? '\u2109' : '\u2103'
+      let tMaxText = state.params.t_max ? `/${state.params.t_max}` : ''
+      return 'Degree day model: ' + state.params.t_min + tMaxText + units
+    }
+    return defaultStatus
+  }
+
+  $: {
+    switch ($selectedPanel) {
+      case 'disease':
+        status = getStatus($diseasePanelState)
+        break
+      case 'insect':
+        status = getStatus($insectPanelState)
+        break
+      case 'custom':
+        status = getDDStatus($customPanelState)
+        break
+    }
+  }
 </script>
 
 <div class="model-status">
-  {#if $selectedPanel == 'disease'}
-    {$diseasePanelState.currentAffliction === undefined ? 'No model submitted' : $diseasePanelState.currentAffliction.name}
-  {:else if $selectedPanel == 'insect'}
-    {$insectPanelState.currentAffliction === undefined ? 'No model submitted' : $insectPanelState.currentAffliction.name}
-  {:else}
-    {#if !$customPanelState.loaded}
-      No model submitted
-    {:else}
-      Degree day model: {$customPanelParams.t_min}{!$customPanelParams.t_max ? '' : `/${$customPanelParams.t_max}`}{$customPanelParams.in_fahrenheit ? '\u2109' : '\u2103'}
-    {/if}
-  {/if}
+  {status}
 </div>

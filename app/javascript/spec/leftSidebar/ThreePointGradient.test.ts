@@ -1,6 +1,6 @@
 import ThreePointGradient from '../../src/components/leftSidebar/ThreePointGradient.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
-import { mapMinMapMax, threePointGradientState } from '../../src/store/store'
+import { mapRange, threePointGradientState } from '../../src/store/store'
 
 let queryId
 let userMinInput: HTMLInputElement
@@ -11,7 +11,6 @@ let addButton
 let minusButton
 let updateButton
 let resetButton
-let mapRange
 
 const mapMin = 100
 const mapMax = 1000
@@ -24,7 +23,7 @@ function to_tenths(x: number) {
 
 describe('without save state', () => {
   beforeEach(() => {
-    mapMinMapMax.set({ min: mapMin, max: mapMax })
+    mapRange.set({ min: mapMin, max: mapMax })
     threePointGradientState.set({})
 
     const { queryAllByTestId, getByTitle, getByTestId } = render(ThreePointGradient)
@@ -38,14 +37,9 @@ describe('without save state', () => {
     minusButton = getByTestId('minusButton')
     updateButton = getByTestId('updateButton')
     resetButton = getByTestId('resetButton')
-    mapRange = getByTitle('Map range')
   })
 
   describe('sets up initial state', () => {
-    it('displays map min and map max', () => {
-      expect(mapRange.textContent).toContain(`${mapMin} - ${mapMax}`)
-    })
-
     it('defaults to 5 severity levels', () => {
       expect(queryId('severity-row').length).toEqual(defaultSeverityRows)
     })
@@ -259,7 +253,7 @@ describe('saving valid state', () => {
   const userValues = [250, 350, 450, 550]
 
   beforeEach(() => {
-    mapMinMapMax.set({ min: mapMin, max: mapMax })
+    mapRange.set({ min: mapMin, max: mapMax })
     threePointGradientState.set({
       severityLevels: severityLevels,
       userValues: userValues,

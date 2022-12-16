@@ -12,7 +12,7 @@ import {
   selectedPanel,
   overlayGradient,
   overlayLoading,
-  mapMinMapMax
+  mapRange
 } from '../../src/store/store'
 import OverlayHelper from '../../src/components/map/ts/overlayHelper'
 import { Severity } from '../../src/components/common/ts/types'
@@ -43,7 +43,7 @@ const mockShowBounds = jest.fn()
 jest.mock('../../src/components/map/ts/overlayHelper')
 
 const overlayLoadingSpy = jest.spyOn(overlayLoading, 'set')
-const mapMinMapMaxSpy = jest.spyOn(mapMinMapMax, 'set')
+const mapRangeSpy = jest.spyOn(mapRange, 'set')
 // const customPanelStateSpy = jest.spyOn(customPanelState, 'set')
 
 beforeEach(() => {
@@ -65,15 +65,15 @@ beforeEach(() => {
       Component: SeverityOverlay,
       context_key: mapKey,
       context_value: {
-        getMap: () => {},
-        getGoogle: () => {}
+        getMap: () => { },
+        getGoogle: () => { }
       }
     }
   })
 })
 
 afterEach(() => {
-  mapMinMapMaxSpy.mockClear()
+  mapRangeSpy.mockClear()
 })
 
 afterAll(() => {
@@ -133,10 +133,10 @@ describe('updating overlay for custom panel params', () => {
     await expect(overlayLoadingSpy).toHaveBeenNthCalledWith(2, false)
   })
 
-  it('sets mapMinMapMax', async () => {
+  it('sets mapRange', async () => {
     customPanelParams.set(customSeverityParams)
     mockUpdateOverlay.mockResolvedValue({})
-    await expect(mapMinMapMaxSpy).toHaveBeenCalledWith({ max: 15, min: 10 })
+    await expect(mapRangeSpy).toHaveBeenCalledWith({ max: 15, min: 10 })
   })
 })
 
