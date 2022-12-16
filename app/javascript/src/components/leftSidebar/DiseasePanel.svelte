@@ -37,7 +37,7 @@
 
   // TODO: change 'Disease' to thisPanel
   setContext(panelKey, {
-    panelType: 'Disease',
+    panelType: 'disease',
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Start of date range',

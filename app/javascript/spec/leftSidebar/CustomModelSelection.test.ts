@@ -6,59 +6,59 @@ import SetContextTest from '../testComponents/SetContextTest.svelte'
 let data
 let getRole
 let getQuery
+let getLabel
 
 describe('when data present', () => {
   beforeEach(() => {
     data = [
       {
         id: 1,
-        name: 'corn',
-        afflictions: [
-          { id: 11, name: 'bug', t_min: 50, t_max: 86 },
-          { id: 12, name: 'beetle', t_min: 40, t_max: null }
-        ]
+        name: "Base 50.0°F",
+        remote_name: "dd_50_none",
+        t_min: 50.0,
+        t_max: null,
+        name_c: "Base 10.0°C"
       },
       {
         id: 2,
-        name: 'carrots',
-        afflictions: [
-          { id: 21, name: 'ladybug' },
-          { id: 22, name: 'fly' }
-        ]
-      }
+        name: "Base 50.0°F, Upper 86.0°F",
+        remote_name: "dd_50_86",
+        t_min: 50.0,
+        t_max: 86.0,
+        name_c: "Base 10.0°C, Upper 30.0°C"
+      },
     ]
 
-    const { getByRole, queryByRole } = render(SetContextTest, {
+    const { getByRole, queryByRole, getByLabelText } = render(SetContextTest, {
       props: {
         Component: CustomModelSelection,
         context_key: panelKey,
         context_value: {
-          getCrops: () => data,
-          getAfflictionName: () => 'Model'
+          getModels: () => data,
         }
       }
     })
     getRole = getByRole
     getQuery = queryByRole
+    getLabel = getByLabelText
   })
 
-  it('defaults crop and affliction values to first in their respective lists', () => {
-    expect(getRole('combobox', { name: 'Crop' })).toHaveValue('1')
-    expect(getRole('combobox', { name: 'Model' })).toHaveValue('11')
-  })
-
-  it('updates afflictions for selected crop', async () => {
-    const select: HTMLElement = getRole('combobox', { name: 'Crop' })
-    await fireEvent.change(select, { target: { value: '2' } })
-    expect(getRole('combobox', { name: 'Model' })).toHaveValue('21')
+  it('defaults to the 50/86 degree day model', () => {
+    let input = getRole('combobox', { name: 'Choose model' })
+    expect(input).toHaveValue('2')
   })
 
   it('shows tmin and tmax in the model selection box', () => {
-    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('bug')
-    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('(50/86')
-    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('beetle')
-    expect(getRole('combobox', { name: 'Model' })).toHaveTextContent('(40/None')
+    let input = getRole('combobox', { name: 'Choose model' })
+    expect(input).toHaveTextContent('Base 50.0°F, Upper 86.0°F')
   })
+
+  // it('shows the tmin and tmax values in the display', () => {
+  //   let tmin = getLabel('Tmin')
+  //   let tmax = getRole('Tmax')
+  //   expect(tmin).toHaveTextContent('50')
+  //   expect(tmin).toHaveTextContent('86')
+  // })
 })
 
 describe('when data not present', () => {
@@ -70,8 +70,7 @@ describe('when data not present', () => {
         Component: CustomModelSelection,
         context_key: panelKey,
         context_value: {
-          getCrops: () => data,
-          getAfflictionName: () => 'Model'
+          getModels: () => data,
         }
       }
     })
@@ -80,7 +79,7 @@ describe('when data not present', () => {
   })
 
   it('renders empty select box', () => {
-    expect(getRole('combobox', { name: 'Crop' })).toBeInTheDocument()
-    expect(getRole('combobox', { name: 'Model' })).toBeInTheDocument()
+    let input = getRole('combobox', { name: 'Choose model' })
+    expect(input).toBeInTheDocument()
   })
 })

@@ -95,7 +95,7 @@
   import GradientHelper from './ts/gradientHelper'
   import ColorHelper from '../../components/map/ts/colorHelper'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import { mapMinMapMax, twoPointGradientState } from '../../store/store'
+  import { mapRange, twoPointGradientState } from '../../store/store'
   import { get } from 'svelte/store'
 
   const _ = require('lodash')
@@ -115,12 +115,12 @@
   let intermediateRanges: number[][] = []
   let buttonsDisabled = false
 
-  $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+  $: setUserMinMax($mapRange.min, $mapRange.max)
 
   onMount(() => {
     const state = get(twoPointGradientState)
     if (_.size(state) > 0) {
-      if (state.mapMin === $mapMinMapMax.min && state.mapMax === $mapMinMapMax.max) {
+      if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
         // console.log('loading saved state')
         severityLevels = state.severityLevels
         userInputs = state.userValues
@@ -128,11 +128,11 @@
         updateOverlay()
       } else {
         // console.log('saved state present but map has changed')
-        setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+        setUserMinMax($mapRange.min, $mapRange.max)
       }
     } else {
       // console.log('no saved state found')
-      setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+      setUserMinMax($mapRange.min, $mapRange.max)
     }
   })
 
@@ -140,8 +140,8 @@
     twoPointGradientState.set({
       severityLevels,
       userValues,
-      mapMax: get(mapMinMapMax).max,
-      mapMin: get(mapMinMapMax).min,
+      mapMax: get(mapRange).max,
+      mapMin: get(mapRange).min,
       gradient: getGradient()
     })
   })
@@ -226,7 +226,7 @@
 
   // handle reset button
   function resetOverlay() {
-    setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+    setUserMinMax($mapRange.min, $mapRange.max)
   }
 
   // handle input updates
@@ -335,6 +335,3 @@
     </button>
   </div>
 </fieldset>
-<div title="Map range">
-  Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
-</div>

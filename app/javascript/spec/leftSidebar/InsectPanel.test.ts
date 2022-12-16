@@ -63,7 +63,7 @@ it('should dispatch submit params when button is clicked', async () => {
 
 it('sets context data for child elements', () => {
   expect(insectPanel.$$.context.get(panelKey)).toEqual({
-    panelType: 'Insect',
+    panelType: 'insect',
     getCrops: expect.any(Function),
     dateToolTip: {
       startDate: 'Biofix date for insect',

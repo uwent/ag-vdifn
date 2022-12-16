@@ -1,7 +1,7 @@
 import SeverityLegend from '../../src/components/rightSidebar/SeverityLegend.svelte'
 import { severityColors } from '../../src/components/common/ts/colors'
 import { render } from '@testing-library/svelte'
-import { mapMinMapMax } from '../../src/store/store'
+import { mapRange } from '../../src/store/store'
 import { tick } from 'svelte'
 import Color from 'color'
 
@@ -28,7 +28,7 @@ beforeEach(() => {
 })
 
 it('displays legend', async () => {
-  mapMinMapMax.set(null)
+  mapRange.set(null)
   await tick()
   for (severity of severities) {
     expect(getTestId('severity-level-' + severity.slug)).toBeInTheDocument()
@@ -36,7 +36,7 @@ it('displays legend', async () => {
 })
 
 it('show the right severity colors', async () => {
-  mapMinMapMax.set(null)
+  mapRange.set(null)
   await tick()
   for (severity of severities) {
     const div = getTestId('severity-color-' + severity.slug)

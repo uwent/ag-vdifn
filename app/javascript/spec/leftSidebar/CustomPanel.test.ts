@@ -8,7 +8,6 @@ import {
   customPanelParams,
   startDate,
   endDate,
-  afflictionValue,
   tMinTmax,
   customOverlaySubmitted,
   defaults
@@ -18,25 +17,40 @@ import { tick } from 'svelte'
 import * as moment from 'moment'
 
 let getText
-let getTestId
 let customPanel
 let submitSpy
 let selectedPanelSpy
+let queryId
+let dd1 = {
+  id: 1,
+  name: "Base 50.0°F",
+  remote_name: "dd_50_none",
+  t_min: 50.0,
+  t_max: null,
+  name_c: "Base 10.0°C"
+}
+let dd2 = {
+  id: 2,
+  name: "Base 50.0°F, Upper 86.0°F",
+  remote_name: "dd_50_86",
+  t_min: 50.0,
+  t_max: 86.0,
+  name_c: "Base 10.0°C, Upper 30.0°C"
+}
 
 beforeEach(() => {
   selectedPanelSpy = jest.spyOn(selectedPanel, 'set')
-  const { getByText, getByTestId, component } = render(CustomPanel, {
+  const { getByText, queryByTestId, component } = render(CustomPanel, {
     props: {
-      data: [{ id: 1, name: 'potato', afflictions: [{ id: 1, name: 'bug' }] }]
+      data: [dd1, dd2]
     }
   })
   submitSpy = jest.spyOn(customPanelParams, 'set')
   customPanel = component
   getText = getByText
-  getTestId = getByTestId
+  queryId = queryByTestId
   startDate.set('2000-10-10')
   endDate.set('2000-11-10')
-  afflictionValue.set(1)
   tMinTmax.set({ t_min: 1, t_max: 2, in_fahrenheit: true })
   customOverlaySubmitted.set(false)
 })
@@ -63,26 +77,30 @@ it('updates state on submit', async () => {
   const button = getText('Submit')
   await fireEvent.click(button)
   expect(get(customPanelState)).toEqual({
-    in_fahrenheit: true,
+    severities: undefined,
+    severyParams: undefined,
     selectedGradient: 1,
-    t_max: 2,
-    t_min: 1,
+    selectedExtent: defaults.extent,
+    selectedModel: dd2,
+    params: expect.any(Object),
     loaded: true,
-    selectedExtent: defaults.extent
   })
 })
 
-it('asks user to submit model parameters if overlay options not submitted', async () => {
+it('doesnt show the overlay options until submit', async () => {
   customOverlaySubmitted.set(false)
   await tick()
-  expect(getText('Please submit model parameters')).toBeInTheDocument()
+  expect(queryId('gradient-opts')).toBeNull()
+  customOverlaySubmitted.set(true)
+  await tick()
+  expect(queryId('gradient-opts')).toBeInTheDocument()
 })
 
 it('displays loading component if options are submitted and the overlay is loading', async () => {
   customOverlaySubmitted.set(true)
   overlayLoading.set(true)
   await tick()
-  expect(getTestId('loading')).toBeInTheDocument()
+  expect(queryId('loading')).toBeInTheDocument()
 })
 
 it('displays severity gradient options if options have been submitted', async () => {
@@ -95,13 +113,12 @@ it('displays severity gradient options if options have been submitted', async ()
 
 it('sets context data for child elements', () => {
   expect(customPanel.$$.context.get(panelKey)).toEqual({
-    panelType: 'Custom',
-    getCrops: expect.any(Function),
+    panelType: 'custom',
+    getModels: expect.any(Function),
     dateToolTip: {
       startDate: 'Biofix',
       endDate: 'Date through which degree-days are accumulated'
     },
-    getAfflictionName: expect.any(Function),
     defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD')
   })
 })

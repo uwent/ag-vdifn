@@ -18,12 +18,14 @@
       rgba(0, 176, 38, 1) 100%
     );
   }
+
   /* Customize the label (the container) */
   .gradient-type-field {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
   }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -92,23 +94,32 @@
     grid-template-columns: 1fr 1fr;
     justify-items: flex-start;
     padding: 0px 19% 0px;
-    margin-bottom: 10px;
+    padding-left: 0px;
+    font-size: small;
+  }
+
+  .note {
+    margin: 0.5em;
+    text-align: center;
+    font-style: italic;
+    font-size: small;
   }
 </style>
 
 <script lang="ts">
+  const moment = require('moment')
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
   import TwoPointGradient from './TwoPointGradient.svelte'
   import ThreePointGradient from './ThreePointGradient.svelte'
   import {
     overlayGradient,
-    customPanelParams,
     customOverlaySubmitted,
-    customPanelState
+    customPanelState,
+    mapRange
   } from '../../store/store'
-  import { onMount } from 'svelte'
-  import { get } from 'svelte/store'
-  const moment = require('moment')
   let gradient = 1
+  let rangeText = ''
 
   function updateOverlay(event) {
     overlayGradient.set(event.detail)
@@ -129,48 +140,56 @@
   })
 </script>
 
-{#if $customPanelParams.start_date}
-  <div class="submitted-params" title="submitted-params">
-    <div>Start Date:</div>
-    <div>{moment($customPanelParams.start_date).format('MM/DD/YYYY')}</div>
-    <div>End Date:</div>
-    <div>{moment($customPanelParams.end_date).format('MM/DD/YYYY')}</div>
-    <div>Tmin:</div>
-    <div>{$customPanelParams.t_min}</div>
-    <div>Tmax:</div>
-    <div>{$customPanelParams.t_max ? $customPanelParams.t_max : 'None'}</div>
-    <div>Units:</div>
-    <div>{$customPanelParams.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
+<div data-testid="gradient-opts">
+  {#if $customPanelState.params}
+    <fieldset>
+      <legend>Submitted Values</legend>
+      <div class="submitted-params" title="submitted-params">
+        <div>Start Date:</div>
+        <div>{moment($customPanelState.params.start_date).format('YYYY-MM-DD')}</div>
+        <div>End Date:</div>
+        <div>{moment($customPanelState.params.end_date).format('YYYY-MM-DD')}</div>
+        <div>Tmin:</div>
+        <div>{$customPanelState.params.t_min}</div>
+        <div>Tmax:</div>
+        <div>{$customPanelState.params.t_max || 'None'}</div>
+        <div>Units:</div>
+        <div>{$customPanelState.params.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
+      </div>
+    </fieldset>
+  {/if}
+  <fieldset class="gradient-type-field">
+    <legend>Gradient Type</legend>
+    <label for="gradient-2-point" class="container">
+      <input
+        id="gradient-2-point"
+        type="radio"
+        name="gradient-type"
+        title="gradient-2-point"
+        bind:group={gradient}
+        value={1}
+      />
+      <span id="gradient-2-point-display" class="gradient" />
+    </label>
+    <label for="gradient-3-point" class="container">
+      <input
+        id="gradient-3-point"
+        type="radio"
+        name="gradient-type"
+        title="gradient-3-point"
+        bind:group={gradient}
+        value={2}
+      />
+      <span id="gradient-3-point-display" class="gradient" />
+    </label>
+  </fieldset>
+  {#if gradient === 1}
+    <TwoPointGradient on:updateOverlay={updateOverlay} />
+  {:else}
+    <ThreePointGradient on:updateOverlay={updateOverlay} />
+  {/if}
+  <div title="Map range" class="note">
+    Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
   </div>
-{/if}
-<fieldset class="gradient-type-field">
-  <legend>Gradient Type</legend>
-  <label for="gradient-2-point" class="container">
-    <input
-      id="gradient-2-point"
-      type="radio"
-      name="gradient-type"
-      title="gradient-2-point"
-      bind:group={gradient}
-      value={1}
-    />
-    <span id="gradient-2-point-display" class="gradient" />
-  </label>
-  <label for="gradient-3-point" class="container">
-    <input
-      id="gradient-3-point"
-      type="radio"
-      name="gradient-type"
-      title="gradient-3-point"
-      bind:group={gradient}
-      value={2}
-    />
-    <span id="gradient-3-point-display" class="gradient" />
-  </label>
-</fieldset>
+</div>
 
-{#if gradient === 1}
-  <TwoPointGradient on:updateOverlay={updateOverlay} />
-{:else}
-  <ThreePointGradient on:updateOverlay={updateOverlay} />
-{/if}

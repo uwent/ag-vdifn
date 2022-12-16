@@ -1,14 +1,17 @@
 import SeverityGradient from '../../src/components/leftSidebar/SeverityGradient.svelte'
 import {
   panelKey,
-  mapMinMapMax,
+  mapRange,
   twoPointGradientState,
   threePointGradientState,
-  customPanelParams
+  customPanelState
 } from '../../src/store/store'
 import { render } from '@testing-library/svelte'
 import SetContextTest from '../testComponents/SetContextTest.svelte'
 import { tick } from 'svelte'
+
+const mapMin = 5
+const mapMax = 42
 
 let data
 let getRole
@@ -16,10 +19,7 @@ let getTitle
 
 describe('when data present', () => {
   beforeEach(() => {
-    mapMinMapMax.set({
-      max: 10,
-      min: 5
-    })
+    mapRange.set({ min: mapMin, max: mapMax })
     twoPointGradientState.set({})
     threePointGradientState.set({})
     data = [
@@ -36,7 +36,7 @@ describe('when data present', () => {
           { id: 6, name: 'grasshopper' },
           { id: 10, name: 'fly' }
         ]
-      }
+      },
     ]
 
     const { getByRole, getByTitle } = render(SetContextTest, {
@@ -57,16 +57,23 @@ describe('when data present', () => {
   })
 
   it('displays params once submitted', async () => {
-    customPanelParams.set({
-      start_date: '2020-10-10',
-      end_date: '2020-10-20',
-      t_min: 50,
-      t_max: null,
-      in_fahrenheit: true
+    customPanelState.set({
+      params: {
+        start_date: '2020-10-10',
+        end_date: '2020-10-20',
+        t_min: 50,
+        t_max: null,
+        in_fahrenheit: true
+      }
     })
     await tick()
     expect(getTitle('submitted-params').textContent).toContain(
-      'Start Date: 10/10/2020 End Date: 10/20/2020 Tmin: 50 Tmax: None Units: Fahrenheit'
+      'Start Date: 2020-10-10 End Date: 2020-10-20 Tmin: 50 Tmax: None Units: Fahrenheit'
     )
+  })
+
+  it('displays map min and map max', () => {
+    let mapRange = getTitle('Map range')
+    expect(mapRange.textContent).toContain(`${mapMin} - ${mapMax}`)
   })
 })

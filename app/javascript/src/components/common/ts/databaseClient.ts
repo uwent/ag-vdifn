@@ -6,7 +6,8 @@ import {
   SeverityParams,
   CropWithAfflictions,
   CropWithDiseases,
-  CropWithInsects
+  CropWithInsects,
+  DegreeDayModel
 } from './types'
 import { isDev, extents } from '../../../store/store'
 import axios from 'axios'
@@ -62,6 +63,25 @@ export default class DatabaseClient implements DatabaseClientInterface {
         return newData
       })
       return cropsWithAfflictions
+    } catch (e) {
+      return []
+    }
+  }
+
+  async fetchCustomPanel(): Promise<DegreeDayModel[]> {
+    const endpoint = ENDPOINTS.DD_MODELS
+    try {
+      const response = await axios.get(endpoint)
+      if (isDev) console.log(
+        'DB >> fetchDDModels',
+        '\nEndpoint:', endpoint,
+        '\nResponse:', response
+      )
+      let ddModels: DegreeDayModel[] = []
+      ddModels = response.data.map((ddModel: DegreeDayModel) => {
+        return ddModel
+      })
+      return ddModels
     } catch (e) {
       return []
     }

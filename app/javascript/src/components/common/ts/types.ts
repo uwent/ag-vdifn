@@ -75,6 +75,15 @@ export type CropWithAfflictions = {
   afflictions: Pest[]
 }
 
+export type DegreeDayModel = {
+  id: number
+  name: string
+  name_c: string
+  remote_name: string
+  t_min: number
+  t_max: number
+}
+
 export type Pest = {
   id: number
   name: string
