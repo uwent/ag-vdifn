@@ -116,9 +116,10 @@
     overlayGradient,
     customOverlaySubmitted,
     customPanelState,
-    mapMinMapMax
+    mapRange
   } from '../../store/store'
   let gradient = 1
+  let rangeText = ''
 
   function updateOverlay(event) {
     overlayGradient.set(event.detail)
@@ -139,54 +140,56 @@
   })
 </script>
 
-{#if $customPanelState.params}
-  <fieldset>
-    <legend>Submitted Values</legend>
-    <div class="submitted-params" title="submitted-params">
-      <div>Start Date:</div>
-      <div>{moment($customPanelState.params.start_date).format('YYYY-MM-DD')}</div>
-      <div>End Date:</div>
-      <div>{moment($customPanelState.params.end_date).format('YYYY-MM-DD')}</div>
-      <div>Tmin:</div>
-      <div>{$customPanelState.params.t_min}</div>
-      <div>Tmax:</div>
-      <div>{$customPanelState.params.t_max || 'None'}</div>
-      <div>Units:</div>
-      <div>{$customPanelState.params.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
-    </div>
+<div data-testid="gradient-opts">
+  {#if $customPanelState.params}
+    <fieldset>
+      <legend>Submitted Values</legend>
+      <div class="submitted-params" title="submitted-params">
+        <div>Start Date:</div>
+        <div>{moment($customPanelState.params.start_date).format('YYYY-MM-DD')}</div>
+        <div>End Date:</div>
+        <div>{moment($customPanelState.params.end_date).format('YYYY-MM-DD')}</div>
+        <div>Tmin:</div>
+        <div>{$customPanelState.params.t_min}</div>
+        <div>Tmax:</div>
+        <div>{$customPanelState.params.t_max || 'None'}</div>
+        <div>Units:</div>
+        <div>{$customPanelState.params.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
+      </div>
+    </fieldset>
+  {/if}
+  <fieldset class="gradient-type-field">
+    <legend>Gradient Type</legend>
+    <label for="gradient-2-point" class="container">
+      <input
+        id="gradient-2-point"
+        type="radio"
+        name="gradient-type"
+        title="gradient-2-point"
+        bind:group={gradient}
+        value={1}
+      />
+      <span id="gradient-2-point-display" class="gradient" />
+    </label>
+    <label for="gradient-3-point" class="container">
+      <input
+        id="gradient-3-point"
+        type="radio"
+        name="gradient-type"
+        title="gradient-3-point"
+        bind:group={gradient}
+        value={2}
+      />
+      <span id="gradient-3-point-display" class="gradient" />
+    </label>
   </fieldset>
-{/if}
-<fieldset class="gradient-type-field">
-  <legend>Gradient Type</legend>
-  <label for="gradient-2-point" class="container">
-    <input
-      id="gradient-2-point"
-      type="radio"
-      name="gradient-type"
-      title="gradient-2-point"
-      bind:group={gradient}
-      value={1}
-    />
-    <span id="gradient-2-point-display" class="gradient" />
-  </label>
-  <label for="gradient-3-point" class="container">
-    <input
-      id="gradient-3-point"
-      type="radio"
-      name="gradient-type"
-      title="gradient-3-point"
-      bind:group={gradient}
-      value={2}
-    />
-    <span id="gradient-3-point-display" class="gradient" />
-  </label>
-</fieldset>
-
-{#if gradient === 1}
-  <TwoPointGradient on:updateOverlay={updateOverlay} />
-{:else}
-  <ThreePointGradient on:updateOverlay={updateOverlay} />
-{/if}
-<div title="Map range" class="note">
-  Map range: {$mapMinMapMax.min} - {$mapMinMapMax.max} degree days
+  {#if gradient === 1}
+    <TwoPointGradient on:updateOverlay={updateOverlay} />
+  {:else}
+    <ThreePointGradient on:updateOverlay={updateOverlay} />
+  {/if}
+  <div title="Map range" class="note">
+    Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
+  </div>
 </div>
+

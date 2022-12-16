@@ -118,13 +118,13 @@
   import { panelKey, selectedAffliction, selectedDDModel, tMinTmax } from '../../store/store'
   import { f_to_c } from '../common/ts/utils'
   const { panelType } = getContext(panelKey)
-  let in_f = $tMinTmax.in_fahrenheit
-  let tMinF: number
-  let tMaxF: number
-  let tMinC: number
-  let tMaxC: number
-  let tMinText: string
-  let tMaxText: string
+  let in_f = true
+  let tMinF = 0
+  let tMaxF = 0
+  let tMinC = 0
+  let tMaxC = 0
+  let tMinText = ''
+  let tMaxText = ''
 
   // generate the temperature display text
   function makeText(temp) {
@@ -167,7 +167,6 @@
   }
 
   onMount(() => {
-
     setTminTmax((panelType == 'custom') ? $selectedDDModel : $selectedAffliction)
   })
 

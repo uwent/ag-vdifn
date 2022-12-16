@@ -11,7 +11,7 @@
     selectedPanel,
     overlayGradient,
     overlayLoading,
-    mapMinMapMax,
+    mapRange,
     mapExtent,
     bounds,
     twoPointGradientState,
@@ -121,7 +121,7 @@
 
   customPanelParams.subscribe(async (severityParams: SeverityParams) => {
     await updateOverlay(customOverlay, severityParams, 'custom')
-    mapMinMapMax.set({
+    mapRange.set({
       min: customOverlay.min || 0,
       max: customOverlay.max || 0
     })

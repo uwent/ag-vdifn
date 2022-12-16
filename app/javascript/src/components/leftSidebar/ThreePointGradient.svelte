@@ -100,7 +100,7 @@
   import GradientHelper from './ts/gradientHelper'
   import ColorHelper from '../../components/map/ts/colorHelper'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import { mapMinMapMax, threePointGradientState } from '../../store/store'
+  import { mapRange, threePointGradientState } from '../../store/store'
   import { get } from 'svelte/store'
 
   const _ = require('lodash')
@@ -123,12 +123,12 @@
   let intermediateRangesLower: number[][] = []
   let buttonsDisabled = false
 
-  $: setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+  $: setUserMinMax($mapRange.min, $mapRange.max)
 
   onMount(() => {
     const state = get(threePointGradientState)
     if (_.size(state) > 0) {
-      if (state.mapMin === $mapMinMapMax.min && state.mapMax === $mapMinMapMax.max) {
+      if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
         // console.log('loading saved state')
         severityLevels = state.severityLevels
         userInputs = state.userValues
@@ -136,11 +136,11 @@
         updateOverlay()
       } else {
         // console.log('saved state present but map has changed')
-        setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+        setUserMinMax($mapRange.min, $mapRange.max)
       }
     } else {
       // console.log('no saved state found')
-      setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+      setUserMinMax($mapRange.min, $mapRange.max)
     }
   })
 
@@ -148,8 +148,8 @@
     threePointGradientState.set({
       severityLevels,
       userValues,
-      mapMin: get(mapMinMapMax).min,
-      mapMax: get(mapMinMapMax).max,
+      mapMin: get(mapRange).min,
+      mapMax: get(mapRange).max,
       gradient: getGradient()
     })
   })
@@ -276,7 +276,7 @@
 
   // handle reset button
   function resetOverlay() {
-    setUserMinMax($mapMinMapMax.min, $mapMinMapMax.max)
+    setUserMinMax($mapRange.min, $mapRange.max)
   }
 
   // handle inputs
