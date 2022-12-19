@@ -15,7 +15,7 @@
     "chroma-js": "2.4.2",
     "color": "4.2.3",
     "dotenv": "16.0.3",
-    "esbuild": "0.16.7",
+    "esbuild": "0.16.9",
     "esbuild-envfile-plugin": "1.0.5",
     "esbuild-plugin-svgr": "1.0.1",
     "esbuild-svelte": "0.7.3",
