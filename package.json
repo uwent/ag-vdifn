@@ -52,7 +52,7 @@
     "@babel/preset-typescript": "7.18.6",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/svelte": "3.2.2",
-    "@types/jest": "29.2.4",
+    "@types/jest": "29.2.5",
     "@typescript-eslint/eslint-plugin": "5.47.1",
     "@typescript-eslint/parser": "5.47.1",
     "babel-plugin-dynamic-import-node": "2.3.3",
