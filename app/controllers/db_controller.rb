@@ -93,7 +93,11 @@ class DbController < ApplicationController
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
 
     tmin = in_f ? pest.t_min : f_to_c(pest.t_min)
-    tmax = pest.t_max.nil? ? "" : (in_f ? pest.t_max : f_to_c(pest.t_max))
+    tmax = if pest.t_max.nil?
+      ""
+    else
+      in_f ? pest.t_max : f_to_c(pest.t_max)
+    end
 
     render json: {
       info: info,

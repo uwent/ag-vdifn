@@ -8,7 +8,7 @@ class DegreeDay < Pest
   def fmt(num)
     (num == num.to_i) ? num.to_i : num
   end
-  
+
   def name
     n = "Base #{fmt(t_min)}°F"
     n += ", Upper #{fmt(t_max)}°F" unless t_max.nil?
