@@ -430,6 +430,7 @@ western_flower_thrips = Insect.create!(
 # insect_models = Insect.all.pluck(:remote_name).uniq
 dd_models = %w[
   dd_32_none
+  dd_38_75
   dd_39p2_86
   dd_41_none
   dd_41_86
