@@ -1,4 +1,4 @@
-<style type="scss">
+<style lang="scss">
   @import '../../scss/settings.scss';
 
   $colors: (

@@ -1,4 +1,4 @@
-<style global type="scss">
+<style global lang="scss">
   @import '../../node_modules/balloon-css/src/balloon.scss';
 
   html,

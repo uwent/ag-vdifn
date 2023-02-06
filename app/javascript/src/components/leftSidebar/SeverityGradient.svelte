@@ -1,4 +1,4 @@
-<style type="scss">
+<style lang="scss">
   #gradient-2-point-display {
     background: linear-gradient(
       90deg,
