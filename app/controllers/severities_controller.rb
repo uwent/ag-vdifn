@@ -67,18 +67,19 @@ class SeveritiesController < ApplicationController
     end
   end
 
+  # with freeze data
   def get_insect_data
-    freeze_data, totals = [
-      Thread.new { get_freeze_data(@end_date) },
-      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) }
-    ].map(&:value)
-    totals = add_freeze_data(totals, freeze_data)
+    totals = get_totals(@pest.remote_name, @start_date, @end_date)
+    if @end_date.month >= 11
+      freeze_data = get_freeze_data(@end_date)
+      totals = add_freeze_data(totals, freeze_data)
+    end
     @pest.severities_from_totals(totals, @end_date)
   end
 
   def get_botrytis_data
     totals = get_totals(@pest.remote_name, @start_date, @end_date)
-    if @end_date.month > 7
+    if @end_date.month >= 11
       freeze_data = get_freeze_data(@end_date)
       totals = add_freeze_data(totals, freeze_data)
     end

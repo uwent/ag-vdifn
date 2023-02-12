@@ -7,7 +7,11 @@ class OakWilt < Insect
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:total].to_f, point[:freeze], end_date)
+        severity: total_to_severity(
+          point[:total].to_f,
+          point[:freeze],
+          end_date
+        )
       }
     end
   end
@@ -29,7 +33,7 @@ class OakWilt < Insect
     sev -= 1 if end_date.yday >= 210
 
     # severity reduction from hard freeze
-    sev -= freeze_days
+    sev -= freeze_days if freeze_days
 
     # clip at zero
     [0, sev].max

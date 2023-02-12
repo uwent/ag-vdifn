@@ -4,7 +4,10 @@ class Insect < Pest
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:total].to_f, point[:freeze])
+        severity: total_to_severity(
+          point[:total].to_f,
+          point[:freeze]
+        )
       }
     end
   end
@@ -14,7 +17,7 @@ class Insect < Pest
     risk_array.each do |gen|
       sev = sev_ramp(gen[0], gen[1], gen[2], total) if total.between?(gen[0], gen[2])
     end
-    sev -= freeze_days
+    sev -= freeze_days if freeze_days
     [0, sev].max
   end
 
@@ -39,6 +42,6 @@ class Insect < Pest
   end
 
   def biofix_label
-    "Start date (Default: #{biofix_date.strftime("%b %-d")})"
+    "Biofix (Default: #{biofix_date.strftime("%b %-d")})"
   end
 end
