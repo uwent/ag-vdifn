@@ -193,22 +193,26 @@
     <button
       title="Set date range to past week"
       data-testid="button-past-week"
-      on:click={selectPastWeek}>Past week</button
-    >
+      on:click={selectPastWeek}>
+      Past week
+    </button>
     <button
       title="Set date range to past month"
       data-testid="button-past-month"
-      on:click={selectPastMonth}>Past month</button
-    >
+      on:click={selectPastMonth}>
+      Past month
+    </button>
     <button
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
-      on:click={selectThisYear}>This year</button
-    >
+      on:click={selectThisYear}>
+      This year
+    </button>
     <button
       title="Restore default date settings for this model"
       data-testid="button-defaults"
-      on:click={selectDefaults}>Defaults</button
-    >
+      on:click={selectDefaults}>
+      Defaults
+    </button>
   </div>
 </fieldset>
