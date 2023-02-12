@@ -92,16 +92,13 @@ class SeveritiesController < ApplicationController
   end
 
   def get_cercospora_data
-    two_day, seven_day = [
-      Thread.new { get_totals(@pest.remote_name, @end_date - 2.days, @end_date) },
-      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) }
-    ].map(&:value)
-
+    two_day = get_totals(@pest.remote_name, @end_date - 2.days, @end_date)
     two_day_hash = {}
     two_day.map do |point|
       two_day_hash[[point[:lat], point[:long]]] = point[:avg]
     end
 
+    seven_day = get_totals(@pest.remote_name, @end_date - 7.days, @end_date)
     grid = seven_day.map do |point|
       {
         lat: point[:lat],
@@ -115,16 +112,13 @@ class SeveritiesController < ApplicationController
   end
 
   def get_early_blight_data
-    seven_day, selected_dates = [
-      Thread.new { get_totals(@pest.remote_name, @end_date - 7.days, @end_date) },
-      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) }
-    ].map(&:value)
-
+    seven_day = get_totals(@pest.remote_name, @end_date - 7.days, @end_date)
     seven_day_hash = {}
     seven_day.map do |point|
       seven_day_hash[[point[:lat], point[:long]]] = point[:avg]
     end
 
+    selected_dates = get_totals(@pest.remote_name, @start_date, @end_date)
     grid = selected_dates.map do |point|
       {
         lat: point[:lat],
@@ -138,16 +132,13 @@ class SeveritiesController < ApplicationController
   end
 
   def get_late_blight_data
-    total, season_total = [
-      Thread.new { get_totals(@pest.remote_name, @start_date, @end_date) },
-      Thread.new { get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date) }
-    ].map(&:value)
-
+    total = get_totals(@pest.remote_name, @start_date, @end_date)
     total_hash = {}
     total.map do |point|
       total_hash[[point[:lat], point[:long]]] = point[:total]
     end
 
+    season_total = get_totals(@pest.remote_name, @end_date.beginning_of_year, @end_date)
     grid = season_total.map do |point|
       {
         lat: point[:lat],
@@ -158,7 +149,7 @@ class SeveritiesController < ApplicationController
     end
 
     # get freezing data in the fall/winter
-    unless (4..8) === @end_date.month
+    unless (3..10) === @end_date.month
       freeze_data = get_freeze_data(@end_date)
       grid = add_freeze_data(grid, freeze_data)
     end
@@ -176,15 +167,10 @@ class SeveritiesController < ApplicationController
       lat_range: @lat_range,
       long_range: @long_range
     }
-    opts = if pests.any?
-      opts.merge({
-        pest: pests.first.remote_name
-      })
+    if pests.any?
+      opts.merge!({pest: pests.first.remote_name})
     else
-      opts.merge({
-        t_base: t_min,
-        t_upper: t_max
-      })
+      opts.merge!({t_base: t_min, t_upper: t_max})
     end
     ag_weather_client.custom(opts)
   end
