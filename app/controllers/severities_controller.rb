@@ -168,9 +168,10 @@ class SeveritiesController < ApplicationController
       long_range: @long_range
     }
     if pests.any?
-      opts.merge!({pest: pests.first.remote_name})
+      opts[:pest] = pests.first.remote_name
     else
-      opts.merge!({t_base: t_min, t_upper: t_max})
+      opts[:t_base] = t_min
+      opts[:t_upper] = t_max
     end
     ag_weather_client.custom(opts)
   end
