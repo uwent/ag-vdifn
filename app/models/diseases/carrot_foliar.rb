@@ -4,7 +4,7 @@ class CarrotFoliar < Disease
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:total])
+        value: total_to_severity(point[:total])
       }
     end
   end

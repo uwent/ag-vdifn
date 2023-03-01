@@ -4,7 +4,7 @@ class CercosporaLeafSpot < Disease
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:avg7], point[:avg2])
+        value: total_to_severity(point[:avg7], point[:avg2])
       }
     end
   end
@@ -15,6 +15,8 @@ class CercosporaLeafSpot < Disease
     return 2 if avg7 >= 1.5 || avg2 >= 2
     return 1 if avg7 >= 0.5 || avg2 >= 1
     0
+  rescue
+    nil
   end
 
   def severity_legend

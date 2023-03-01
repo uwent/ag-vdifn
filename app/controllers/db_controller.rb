@@ -10,11 +10,11 @@ class DbController < ApplicationController
 
   def point_details
     @panel = params[:panel]
-    @lat = params[:lat].to_f.round(1)
-    @long = params[:long].to_f.round(1)
+    @lat = params[:latitude].to_f.round(1)
+    @long = params[:longitude].to_f.round(1)
     @start_date = start_date
     @end_date = end_date
-    @in_f = params[:in_fahrenheit] == "true"
+    @in_f = params[:in_f] == "true"
     @pest = get_pest
     query = {
       lat: @lat,
@@ -22,6 +22,7 @@ class DbController < ApplicationController
       start_date: @start_date,
       end_date: @end_date
     }
+    response = {}
 
     case @panel
     when "disease"
@@ -48,9 +49,8 @@ class DbController < ApplicationController
     else
       return
     end
-    puts response.inspect
 
-    @data = response[:data] || []
+    @data = response || []
     @data.each { |d| d[:date] = parse_date(d[:date]) }
     @selected_data = @data.select { |h| h[:date] >= @start_date }
 
@@ -112,7 +112,7 @@ class DbController < ApplicationController
   end
 
   def dd_models
-    @models = DegreeDay.all.select(:id, :name, :remote_name, :t_min, :t_max)
+    @models = DegreeDay.all.order(:id).select(:id, :name, :remote_name, :t_min, :t_max)
     render json: @models, methods: :name_c
   end
 

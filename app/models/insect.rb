@@ -4,8 +4,8 @@ class Insect < Pest
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(
-          point[:total].to_f,
+        value: total_to_severity(
+          point[:value],
           point[:freeze]
         )
       }

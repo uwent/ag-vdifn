@@ -2,7 +2,7 @@
   Grid Point Details (<%= @lat %>&deg;N, <%= @long %>&deg;W)
 </div>
 
-<div class="iw-content">
+<div id="iw-content">
   <% if @data.size > 0 && @partial %>
     <%= render partial: @partial %>
   <% else %>

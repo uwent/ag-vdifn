@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   private
 
   def start_date
-    params[:start_date].blank? ? Date.yesterday - 7.days : Date.parse(params[:start_date])
+    Date.parse(params[:start_date])
+  # rescue
+  #   Date.yesterday - 7.days
   end
 
   def end_date

@@ -14,31 +14,45 @@ class AgWeather
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.pest_grid(query)
-    fetch(PEST_GRID, query:)
-  end
+  ## Grids - returns hash where [lat, long] = value ##
 
-  def self.pest_point(query)
-    fetch(PEST_POINT, query:, timeout: 10)
+  def self.pest_grid(query)
+    resp = fetch(PEST_GRID, query:)
+    data = resp[:data] || {}
+    parse_grid_keys(data)
   end
 
   def self.dd_grid(query)
-    fetch(DD_GRID, query:)
-  end
-
-  def self.dd_point(query)
-    fetch(DD_POINT, query:, timeout: 10)
+    resp = fetch(DD_GRID, query:)
+    data = resp[:data] || {}
+    parse_grid_keys(data)
   end
 
   def self.freeze_grid(query)
-    fetch(FREEZE_GRID, query:)
+    resp = fetch(FREEZE_GRID, query:)
+    data = resp[:data] || {}
+    parse_grid_keys(data)
   end
 
-  private
+  ## Point data - returns array of hashes ##
 
-  # def get_options(options)
-  #   options.each_with_object({}) { |q, h|
-  #     h[q[0].to_s.underscore] = q[1]
-  #   }
-  # end
+  def self.pest_point(query)
+    resp = fetch(PEST_POINT, query:, timeout: 10)
+    resp[:data] || []
+  end
+
+  def self.dd_point(query)
+    resp = fetch(DD_POINT, query:, timeout: 10)
+    resp[:data] || []
+  end
+
+  ## Utils ##
+
+  def self.parse_grid_keys(grid)
+    hash = {}
+    grid.each do |key, value|
+      hash[JSON.parse(key.to_s)] = value
+    end
+    hash
+  end
 end

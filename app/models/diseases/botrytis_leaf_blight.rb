@@ -4,7 +4,10 @@ class BotrytisLeafBlight < Disease
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(point[:total], point[:freeze] || 0)
+        value: total_to_severity(
+          point[:total],
+          point[:freeze] || 0
+        )
       }
     end
   end
