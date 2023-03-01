@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :db, only: [:index], export: true do
     collection do
+      get "point_details"
       post "point_details"
       post "severity_legend"
       post "severity_legend_info"
@@ -26,5 +27,5 @@ Rails.application.routes.draw do
   root to: "application#index"
 
   # redirect all wayward routes to home
-  get "*path", to: redirect("/")
+  get "*path", to: redirect("/") unless Rails.env.development?
 end

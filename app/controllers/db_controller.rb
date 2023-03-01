@@ -9,61 +9,51 @@ class DbController < ApplicationController
   # end
 
   def point_details
-    @pest = get_pest
-    @latitude = params[:latitude].to_f.round(1)
-    @longitude = params[:longitude].to_f.round(1)
-    @t_min = params[:t_min]
-    @t_max = params[:t_max].nil? ? "None" : params[:t_max]
-    @in_fahrenheit = params[:in_fahrenheit]
+    @panel = params[:panel]
+    @lat = params[:lat].to_f.round(1)
+    @long = params[:long].to_f.round(1)
     @start_date = start_date
+    @end_date = end_date
+    @in_f = params[:in_fahrenheit] == "true"
+    @pest = get_pest
+    query = {
+      lat: @lat,
+      long: @long,
+      start_date: @start_date,
+      end_date: @end_date
+    }
 
-    case params[:panel]
-
-    when "custom"
-      @model_value = "Custom"
-      params = {
-        lat: @latitude,
-        long: @longitude,
-        t_base: t_min,
-        t_upper: t_max,
-        start_date: @start_date,
-        end_date: end_date
-      }
-      response = ag_weather_client.custom_point_details(params)
-      @data = response[:data] || []
-
-    when "insect"
-      @model_value = @pest.name
-      params = {
-        pest: @pest.remote_name,
-        lat: @latitude,
-        long: @longitude,
-        start_date: @start_date,
-        end_date: end_date
-      }
-      response = ag_weather_client.point_details(params)
-      @data = response[:data] || []
-
+    case @panel
     when "disease"
-      params = {
-        pest: @pest.remote_name,
-        lat: @latitude,
-        long: @longitude,
-        start_date: end_date.beginning_of_year,
-        end_date: end_date
-      }
-      response = ag_weather_client.point_details(params)
-      data = response[:data] || []
-      @data = data.collect do |d|
-        d[:date] = begin
-          d[:date].to_date
-        rescue
-          d[:date]
-        end
-        d
+      query[:pest] = @pest.remote_name
+      response = AgWeather.pest_point(query.compact)
+      if @pest.is_a?(EarlyBlight)
+        @partial = "infobox_pdays"
+        @units = "P-days"
+      else
+        @partial = "infobox_dsv"
+        @units = "DSVs"
       end
-      @selected = @data.select { |h| h[:date] >= @start_date }
+    when "insect"
+      query[:model] = @pest.remote_name
+      @base = @pest.t_min
+      @upper = @pest.t_max
+      response = AgWeather.dd_point(query.compact)
+      @partial = "infobox_dd"
+    when "custom"
+      query[:base] = @base = params[:t_min]
+      query[:upper] = @upper = params[:t_max]
+      response = AgWeather.dd_point(query.compact)
+      @partial = "infobox_dd"
+    else
+      return
     end
+    puts response.inspect
+
+    @data = response[:data] || []
+    @data.each { |d| d[:date] = parse_date(d[:date]) }
+    @selected_data = @data.select { |h| h[:date] >= @start_date }
+
     render layout: false
   end
 
@@ -140,5 +130,11 @@ class DbController < ApplicationController
     any_crop = Crop.new(id: 0, name: "Any")
     any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name.to_s <=> y.name.to_s }
     any_crop
+  end
+
+  def parse_date(date)
+    Date.parse(date)
+  rescue
+    date
   end
 end

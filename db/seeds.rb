@@ -59,7 +59,7 @@ botrytis_leaf_blight = BotrytisLeafBlight.create!(
 alfalfa_weevil = Insect.create!(
   name: "Alfalfa Weevil",
   local_name: "alfalfa-weevil",
-  remote_name: "dd_48_none",
+  remote_name: "dd_48",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 48, t_max: nil,
   risk_array: [[300, 504, 814]],
@@ -111,7 +111,7 @@ black_cutworm = Insect.create!(
 # bmsb = Insect.create!(
 #   name: "Brown Marmorated Stink Bug",
 #   local_name: "bmsb",
-#   remote_name: "dd_50_none",
+#   remote_name: "dd_50",
 #   biofix_mm: 4, biofix_dd: 15,
 #   t_min: 50, t_max: nil,
 #   risk_array: [[148, 686, 3000]],
@@ -147,7 +147,7 @@ cabbage_maggot = Insect.create!(
     [360, 600, 1521],
     [1881, 2121, 3042]
   ],
-  info: "<p>Cabbage maggots (<i>Delia radicum</i>) are early season pests that feed on the roots and lower stems of all cruciferous crops and weeds. Wounds produced by this feeding can create entry points for several cole crop diseases. Early season transplants and spring roots crops are damaged most severely.</p><p>The adult cabbage maggot is an ash gray, bristly fly that resembles a housefly but is half as long with black stripes on its thorax. The larvae are only 1/3-inch long, white and have no legs and a body that tapers toward the head. Cabbage maggots appear similar to seed corn maggots, but cabbage maggot prefers to feed on the roots of cole crops while seed corn maggot prefers to feed on seeds and seedlings of corn and cucurbits.</p><p>Cabbage maggots feed both internally and on the surface of roots. Their tunneling provides a point of entry into the plant for pathogens such as soft rot bacteria and the blackleg fungus. Maggots can be especially damaging to seedlings, injuring the growing point of the root, and stunting plant growth. Affected seedlings and young transplants may become off-color or wilt during hot weather. Cabbage maggots thrive in wet, cool conditions, and injury to crops is most likely during first and third generations.</p>",
+  info: "<p>Cabbage maggots (<i>Delia radicum</i>) are early season pests that feed on the roots and lower stems of all cruciferous crops and weeds. Wounds produced by this feeding can create entry points for several cole crop diseases. Early season transplants and spring roots crops are damaged most severely.</p><p>The adult cabbage maggot is an ash gray, bristly fly that resembles a housefly but is half as long with black stripes on its thorax. The larvae are only 1/3-inch long, white and have no legs and a body that tapers toward the head. Cabbage maggots appear similar to seed corn maggots, but cabbage maggot prefers to feed on the roots of cole crops while seed corn maggot prefers to feed on seeds and seedlings of corn and cucurbits.</p><p>Cabbage maggots feed both internally and on the surface of roots. Their tunneling provides a point of entry into the plant for pathogens such as soft rot bacteria and the blackleg fungus. Maggots can be especially damaging to seedlings, injuring the growing point of the root, and stunting plant growth. Affected seedlings and young transplants may become off-color or wilt during hot weather. Cabbage maggots thrive in wet, cool conditions, and injury to crops is most likely during first and third generations.</p>",
   severity_info: "Spring adult emergence begins around 360 FDD with peak emergence at around 600 FDD. Management actions targeting adults is recommended at this time. Adults will lay eggs from 750-1521 FDD when spring flight concludes.",
   photo: "cabbage-maggot.jpg",
   link: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD. Second generation adult emergence begins around 1880 FDD and peaks around 2120 FDD, with egg-laying occurring from 2270 FDD through 3040 FDD."
@@ -156,7 +156,7 @@ cabbage_maggot = Insect.create!(
 colorado_potato_beetle = Insect.create!(
   name: "Colorado Potato Beetle",
   local_name: "cpb",
-  remote_name: "dd_52_none",
+  remote_name: "dd_52",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [
@@ -185,7 +185,7 @@ corn_earworm = Insect.create!(
 corn_rootworm = Insect.create!(
   name: "Corn Rootworm",
   local_name: "corn-rootworm",
-  remote_name: "dd_52_none",
+  remote_name: "dd_52",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [[329, 472, 636]],
@@ -214,14 +214,14 @@ european_corn_borer = Insect.create!(
 flea_beetle_crucifer = Insect.create!(
   name: "Flea Beetle (Crucifer)",
   local_name: "crucifer-flea-beetle",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [
     [820, 965, 1155],
     [1640, 1785, 1975]
   ],
-  info: "<p>Flea beetles (Tribe Alticini) are an early-season pest commonly found on all members of the cole crop group, as well as spinach, beets, potatoes, and eggplant.  There are several different species of flea beetle that pose problems early in the season when they are considered occasional pests. Host plants of many of the flea beetles are easily identified by their common names. For example, the crucifer flea beetle attacks cole crops and mustards while the eggplant flea beetle is commonly associated with eggplant.</p><p>Common Wisconsin flea beetles include the cruicfer, eggplant, horseradish, pale-striped, potato, spinach, and striped varieties. All have characteristically large hind legs that give adults the ability to jump. Adult flea beetles range in size from about 1/10 - 1/5 inch. Larvae are delicate and thread-like with white bodies and brown heads.</p><p>Adults feed on both leaf surfaces, but usually on the underside where they chew small, circular holes through to the upper cuticle. This cuticle often remains in place for some time before trying and falling out. The circular holes give the plant a “shot-gun” appearance. Heavy feeding on young plants may reduce yields or even kill plants in severe cases. Crops grown for their foliage such as kale, bok choy, spinach, or mustards may be rendered unmarketable by flea beetle damage. Larvae feed on the roots and tubers of susceptible plants but don’t often cause economic damage. Larvae of the horseradish flea beetle also mine the stem and leaf veins. In addition, many are vectors of plant pathogens.</p>",
+  info: "<p>Flea beetles (Tribe Alticini) are an early-season pest commonly found on all members of the cole crop group, as well as spinach, beets, potatoes, and eggplant.  There are several different species of flea beetle that pose problems early in the season when they are considered occasional pests. Host plants of many of the flea beetles are easily identified by their common names. For example, the crucifer flea beetle attacks cole crops and mustards while the eggplant flea beetle is commonly associated with eggplant.</p><p>Common Wisconsin flea beetles include the cruicfer, eggplant, horseradish, pale-striped, potato, spinach, and striped varieties. All have characteristically large hind legs that give adults the ability to jump. Adult flea beetles range in size from about 1/10 - 1/5 inch. Larvae are delicate and thread-like with white bodies and brown heads.</p><p>Adults feed on both leaf surfaces, but usually on the underside where they chew small, circular holes through to the upper cuticle. This cuticle often remains in place for some time before trying and falling out. The circular holes give the plant a “shot-gun” appearance. Heavy feeding on young plants may reduce yields or even kill plants in severe cases. Crops grown for their foliage such as kale, bok choy, spinach, or mustards may be rendered unmarketable by flea beetle damage. Larvae feed on the roots and tubers of susceptible plants but don't often cause economic damage. Larvae of the horseradish flea beetle also mine the stem and leaf veins. In addition, many are vectors of plant pathogens.</p>",
   severity_info: "Adult flea beetles are most damaging with two generations typical in Wisconsin. First generation adults develop around 820 FDD and feed through around 1155 FDD. Second generation adults emerge around 1640 FDD and feed through around 1975 FDD.",
   photo: "flea-beetle.jpg",
   link: "https://vegento.russell.wisc.edu/pests/flea-beetles/"
@@ -230,11 +230,11 @@ flea_beetle_crucifer = Insect.create!(
 flea_beetle_mint = Insect.create!(
   name: "Flea Beetle (Mint)",
   local_name: "mint-flea-beetle",
-  remote_name: "dd_41_none",
+  remote_name: "dd_41",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   risk_array: [[550, 740, 900]],
-  info: "<p>Flea beetles (Tribe Alticini) are an early-season pest commonly found on all members of the cole crop group, as well as spinach, beets, potatoes, and eggplant.  There are several different species of flea beetle that pose problems early in the season when they are considered occasional pests. Host plants of many of the flea beetles are easily identified by their common names. For example, the crucifer flea beetle attacks cole crops and mustards while the eggplant flea beetle is commonly associated with eggplant.</p><p>Common Wisconsin flea beetles include the cruicfer, eggplant, horseradish, pale-striped, potato, spinach, and striped varieties. All have characteristically large hind legs that give adults the ability to jump. Adult flea beetles range in size from about 1/10 - 1/5 inch. Larvae are delicate and thread-like with white bodies and brown heads.</p><p>Adults feed on both leaf surfaces, but usually on the underside where they chew small, circular holes through to the upper cuticle. This cuticle often remains in place for some time before trying and falling out. The circular holes give the plant a “shot-gun” appearance. Heavy feeding on young plants may reduce yields or even kill plants in severe cases. Crops grown for their foliage such as kale, bok choy, spinach, or mustards may be rendered unmarketable by flea beetle damage. Larvae feed on the roots and tubers of susceptible plants but don’t often cause economic damage. Larvae of the horseradish flea beetle also mine the stem and leaf veins. In addition, many are vectors of plant pathogens.</p>",
+  info: "<p>Flea beetles (Tribe Alticini) are an early-season pest commonly found on all members of the cole crop group, as well as spinach, beets, potatoes, and eggplant.  There are several different species of flea beetle that pose problems early in the season when they are considered occasional pests. Host plants of many of the flea beetles are easily identified by their common names. For example, the crucifer flea beetle attacks cole crops and mustards while the eggplant flea beetle is commonly associated with eggplant.</p><p>Common Wisconsin flea beetles include the cruicfer, eggplant, horseradish, pale-striped, potato, spinach, and striped varieties. All have characteristically large hind legs that give adults the ability to jump. Adult flea beetles range in size from about 1/10 - 1/5 inch. Larvae are delicate and thread-like with white bodies and brown heads.</p><p>Adults feed on both leaf surfaces, but usually on the underside where they chew small, circular holes through to the upper cuticle. This cuticle often remains in place for some time before trying and falling out. The circular holes give the plant a “shot-gun” appearance. Heavy feeding on young plants may reduce yields or even kill plants in severe cases. Crops grown for their foliage such as kale, bok choy, spinach, or mustards may be rendered unmarketable by flea beetle damage. Larvae feed on the roots and tubers of susceptible plants but don't often cause economic damage. Larvae of the horseradish flea beetle also mine the stem and leaf veins. In addition, many are vectors of plant pathogens.</p>",
   severity_info: "Mint flea beetle adults emerge around 1475 FDD, with activity peaking around 1675 FDD and ending around 1880 FDD.",
   photo: "flea-beetle.jpg",
   link: "https://vegento.russell.wisc.edu/pests/flea-beetles/"
@@ -243,7 +243,7 @@ flea_beetle_mint = Insect.create!(
 imported_cabbageworm = Insect.create!(
   name: "Imported Cabbageworm",
   local_name: "imported-cabbageworm",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [
@@ -259,7 +259,7 @@ imported_cabbageworm = Insect.create!(
 japanese_beetle = Insect.create!(
   name: "Japanese Beetle",
   local_name: "japanese-beetle",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[970, 1600, 2150]],
@@ -272,7 +272,7 @@ japanese_beetle = Insect.create!(
 lygus_bug = Insect.create!(
   name: "Tarnished Plant Bug (Lygus Bug)",
   local_name: "tarnished-plant-bug",
-  remote_name: "dd_52_none",
+  remote_name: "dd_52",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [[275, 1000, 2000]],
@@ -285,7 +285,7 @@ lygus_bug = Insect.create!(
 mint_root_borer = Insect.create!(
   name: "Mint Root Borer",
   local_name: "mint-root-borer",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 4, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[430, 1280, 2150]],
@@ -298,7 +298,7 @@ mint_root_borer = Insect.create!(
 oak_wilt = OakWilt.create!(
   name: "Oak Wilt vectors",
   local_name: "oak-wilt",
-  remote_name: "dd_41_none",
+  remote_name: "dd_41",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 41, t_max: nil,
   info: "<p><b>Oak Wilt</b> is a lethal disease caused by the invasive fungus <i>Bretziella fagacearum</i>, which is transmitted aboveground by sap beetles (Family Nitidulidae). Two major sap beetle vectors of Oak Wilt in Wisconsin are <i>Colopterus truncatus</i> and <i>Carpophilus sayi</i>, whose combined abundance and thus risk of transmitting Oak Wilt can be modeled using a degree-day model with base temperature 41 degrees Fahrenheit.</p><p>Oak Wilt transmission risk begins at 5% <i>C. truncatus</i> beetle flight (231 FDD) and remains elevated through 95% beetle flight (2172 FDD) or July 15, whichever is earlier. Extreme risk occurs during the 10%-90% beetle flight period of <i>C. truncatus</i> (283-1792 FDD). Transmission risk is substantially reduced after July 15 due to reduction in fungal spore abundance and changes in beetle behavior.</p><p>Wounding, pruning, or harvesting oaks should be avoided during periods of elevated transmission risk. If an oak is wounded, consider applying wound dressing immediately to wounds and the last three growth rings of cut stumps. Though not scientifically proven, herbicide application to stumps is believed to make the stump less suitable for pathogen infection.</p><p><b>Forest setting:</b> if your stand is in a county that has oak wilt OR within 6 miles of a county with oak wilt, any activities that may wound oaks should only be considered under certain conditions.</p>",
@@ -359,7 +359,7 @@ spotted_wing = Insect.create!(
 squash_vine_borer = Insect.create!(
   name: "Squash Vine Borer",
   local_name: "squash-vine-borer",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[750, 900, 1000]],
@@ -382,12 +382,13 @@ stalk_borer = Insect.create!(
   link: "https://vegento.russell.wisc.edu/pests/"
 )
 
+# https://ipm.ucanr.edu/PHENOLOGY/ma-variegated_cutworm.html
 variegated_cutworm = Insect.create!(
   name: "Variegated Cutworm",
   local_name: "variegated-cutworm",
-  remote_name: "dd_41_88",
+  remote_name: "dd_45_80p1",
   biofix_mm: 5, biofix_dd: 1,
-  t_min: 41, t_max: 88,
+  t_min: 45, t_max: 80.1,
   risk_array: [[900, 1450, 2100]],
   info: "<p>These are the larval stage (caterpillar) of night-flying moths. They are whitish gray to brown worms, ranging from 1/2 to 2 inches long. They feed almost exclusively at night and hide in the soil during the day. All cutworms curl to a characteristic tight ball when exposed, making them easy to identify. Most cutworms cut plants off at or slightly below the soil surface, making recent transplants especially susceptible. Eventually, plants become too thick and tough for cutworms to feed. Adult females are attracted to tall grasses for egg laying, and cutworm numbers tend to be higher in weedy or trashy fields.</p><p>Almost all commercial vegetable crops such as asparagus, beets, onions, carrots, celery, and potatoes can be attacked by cutworms. It is very difficult to predict when and where an infestation will spring up, and pre-plant insecticide treatments will not control heavy cutworm infestations. Scouting fields on a weekly basis is the best method for monitoring cutworm activity. If damaging populations are found, a “rescue” treatment will be needed. Bait formulations are the preferred treatment if conditions are dry, whereas both baits and sprays can be used when the cutworms are feeding at the soil surface.</p>",
   severity_info: "Egg-laying peaks around 900 FDD with larval populations active from around 1150 FDD through 1900 FDD, with end of larval stage around 2100 FDD.",
@@ -398,7 +399,7 @@ variegated_cutworm = Insect.create!(
 western_bean_cutworm = Insect.create!(
   name: "Western Bean Cutworm",
   local_name: "western-bean-cutworm",
-  remote_name: "dd_50_none",
+  remote_name: "dd_50",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 50, t_max: nil,
   risk_array: [[1320, 1420, 1535]],
@@ -411,7 +412,7 @@ western_bean_cutworm = Insect.create!(
 western_flower_thrips = Insect.create!(
   name: "Western Flower Thrips",
   local_name: "western-flower-thrips",
-  remote_name: "dd_45_none",
+  remote_name: "dd_45",
   biofix_mm: 1, biofix_dd: 1,
   t_min: 45, t_max: nil,
   risk_array: [
@@ -429,21 +430,21 @@ western_flower_thrips = Insect.create!(
 ## Generic DD models ###
 # insect_models = Insect.all.pluck(:remote_name).uniq
 dd_models = %w[
-  dd_32_none
+  dd_32
   dd_38_75
   dd_39p2_86
-  dd_41_none
+  dd_41
   dd_41_86
   dd_41_88
   dd_42p8_86
-  dd_45_none
+  dd_45
   dd_45_86
-  dd_48_none
-  dd_50_none
+  dd_48
+  dd_50
   dd_50_86
   dd_50_88
   dd_50_90
-  dd_52_none
+  dd_52
   dd_54_92
   dd_55_92
 ]
@@ -452,7 +453,7 @@ dd_models = %w[
 dd_models.each do |remote_name|
   _, t_min, t_max = remote_name.split("_")
   t_min = t_min.tr("p", ".").to_f
-  t_max = (t_max == "none") ? nil : t_max.tr("p", ".").to_f
+  t_max = t_max.tr("p", ".").to_f if t_max
   DegreeDay.create!(remote_name:, t_min:, t_max:)
 end
 

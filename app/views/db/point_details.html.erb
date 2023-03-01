@@ -1,7 +1,11 @@
-<% if @pest.is_a?(EarlyBlight) %>
-  <%= render 'infobox_pdays' %>
-<% elsif @pest.is_a?(Disease) %>
-  <%= render 'infobox_dsv' %>
-<% else %>
-  <%= render 'infobox_dd' %>
-<% end %>
+<div class="iw-title">
+  Grid Point Details (<%= @lat %>&deg;N, <%= @long %>&deg;W)
+</div>
+
+<div class="iw-content">
+  <% if @data.size > 0 && @partial %>
+    <%= render partial: @partial %>
+  <% else %>
+    <p style="text-align: center;">No data to display.</p>
+  <% end %>
+</div>

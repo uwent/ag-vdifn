@@ -50,10 +50,6 @@ class ApplicationController < ActionController::Base
     ((temp.to_f - 32.0) * 5.0 / 9.0).round(1)
   end
 
-  def ag_weather_client
-    AgWeather::Client.new
-  end
-
   def get_pest
     if params[:pest_id]
       @pest ||= Pest.find(params[:pest_id])
