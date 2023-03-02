@@ -2,23 +2,28 @@
 
 class LateBlight < Disease
   def severities_from_totals(grid)
-    grid.map do |point|
-      freezing = (point[:freeze] || 0) > 0
-      severity = freezing ? 0 : total_to_severity(point[:total], point[:season_total])
+    grid.collect do |point|
       {
         lat: point[:lat],
         long: point[:long],
-        severity:
+        value: total_to_severity(
+          point[:selected_total],
+          point[:season_total],
+          point[:freeze] || 0
+        )
       }
     end
   end
 
-  def total_to_severity(total, season_total)
+  def total_to_severity(total, season_total, freezing)
+    return 0 if freezing > 0
     return 4 if total >= 21 && season_total >= 30
     return 3 if total >= 14 && season_total >= 30
     return 2 if total >= 3 || season_total >= 30
     return 1 if total >= 1 && season_total < 30
     0
+  rescue
+    nil
   end
 
   def severity_legend
