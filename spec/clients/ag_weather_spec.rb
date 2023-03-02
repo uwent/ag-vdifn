@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe AgWeather::Client do
+RSpec.describe AgWeather do
   let(:start_date) { Date.today - 14.days }
   let(:end_date) { Date.today }
   let(:client) { AgWeather::Client.new }

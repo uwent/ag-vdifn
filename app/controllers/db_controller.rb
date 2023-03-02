@@ -9,7 +9,7 @@ class DbController < ApplicationController
     @long = params[:longitude].to_f.round(1)
     @start_date = start_date
     @end_date = end_date
-    @in_f = params[:in_f] == "true"
+    @in_f = params[:in_fahrenheit]
     @pest = get_pest
     @base = t_min
     @upper = t_max
@@ -17,7 +17,8 @@ class DbController < ApplicationController
       lat: @lat,
       long: @long,
       start_date: @start_date,
-      end_date: @end_date
+      end_date: @end_date,
+      units: @in_f ? "F" : "C"
     }.compact
     
     @data = get_data_for(@panel)
@@ -62,8 +63,8 @@ class DbController < ApplicationController
     @severity_col = true
     data.collect do |day|
       severity = @pest.total_to_severity(day[:cumulative_value], date: day[:date])
-      sev_text = @pest.severity_legend[severity][:name]
-      day[:severity] = sev_text
+      day[:severity] = @pest.severity_legend[severity][:name]
+      day[:severity_class] = "severity-#{@pest.severity_legend[severity][:slug]}"
       day
     end
   end
@@ -87,7 +88,7 @@ class DbController < ApplicationController
 
   def pest_info
     pest = Pest.find(params[:pest_id])
-    in_f = params[:in_fahrenheit] == "true"
+    in_f = params[:in_fahrenheit]
     info = pest.info
     info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: "100px")) unless pest.photo.blank?
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?

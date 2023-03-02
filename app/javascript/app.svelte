@@ -1,6 +1,13 @@
 <style global lang="scss">
   @import '../../node_modules/balloon-css/src/balloon.scss';
 
+  // severity colors for point details
+  $very_low: #00cc00;
+  $low: #7dff23;
+  $medium: #ffd700;
+  $high: #ff8000;
+  $very_high: #cc0000;
+
   html,
   body {
     height: 100%;
@@ -68,6 +75,8 @@
     padding: 10px;
   }
 
+  // Point details info window //
+
   #iw-container {
     width: 275px;
     height: 350px;
@@ -79,6 +88,21 @@
     overflow-x: visible;
     height: 303px;
     font-size: 9pt;
+
+    table th, table td {
+      text-align: center;
+    }
+  }
+
+  .iw-title {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    background-color: #48b5e9;
+    color: white;
+    margin: 1px;
+    border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
   }
 
   #loading {
@@ -93,16 +117,22 @@
     background-color: #ebefef;
   }
 
-  .iw-title {
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 400;
-    padding: 10px;
-    background-color: #48b5e9;
-    color: white;
-    margin: 1px;
-    border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
+  .info-icon {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 9px;
+    display: inline-flex;
+    justify-content: center;
   }
+
+  .severity-very_low { background: $very_low; }
+  .severity-low { background: $low; }
+  .severity-medium { background: $medium; }
+  .severity-high { background: $high; }
+  .severity-very_high { background: $very_high; }
+
 </style>
 
 <script lang="ts">

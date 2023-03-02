@@ -4,21 +4,21 @@
 <%= render partial: "recent_totals" %>
 
 <div class="weather-details">
-  <table>
+  <table id="point-details">
     <thead>
       <tr>
         <th>Date</th>
         <th>Mean Temp.</th>
-        <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="Longer daily periods of high relative humidity contribute to disease progression.">
+        <th data-balloon-length="medium" data-balloon-pos="down" aria-label="Longer daily periods of high relative humidity contribute to disease progression.">
           Hours High RH <div class="info-icon">?</div>
         </th>
-        <th class="weather-details-rh" data-balloon-length="medium" data-balloon-pos="down" aria-label="High temperatures during periods of high relative humidity contribute to disease progression.">
+        <th data-balloon-length="medium" data-balloon-pos="down" aria-label="High temperatures during periods of high relative humidity contribute to disease progression.">
           Mean Temp. (High RH) <div class="info-icon">?</div>
         </th>
-        <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
+        <th data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
           Daily DSVs <div class="info-icon">?</div>
         </th>
-        <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
+        <th data-balloon-length="medium" data-balloon-pos="down-right" aria-label="Disease Severity Values are calculated by using temperature and leaf wetness (or relative humidity) duration (hours). Values range from 0-4. Accumulation of threshold DSV levels trigger fungicide/pesticide applications.">
           Cumulative DSVs <div class="info-icon">?</div>
         </th>
       </tr>
@@ -27,12 +27,12 @@
       <% @data.reverse.each do |day| %>
         <tr>
           <td class="odd"><%= day[:date] %></td>
-          <td><%= convert_temp(day[:avg_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
+          <td><%= day[:avg_temp].round(1) %>&deg;<%= temp_symbol() %></td>
           <td class="odd"><%= day[:hours_hi_rh] %></td>
           <% if day[:hours_hi_rh] == 0 %>
             <td>-</td>
           <% else %>
-            <td><%= convert_temp(day[:avg_temp_hi_rh]).round(1) %>&deg;<%= temp_symbol() %></td>
+            <td><%= day[:avg_temp_hi_rh].round(1) %>&deg;<%= temp_symbol() %></td>
           <% end %>
           <td class="odd"><%= day[:value] %></td>
           <td><%= day[:cumulative_value] %></td>
