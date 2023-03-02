@@ -96,9 +96,7 @@ class SeveritiesController < ApplicationController
   end
 
   def get_custom_data
-    grid = get_dd_grid(base: @base, upper: @upper)
-    puts grid.last(10).inspect
-    grid
+    get_dd_grid(base: @base, upper: @upper)
   end
 
   def get_botrytis_data
