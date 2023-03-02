@@ -3,17 +3,13 @@ class Pest < ApplicationRecord
   has_many :crops, through: :crop_pests
   attr_accessor :end_date
 
-  def severities_from_totals(totals, end_date)
-    # totals.map do |point|
-    #   {
-    #     lat: point[:lat],
-    #     long: point[:long],
-    #     severity: total_to_severity(point[:total].to_f, point[:freeze], end_date)
-    #   }
-    # end
+  def severities_from_totals(*args)
   end
 
-  def total_to_severity
+  def total_to_severity(*args)
+  end
+
+  def severity_legend
   end
 
   def biofix_date

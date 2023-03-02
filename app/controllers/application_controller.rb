@@ -8,16 +8,16 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def start_date
-    Date.parse(params[:start_date])
-  rescue
-    nil
-  end
-
   def end_date
     Date.parse(params[:end_date])
   rescue
-    nil
+    Date.yesterday
+  end
+
+  def start_date
+    Date.parse(params[:start_date])
+  rescue
+    end_date.beginning_of_year
   end
 
   def lat_range
@@ -29,12 +29,21 @@ class ApplicationController < ActionController::Base
   end
 
   def in_f
-    params[:in_fahrenheit].present? && params[:in_fahrenheit] == true
+    if params[:in_fahrenheit].present? && params[:in_fahrenheit] == false
+      false
+    else
+      true
+    end
+  end
+
+  def units
+    in_f ? "F": "C"
   end
 
   def t_min
     val = params[:t_min]
     if val.present?
+      val = val.to_f
       in_f ? val : c_to_f(val)
     else
       nil
@@ -44,6 +53,7 @@ class ApplicationController < ActionController::Base
   def t_max
     val = params[:t_max]
     if val.present?
+      val = val.to_f
       in_f ? val : c_to_f(val)
     else
       nil

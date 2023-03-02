@@ -6,7 +6,8 @@ class PointDetailsController < ApplicationController
     @long = params[:longitude].to_f.round(1)
     @start_date = start_date
     @end_date = end_date
-    @in_f = params[:in_fahrenheit]
+    @in_f = in_f
+    @units = units
     @pest = get_pest
     @base = t_min
     @upper = t_max
@@ -15,7 +16,7 @@ class PointDetailsController < ApplicationController
       long: @long,
       start_date: @start_date,
       end_date: @end_date,
-      units: @in_f ? "F" : "C"
+      units:
     }.compact
     
     @data = get_data_for(@panel)
@@ -60,8 +61,10 @@ class PointDetailsController < ApplicationController
     @severity_col = true
     data.collect do |day|
       severity = @pest.total_to_severity(day[:cumulative_value], date: day[:date])
-      day[:severity] = @pest.severity_legend[severity][:name]
-      day[:severity_class] = "severity-#{@pest.severity_legend[severity][:slug]}"
+      if severity
+        day[:severity] = @pest.severity_legend[severity]&.dig(:name)
+        day[:severity_class] = "severity-#{@pest.severity_legend[severity][:slug]}"
+      end
       day
     end
   end

@@ -27,7 +27,7 @@ class Insect < Pest
       {name: "Medium", slug: "medium", description: "Medium likelihood of pest presence or damage"},
       {name: "High", slug: "high", description: "High likelihood of pest presence or damage"},
       {name: "Very High", slug: "very_high", description: "Very high likelihood of pest presence or damage"}
-    ]
+    ].freeze
   end
 
   def sev_ramp(start, peak, stop, total)

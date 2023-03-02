@@ -1,6 +1,6 @@
 <h3 class="weather-details-title"><%= @pest.name %></h3>
 
-<%= render partial: "recent_totals" %>
+<%= render partial: "dsv_totals" %>
 
 <div class="weather-details">
   <table>
@@ -9,10 +9,16 @@
         <th>Date</th>
         <th>Min Temp.</th>
         <th>Max Temp.</th>
-        <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="P-days (or physiological days) are calculated from daily min and max temperatures.">
+        <th
+          data-balloon-length="medium"
+          data-balloon-pos="down-right"
+          aria-label="P-days (or physiological days) are calculated from daily min and max temperatures.">
           Daily P-Days <div class="info-icon">?</div>
         </th>
-        <th class="weather-details-dsv" data-balloon-length="medium" data-balloon-pos="down-right" aria-label="The accumulation of daily P-Days in a season can be used to predict the onset of early blight risk.">
+        <th
+          data-balloon-length="medium"
+          data-balloon-pos="down-right"
+          aria-label="The accumulation of daily P-Days in a season can be used to predict the onset of early blight risk.">
           Cumulative P-Days <div class="info-icon">?</div>
         </th>
       </tr>

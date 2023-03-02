@@ -6,17 +6,17 @@
   <div>
     <b>Date range:</b> <%= @data.first[:date] %> to <%= @data.last[:date] %> (<%= @data.count %> days)
     <br>
-    <b>Degree day total:</b> <%= convert_dds(@data.last[:cumulative_value]).round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
+    <b>Degree day total:</b> <%= @data.last[:cumulative_value]&.round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
     <% if @data.size >= 14 %>
-      <% avg = convert_dds(get_total(@data.last(14)) / 14.0).round(1) %>
+      <% avg = (get_total(@data.last(14)) / 14.0).round(1) %>
       <br><b>14-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
     <% end %>
     <% if @data.size >= 7 %>
-      <% avg = convert_dds(get_total(@data.last(7)) / 7.0).round(1) %>
+      <% avg = (get_total(@data.last(7)) / 7.0).round(1) %>
       <br><b>7-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
     <% end %>
     <% if @data.size >= 2 %>
-      <% avg = convert_dds(get_total(@data.last(2)) / 2.0).round(1) %>
+      <% avg = (get_total(@data.last(2)) / 2.0).round(1) %>
       <br><b>2-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
     <% end %>
   </div>
@@ -26,7 +26,7 @@
   <table>
     <thead>
       <tr>
-        <th onclick="reverseTable()">Date</th>
+        <th>Date</th>
         <th>Min Temp.</th>
         <th>Max Temp.</th>
         <th
@@ -58,10 +58,10 @@
       <% @data.reverse.each do |day| %>
         <tr>
           <th class="odd"><%= day[:date] %></th>
-          <td><%= day[:min_temp].round(1) %>&deg;<%= temp_symbol() %></td>
-          <td class="odd"><%= day[:max_temp].round(1) %>&deg;<%= temp_symbol() %></td>
+          <td><%= day[:min_temp]&.round(1) %>&deg;<%= temp_symbol() %></td>
+          <td class="odd"><%= day[:max_temp]&.round(1) %>&deg;<%= temp_symbol() %></td>
           <td><%= day[:value].round(2) %></td>
-          <td class="odd"><%= day[:cumulative_value].round(1) %></td>
+          <td class="odd"><%= day[:cumulative_value]&.round(1) %></td>
           <% if @severity_col %>
             <td class=<%= day[:severity_class] %>><%= day[:severity] %></td>
           <% end %>

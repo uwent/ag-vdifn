@@ -2,7 +2,7 @@
   <div>
     <b>Current season:</b> <%= "#{@data.first[:date].strftime('%b %-d')} to #{@data.last[:date].strftime('%b %-d, %Y')} (#{@data.size} days)" %>
     <% total = @data.last[:cumulative_value] %><br>
-    <b>Season total <%= @units %>:</b> <%= total.round(1) %><br>
+    <b>Season total <%= @units %>:</b> <%= total&.round(1) %><br>
     <br>
     <b>Selected dates:</b> <%= "#{@selected_data.first[:date].strftime('%b %-d')} to #{@selected_data.last[:date].strftime('%b %-d')} (#{@selected_data.size} days)" %><br>
     <b>Selected total <%= @units %>:</b> <%= get_total(@selected_data) %><br>
