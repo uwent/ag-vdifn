@@ -95,14 +95,14 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.STATION_DETAILS, async (req, res, ctx) => {
-    const { name } = await req.json()
-    if (name === "error") {
-      return res(ctx.status(500))
-    } else {
-      return res(ctx.status(200), ctx.json("string"))
-    }
-  }),
+  // rest.post(ENDPOINTS.STATION_DETAILS, async (req, res, ctx) => {
+  //   const { name } = await req.json()
+  //   if (name === "error") {
+  //     return res(ctx.status(500))
+  //   } else {
+  //     return res(ctx.status(200), ctx.json("string"))
+  //   }
+  // }),
 
   rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
     return res(
