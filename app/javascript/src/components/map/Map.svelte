@@ -26,9 +26,10 @@
     width: 10px;
     height: 10px;
     border: 1px solid black;
-    text-align: center;
     border-radius: 50%;
     font-size: 9px;
+    display: inline-flex;
+    justify-content: center;
   }
 </style>
 

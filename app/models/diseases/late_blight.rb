@@ -9,14 +9,14 @@ class LateBlight < Disease
         value: total_to_severity(
           point[:selected_total],
           point[:season_total],
-          point[:freeze] || 0
+          freezing: point[:freeze]
         )
       }
     end
   end
 
-  def total_to_severity(total, season_total, freezing)
-    return 0 if freezing > 0
+  def total_to_severity(total, season_total, freezing: nil)
+    return 0 if freezing && freezing > 0
     return 4 if total >= 21 && season_total >= 30
     return 3 if total >= 14 && season_total >= 30
     return 2 if total >= 3 || season_total >= 30
@@ -28,11 +28,11 @@ class LateBlight < Disease
 
   def severity_legend
     [
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of disease (accumulated DSVs ≥ 21 and season accumulated DSVs > 30)"},
-      {name: "High", slug: "high", description: "High likelihood of disease (accumulated DSVs 14-20 and season accumulated DSVs > 30)"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of disease (accumulated DSVs 3-14 or season accumulated DSVs > 30)"},
+      {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (DSVs = 0 and season DSVs < 30"},
       {name: "Low", slug: "low", description: "Low likelihood of disease (accumulated DSVs 1-2 and season accumulated DSVs < 30)"},
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (DSVs = 0 and season DSVs < 30"}
+      {name: "Medium", slug: "medium", description: "Medium likelihood of disease (accumulated DSVs 3-14 or season accumulated DSVs > 30)"},
+      {name: "High", slug: "high", description: "High likelihood of disease (accumulated DSVs 14-20 and season accumulated DSVs > 30)"},
+      {name: "Very High", slug: "very_high", description: "Very high likelihood of disease (accumulated DSVs ≥ 21 and season accumulated DSVs > 30)"}
     ]
   end
 

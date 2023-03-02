@@ -14,32 +14,32 @@ class SeveritiesController < ApplicationController
       long_range: @long_range
     }.compact
 
-    puts @opts
-
-    pest_type = @pest.class.name
-    grid = []
-
-    case pest_type
-    when "Insect", "OakWilt"
-      grid = get_insect_data
-    when "CarrotFoliar"
-      grid = get_carrot_foliar_data
-    when "CercosporaLeafSpot"
-      grid = get_cercospora_data
-    when "BotrytisLeafBlight"
-      grid = get_botrytis_data
-    when "EarlyBlight"
-      grid = get_early_blight_data
-    when "LateBlight"
-      grid = get_late_blight_data
-    when "Custom"
-      grid = get_custom_data
-    end
-
+    grid = get_data_for(@pest.class.name)
     render json: grid
   end
 
   private
+
+  def get_data_for(pest)
+    case pest
+    when "Insect", "OakWilt"
+      get_insect_data
+    when "CarrotFoliar"
+      get_carrot_foliar_data
+    when "CercosporaLeafSpot"
+      get_cercospora_data
+    when "BotrytisLeafBlight"
+      get_botrytis_data
+    when "EarlyBlight"
+      get_early_blight_data
+    when "LateBlight"
+      get_late_blight_data
+    when "Custom"
+      get_custom_data
+    else
+      []
+    end
+  end
 
   def hash_to_array(grid)
     grid.collect do |key, value|
@@ -52,13 +52,14 @@ class SeveritiesController < ApplicationController
     end
   end
 
+  # data received as hash: [lat, long] => value
   def get_dd_grid(**args)
     opts = @opts.merge(args)
     data = AgWeather.dd_grid(opts)
     hash_to_array(data)
   end
 
-  # option to leave as hash or convert to array
+  # data received as hash: [lat, long] => value or hash
   def get_pest_grid(**args)
     opts = @opts.merge(args)
     opts[:pest] = @pest.remote_name
@@ -91,11 +92,13 @@ class SeveritiesController < ApplicationController
   def get_insect_data
     grid = get_dd_grid(model: @pest.remote_name)
     grid = add_freeze_data?(grid)
-    @pest.severities_from_totals(totals, @end_date)
+    @pest.severities_from_totals(grid, @end_date)
   end
 
   def get_custom_data
-    get_dd_grid(base: @base, upper: @upper)
+    grid = get_dd_grid(base: @base, upper: @upper)
+    puts grid.last(10).inspect
+    grid
   end
 
   def get_botrytis_data

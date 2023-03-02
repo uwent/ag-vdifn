@@ -29,34 +29,35 @@ class ApplicationController < ActionController::Base
   end
 
   def in_f
-    params[:in_f].present? && params[:in_f] == true
+    params[:in_fahrenheit].present? && params[:in_fahrenheit] == true
   end
 
   def t_min
     val = params[:t_min]
     if val.present?
-      in_f ? c_to_f(val) : val
+      in_f ? val : c_to_f(val)
     else
       nil
     end
   end
 
   def t_max
-    if !params[:in_fahrenheit].nil? && params[:t_max].present? && !params[:in_fahrenheit] && params[:t_max] != "None"
-      c_to_f(params[:t_max])
+    val = params[:t_max]
+    if val.present?
+      in_f ? val : c_to_f(val)
     else
-      (params[:t_max].nil? || params[:t_max] === "None") ? nil : params[:t_max].to_f
+      nil
     end
   end
 
   def c_to_f(temp)
     return 0 if temp.nil?
-    ((temp.to_f * 9.0 / 5.0) + 32.0).round(1)
+    ((temp.to_f * 9.0 / 5) + 32).round(1)
   end
 
   def f_to_c(temp)
     return 0 if temp.nil?
-    ((temp.to_f - 32.0) * 5.0 / 9.0).round(1)
+    ((temp.to_f - 32) * 5.0 / 9).round(1)
   end
 
   def get_pest

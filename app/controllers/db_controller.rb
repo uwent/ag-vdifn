@@ -1,11 +1,6 @@
 class DbController < ApplicationController
-  def severities
-    render json: strategy.severities_from_totals(strategy.severities)
-  end
-
-  # def stations
-  #   @stations = ag_weather_client.stations
-  #   render json: @stations
+  # def severities
+  #   render json: strategy.severities_from_totals(strategy.severities)
   # end
 
   def point_details
@@ -16,53 +11,68 @@ class DbController < ApplicationController
     @end_date = end_date
     @in_f = params[:in_f] == "true"
     @pest = get_pest
-    query = {
+    @base = t_min
+    @upper = t_max
+    @opts = {
       lat: @lat,
       long: @long,
       start_date: @start_date,
       end_date: @end_date
-    }
-    response = {}
-
-    case @panel
-    when "disease"
-      query[:pest] = @pest.remote_name
-      response = AgWeather.pest_point(query.compact)
-      if @pest.is_a?(EarlyBlight)
-        @partial = "infobox_pdays"
-        @units = "P-days"
-      else
-        @partial = "infobox_dsv"
-        @units = "DSVs"
-      end
-    when "insect"
-      query[:model] = @pest.remote_name
-      @base = @pest.t_min
-      @upper = @pest.t_max
-      response = AgWeather.dd_point(query.compact)
-      @partial = "infobox_dd"
-    when "custom"
-      query[:base] = @base = params[:t_min]
-      query[:upper] = @upper = params[:t_max]
-      response = AgWeather.dd_point(query.compact)
-      @partial = "infobox_dd"
-    else
-      return
-    end
-
-    @data = response || []
-    @data.each { |d| d[:date] = parse_date(d[:date]) }
+    }.compact
+    
+    @data = get_data_for(@panel)
     @selected_data = @data.select { |h| h[:date] >= @start_date }
 
     render layout: false
   end
 
-  # def station_details
-  #   @name = params[:name]
-  #   options = { name: @name, start_date: start_date, end_date: end_date }
-  #   @weather = ag_weather_client.station_observations(options)
-  #   render layout: false
-  # end
+  def get_data_for(panel)
+    case panel
+    when "disease"
+      get_disease_data
+    when "insect"
+      get_insect_data
+    when "custom"
+      get_custom_data
+    else
+      []
+    end
+  end
+
+  def get_disease_data
+    opts = @opts.merge({pest: @pest.remote_name})
+    if @pest.is_a?(EarlyBlight)
+      @partial = "infobox_pdays"
+      @units = "P-days"
+    else
+      @partial = "infobox_dsv"
+      @units = "DSVs"
+    end
+    AgWeather.pest_point(opts)
+  end
+
+  def get_insect_data
+    opts = @opts.merge({model: @pest.remote_name})
+    @base = @pest.t_min
+    @upper = @pest.t_max
+    @partial = "infobox_dd"
+    data = AgWeather.dd_point(opts)
+
+    # get severity for each date
+    @severity_col = true
+    data.collect do |day|
+      severity = @pest.total_to_severity(day[:cumulative_value], date: day[:date])
+      sev_text = @pest.severity_legend[severity][:name]
+      day[:severity] = sev_text
+      day
+    end
+  end
+
+  def get_custom_data
+    opts = @opts.merge({base: @base, upper: @upper})
+    @partial = "infobox_dd"
+    AgWeather.dd_point(opts)
+  end
 
   def severity_legend
     pest = Pest.find(params[:pest_id])
@@ -130,11 +140,5 @@ class DbController < ApplicationController
     any_crop = Crop.new(id: 0, name: "Any")
     any_crop.pests = Pest.all.select { |pest| pest.is_a? pest_type }.sort { |x, y| x.name.to_s <=> y.name.to_s }
     any_crop
-  end
-
-  def parse_date(date)
-    Date.parse(date)
-  rescue
-    date
   end
 end

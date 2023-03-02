@@ -10,40 +10,39 @@ class AgWeather
   FREEZE_GRID = "/weather/freeze_grid"
 
   def self.fetch(endpoint, query:, timeout: 60)
-    response = self.get(endpoint, query:, timeout: 60)
-    JSON.parse(response.body, symbolize_names: true)
+    resp = self.get(endpoint, query:, timeout: 60)
+    data = JSON.parse(resp.body, symbolize_names: true)
+    Rails.logger.debug data[:info]
+    data[:data]
   end
 
   ## Grids - returns hash where [lat, long] = value ##
 
   def self.pest_grid(query)
-    resp = fetch(PEST_GRID, query:)
-    data = resp[:data] || {}
+    data = fetch(PEST_GRID, query:) || {}
     parse_grid_keys(data)
   end
 
   def self.dd_grid(query)
-    resp = fetch(DD_GRID, query:)
-    data = resp[:data] || {}
+    data = fetch(DD_GRID, query:) || {}
     parse_grid_keys(data)
   end
 
   def self.freeze_grid(query)
-    resp = fetch(FREEZE_GRID, query:)
-    data = resp[:data] || {}
+    data = fetch(FREEZE_GRID, query:) || {}
     parse_grid_keys(data)
   end
 
   ## Point data - returns array of hashes ##
 
   def self.pest_point(query)
-    resp = fetch(PEST_POINT, query:, timeout: 10)
-    resp[:data] || []
+    data = fetch(PEST_POINT, query:, timeout: 10) || []
+    parse_dates(data)
   end
 
   def self.dd_point(query)
-    resp = fetch(DD_POINT, query:, timeout: 10)
-    resp[:data] || []
+    data = fetch(DD_POINT, query:, timeout: 10) || []
+    parse_dates(data)
   end
 
   ## Utils ##
@@ -54,5 +53,15 @@ class AgWeather
       hash[JSON.parse(key.to_s)] = value
     end
     hash
+  end
+
+  def self.parse_dates(data)
+    data.each { |d| d[:date] = parse_date(d[:date]) }
+  end
+
+  def self.parse_date(date)
+    Date.parse(date)
+  rescue
+    date
   end
 end

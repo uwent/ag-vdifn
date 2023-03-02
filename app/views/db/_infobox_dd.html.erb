@@ -26,25 +26,45 @@
   <table>
     <thead>
       <tr>
-        <th>Date</th>
+        <th onclick="reverseTable()">Date</th>
         <th>Min Temp.</th>
         <th>Max Temp.</th>
-        <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down" aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
+        <th
+          class="weather-details-dsv"
+          data-balloon-length="small"
+          data-balloon-pos="down"
+          aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
           Degree Days <div class="info-icon">?</div>
         </th>
-        <th class="weather-details-dsv" data-balloon-length="small" data-balloon-pos="down-right" aria-label="Accumulated degree-day values can be used to estimate insect development.">
+        <th
+          class="weather-details-dsv"
+          data-balloon-length="small"
+          data-balloon-pos="down-right"
+          aria-label="Accumulated degree-day values can be used to estimate insect development.">
           Cumulative Degree Days <div class="info-icon">?</div>
         </th>
+        <% if @severity_col %>
+          <th
+            class="weather-details-dsv"
+            data-baloon-length="small"
+            data-balloon-pos="down-right"
+            aria-label="Predicted insect damage risk on date">
+            Risk <div class="info-icon">?</div>
+          </th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
-      <% @data.each do |day| %>
+      <% @data.reverse.each do |day| %>
         <tr>
           <td class="odd"><%= day[:date] %></td>
           <td><%= convert_temp(day[:min_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
           <td class="odd"><%= convert_temp(day[:max_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
           <td><%= convert_dds(day[:value]).round(2) %></td>
           <td class="odd"><%= convert_dds(day[:cumulative_value]).round(1) %></td>
+          <% if @severity_col %>
+            <td><%= day[:severity] %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
