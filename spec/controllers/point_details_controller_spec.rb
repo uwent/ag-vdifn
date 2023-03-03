@@ -1,11 +1,11 @@
 require "spec_helper"
 
 RSpec.describe PointDetailsController, type: :request do
-  let(:start_date) {1.week.ago.to_date}
-  let(:end_date) {Date.yesterday}
-  let(:lat) {45.0}
-  let(:long) {-89.0}
-  let(:units) {"F"}
+  let(:start_date) { 1.week.ago.to_date }
+  let(:end_date) { Date.yesterday }
+  let(:lat) { 45.0 }
+  let(:long) { -89.0 }
+  let(:units) { "F" }
   let(:agwx_response) {
     [
       {date: 2.days.ago.to_date, value: 10, cumulative_value: 10},
@@ -15,7 +15,7 @@ RSpec.describe PointDetailsController, type: :request do
 
   describe "POST point_details" do
     before do
-      stub_request(:get, /pest_forecasts*/).to_return(body: "foo" )
+      stub_request(:get, /pest_forecasts*/).to_return(body: "foo")
       stub_request(:get, /degree_days*/).to_return(body: "bar")
     end
 
@@ -33,7 +33,7 @@ RSpec.describe PointDetailsController, type: :request do
         latitude: lat,
         longitude: long,
         start_date:,
-        end_date:,
+        end_date:
       }
       expect(response).to have_http_status(:success)
     end

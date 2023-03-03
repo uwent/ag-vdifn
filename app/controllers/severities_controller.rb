@@ -72,7 +72,7 @@ class SeveritiesController < ApplicationController
   def get_freeze_data(end_date)
     nov_1 = Date.new(end_date.year, 11, 1)
     start_date = (end_date > nov_1) ? nov_1 : end_date - 1.week
-    freeze_data = AgWeather.freeze_grid(@opts.merge({start_date:}))
+    AgWeather.freeze_grid(@opts.merge({start_date:}))
   end
 
   # appends freeze data to totals grid
@@ -126,7 +126,7 @@ class SeveritiesController < ApplicationController
 
   def get_early_blight_data
     seven_day = get_pest_grid(start_date: @end_date - 7.days, as_hash: true)
-    selected_dates = get_pest_grid()
+    selected_dates = get_pest_grid
     grid = selected_dates.collect do |point|
       lat, long = point[:lat], point[:long]
       total = point[:total]

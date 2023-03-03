@@ -29,15 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def in_f
-    if params[:in_fahrenheit].present? && params[:in_fahrenheit] == false
-      false
-    else
-      true
-    end
+    !(params[:in_fahrenheit].present? && params[:in_fahrenheit] == false)
   end
 
   def units
-    in_f ? "F": "C"
+    in_f ? "F" : "C"
   end
 
   def t_min
@@ -45,8 +41,6 @@ class ApplicationController < ActionController::Base
     if val.present?
       val = val.to_f
       in_f ? val : c_to_f(val)
-    else
-      nil
     end
   end
 
@@ -55,8 +49,6 @@ class ApplicationController < ActionController::Base
     if val.present?
       val = val.to_f
       in_f ? val : c_to_f(val)
-    else
-      nil
     end
   end
 

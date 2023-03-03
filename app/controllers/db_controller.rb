@@ -1,5 +1,4 @@
 class DbController < ApplicationController
-  
   def severity_legend
     pest = Pest.find(params[:pest_id])
     @severities = pest.severity_legend

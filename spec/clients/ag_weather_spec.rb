@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe AgWeather do
-  let(:endpoint) {ENV["AG_WEATHER_BASE_URL"]}
+  let(:endpoint) { ENV["AG_WEATHER_BASE_URL"] }
   let(:start_date) { 14.days.ago.to_date }
   let(:end_date) { Date.today }
   let(:dd_grid) {

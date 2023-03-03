@@ -1,5 +1,4 @@
 class PointDetailsController < ApplicationController
-
   def index
     @panel = params[:panel]
     @lat = params[:latitude].to_f.round(1)
@@ -18,7 +17,7 @@ class PointDetailsController < ApplicationController
       end_date: @end_date,
       units:
     }.compact
-    
+
     @data = get_data_for(@panel)
     @selected_data = @data.select { |h| h[:date] >= @start_date }
 

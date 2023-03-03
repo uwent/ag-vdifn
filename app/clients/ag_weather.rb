@@ -2,7 +2,7 @@ class AgWeather
   include HTTParty
 
   base_uri ENV["AG_WEATHER_BASE_URL"]
-  
+
   PEST_GRID = "/pest_forecasts/grid"
   PEST_POINT = "/pest_forecasts"
   DD_GRID = "/degree_days/grid"
@@ -10,7 +10,7 @@ class AgWeather
   FREEZE_GRID = "/weather/freeze_grid"
 
   def self.fetch(endpoint, query:, timeout: 60)
-    resp = self.get(endpoint, query:, timeout: 60)
+    resp = get(endpoint, query:, timeout: 60)
     data = JSON.parse(resp.body, symbolize_names: true)
     Rails.logger.debug data[:info]
     data[:data]
