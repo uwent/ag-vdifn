@@ -1,79 +1,4 @@
 class DbController < ApplicationController
-  def severities
-    render json: strategy.severities_from_totals(strategy.severities)
-  end
-
-  # def stations
-  #   @stations = ag_weather_client.stations
-  #   render json: @stations
-  # end
-
-  def point_details
-    @pest = get_pest
-    @latitude = params[:latitude].to_f.round(1)
-    @longitude = params[:longitude].to_f.round(1)
-    @t_min = params[:t_min]
-    @t_max = params[:t_max].nil? ? "None" : params[:t_max]
-    @in_fahrenheit = params[:in_fahrenheit]
-    @start_date = start_date
-
-    case params[:panel]
-
-    when "custom"
-      @model_value = "Custom"
-      params = {
-        lat: @latitude,
-        long: @longitude,
-        t_base: t_min,
-        t_upper: t_max,
-        start_date: @start_date,
-        end_date: end_date
-      }
-      response = ag_weather_client.custom_point_details(params)
-      @data = response[:data] || []
-
-    when "insect"
-      @model_value = @pest.name
-      params = {
-        pest: @pest.remote_name,
-        lat: @latitude,
-        long: @longitude,
-        start_date: @start_date,
-        end_date: end_date
-      }
-      response = ag_weather_client.point_details(params)
-      @data = response[:data] || []
-
-    when "disease"
-      params = {
-        pest: @pest.remote_name,
-        lat: @latitude,
-        long: @longitude,
-        start_date: end_date.beginning_of_year,
-        end_date: end_date
-      }
-      response = ag_weather_client.point_details(params)
-      data = response[:data] || []
-      @data = data.collect do |d|
-        d[:date] = begin
-          d[:date].to_date
-        rescue
-          d[:date]
-        end
-        d
-      end
-      @selected = @data.select { |h| h[:date] >= @start_date }
-    end
-    render layout: false
-  end
-
-  # def station_details
-  #   @name = params[:name]
-  #   options = { name: @name, start_date: start_date, end_date: end_date }
-  #   @weather = ag_weather_client.station_observations(options)
-  #   render layout: false
-  # end
-
   def severity_legend
     pest = Pest.find(params[:pest_id])
     @severities = pest.severity_legend
@@ -87,7 +12,7 @@ class DbController < ApplicationController
 
   def pest_info
     pest = Pest.find(params[:pest_id])
-    in_f = params[:in_fahrenheit] == "true"
+    in_f = params[:in_fahrenheit]
     info = pest.info
     info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: "100px")) unless pest.photo.blank?
     info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
@@ -122,7 +47,7 @@ class DbController < ApplicationController
   end
 
   def dd_models
-    @models = DegreeDay.all.select(:id, :name, :remote_name, :t_min, :t_max)
+    @models = DegreeDay.all.order(:id).select(:id, :name, :remote_name, :t_min, :t_max)
     render json: @models, methods: :name_c
   end
 

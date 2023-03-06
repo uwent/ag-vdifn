@@ -23,4 +23,8 @@ module ApplicationHelper
       "C"
     end
   end
+
+  def get_total(data, key: :value)
+    data.inject(0) { |sum, h| sum + h[key] }
+  end
 end

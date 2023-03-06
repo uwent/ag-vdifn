@@ -11,23 +11,23 @@ export const handlers = [
     )
   }),
 
-  rest.post(ENDPOINTS.SEVERITIES, (req, res, ctx) => {
-    const { pest_id } = req.body
+  rest.post(ENDPOINTS.SEVERITIES, async (req, res, ctx) => {
+    const { pest_id } = await req.json()
     if (pest_id === 101) {
       return res(ctx.status(500))
     } else {
       return res(
         ctx.status(200),
         ctx.json([
-          { lat: 5, long: 10, severity: 10 },
-          { lat: 50, long: 60, severity: 5 },
+          { lat: 5, long: 10, value: 10 },
+          { lat: 50, long: 60, value: 5 },
         ]),
       )
     }
   }),
 
-  rest.post(ENDPOINTS.SEVERITY_LEGEND, (req, res, ctx) => {
-    const { pest_id } = req.body
+  rest.post(ENDPOINTS.SEVERITY_LEGEND, async (req, res, ctx) => {
+    const { pest_id } = await req.json()
     if (pest_id === 101) {
       return res(ctx.status(500))
     } else {
@@ -57,8 +57,8 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.SEVERITY_LEGEND_INFO, (req, res, ctx) => {
-    const { pest_id } = req.body
+  rest.post(ENDPOINTS.SEVERITY_LEGEND_INFO, async (req, res, ctx) => {
+    const { pest_id } = await req.json()
     if (pest_id === 101) {
       return res(ctx.status(500))
     } else {
@@ -66,8 +66,8 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.POINT_DETAILS, (req, res, ctx) => {
-    const { pest_id } = req.body
+  rest.post(ENDPOINTS.POINT_DETAILS, async (req, res, ctx) => {
+    const { pest_id } = await req.json()
     if (pest_id === 101) {
       return res(ctx.status(500))
     } else {
@@ -75,8 +75,8 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.PEST_INFO, (req, res, ctx) => {
-    const { pest_id } = req.body
+  rest.post(ENDPOINTS.PEST_INFO, async (req, res, ctx) => {
+    const { pest_id } = await req.json()
     if (pest_id === 101) {
       return res(ctx.status(500))
     } else {
@@ -95,14 +95,14 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.STATION_DETAILS, (req, res, ctx) => {
-    const { name } = req.body
-    if (name === "error") {
-      return res(ctx.status(500))
-    } else {
-      return res(ctx.status(200), ctx.json("string"))
-    }
-  }),
+  // rest.post(ENDPOINTS.STATION_DETAILS, async (req, res, ctx) => {
+  //   const { name } = await req.json()
+  //   if (name === "error") {
+  //     return res(ctx.status(500))
+  //   } else {
+  //     return res(ctx.status(200), ctx.json("string"))
+  //   }
+  // }),
 
   rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
     return res(

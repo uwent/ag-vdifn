@@ -1,0 +1,38 @@
+<h3 class="weather-details-title"><%= @pest.name %></h3>
+
+<%= render partial: "dsv_totals" %>
+
+<div class="weather-details">
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Min Temp.</th>
+        <th>Max Temp.</th>
+        <th
+          data-balloon-length="medium"
+          data-balloon-pos="down-right"
+          aria-label="P-days (or physiological days) are calculated from daily min and max temperatures.">
+          Daily P-Days <div class="info-icon">?</div>
+        </th>
+        <th
+          data-balloon-length="medium"
+          data-balloon-pos="down-right"
+          aria-label="The accumulation of daily P-Days in a season can be used to predict the onset of early blight risk.">
+          Cumulative P-Days <div class="info-icon">?</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @data.reverse.each do |day| %>
+        <tr>
+          <td class="odd"><%= day[:date] %></td>
+          <td><%= convert_temp(day[:min_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
+          <td class="odd"><%= convert_temp(day[:max_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
+          <td><%= day[:value] %></td>
+          <td class="odd"><%= day[:cumulative_value].round(1) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

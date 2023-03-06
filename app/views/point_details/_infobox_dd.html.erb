@@ -1,0 +1,72 @@
+<h3 class="weather-details-title">
+  <%= @pest.name || "Degree day model" %> (<%= @base %>/<%= @upper || "None" %> &deg;<%= temp_symbol() %>)
+</h3>
+
+<div class="information" style="padding-bottom: 1em;">
+  <div>
+    <b>Date range:</b> <%= @data.first[:date] %> to <%= @data.last[:date] %> (<%= @data.count %> days)
+    <br>
+    <b>Degree day total:</b> <%= @data.last[:cumulative_value]&.round(1) %> <span style="font-size: smaller"><%= temp_symbol() %>DD</span>
+    <% if @data.size >= 14 %>
+      <% avg = (get_total(@data.last(14)) / 14.0).round(1) %>
+      <br><b>14-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+    <% end %>
+    <% if @data.size >= 7 %>
+      <% avg = (get_total(@data.last(7)) / 7.0).round(1) %>
+      <br><b>7-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+    <% end %>
+    <% if @data.size >= 2 %>
+      <% avg = (get_total(@data.last(2)) / 2.0).round(1) %>
+      <br><b>2-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
+    <% end %>
+  </div>
+</div>
+
+<div class="weather-details">
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Min Temp.</th>
+        <th>Max Temp.</th>
+        <th
+          class="weather-details-dsv"
+          data-balloon-length="small"
+          data-balloon-pos="down"
+          aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
+          Degree Days <div class="info-icon">?</div>
+        </th>
+        <th
+          class="weather-details-dsv"
+          data-balloon-length="small"
+          data-balloon-pos="down-right"
+          aria-label="Accumulated degree-day values can be used to estimate insect development.">
+          Cumulative Degree Days <div class="info-icon">?</div>
+        </th>
+        <% if @severity_col %>
+          <th
+            class="weather-details-dsv"
+            data-baloon-length="small"
+            data-balloon-pos="down-right"
+            aria-label="Predicted insect damage risk on date">
+            Risk <div class="info-icon">?</div>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @data.reverse.each do |day| %>
+        <tr>
+          <th class="odd"><%= day[:date] %></th>
+          <td><%= day[:min_temp]&.round(1) %>&deg;<%= temp_symbol() %></td>
+          <td class="odd"><%= day[:max_temp]&.round(1) %>&deg;<%= temp_symbol() %></td>
+          <td><%= day[:value].round(2) %></td>
+          <td class="odd"><%= day[:cumulative_value]&.round(1) %></td>
+          <% if @severity_col %>
+            <td class=<%= day[:severity_class] %>><%= day[:severity] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

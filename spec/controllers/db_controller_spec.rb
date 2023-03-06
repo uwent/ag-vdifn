@@ -2,15 +2,6 @@ require "spec_helper"
 
 RSpec.describe DbController, type: :request do
   let(:fake_response) { {data: "data"} }
-  let(:severity_data) { [{lat: 20, long: 40, total: 200}] }
-  let(:days_data) {
-    {
-      status: "OK",
-      info: {},
-      data: [{value: 10, date: Date.current.to_s, avg_temp: 69}]
-    }
-  }
-  # let(:station_data) { [{ potato_late_blight_dsv: 15, value: 10, date: "data", avg_temp: "100"}] }
 
   describe "GET db/disease_panel" do
     it "returns success response" do
@@ -35,118 +26,6 @@ RSpec.describe DbController, type: :request do
       expect(response.body).not_to be_empty
     end
   end
-
-  # describe "POST db/stations" do
-  #   it "returns success response" do
-  #     allow_any_instance_of(AgWeather::Client).to receive(:stations).and_return(fake_response)
-
-  #     post stations_db_index_path
-
-  #     expect(response).to have_http_status(:success)
-  #     expect(response.body).to eq(fake_response.to_json)
-  #   end
-  # end
-
-  describe "POST db/point_details" do
-    it "returns success response when standard pest from disease panel" do
-      pest = Pest.create(remote_name: "pest")
-      start_date = Date.current - 20.days
-      end_date = Date.current
-      lat = 10
-      long = 20
-      allow_any_instance_of(AgWeather::Client).to receive(:point_details).and_return(days_data)
-
-      expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
-        start_date: end_date.beginning_of_year,
-        end_date:,
-        lat: lat.to_f,
-        long: long.to_f,
-        pest: "pest"
-      })
-
-      post point_details_db_index_path, params: {
-        pest_id: pest.id,
-        latitude: lat,
-        longitude: long,
-        start_date:,
-        end_date:,
-        panel: "disease"
-      }
-
-      expect(response).to have_http_status(:success)
-    end
-
-    it "returns success response when standard pest from insect panel" do
-      pest = Pest.create(remote_name: "pest")
-      start_date = Date.current
-      end_date = Date.current - 20.days
-      lat = 10
-      long = 20
-      allow_any_instance_of(AgWeather::Client).to receive(:point_details).and_return(days_data)
-
-      expect_any_instance_of(AgWeather::Client).to receive(:point_details).with({
-        start_date:,
-        end_date:,
-        lat: lat.to_f,
-        long: long.to_f,
-        pest: "pest"
-      })
-
-      post point_details_db_index_path, params: {
-        pest_id: pest.id,
-        latitude: lat,
-        longitude: long,
-        start_date:,
-        end_date:,
-        panel: "insect"
-      }
-
-      expect(response).to have_http_status(:success)
-    end
-
-    it "returns success response when custom pest" do
-      Pest.create
-      t_min = 50
-      t_max = 100
-      start_date = Date.current - 20.days
-      end_date = Date.current
-      lat = 10
-      long = 20
-      allow_any_instance_of(AgWeather::Client).to receive(:custom_point_details).and_return(days_data)
-
-      expect_any_instance_of(AgWeather::Client).to receive(:custom_point_details).with({
-        start_date:,
-        end_date:,
-        lat: lat.to_f,
-        long: long.to_f,
-        t_base: t_min,
-        t_upper: t_max
-      })
-
-      post point_details_db_index_path, params: {
-        t_min:,
-        t_max:,
-        latitude: lat,
-        longitude: long,
-        start_date:,
-        end_date:,
-        panel: "custom"
-      }
-
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  # describe "POST db/station_details" do
-  #   it "returns success response" do
-  #     allow_any_instance_of(AgWeather::Client).to receive(:station_observations).
-  #       and_return(station_data)
-
-  #     post station_details_db_index_path, params: { name: "name" }
-
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
 
   describe "POST db/severity_legend" do
     it "returns success response" do

@@ -80,12 +80,12 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.post(endpoint, params)
       if (isDev) console.log('DB >> fetchSeverities', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
-      if (response.data.data) {
-        response.data.data.forEach(data => {
+      if (response.data) {
+        response.data.forEach(data => {
           severities.push({
             lat: data.lat,
             long: data.long,
-            level: data.total
+            level: data.value
           })
         })
         return severities
@@ -142,7 +142,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.PEST_INFO
     const params = {
       pest_id: pestId,
-      in_fahrenheit: inFahrenheit
+      in_f: inFahrenheit
     }
     try {
       const response = await axios.post(endpoint, params)

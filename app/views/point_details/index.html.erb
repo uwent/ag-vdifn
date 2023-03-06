@@ -1,0 +1,11 @@
+<div class="iw-title">
+  Grid Point Details (<%= @lat %>&deg;N, <%= @long %>&deg;W)
+</div>
+
+<div id="iw-content">
+  <% if @data.size > 0 && @partial %>
+    <%= render partial: @partial %>
+  <% else %>
+    <p style="text-align: center;">No data to display.</p>
+  <% end %>
+</div>

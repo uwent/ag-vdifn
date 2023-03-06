@@ -3,20 +3,17 @@ require "spec_helper"
 RSpec.describe LateBlight, type: :model do
   let(:biofix) { Date.today - 7.days }
   let(:pest) { LateBlight.new }
-  let(:grid) {
-    [
-      {lat: 1, long: 1, total: rand(25), season_total: rand(50), freeze: 0},
-      {lat: 1, long: 2, total: rand(25), season_total: rand(50), freeze: 0},
-      {lat: 2, long: 1, total: rand(25), season_total: rand(50), freeze: 0},
-      {lat: 2, long: 2, total: rand(25), season_total: rand(50), freeze: 0}
-    ]
+  let(:grid1) {
+    1.upto(5).collect do |i|
+      {lat: rand(180), long: rand(180), selected_total: rand(25), season_total: rand(50), freeze: 0}
+    end
   }
   let(:grid2) {
     [
-      {lat: 1, long: 1, total: rand(25), season_total: rand(50), freeze: 1},
-      {lat: 1, long: 2, total: rand(25), season_total: rand(50), freeze: 0},
-      {lat: 2, long: 1, total: rand(25), season_total: rand(50), freeze: 3},
-      {lat: 2, long: 2, total: rand(25), season_total: rand(50), freeze: 0}
+      {lat: 1, long: 1, selected_total: rand(25), season_total: rand(50), freeze: 1},
+      {lat: 1, long: 2, selected_total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 2, long: 1, selected_total: rand(25), season_total: rand(50), freeze: 3},
+      {lat: 2, long: 2, selected_total: rand(25), season_total: rand(50), freeze: 0}
     ]
   }
 
@@ -35,12 +32,12 @@ RSpec.describe LateBlight, type: :model do
   end
 
   it "generates severities from weather" do
-    expect(pest).to receive(:total_to_severity).exactly(4).times
-    pest.severities_from_totals(grid)
+    expect(pest).to receive(:total_to_severity).exactly(5).times
+    pest.severities_from_totals(grid1)
   end
 
   it "returns no severities when freezing" do
-    expect(pest).to receive(:total_to_severity).exactly(2).times
+    expect(pest).to receive(:total_to_severity).exactly(4).times
     pest.severities_from_totals(grid2)
   end
 

@@ -4,31 +4,30 @@ class Insect < Pest
       {
         lat: point[:lat],
         long: point[:long],
-        severity: total_to_severity(
-          point[:total].to_f,
-          point[:freeze]
-        )
+        value: total_to_severity(point[:value], freezing: point[:freeze])
       }
     end
   end
 
-  def total_to_severity(total, freeze_days)
+  def total_to_severity(total, date: nil, freezing: nil)
     sev = 0
     risk_array.each do |gen|
       sev = sev_ramp(gen[0], gen[1], gen[2], total) if total.between?(gen[0], gen[2])
     end
-    sev -= freeze_days if freeze_days
+    sev -= freezing if freezing
     [0, sev].max
+  rescue
+    nil
   end
 
   def severity_legend
     [
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of pest presence or damage"},
-      {name: "High", slug: "high", description: "High likelihood of pest presence or damage"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of pest presence or damage"},
+      {name: "Very Low", slug: "very_low", description: "Very low likelihood of pest presence or damage"},
       {name: "Low", slug: "low", description: "Low likelihood of pest presence or damage"},
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of pest presence or damage"}
-    ]
+      {name: "Medium", slug: "medium", description: "Medium likelihood of pest presence or damage"},
+      {name: "High", slug: "high", description: "High likelihood of pest presence or damage"},
+      {name: "Very High", slug: "very_high", description: "Very high likelihood of pest presence or damage"}
+    ].freeze
   end
 
   def sev_ramp(start, peak, stop, total)
