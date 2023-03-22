@@ -17,7 +17,9 @@ group :development do
   gem "capistrano-rails"
   gem "capistrano-rbenv"
   gem "web-console"
-  gem "standard"
+  gem "standard" # linter
+  gem "brakeman" # security analysis https://brakemanscanner.org/
+  gem "bundler-audit" # patch-level verification
 end
 
 group :development, :test do
