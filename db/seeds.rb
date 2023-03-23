@@ -230,8 +230,8 @@ colorado_potato_beetle = Insect.create!(
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
   risk_array: [
-    [120, 400, 675],
-    [900, 1400, 1800]
+    [120, 400, 800],
+    [800, 1200, 1800]
   ],
   info:
     "<p>
@@ -241,7 +241,7 @@ colorado_potato_beetle = Insect.create!(
     </p><p>
       Our Colorado potato beetle feeding risk model uses a base 52F degree day model. Two generations per year are typical in Wisconsin. Biofix should be set to May 1, or when first spring adults are detected to adjust the model to your local situation.
     </p>",
-  severity_info: "Adjust biofix date to match date of first egg mass discovery. Overwintering adults lay eggs around 120 FDD after the biofix, with peak larvae and feeding occurring around 400 FDD. First generation feeding ends around 675 FDD. Second generation adults can cause severe damage, appearing around 900 FDD, peaking around 1400 FDD, and dispersing to overwintering habitats by around 1800 FDD.",
+  severity_info: "Adjust biofix date to match date of first egg mass discovery. Overwintering adults lay eggs around 120 FDD after the biofix, with peak larvae and feeding occurring around 400 FDD. Most first generation feeding ends around 800 FDD, though second generation adults begin emerging soon after. Second generation adults can cause severe damage, with activity peaking around 1200 FDD, and dispersing to overwintering habitats by around 1800 FDD.",
   photo: "colorado-potato-beetle.jpg",
   link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
 )
