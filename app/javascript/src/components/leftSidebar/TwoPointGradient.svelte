@@ -149,7 +149,7 @@
   // populate user values from map range
   function setUserMinMax(mapMin, mapMax) {
     const x = (mapMax - mapMin) / severityLevels
-    userInputs = [Math.round(mapMin + x), Math.round(mapMax - x)]
+    userInputs = [Math.floor(mapMin + x), Math.ceil(mapMax - x)]
     validateInputs()
     updateOverlay()
   }
