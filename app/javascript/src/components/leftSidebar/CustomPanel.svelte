@@ -111,7 +111,7 @@
   // }
 
   function updateUrlParams() {
-    let title = 'AgVDIFN: Degree-day Map Viewer'
+    let title = 'VDIFN: Degree-day Map Viewer'
     let url = window.location.pathname + '?panel=custom'
     if (isDev) console.log('Custom Panel >> Setting page title to ' + title)
     if (isDev) console.log('Custom Panel >> Setting url to ' + url)

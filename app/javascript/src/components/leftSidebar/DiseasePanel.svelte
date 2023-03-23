@@ -68,7 +68,7 @@
 
   function updateUrlParams() {
     let model = $diseasePanelState.currentAffliction
-    let title = 'AgVDIFN'
+    let title = 'VDIFN'
     let url = window.location.pathname
     if (model) {
       url += '?panel=' + thisPanel

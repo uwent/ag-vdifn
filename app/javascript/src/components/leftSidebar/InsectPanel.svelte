@@ -61,7 +61,7 @@
   function updateUrlParams() {
     let model = $insectPanelState.currentAffliction
     let url = window.location.pathname
-    let title = 'AgVDIFN: Insect Models'
+    let title = 'VDIFN: Insect Models'
 
     url += '?panel=' + thisPanel
     if (model) {
