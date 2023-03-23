@@ -105,7 +105,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { pest_id: pestId }
 
     try {
-      const response = await axios.post(endpoint, params)
+      const response = await axios.get(endpoint, { params: params })
       if (isDev) console.log('DB >> fetchSeverityLegend', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
@@ -118,7 +118,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { pest_id: pestId }
 
     try {
-      const response = await axios.post(endpoint, params)
+      const response = await axios.get(endpoint, { params: params })
       if (isDev) console.log('DB >> fetchSeverityLegendInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
@@ -130,7 +130,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.POINT_DETAILS
     const params = { ...pointDetailsParams }
     try {
-      const response = await axios.post(endpoint, params)
+      const response = await axios.get(endpoint, { params: params })
       if (isDev) console.log('DB >> fetchPointDetails', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
       return response.data
     } catch (e) {
@@ -138,29 +138,29 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
-  async fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo> {
-    const endpoint = ENDPOINTS.PEST_INFO
-    const params = {
-      pest_id: pestId,
-      in_f: inFahrenheit
-    }
-    try {
-      const response = await axios.post(endpoint, params)
-      if (isDev) console.log('DB >> fetchPestInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
-      return response.data
-    } catch (e) {
-      return {
-        info: null,
-        name: null,
-        pest_link: null,
-        biofix_date: null,
-        biofix_label: null,
-        end_date_enabled: null,
-        tmin: null,
-        tmax: null
-      }
-    }
-  }
+  // async fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo> {
+  //   const endpoint = ENDPOINTS.PEST_INFO
+  //   const params = {
+  //     pest_id: pestId,
+  //     in_f: inFahrenheit
+  //   }
+  //   try {
+  //     const response = await axios.post(endpoint, params)
+  //     if (isDev) console.log('DB >> fetchPestInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
+  //     return response.data
+  //   } catch (e) {
+  //     return {
+  //       info: null,
+  //       name: null,
+  //       pest_link: null,
+  //       biofix_date: null,
+  //       biofix_label: null,
+  //       end_date_enabled: null,
+  //       tmin: null,
+  //       tmax: null
+  //     }
+  //   }
+  // }
 
   // Weather station display is not implemented
   // async fetchStationDetails(

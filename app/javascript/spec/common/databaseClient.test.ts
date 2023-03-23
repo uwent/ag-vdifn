@@ -44,20 +44,17 @@ describe('fetchSeverityLegend', () => {
       {
         name: 'High',
         slug: 'very_high',
-        description:
-          'High likelihood of disease\n(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)'
+        description: 'High likelihood of disease'
       },
       {
         name: 'Medium',
         slug: 'medium',
-        description:
-          'Medium likelihood of disease\n(7-day accumulated DSVs ≥ 3 or season accumulated DSVs \u003e 30)'
+        description: 'Medium likelihood of disease'
       },
       {
         name: 'Low',
         slug: 'very_low',
-        description:
-          'Low likelihood of disease\n(7-day accumulated DSVs ≤ 3 and season accumulated DSVs \u003c 30)'
+        description: 'Low likelihood of disease'
       }
     ])
   })
@@ -135,44 +132,44 @@ describe('fetchPointDetails', () => {
   })
 })
 
-describe('fetchPestInfo', () => {
-  it('calls correct url and returns data', async () => {
-    const database = new DatabaseClient()
-    const pestId = 1
-    const inFahrenheit = true
+// describe('fetchPestInfo', () => {
+//   it('calls correct url and returns data', async () => {
+//     const database = new DatabaseClient()
+//     const pestId = 1
+//     const inFahrenheit = true
 
-    const response = await database.fetchPestInfo(pestId, inFahrenheit)
+//     const response = await database.fetchPestInfo(pestId, inFahrenheit)
 
-    expect(response).toEqual({
-      info: 'info',
-      name: 'pest name',
-      pest_link: 'www.example.com',
-      biofix_date: new Date().toDateString(),
-      end_date_enabled: true,
-      tmin: 0,
-      tmax: 100
-    })
-  })
+//     expect(response).toEqual({
+//       info: 'info',
+//       name: 'pest name',
+//       pest_link: 'www.example.com',
+//       biofix_date: new Date().toDateString(),
+//       end_date_enabled: true,
+//       tmin: 0,
+//       tmax: 100
+//     })
+//   })
 
-  it('returns empty object on failure', async () => {
-    const database = new DatabaseClient()
-    const pestId = 101
-    const inFahrenheit = true
+//   it('returns empty object on failure', async () => {
+//     const database = new DatabaseClient()
+//     const pestId = 101
+//     const inFahrenheit = true
 
-    const response = await database.fetchPestInfo(pestId, inFahrenheit)
+//     const response = await database.fetchPestInfo(pestId, inFahrenheit)
 
-    expect(response).toEqual({
-      info: null,
-      name: null,
-      pest_link: null,
-      biofix_date: null,
-      biofix_label: null,
-      end_date_enabled: null,
-      tmin: null,
-      tmax: null
-    })
-  })
-})
+//     expect(response).toEqual({
+//       info: null,
+//       name: null,
+//       pest_link: null,
+//       biofix_date: null,
+//       biofix_label: null,
+//       end_date_enabled: null,
+//       tmin: null,
+//       tmax: null
+//     })
+//   })
+// })
 
 // describe("fetchStationDetails", () => {
 //   it("calls correct url and returns data", async () => {
@@ -209,8 +206,11 @@ describe('fetchDiseasePanel', () => {
     expect(response).toEqual([
       {
         id: 1,
-        name: 'potatoes',
-        afflictions: [{ id: 2, name: 'late blight' }]
+        name: 'potato',
+        afflictions: [
+          { id: 1, name: 'late blight' },
+          { id: 2, name: 'black death' }
+        ]
       }
     ])
   })

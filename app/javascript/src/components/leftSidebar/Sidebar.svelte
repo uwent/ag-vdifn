@@ -113,15 +113,6 @@
     background-position: center;
   }
 
-  h1 {
-    clear: both;
-    margin: 0;
-    text-align: center;
-    font-family: Caudex, Garamond, Georgia, 'Times New Roman', Times, serif;
-    font-weight: normal;
-    font-size: 1.65em;
-  }
-
   h1 span {
     display: block;
     white-space: nowrap;

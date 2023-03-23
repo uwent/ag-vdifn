@@ -10,7 +10,7 @@ RSpec.describe DbController, type: :request do
       crop.pests << EarlyBlight.create(name: "early_blight", biofix_mm: 1, biofix_dd: 1)
       crop.pests << CarrotFoliar.create(name: "foliar_disease")
       crop.pests << LateBlight.create(name: "late_blight")
-      get disease_panel_db_index_path
+      get(disease_panel_db_index_path)
       expect(response).to have_http_status(:success)
       expect(response.body).not_to be_empty
     end
@@ -21,7 +21,7 @@ RSpec.describe DbController, type: :request do
       crop = Crop.create(name: "crop")
       crop.pests << Insect.create(name: "test1", biofix_mm: 1, biofix_dd: 2)
       crop.pests << Insect.create(name: "test2", biofix_mm: 1, biofix_dd: 2)
-      get insect_panel_db_index_path
+      get(insect_panel_db_index_path)
       expect(response).to have_http_status(:success)
       expect(response.body).not_to be_empty
     end
@@ -30,7 +30,7 @@ RSpec.describe DbController, type: :request do
   describe "POST db/severity_legend" do
     it "returns success response" do
       pest = CarrotFoliar.create
-      post severity_legend_db_index_path, params: {pest_id: pest.id}
+      get(severity_legend_db_index_path, params: {pest_id: pest.id})
       expect(response).to have_http_status(:success)
     end
   end
@@ -38,15 +38,7 @@ RSpec.describe DbController, type: :request do
   describe "POST db/severity_legend_info" do
     it "returns success response" do
       pest = Insect.create
-      post severity_legend_info_db_index_path, params: {pest_id: pest.id}
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "POST db/pest_info" do
-    it "returns success response" do
-      pest = Pest.create(biofix_mm: 10, biofix_dd: 22)
-      post pest_info_db_index_path, params: {pest_id: pest.id, in_fahrenheit: "true"}
+      get(severity_legend_info_db_index_path, params: {pest_id: pest.id})
       expect(response).to have_http_status(:success)
     end
   end

@@ -1,39 +1,12 @@
 class DbController < ApplicationController
   def severity_legend
-    pest = Pest.find(params[:pest_id])
-    @severities = pest.severity_legend
-    render json: @severities
+    legend = Pest.find(params[:pest_id]).severity_legend
+    render json: legend
   end
 
   def severity_legend_info
-    pest_info = Pest.find(params[:pest_id]).severity_info
-    render json: pest_info
-  end
-
-  def pest_info
-    pest = Pest.find(params[:pest_id])
-    in_f = params[:in_fahrenheit]
-    info = pest.info
-    info.prepend(ActionController::Base.helpers.image_tag(pest.photo, width: "100px")) unless pest.photo.blank?
-    info += " <a href=https://#{pest.link} target='_blank'>More information…</a>" unless pest.link.blank?
-
-    tmin = in_f ? pest.t_min : f_to_c(pest.t_min)
-    tmax = if pest.t_max.nil?
-      ""
-    else
-      in_f ? pest.t_max : f_to_c(pest.t_max)
-    end
-
-    render json: {
-      info: info,
-      name: pest.name,
-      pest_link: pest.link,
-      biofix: pest.biofix_date,
-      biofix_label: pest.biofix_label,
-      end_date_enabled: pest.end_date_enabled,
-      tmin:,
-      tmax:
-    }
+    info = Pest.find(params[:pest_id]).severity_info
+    render json: info
   end
 
   def disease_panel
@@ -58,7 +31,7 @@ class DbController < ApplicationController
   end
 
   def create_crops_for_insect_panel
-    Crop.includes(:pests).references(:pests).all.select { |crop| crop.insects }
+    Crop.includes(:pests).references(:pests).all.select { |crop| crop.insects.count > 0 }
   end
 
   def create_any_option(pest_type)

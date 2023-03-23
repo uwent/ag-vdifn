@@ -13,7 +13,8 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Lucida Grande', 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
     overflow: hidden;
   }
 
@@ -59,7 +60,7 @@
     clear: both;
     margin: 0;
     text-align: center;
-    font-family: Caudex, Garamond, Georgia, 'Times New Roman', Times, serif;
+    font-family: Garamond, Times, serif;
     font-weight: normal;
     font-size: 1.65em;
   }

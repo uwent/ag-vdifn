@@ -18,11 +18,9 @@ export default class GradientHelper {
     } = options
 
     const result = {}
-
     result[min] = ColorHelper.color(0, totalLevels)
 
     if (min === max) return result
-
     if (middleMin && middleMax) {
       const lowerRanges = this.calculateRanges(min, middleMin, totalLevels - 2)
       const upperRanges = this.calculateRanges(middleMax, max, totalLevels - 2)

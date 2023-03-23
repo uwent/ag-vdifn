@@ -51,11 +51,14 @@
 
   .modal__pest-info {
     overflow: hidden;
+    word-break: break-word;
   }
 
-  .modal__pest-info p {
-    word-break: break-word;
-    margin: 0px;
+  .modal__pest-icon {
+    width: 150px;
+    float: left;
+    margin: 1.2em 1em 0.5em 0;
+    border-radius: 3px;
   }
 </style>
 
@@ -93,7 +96,6 @@
     if (affliction) {
       return affliction
     } else if (crops[0] === undefined) {
-      // return []
       return undefined
     } else {
       return crops[0].afflictions[0]
@@ -105,20 +107,6 @@
     afflictionValue.update(value => value)
     afflictionValue.set(value)
     selectedAffliction.set(getCurrentAffliction(value))
-  }
-
-  function buildModalLink(link) {
-    if (link != null) {
-      return `<a href='${link}' target='_blank'>More Information... </a>`
-    }
-  }
-
-  function buildModalImage(photo) {
-    if (photo != null) {
-      return `<img src="${baseURL}/images/${photo}" width="150px" style="margin-top: 1em; margin-right: 10px; float: left;"/>`
-    } else {
-      return ''
-    }
   }
 
   function getAfflictionId(alias: string) {
@@ -164,7 +152,7 @@
     title="Select crop"
   >
     {#each crops as { id, name }}
-      <option value={id} name="crop_id">{name}</option>
+      <option value={id}>{name}</option>
     {/each}
   </select>
   <div class="clear" />
@@ -180,7 +168,7 @@
       value={$afflictionValue}
     >
       {#each afflictionsForCrop as { id, name }}
-        <option value={id} name="affliction_id">{name}</option>
+        <option value={id}>{name}</option>
       {/each}
     </select>
     {#if crops.length > 0}
@@ -191,11 +179,13 @@
 {#if showModal}
   <Modal name={$selectedAffliction.name} on:close={() => (showModal = false)}>
     <div class="modal__pest-info">
-      {@html buildModalImage($selectedAffliction.photo)}
-      <p>
-        {@html $selectedAffliction.info}
-      </p>
-      {@html buildModalLink($selectedAffliction.link)}
+      {#if $selectedAffliction.photo}
+        <img class="modal__pest-icon" src="{baseURL}/images/{$selectedAffliction.photo}" alt="pest icon"/>
+      {/if}
+      {@html $selectedAffliction.info}
+      {#if $selectedAffliction.link}
+        <a href='${$selectedAffliction.link}' target='_blank'>More information...</a>
+      {/if}
     </div>
   </Modal>
 {/if}
