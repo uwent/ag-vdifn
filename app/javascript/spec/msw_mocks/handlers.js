@@ -2,15 +2,6 @@ import { rest } from "msw"
 import ENDPOINTS from "../../src/components/common/ts/endpoints"
 
 export const handlers = [
-  rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json([
-        { id: 1, name: "potatoes", diseases: [{ id: 2, name: "late blight" }] },
-      ]),
-    )
-  }),
-
   rest.post(ENDPOINTS.SEVERITIES, async (req, res, ctx) => {
     const { pest_id } = await req.json()
     if (pest_id === 101) {
@@ -26,83 +17,67 @@ export const handlers = [
     }
   }),
 
-  rest.post(ENDPOINTS.SEVERITY_LEGEND, async (req, res, ctx) => {
-    const { pest_id } = await req.json()
-    if (pest_id === 101) {
-      return res(ctx.status(500))
-    } else {
-      return res(
-        ctx.status(200),
-        ctx.json([
-          {
-            name: "High",
-            slug: "very_high",
-            description:
-              "High likelihood of disease\n(widespread outbreak observed OR 7-day accumulated DSVs ≥ 21 or isolated outbreak observed)",
-          },
-          {
-            name: "Medium",
-            slug: "medium",
-            description:
-              "Medium likelihood of disease\n(7-day accumulated DSVs ≥ 3 or season accumulated DSVs \u003e 30)",
-          },
-          {
-            name: "Low",
-            slug: "very_low",
-            description:
-              "Low likelihood of disease\n(7-day accumulated DSVs ≤ 3 and season accumulated DSVs \u003c 30)",
-          },
-        ]),
-      )
-    }
+  rest.get(ENDPOINTS.POINT_DETAILS, async (req, res, ctx) => {
+    const pest_id = parseInt(req.url.searchParams.get('pest_id'))
+
+    if (pest_id === 101) return res(ctx.status(500))
+
+    return res(ctx.status(200), ctx.json("string"))
   }),
 
-  rest.post(ENDPOINTS.SEVERITY_LEGEND_INFO, async (req, res, ctx) => {
-    const { pest_id } = await req.json()
-    if (pest_id === 101) {
-      return res(ctx.status(500))
-    } else {
-      return res(ctx.status(200), ctx.json("Alfalfa Weevil Info"))
-    }
+  rest.get(ENDPOINTS.SEVERITY_LEGEND, async (req, res, ctx) => {
+    const pest_id = parseInt(req.url.searchParams.get('pest_id'))
+
+    if (pest_id === 101) return res(ctx.status(500))
+
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          name: "High",
+          slug: "very_high",
+          description: "High likelihood of disease",
+        },
+        {
+          name: "Medium",
+          slug: "medium",
+          description: "Medium likelihood of disease",
+        },
+        {
+          name: "Low",
+          slug: "very_low",
+          description: "Low likelihood of disease",
+        },
+      ]),
+    )
   }),
 
-  rest.post(ENDPOINTS.POINT_DETAILS, async (req, res, ctx) => {
-    const { pest_id } = await req.json()
-    if (pest_id === 101) {
-      return res(ctx.status(500))
-    } else {
-      return res(ctx.status(200), ctx.json("string"))
-    }
+  rest.get(ENDPOINTS.SEVERITY_LEGEND_INFO, async (req, res, ctx) => {
+    const pest_id = parseInt(req.url.searchParams.get('pest_id'))
+
+    if (pest_id === 101) return res(ctx.status(500))
+
+    return res(ctx.status(200), ctx.json("Alfalfa Weevil Info"))
   }),
 
-  rest.post(ENDPOINTS.PEST_INFO, async (req, res, ctx) => {
-    const { pest_id } = await req.json()
-    if (pest_id === 101) {
-      return res(ctx.status(500))
-    } else {
-      return res(
-        ctx.status(200),
-        ctx.json({
-          info: "info",
-          name: "pest name",
-          pest_link: "www.example.com",
-          biofix_date: new Date().toDateString(),
-          end_date_enabled: true,
-          tmin: 0,
-          tmax: 100,
-        }),
-      )
-    }
-  }),
+  rest.get(ENDPOINTS.PEST_INFO, async (req, res, ctx) => {
+    const pest_id = parseInt(req.url.searchParams.get('pest_id'))
 
-  // rest.post(ENDPOINTS.STATION_DETAILS, async (req, res, ctx) => {
-  //   const { name } = await req.json()
-  //   if (name === "error") {
-  //     return res(ctx.status(500))
-  //   } else {
-  //     return res(ctx.status(200), ctx.json("string"))
-  //   }
-  // }),
+    if (pest_id === 101) return res(ctx.status(500))
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        info: "info",
+        name: "pest name",
+        pest_link: "www.example.com",
+        biofix_date: new Date().toDateString(),
+        end_date_enabled: true,
+        tmin: 0,
+        tmax: 100,
+      }),
+    )
+  }),
 
   rest.get(ENDPOINTS.DISEASE_PANEL, (req, res, ctx) => {
     return res(
@@ -112,20 +87,8 @@ export const handlers = [
           id: 1,
           name: "potato",
           diseases: [
-            {
-              id: 5,
-              name: "late blight",
-              t_min: null,
-              t_max: null,
-              end_date_enabled: true,
-            },
-            {
-              id: 10,
-              name: "black death",
-              t_min: null,
-              t_max: null,
-              end_date_enabled: true,
-            },
+            { id: 1, name: "late blight" },
+            { id: 2, name: "black death" },
           ],
         },
       ]),

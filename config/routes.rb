@@ -5,14 +5,13 @@ Rails.application.routes.draw do
       get "disease_panel"
       get "insect_panel"
       get "dd_models"
-      post "severity_legend"
-      post "severity_legend_info"
-      post "pest_info"
+      get "severity_legend"
+      get "severity_legend_info"
     end
   end
 
-  match "/point_details", to: "point_details#index", via: [:get, :post]
-  match "/severities", to: "severities#index", via: :post
+  get "/point_details", to: "point_details#index"
+  post "/severities", to: "severities#index"
 
   get "/?model=:local_name", to: "application#index"
   get "/maps?model=:local_name", to: "application#index"

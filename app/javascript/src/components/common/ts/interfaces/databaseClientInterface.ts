@@ -12,7 +12,7 @@ export default interface DatabaseClientInterface {
   fetchSeverityLegend(pestId: number): Promise<SeverityLegend[]>
   fetchSeverityLegendInfo(pestId: number): Promise<string>
   fetchPointDetails(pointDetailsParams: PointDetailsParams): Promise<string>
-  fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo>
+  // fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo>
   // fetchStationDetails(stationDetailParams: StationDetailsParams): Promise<string>
   fetchDiseasePanel(): Promise<CropWithAfflictions[]>
   fetchInsectPanel(): Promise<CropWithAfflictions[]>
