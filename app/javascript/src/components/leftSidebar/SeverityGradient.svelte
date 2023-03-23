@@ -119,7 +119,6 @@
     mapRange
   } from '../../store/store'
   let gradient = 1
-  let rangeText = ''
 
   function updateOverlay(event) {
     overlayGradient.set(event.detail)

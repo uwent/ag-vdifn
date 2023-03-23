@@ -14,8 +14,7 @@ export default class RectangleOption {
   // strokeColor: string = "6c6c6c"
   strokeColor = "000000"
   strokeOpacity = 1
-  // strokeWeight = 0.025
-  strokeWeight = 0.04
+  strokeWeight = 0.025
   fillOpacity = 0.5
 
   private latitudeOffset = 0.05

@@ -46,7 +46,7 @@
     width: 100%;
     background-color: #e4e4e4;
     color: rgba(0, 0, 0, 0.6);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: normal;
     text-align: center;
     text-shadow: none;
