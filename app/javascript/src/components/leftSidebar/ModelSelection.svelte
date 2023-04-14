@@ -184,7 +184,7 @@
       {/if}
       {@html $selectedAffliction.info}
       {#if $selectedAffliction.link}
-        <a href='${$selectedAffliction.link}' target='_blank'>More information...</a>
+        <a href='{$selectedAffliction.link}' target='_blank'>More information...</a>
       {/if}
     </div>
   </Modal>
