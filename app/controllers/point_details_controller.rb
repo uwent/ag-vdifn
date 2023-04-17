@@ -61,8 +61,10 @@ class PointDetailsController < ApplicationController
     data.collect do |day|
       severity = @pest.total_to_severity(day[:cumulative_value], date: day[:date])
       if severity
-        day[:severity] = @pest.severity_legend[severity]&.dig(:name)
-        day[:severity_class] = "severity-#{@pest.severity_legend[severity][:slug]}"
+        next unless (legend = @pest.severity_legend[severity])
+        day[:severity] = legend[:name]
+        day[:severity_class] = "severity-#{legend[:slug]}"
+        day[:severity_info] = legend[:description]
       end
       day
     end

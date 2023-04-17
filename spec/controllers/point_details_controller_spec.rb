@@ -87,7 +87,6 @@ RSpec.describe PointDetailsController, type: :request do
 
         get(point_details_path, params:)
         expect(response).to have_http_status(:success)
-
       end
     end
   end

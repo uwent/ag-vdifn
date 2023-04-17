@@ -19,6 +19,9 @@
       <% avg = (get_total(@data.last(2)) / 2.0).round(1) %>
       <br><b>2-day average:</b> <%= avg %> <span style="font-size: smaller"><%= temp_symbol() %>DD / day</span>
     <% end %>
+    <% if @severity_col %>
+      <br><br><b>Most recent estimate:</b> <%= @data.last[:severity_info] %>
+    <% end %>
   </div>
 </div>
 
@@ -63,7 +66,7 @@
           <td><%= day[:value].round(2) %></td>
           <td class="odd"><%= day[:cumulative_value]&.round(1) %></td>
           <% if @severity_col %>
-            <td class=<%= day[:severity_class] %>><%= day[:severity] %></td>
+            <td class="<%= day[:severity_class] %>" title="<%= day[:severity_info] %>"><%= day[:severity] %></td>
           <% end %>
         </tr>
       <% end %>

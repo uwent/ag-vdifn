@@ -7,32 +7,42 @@ class OakWilt < Insect
       {
         lat: point[:lat],
         long: point[:long],
-        value: total_to_severity(point[:value], date: end_date, freezing: point[:freeze] || 0)
+        value: total_to_severity(
+          point[:value],
+          date: end_date,
+          freezing: point[:freeze] || 0
+        )
       }
     end
   end
 
   def total_to_severity(total, date:, freezing: nil)
     # severity based on degree-day
-    sev = 0
-    sev = 1 if total.between?(50, 3221) # 0-100% C. truncatus, 0-90% C. sayi
-    sev = 2 if total.between?(150, 2631) # 0-100% C. truncatus, 0-75% C. sayi
-    sev = 3 if total.between?(231, 2172) # 5-95% C. truncatus
-    sev = 4 if total.between?(388, 913) # 25-90% C. truncatus
+    sev = oak_wilt_risk(total)
 
     # severity reduction based on time after July 15
     if date.yday >= 196
       sev -= 1
       sev = [2, sev].min
     end
-    sev -= 1 if date.yday >= 203
-    sev -= 1 if date.yday >= 210
+    sev -= 1 if date.yday >= 203 # 1 week after Jul 15
+    sev -= 1 if date.yday >= 210 # 2 weeks after Jul 15
 
     # severity reduction from hard freeze
     sev -= freezing if freezing
 
     # clip at zero
     [0, sev].max
+  end
+
+  def oak_wilt_risk(dds)
+    return 0 if dds < 178 # before flight, estimate based on chart analysis
+    return 1 if dds < 231 # <5% flight
+    return 2 if dds < 368 # 5-25% flight
+    return 3 if dds < 638 # 25-50% flight
+    return 4 if dds < 913 # 50-75% flight
+    return 3 if dds < 2172 # 75-95% flight
+    2 # > 95% flight
   end
 
   def severity_legend
