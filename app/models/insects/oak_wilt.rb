@@ -22,11 +22,11 @@ class OakWilt < Insect
 
     # severity reduction based on time after July 15
     if date.yday >= 196
-      sev -= 1
-      sev = [2, sev].min
+      sev -= 2
+      sev = [1, sev].min
     end
     sev -= 1 if date.yday >= 203 # 1 week after Jul 15
-    sev -= 1 if date.yday >= 210 # 2 weeks after Jul 15
+    # sev -= 1 if date.yday >= 210 # 2 weeks after Jul 15
 
     # severity reduction from hard freeze
     sev -= freezing if freezing
@@ -35,23 +35,26 @@ class OakWilt < Insect
     [0, sev].max
   end
 
+  # CT = C. truncatus (primary, early vector)
+  # CS = C. sayi (secondary, later vector)
   def oak_wilt_risk(dds)
-    return 0 if dds < 178 # before flight, estimate based on chart analysis
-    return 1 if dds < 231 # <5% flight
-    return 2 if dds < 368 # 5-25% flight
-    return 3 if dds < 638 # 25-50% flight
-    return 4 if dds < 913 # 50-75% flight
-    return 3 if dds < 2172 # 75-95% flight
-    2 # > 95% flight
+    return 0 if dds < 180 # before flight
+    return 1 if dds < 231 # <5% CT flight
+    return 2 if dds < 283 # 5-10% CT flight
+    return 3 if dds < 388 # 10-25% CT flight, 0-5% CS flight
+    return 4 if dds < 913 # 25-75% CT flight, 5-10% CS flight
+    return 3 if dds < 1792 # 75-90% CT flight, 10-25% CS flight
+    return 2 if dds < 2172 # 90-95% CT flight, 25-50% CS flight
+    1 # late flights
   end
 
   def severity_legend
     [
-      {name: "No vectors present", slug: "very_low", description: "Very low risk of oak wilt (no vectors in flight or date after July 15)"},
-      {name: "<5% vector flight", slug: "low", description: "Lower risk of oak wilt transmission (<5% or >95% beetle flight)"},
-      {name: "5-10% vector flight", slug: "medium", description: "Moderate risk of oak wilt transmission (5-10% or 90-95% beetle flight)"},
-      {name: "10-25% vector flight", slug: "high", description: "High risk of oak wilt transmission (10-25% or 75-90% beetle flight)"},
-      {name: "Peak vector flight", slug: "very_high", description: "Very high risk of oak wilt transmission (25-75% beetle vector flight)"}
+      {name: "Very low", slug: "very_low", description: "Very low risk of oak wilt (no vectors in flight or date more than 2 weeks after July 15)"},
+      {name: "Low", slug: "low", description: "Low risk of oak wilt transmission (<5% or >95% vector flight, or date after July 15)"},
+      {name: "Moderate", slug: "medium", description: "Moderate risk of oak wilt transmission - early or late vector flight (5-10% or 90-95%)"},
+      {name: "High", slug: "high", description: "High risk of oak wilt transmission - early peak or late peak vector flight (10-25% or 75-90%)"},
+      {name: "Very high", slug: "very_high", description: "Very high risk of oak wilt transmission - peak vector flight (25-75%)"}
     ]
   end
 end

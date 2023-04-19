@@ -161,7 +161,7 @@
     <SeverityLegend severities={$insectLegend.legend} />
     <fieldset title="more-info">
       <legend>More Information</legend>
-      <p>{$insectLegend.info}</p>
+      <p>{@html $insectLegend.info}</p>
     </fieldset>
   </div>
 {/if}

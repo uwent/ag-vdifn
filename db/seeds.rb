@@ -454,7 +454,7 @@ oak_wilt = OakWilt.create!(
     </p><p>
       This oak wilt risk model uses a base 41F degree day model. It was developed in Wisconsin where two beetles are major vectors of the pathogen. Outside of Wisconsin the model may not accurately reflect the risk of oak wilt transmission and should be used with caution.
     </p>",
-  severity_info: "High Oak Wilt transmission risk begins at 5% beetle flight (231 FDD) and remains elevated through 95% beetle flight (2172 FDD). Risk is substantially lower after July 15. Wounding, pruning, or harvesting oaks should be avoided during periods of elevated risk. Note: This risk model may not be valid outside of Wisconsin where the model was developed.",
+  severity_info: "High Oak Wilt transmission risk begins at 5% beetle flight (231 FDD) and remains elevated through 95% beetle flight (2172 FDD). Risk is substantially lower after July 15 due to changes in beetle vector behavior and disease spore abundance. Wounding, pruning, or harvesting oaks should be avoided during periods of elevated risk. <b>Note:</b> This risk model may not be valid outside of Wisconsin where the model was developed. Model only valid where the causative agent <i>B. fagacearum</i> and the beetle vectors <i>C. truncatus</i> and <i>C. sayi</i> are present.",
   photo: "oak-wilt.png",
   link: "https://agweather.cals.wisc.edu/thermal-models/oak-wilt"
 )
