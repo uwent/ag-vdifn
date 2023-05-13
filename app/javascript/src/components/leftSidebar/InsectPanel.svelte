@@ -59,9 +59,9 @@
     insectPanelParams.set(params)
     setInsectPanelURL()
     gtag('event', 'submit', {
-      panel: 'insect',
-      model: currentAffliction.name,
-      params: params,
+      _panel_name: thisPanel,
+      _model_name: currentAffliction.name,
+      _map_extent: $mapExtent,
     })
   }
 
