@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
-    "types": ["google.maps", "jest", "node", "lodash", "@testing-library/jest-dom"],
+    "types": [
+      "google.maps",
+      "jest",
+      "node",
+      "lodash",
+      "@testing-library/jest-dom",
+      "@types/gtag.js"
+    ],
     "downlevelIteration": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
