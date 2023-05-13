@@ -170,7 +170,8 @@
       id="datepicker-start"
       data-testid="datepicker-start"
       bind:value={startDateValue}
-      on:change={updateEndDateInput}
+      on:focus={updateEndDateInput}
+      on:focusout={updateEndDateInput}
       max={today}
     />
     {#if isPastYear(startDateValue)}
@@ -186,7 +187,8 @@
       id="datepicker-end"
       data-testid="datepicker-end"
       bind:value={endDateValue}
-      on:change={updateStartDateInput}
+      on:focus={updateStartDateInput}
+      on:focusout={updateStartDateInput}
       max={today}
     />
     {#if isPastYear(endDateValue)}
