@@ -16,6 +16,12 @@
     padding: 0 5px;
   }
 
+  .label-text {
+    color: #484848;
+    font-size: 0.75em;
+    padding: 0 5px;
+  }
+
   .datepicker-tooltip {
     margin-left: 8px;
     margin: auto;
@@ -164,7 +170,8 @@
       id="datepicker-start"
       data-testid="datepicker-start"
       bind:value={startDateValue}
-      on:change={updateEndDateInput}
+      on:focus={updateEndDateInput}
+      on:focusout={updateEndDateInput}
       max={today}
     />
     {#if isPastYear(startDateValue)}
@@ -180,7 +187,8 @@
       id="datepicker-end"
       data-testid="datepicker-end"
       bind:value={endDateValue}
-      on:change={updateStartDateInput}
+      on:focus={updateStartDateInput}
+      on:focusout={updateStartDateInput}
       max={today}
     />
     {#if isPastYear(endDateValue)}
@@ -188,7 +196,7 @@
     {/if}
   </div>
   <div class="clear" />
-  <label for="preset-buttons">Quick date ranges:</label>
+  <div class="label-text">Quick date ranges:</div>
   <div class="preset-buttons">
     <button
       title="Set date range to past week"

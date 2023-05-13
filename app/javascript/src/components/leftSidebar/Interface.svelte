@@ -80,22 +80,26 @@
   let panel = defaults.panel
   let extent = defaults.extent
   let showHelp = false
-  let diseaseParams = { model: defaults.disease }
-  let insectParams = { model: defaults.insect }
+  let opts = {
+    initialDisease: defaults.disease,
+    initialInsect: defaults.insect,
+    submitOnLoad: false
+  }
 
   // console.log('Launching VDIFN in ' + env + ' environment')
 
   function parseUrlParams() {
-    if (validPanels.includes(urlParams.get('panel'))) {
-      panel = urlParams.get('panel')
-      if (panel === 'disease' && urlParams.has('model')) {
-        diseaseParams.model = urlParams.get('model')
-      }
-      if (panel === 'insect' && urlParams.has('model')) {
-        insectParams.model = urlParams.get('model')
+    let panelFromParams = urlParams.get('p') || urlParams.get('panel')
+    if (validPanels.includes(panelFromParams)) {
+      panel = panelFromParams
+      let model = urlParams.get('m') || urlParams.get('model')
+      if (model) {
+        opts.submitOnLoad = true
+        if (panel === 'disease') opts.initialDisease = model
+        if (panel === 'insect') opts.initialInsect = model
       }
     } else {
-      window.history.replaceState({}, null, window.location.pathname)
+      window.history.replaceState({}, '', window.location.pathname)
     }
   }
 
@@ -169,11 +173,13 @@
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
-          defaultModel={diseaseParams.model} />
+          defaultModel={opts.initialDisease}
+          submitOnLoad={opts.submitOnLoad} />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
-          defaultModel={insectParams.model} />
+          defaultModel={opts.initialInsect}
+          submitOnLoad={opts.submitOnLoad} />
       {:else if panel === 'custom'}
         <CustomPanel
           data={customPanelData} />

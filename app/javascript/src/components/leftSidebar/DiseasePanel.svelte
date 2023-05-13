@@ -7,7 +7,7 @@
 
 <script lang="ts">
   const moment = require('moment')
-  import { onMount, setContext } from 'svelte'
+  import { onMount, setContext, tick } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -20,8 +20,6 @@
     selectedPanel,
     diseasePanelState,
     selectedAffliction,
-    defaults,
-    isDev,
     extents,
     mapExtent
   } from '../../store/store'
@@ -33,11 +31,11 @@
   import Loading from '../common/Loading.svelte'
   export let data
   export let defaultModel = ''
+  export let submitOnLoad = false
   const thisPanel = 'disease'
 
-  // TODO: change 'Disease' to thisPanel
   setContext(panelKey, {
-    panelType: 'disease',
+    panelType: thisPanel,
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Start of date range',
@@ -49,12 +47,7 @@
   })
 
   function submit() {
-    diseasePanelState.update(state => ({
-      ...state,
-      currentAffliction: get(selectedAffliction),
-      selectedExtent: $mapExtent,
-      loaded: true
-    }))
+    let currentAffliction = get(selectedAffliction)
     let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
@@ -62,30 +55,46 @@
       in_fahrenheit: $tMinTmax.in_fahrenheit,
       ...extents[$mapExtent]
     }
+    diseasePanelState.update(state => ({
+      ...state,
+      currentAffliction: currentAffliction,
+      selectedExtent: $mapExtent,
+      loaded: true
+    }))
     diseasePanelParams.set(params)
-    updateUrlParams()
+    setDiseasePanelURL()
+    gtag('event', 'submit', {
+      panel_name: thisPanel,
+      model_name: currentAffliction.name,
+      map_extent: $mapExtent,
+    })
   }
 
-  function updateUrlParams() {
+  function setDiseasePanelURL() {
     let model = $diseasePanelState.currentAffliction
-    let title = 'VDIFN'
     let url = window.location.pathname
+    let title = 'VDIFN'
     if (model) {
-      url += '?panel=' + thisPanel
-      url += '&model=' + model.local_name
-      title += ': Disease Models - ' + model.name
+      url += '?p=' + thisPanel
+      url += '&m=' + model.local_name
+      title = `${model.name} model - VDIFN`
     }
-    if (isDev) console.log('Disease panel >> Setting title to ' + title)
-    if (isDev) console.log('Disease panel >> Setting url to ' + url)
-    window.history.replaceState({}, title, url)
+    window.history.replaceState({}, '', url)
     document.title = title
+  }
+
+  // submit once all components have rendered
+  async function lazySubmit() {
+    await tick()
+    submit()
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    updateUrlParams()
+    submitOnLoad ? lazySubmit() : setDiseasePanelURL()
   })
 
+  // submit if data is loaded and then extent is changed
   $: if (
     $selectedPanel == thisPanel &&
     $diseasePanelState.loaded &&

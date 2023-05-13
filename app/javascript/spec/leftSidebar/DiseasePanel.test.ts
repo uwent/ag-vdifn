@@ -1,3 +1,4 @@
+import moment = require('moment')
 import DiseasePanel from '../../src/components/leftSidebar/DiseasePanel.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
 import {
@@ -13,12 +14,12 @@ import {
   extents
 } from '../../src/store/store'
 import { get } from 'svelte/store'
-import moment from 'moment'
 
 let getText
 let diseasePanel
 
 beforeEach(() => {
+  window.gtag = jest.fn()
   const { getByText, component } = render(DiseasePanel, {
     props: {
       data: []

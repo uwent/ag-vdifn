@@ -1,6 +1,6 @@
 <script lang="ts">
   const moment = require('moment')
-  import { onMount, setContext } from 'svelte'
+  import { onMount, setContext, tick } from 'svelte'
   import { get } from 'svelte/store'
   import {
     overlayLoading,
@@ -15,7 +15,6 @@
     selectedAffliction,
     extents,
     mapExtent,
-    isDev
   } from '../../store/store'
   import ModelSelection from './ModelSelection.svelte'
   import ModelParameters from './ModelParameters.svelte'
@@ -25,10 +24,11 @@
   import Loading from '../common/Loading.svelte'
   export let data
   export let defaultModel = ''
+  export let submitOnLoad = false
   const thisPanel = 'insect'
 
   setContext(panelKey, {
-    panelType: 'insect',
+    panelType: thisPanel,
     getCrops: () => data,
     dateToolTip: {
       startDate: 'Biofix date for insect',
@@ -40,13 +40,8 @@
   })
 
   function submit() {
-    insectPanelState.update(state => ({
-      ...state,
-      currentAffliction: get(selectedAffliction),
-      selectedExtent: $mapExtent,
-      loaded: true
-    }))
-    insectPanelParams.set({
+    let currentAffliction = get(selectedAffliction)
+    let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       pest_id: $afflictionValue,
@@ -54,31 +49,47 @@
       t_max: $tMinTmax.t_max,
       in_fahrenheit: $tMinTmax.in_fahrenheit,
       ...extents[$mapExtent]
+    }
+    insectPanelState.update(state => ({
+      ...state,
+      currentAffliction: currentAffliction,
+      selectedExtent: $mapExtent,
+      loaded: true
+    }))
+    insectPanelParams.set(params)
+    setInsectPanelURL()
+    gtag('event', 'submit', {
+      panel_name: thisPanel,
+      model_name: currentAffliction.name,
+      map_extent: $mapExtent,
     })
-    updateUrlParams()
   }
 
-  function updateUrlParams() {
-    let model = $insectPanelState.currentAffliction
+  function setInsectPanelURL() {
+    let title = 'Insect models - VDIFN'
     let url = window.location.pathname
-    let title = 'VDIFN: Insect Models'
-
-    url += '?panel=' + thisPanel
+    let model = $insectPanelState.currentAffliction
+    url += '?p=' + thisPanel
     if (model) {
-      url += '&model=' + model.local_name
-      title += ' - ' + model.name
+      url += '&m=' + model.local_name
+      title = `${model.name} model - VDIFN`
     }
-    if (isDev) console.log('Insect panel >> Setting title to ' + title)
-    if (isDev) console.log('Insect panel >> Setting url to ' + url)
-    window.history.replaceState({}, title, url)
+    window.history.replaceState({}, '', url)
     document.title = title
+  }
+
+  // submit once all components have rendered
+  async function lazySubmit() {
+    await tick()
+    submit()
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
-    updateUrlParams()
+    submitOnLoad ? lazySubmit() : setInsectPanelURL()
   })
 
+  // submit if data is loaded and then extent is changed
   $: if (
     $selectedPanel == thisPanel &&
     $insectPanelState.loaded &&

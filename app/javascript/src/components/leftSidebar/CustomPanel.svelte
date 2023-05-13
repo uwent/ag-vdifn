@@ -62,7 +62,6 @@
     selectedDDModel,
     extents,
     mapExtent,
-    isDev
   } from '../../store/store'
   import ModelParameters from './ModelParameters.svelte'
   import DatePicker from './DatePicker.svelte'
@@ -72,11 +71,10 @@
   import Button from '../common/Button.svelte'
   import Loading from '../common/Loading.svelte'
   export let data: any
-  let submitDisabled = false
-  let thisPanel = 'custom'
+  const thisPanel = 'custom'
 
   setContext(panelKey, {
-    panelType: 'custom',
+    panelType: thisPanel,
     getModels: () => data,
     dateToolTip: {
       startDate: 'Biofix',
@@ -103,26 +101,25 @@
       loaded: true,
     }))
     customPanelParams.set(params)
-    updateUrlParams()
+    setCustomPanelURL()
+    gtag('event', 'submit', {
+      panel_name: thisPanel,
+      model_name: `Degree day (${$tMinTmax.t_min}/${$tMinTmax.t_max})`,
+      map_extent: $mapExtent,
+    })
   }
 
-  // function handleCustomTminTMax(event) {
-  //   submitDisabled = !event.detail.valid
-  // }
-
-  function updateUrlParams() {
-    let title = 'VDIFN: Degree-day Map Viewer'
-    let url = window.location.pathname + '?panel=custom'
-    if (isDev) console.log('Custom Panel >> Setting page title to ' + title)
-    if (isDev) console.log('Custom Panel >> Setting url to ' + url)
-    window.history.replaceState({}, title, url)
+  function setCustomPanelURL() {
+    let title = 'Degree-day maps - VDIFN'
+    let url = window.location.pathname + '?p=custom'
+    window.history.replaceState({}, '', url)
     document.title = title
   }
 
   onMount(() => {
     selectedPanel.set(thisPanel)
     if ($customPanelState.loaded) selectedDDModel.set($customPanelState.selectedModel)
-    updateUrlParams()
+    setCustomPanelURL()
   })
 
   // Submit if map extent doesn't match stored data
@@ -140,7 +137,7 @@
     <TminMaxDisplay />
     <Button
       title="Submit parameters. Data load may take several seconds."
-      disabled={submitDisabled || $overlayLoading}
+      disabled={$overlayLoading}
       click={submit}
     />
   </ModelParameters>

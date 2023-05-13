@@ -7,13 +7,13 @@
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-75G2W5HBHY"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV["VDIFN_GTAG"] %>"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-75G2W5HBHY'); // AgWeather - GA4
+    gtag('config', '<%= ENV["VDIFN_GTAG"] %>');
   </script>
 </head>
 <body>

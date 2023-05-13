@@ -4,6 +4,7 @@
   }
 
   #tMinMaxRange {
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     display: flex;
@@ -17,7 +18,7 @@
     justify-content: space-evenly;
   }
 
-  label {
+  .label {
     padding: 0 5px;
     color: #484848;
     font-size: 0.75em;
@@ -178,12 +179,12 @@
   <div class="temp-group" id="t-min-wrapper">
     <div id="tMinMaxRange">
       <div class="t-min-wrapper">
-        <label for="tmin">Tmin</label>
-        <div title="Min temp" type="text" class="tmin">{tMinText}</div>
+        <div class="label">Tmin</div>
+        <div title="Min temp" class="tmin">{tMinText}</div>
       </div>
       <div class="t-max-wrapper">
-        <label for="tmax">Tmax</label>
-        <div title="Max temp" type="text" class="tmax">{tMaxText}</div>
+        <div class="label">Tmax</div>
+        <div title="Max temp" class="tmax">{tMaxText}</div>
       </div>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import moment = require('moment')
 import InsectPanel from '../../src/components/leftSidebar/InsectPanel.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
 import {
@@ -13,12 +14,12 @@ import {
   extents
 } from '../../src/store/store'
 import { get } from 'svelte/store'
-import moment from 'moment'
 
 let getText
 let insectPanel
 
 beforeEach(() => {
+  window.gtag = jest.fn()
   const { getByText, component } = render(InsectPanel, {
     props: {
       data: []

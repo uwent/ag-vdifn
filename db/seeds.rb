@@ -11,7 +11,7 @@ CropPest.connection.execute("ALTER SEQUENCE crop_pests_id_seq RESTART WITH 1")
 #--- DISEASE MODELS ---#
 
 early_blight = EarlyBlight.create!(
-  name: "Early Blight (Potato, Tomato)",
+  name: "Early Blight (potato/tomato)",
   local_name: "early-blight",
   remote_name: "potato_p_days",
   biofix_mm: 5, biofix_dd: 1,
@@ -26,7 +26,7 @@ early_blight = EarlyBlight.create!(
 )
 
 late_blight = LateBlight.create!(
-  name: "Late Blight (Potato, Tomato)",
+  name: "Late Blight (potato/tomato)",
   local_name: "late-blight",
   remote_name: "potato_blight_dsv",
   info:
@@ -38,7 +38,7 @@ late_blight = LateBlight.create!(
 )
 
 carrot_foliar = CarrotFoliar.create!(
-  name: "Foliar Disease (Carrot)",
+  name: "Foliar Disease (carrot)",
   local_name: "carrot-foliar",
   remote_name: "carrot_foliar_dsv",
   info:
@@ -52,7 +52,7 @@ carrot_foliar = CarrotFoliar.create!(
 )
 
 cercospora_leaf_spot = CercosporaLeafSpot.create!(
-  name: "Cercospora Leaf Spot (Beet)",
+  name: "Cercospora Leaf Spot (beet)",
   local_name: "cercospora-leaf-spot",
   remote_name: "cercospora_div",
   info:
@@ -64,7 +64,7 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
 )
 
 botrytis_leaf_blight = BotrytisLeafBlight.create!(
-  name: "Botrytis leaf blight (Onion)",
+  name: "Botrytis Leaf Blight (onion)",
   local_name: "botrytis-leaf-blight",
   remote_name: "botcast_dsi",
   biofix_mm: 5, biofix_dd: 1,
@@ -438,7 +438,7 @@ mint_root_borer = Insect.create!(
 )
 
 oak_wilt = OakWilt.create!(
-  name: "Oak Wilt vectors",
+  name: "Oak Wilt Vectors",
   local_name: "oak-wilt",
   remote_name: "dd_41",
   t_min: 41, t_max: nil,
