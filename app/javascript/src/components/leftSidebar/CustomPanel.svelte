@@ -103,9 +103,9 @@
     customPanelParams.set(params)
     setCustomPanelURL()
     gtag('event', 'submit', {
-      _panel_name: thisPanel,
-      _model_name: `Degree day (${$tMinTmax.t_min}/${$tMinTmax.t_max}`,
-      _map_extent: $mapExtent,
+      event_panel_name: thisPanel,
+      event_model_name: `Degree day (${$tMinTmax.t_min}/${$tMinTmax.t_max}`,
+      event_map_extent: $mapExtent,
     })
   }
 
