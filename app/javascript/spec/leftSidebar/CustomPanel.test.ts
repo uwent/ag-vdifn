@@ -1,3 +1,4 @@
+import moment = require('moment')
 import CustomPanel from '../../src/components/leftSidebar/CustomPanel.svelte'
 import { fireEvent, render } from '@testing-library/svelte'
 import {
@@ -14,7 +15,6 @@ import {
 } from '../../src/store/store'
 import { get } from 'svelte/store'
 import { tick } from 'svelte'
-import * as moment from 'moment'
 
 let getText
 let customPanel
@@ -39,6 +39,7 @@ let dd2 = {
 }
 
 beforeEach(() => {
+  window.gtag = jest.fn()
   selectedPanelSpy = jest.spyOn(selectedPanel, 'set')
   const { getByText, queryByTestId, component } = render(CustomPanel, {
     props: {
