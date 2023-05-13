@@ -66,13 +66,13 @@
   }
 
   function setInsectPanelURL() {
-    let title = 'VDIFN - Insect models'
+    let title = 'Insect models - VDIFN'
     let url = window.location.pathname
     let model = $insectPanelState.currentAffliction
     url += '?p=' + thisPanel
     if (model) {
       url += '&m=' + model.local_name
-      title = `VDIFN - ${model.name}`
+      title = `${model.name} model - VDIFN`
     }
     window.history.replaceState({}, '', url)
     document.title = title

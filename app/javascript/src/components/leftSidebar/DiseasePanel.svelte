@@ -77,7 +77,7 @@
     if (model) {
       url += '?p=' + thisPanel
       url += '&m=' + model.local_name
-      title = `VDIFN - ${model.name}`
+      title = `${model.name} model - VDIFN`
     }
     window.history.replaceState({}, '', url)
     document.title = title

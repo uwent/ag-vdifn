@@ -110,7 +110,7 @@
   }
 
   function setCustomPanelURL() {
-    let title = 'VDIFN - Degree-day maps'
+    let title = 'Degree-day maps - VDIFN'
     let url = window.location.pathname + '?p=custom'
     window.history.replaceState({}, '', url)
     document.title = title
