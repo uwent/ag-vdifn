@@ -64,9 +64,9 @@
     diseasePanelParams.set(params)
     setDiseasePanelURL()
     gtag('event', 'submit', {
-      event_panel_name: thisPanel,
-      event_model_name: currentAffliction.name,
-      event_map_extent: $mapExtent,
+      panel_name: thisPanel,
+      model_name: currentAffliction.name,
+      map_extent: $mapExtent,
     })
   }
 
