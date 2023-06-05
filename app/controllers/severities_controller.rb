@@ -101,14 +101,12 @@ class SeveritiesController < ApplicationController
 
   def get_botrytis_data
     grid = get_pest_grid
-    grid = hash_to_array(grid)
     grid = add_freeze_data?(grid)
     @pest.severities_from_totals(grid)
   end
 
   def get_carrot_foliar_data
     seven_day = get_pest_grid(start_date: @end_date - 7.days)
-    seven_day = hash_to_array(seven_day)
     @pest.severities_from_totals(seven_day)
   end
 
