@@ -1,6 +1,6 @@
 # Ag-Vdifn
 
-[![Circle CI](https://circleci.com/gh/uwent/ag-vdifn.svg?style=svg&circle-token=f8cd109ae0fe656784844b0870aeb501ade6bfa6)](https://circleci.com/gh/uwent/ag-vdifn)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/uwent/ag-vdifn/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/uwent/ag-vdifn/tree/main)
 
 ## Description
 
@@ -25,7 +25,7 @@ git -C "$(rbenv root)"/plugins/ruby-build pull
 git config --global url."https://github.com/".insteadOf git://github.com/
 
 # install ruby with rbenv
-rbenv install 3.2.1 # or latest version
+rbenv install 3.2.2 # or latest version
 
 # update bundler to latest
 gem install bundler
