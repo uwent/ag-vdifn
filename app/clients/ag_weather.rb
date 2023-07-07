@@ -12,7 +12,9 @@ class AgWeather
   def self.fetch(endpoint, query:, timeout: 60)
     resp = get(endpoint, query:, timeout: 60)
     data = JSON.parse(resp.body, symbolize_names: true)
-    Rails.logger.debug data[:info]
+    Rails.logger.debug "GET #{endpoint}"
+    Rails.logger.debug "RESPONSE #{data[:info]}"
+    Rails.logger.debug "VALUES #{data[:data].count}"
     data[:data]
   end
 
