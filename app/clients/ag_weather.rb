@@ -14,7 +14,6 @@ class AgWeather
     data = JSON.parse(resp.body, symbolize_names: true)
     Rails.logger.debug "GET #{endpoint}"
     Rails.logger.debug "RESPONSE #{data[:info]}"
-    Rails.logger.debug "VALUES #{data[:data].count}"
     data[:data]
   end
 
