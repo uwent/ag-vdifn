@@ -78,7 +78,7 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" on:click={close} on:keydown={close} />
+<div class="modal-background" role="none" on:click={close} on:keydown={close} />
 
 <div
   class="modal"
@@ -92,6 +92,5 @@
   <slot name="header" />
   <slot />
 
-  <!-- svelte-ignore a11y-autofocus -->
   <Button click={close} text="Close" />
 </div>
