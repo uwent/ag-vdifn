@@ -231,7 +231,8 @@ colorado_potato_beetle = Insect.create!(
   t_min: 52, t_max: nil,
   risk_array: [
     [120, 400, 800],
-    [800, 1200, 1800]
+    [800, 1100, 1600],
+    [1600, 1900, 2200]
   ],
   info:
     "<p>
@@ -239,9 +240,9 @@ colorado_potato_beetle = Insect.create!(
     </p><p>
       CPB is a persistent pest annually, once an infestation occurs beetle populations tend to increase annually. When potato is unavailable in the environment CPB can utilize alternate solanaceous host plants such as eastern black and deadly black nightshade, jimson-weed, Carolina horse-nettle and buffalo-bur. Common solanaceous weeds in the environment are thought to provide a green bridge enabling potato beetle colonization into new environments.
     </p><p>
-      Our Colorado potato beetle feeding risk model uses a base 52F degree day model. Two generations per year are typical in Wisconsin. Biofix should be set to May 1, or when first spring adults are detected to adjust the model to your local situation.
+      Our Colorado potato beetle feeding risk model uses a base 52F degree day model. Two generations per year are typical in Wisconsin. Biofix should be set to May 1, or when first egg masses are laid by emerging overwintered adults to adjust the model to your local situation. Peak egg hatch occurs at 120DD after first egg laying, peak 1st instar larvae at 185DD, second instars at 240DD, third instars at 300DD, and fourth instars at 400DD. Second generation adults will begin emerging around 800DD causing severe feeding damage between 1000-1200DD before laying eggs and starting the cycle over again. A partial third generation may occur in an extended season.
     </p>",
-  severity_info: "Adjust biofix date to match date of first egg mass discovery. Overwintering adults lay eggs around 120 FDD after the biofix, with peak larvae and feeding occurring around 400 FDD. Most first generation feeding ends around 800 FDD, though second generation adults begin emerging soon after. Second generation adults can cause severe damage, with activity peaking around 1200 FDD, and dispersing to overwintering habitats by around 1800 FDD.",
+  severity_info: "Adjust biofix date to match date of first egg mass discovery. Peak egg hatch occurs around 120 FDD after the biofix, with peak larval feeding occurring around 400-600 FDD. Most first generation feeding ends around 800 FDD, though second generation adults begin emerging soon after. Second generation adult feeding can cause severe damage peaking around 1000-1200DD, followed by egg laying and larval development. A partial third generation may occur in an extended season.",
   photo: "colorado-potato-beetle.jpg",
   link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
 )
