@@ -2689,6 +2689,11 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.0.7.tgz#30cd49820a962aff48c8fffc5cd760151fca61fe"
   integrity sha512-8cXDaBBHOr2pQ7j77Y6Vp5VDT2sIqWyWQ56TjEq4ih/a4iST3dItRe8Q9fp0rrIl9DoKhWQtUQz/YpOxLkXbNA==
 
+"@jridgewell/resolve-uri@^3.1.0":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.1.tgz#c08679063f279615a3326583ba3a90d1d82cc721"
+  integrity sha512-dSYZh7HhCDtCKm4QakX0xFpsRDqjjtZf/kjI/v3T3Nwt5r8/qz/M19F9ySyOqU94SXBmeG9ttTul+YnR4LOxFA==
+
 "@jridgewell/set-array@^1.0.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/set-array/-/set-array-1.1.1.tgz#36a6acc93987adcf0ba50c66908bd0b70de8afea"
@@ -2732,6 +2737,14 @@
   dependencies:
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
+
+"@jridgewell/trace-mapping@^0.3.19":
+  version "0.3.19"
+  resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.19.tgz#f8a3249862f91be48d3127c3cfe992f79b4b8811"
+  integrity sha512-kf37QtfW+Hwx/buWGMPcR60iF9ziHa6r/CZJIHbmcm4+0qrXiVdxegAH0F6yddEVQ7zdkjcGCgCzUu+BcbhQxw==
+  dependencies:
+    "@jridgewell/resolve-uri" "^3.1.0"
+    "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@jridgewell/trace-mapping@^0.3.9":
   version "0.3.13"
@@ -3054,10 +3067,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/gtag.js@^0.0.13":
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/@types/gtag.js/-/gtag.js-0.0.13.tgz#54d746635e09fa61242e05b574b1ac068e6a90dd"
-  integrity sha512-yOXFkfnt1DQr1v9B4ERulJOGnbdVqnPHV8NG4nkQhnu4qbrJecQ06DlaKmSjI3nzIwBj5U9/X61LY4sTc2KbaQ==
+"@types/gtag.js@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@types/gtag.js/-/gtag.js-0.0.14.tgz#e19f5c310400907ed6f3cbbf00bb5e9f2b6f12f6"
+  integrity sha512-NcR9rf3B93ie5T086NIpXGTtoIJeOeQ14+IBIBwfNBztb175e/0gONc60ywUU4+f9dwctgz9L3I4h5Gs/hl31g==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
@@ -4552,10 +4565,12 @@ esbuild-plugin-svgr@2.1.0:
     "@svgr/core" "^8.0.0"
     "@svgr/plugin-jsx" "^8.0.1"
 
-esbuild-svelte@0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.7.4.tgz#62f2d663ee93acf13f3909ea767029e9407a25b0"
-  integrity sha512-d4Vafj5nFTmZPXznW6YL3ZHXiWwNiPLcE8yfq/5oE8nbyrZlIB92ZCVh3JMbMje+vCb4jnKdH+WoV2sLZRdOJA==
+esbuild-svelte@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/esbuild-svelte/-/esbuild-svelte-0.8.0.tgz#a64d6e7f3df0a111fca939f8fd2917cceea7aa91"
+  integrity sha512-uKcPf1kl2UGMjrfHChv4dLxGAvCNhf9s72mHo19ZhKP+LrVOuQkOM/g8GE7MiGpoqjpk8UHqL08uLRbSKXhmhw==
+  dependencies:
+    "@jridgewell/trace-mapping" "^0.3.19"
 
 esbuild@0.19.4:
   version "0.19.4"
