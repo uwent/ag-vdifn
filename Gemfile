@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.0"
-gem "railties", "~> 7.0"
-gem "activesupport", "~> 7.0"
+gem "rails", "~> 7.1"
+gem "railties", "~> 7.1"
+gem "activesupport", "~> 7.1"
 gem "pg"
 gem "httparty"
 gem "sassc-rails"
