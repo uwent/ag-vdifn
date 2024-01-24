@@ -8,6 +8,7 @@
       "@testing-library/jest-dom",
       "@types/gtag.js"
     ],
+    "allowJs": true,
     "downlevelIteration": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
