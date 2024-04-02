@@ -110,6 +110,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     diff-lcs (1.5.1)
     docile (1.4.0)
@@ -391,6 +392,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rbenv
+  csv
   dotenv-rails
   foreman
   guard-rspec
