@@ -43,12 +43,10 @@ set :rbenv_ruby, "3.3.0"
 before "deploy:assets:precompile", "deploy:npm_install"
 
 namespace :deploy do
-  desc "Run rake npm install"
+  desc "Run npm install"
   task :npm_install do
     on roles(:app) do
-      within release_path do
-        execute "cd #{release_path} && pnpm install"
-      end
+      execute "cd #{release_path} && pnpm install --prod --silent --force"
     end
   end
 
