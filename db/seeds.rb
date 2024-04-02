@@ -220,7 +220,7 @@ cabbage_maggot = Insect.create!(
     </p>",
   severity_info: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD. Second generation adult emergence begins around 1880 FDD and peaks around 2120 FDD, with egg-laying occurring from 2270 FDD through 3040 FDD.",
   photo: "cabbage-maggot.jpg",
-  link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/"
+  link: "https://vegento.russell.wisc.edu/pests/cabbage-maggot/"
 )
 
 colorado_potato_beetle = Insect.create!(
