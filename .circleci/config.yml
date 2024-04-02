@@ -25,7 +25,7 @@ jobs:
       - ruby/install-deps:
           key: gems-v1
       - node/install-packages:
-          pkg-manager: yarn
+          pkg-manager: pnpm
       - run:
           name: Set up database
           command: bundle exec rails db:setup
@@ -34,7 +34,7 @@ jobs:
           command: bundle exec rspec
       - run:
           name: Jest
-          command: yarn test
+          command: pnpm test
       - run:
           name: Build
-          command: yarn build
+          command: pnpm build

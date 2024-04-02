@@ -40,14 +40,14 @@ set :deploy_user, "deploy"
 set :rbenv_type, :user
 set :rbenv_ruby, "3.3.0"
 
-before "deploy:assets:precompile", "deploy:yarn_install"
+before "deploy:assets:precompile", "deploy:npm_install"
 
 namespace :deploy do
-  desc "Run rake yarn install"
-  task :yarn_install do
+  desc "Run rake npm install"
+  task :npm_install do
     on roles(:app) do
       within release_path do
-        execute "cd #{release_path} && yarn install --production --silent"
+        execute "cd #{release_path} && pnpm install"
       end
     end
   end
