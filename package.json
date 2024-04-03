@@ -1,5 +1,6 @@
 {
   "name": "vdifn",
+  "type": "module",
   "private": true,
   "description": "UW-Madison AgWeather Vegetable Disease and Insect Forecasting Network Web App",
   "license": "MIT",
@@ -70,6 +71,7 @@
     "svelte-check": "3.6.9",
     "svelte-jester": "3.0.0",
     "ts-jest": "29.1.2",
+    "ts-node": "^10.9.2",
     "undici": "^6.11.0"
   }
 }

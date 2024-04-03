@@ -14,17 +14,31 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "module": "es6",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "app/javascript/*"]
+      "*": [
+        "node_modules/*",
+        "app/javascript/*"
+      ]
     },
     "sourceMap": true,
     "target": "esnext",
     "noEmit": true,
   },
-  "include": ["app/javascript"],
-  "exclude": ["node_modules", "vendor", "public", "spec", "app/javascript/spec"],
+  "include": [
+    "app/javascript"
+  ],
+  "exclude": [
+    "node_modules",
+    "vendor",
+    "public",
+    "spec",
+    "app/javascript/spec"
+  ],
 }
