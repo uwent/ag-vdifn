@@ -7,7 +7,7 @@
 </style>
 
 <script lang="ts">
-  export let title = 'Model Parameters'
+  export let title = 'Model Parameters';
 </script>
 
 <fieldset>

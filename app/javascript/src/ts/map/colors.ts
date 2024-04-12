@@ -5,8 +5,8 @@ export const COLORS = {
   orange: '#ff8000',
   red: '#cc0000',
   brightRed: '#FF0000',
-  grey: '#808080'
-}
+  grey: '#808080',
+};
 
 export const severityColors = {
   error: COLORS.grey,
@@ -14,8 +14,8 @@ export const severityColors = {
   low: COLORS.brightGreen,
   medium: COLORS.yellow,
   high: COLORS.orange,
-  very_high: COLORS.red
-}
+  very_high: COLORS.red,
+};
 
 // export const defaultSpectrum = [
 //   COLORS.lightGreen,

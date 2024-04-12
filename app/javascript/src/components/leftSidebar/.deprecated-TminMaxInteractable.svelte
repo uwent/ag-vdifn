@@ -118,100 +118,95 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte'
-  import { tMinTmax, defaults } from '../../store/store'
-  import { f_to_c, c_to_f } from '../common/ts/utils'
-  let in_f = $tMinTmax.in_fahrenheit
-  let tMin = $tMinTmax.t_min || defaults.t_min
-  let tMax = $tMinTmax.t_max
-  let tMaxDisabled = ($tMinTmax.t_max === null)
-  let valid = true
-  const dispatch = createEventDispatcher()
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { tMinTmax, defaults } from '../../store/store';
+  import { f_to_c, c_to_f } from '../common/ts/utils';
+  let in_f = $tMinTmax.in_fahrenheit;
+  let tMin = $tMinTmax.t_min || defaults.t_min;
+  let tMax = $tMinTmax.t_max;
+  let tMaxDisabled = $tMinTmax.t_max === null;
+  let valid = true;
+  const dispatch = createEventDispatcher();
 
   function convert(event: any) {
-    in_f = event.target.checked
+    in_f = event.target.checked;
     if (in_f) {
-      tMin = c_to_f(tMin)
-      tMax = c_to_f(tMax)
+      tMin = c_to_f(tMin);
+      tMax = c_to_f(tMax);
     } else {
-      tMin = f_to_c(tMin)
-      tMax = f_to_c(tMax)
+      tMin = f_to_c(tMin);
+      tMax = f_to_c(tMax);
     }
   }
 
   function tMaxToggle(event: any) {
-    tMaxDisabled = event.target.checked
+    tMaxDisabled = event.target.checked;
     if (tMaxDisabled) {
-      valid = true
+      valid = true;
     } else if (!tMaxDisabled && !tMax) {
-      valid = false
+      valid = false;
     }
   }
 
   function validateTmin(event: any) {
-    let msg = ''
+    let msg = '';
     const {
       target,
-      target: { value }
-    } = event
+      target: { value },
+    } = event;
     if (tMaxDisabled) {
-      valid = true
+      valid = true;
     } else if (value >= tMax) {
-      msg = 'This value must be less than the Tmax'
-      valid = false
+      msg = 'This value must be less than the Tmax';
+      valid = false;
     } else {
-      tMin = Number(event.target.value)
-      valid = true
+      tMin = Number(event.target.value);
+      valid = true;
     }
-    target.setCustomValidity(msg)
-    target.title = msg
+    target.setCustomValidity(msg);
+    target.title = msg;
   }
 
   function validateTmax(event: any) {
-    let msg = ''
+    let msg = '';
     const {
       target,
-      target: { value }
-    } = event
+      target: { value },
+    } = event;
     if (tMaxDisabled) {
-      valid = true
+      valid = true;
     } else if (value <= tMin) {
-      msg = 'This value must be greater than the Tmin'
-      valid = false
+      msg = 'This value must be greater than the Tmin';
+      valid = false;
     } else {
-      tMax = Number(event.target.value)
-      valid = true
+      tMax = Number(event.target.value);
+      valid = true;
     }
-    target.setCustomValidity(msg)
-    target.title = msg
+    target.setCustomValidity(msg);
+    target.title = msg;
   }
 
-  function updateTminTmax(
-    tMin: number,
-    tMax: number,
-    in_f: boolean,
-    tMaxDisabled: boolean
-  ) {
+  function updateTminTmax(tMin: number, tMax: number, in_f: boolean, tMaxDisabled: boolean) {
     if (tMaxDisabled) {
       tMinTmax.set({
         t_min: tMin,
         t_max: null,
-        in_fahrenheit: in_f
-      })
+        in_fahrenheit: in_f,
+      });
     } else {
       tMinTmax.set({
         t_min: tMin,
         t_max: tMax,
-        in_fahrenheit: in_f
-      })
+        in_fahrenheit: in_f,
+      });
     }
   }
 
   // onMount(() => {
   // })
 
-  $: dispatch('tMinMaxValid', { valid: valid })
-  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled)
+  $: dispatch('tMinMaxValid', { valid: valid });
+  $: updateTminTmax(tMin, tMax, in_f, tMaxDisabled);
 </script>
 
 <div id="degree_day_info">
@@ -222,8 +217,8 @@
         on:change={validateTmin}
         type="number"
         id="tmin"
-        maxlength=4
-        step=0.1
+        maxlength="4"
+        step="0.1"
         bind:value={tMin}
         title={this.validationMessage}
       />
@@ -242,12 +237,7 @@
         />
       </div>
       <div class="tMaxToggle">
-        <input
-          id="tMaxToggle"
-          type="checkbox"
-          on:change={tMaxToggle}
-          bind:checked={tMaxDisabled}
-        />
+        <input id="tMaxToggle" type="checkbox" on:change={tMaxToggle} bind:checked={tMaxDisabled} />
         <label for="tMaxToggle">No Tmax</label>
       </div>
     </div>
@@ -258,12 +248,7 @@
       <span class="in-fahrenheit">&#8457;</span>
     </div>
     <label class="switch">
-      <input
-        type="checkbox"
-        title="temp-unit-toggle"
-        on:change={convert}
-        bind:checked={in_f}
-      />
+      <input type="checkbox" title="temp-unit-toggle" on:change={convert} bind:checked={in_f} />
       <span class="slider round" />
     </label>
   </div>

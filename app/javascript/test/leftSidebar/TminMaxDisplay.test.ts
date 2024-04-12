@@ -30,14 +30,14 @@ let tempToggle;
 
 describe('Temperature conversion helpers', () => {
   test('converts c to f correctly', () => {
-    expect(c_to_f(null)).toBeNull()
+    expect(c_to_f(null)).toBeNull();
     expect(c_to_f(0)).toEqual(32);
     expect(c_to_f(-40)).toEqual(-40);
     expect(c_to_f(37)).toEqual(98.6);
   });
 
   test('converts f to c correctly', () => {
-    expect(f_to_c(null)).toBeNull()
+    expect(f_to_c(null)).toBeNull();
     expect(f_to_c(32)).toEqual(0);
     expect(f_to_c(-40)).toEqual(-40);
     expect(f_to_c(85)).toEqual(29.4);

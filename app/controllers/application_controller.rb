@@ -36,21 +36,13 @@ class ApplicationController < ActionController::Base
   end
 
   def t_min
-    # val = params[:t_min]
-    # if val.present?
-    #   val = val.to_f
-    #   in_f ? val : c_to_f(val)
-    # end
-    params[:t_min]
+    val = params[:t_min]
+    val = val.to_f if val.present?
   end
 
   def t_max
-    # val = params[:t_max]
-    # if val.present?
-    #   val = val.to_f
-    #   in_f ? val : c_to_f(val)
-    # end
-    params[:t_max]
+    val = params[:t_max]
+    val = val.to_f if val.present?
   end
 
   def c_to_f(temp)

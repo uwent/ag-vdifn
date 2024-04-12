@@ -1,5 +1,5 @@
-import { it, expect } from 'vitest'
+import { it, expect } from 'vitest';
 
 it('always passes', () => {
-  expect(true).toEqual(true)
-})
+  expect(true).toEqual(true);
+});

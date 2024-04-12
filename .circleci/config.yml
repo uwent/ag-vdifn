@@ -30,11 +30,11 @@ jobs:
           name: Set up database
           command: bundle exec rails db:setup
       - run:
-          name: Rspec
+          name: Run rails tests
           command: bundle exec rspec
       - run:
-          name: Jest
+          name: Run js tests
           command: pnpm test
       - run:
-          name: Build
+          name: Run js build
           command: pnpm build
