@@ -110,14 +110,11 @@
   import moment from 'moment';
   import { onMount } from 'svelte';
   import { get } from 'svelte/store';
+
   import TwoPointGradient from './TwoPointGradient.svelte';
   import ThreePointGradient from './ThreePointGradient.svelte';
-  import {
-    overlayGradient,
-    customOverlaySubmitted,
-    customPanelState,
-    mapRange,
-  } from '../../store/store';
+  import { overlayGradient, customOverlaySubmitted, customPanelState, mapRange } from '@store';
+
   let gradient = 1;
 
   function updateOverlay(event) {

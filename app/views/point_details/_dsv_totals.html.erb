@@ -5,7 +5,7 @@
     <b>Season total <%= @dsv_units %>:</b> <%= total&.round(1) %><br>
     <br>
     <b>Selected dates:</b> <%= "#{@selected_data.first[:date].strftime('%b %-d')} to #{@selected_data.last[:date].strftime('%b %-d')} (#{@selected_data.size} days)" %><br>
-    <b>Selected total <%= @dsv_units %>:</b> <%= get_total(@selected_data) %><br>
+    <b>Selected total <%= @dsv_units %>:</b> <%= sprintf("%.1f", get_total(@selected_data)) %><br>
     
     <% if @data.size >= 14 %>
       <% total = get_total(@data.last(14)); avg = (total / 14.0).round(1) %>

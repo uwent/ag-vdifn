@@ -40,10 +40,11 @@
 
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
-  import type { DegreeDayModel } from '../common/ts/types';
-  import { panelKey, customPanelState, selectedDDModel, tMinTmax } from '../../store/store';
 
-  const { getModels } = getContext(panelKey);
+  import type { DegreeDayModel } from '@types';
+  import { panelKey, customPanelState, selectedDDModel, tMinTmax } from '@store';
+
+  const { getModels } = getContext<any>(panelKey);
 
   let ddModels: DegreeDayModel[] = getModels();
   let defaultModel = 'dd_50_86';

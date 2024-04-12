@@ -49,6 +49,14 @@
 <script lang="ts">
   import moment from 'moment';
   import { onMount, setContext } from 'svelte';
+
+  import ModelParameters from './ModelParameters.svelte';
+  import DatePicker from './DatePicker.svelte';
+  import SeverityGradient from './SeverityGradient.svelte';
+  import CustomModelSelection from './CustomModelSelection.svelte';
+  import TminMaxDisplay from './TminMaxDisplay.svelte';
+  import Button from '../common/Button.svelte';
+  import Loading from '../common/Loading.svelte';
   import {
     customOverlaySubmitted,
     endDate,
@@ -62,15 +70,10 @@
     selectedDDModel,
     extents,
     mapExtent,
-  } from '../../store/store';
-  import ModelParameters from './ModelParameters.svelte';
-  import DatePicker from './DatePicker.svelte';
-  import SeverityGradient from './SeverityGradient.svelte';
-  import CustomModelSelection from './CustomModelSelection.svelte';
-  import TminMaxDisplay from './TminMaxDisplay.svelte';
-  import Button from '../common/Button.svelte';
-  import Loading from '../common/Loading.svelte';
+  } from '@store';
+
   export let data: any;
+
   const thisPanel = 'custom';
 
   setContext(panelKey, {

@@ -55,36 +55,35 @@
       background: rgb(200, 200, 200);
     }
   }
-
 </style>
 
 <script lang="ts">
-  import moment from 'moment'
-  import { getContext, onDestroy, onMount } from 'svelte'
-  import { endDate, panelKey, startDate, selectedAffliction } from '../../store/store'
-  import type { PestInfo } from '../common/ts/types'
-  // import QuestionSvg from '../common/svg/QuestionSvg.svelte'
+  import moment from 'moment';
+  import { getContext, onDestroy } from 'svelte';
 
-  const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey)
+  import { endDate, panelKey, startDate, selectedAffliction } from '@store';
+  import type { PestInfo } from '@types';
 
-  let today: string = moment.utc().subtract(1, 'day').format('YYYY-MM-DD')
-  let endDateValue: string = today
-  let defaultEndDateValue = endDateValue
-  let startDateValue: string = defaultStartDate
-  let defaultStartDateValue = startDateValue
-  let startLabel = "Start date"
+  const { panelType, dateToolTip, defaultStartDate } = getContext<any>(panelKey);
+
+  let today: string = moment.utc().subtract(1, 'day').format('YYYY-MM-DD');
+  let endDateValue: string = today;
+  let defaultEndDateValue = endDateValue;
+  let startDateValue: string = defaultStartDate;
+  let defaultStartDateValue = startDateValue;
+  let startLabel = 'Start date';
 
   // handle end date changes
   // allow end date to push start date forward and update
   // if end date moves to different year start date set to Jan 1 of same year
   function updateStartDateInput() {
-    const start = moment.utc(startDateValue)
-    const end = moment.utc(endDateValue)
+    const start = moment.utc(startDateValue);
+    const end = moment.utc(endDateValue);
 
-    if (end < start) startDateValue = endDateValue
+    if (end < start) startDateValue = endDateValue;
 
     if (end.format('YYYY') != start.format('YYYY')) {
-      startDateValue = end.format('YYYY') + '-01-01'
+      startDateValue = end.format('YYYY') + '-01-01';
     }
   }
 
@@ -92,71 +91,71 @@
   // allow start date to push end date backward
   // if start date moves to different year end date follows
   function updateEndDateInput() {
-    const start = moment.utc(startDateValue)
-    const end = moment.utc(endDateValue)
+    const start = moment.utc(startDateValue);
+    const end = moment.utc(endDateValue);
 
-    if (start > end) endDateValue = startDateValue
+    if (start > end) endDateValue = startDateValue;
 
     if (start.format('YYYY') != end.format('YYYY')) {
       if (today < start.format('YYYY') + '-12-31') {
-        endDateValue = today
+        endDateValue = today;
       } else {
-        endDateValue = start.format('YYYY') + '-12-31'
+        endDateValue = start.format('YYYY') + '-12-31';
       }
     }
   }
 
   function selectPastWeek() {
-    endDateValue = today
-    startDateValue = moment.utc().subtract(1, 'week').format('YYYY-MM-DD')
+    endDateValue = today;
+    startDateValue = moment.utc().subtract(1, 'week').format('YYYY-MM-DD');
   }
 
   function selectPastMonth() {
-    endDateValue = today
-    startDateValue = moment.utc().subtract(1, 'month').format('YYYY-MM-DD')
+    endDateValue = today;
+    startDateValue = moment.utc().subtract(1, 'month').format('YYYY-MM-DD');
   }
 
   function selectThisYear() {
-    endDateValue = today
-    startDateValue = moment.utc().format('YYYY') + '-01-01'
+    endDateValue = today;
+    startDateValue = moment.utc().format('YYYY') + '-01-01';
   }
 
   function selectDefaults() {
-    endDateValue = defaultEndDateValue
-    startDateValue = defaultStartDateValue
+    endDateValue = defaultEndDateValue;
+    startDateValue = defaultStartDateValue;
   }
 
   function isPastYear(date: string) {
-    return moment.utc(date).format('YYYY') != moment.utc().format('YYYY')
+    return moment.utc(date).format('YYYY') != moment.utc().format('YYYY');
   }
 
   // panel and pest-specific tweaks to datepicker
-  const unsubscribe = selectedAffliction.subscribe((affliction: PestInfo) => {
+  const unsubscribe = selectedAffliction.subscribe((affliction) => {
     if (panelType != 'custom') {
-      startLabel = affliction.biofix_label || "Start date"
+      startLabel = affliction.biofix_label || 'Start date';
 
       // if biofix has yet to occur default to last year
       if (affliction.biofix_date) {
         if (affliction.biofix_date < today) {
-          defaultStartDateValue = affliction.biofix_date
-          defaultEndDateValue = today
+          defaultStartDateValue = affliction.biofix_date;
+          defaultEndDateValue = today;
         } else {
           defaultStartDateValue = moment
             .utc(affliction.biofix_date)
             .subtract(1, 'year')
-            .format('YYYY-MM-DD')
-          defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31'
+            .format('YYYY-MM-DD');
+          defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31';
         }
-        startDateValue = defaultStartDateValue
-        endDateValue = defaultEndDateValue
+        startDateValue = defaultStartDateValue;
+        endDateValue = defaultEndDateValue;
       }
     }
-  })
+  });
 
-  onDestroy(unsubscribe)
+  onDestroy(unsubscribe);
 
-  $: startDate.set(startDateValue)
-  $: endDate.set(endDateValue)
+  $: startDate.set(startDateValue);
+  $: endDate.set(endDateValue);
 </script>
 
 <fieldset id="datepicker">
@@ -201,25 +200,29 @@
     <button
       title="Set date range to past week"
       data-testid="button-past-week"
-      on:click={selectPastWeek}>
+      on:click={selectPastWeek}
+    >
       Past week
     </button>
     <button
       title="Set date range to past month"
       data-testid="button-past-month"
-      on:click={selectPastMonth}>
+      on:click={selectPastMonth}
+    >
       Past month
     </button>
     <button
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
-      on:click={selectThisYear}>
+      on:click={selectThisYear}
+    >
       This year
     </button>
     <button
       title="Restore default date settings for this model"
       data-testid="button-defaults"
-      on:click={selectDefaults}>
+      on:click={selectDefaults}
+    >
       Defaults
     </button>
   </div>

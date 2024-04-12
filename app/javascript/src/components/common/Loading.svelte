@@ -43,13 +43,15 @@
 </style>
 
 <script lang="ts">
-  import { onMount } from 'svelte'
-  let time = 0
+  import { onMount } from 'svelte';
+
+  let time = 0;
+
   onMount(() => {
     setInterval(() => {
-      time += 0.1
-    }, 100)
-  })
+      time += 0.1;
+    }, 100);
+  });
 </script>
 
 <div class="lds-ring" title="Loading" data-testid="loading">

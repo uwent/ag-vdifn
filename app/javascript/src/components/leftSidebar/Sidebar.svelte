@@ -11,7 +11,9 @@
     overflow-y: auto;
     max-height: 100vh;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      -4px 0px 10px rgba(0, 0, 0, 0.3),
+      4px 0px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
     z-index: $z-index-modal;
     transition: $duration-promptly ease-in-out;
@@ -130,9 +132,10 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment'
-  let expanded = true
-  let host = window.location.host
+  import moment from 'moment';
+
+  let expanded = true;
+  let host = window.location.host;
 </script>
 
 <div id="sidebar" aria-expanded={expanded}>

@@ -96,10 +96,9 @@
   import _ from 'lodash';
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { get } from 'svelte/store';
-
-  import GradientHelper from './ts/gradientHelper';
-  import ColorHelper from '@components/map/ts/colorHelper';
-  import { mapRange, twoPointGradientState } from '@store/store';
+  import GradientHelper from '@ts/gradientHelper';
+  import ColorHelper from '@ts/map/colorHelper';
+  import { mapRange, twoPointGradientState } from '@store';
 
   const dispatch = createEventDispatcher();
 
@@ -124,8 +123,8 @@
     if (_.size(state) > 0) {
       if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
         // console.log('loading saved state')
-        severityLevels = state.severityLevels;
-        userInputs = state.userValues;
+        severityLevels = state.severityLevels || 5;
+        userInputs = state.userValues || [];
         validateInputs();
         updateOverlay();
       } else {

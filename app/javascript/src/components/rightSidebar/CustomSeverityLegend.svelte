@@ -20,16 +20,10 @@
 </style>
 
 <script lang="ts">
-  type GradientMapping = {
-    color: string;
-    number: number;
-  };
-  type LegendMapping = {
-    color: string;
-    text: string;
-  };
+  import type { GradientMapping, LegendMapping } from '@types';
 
   export let gradientMapping: GradientMapping[] = [];
+
   let legend: LegendMapping[] = [];
 
   // converts color/cutoff gradient into legend

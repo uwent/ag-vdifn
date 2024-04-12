@@ -31,10 +31,12 @@
     "verbatimModuleSyntax": true,
     "baseUrl": "./app/javascript",
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
-      "@store/*": ["./src/store/*"]
+      "@ts/*": ["./src/ts/*"],
+      "@types": ["./src/types"],
+      "@store": ["./src/store"],
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     },
     "outDir": "./app/assets/builds"
   },

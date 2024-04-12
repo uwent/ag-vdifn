@@ -39,8 +39,9 @@
 </style>
 
 <script lang="ts">
-  import type { SeverityLegend } from '@components/common/ts/types';
+  import type { SeverityLegend } from '@types';
   import QuestionSvg from '../common/QuestionSvg.svelte';
+
   export let severities: SeverityLegend[] = [];
 </script>
 

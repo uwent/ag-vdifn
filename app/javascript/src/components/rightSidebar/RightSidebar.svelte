@@ -1,6 +1,6 @@
 <style lang="scss">
   @import '../../scss/settings.scss';
-  
+
   #right-sidebar-expand-button {
     position: fixed;
     right: 10px;
@@ -29,7 +29,9 @@
     padding: 5px 10px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 3px;
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      -4px 0px 10px rgba(0, 0, 0, 0.3),
+      4px 0px 10px rgba(0, 0, 0, 0.3);
 
     @media #{$medium-up} {
       bottom: 30px;
@@ -73,9 +75,12 @@
 </style>
 
 <script lang="ts">
-  import _ from 'lodash'
-  import { onDestroy } from 'svelte'
-  import type { SeverityParams } from '../common/ts/types'
+  import _ from 'lodash';
+  import { onDestroy } from 'svelte';
+  import DatabaseClient from '@ts/databaseClient';
+  import SeverityLegend from './SeverityLegend.svelte';
+  import CustomSeverityLegend from './CustomSeverityLegend.svelte';
+  import Modal from '../common/Modal.svelte';
   import {
     selectedPanel,
     diseasePanelParams,
@@ -84,63 +89,57 @@
     selectedAffliction,
     diseaseLegend,
     insectLegend,
-    customLegend
-  } from '../../store/store'
-  import DatabaseClient from '../common/ts/databaseClient'
-  import SeverityLegend from './SeverityLegend.svelte'
-  import CustomSeverityLegend from './CustomSeverityLegend.svelte'
-  import Modal from '../common/Modal.svelte'
-  let expanded = false
-  let showModal = false
+    customLegend,
+  } from '@store';
 
-  const diseaseUnsubscribe = diseasePanelParams.subscribe(
-    async (severityParams: SeverityParams) => {
-      if (Object.entries(severityParams).length === 0) return
-      let legend = await updateSeverities(severityParams)
-      diseaseLegend.set(legend)
-    }
-  )
+  let expanded = false;
+  let showModal = false;
 
-  const insectUnsubscribe = insectPanelParams.subscribe(
-    async (severityParams: SeverityParams) => {
-      if (Object.entries(severityParams).length === 0) return
-      let legend = await updateSeverities(severityParams)
-      let info = await updateSeverityInfo(severityParams)
-      insectLegend.set({legend: legend, info: info})
-    }
-  )
+  const diseaseUnsubscribe = diseasePanelParams.subscribe(async (severityParams) => {
+    if (Object.entries(severityParams).length === 0) return;
+    const legend = await updateSeverities(severityParams);
+    diseaseLegend.set(legend);
+  });
 
-  const overlayGradientUnsubscribe = overlayGradient.subscribe(gradientMapping => {
-    if (Object.entries(gradientMapping).length === 0) return
-    const temp = []
+  const insectUnsubscribe = insectPanelParams.subscribe(async (severityParams) => {
+    if (Object.entries(severityParams).length === 0) return;
+    let legend = await updateSeverities(severityParams);
+    let info = await updateSeverityInfo(severityParams);
+    insectLegend.set({ legend: legend, info: info });
+  });
+
+  const overlayGradientUnsubscribe = overlayGradient.subscribe((gradientMapping) => {
+    if (Object.entries(gradientMapping).length === 0) return;
+    const temp: any[] = [];
     _.forEach(gradientMapping, (value, key) => {
-      temp.push({ number: key, color: value })
-    })
+      temp.push({ number: key, color: value });
+    });
     let gradient = temp.sort((x, y) => {
-      return x.number - y.number
-    })
-    customLegend.set(gradient)
-  })
+      return x.number - y.number;
+    });
+    customLegend.set(gradient);
+  });
 
   async function updateSeverities(severityParams) {
-    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id)
+    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
   }
 
   async function updateSeverityInfo(severityParams) {
-    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id)
+    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id);
   }
 
   onDestroy(() => {
-    diseaseUnsubscribe()
-    insectUnsubscribe()
-    overlayGradientUnsubscribe()
-  })
+    diseaseUnsubscribe();
+    insectUnsubscribe();
+    overlayGradientUnsubscribe();
+  });
 </script>
 
 <button
   id="right-sidebar-expand-button"
   aria-expanded={expanded}
-  on:click={() => (expanded = !expanded)}>
+  on:click={() => (expanded = !expanded)}
+>
   {expanded ? '\u2716' : 'Show Legend'}
 </button>
 
@@ -150,13 +149,13 @@
   </Modal>
 {/if}
 
-{#if $selectedPanel === "disease" && $diseaseLegend.length}
+{#if $selectedPanel === 'disease' && $diseaseLegend.length}
   <div id="right-sidebar" aria-expanded={expanded}>
     <SeverityLegend severities={$diseaseLegend} />
   </div>
 {/if}
 
-{#if $selectedPanel === "insect" && $insectLegend.legend.length}
+{#if $selectedPanel === 'insect' && $insectLegend.legend.length}
   <div id="right-sidebar" aria-expanded={expanded}>
     <SeverityLegend severities={$insectLegend.legend} />
     <fieldset title="more-info">
@@ -166,7 +165,7 @@
   </div>
 {/if}
 
-{#if $selectedPanel === "custom" && $customLegend.length}
+{#if $selectedPanel === 'custom' && $customLegend.length}
   <div id="right-sidebar" aria-expanded={expanded}>
     <CustomSeverityLegend gradientMapping={$customLegend} />
   </div>

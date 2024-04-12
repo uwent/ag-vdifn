@@ -115,43 +115,45 @@
 </style>
 
 <script lang="ts">
-  import { getContext, onMount } from 'svelte'
-  import { panelKey, selectedAffliction, selectedDDModel, tMinTmax } from '../../store/store'
-  import { f_to_c } from '../common/ts/utils'
-  const { panelType } = getContext(panelKey)
-  let in_f = true
-  let tMinF = 0
-  let tMaxF = 0
-  let tMinC = 0
-  let tMaxC = 0
-  let tMinText = ''
-  let tMaxText = ''
+  import { getContext, onMount } from 'svelte';
+  import { f_to_c } from '@ts/utils';
+  import { panelKey, selectedAffliction, selectedDDModel, tMinTmax } from '@store';
+
+  const { panelType } = getContext<any>(panelKey);
+
+  let in_f = true;
+  let tMinF = 0;
+  let tMaxF = 0;
+  let tMinC = 0;
+  let tMaxC = 0;
+  let tMinText = '';
+  let tMaxText = '';
 
   // generate the temperature display text
   function makeText(temp) {
-    if (temp === null || temp === undefined) return 'None'
-    if (Number.isInteger(temp)) return temp.toFixed(0)
-    return temp.toFixed(1)
+    if (temp === null || temp === undefined) return 'None';
+    if (Number.isInteger(temp)) return temp.toFixed(0);
+    return temp.toFixed(1);
   }
 
   // convert between units and update text
   function updateText(in_f) {
     if (in_f) {
-      tMinText = makeText(tMinF)
-      tMaxText = makeText(tMaxF)
+      tMinText = makeText(tMinF);
+      tMaxText = makeText(tMaxF);
       tMinTmax.set({
         t_min: tMinF,
         t_max: tMaxF,
-        in_fahrenheit: true
-      })
+        in_fahrenheit: true,
+      });
     } else {
-      tMinText = makeText(tMinC)
-      tMaxText = makeText(tMaxC)
+      tMinText = makeText(tMinC);
+      tMaxText = makeText(tMaxC);
       tMinTmax.set({
         t_min: tMinC,
         t_max: tMaxC,
-        in_fahrenheit: false
-      })
+        in_fahrenheit: false,
+      });
     }
   }
 
@@ -159,20 +161,20 @@
   function setTminTmax(model) {
     if (model) {
       // in_f = $tMinTmax.in_fahrenheit || true
-      tMinF = model.t_min
-      tMaxF = model.t_max
-      tMinC = f_to_c(tMinF)
-      tMaxC = f_to_c(tMaxF)
-      updateText(in_f)
+      tMinF = model.t_min;
+      tMaxF = model.t_max;
+      tMinC = f_to_c(tMinF);
+      tMaxC = f_to_c(tMaxF);
+      updateText(in_f);
     }
   }
 
   onMount(() => {
-    setTminTmax((panelType == 'custom') ? $selectedDDModel : $selectedAffliction)
-  })
+    setTminTmax(panelType == 'custom' ? $selectedDDModel : $selectedAffliction);
+  });
 
-  $: updateText(in_f)
-  $: setTminTmax((panelType == 'custom') ? $selectedDDModel : $selectedAffliction)
+  $: updateText(in_f);
+  $: setTminTmax(panelType == 'custom' ? $selectedDDModel : $selectedAffliction);
 </script>
 
 <div id="degree_day_info">

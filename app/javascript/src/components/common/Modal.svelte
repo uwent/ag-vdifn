@@ -37,42 +37,45 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte'
-  import Button from './Button.svelte'
-  export let name = 'Information'
-  export let maxWidth = '32em'
-  const dispatch = createEventDispatcher()
-  const close = () => dispatch('close')
-  let modal: any
+  import { createEventDispatcher, onDestroy } from 'svelte';
+  import Button from './Button.svelte';
 
-  const handle_keydown = e => {
+  export let name = 'Information';
+  export let maxWidth = '32em';
+
+  const dispatch = createEventDispatcher();
+  const close = () => dispatch('close');
+
+  let modal: any;
+
+  const handle_keydown = (e) => {
     if (e.key === 'Escape') {
-      close()
-      return
+      close();
+      return;
     }
 
     if (e.key === 'Tab') {
       // trap focus
-      const nodes = modal.querySelectorAll('*')
-      const tabbable = Array.from(nodes).filter(n => n.tabIndex >= 0)
+      const nodes = modal.querySelectorAll('*');
+      const tabbable: any[] = Array.from(nodes).filter((n: any) => n.tabIndex >= 0);
 
-      let index = tabbable.indexOf(document.activeElement)
-      if (index === -1 && e.shiftKey) index = 0
+      let index = tabbable.indexOf(document.activeElement);
+      if (index === -1 && e.shiftKey) index = 0;
 
-      index += tabbable.length + (e.shiftKey ? -1 : 1)
-      index %= tabbable.length
+      index += tabbable.length + (e.shiftKey ? -1 : 1);
+      index %= tabbable.length;
 
-      tabbable[index].focus()
-      e.preventDefault()
+      tabbable[index].focus();
+      e.preventDefault();
     }
-  }
+  };
 
-  const previously_focused = typeof document !== 'undefined' && document.activeElement
+  const previously_focused: any = typeof document !== 'undefined' && document.activeElement;
 
   if (previously_focused) {
     onDestroy(() => {
-      previously_focused.focus()
-    })
+      previously_focused.focus();
+    });
   }
 </script>
 

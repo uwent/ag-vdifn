@@ -28,14 +28,14 @@ export default defineConfig({
     commonjsOptions: { include: [] },
     rollupOptions: {
       input: {
-        main: '/app/javascript/entrypoints/application.js',
+        main: '/app/javascript/entrypoints/application.ts',
       },
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['spec/spec_setup.ts'],
+    setupFiles: ['test/test_setup.ts'],
     alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
     coverage: {
       reporter: ['text', 'json', 'html'],
