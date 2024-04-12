@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="<%= Rails.configuration.relative_url_root %>/favicon.png">
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV["VDIFN_GTAG"] %>"></script>
   <script>
@@ -15,6 +13,18 @@
     gtag('js', new Date());
     gtag('config', '<%= ENV["VDIFN_GTAG"] %>');
   </script>
+  <%= vite_client_tag %>
+  <%= vite_javascript_tag 'application' %>
+  <!--
+    If using a TypeScript entrypoint file:
+      vite_typescript_tag 'application'
+
+    If using a .jsx or .tsx entrypoint, add the extension:
+      vite_javascript_tag 'application.jsx'
+
+    Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails
+  -->
+
 </head>
 <body>
   <%= yield %>

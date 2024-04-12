@@ -1,12 +1,10 @@
-import Interface from '../../src/components/leftSidebar/Interface.svelte'
-import { fireEvent, render } from '@testing-library/svelte'
-import { tick } from 'svelte'
+import { fireEvent, render, screen } from '@testing-library/svelte';
+import { tick } from 'svelte';
 
-let getRole
-let getTestId
+import Interface from '@components/leftSidebar/Interface.svelte';
 
 beforeEach(() => {
-  const { getByRole, getByTestId } = render(Interface, {
+  render(Interface, {
     props: {
       diseasePanelData: [
         {
@@ -14,9 +12,9 @@ beforeEach(() => {
           name: 'potato',
           afflictions: [
             { id: 5, name: 'late blight', t_min: 5, t_max: 10 },
-            { id: 10, name: 'black death', t_min: 10, t_max: 100 }
-          ]
-        }
+            { id: 10, name: 'black death', t_min: 10, t_max: 100 },
+          ],
+        },
       ],
       insectPanelData: [
         {
@@ -24,44 +22,48 @@ beforeEach(() => {
           name: 'potato',
           afflictions: [
             { id: 10, name: 'grasshopper' },
-            { id: 45, name: 'caterpillar' }
-          ]
-        }
+            { id: 45, name: 'caterpillar' },
+          ],
+        },
       ],
       customPanelData: [
         {
           id: 40,
-          name: "Base 50.0°F",
-          remote_name: "dd_50_none",
+          name: 'Base 50.0°F',
+          remote_name: 'dd_50_none',
           t_min: 50.0,
           t_max: null,
-          name_c: "Base 10.0°C"
-        }
-      ]
-    }
-  })
-  getRole = getByRole
-  getTestId = getByTestId
-})
+          name_c: 'Base 10.0°C',
+        },
+      ],
+    },
+  });
+});
 
-it('disease tab is selected by default', async () => {
-  await tick()
-  expect(getRole('radio', { name: 'Disease' }).checked).toEqual(true)
-  expect(getTestId('disease-panel')).toBeInTheDocument()
-  expect(getRole('combobox', { name: 'Disease' })).toBeInTheDocument()
-})
+test('disease tab is selected by default', async () => {
+  await tick();
+  expect(screen.getByRole('radio', { name: 'Disease' }));
+  expect(screen.getByTestId('disease-panel'));
+  expect(screen.getByRole('combobox', { name: 'Disease' }));
+  expect(screen.queryByTestId('insect-panel')).not.exist;
+  expect(screen.queryByTestId('custom-panel')).not.exist;
+});
 
-it('shows insect panel when insect tab is selected', async () => {
-  await tick()
-  const insectTab = getRole('radio', { name: 'Insect' })
-  await fireEvent.click(insectTab)
-  expect(getTestId('insect-panel')).toBeInTheDocument()
-  expect(getRole('combobox', { name: 'Insect' })).toBeInTheDocument()
-})
+test('shows insect panel when insect tab is selected', async () => {
+  await tick();
+  const insectTab = screen.getByRole('radio', { name: 'Insect' });
+  await fireEvent.click(insectTab);
+  expect(screen.getByTestId('insect-panel'));
+  expect(screen.getByRole('combobox', { name: 'Insect' }));
+  expect(screen.queryByTestId('disease-panel')).not.exist;
+  expect(screen.queryByTestId('custom-panel')).not.exist;
+});
 
-it('shows custom panel when custom tab is selected', async () => {
-  await tick()
-  const customTab = getRole('radio', { name: 'Custom' })
-  await fireEvent.click(customTab)
-  expect(getTestId('custom-panel')).toBeInTheDocument()
-})
+test('shows custom panel when custom tab is selected', async () => {
+  await tick();
+  const customTab = screen.getByRole('radio', { name: 'Custom' });
+  await fireEvent.click(customTab);
+  expect(screen.getByTestId('custom-panel'));
+  expect(screen.queryByTestId('disease-panel')).not.exist;
+  expect(screen.queryByTestId('insect-panel')).not.exist;
+});

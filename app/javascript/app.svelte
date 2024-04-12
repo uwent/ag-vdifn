@@ -137,13 +137,13 @@
 </style>
 
 <script lang="ts">
-  import Map from './src/components/map/Map.svelte'
-  import SeverityOverlay from './src/components/map/SeverityOverlay.svelte'
-  import Sidebar from './src/components/leftSidebar/Sidebar.svelte'
-  import Interface from './src/components/leftSidebar/Interface.svelte'
-  import RightSidebar from './src/components/rightSidebar/RightSidebar.svelte'
-  import SeverityLegend from './src/components/rightSidebar/SeverityLegend.svelte'
-  import Status from './src/components/map/Status.svelte'
+  import Map from '~/src/components/map/Map.svelte'
+  import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte'
+  import Sidebar from '~/src/components/leftSidebar/Sidebar.svelte'
+  import Interface from '~/src/components/leftSidebar/Interface.svelte'
+  import RightSidebar from '~/src/components/rightSidebar/RightSidebar.svelte'
+  import SeverityLegend from '~/src/components/rightSidebar/SeverityLegend.svelte'
+  import Status from '~/src/components/map/Status.svelte'
 </script>
 
 <main class="main">

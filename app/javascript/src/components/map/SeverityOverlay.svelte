@@ -17,9 +17,9 @@
     twoPointGradientState,
     threePointGradientState,
     customOverlaySubmitted
-  } from '../../store/store'
+  } from '@store/store'
   import OverlayHelper from './ts/overlayHelper'
-  import { SeverityParams } from '../common/ts/types'
+  import type { SeverityParams } from '../common/ts/types'
 
   const { getMap, getGoogle } = getContext(mapKey)
   const map = getMap()

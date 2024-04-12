@@ -59,12 +59,12 @@
 </style>
 
 <script lang="ts">
+  import moment from 'moment'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { endDate, panelKey, startDate, selectedAffliction } from '../../store/store'
-  import { PestInfo } from '../common/ts/types'
+  import type { PestInfo } from '../common/ts/types'
   // import QuestionSvg from '../common/svg/QuestionSvg.svelte'
 
-  const moment = require('moment')
   const { panelType, dateToolTip, defaultStartDate } = getContext(panelKey)
 
   let today: string = moment.utc().subtract(1, 'day').format('YYYY-MM-DD')

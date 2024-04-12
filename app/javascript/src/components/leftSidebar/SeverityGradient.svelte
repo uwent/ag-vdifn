@@ -107,36 +107,36 @@
 </style>
 
 <script lang="ts">
-  const moment = require('moment')
-  import { onMount } from 'svelte'
-  import { get } from 'svelte/store'
-  import TwoPointGradient from './TwoPointGradient.svelte'
-  import ThreePointGradient from './ThreePointGradient.svelte'
+  import moment from 'moment';
+  import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
+  import TwoPointGradient from './TwoPointGradient.svelte';
+  import ThreePointGradient from './ThreePointGradient.svelte';
   import {
     overlayGradient,
     customOverlaySubmitted,
     customPanelState,
-    mapRange
-  } from '../../store/store'
-  let gradient = 1
+    mapRange,
+  } from '../../store/store';
+  let gradient = 1;
 
   function updateOverlay(event) {
-    overlayGradient.set(event.detail)
-    updateCustomPanelState()
+    overlayGradient.set(event.detail);
+    updateCustomPanelState();
   }
 
   function updateCustomPanelState() {
-    customPanelState.update(state => ({
+    customPanelState.update((state) => ({
       ...state,
-      selectedGradient: gradient
-    }))
+      selectedGradient: gradient,
+    }));
   }
 
   onMount(() => {
     if (get(customOverlaySubmitted)) {
-      gradient = get(customPanelState).selectedGradient
+      gradient = get(customPanelState).selectedGradient || 1;
     }
-  })
+  });
 </script>
 
 <div data-testid="gradient-opts">
@@ -191,4 +191,3 @@
     Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
   </div>
 </div>
-

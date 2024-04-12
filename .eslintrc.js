@@ -3,7 +3,6 @@ module.exports = {
     node: true,
     browser: true,
     es2021: true,
-    'jest/globals': true
   },
   extends: [
     "eslint:recommended",
@@ -31,8 +30,7 @@ module.exports = {
   },
   plugins: [
     "@typescript-eslint",
-    "svelte3",
-    "jest"
+    "svelte3"
   ],
   rules: {
   },

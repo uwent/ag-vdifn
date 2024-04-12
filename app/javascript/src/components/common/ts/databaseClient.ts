@@ -1,6 +1,6 @@
-import {
+import type {
   Severity,
-  PestInfo,
+  // PestInfo,
   SeverityLegend,
   PointDetailsParams,
   SeverityParams,
@@ -11,7 +11,7 @@ import {
 } from './types'
 import { isDev } from '../../../store/store'
 import axios from 'axios'
-import DatabaseClientInterface from './interfaces/databaseClientInterface'
+import type DatabaseClientInterface from './interfaces/databaseClientInterface'
 import ENDPOINTS from './endpoints'
 
 export default class DatabaseClient implements DatabaseClientInterface {

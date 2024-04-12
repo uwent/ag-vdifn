@@ -1,5 +1,5 @@
 <script lang="ts">
-  const moment = require('moment')
+  import moment from 'moment'
   import { onMount, setContext, tick } from 'svelte'
   import { get } from 'svelte/store'
   import {

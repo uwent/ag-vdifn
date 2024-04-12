@@ -97,13 +97,13 @@
 </style>
 
 <script lang="ts">
+  import _ from 'lodash'
   import GradientHelper from './ts/gradientHelper'
   import ColorHelper from '../../components/map/ts/colorHelper'
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
   import { mapRange, threePointGradientState } from '../../store/store'
   import { get } from 'svelte/store'
 
-  const _ = require('lodash')
   const dispatch = createEventDispatcher()
 
   let gradientHelper = new GradientHelper()

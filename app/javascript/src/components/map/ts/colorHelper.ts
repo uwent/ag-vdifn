@@ -1,5 +1,5 @@
-import { COLORS } from '../../common/ts/colors'
 import chroma from 'chroma-js'
+import { COLORS } from '../../common/ts/colors'
 
 export default class ColorHelper {
   static color(severity: number, severityLevels: number): string {

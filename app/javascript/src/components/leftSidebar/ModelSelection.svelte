@@ -64,7 +64,7 @@
 
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
-  import { CropWithAfflictions, Pest } from '../common/ts/types'
+  import type { CropWithAfflictions, Pest } from '../common/ts/types'
   import { panelKey, selectedAffliction, afflictionValue, isDev, baseURL } from '../../store/store'
   import Modal from '../common/Modal.svelte'
   const { getCrops, getAfflictionName } = getContext(panelKey)

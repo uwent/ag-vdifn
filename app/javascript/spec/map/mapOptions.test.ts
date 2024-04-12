@@ -1,15 +1,15 @@
-import MapOptions from '../../src/components/map/ts/mapOptions'
+import MapOptions from '@components/map/ts/mapOptions';
 
-it('returns map options object', () => {
+test('returns map options object', () => {
   expect(MapOptions).toEqual({
     center: {
       lat: 45.05,
-      lng: -90.275
+      lng: -90.275,
     },
     mapTypeControl: true,
     mapTypeControlOptions: {
       mapTypeIds: ['roadmap', 'terrain', 'satellite'],
-      position: 3
+      position: 3,
     },
     mapTypeId: 'terrain',
     maxZoom: 14,
@@ -17,9 +17,9 @@ it('returns map options object', () => {
     streetViewControl: false,
     zoomControl: true,
     zoomControlOptions: {
-      position: 7
+      position: 7,
     },
     zoom: 7,
-    styles: expect.anything()
-  })
-})
+    styles: expect.anything(),
+  });
+});

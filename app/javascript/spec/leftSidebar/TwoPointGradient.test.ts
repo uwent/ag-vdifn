@@ -1,197 +1,193 @@
-import TwoPointGradient from '../../src/components/leftSidebar/TwoPointGradient.svelte'
-import { fireEvent, render } from '@testing-library/svelte'
-import { mapRange, twoPointGradientState } from '../../src/store/store'
+import { fireEvent, render, screen } from '@testing-library/svelte';
 
-let queryId
-let userMinInput: HTMLInputElement
-let userMaxInput: HTMLInputElement
-let addButton
-let minusButton
-let updateButton
-let resetButton
+import TwoPointGradient from '@components/leftSidebar/TwoPointGradient.svelte';
+import { mapRange, twoPointGradientState } from '@store/store';
 
-const mapMin = 300
-const mapMax = 800
-const defaultSeverityLevels = 5
+const mapMin = 300;
+const mapMax = 800;
+const defaultSeverityLevels = 5;
+
+let userMinInput;
+let userMaxInput;
+let addButton;
+let minusButton;
+let updateButton;
+let resetButton;
 
 function to_tenths(x: number) {
-  return Math.round(x * 10) / 10
+  return Math.round(x * 10) / 10;
 }
 
 describe('without save state', () => {
   beforeEach(() => {
-    mapRange.set({ min: mapMin, max: mapMax })
-    twoPointGradientState.set({})
+    mapRange.set({ min: mapMin, max: mapMax });
+    twoPointGradientState.set({});
 
-    const { queryAllByTestId, getByTitle, getByTestId } = render(TwoPointGradient)
+    render(TwoPointGradient);
 
-    queryId = queryAllByTestId
-    userMinInput = getByTestId('userMinInput') as HTMLInputElement
-    userMaxInput = getByTestId('userMaxInput') as HTMLInputElement
-    addButton = getByTestId('addButton')
-    minusButton = getByTestId('minusButton')
-    updateButton = getByTestId('updateButton')
-    resetButton = getByTestId('resetButton')
-  })
+    userMinInput = screen.getByTestId('userMinInput');
+    userMaxInput = screen.getByTestId('userMaxInput');
+    addButton = screen.getByTestId('addButton');
+    minusButton = screen.getByTestId('minusButton');
+    updateButton = screen.getByTestId('updateButton');
+    resetButton = screen.getByTestId('resetButton');
+  });
 
   describe('sets up in initial state', () => {
-    it('defaults to 5 severity levels', () => {
-      expect(queryId('severity-row').length).toEqual(defaultSeverityLevels)
-    })
+    test('defaults to 5 severity levels', () => {
+      expect(screen.queryAllByTestId('severity-row').length).toEqual(defaultSeverityLevels);
+    });
 
-    it('starts with buttons enabled', () => {
-      expect(addButton.disabled).toEqual(false)
-      expect(updateButton.disabled).toEqual(false)
-      expect(resetButton.disabled).toEqual(false)
-      expect(minusButton.disabled).toEqual(false)
-    })
+    test('starts with buttons enabled', () => {
+      expect(addButton.disabled).toEqual(false);
+      expect(updateButton.disabled).toEqual(false);
+      expect(resetButton.disabled).toEqual(false);
+      expect(minusButton.disabled).toEqual(false);
+    });
 
-    it('sets initial input values based on map range', () => {
-      const x = to_tenths((mapMax - mapMin) / defaultSeverityLevels)
-      expect(userMinInput.value).toEqual(`${mapMin + x}`)
-      expect(userMaxInput.value).toEqual(`${mapMax - x}`)
-    })
+    test('sets initial input values based on map range', () => {
+      const x = to_tenths((mapMax - mapMin) / defaultSeverityLevels);
+      expect(userMinInput.value).toEqual(`${mapMin + x}`);
+      expect(userMaxInput.value).toEqual(`${mapMax - x}`);
+    });
 
-    it('generates intermediate values divided between userMin and userMax', async () => {
-      const userMin = Number(userMinInput.value)
-      const userMax = Number(userMaxInput.value)
-      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${userMin} - ${userMin + x}`
-      )
-    })
-  })
+    test('generates intermediate values divided between userMin and userMax', async () => {
+      const userMin = Number(userMinInput.value);
+      const userMax = Number(userMaxInput.value);
+      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2));
+      expect(screen.queryAllByTestId('severity-row')[1].textContent).toEqual(
+        ` ${userMin} - ${userMin + x}`,
+      );
+    });
+  });
 
   describe('can change severity levels', () => {
-    it('adds and decrements severity levels', async () => {
-      await fireEvent.click(addButton)
-      await fireEvent.click(addButton)
-      expect(queryId('severity-row').length).toEqual(7)
-      await fireEvent.click(minusButton)
-      await fireEvent.click(minusButton)
-      expect(queryId('severity-row').length).toEqual(5)
-    })
+    test('adds and decrements severity levels', async () => {
+      await fireEvent.click(addButton);
+      await fireEvent.click(addButton);
+      expect(screen.queryAllByTestId('severity-row').length).toEqual(7);
+      await fireEvent.click(minusButton);
+      await fireEvent.click(minusButton);
+      expect(screen.queryAllByTestId('severity-row').length).toEqual(5);
+    });
 
-    it('cannot decrement when there are 3 severity levels', async () => {
-      await fireEvent.click(minusButton)
-      await fireEvent.click(minusButton)
-      expect(minusButton.disabled).toEqual(true)
-    })
+    test('cannot decrement when there are 3 severity levels', async () => {
+      await fireEvent.click(minusButton);
+      await fireEvent.click(minusButton);
+      expect(minusButton.disabled).toEqual(true);
+    });
 
-    it('cannot add when there are 8 levels', async () => {
-      await fireEvent.click(addButton)
-      await fireEvent.click(addButton)
-      await fireEvent.click(addButton)
-      expect(addButton.disabled).toEqual(true)
-    })
+    test('cannot add when there are 8 levels', async () => {
+      await fireEvent.click(addButton);
+      await fireEvent.click(addButton);
+      await fireEvent.click(addButton);
+      expect(addButton.disabled).toEqual(true);
+    });
 
-    it('updates intermediate values when severity levels change', async () => {
-      const userMin = Number(userMinInput.value)
-      const userMax = Number(userMaxInput.value)
-      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${userMin} - ${userMin + x}`
-      )
-      await fireEvent.click(addButton)
-      const severityLevels = defaultSeverityLevels + 1
-      const y = to_tenths((userMax - userMin) / (severityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(
-        ` ${userMin} - ${userMin + y}`
-      )
-    })
-  })
+    test('updates intermediate values when severity levels change', async () => {
+      const userMin = Number(userMinInput.value);
+      const userMax = Number(userMaxInput.value);
+      const x = to_tenths((userMax - userMin) / (defaultSeverityLevels - 2));
+      expect(screen.queryAllByTestId('severity-row')[1].textContent).toEqual(
+        ` ${userMin} - ${userMin + x}`,
+      );
+      await fireEvent.click(addButton);
+      const severityLevels = defaultSeverityLevels + 1;
+      const y = to_tenths((userMax - userMin) / (severityLevels - 2));
+      expect(screen.queryAllByTestId('severity-row')[1].textContent).toEqual(
+        ` ${userMin} - ${userMin + y}`,
+      );
+    });
+  });
 
   describe('validates user min and max values', () => {
-    it('disables buttons when min is less than zero', async () => {
-      const newMin = -10
-      await fireEvent.change(userMinInput, { target: { value: newMin } })
+    test('disables buttons when min is less than zero', async () => {
+      const newMin = -10;
+      await fireEvent.change(userMinInput, { target: { value: newMin } });
       expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum'
-      )
-      expect(userMaxInput.validationMessage).toEqual('')
-      expect(updateButton.disabled).toEqual(true)
-    })
+        'This value must be between 0 and the maximum',
+      );
+      expect(userMaxInput.validationMessage).toEqual('');
+      expect(updateButton.disabled).toEqual(true);
+    });
 
-    it('disables buttons when min is greater than max', async () => {
-      const newMin = 1000
-      await fireEvent.change(userMinInput, { target: { value: newMin } })
+    test('disables buttons when min is greater than max', async () => {
+      const newMin = 1000;
+      await fireEvent.change(userMinInput, { target: { value: newMin } });
       expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum'
-      )
-      expect(userMaxInput.validationMessage).toEqual(
-        'This value must be greater than the minimum'
-      )
-      expect(updateButton.disabled).toEqual(true)
-    })
+        'This value must be between 0 and the maximum',
+      );
+      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum');
+      expect(updateButton.disabled).toEqual(true);
+    });
 
-    it('disables buttons when min is greater than max', async () => {
-      const newMax = -10
-      await fireEvent.change(userMaxInput, { target: { value: newMax } })
+    test('disables buttons when min is greater than max', async () => {
+      const newMax = -10;
+      await fireEvent.change(userMaxInput, { target: { value: newMax } });
       expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum'
-      )
-      expect(userMaxInput.validationMessage).toEqual(
-        'This value must be greater than the minimum'
-      )
-      expect(updateButton.disabled).toEqual(true)
-    })
-  })
+        'This value must be between 0 and the maximum',
+      );
+      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum');
+      expect(updateButton.disabled).toEqual(true);
+    });
+  });
 
   describe('updates intermediate values when user inputs change', () => {
-    it('updates intermediate values when userMin is changed', async () => {
-      const newMin = 200
-      const userMax = Number(userMaxInput.value)
-      await fireEvent.change(userMinInput, { target: { value: newMin } })
-      const x = to_tenths((userMax - newMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[1].textContent).toEqual(` ${newMin} - ${newMin + x}`)
-    })
+    test('updates intermediate values when userMin is changed', async () => {
+      const newMin = 200;
+      const userMax = Number(userMaxInput.value);
+      await fireEvent.change(userMinInput, { target: { value: newMin } });
+      const x = to_tenths((userMax - newMin) / (defaultSeverityLevels - 2));
+      expect(screen.queryAllByTestId('severity-row')[1].textContent).toEqual(
+        ` ${newMin} - ${newMin + x}`,
+      );
+    });
 
-    it('updates intermediate values when userMax is changed', async () => {
-      const newMax = 1000
-      const userMin = Number(userMinInput.value)
-      await fireEvent.change(userMaxInput, { target: { value: newMax } })
-      const x = to_tenths((newMax - userMin) / (defaultSeverityLevels - 2))
-      expect(queryId('severity-row')[defaultSeverityLevels - 2].textContent).toEqual(
-        ` ${newMax - x} - ${newMax}`
-      )
-    })
-  })
+    test('updates intermediate values when userMax is changed', async () => {
+      const newMax = 1000;
+      const userMin = Number(userMinInput.value);
+      await fireEvent.change(userMaxInput, { target: { value: newMax } });
+      const x = to_tenths((newMax - userMin) / (defaultSeverityLevels - 2));
+      expect(
+        screen.queryAllByTestId('severity-row')[defaultSeverityLevels - 2].textContent,
+      ).toEqual(` ${newMax - x} - ${newMax}`);
+    });
+  });
 
   describe('resets user values', () => {
-    it('resets values to default when reset is pushed', async () => {
-      const oldMax = userMaxInput.value
-      const newMax = 1000
-      await fireEvent.change(userMaxInput, { target: { value: newMax } })
-      expect(userMaxInput.value).toEqual(newMax.toString())
-      await fireEvent.click(resetButton)
-      expect(userMaxInput.value).toEqual(oldMax)
-    })
-  })
-})
+    test('resets values to default when reset is pushed', async () => {
+      const oldMax = userMaxInput.value;
+      const newMax = 1000;
+      await fireEvent.change(userMaxInput, { target: { value: newMax } });
+      expect(userMaxInput.value).toEqual(newMax.toString());
+      await fireEvent.click(resetButton);
+      expect(userMaxInput.value).toEqual(oldMax);
+    });
+  });
+});
 
 describe('saving valid state', () => {
-  const severityLevels = 4
-  const userValues = [350, 650]
+  const severityLevels = 4;
+  const userValues = [350, 650];
 
   beforeEach(() => {
-    mapRange.set({ min: mapMin, max: mapMax })
+    mapRange.set({ min: mapMin, max: mapMax });
     twoPointGradientState.set({
       severityLevels: severityLevels,
       userValues: userValues,
       mapMax: mapMax,
-      mapMin: mapMin
-    })
+      mapMin: mapMin,
+    });
 
-    const { queryAllByTestId, getByTestId } = render(TwoPointGradient)
+    render(TwoPointGradient);
 
-    queryId = queryAllByTestId
-    userMinInput = getByTestId('userMinInput') as HTMLInputElement
-    userMaxInput = getByTestId('userMaxInput') as HTMLInputElement
-  })
+    userMinInput = screen.getByTestId('userMinInput');
+    userMaxInput = screen.getByTestId('userMaxInput');
+  });
 
-  it('saves state', () => {
-    expect(userMinInput.value).toEqual(userValues[0].toString())
-    expect(userMaxInput.value).toEqual(userValues[1].toString())
-    expect(queryId('severity-row').length).toEqual(severityLevels)
-  })
-})
+  test('saves state', () => {
+    expect(userMinInput.value).toEqual(userValues[0].toString());
+    expect(userMaxInput.value).toEqual(userValues[1].toString());
+    expect(screen.queryAllByTestId('severity-row').length).toEqual(severityLevels);
+  });
+});

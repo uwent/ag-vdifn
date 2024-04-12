@@ -1,15 +1,9 @@
-const sveltePreprocess = require('svelte-preprocess')
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
-module.exports = {
-  preprocess: sveltePreprocess({
-    typescript: {
-      transpileOnly: true,
-      compilerOptions: {
-        noEmit: false,
-      },
-    },
-    postcss: {
-      'postcss-preset-env': true,
-    },
-  }),
+export default {
+  preprocess: vitePreprocess(),
+  "enable-ts-plugin": true,
+  postcss: {
+    'postcss-preset-env': true,
+  },
 }

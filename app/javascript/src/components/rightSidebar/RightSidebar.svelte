@@ -73,9 +73,9 @@
 </style>
 
 <script lang="ts">
-  const _ = require('lodash')
+  import _ from 'lodash'
   import { onDestroy } from 'svelte'
-  import { SeverityParams } from '../common/ts/types'
+  import type { SeverityParams } from '../common/ts/types'
   import {
     selectedPanel,
     diseasePanelParams,
