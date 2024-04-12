@@ -29,10 +29,6 @@
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "postcss": "^8.4.38",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-import": "^16.1.0",
-    "postcss-preset-env": "^9.5.4",
     "sass": "^1.72.0",
     "turbolinks": "^5.2.0"
   },
