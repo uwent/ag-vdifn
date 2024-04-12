@@ -94,6 +94,9 @@
 
   let expanded = false;
   let showModal = false;
+  let showDiseaseLegend = false;
+  let showInsectLegend = false;
+  let showCustomLegend = false;
 
   const diseaseUnsubscribe = diseasePanelParams.subscribe(async (severityParams) => {
     if (Object.entries(severityParams).length === 0) return;
@@ -133,15 +136,13 @@
     insectUnsubscribe();
     overlayGradientUnsubscribe();
   });
+
+  $: showDiseaseLegend = $selectedPanel === 'disease' && $diseaseLegend.length > 0;
+  $: showInsectLegend = $selectedPanel === 'insect' && $insectLegend.legend.length > 0;
+  $: showCustomLegend = $selectedPanel === 'custom' && $customLegend.length > 0;
 </script>
 
-<button
-  id="right-sidebar-expand-button"
-  aria-expanded={expanded}
-  on:click={() => (expanded = !expanded)}
->
-  {expanded ? '\u2716' : 'Show Legend'}
-</button>
+<slot />
 
 {#if showModal}
   <Modal name="Pest Info" on:close={() => (showModal = false)}>
@@ -149,13 +150,13 @@
   </Modal>
 {/if}
 
-{#if $selectedPanel === 'disease' && $diseaseLegend.length}
+{#if showDiseaseLegend}
   <div id="right-sidebar" aria-expanded={expanded}>
     <SeverityLegend severities={$diseaseLegend} />
   </div>
 {/if}
 
-{#if $selectedPanel === 'insect' && $insectLegend.legend.length}
+{#if showInsectLegend}
   <div id="right-sidebar" aria-expanded={expanded}>
     <SeverityLegend severities={$insectLegend.legend} />
     <fieldset title="more-info">
@@ -165,8 +166,18 @@
   </div>
 {/if}
 
-{#if $selectedPanel === 'custom' && $customLegend.length}
+{#if showCustomLegend}
   <div id="right-sidebar" aria-expanded={expanded}>
     <CustomSeverityLegend gradientMapping={$customLegend} />
   </div>
+{/if}
+
+{#if showDiseaseLegend || showInsectLegend || showCustomLegend}
+  <button
+    id="right-sidebar-expand-button"
+    aria-expanded={expanded}
+    on:click={() => (expanded = !expanded)}
+  >
+    {expanded ? '\u2716' : 'Show Legend'}
+  </button>
 {/if}
