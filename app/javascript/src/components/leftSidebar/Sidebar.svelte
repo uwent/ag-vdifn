@@ -35,7 +35,7 @@
       bottom: 0;
       width: 100%;
       border-bottom: black 1px solid;
-      background-image: url('/images/close.svg');
+      background-image: url('@public/images/close.svg');
       background-color: white;
       border-top: 1px solid gray;
       border-left: none;
@@ -59,7 +59,7 @@
       }
 
       button {
-        background-image: url('/images/open.svg');
+        background-image: url('@public/images/open.svg');
       }
     }
   }
@@ -103,15 +103,15 @@
   }
 
   #plantpath-logo {
-    background-image: url('/images/plantpath-logo.png');
+    background-image: url('@public/images/plantpath-logo.png');
   }
 
   #vegento-logo {
-    background-image: url('/images/vegento-logo.png');
+    background-image: url('@public/images/vegento-logo.png');
   }
 
   #uw-madison {
-    background-image: url('/images/uw-madison.png');
+    background-image: url('@public/images/uw-madison.png');
     background-position: center;
   }
 
