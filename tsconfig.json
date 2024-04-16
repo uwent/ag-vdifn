@@ -16,7 +16,6 @@
     "isolatedModules": true,
     "types": [
       "node",
-      "lodash",
       "google.maps",
       "@types/gtag.js",
       "vitest/globals",
@@ -38,8 +37,8 @@
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     },
-    "outDir": "./app/assets/builds"
+    "outDir": "./public/vite"
   },
   "include": ["**/*.d.ts", "**/*.js", "**/*.ts", "**/*.svelte"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules"]
 }
