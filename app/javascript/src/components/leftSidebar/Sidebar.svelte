@@ -103,15 +103,15 @@
   }
 
   #plantpath-logo {
-    background-image: url('./images/plantpath-logo.png');
+    background-image: url('../../../../assets/images/plantpath-logo.png');
   }
 
   #vegento-logo {
-    background-image: url('./images/vegento-logo.png');
+    background-image: url('../../../../assets/images/vegento-logo.png');
   }
 
   #uw-madison {
-    background-image: url('./images/uw-madison.png');
+    background-image: url('../../../../assets/images/uw-madison.png');
     background-position: center;
   }
 
