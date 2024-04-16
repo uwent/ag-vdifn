@@ -52,7 +52,7 @@ psql -c "alter user postgres with password 'password'"
 exit
 ```
 
-`node` and `yarn`
+`node` and `pnpm`
 ```bash
 # install npm
 sudo apt install npm
@@ -65,21 +65,21 @@ sudo npm install -g n
 sudo n stable
 node -v
 
-# install yarn
-sudo npm install -g yarn
-yarn -v
+# install pnpm
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+pnpm -v
 
 # install packages
-yarn install
+pnpm install
 
 # or update packages to latest - be sure to test compatibility after updates
-yarn upgrade-interactive --latest # or run: yarn bump
+pnpm up --latest
 ```
 
 ## Setup
 
 1. Install core dependencies listed above.
-2. Install ruby gems with `bundle install` and node packages with `yarn install`
+2. Install ruby gems with `bundle install` and node packages with `pnpm install`
 3. Setup database with `bundle exec rails db:setup`
 4. Run [ag-weather](https://github.com/uwent/ag-weather) server on port 8080 with `ag-weather> bundle exec rails s`
 5. Run ag-vdifn server with `bin/dev`
@@ -103,13 +103,13 @@ bundle exec rspec
 ### Jest (Node tests)
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ### Build
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ## Deployment

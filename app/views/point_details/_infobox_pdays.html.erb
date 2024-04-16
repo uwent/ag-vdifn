@@ -27,10 +27,10 @@
       <% @data.reverse.each do |day| %>
         <tr>
           <td class="odd"><%= day[:date] %></td>
-          <td><%= convert_temp(day[:min_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
-          <td class="odd"><%= convert_temp(day[:max_temp]).round(1) %>&deg;<%= temp_symbol() %></td>
-          <td><%= day[:value] %></td>
-          <td class="odd"><%= day[:cumulative_value].round(1) %></td>
+          <td><%= sprintf("%.1f°%s", day[:min_temp], @units) %></td>
+          <td class="odd"><%= sprintf("%.1f°%s", day[:max_temp], @units) %></td>
+          <td><%= sprintf("%.2f", day[:value]) %></td>
+          <td class="odd"><%= sprintf("%.1f", day[:cumulative_value]) %></td>
         </tr>
       <% end %>
     </tbody>

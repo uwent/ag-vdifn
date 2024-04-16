@@ -15,7 +15,8 @@
     background: #249dde;
     background: linear-gradient(to bottom, $btn-color-1 0%, $btn-color-2);
     border-radius: 3px;
-    box-shadow: 0px 1px 3px rgba(000, 000, 000, 0),
+    box-shadow:
+      0px 1px 3px rgba(000, 000, 000, 0),
       inset 0px 0px 1px rgba(255, 255, 255, 1);
     color: #fff;
     font-size: 0.85em;
@@ -36,10 +37,10 @@
 </style>
 
 <script lang="ts">
-  export let click
-  export let text = 'Submit'
-  export let title = ''
-  export let disabled = false
+  export let click;
+  export let text = 'Submit';
+  export let title = '';
+  export let disabled = false;
 </script>
 
 <button class="button button-primary" {title} on:click={click} {disabled}>

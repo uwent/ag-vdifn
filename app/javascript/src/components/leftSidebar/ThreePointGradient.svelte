@@ -4,9 +4,9 @@
   input {
     text-align: center;
   }
-  
+
   input:invalid {
-    border-color: #900;
+    border: 1px solid darkred;
     background-color: #fdd;
   }
 
@@ -40,7 +40,8 @@
     background: $btn-color-2;
     background: linear-gradient(to bottom, $btn-color-1 0%, $btn-color-2);
     border-radius: 3px;
-    box-shadow: 0px 1px 3px rgba(000, 000, 000, 0),
+    box-shadow:
+      0px 1px 3px rgba(000, 000, 000, 0),
       inset 0px 0px 1px rgba(255, 255, 255, 1);
     color: #fff;
     font-size: 0.85em;
@@ -57,6 +58,12 @@
   button:disabled {
     background: grey;
     cursor: not-allowed;
+  }
+
+  .validation-msg {
+    margin-top: 0.5rem;
+    font-size: smaller;
+    font-style: italic;
   }
 
   .severity-value-end {
@@ -78,6 +85,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    gap: 2px;
   }
 
   .level-quantity-button {
@@ -97,74 +105,41 @@
 </style>
 
 <script lang="ts">
-  import GradientHelper from './ts/gradientHelper'
-  import ColorHelper from '../../components/map/ts/colorHelper'
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import { mapRange, threePointGradientState } from '../../store/store'
-  import { get } from 'svelte/store'
+  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { get } from 'svelte/store';
+  import GradientHelper from '@ts/gradientHelper';
+  import ColorHelper from '@ts/map/colorHelper';
+  import { strToNum } from '@ts/utils';
+  import { mapRange, threePointGradientState } from '@store';
 
-  const _ = require('lodash')
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
-  let gradientHelper = new GradientHelper()
-  let userMinInput: HTMLInputElement
-  let userMiddleMinInput: HTMLInputElement
-  let userMiddleMaxInput: HTMLInputElement
-  let userMaxInput: HTMLInputElement
-  let addButton: HTMLButtonElement
-  let minusButton: HTMLButtonElement
-  let updateOverlayButton: HTMLButtonElement
-  let resetOverlayButton: HTMLButtonElement
+  let gradientHelper = new GradientHelper();
+  let userInputElements: HTMLInputElement[] = [];
+  let severityLevels = 5;
+  let userValues = [0, 0, 0, 0];
+  let userInputs = [0, 0, 0, 0];
+  let intermediateRangesUpper: number[][] = [];
+  let intermediateRangesLower: number[][] = [];
+  let buttonsDisabled = false;
+  let gradientValidationMessage = '';
 
-  let severityLevels = 5
-  let userValues: number[] = [0, 0, 0, 0]
-  let userInputs: number[] = [0, 0, 0, 0]
-  let intermediateRangesUpper: number[][] = []
-  let intermediateRangesLower: number[][] = []
-  let buttonsDisabled = false
-
-  $: setUserMinMax($mapRange.min, $mapRange.max)
-
-  onMount(() => {
-    const state = get(threePointGradientState)
-    if (_.size(state) > 0) {
-      if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
-        // console.log('loading saved state')
-        severityLevels = state.severityLevels
-        userInputs = state.userValues
-        validateInputs()
-        updateOverlay()
-      } else {
-        // console.log('saved state present but map has changed')
-        setUserMinMax($mapRange.min, $mapRange.max)
-      }
-    } else {
-      // console.log('no saved state found')
-      setUserMinMax($mapRange.min, $mapRange.max)
-    }
-  })
-
-  onDestroy(() => {
-    threePointGradientState.set({
-      severityLevels,
-      userValues,
-      mapMin: get(mapRange).min,
-      mapMax: get(mapRange).max,
-      gradient: getGradient()
-    })
-  })
+  // populate temporary elements
+  for (let i = 0; i <= 3; i++) {
+    userInputElements.push(0 as any);
+  }
 
   // populate user values from map range
   function setUserMinMax(mapMin, mapMax) {
-    const x = (mapMax - mapMin) / (severityLevels * 2 - 1)
+    const x = (mapMax - mapMin) / (severityLevels * 2 - 1);
     userInputs = [
       Math.round(mapMin + x),
       Math.round((mapMin + mapMax) / 2 - x / 2),
       Math.round((mapMin + mapMax) / 2 + x / 2),
-      Math.round(mapMax - x)
-    ]
-    validateInputs()
-    updateOverlay()
+      Math.round(mapMax - x),
+    ];
+    validateInputs();
+    updateOverlay();
   }
 
   // generate intermediate values for display
@@ -172,75 +147,46 @@
     const { intermediateValues: lower } = gradientHelper.gradientValues({
       min: userValues[0],
       max: userValues[1],
-      intermediateLevels: severityLevels - 2
-    })
+      intermediateLevels: severityLevels - 2,
+    });
     const { intermediateValues: upper } = gradientHelper.gradientValues({
       min: userValues[2],
       max: userValues[3],
-      intermediateLevels: severityLevels - 2
-    })
-    intermediateRangesLower = lower
-    intermediateRangesUpper = upper
+      intermediateLevels: severityLevels - 2,
+    });
+    intermediateRangesLower = lower;
+    intermediateRangesUpper = upper;
   }
 
   // validate inputs, write to values, and update intermediates
   function validateInputs() {
-    if (!userMinInput || !userMiddleMinInput || !userMiddleMaxInput || !userMaxInput)
-      return
+    if (!userInputElements || !userInputElements.every(Boolean)) return;
 
-    const min = Number(userInputs[0])
-    const middleMin = Number(userInputs[1])
-    const middleMax = Number(userInputs[2])
-    const max = Number(userInputs[3])
-
-    if (isNaN(min)) {
-      userMinInput.setCustomValidity('No value entered')
-    } else if (min < 0 || min > middleMin) {
-      userMinInput.setCustomValidity('This value must be between 0 and the middle min')
-    } else {
-      userMinInput.setCustomValidity('')
-      userValues[0] = min
+    const ranges = userInputs.map(strToNum).concat([Infinity]);
+    let messages = [''];
+    for (let i = 0; i <= 3; i++) {
+      let msg = '';
+      if (isNaN(ranges[i])) {
+        msg = 'Please enter a number in each field.';
+        messages.push(msg);
+        userInputElements[i].setCustomValidity(msg);
+      } else if (i === 0 && ranges[0] < 0) {
+        msg = 'Minimum value must be greater than zero.';
+        messages.push(msg);
+        userInputElements[i].setCustomValidity(msg);
+      } else if (ranges[i] < ranges[i - 1]) {
+        msg = 'All values must be in ascending order.';
+        messages.push(msg);
+        userInputElements[i].setCustomValidity(msg);
+      } else {
+        userInputElements[i].setCustomValidity('');
+      }
     }
-
-    if (isNaN(middleMin)) {
-      userMiddleMinInput.setCustomValidity('No value entered')
-    } else if (middleMin < min || middleMin > middleMax) {
-      userMiddleMinInput.setCustomValidity(
-        'This value must be between the min and middle max'
-      )
-    } else {
-      userMiddleMinInput.setCustomValidity('')
-    }
-
-    if (isNaN(middleMax)) {
-      userMiddleMaxInput.setCustomValidity('No value entered')
-    } else if (middleMax < middleMin || middleMax > max) {
-      userMiddleMaxInput.setCustomValidity(
-        'This value must be between the middle min and the max'
-      )
-    } else {
-      userMiddleMaxInput.setCustomValidity('')
-    }
-
-    if (isNaN(max)) {
-      userMaxInput.setCustomValidity('No value entered')
-    } else if (max < middleMax) {
-      userMaxInput.setCustomValidity('This value must be greater than the middle max')
-    } else {
-      userMaxInput.setCustomValidity('')
-    }
-
-    if (
-      userMinInput.validationMessage ||
-      userMiddleMinInput.validationMessage ||
-      userMiddleMaxInput.validationMessage ||
-      userMaxInput.validationMessage
-    ) {
-      buttonsDisabled = true
-    } else {
-      buttonsDisabled = false
-      userValues = [min, middleMin, middleMax, max]
-      updateIntermediateValues()
+    gradientValidationMessage = [...new Set(messages)].join(' ').trim();
+    buttonsDisabled = !!gradientValidationMessage;
+    if (!buttonsDisabled) {
+      userValues = ranges.slice(0, 4);
+      updateIntermediateValues();
     }
   }
 
@@ -251,59 +197,86 @@
       middleMin: userValues[1],
       middleMax: userValues[2],
       max: userValues[3],
-      totalLevels: severityLevels
-    })
+      totalLevels: severityLevels,
+    });
   }
 
   // add gradient level
   function addLevel() {
-    if (severityLevels > 8) return
-    severityLevels += 1
-    updateIntermediateValues()
+    if (severityLevels > 8) return;
+    severityLevels += 1;
+    updateIntermediateValues();
   }
 
   // remove gradient level
   function decrementLevel() {
-    if (severityLevels < 3) return
-    severityLevels -= 1
-    updateIntermediateValues()
+    if (severityLevels < 3) return;
+    severityLevels -= 1;
+    updateIntermediateValues();
   }
 
   // update grid overlay
   function updateOverlay() {
-    dispatch('updateOverlay', getGradient())
+    dispatch('updateOverlay', getGradient());
   }
 
   // handle reset button
   function resetOverlay() {
-    setUserMinMax($mapRange.min, $mapRange.max)
+    setUserMinMax($mapRange.min, $mapRange.max);
   }
 
   // handle inputs
   function handleUpdate(event) {
-    const name = event.target.name
-    const { value } = event.target
+    const name = event.target.name;
+    const { value } = event.target;
     if (name === 'userMin') {
-      userInputs[0] = value
+      userInputs[0] = value;
     } else if (name === 'userMiddleMin') {
-      userInputs[1] = value
+      userInputs[1] = value;
     } else if (name === 'userMiddleMax') {
-      userInputs[2] = value
+      userInputs[2] = value;
     } else if (name === 'userMax') {
-      userInputs[3] = value
+      userInputs[3] = value;
     }
-    validateInputs()
+    validateInputs();
   }
+
+  onMount(() => {
+    const state = get(threePointGradientState);
+    if (
+      Object.keys(state).length > 0 &&
+      state.mapMin === $mapRange.min &&
+      state.mapMax === $mapRange.max
+    ) {
+      // console.log('loading saved state')
+      severityLevels = state.severityLevels || 5;
+      userInputs = state.userValues || [];
+      validateInputs();
+      updateOverlay();
+    } else {
+      // console.log('no saved state found or map changed')
+      setUserMinMax($mapRange.min, $mapRange.max);
+    }
+  });
+
+  onDestroy(() => {
+    threePointGradientState.set({
+      severityLevels,
+      userValues,
+      mapMin: get(mapRange).min,
+      mapMax: get(mapRange).max,
+      gradient: getGradient(),
+    });
+  });
+
+  $: setUserMinMax($mapRange.min, $mapRange.max);
 </script>
 
 <fieldset title="Gradient specification">
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
     <div class="severity-row" data-testid="severity-row">
-      <div
-        class="severity-color"
-        style="background: {ColorHelper.color(0, severityLevels)}"
-      />
+      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}" />
       <div class="severity-value-end">0</div>
       <input
         class="severity-value-end-input"
@@ -312,7 +285,7 @@
         name="userMin"
         data-testid="userMinInput"
         required
-        bind:this={userMinInput}
+        bind:this={userInputElements[0]}
         bind:value={userInputs[0]}
         on:change={handleUpdate}
       />
@@ -340,7 +313,7 @@
         name="userMiddleMin"
         data-testid="userMiddleMinInput"
         required
-        bind:this={userMiddleMinInput}
+        bind:this={userInputElements[1]}
         bind:value={userInputs[1]}
         on:change={handleUpdate}
       />
@@ -351,7 +324,7 @@
         name="userMiddleMax"
         data-testid="userMiddleMaxInput"
         required
-        bind:this={userMiddleMaxInput}
+        bind:this={userInputElements[2]}
         bind:value={userInputs[2]}
         on:change={handleUpdate}
       />
@@ -368,10 +341,7 @@
       </div>
     {/each}
     <div class="severity-row" data-testid="severity-row">
-      <div
-        class="severity-color"
-        style="background: {ColorHelper.color(0, severityLevels)}"
-      />
+      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}" />
       <input
         class="severity-value-end-input"
         title="End of gradient"
@@ -379,7 +349,7 @@
         name="userMax"
         data-testid="userMaxInput"
         required
-        bind:this={userMaxInput}
+        bind:this={userInputElements[3]}
         bind:value={userInputs[3]}
         on:change={handleUpdate}
       />
@@ -390,33 +360,34 @@
         class="level-quantity-button"
         title="Add levels to gradient"
         data-testid="addButton"
-        bind:this={addButton}
         on:click={addLevel}
-        disabled={buttonsDisabled || severityLevels >= 8}
-      >+</button>
+        disabled={buttonsDisabled || severityLevels >= 8}>+</button
+      >
       <button
         class="update-overlay-button"
         title="Update grid overlay with new values"
         data-testid="updateButton"
-        bind:this={updateOverlayButton}
         on:click={updateOverlay}
-        disabled={buttonsDisabled}
-      >Update</button>
+        disabled={buttonsDisabled}>Update</button
+      >
       <button
         class="update-overlay-button"
         title="Reset to defaults"
         data-testid="resetButton"
-        bind:this={resetOverlayButton}
-        on:click={resetOverlay}
-      >Reset</button>
+        on:click={resetOverlay}>Reset</button
+      >
       <button
         class="level-quantity-button"
         title="Remove levels from gradient"
         data-testid="minusButton"
-        bind:this={minusButton}
         on:click={decrementLevel}
-        disabled={buttonsDisabled || severityLevels <= 3}
-      >-</button>
+        disabled={buttonsDisabled || severityLevels <= 3}>-</button
+      >
     </div>
   </div>
+  {#if gradientValidationMessage}
+    <div class="validation-msg" data-testid="validation-msg">
+      {gradientValidationMessage}
+    </div>
+  {/if}
 </fieldset>

@@ -106,18 +106,16 @@ aphid_pvy = Insect.create!(
   local_name: "pvy-vectors",
   remote_name: "dd_39p2_86",
   t_min: 39.2, t_max: 86,
-  risk_array: [[1967, 2473, 3228]],
+  risk_array: [[1838, 2515, 3228]],
   info:
     "<p>
       Of principal interest to potato seed growers in Wisconsin is the prevention of PVY in seed potato lots. PVY is transmitted by aphid feeding activity and can be prevented in part by the timely application of crop oils, which discourage aphids from probing leaf tissues in search of their preferred host and inadvertently transmitting the virus.
     </p><p>
-      The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after 14 years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.
+      The Upper Midwest Aphid Suction Trap Network, developed and maintained out of the University of Illinois at Urbana-Champaign, has been in operation since 2005. Originally conceived to detect soybean aphid flights and provide timely information to growers, the wealth of data now available after many years of operation has enabled us to model flight patterns for a number of different species captured by these traps. These predictive models can also be aligned to degree-days rather than calendar days to control for site-to-site and annual climatic variations.
     </p><p>
-      We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin.
-    </p><p>
-      Our PVY model uses a base 39.2F degree day model with an upper threshold of 86F.
+      We have taken these species-specific models and incorporated published PVY transmission efficiency values to compute risk-adjusted counts for each species. These counts are then added, and a single model is generated from this aggregate risk value that indicates the PVY risk window in Wisconsin. Our most recent model uses data from 2016 - 2023 to generate the aggregate risk degree-day model using a base temperature of 39.2F and an upper threshold of 86F.
     </p>",
-  severity_info: "The risk of PVY transmission by aphid vectors begins around 1967 FDD, peaks around 2473 FDD, and ends around 3228 FDD. PVY transmission risk is calculated from a combination of several aphid species, the relative abundance of each species in Wisconsin, and the estimated PVY transmission efficiency of each species. Aphid vectors include Soybean aphid, Bird cherry-oat aphid, Green peach aphid, Pea aphid, Corn leaf aphid, and Potato aphid.",
+  severity_info: "The risk of PVY transmission by aphid vectors begins around 1838 FDD, peaks around 2515 FDD, and remains elevated through vine kill. PVY transmission risk is calculated from a combination of several aphid species, the relative abundance of each species in Wisconsin, and the estimated PVY transmission efficiency of each species. Aphid vectors include Soybean aphid, Bird cherry-oat aphid, Green peach aphid, Pea aphid, Corn leaf aphid, and Potato aphid.",
   photo: "pea-aphid.jpg",
   link: "https://vegento.russell.wisc.edu/pests/aphids/"
 )
@@ -220,7 +218,7 @@ cabbage_maggot = Insect.create!(
     </p>",
   severity_info: "Adult emergence occurs around 360 FDD, with peak emergence occurring around 600 FDD. Egg laying occurs from around 750 FDD to 1500 FDD with a peak around 1050 FDD. Second generation adult emergence begins around 1880 FDD and peaks around 2120 FDD, with egg-laying occurring from 2270 FDD through 3040 FDD.",
   photo: "cabbage-maggot.jpg",
-  link: "https://vegento.russell.wisc.edu/pests/caterpillar-pests-of-cole-crops/"
+  link: "https://vegento.russell.wisc.edu/pests/cabbage-maggot/"
 )
 
 colorado_potato_beetle = Insect.create!(

@@ -19,37 +19,38 @@
 </style>
 
 <script lang="ts">
-  import { Loader } from '@googlemaps/js-api-loader'
-  import { onMount, setContext } from 'svelte'
-  import { mapKey, mapsApiKey } from '../../store/store'
-  import Loading from '../common/Loading.svelte'
-  import mapOptions from './ts/mapOptions'
-  import GoogleWrapper from './ts/googleWrapper'
-  
-  let container
-  let promise
-  let map
-  let googleInstance: GoogleWrapper
+  import { Loader } from '@googlemaps/js-api-loader';
+  import { onMount, setContext } from 'svelte';
+
+  import Loading from '../common/Loading.svelte';
+  import mapOptions from '@ts/map/mapOptions';
+  import GoogleWrapper from '@ts/map/googleWrapper';
+  import { mapKey, mapsApiKey } from '@store';
+
+  let container;
+  let promise;
+  let map;
+  let googleInstance: GoogleWrapper;
 
   const loader = new Loader({
-    apiKey: mapsApiKey
-  })
+    apiKey: mapsApiKey || '',
+  });
 
   setContext(mapKey, {
     getMap: () => map,
-    getGoogle: () => googleInstance
-  })
+    getGoogle: () => googleInstance,
+  });
 
   async function loadMap() {
     await loader.load().then(() => {
-      googleInstance = new GoogleWrapper(google)
-      map = googleInstance.createMap(container, mapOptions)
-    })
+      googleInstance = new GoogleWrapper(google);
+      map = googleInstance.createMap(container, mapOptions);
+    });
   }
 
   onMount(() => {
-    promise = loadMap()
-  })
+    promise = loadMap();
+  });
 </script>
 
 {#await promise}

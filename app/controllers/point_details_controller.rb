@@ -18,6 +18,12 @@ class PointDetailsController < ApplicationController
       units:
     }.compact
 
+    puts params
+    puts in_f
+    puts units
+    puts t_min
+    puts t_max
+
     @data = get_data_for(@panel)
     @selected_data = @data.select { |h| h[:date] >= @start_date }
 
@@ -41,10 +47,10 @@ class PointDetailsController < ApplicationController
     opts = @opts.merge({pest: @pest.remote_name})
     if @pest.is_a?(EarlyBlight)
       @partial = "infobox_pdays"
-      @units = "P-days"
+      @dsv_units = "P-days"
     else
       @partial = "infobox_dsv"
-      @units = "DSVs"
+      @dsv_units = "DSVs"
     end
     AgWeather.pest_point(opts)
   end

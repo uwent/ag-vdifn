@@ -7,11 +7,13 @@ class SeveritiesController < ApplicationController
     @long_range = long_range
     @base = t_min
     @upper = t_max
+    @units = units
     @opts = {
       start_date: @start_date,
       end_date: @end_date,
       lat_range: @lat_range,
-      long_range: @long_range
+      long_range: @long_range,
+      units: @units,
     }.compact
 
     grid = get_data_for(@pest.class.name)
@@ -91,6 +93,13 @@ class SeveritiesController < ApplicationController
 
   def get_insect_data
     grid = get_dd_grid(model: @pest.remote_name)
+    # convert celsius dds to fahrenheit for pest models
+    if !in_f
+      grid = grid.collect do |pt|
+        pt[:value] = pt[:value] * 1.8
+        pt
+      end
+    end
     grid = add_freeze_data?(grid)
     @pest.severities_from_totals(grid, @end_date)
   end

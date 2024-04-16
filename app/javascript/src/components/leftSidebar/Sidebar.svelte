@@ -11,7 +11,9 @@
     overflow-y: auto;
     max-height: 100vh;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3), 4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      -4px 0px 10px rgba(0, 0, 0, 0.3),
+      4px 0px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
     z-index: $z-index-modal;
     transition: $duration-promptly ease-in-out;
@@ -33,7 +35,7 @@
       bottom: 0;
       width: 100%;
       border-bottom: black 1px solid;
-      background-image: url('../../../../assets/images/close.svg');
+      background-image: url('@public/images/close.svg');
       background-color: white;
       border-top: 1px solid gray;
       border-left: none;
@@ -57,7 +59,7 @@
       }
 
       button {
-        background-image: url('../../../../assets/images/open.svg');
+        background-image: url('@public/images/open.svg');
       }
     }
   }
@@ -101,15 +103,15 @@
   }
 
   #plantpath-logo {
-    background-image: url('../../../../assets/images/plantpath-logo.png');
+    background-image: url('@public/images/plantpath-logo.png');
   }
 
   #vegento-logo {
-    background-image: url('../../../../assets/images/vegento-logo.png');
+    background-image: url('@public/images/vegento-logo.png');
   }
 
   #uw-madison {
-    background-image: url('../../../../assets/images/uw-madison.png');
+    background-image: url('@public/images/uw-madison.png');
     background-position: center;
   }
 
@@ -130,9 +132,10 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment'
-  let expanded = true
-  let host = window.location.host
+  import moment from 'moment';
+
+  let expanded = true;
+  let host = window.location.host;
 </script>
 
 <div id="sidebar" aria-expanded={expanded}>

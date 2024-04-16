@@ -52,7 +52,9 @@
     text-shadow: none;
     padding: 6px 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow:
+      inset 0 1px 3px rgba(0, 0, 0, 0.3),
+      0 1px rgba(255, 255, 255, 0.1);
     transition: all 0.1s ease-in-out;
   }
 
@@ -62,55 +64,62 @@
 </style>
 
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import { overlayLoading, mapExtent, defaults, env } from '../../store/store'
-  import DiseasePanel from './DiseasePanel.svelte'
-  import InsectPanel from './InsectPanel.svelte'
-  import DatabaseClient from '../common/ts/databaseClient'
-  import Loading from '../common/Loading.svelte'
-  import CustomPanel from './CustomPanel.svelte'
-  import Modal from '../common/Modal.svelte'
-  import Help from './Help.svelte'
-  export let diseasePanelData
-  export let insectPanelData
-  export let customPanelData
-  const databaseClient = new DatabaseClient()
-  const urlParams = new URLSearchParams(window.location.search)
-  const validPanels = ['disease', 'insect', 'custom']
-  let panel = defaults.panel
-  let extent = defaults.extent
-  let showHelp = false
+  import { onMount } from 'svelte';
+
+  import DatabaseClient from '@ts/databaseClient';
+  import DiseasePanel from './DiseasePanel.svelte';
+  import InsectPanel from './InsectPanel.svelte';
+  import CustomPanel from './CustomPanel.svelte';
+  import Help from './Help.svelte';
+  import Loading from '../common/Loading.svelte';
+  import Modal from '../common/Modal.svelte';
+  import { overlayLoading, mapExtent, defaults } from '@store';
+  import type { CropWithAfflictions, DegreeDayModel } from '@types';
+
+  export let diseasePanelData: CropWithAfflictions[] = [];
+  export let insectPanelData: CropWithAfflictions[] = [];
+  export let customPanelData: DegreeDayModel[] = [];
+  let panelDataReady = false;
+
+  const databaseClient = new DatabaseClient();
+  const urlParams = new URLSearchParams(window.location.search);
+  const validPanels = ['disease', 'insect', 'custom'];
+
+  let panel = defaults.panel;
+  let extent = defaults.extent;
+  let showHelp = false;
   let opts = {
     initialDisease: defaults.disease,
     initialInsect: defaults.insect,
-    submitOnLoad: false
-  }
+    submitOnLoad: false,
+  };
 
   // console.log('Launching VDIFN in ' + env + ' environment')
 
   function parseUrlParams() {
-    let panelFromParams = urlParams.get('p') || urlParams.get('panel')
+    let panelFromParams = urlParams.get('p') || urlParams.get('panel') || '';
     if (validPanels.includes(panelFromParams)) {
-      panel = panelFromParams
-      let model = urlParams.get('m') || urlParams.get('model')
+      panel = panelFromParams;
+      let model = urlParams.get('m') || urlParams.get('model');
       if (model) {
-        opts.submitOnLoad = true
-        if (panel === 'disease') opts.initialDisease = model
-        if (panel === 'insect') opts.initialInsect = model
+        opts.submitOnLoad = true;
+        if (panel === 'disease') opts.initialDisease = model;
+        if (panel === 'insect') opts.initialInsect = model;
       }
     } else {
-      window.history.replaceState({}, '', window.location.pathname)
+      window.history.replaceState({}, '', window.location.pathname);
     }
   }
 
   onMount(async () => {
-    parseUrlParams()
-    if (!diseasePanelData) diseasePanelData = await databaseClient.fetchDiseasePanel()
-    if (!insectPanelData) insectPanelData = await databaseClient.fetchInsectPanel()
-    if (!customPanelData) customPanelData = await databaseClient.fetchCustomPanel()
-  })
+    parseUrlParams();
+    if (diseasePanelData.length < 1) diseasePanelData = await databaseClient.fetchDiseasePanel();
+    if (insectPanelData.length < 1) insectPanelData = await databaseClient.fetchInsectPanel();
+    if (customPanelData.length < 1) customPanelData = await databaseClient.fetchCustomPanel();
+    panelDataReady = true;
+  });
 
-  $: mapExtent.set(extent)
+  $: mapExtent.set(extent);
 </script>
 
 <div class="options">
@@ -157,7 +166,8 @@
           id="wisconsin"
           value="wisconsin"
           bind:group={extent}
-          disabled={$overlayLoading}>
+          disabled={$overlayLoading}
+        />
         <label for="wisconsin">Wisconsin</label>
         <input
           name="extent"
@@ -165,24 +175,26 @@
           id="midwest"
           value="midwest"
           bind:group={extent}
-          disabled={$overlayLoading}>
+          disabled={$overlayLoading}
+        />
         <label for="midwest">Upper Midwest</label>
       </div>
     </fieldset>
-    {#if diseasePanelData && insectPanelData && customPanelData}
+    {#if panelDataReady}
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
           defaultModel={opts.initialDisease}
-          submitOnLoad={opts.submitOnLoad} />
+          submitOnLoad={opts.submitOnLoad}
+        />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
           defaultModel={opts.initialInsect}
-          submitOnLoad={opts.submitOnLoad} />
+          submitOnLoad={opts.submitOnLoad}
+        />
       {:else if panel === 'custom'}
-        <CustomPanel
-          data={customPanelData} />
+        <CustomPanel data={customPanelData} />
       {/if}
     {:else}
       <Loading />

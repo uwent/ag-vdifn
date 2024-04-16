@@ -1,29 +1,44 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    /**
+     * Typecheck JS in `.svelte` and `.js` files by default.
+     * Disable checkJs if you'd like to use dynamic types in JS.
+     * Note that setting allowJs false does not prevent the use
+     * of JS in `.svelte` files.
+     */
+    "allowJs": true,
+    "checkJs": true,
+    "isolatedModules": true,
     "types": [
-      "google.maps",
-      "jest",
       "node",
-      "lodash",
-      "@testing-library/jest-dom",
-      "@types/gtag.js"
+      "google.maps",
+      "@types/gtag.js",
+      "vitest/globals",
+      "@testing-library/svelte",
+      "@testing-library/jest-dom"
     ],
-    "downlevelIteration": true,
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "lib": ["es6", "dom"],
-    "module": "es6",
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "app/javascript/*"]
-    },
+    // "strict": true,
+    "noImplicitAny": false, // suppresses implicit type errors
+    "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
-    "target": "esnext",
-    "noEmit": true,
+    "verbatimModuleSyntax": true,
+    "baseUrl": "./app/javascript",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@ts/*": ["./src/ts/*"],
+      "@types": ["./src/types"],
+      "@store": ["./src/store"],
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    },
+    "outDir": "./public/vite"
   },
-  "include": ["app/javascript"],
-  "exclude": ["node_modules", "vendor", "public", "spec", "app/javascript/spec"],
+  "include": ["**/*.d.ts", "**/*.js", "**/*.ts", "**/*.svelte"],
+  "exclude": ["node_modules"]
 }

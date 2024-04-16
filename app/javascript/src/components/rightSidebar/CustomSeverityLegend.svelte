@@ -20,37 +20,26 @@
 </style>
 
 <script lang="ts">
-  export let gradientMapping = []
-  let legend = []
+  import { round } from '@ts/utils';
+  import type { GradientMapping, LegendMapping } from '@types';
 
-  // converts color/cutoff gradient into legend
+  export let gradientMapping: GradientMapping[] = [];
+
+  let legend: LegendMapping[] = [];
+
+  // converts color/cutoff gradient into array of legend text/color pairs
   function makeLegend(gradient) {
-    let legend = []
-    if (gradient) {
-      gradient.forEach((element, index) => {
-        if (index === 0) {
-          legend[0] = { color: element.color, text: '0 - ' + element.number }
-        } else if (index === gradient.length - 1) {
-          legend[index] = {
-            color: element.color,
-            text: Math.round(gradient[index - 1].number) + 1 + '+'
-          }
-        } else {
-          legend[index] = {
-            color: element.color,
-            text:
-              Math.round(gradient[index - 1].number) +
-              1 +
-              ' - ' +
-              Math.round(gradient[index].number)
-          }
-        }
-      })
-    }
-    return legend
+    if (!gradient) return [];
+    console.log(gradientMapping);
+    return gradient.map((el, i) => {
+      const color = el.color;
+      const lowRange = i === 0 ? 0 : round(gradient[i - 1].number, 1);
+      const text = i === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${el.number}`;
+      return { color, text };
+    });
   }
 
-  $: legend = makeLegend(gradientMapping)
+  $: legend = makeLegend(gradientMapping);
 </script>
 
 <fieldset id="dsv-legend" data-testid="dsv-legend">
@@ -58,11 +47,7 @@
   {#each legend.reverse() as entry}
     <div class="severity-level-col">
       <div class="severity-level-row" data-testid="dsv-row">
-        <div
-          class="severity-color"
-          data-testid="dsv-color"
-          style="background: {entry.color}"
-        />
+        <div class="severity-color" data-testid="dsv-color" style="background: {entry.color}" />
         <div>{entry.text}</div>
       </div>
     </div>

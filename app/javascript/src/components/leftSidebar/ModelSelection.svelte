@@ -2,7 +2,7 @@
   .affliction-container {
     display: flex;
   }
-  
+
   fieldset {
     margin-bottom: 10px;
     padding: 10px;
@@ -63,81 +63,88 @@
 </style>
 
 <script lang="ts">
-  import { getContext, onMount } from 'svelte'
-  import { CropWithAfflictions, Pest } from '../common/ts/types'
-  import { panelKey, selectedAffliction, afflictionValue, isDev, baseURL } from '../../store/store'
-  import Modal from '../common/Modal.svelte'
-  const { getCrops, getAfflictionName } = getContext(panelKey)
-  export let defaultModel = ''
-  let showModal = false
-  let crops: CropWithAfflictions[] = []
-  let selectedCropValue = 0
-  let afflictionsForCrop: Pest[] = []
-  let afflictionName = getAfflictionName()
-  let modelId: number
+  import { getContext, onMount } from 'svelte';
+
+  import Modal from '../common/Modal.svelte';
+  import type { CropWithAfflictions, Pest } from '@types';
+  import { panelKey, selectedAffliction, afflictionValue, isDev, baseURL } from '@store';
+
+  export let defaultModel = '';
+
+  const { getCrops, getAfflictionName } = getContext<any>(panelKey);
+
+  let showModal = false;
+  let crops: CropWithAfflictions[] = [];
+  let selectedCropValue = 0;
+  let afflictionsForCrop: Pest[] = [];
+  let afflictionName = getAfflictionName();
+  let modelId: number;
 
   function getAfflictionsForCrop(event) {
-    const cropId = parseInt(event.target.value)
-    const cropWithAfflictions = crops.find(crop => {
-      return crop.id === cropId
-    })
+    const cropId = parseInt(event.target.value);
+    const cropWithAfflictions = crops.find((crop) => {
+      return crop.id === cropId;
+    });
     if (cropWithAfflictions) {
-      afflictionsForCrop = cropWithAfflictions.afflictions
-      afflictionValue.update(_ => afflictionsForCrop[0].id)
-      afflictionValue.set(afflictionsForCrop[0].id)
-      selectedAffliction.set(afflictionsForCrop[0])
+      afflictionsForCrop = cropWithAfflictions.afflictions;
+      afflictionValue.update((_) => afflictionsForCrop[0].id);
+      afflictionValue.set(afflictionsForCrop[0].id);
+      selectedAffliction.set(afflictionsForCrop[0]);
     }
   }
 
   function getCurrentAffliction(afflictionId) {
-    const affliction = afflictionsForCrop.find(affliction => {
-      return affliction.id === afflictionId
-    })
-    if (affliction) {
-      return affliction
-    } else if (crops[0] === undefined) {
-      return undefined
-    } else {
-      return crops[0].afflictions[0]
-    }
+    const affliction = afflictionsForCrop.find((affliction) => {
+      return affliction.id === afflictionId;
+    });
+    if (affliction) return affliction;
+    return crops[0].afflictions[0] || ({} as Pest);
   }
 
   function setAfflictionValue(event) {
-    const value = parseInt(event.target.value)
-    afflictionValue.update(value => value)
-    afflictionValue.set(value)
-    selectedAffliction.set(getCurrentAffliction(value))
+    const value = parseInt(event.target.value);
+    afflictionValue.update((value) => value);
+    afflictionValue.set(value);
+    selectedAffliction.set(getCurrentAffliction(value));
   }
 
   function getAfflictionId(alias: string) {
-    const affliction = afflictionsForCrop.find(affliction => {
-      return affliction.local_name === alias
-    })
-    return affliction ? affliction.id : afflictionsForCrop[0].id
+    const affliction = afflictionsForCrop.find((affliction) => {
+      return affliction.local_name === alias;
+    });
+    return affliction ? affliction.id : afflictionsForCrop[0].id;
   }
 
   function handleUrlParams() {
-    const queryModel = defaultModel
+    const queryModel = defaultModel;
     if (queryModel) {
-      modelId = getAfflictionId(queryModel)
-      if (isDev) console.log("Model selection >> Specified model '" + queryModel + "' matched to id " + modelId)
+      modelId = getAfflictionId(queryModel);
+      if (isDev)
+        console.log(
+          "Model selection >> Specified model '" + queryModel + "' matched to id " + modelId,
+        );
     } else {
-      modelId = getAfflictionId(defaultModel)
-      if (isDev) console.log("Model selection >> No model param specified, choosing default model '" + queryModel + "'")
+      modelId = getAfflictionId(defaultModel);
+      if (isDev)
+        console.log(
+          "Model selection >> No model param specified, choosing default model '" +
+            queryModel +
+            "'",
+        );
     }
   }
 
   onMount(() => {
-    crops = getCrops()
-    if (crops.length <= 0) return
-    selectedCropValue = crops[0].id
-    afflictionsForCrop = crops[0].afflictions
+    crops = getCrops();
+    if (crops.length <= 0) return;
+    selectedCropValue = crops[0].id;
+    afflictionsForCrop = crops[0].afflictions;
 
-    handleUrlParams()
+    handleUrlParams();
 
-    afflictionValue.update(_ => modelId)
-    selectedAffliction.set(getCurrentAffliction(modelId))
-  })
+    afflictionValue.update((_) => modelId);
+    selectedAffliction.set(getCurrentAffliction(modelId));
+  });
 </script>
 
 <fieldset id="model-selection">
@@ -180,11 +187,15 @@
   <Modal name={$selectedAffliction.name} on:close={() => (showModal = false)}>
     <div class="modal__pest-info">
       {#if $selectedAffliction.photo}
-        <img class="modal__pest-icon" src="{baseURL}/images/{$selectedAffliction.photo}" alt="pest icon"/>
+        <img
+          class="modal__pest-icon"
+          src="{baseURL}/images/pests/{$selectedAffliction.photo}"
+          alt="pest icon"
+        />
       {/if}
       {@html $selectedAffliction.info}
       {#if $selectedAffliction.link}
-        <a href='{$selectedAffliction.link}' target='_blank'>More information...</a>
+        <a href={$selectedAffliction.link} target="_blank">More information...</a>
       {/if}
     </div>
   </Modal>

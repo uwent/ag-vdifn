@@ -6,7 +6,7 @@
     'low': #7dff23,
     'medium': #ffd700,
     'high': #ff8000,
-    'very_high': #cc0000
+    'very_high': #cc0000,
   );
 
   @each $slug, $color in $colors {
@@ -39,19 +39,16 @@
 </style>
 
 <script lang="ts">
-  import QuestionSvg from '../common/QuestionSvg.svelte'
-  export let severities = []
+  import type { SeverityLegend } from '@types';
+  import QuestionSvg from '../common/QuestionSvg.svelte';
+
+  export let severities: SeverityLegend[] = [];
 </script>
 
 <fieldset id="dsv-legend">
   <legend>Severity Legend:</legend>
   {#each severities as { name, description, slug }}
-    <div
-      id="dsv-{slug}"
-      class="dsv"
-      data-color="#ff0000"
-      data-testid="severity-level-{slug}"
-    >
+    <div id="dsv-{slug}" class="dsv" data-color="#ff0000" data-testid="severity-level-{slug}">
       <div class="dsv-threshold dsv-{slug}" data-testid="severity-color-{slug}" />
       <label>
         {name}

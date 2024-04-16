@@ -5,9 +5,11 @@ gem "railties", "~> 7.1"
 gem "activesupport", "~> 7.1"
 gem "pg"
 gem "httparty"
+gem "vite_rails"
 gem "sassc-rails"
 gem "jsbundling-rails"
 gem "terser"
+gem "csv" # no longer default gem, but it's being loaded by a gem and throwing a warning
 
 group :development do
   gem "puma"
