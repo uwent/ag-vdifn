@@ -40,6 +40,9 @@ set :deploy_user, "deploy"
 set :rbenv_type, :user
 set :rbenv_ruby, "3.3.0"
 
+# Must match `ViteRuby.config.public_output_dir`, which by default is 'vite'
+set :assets_prefix, 'vite'
+
 before "deploy:assets:precompile", "deploy:npm_install"
 
 namespace :deploy do
