@@ -189,7 +189,7 @@
       {#if $selectedAffliction.photo}
         <img
           class="modal__pest-icon"
-          src="{baseURL}/images/{$selectedAffliction.photo}"
+          src="{baseURL}/images/pests/{$selectedAffliction.photo}"
           alt="pest icon"
         />
       {/if}

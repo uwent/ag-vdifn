@@ -24,7 +24,6 @@ const sveltePlugin = svelte({
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), sveltePlugin],
-  base: '/vdifn/',
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
     manifest: true,
