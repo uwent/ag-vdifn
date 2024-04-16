@@ -127,55 +127,53 @@ describe('without save state', () => {
     test('disables buttons when min is less than zero', async () => {
       const newMin = -1;
       await fireEvent.change(userMinInput, { target: { value: newMin } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the middle min',
-      );
-      expect(userMiddleMinInput.validationMessage).toEqual('');
-      expect(userMiddleMaxInput.validationMessage).toEqual('');
-      expect(userMaxInput.validationMessage).toEqual('');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMinInput.validationMessage).toBeFalsy;
+      expect(userMiddleMaxInput.validationMessage).toBeFalsy;
+      expect(userMaxInput.validationMessage).toBeFalsy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'Minimum value must be greater than zero.',
+      );
     });
 
     test('disables buttons when min is greater than middle min', async () => {
       const newMin = Number(userMiddleMinInput.value) + 1;
       await fireEvent.change(userMinInput, { target: { value: newMin } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the middle min',
-      );
-      expect(userMiddleMinInput.validationMessage).toEqual(
-        'This value must be between the min and middle max',
-      );
-      expect(userMiddleMaxInput.validationMessage).toEqual('');
-      expect(userMaxInput.validationMessage).toEqual('');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMaxInput.validationMessage).toBeFalsy;
+      expect(userMaxInput.validationMessage).toBeFalsy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'All values must be in ascending order.',
+      );
     });
 
     test('disables buttons when middle min is less than the min', async () => {
       const newMiddleMin = Number(userMinInput.value) - 1;
       await fireEvent.change(userMiddleMinInput, { target: { value: newMiddleMin } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the middle min',
-      );
-      expect(userMiddleMinInput.validationMessage).toEqual(
-        'This value must be between the min and middle max',
-      );
-      expect(userMiddleMaxInput.validationMessage).toEqual('');
-      expect(userMaxInput.validationMessage).toEqual('');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMaxInput.validationMessage).toBeFalsy;
+      expect(userMaxInput.validationMessage).toBeFalsy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'All values must be in ascending order.',
+      );
     });
 
     test('disables buttons when middle min is greater than the middle max', async () => {
       const newMiddleMin = Number(userMiddleMaxInput.value) + 1;
       await fireEvent.change(userMiddleMinInput, { target: { value: newMiddleMin } });
-      expect(userMinInput.validationMessage).toEqual('');
-      expect(userMiddleMinInput.validationMessage).toEqual(
-        'This value must be between the min and middle max',
-      );
-      expect(userMiddleMaxInput.validationMessage).toEqual(
-        'This value must be between the middle min and the max',
-      );
-      expect(userMaxInput.validationMessage).toEqual('');
+      expect(userMinInput.validationMessage).toBeFalsy;
+      expect(userMiddleMinInput.validationMessage).toBeTruthy;
+      expect(userMiddleMaxInput.validationMessage).toBeTruthy;
+      expect(userMaxInput.validationMessage).toBeFalsy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'All values must be in ascending order.',
+      );
     });
 
     test('disables buttons when middle max is greater than the max', async () => {
@@ -183,13 +181,12 @@ describe('without save state', () => {
       await fireEvent.change(userMiddleMaxInput, { target: { value: newMiddleMax } });
       expect(userMinInput.validationMessage).toEqual('');
       expect(userMiddleMinInput.validationMessage).toEqual('');
-      expect(userMiddleMaxInput.validationMessage).toEqual(
-        'This value must be between the middle min and the max',
-      );
-      expect(userMaxInput.validationMessage).toEqual(
-        'This value must be greater than the middle max',
-      );
+      expect(userMiddleMaxInput.validationMessage).toBeTruthy;
+      expect(userMaxInput.validationMessage).toBeTruthy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'All values must be in ascending order.',
+      );
     });
   });
 

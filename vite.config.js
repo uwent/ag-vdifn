@@ -25,10 +25,10 @@ const sveltePlugin = svelte({
 export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), sveltePlugin],
   build: {
-    commonjsOptions: { include: [] },
+    commonjsOptions: { exclude: ['chroma-js'] },
     rollupOptions: {
       input: {
-        main: '/app/javascript/entrypoints/application.ts',
+        main: '~/entrypoints/application.ts',
       },
     },
   },

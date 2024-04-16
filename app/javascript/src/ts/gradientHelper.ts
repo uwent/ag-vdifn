@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { round } from './utils';
 import ColorHelper from './map/colorHelper';
 
 export default class GradientHelper {
@@ -59,16 +59,12 @@ export default class GradientHelper {
     if (levels <= 0) return [];
     const ranges: number[][] = [];
     const length_of_range = (max - min) / levels;
-    ranges.push([min, _.round(min + length_of_range, 1)]);
+    ranges.push([min, round(min + length_of_range, 1)]);
     for (let i = 0; i < levels - 1; i++) {
-      const latestRange = _.last<number[]>(ranges);
-      ranges.push([
-        _.round(_.last<number>(latestRange), 1),
-        _.round(_.last<number>(latestRange) + length_of_range, 1),
-      ]);
+      const lastRange = ranges[ranges.length - 1];
+      ranges.push([lastRange[1], round(lastRange[1] + length_of_range, 1)]);
     }
-    const lastRangeIndex = _.findLastIndex(ranges);
-    ranges[lastRangeIndex][1] = max;
+    ranges[ranges.length - 1][1] = max;
     return ranges;
   }
 }

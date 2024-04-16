@@ -20,29 +20,23 @@
 </style>
 
 <script lang="ts">
+  import { round } from '@ts/utils';
   import type { GradientMapping, LegendMapping } from '@types';
 
   export let gradientMapping: GradientMapping[] = [];
 
   let legend: LegendMapping[] = [];
 
-  // converts color/cutoff gradient into legend
+  // converts color/cutoff gradient into array of legend text/color pairs
   function makeLegend(gradient) {
-    legend = [];
-    if (gradient) {
-      gradient.forEach((element, index) => {
-        let color = element.color;
-        let text = '';
-        if (index === 0) {
-          text = `0 - ${element.number}`;
-        } else {
-          let lowRange = Math.round(gradient[index - 1].number) + 1;
-          text = index === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${element.number}`;
-        }
-        legend[index] = { color: color, text: text };
-      });
-    }
-    return legend;
+    if (!gradient) return [];
+    return gradient.map((element, index) => {
+      const color = element.color;
+      const lowRange = index === 0 ? 0 : round(gradient[index - 1].number, 1);
+      const highRange = index === gradient.length - 1 ? `${lowRange}+` : element.number;
+      const text = index === 0 ? `0 - ${highRange}` : `${lowRange} - ${highRange}`;
+      return { color, text };
+    });
   }
 
   $: legend = makeLegend(gradientMapping);

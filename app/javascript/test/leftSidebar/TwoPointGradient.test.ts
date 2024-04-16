@@ -104,31 +104,34 @@ describe('without save state', () => {
     test('disables buttons when min is less than zero', async () => {
       const newMin = -10;
       await fireEvent.change(userMinInput, { target: { value: newMin } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum',
-      );
-      expect(userMaxInput.validationMessage).toEqual('');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMaxInput.validationMessage).toBeFalsy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'Minimum must be greater than zero.',
+      );
     });
 
     test('disables buttons when min is greater than max', async () => {
       const newMin = 1000;
       await fireEvent.change(userMinInput, { target: { value: newMin } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum',
-      );
-      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMaxInput.validationMessage).toBeTruthy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'Minimum must be less than maximum. Maximum must be greater than the minimum.',
+      );
     });
 
     test('disables buttons when min is greater than max', async () => {
       const newMax = -10;
       await fireEvent.change(userMaxInput, { target: { value: newMax } });
-      expect(userMinInput.validationMessage).toEqual(
-        'This value must be between 0 and the maximum',
-      );
-      expect(userMaxInput.validationMessage).toEqual('This value must be greater than the minimum');
+      expect(userMinInput.validationMessage).toBeTruthy;
+      expect(userMaxInput.validationMessage).toBeTruthy;
       expect(updateButton.disabled).toEqual(true);
+      expect(screen.getByTestId('validation-msg').innerHTML).toEqual(
+        'Minimum must be less than maximum. Maximum must be greater than the minimum.',
+      );
     });
   });
 

@@ -74,6 +74,12 @@
     background-color: #fdd;
   }
 
+  .validation-msg {
+    margin-top: 0.5rem;
+    font-size: smaller;
+    font-style: italic;
+  }
+
   .button-row {
     display: flex;
     flex-direction: row;
@@ -93,11 +99,11 @@
 </style>
 
 <script lang="ts">
-  import _ from 'lodash';
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
   import { get } from 'svelte/store';
   import GradientHelper from '@ts/gradientHelper';
   import ColorHelper from '@ts/map/colorHelper';
+  import { strToNum } from '@ts/utils';
   import { mapRange, twoPointGradientState } from '@store';
 
   const dispatch = createEventDispatcher();
@@ -115,12 +121,13 @@
   let userInputs: number[] = [0, 0];
   let intermediateRanges: number[][] = [];
   let buttonsDisabled = false;
+  let gradientValidationMessage = '';
 
   $: setUserMinMax($mapRange.min, $mapRange.max);
 
   onMount(() => {
     const state = get(twoPointGradientState);
-    if (_.size(state) > 0) {
+    if (Object.keys(state).length > 0) {
       if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
         // console.log('loading saved state')
         severityLevels = state.severityLevels || 5;
@@ -166,32 +173,32 @@
   }
 
   // validate inputs, write to values, and update intermediates
+  function validateMin(min: number, max: number): string {
+    if (isNaN(min)) return 'No minimum value entered.';
+    if (min < 0) return 'Minimum must be greater than zero.';
+    if (min > max) return 'Minimum must be less than maximum.';
+    return '';
+  }
+
+  function validateMax(min: number, max: number): string {
+    if (isNaN(max)) return 'No maximum value entered.';
+    if (max <= min) return 'Maximum must be greater than the minimum.';
+    return '';
+  }
+
   function validateInputs() {
     if (!userMinInput || !userMaxInput) return;
 
-    const min = Number(userInputs[0]);
-    const max = Number(userInputs[1]);
+    const min = strToNum(userInputs[0]);
+    const max = strToNum(userInputs[1]);
+    const minMsg = validateMin(min, max);
+    const maxMsg = validateMax(min, max);
+    userMinInput.setCustomValidity(minMsg);
+    userMaxInput.setCustomValidity(maxMsg);
 
-    if (isNaN(min)) {
-      userMinInput.setCustomValidity('No value entered');
-    } else if (min < 0 || min > max) {
-      userMinInput.setCustomValidity('This value must be between 0 and the maximum');
-    } else {
-      userMinInput.setCustomValidity('');
-    }
-
-    if (isNaN(max)) {
-      userMaxInput.setCustomValidity('No value entered');
-    } else if (max < min) {
-      userMaxInput.setCustomValidity('This value must be greater than the minimum');
-    } else {
-      userMaxInput.setCustomValidity('');
-    }
-
-    if (userMinInput.validationMessage || userMaxInput.validationMessage) {
-      buttonsDisabled = true;
-    } else {
-      buttonsDisabled = false;
+    gradientValidationMessage = `${minMsg} ${maxMsg}`.trim();
+    buttonsDisabled = !!gradientValidationMessage;
+    if (!buttonsDisabled) {
       userValues = [min, max];
       updateIntermediateValues();
     }
@@ -232,6 +239,7 @@
 
   // handle input updates
   function handleUpdate(event) {
+    console.log(event);
     const name = event.target.name;
     const { value } = event.target;
     if (name === 'userMin') {
@@ -259,6 +267,7 @@
         bind:this={userMinInput}
         bind:value={userInputs[0]}
         on:change={handleUpdate}
+        on:emptied={handleUpdate}
       />
     </div>
     {#each intermediateRanges as severityValueRange, index}
@@ -287,6 +296,7 @@
         bind:this={userMaxInput}
         bind:value={userInputs[1]}
         on:change={handleUpdate}
+        on:emptied={handleUpdate}
       />
       <div class="severity-value-end">&gt; &gt; &gt;</div>
     </div>
@@ -332,4 +342,9 @@
       -
     </button>
   </div>
+  {#if gradientValidationMessage}
+    <div class="validation-msg" data-testid="validation-msg">
+      {gradientValidationMessage}
+    </div>
+  {/if}
 </fieldset>

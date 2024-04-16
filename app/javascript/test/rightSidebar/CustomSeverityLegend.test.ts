@@ -29,9 +29,9 @@ test('displays all the gradient levels', async () => {
 test('displays ranges on each row', async () => {
   await tick();
   let labels = screen.getAllByTestId('dsv-row');
-  expect(labels[0].innerHTML).toContain('301+');
-  expect(labels[1].innerHTML).toContain('201 - 300');
-  expect(labels[2].innerHTML).toContain('101 - 200');
+  expect(labels[0].innerHTML).toContain('300+');
+  expect(labels[1].innerHTML).toContain('200 - 300');
+  expect(labels[2].innerHTML).toContain('100 - 200');
   expect(labels[3].innerHTML).toContain('0 - 100');
 });
 

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import type { SeverityParams, Severity } from '@types';
 import DatabaseClient from '@ts/databaseClient';
 import GoogleWrapper from './googleWrapper';
@@ -59,9 +58,11 @@ export default class OverlayHelper {
   }
 
   updateOverlayGradient(gradientMapping) {
-    _.zip(this.severities, this.rectangles).forEach((severityWithRect: [Severity, any]) => {
-      severityWithRect[1].setOptions({
-        fillColor: this.severityToColor(severityWithRect[0].level, gradientMapping),
+    this.severities.forEach((severity, index) => {
+      const rectangle = this.rectangles[index];
+      if (!rectangle) return;
+      rectangle.setOptions({
+        fillColor: this.severityToColor(severity.level, gradientMapping),
       });
     });
   }
@@ -128,13 +129,11 @@ export default class OverlayHelper {
   }
 
   severityToColor(severityNumber: number, gradientMapping): string {
-    const key = _.find(
-      _.keys(gradientMapping)
-        .map((value) => parseFloat(value))
-        .sort((x, y) => x - y),
-      (rangeMax) => severityNumber <= rangeMax,
-    );
-    return gradientMapping[key];
+    const keys = Object.keys(gradientMapping)
+      .map(Number)
+      .sort((x, y) => x - y);
+    const key = keys.find((rangeMax) => severityNumber <= rangeMax);
+    return key !== undefined ? gradientMapping[key] : ''; // handle the case when key is undefined
   }
 
   private async fetchPointDetails(

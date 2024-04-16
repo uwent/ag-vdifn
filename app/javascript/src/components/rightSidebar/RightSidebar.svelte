@@ -75,7 +75,6 @@
 </style>
 
 <script lang="ts">
-  import _ from 'lodash';
   import { onDestroy } from 'svelte';
   import DatabaseClient from '@ts/databaseClient';
   import SeverityLegend from './SeverityLegend.svelte';
@@ -91,6 +90,7 @@
     insectLegend,
     customLegend,
   } from '@store';
+  import type { GradientMapping } from '@types';
 
   let expanded = false;
   let showModal = false;
@@ -112,14 +112,14 @@
   });
 
   const overlayGradientUnsubscribe = overlayGradient.subscribe((gradientMapping) => {
-    if (Object.entries(gradientMapping).length === 0) return;
-    const temp: any[] = [];
-    _.forEach(gradientMapping, (value, key) => {
-      temp.push({ number: key, color: value });
-    });
-    let gradient = temp.sort((x, y) => {
-      return x.number - y.number;
-    });
+    if (Object.keys(gradientMapping).length === 0) return;
+    const arr: GradientMapping[] = [];
+    for (const key in gradientMapping) {
+      if (gradientMapping.hasOwnProperty(key)) {
+        arr.push({ number: parseFloat(key), color: gradientMapping[key] });
+      }
+    }
+    const gradient = arr.sort((x, y) => x.number - y.number);
     customLegend.set(gradient);
   });
 

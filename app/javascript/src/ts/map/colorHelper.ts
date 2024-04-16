@@ -1,4 +1,4 @@
-import chroma from 'chroma-js';
+import * as chroma from 'chroma-js';
 import { COLORS } from './colors';
 
 export default class ColorHelper {
@@ -11,7 +11,7 @@ export default class ColorHelper {
   }
 
   private static getColor(severity, severityLevels, _scale) {
-    const scale = chroma.scale(_scale).domain([...Array(severityLevels).keys()]);
-    return scale(severity).hex() as string;
+    const scale = chroma.scale(_scale).domain([...Array(severityLevels).keys()]) as any;
+    return scale(severity).hex();
   }
 }
