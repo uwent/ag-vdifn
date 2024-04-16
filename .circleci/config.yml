@@ -51,7 +51,7 @@ jobs:
             - .pnpm-store
       - run:
           name: Run vitest
-          command: npm test
+          command: pnpm test
       - run:
           name: Run vite build
-          command: npm build
+          command: pnpm build
