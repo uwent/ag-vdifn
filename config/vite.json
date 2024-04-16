@@ -4,7 +4,7 @@
     "watchAdditionalPaths": []
   },
   "production": {
-    "base": "vdifn"
+    "base": "/vdifn"
   },
   "development": {
     "autoBuild": true,

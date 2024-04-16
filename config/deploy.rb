@@ -49,7 +49,7 @@ namespace :deploy do
   desc "Run npm install"
   task :npm_install do
     on roles(:app) do
-      execute "cd #{release_path} && pnpm install --prod --silent --force"
+      execute "cd #{release_path} && pnpm install --silent --force"
     end
   end
 
