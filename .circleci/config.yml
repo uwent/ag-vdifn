@@ -25,7 +25,7 @@ jobs:
       - ruby/install-deps:
           key: gems-v1
       - node/install-packages:
-          pkg-manager: pnpm
+          pkg-manager: npm
       - run:
           name: Set up database
           command: bundle exec rails db:setup
@@ -34,7 +34,7 @@ jobs:
           command: bundle exec rspec
       - run:
           name: Run js tests
-          command: pnpm test
+          command: npm test
       - run:
           name: Run js build
-          command: pnpm build
+          command: npm build
