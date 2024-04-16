@@ -40,8 +40,12 @@ set :deploy_user, "deploy"
 set :rbenv_type, :user
 set :rbenv_ruby, "3.3.0"
 
-# Must match `ViteRuby.config.public_output_dir`, which by default is 'vite'
+# Vite config for capistrano
 set :assets_prefix, 'vite'
+set :assets_manifests, [
+  "#{release_path}/public/vite/.vite/manifest.json",
+  "#{release_path}/public/vite/.vite/manifest-assets.json"
+]
 
 before "deploy:assets:precompile", "deploy:npm_install"
 

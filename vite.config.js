@@ -26,6 +26,7 @@ export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), sveltePlugin],
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
+    manifest: true,
     rollupOptions: {
       input: {
         main: '~/entrypoints/application.ts',
