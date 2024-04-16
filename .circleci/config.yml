@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@2.0.0
-  node: circleci/node@5.0.3
+  ruby: circleci/ruby@2.1.1
+  node: circleci/node@5.2.0
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
           PG_USER: postgres
           RAILS_ENV: test
           RACK_ENV: test
-      - image: cimg/postgres:14.5
+      - image: cimg/postgres:16.2
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
@@ -24,17 +24,34 @@ jobs:
       - checkout
       - ruby/install-deps:
           key: gems-v1
-      - node/install-packages:
-          pkg-manager: npm
       - run:
           name: Set up database
           command: bundle exec rails db:setup
       - run:
           name: Run rails tests
           command: bundle exec rspec
+      - restore_cache:
+          name: Restore pnpm package cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
-          name: Run js tests
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-9 --activate
+            pnpm config set store-dir .pnpm-store
+      - run:
+          name: Install dependencies
+          command: |
+            pnpm install
+      - save_cache:
+          name: Save pnpm package pache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - .pnpm-store
+      - run:
+          name: Run vitest
           command: npm test
       - run:
-          name: Run js build
+          name: Run vite build
           command: npm build
