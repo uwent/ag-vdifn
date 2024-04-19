@@ -20,6 +20,7 @@ const MapOptions = {
   },
   zoom: 7,
   styles: LightGreyStyle,
+  gestureHandling: 'greedy',
 };
 
 export default MapOptions;
