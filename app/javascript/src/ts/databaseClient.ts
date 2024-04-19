@@ -4,15 +4,18 @@ import type {
   SeverityLegend,
   PointDetailsParams,
   SeverityParams,
-  CropWithAfflictions,
+  CropWithPests,
   CropWithDiseases,
   CropWithInsects,
   DegreeDayModel,
 } from '../types';
-import { isDev } from '@store';
+import { env } from '@store';
 import axios from 'axios';
 import type DatabaseClientInterface from './databaseClientInterface';
 import ENDPOINTS from './endpoints';
+
+// const logging = env === 'development';
+const logging = false;
 
 export default class DatabaseClient implements DatabaseClientInterface {
   constructor() {
@@ -20,41 +23,41 @@ export default class DatabaseClient implements DatabaseClientInterface {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
   }
 
-  async fetchDiseasePanel(): Promise<CropWithAfflictions[]> {
+  async fetchDiseasePanel(): Promise<CropWithPests[]> {
     const endpoint = ENDPOINTS.DISEASE_PANEL;
     try {
-      let cropsWithAfflictions: CropWithAfflictions[] = [];
+      let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
-      if (isDev)
+      if (logging)
         console.log('DB >> fetchDiseasePanel', '\nEndpoint:', endpoint, '\nResponse:', response);
-      cropsWithAfflictions = response.data.map((cropWithDisease: CropWithDiseases) => {
+      cropsWithPests = response.data.map((cropWithDisease: CropWithDiseases) => {
         const { diseases, ...newData } = {
           ...cropWithDisease,
-          afflictions: cropWithDisease.diseases,
+          pests: cropWithDisease.diseases,
         };
         return newData;
       });
-      return cropsWithAfflictions;
+      return cropsWithPests;
     } catch (e) {
       return [];
     }
   }
 
-  async fetchInsectPanel(): Promise<CropWithAfflictions[]> {
+  async fetchInsectPanel(): Promise<CropWithPests[]> {
     const endpoint = ENDPOINTS.INSECT_PANEL;
     try {
-      let cropsWithAfflictions: CropWithAfflictions[] = [];
+      let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
-      if (isDev)
+      if (logging)
         console.log('DB >> fetchInsectPanel', '\nEndpoint:', endpoint, '\nResponse:', response);
-      cropsWithAfflictions = response.data.map((cropWithInsect: CropWithInsects) => {
+      cropsWithPests = response.data.map((cropWithInsect: CropWithInsects) => {
         const { insects, ...newData } = {
           ...cropWithInsect,
-          afflictions: cropWithInsect.insects,
+          pests: cropWithInsect.insects,
         };
         return newData;
       });
-      return cropsWithAfflictions;
+      return cropsWithPests;
     } catch (e) {
       return [];
     }
@@ -64,7 +67,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.DD_MODELS;
     try {
       const response = await axios.get(endpoint);
-      if (isDev)
+      if (logging)
         console.log('DB >> fetchDDModels', '\nEndpoint:', endpoint, '\nResponse:', response);
       let ddModels: DegreeDayModel[] = [];
       ddModels = response.data.map((ddModel: DegreeDayModel) => {
@@ -82,7 +85,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const severities: Severity[] = [];
     try {
       const response = await axios.post(endpoint, params);
-      if (isDev)
+      if (logging)
         console.log(
           'DB >> fetchSeverities',
           '\nEndpoint:',
@@ -118,7 +121,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (isDev)
+      if (logging)
         console.log(
           'DB >> fetchSeverityLegend',
           '\nEndpoint:',
@@ -140,7 +143,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (isDev)
+      if (logging)
         console.log(
           'DB >> fetchSeverityLegendInfo',
           '\nEndpoint:',
@@ -161,7 +164,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams };
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (isDev)
+      if (logging)
         console.log(
           'DB >> fetchPointDetails',
           '\nEndpoint:',

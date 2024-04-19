@@ -1,49 +1,4 @@
 <style>
-  /* .tMinTMaxOptions {
-    display: flex;
-    margin: 15px;
-    overflow: hidden;
-    justify-content: center;
-  }
-
-  .tMinTMaxOptions input {
-    position: absolute !important;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    width: 1px;
-    border: 0;
-    overflow: hidden;
-  }
-
-  .tMinTMaxOptions label {
-    background-color: #e4e4e4;
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
-    line-height: 1;
-    text-align: center;
-    padding: 8px 16px;
-    margin-right: -1px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-    transition: all 0.1s ease-in-out;
-  }
-
-  .tMinTMaxOptions label:hover {
-    cursor: pointer;
-  }
-
-  .tMinTMaxOptions input:checked + label {
-    background-color: #a5dc86;
-    box-shadow: none;
-  }
-
-  .tMinTMaxOptions label:first-of-type {
-    border-radius: 4px 0 0 4px;
-  }
-
-  .tMinTMaxOptions label:last-of-type {
-    border-radius: 0 4px 4px 0;
-  } */
 </style>
 
 <script lang="ts">
@@ -93,7 +48,7 @@
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
-      in_fahrenheit: $tMinTmax.in_fahrenheit,
+      in_fahrenheit: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
     customPanelState.update((state) => ({
@@ -114,7 +69,7 @@
 
   function setCustomPanelURL() {
     let title = 'Degree-day maps - VDIFN';
-    let url = window.location.pathname + '?p=custom';
+    let url = window.location.pathname + '?type=custom';
     window.history.replaceState({}, '', url);
     document.title = title;
   }

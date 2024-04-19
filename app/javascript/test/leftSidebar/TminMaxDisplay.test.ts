@@ -4,7 +4,7 @@ import { tick } from 'svelte';
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import TminMaxDisplay from '@components/leftSidebar/TminMaxDisplay.svelte';
 import { c_to_f, f_to_c } from '@ts/utils';
-import { panelKey, selectedPanel, selectedAffliction, selectedDDModel } from '@store';
+import { panelKey, selectedPanel, selectedPest, selectedDDModel } from '@store';
 import type { DegreeDayModel, Pest } from '@types';
 
 const disease = { id: 1, name: 'disease', t_min: null, t_max: null };
@@ -68,12 +68,12 @@ describe('TminMaxDisplay component for disease/insect', () => {
 
   test('shows min/max temps for insect panel', async () => {
     selectedPanel.set('insect');
-    selectedAffliction.set(bug1);
+    selectedPest.set(bug1);
     await tick();
     expect(minText.textContent).toBe(`${bug1.t_min}`);
     expect(maxText.textContent).toBe(`${bug1.t_max}`);
 
-    selectedAffliction.set(bug2);
+    selectedPest.set(bug2);
     await tick();
     expect(minText.textContent).toBe(`${bug2.t_min}`);
     expect(maxText.textContent).toBe('None');
@@ -81,7 +81,7 @@ describe('TminMaxDisplay component for disease/insect', () => {
 
   test('converts values between celcius and fahrenheit when temp unit is toggled', async () => {
     selectedPanel.set('insect');
-    selectedAffliction.set(bug1);
+    selectedPest.set(bug1);
     await tick();
 
     expect(minText.textContent).toBe(`${bug1.t_min}`);

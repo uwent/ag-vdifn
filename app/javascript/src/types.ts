@@ -1,10 +1,4 @@
-export type Severity = {
-  lat: number;
-  long: number;
-  level: number;
-  min?: number;
-  max?: number;
-};
+export type PanelType = 'disease' | 'insect' | 'custom';
 
 export type SeverityLegend = {
   name: string;
@@ -60,26 +54,74 @@ export type PointDetailsParams = {
   pest_id: number;
   t_max?: number;
   t_min?: number;
-  in_fahrenheit?: boolean;
+  in_f?: boolean;
   panel: string;
 };
 
+export type TMinTmax = {
+  t_min: number | null;
+  t_max: number | null;
+  in_f: boolean;
+};
+
+export type Severity = {
+  lat: number;
+  long: number;
+  level: number;
+};
+
 export type SeverityParams = {
+  pest_id: number;
   start_date: string;
   end_date: string;
-  pest_id: number;
   t_max: number;
   t_min: number;
-  in_fahrenheit: boolean;
+  in_f: boolean;
   lat_range: string;
   long_range: string;
 };
 
-export type StationDetailsParams = {
-  name: string;
-  start_date: Date;
-  end_date: Date;
+export type PestPanelState = {
+  selectedPest: Pest;
+  severities: Severity[];
+  severityParams: SeverityParams;
+  mapExtent: string;
+  loaded: boolean;
 };
+
+export type CustomPanelParams = {
+  start_date: string;
+  end_date: string;
+  t_min: number;
+  t_max: number | null;
+  in_f: boolean;
+};
+
+export type CustomPanelState = {
+  selectedModel: DegreeDayModel;
+  selectedExtent: string;
+  severities: Severity[];
+  severityParams: SeverityParams;
+  params: Partial<CustomPanelParams>;
+  selectedGradient: number;
+  loaded: boolean;
+};
+
+export type GradientState = {
+  severityLevels: number;
+  userValues: number[];
+  mapMin: number;
+  mapMax: number;
+  gradient: {
+    [key: number]: string;
+  };
+};
+
+// export type StationDetailsParams = {
+//   name: string;
+//   start_date: Date;
+//   end_date: Date;
+// };
 
 export type Crop = {
   id: number;
@@ -98,10 +140,10 @@ export type CropWithInsects = {
   insects: Pest[];
 };
 
-export type CropWithAfflictions = {
+export type CropWithPests = {
   id: number;
   name: string;
-  afflictions: Pest[];
+  pests: Pest[];
 };
 
 export type DegreeDayModel = {

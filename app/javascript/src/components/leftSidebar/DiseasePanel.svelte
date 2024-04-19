@@ -7,9 +7,7 @@
 
 <script lang="ts">
   import moment from 'moment';
-  import { onMount, setContext, tick } from 'svelte';
-  import { get } from 'svelte/store';
-
+  import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
   import ModelParameters from './ModelParameters.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
@@ -18,7 +16,7 @@
   import Loading from '../common/Loading.svelte';
   import {
     overlayLoading,
-    afflictionValue,
+    pestId,
     endDate,
     panelKey,
     startDate,
@@ -26,16 +24,28 @@
     diseasePanelParams,
     selectedPanel,
     diseasePanelState,
-    selectedAffliction,
+    selectedDisease,
     extents,
     mapExtent,
+    defaults,
+    selectedPest,
   } from '@store';
 
   export let data;
-  export let defaultModel = '';
+  export let initialModelName = defaults.disease;
   export let submitOnLoad = false;
 
   const thisPanel = 'disease';
+
+  if ($diseasePanelState.loaded) {
+    let pest = $diseasePanelState.selectedPest;
+    selectedDisease.set(pest);
+    initialModelName = pest.local_name;
+  } else {
+    submitOnLoad = false;
+    initialModelName = $selectedDisease.local_name;
+  }
+  setDiseasePanelURL();
 
   setContext(panelKey, {
     panelType: thisPanel,
@@ -45,69 +55,59 @@
       endDate: 'Date through which disease severity values are accumulated',
       startLabel: 'Start date',
     },
-    getAfflictionName: () => 'Disease',
+    getPestName: () => 'Disease',
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
   });
 
   function submit() {
-    let currentAffliction = get(selectedAffliction);
+    let pest = $selectedDisease;
     let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
-      pest_id: $afflictionValue,
-      in_fahrenheit: $tMinTmax.in_fahrenheit,
+      pest_id: $pestId,
+      in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
     diseasePanelState.update((state) => ({
       ...state,
-      currentAffliction: currentAffliction,
-      selectedExtent: $mapExtent,
+      selectedPest: pest,
+      mapExtent: $mapExtent,
       loaded: true,
     }));
     diseasePanelParams.set(params);
     setDiseasePanelURL();
     gtag('event', 'submit', {
       panel_name: thisPanel,
-      model_name: currentAffliction.name,
+      model_name: pest.name,
       map_extent: $mapExtent,
     });
   }
 
   function setDiseasePanelURL() {
-    let model = $diseasePanelState.currentAffliction;
+    let pest = $diseasePanelState.selectedPest;
     let url = window.location.pathname;
     let title = 'VDIFN';
-    if (model) {
-      url += '?p=' + thisPanel;
-      url += '&m=' + model.local_name;
-      title = `${model.name} model - VDIFN`;
+    if (pest) {
+      initialModelName = pest.local_name;
+      url += '?model=' + pest.local_name;
+      title = `${pest.name} model - VDIFN`;
     }
     window.history.replaceState({}, '', url);
     document.title = title;
   }
 
-  // submit once all components have rendered
-  async function lazySubmit() {
-    await tick();
-    submit();
-  }
-
   onMount(() => {
     selectedPanel.set(thisPanel);
-    submitOnLoad ? lazySubmit() : setDiseasePanelURL();
+    if (submitOnLoad) submit();
   });
 
   // submit if data is loaded and then extent is changed
-  $: if (
-    $selectedPanel == thisPanel &&
-    $diseasePanelState.loaded &&
-    $diseasePanelState.selectedExtent != $mapExtent
-  )
-    submit();
+  $: if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
+  $: selectedPest.set($selectedDisease);
 </script>
 
 <div data-testid="disease-panel">
-  <ModelSelection {defaultModel} />
+  <ModelSelection initialModel={initialModelName} />
   <ModelParameters>
     <DatePicker />
     <TminMaxDisplay />

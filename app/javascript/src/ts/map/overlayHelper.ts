@@ -150,7 +150,7 @@ export default class OverlayHelper {
       pest_id: severityParams.pest_id,
       t_min: severityParams.t_min,
       t_max: severityParams.t_max,
-      in_fahrenheit: severityParams.in_fahrenheit,
+      in_f: severityParams.in_f,
       panel: panelType,
     });
   }

@@ -239,7 +239,6 @@
 
   // handle input updates
   function handleUpdate(event) {
-    console.log(event);
     const name = event.target.name;
     const { value } = event.target;
     if (name === 'userMin') {

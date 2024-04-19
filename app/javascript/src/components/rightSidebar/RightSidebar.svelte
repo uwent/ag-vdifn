@@ -85,7 +85,7 @@
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    selectedAffliction,
+    selectedPest,
     diseaseLegend,
     insectLegend,
     customLegend,
@@ -146,7 +146,7 @@
 
 {#if showModal}
   <Modal name="Pest Info" on:close={() => (showModal = false)}>
-    {@html $selectedAffliction.info}
+    {@html $selectedPest.info}
   </Modal>
 {/if}
 

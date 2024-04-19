@@ -1,22 +1,24 @@
 import { round } from './utils';
 import ColorHelper from './map/colorHelper';
 
-export default class GradientHelper {
-  mapRangeToColors(options) {
-    const {
-      min,
-      middleMin,
-      middleMax,
-      max,
-      totalLevels,
-    }: {
-      min: number;
-      middleMin: number;
-      middleMax: number;
-      max: number;
-      totalLevels: number;
-    } = options;
+interface MapRangeToColors {
+  min: number;
+  middleMin?: number;
+  middleMax?: number;
+  max: number;
+  totalLevels: number;
+}
 
+interface GradientValues {
+  min: number;
+  max: number;
+  intermediateLevels: number;
+}
+
+export default class GradientHelper {
+  mapRangeToColors({ min, middleMin, middleMax, max, totalLevels }: MapRangeToColors): {
+    [key: number]: string;
+  } {
     const result = {};
     result[min] = ColorHelper.color(0, totalLevels);
 
@@ -42,12 +44,7 @@ export default class GradientHelper {
     return result;
   }
 
-  gradientValues(options) {
-    const {
-      min,
-      max,
-      intermediateLevels,
-    }: { min: number; max: number; intermediateLevels: number } = options;
+  gradientValues({ min, max, intermediateLevels }: GradientValues) {
     return {
       userMin: min,
       userMax: max,

@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import DatePicker from '@components/leftSidebar/DatePicker.svelte';
-import { panelKey, selectedAffliction } from '@store';
+import { panelKey, selectedPest } from '@store';
 import type { Pest } from '@types';
 
 let startPicker;
@@ -78,7 +78,7 @@ describe('common behavior for all panels', () => {
       biofix_date: twoWeeksAgo,
       end_date_enabled: true,
     } as Pest;
-    selectedAffliction.set(pest);
+    selectedPest.set(pest);
     await tick();
     expect(startPicker.value).toEqual(twoWeeksAgo);
     expect(endPicker.value).toEqual(yesterday);

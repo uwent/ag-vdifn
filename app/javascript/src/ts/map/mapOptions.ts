@@ -2,8 +2,8 @@ import { LightGreyStyle } from './mapStyles';
 
 const MapOptions = {
   center: {
-    lat: 45.05,
-    lng: -90.275,
+    lat: 44.75,
+    lng: -89.9,
   },
   mapTypeControl: true,
   mapTypeControlOptions: {

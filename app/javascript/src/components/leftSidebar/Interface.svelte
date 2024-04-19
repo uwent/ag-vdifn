@@ -8,11 +8,6 @@
     margin: 0 10px;
   }
 
-  fieldset {
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-
   .switch-field {
     font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
     overflow: hidden;
@@ -65,7 +60,6 @@
 
 <script lang="ts">
   import { onMount } from 'svelte';
-
   import DatabaseClient from '@ts/databaseClient';
   import DiseasePanel from './DiseasePanel.svelte';
   import InsectPanel from './InsectPanel.svelte';
@@ -73,11 +67,11 @@
   import Help from './Help.svelte';
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
-  import { overlayLoading, mapExtent, defaults } from '@store';
-  import type { CropWithAfflictions, DegreeDayModel } from '@types';
+  import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
+  import type { CropWithPests, DegreeDayModel } from '@types';
 
-  export let diseasePanelData: CropWithAfflictions[] = [];
-  export let insectPanelData: CropWithAfflictions[] = [];
+  export let diseasePanelData: CropWithPests[] = [];
+  export let insectPanelData: CropWithPests[] = [];
   export let customPanelData: DegreeDayModel[] = [];
   let panelDataReady = false;
 
@@ -89,22 +83,21 @@
   let extent = defaults.extent;
   let showHelp = false;
   let opts = {
-    initialDisease: defaults.disease,
-    initialInsect: defaults.insect,
+    initialModel: '',
     submitOnLoad: false,
   };
 
   // console.log('Launching VDIFN in ' + env + ' environment')
 
   function parseUrlParams() {
-    let panelFromParams = urlParams.get('p') || urlParams.get('panel') || '';
-    if (validPanels.includes(panelFromParams)) {
-      panel = panelFromParams;
-      let model = urlParams.get('m') || urlParams.get('model');
+    const initialPanel =
+      urlParams.get('type') || urlParams.get('panel') || urlParams.get('p') || 'disease';
+    if (validPanels.includes(initialPanel)) {
+      panel = initialPanel;
+      let model = urlParams.get('model') || urlParams.get('m');
       if (model) {
+        opts.initialModel = model;
         opts.submitOnLoad = true;
-        if (panel === 'disease') opts.initialDisease = model;
-        if (panel === 'insect') opts.initialInsect = model;
       }
     } else {
       window.history.replaceState({}, '', window.location.pathname);
@@ -119,6 +112,7 @@
     panelDataReady = true;
   });
 
+  $: selectedPanel.set(panel);
   $: mapExtent.set(extent);
 </script>
 
@@ -184,13 +178,13 @@
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
-          defaultModel={opts.initialDisease}
+          initialModelName={opts.initialModel}
           submitOnLoad={opts.submitOnLoad}
         />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
-          defaultModel={opts.initialInsect}
+          initialModelName={opts.initialModel}
           submitOnLoad={opts.submitOnLoad}
         />
       {:else if panel === 'custom'}
