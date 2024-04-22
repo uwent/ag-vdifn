@@ -68,7 +68,7 @@
   }
 
   function setCustomPanelURL() {
-    let title = 'Degree-day maps - VDIFN';
+    let title = 'VDIFN | Degree-day maps';
     let url = window.location.pathname + '?type=custom';
     window.history.replaceState({}, '', url);
     document.title = title;

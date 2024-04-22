@@ -80,14 +80,14 @@
   }
 
   function setInsectPanelURL() {
-    let title = 'Insect models - VDIFN';
+    let title = 'VDIFN | Insect models';
     let url = window.location.pathname;
     let pest = $insectPanelState.selectedPest;
     url += '?type=' + thisPanel;
     if (pest) {
       initialModelName = pest.local_name;
       url += '&model=' + pest.local_name;
-      title = `${pest.name} model - VDIFN`;
+      title = `VDIFN | ${pest.name} model`;
     }
     window.history.replaceState({}, '', url);
     document.title = title;

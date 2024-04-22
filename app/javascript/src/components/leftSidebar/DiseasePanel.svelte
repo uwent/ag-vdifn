@@ -86,11 +86,11 @@
   function setDiseasePanelURL() {
     let pest = $diseasePanelState.selectedPest;
     let url = window.location.pathname;
-    let title = 'VDIFN';
+    let title = 'VDIFN: Plant disease and insect risk models';
     if (pest) {
       initialModelName = pest.local_name;
       url += '?model=' + pest.local_name;
-      title = `${pest.name} model - VDIFN`;
+      title = `VDIFN | ${pest.name} model`;
     }
     window.history.replaceState({}, '', url);
     document.title = title;
