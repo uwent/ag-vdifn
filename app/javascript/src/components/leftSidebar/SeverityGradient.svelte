@@ -118,7 +118,7 @@
   let gradient = 1;
 
   function updateOverlay(event) {
-    overlayGradient.set(event.detail);
+    $overlayGradient = event.detail;
     updateCustomPanelState();
   }
 
@@ -130,8 +130,8 @@
   }
 
   onMount(() => {
-    if (get(customOverlaySubmitted)) {
-      gradient = get(customPanelState).selectedGradient || 1;
+    if ($customOverlaySubmitted) {
+      gradient = $customPanelState.selectedGradient || 1;
     }
   });
 </script>

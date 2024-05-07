@@ -126,7 +126,7 @@
   $: setUserMinMax($mapRange.min, $mapRange.max);
 
   onMount(() => {
-    const state = get(twoPointGradientState);
+    const state = $twoPointGradientState;
     if (Object.keys(state).length > 0) {
       if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
         // console.log('loading saved state')
@@ -145,13 +145,13 @@
   });
 
   onDestroy(() => {
-    twoPointGradientState.set({
+    $twoPointGradientState = {
       severityLevels,
       userValues,
-      mapMax: get(mapRange).max,
-      mapMin: get(mapRange).min,
+      mapMax: $mapRange.max,
+      mapMin: $mapRange.min,
       gradient: getGradient(),
-    });
+    };
   });
 
   // populate user values from map range

@@ -138,24 +138,21 @@
   }
 
   // convert between units and update text
-  function updateText(in_f) {
-    if (in_f) {
-      tMinText = makeText(tMinF);
-      tMaxText = makeText(tMaxF);
-      tMinTmax.set({
-        t_min: tMinF,
-        t_max: tMaxF,
-        in_f: true,
-      });
-    } else {
-      tMinText = makeText(tMinC);
-      tMaxText = makeText(tMaxC);
-      tMinTmax.set({
-        t_min: tMinC,
-        t_max: tMaxC,
-        in_f: false,
-      });
-    }
+  function updateText(in_f: boolean) {
+    const opts = in_f
+      ? {
+          t_min: tMinF,
+          t_max: tMaxF,
+          in_f: true,
+        }
+      : {
+          t_min: tMinC,
+          t_max: tMaxC,
+          in_f: false,
+        };
+    $tMinTmax = opts;
+    tMinText = makeText(opts.t_min);
+    tMaxText = makeText(opts.t_max);
   }
 
   // Sets temperature values and updates display text
@@ -168,10 +165,6 @@
       updateText(in_f);
     }
   }
-
-  onMount(() => {
-    // setTminTmax($selectedPanel === 'custom' ? $selectedDDModel : $selectedPest);
-  });
 
   $: updateText(in_f);
   $: setTminTmax(panelType === 'custom' ? $selectedDDModel : $selectedPest);

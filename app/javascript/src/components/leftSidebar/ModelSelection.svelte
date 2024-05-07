@@ -82,8 +82,8 @@
     if (cropWithPests) {
       pestsForCrop = cropWithPests.pests;
       pestId.update((_) => pestsForCrop[0].id);
-      pestId.set(pestsForCrop[0].id);
-      selectedPest.set(pestsForCrop[0]);
+      $pestId = pestsForCrop[0].id;
+      $selectedPest = pestsForCrop[0];
     }
   }
 
@@ -97,9 +97,9 @@
 
   function setPestValue(event) {
     const value = parseInt(event.target.value);
-    pestId.update((value) => value);
-    pestId.set(value);
-    selectedPest.set(getCurrentPest(value));
+    // pestId.update((value) => value);
+    $pestId = value;
+    $selectedPest = getCurrentPest(value);
   }
 
   function getPestId(alias: string) {
@@ -138,8 +138,9 @@
 
     selectInitialModel();
 
-    pestId.update((_) => modelId);
-    selectedPest.set(getCurrentPest(modelId));
+    // pestId.update((_) => modelId);
+    $pestId = modelId;
+    $selectedPest = getCurrentPest(modelId);
   });
 </script>
 

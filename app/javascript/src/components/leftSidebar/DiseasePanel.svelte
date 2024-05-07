@@ -40,7 +40,7 @@
 
   if ($diseasePanelState.loaded) {
     let pest = $diseasePanelState.selectedPest;
-    selectedDisease.set(pest);
+    $selectedDisease = pest;
     initialModelName = pest.local_name;
   } else {
     submitOnLoad = false;
@@ -75,7 +75,7 @@
       mapExtent: $mapExtent,
       loaded: true,
     }));
-    diseasePanelParams.set(params);
+    $diseasePanelParams = params;
     setDiseasePanelURL();
     gtag('event', 'submit', {
       panel_name: thisPanel,
@@ -98,13 +98,13 @@
   }
 
   onMount(() => {
-    selectedPanel.set(thisPanel);
+    $selectedPanel = thisPanel;
     if (submitOnLoad) submit();
   });
 
   // submit if data is loaded and then extent is changed
   $: if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
-  $: selectedPest.set($selectedDisease);
+  $: $selectedPest = $selectedDisease;
 </script>
 
 <div data-testid="disease-panel">

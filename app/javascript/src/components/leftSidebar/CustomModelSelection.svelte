@@ -21,7 +21,7 @@
     const model = ddModels.find((model) => {
       return model.id === id;
     });
-    if (model) selectedDDModel.set(model);
+    if (model) $selectedDDModel = model;
   }
 
   // If loaded select the loaded model
@@ -40,7 +40,7 @@
     ddModels = getModels();
     let model = getCurrentModel();
     if (model) {
-      selectedDDModel.set(model);
+      $selectedDDModel = model;
       modelId = model.id;
     }
   });

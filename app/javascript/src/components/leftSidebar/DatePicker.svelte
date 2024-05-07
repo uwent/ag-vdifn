@@ -141,8 +141,8 @@
 
   onDestroy(unsubscribe);
 
-  $: startDate.set(startDateValue);
-  $: endDate.set(endDateValue);
+  $: $startDate = startDateValue;
+  $: $endDate = endDateValue;
 </script>
 
 <fieldset id="datepicker">

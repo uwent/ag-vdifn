@@ -112,8 +112,8 @@
     panelDataReady = true;
   });
 
-  $: selectedPanel.set(panel);
-  $: mapExtent.set(extent);
+  $: $selectedPanel = panel;
+  $: $mapExtent = extent;
 </script>
 
 <div class="options">

@@ -34,7 +34,7 @@
 
   if ($insectPanelState.loaded) {
     let pest = $insectPanelState.selectedPest;
-    selectedInsect.set(pest);
+    $selectedInsect = pest;
     initialModelName = pest.local_name;
   } else {
     submitOnLoad = false;
@@ -71,7 +71,7 @@
       mapExtent: $mapExtent,
       loaded: true,
     }));
-    insectPanelParams.set(params);
+    $insectPanelParams = params;
     setInsectPanelURL();
     gtag('event', 'submit', {
       panel_name: thisPanel,
@@ -95,13 +95,13 @@
   }
 
   onMount(() => {
-    selectedPanel.set(thisPanel);
+    $selectedPanel = thisPanel;
     if (submitOnLoad) submit();
   });
 
   // submit if data is loaded and then extent is changed
   $: if ($insectPanelState.loaded && $insectPanelState.mapExtent != $mapExtent) submit();
-  $: selectedPest.set($selectedInsect);
+  $: $selectedPest = $selectedInsect;
 </script>
 
 <div data-testid="insect-panel">

@@ -101,14 +101,14 @@
   const diseaseUnsubscribe = diseasePanelParams.subscribe(async (severityParams) => {
     if (Object.entries(severityParams).length === 0) return;
     const legend = await updateSeverities(severityParams);
-    diseaseLegend.set(legend);
+    $diseaseLegend = legend;
   });
 
   const insectUnsubscribe = insectPanelParams.subscribe(async (severityParams) => {
     if (Object.entries(severityParams).length === 0) return;
     let legend = await updateSeverities(severityParams);
     let info = await updateSeverityInfo(severityParams);
-    insectLegend.set({ legend: legend, info: info });
+    $insectLegend = { legend: legend, info: info };
   });
 
   const overlayGradientUnsubscribe = overlayGradient.subscribe((gradientMapping) => {
@@ -120,7 +120,7 @@
       }
     }
     const gradient = arr.sort((x, y) => x.number - y.number);
-    customLegend.set(gradient);
+    $customLegend = gradient;
   });
 
   async function updateSeverities(severityParams) {

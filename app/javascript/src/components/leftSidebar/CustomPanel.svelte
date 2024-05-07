@@ -43,7 +43,7 @@
   });
 
   function submit() {
-    customOverlaySubmitted.set(true);
+    $customOverlaySubmitted = true;
     let params = {
       start_date: moment.utc($startDate).format('YYYY-MM-DD'),
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
@@ -59,7 +59,7 @@
       params: params,
       loaded: true,
     }));
-    customPanelParams.set(params);
+    $customPanelParams = params;
     setCustomPanelURL();
     gtag('event', 'submit', {
       panel_name: thisPanel,
@@ -76,9 +76,9 @@
   }
 
   onMount(() => {
-    selectedPanel.set(thisPanel);
+    $selectedPanel = thisPanel;
     if ($customPanelState.loaded && $customPanelState.selectedModel)
-      selectedDDModel.set($customPanelState.selectedModel);
+      $selectedDDModel = $customPanelState.selectedModel;
     setCustomPanelURL();
   });
 
