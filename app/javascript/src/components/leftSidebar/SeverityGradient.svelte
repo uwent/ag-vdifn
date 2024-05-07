@@ -150,7 +150,7 @@
         <div>Tmax:</div>
         <div>{$customPanelState.params.t_max || 'None'}</div>
         <div>Units:</div>
-        <div>{$customPanelState.params.in_fahrenheit ? 'Fahrenheit' : 'Celcius'}</div>
+        <div>{$customPanelState.params.in_f ? 'Fahrenheit' : 'Celcius'}</div>
       </div>
     </fieldset>
   {/if}

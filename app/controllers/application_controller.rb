@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def in_f
-    str = params[:in_fahrenheit].to_s
+    str = params[:in_f].to_s
     return true if str == 'true'
     return false if str == 'false'
     return true

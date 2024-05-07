@@ -33,8 +33,8 @@
     if (!gradient) return [];
     return gradient.map((el, i) => {
       const color = el.color;
-      const lowRange = i === 0 ? 0 : round(gradient[i - 1].number, 1);
-      const text = i === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${el.number}`;
+      const lowRange = i === 0 ? 0 : round(gradient[i - 1].number);
+      const text = i === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(el.number)}`;
       return { color, text };
     });
   }

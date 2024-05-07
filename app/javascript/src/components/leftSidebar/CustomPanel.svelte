@@ -49,7 +49,7 @@
       end_date: moment.utc($endDate).format('YYYY-MM-DD'),
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
-      in_fahrenheit: $tMinTmax.in_f,
+      in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
     customPanelState.update((state) => ({
