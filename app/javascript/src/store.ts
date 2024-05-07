@@ -69,6 +69,7 @@ export const pestId = writable();
 export const pestAlias = writable('');
 export const overlayGradient = writable({});
 export const overlayLoading = writable(false);
+export const loadStatus = writable('');
 export const customOverlaySubmitted = writable(false);
 export const pestParams = writable({});
 export const diseasePanelParams = writable({});

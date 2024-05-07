@@ -30,6 +30,7 @@
     defaults,
     selectedPest,
   } from '@store';
+  import LoadStatus from '@components/common/LoadStatus.svelte';
 
   export let data;
   export let initialModelName = defaults.disease;
@@ -119,5 +120,7 @@
   />
   {#if $overlayLoading}
     <Loading />
+  {:else}
+    <LoadStatus loaded={$diseasePanelState.loaded} />
   {/if}
 </div>

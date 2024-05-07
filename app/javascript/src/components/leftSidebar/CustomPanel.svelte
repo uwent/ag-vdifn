@@ -26,6 +26,7 @@
     extents,
     mapExtent,
   } from '@store';
+  import LoadStatus from '@components/common/LoadStatus.svelte';
 
   export let data: any;
 
@@ -101,11 +102,14 @@
       click={submit}
     />
   </ModelParameters>
-  {#if $customOverlaySubmitted && $overlayLoading}
+  {#if $overlayLoading}
     <Loading />
-  {:else if $customOverlaySubmitted}
-    <ModelParameters title={'Current Overlay Parameters'}>
-      <SeverityGradient />
-    </ModelParameters>
+  {:else}
+    <LoadStatus loaded={$customPanelState.loaded} />
+    {#if $customOverlaySubmitted}
+      <ModelParameters title={'Current Overlay Parameters'}>
+        <SeverityGradient />
+      </ModelParameters>
+    {/if}
   {/if}
 </div>

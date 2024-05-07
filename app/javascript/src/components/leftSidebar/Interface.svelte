@@ -68,7 +68,7 @@
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
-  import type { CropWithPests, DegreeDayModel } from '@types';
+  import type { CropWithPests, DegreeDayModel, PanelType } from '@types';
 
   export let diseasePanelData: CropWithPests[] = [];
   export let insectPanelData: CropWithPests[] = [];
@@ -79,7 +79,7 @@
   const urlParams = new URLSearchParams(window.location.search);
   const validPanels = ['disease', 'insect', 'custom'];
 
-  let panel = defaults.panel;
+  let panel = defaults.panel as PanelType;
   let extent = defaults.extent;
   let showHelp = false;
   let opts = {
@@ -93,7 +93,7 @@
     const initialPanel =
       urlParams.get('type') || urlParams.get('panel') || urlParams.get('p') || 'disease';
     if (validPanels.includes(initialPanel)) {
-      panel = initialPanel;
+      panel = initialPanel as PanelType;
       let model = urlParams.get('model') || urlParams.get('m');
       if (model) {
         opts.initialModel = model;

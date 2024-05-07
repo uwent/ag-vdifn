@@ -7,6 +7,7 @@
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
+  import LoadStatus from '../common/LoadStatus.svelte';
   import {
     defaults,
     endDate,
@@ -116,5 +117,7 @@
   />
   {#if $overlayLoading}
     <Loading />
+  {:else}
+    <LoadStatus loaded={$insectPanelState.loaded} />
   {/if}
 </div>
