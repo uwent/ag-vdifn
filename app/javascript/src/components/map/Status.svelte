@@ -10,9 +10,7 @@
     padding: 5px 10px;
     border-bottom-right-radius: 0.2em;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow:
-      -4px 0px 10px rgba(0, 0, 0, 0.3),
-      4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.3);
     @media #{$medium-up} {
       left: 350px;
     }
@@ -21,18 +19,19 @@
 
 <script lang="ts">
   import { insectPanelState, selectedPanel, diseasePanelState, customPanelState } from '@store';
+  import type { CustomPanelState, PestPanelState } from '@types';
 
   let defaultStatus = 'No model submitted';
   let status = defaultStatus;
 
-  function getStatus(state) {
-    if (state.currentAffliction) return state.currentAffliction.name;
+  function getStatus(state: PestPanelState) {
+    if (state.selectedPest) return state.selectedPest.name;
     return defaultStatus;
   }
 
-  function getDDStatus(state) {
+  function getDDStatus(state: CustomPanelState) {
     if (state.loaded) {
-      let units = state.params.in_fahrenheit ? '\u2109' : '\u2103';
+      let units = state.params.in_f ? '\u2109' : '\u2103';
       let tMaxText = state.params.t_max ? `/${state.params.t_max}` : '';
       return 'Degree day model: ' + state.params.t_min + tMaxText + units;
     }

@@ -117,15 +117,16 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
   import { f_to_c } from '@ts/utils';
-  import { panelKey, selectedAffliction, selectedDDModel, tMinTmax } from '@store';
+  import { panelKey, selectedPest, selectedDDModel, tMinTmax } from '@store';
+  import type { Pest, DegreeDayModel } from '@types';
 
   const { panelType } = getContext<any>(panelKey);
 
   let in_f = true;
-  let tMinF = 0;
-  let tMaxF = 0;
-  let tMinC = 0;
-  let tMaxC = 0;
+  let tMinF: number | null;
+  let tMaxF: number | null;
+  let tMinC: number | null;
+  let tMaxC: number | null;
   let tMinText = '';
   let tMaxText = '';
 
@@ -137,30 +138,26 @@
   }
 
   // convert between units and update text
-  function updateText(in_f) {
-    if (in_f) {
-      tMinText = makeText(tMinF);
-      tMaxText = makeText(tMaxF);
-      tMinTmax.set({
-        t_min: tMinF,
-        t_max: tMaxF,
-        in_fahrenheit: true,
-      });
-    } else {
-      tMinText = makeText(tMinC);
-      tMaxText = makeText(tMaxC);
-      tMinTmax.set({
-        t_min: tMinC,
-        t_max: tMaxC,
-        in_fahrenheit: false,
-      });
-    }
+  function updateText(in_f: boolean) {
+    const opts = in_f
+      ? {
+          t_min: tMinF,
+          t_max: tMaxF,
+          in_f: true,
+        }
+      : {
+          t_min: tMinC,
+          t_max: tMaxC,
+          in_f: false,
+        };
+    $tMinTmax = opts;
+    tMinText = makeText(opts.t_min);
+    tMaxText = makeText(opts.t_max);
   }
 
   // Sets temperature values and updates display text
-  function setTminTmax(model) {
+  function setTminTmax(model: Pest | DegreeDayModel) {
     if (model) {
-      // in_f = $tMinTmax.in_fahrenheit || true
       tMinF = model.t_min;
       tMaxF = model.t_max;
       tMinC = f_to_c(tMinF);
@@ -169,12 +166,8 @@
     }
   }
 
-  onMount(() => {
-    setTminTmax(panelType == 'custom' ? $selectedDDModel : $selectedAffliction);
-  });
-
   $: updateText(in_f);
-  $: setTminTmax(panelType == 'custom' ? $selectedDDModel : $selectedAffliction);
+  $: setTminTmax(panelType === 'custom' ? $selectedDDModel : $selectedPest);
 </script>
 
 <div id="degree_day_info">

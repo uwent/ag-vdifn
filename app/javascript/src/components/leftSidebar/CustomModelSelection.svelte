@@ -2,40 +2,6 @@
   .dd-container {
     display: flex;
   }
-
-  fieldset {
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-
-  legend {
-    color: #242424;
-    font-size: 0.85em;
-    padding: 0 5px;
-  }
-
-  label {
-    color: #484848;
-    font-size: 0.75em;
-    padding: 0 5px;
-  }
-
-  select {
-    padding: 5px 8px;
-    text-indent: 0.01px;
-    width: 99%;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 0;
-    border: 1px solid #d0d0d0;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
 </style>
 
 <script lang="ts">
@@ -55,16 +21,15 @@
     const model = ddModels.find((model) => {
       return model.id === id;
     });
-    if (model) selectedDDModel.set(model);
+    if (model) $selectedDDModel = model;
   }
 
+  // If loaded select the loaded model
+  // If not loaded, select the model that was last selected
+  // Try to find the default model
   function getCurrentModel(): DegreeDayModel {
-    // If loaded select the loaded model
-    if ($customPanelState.loaded && $customPanelState.selectedModel)
-      return $customPanelState.selectedModel;
-    // If not loaded, select the model that was last selected
+    if ($customPanelState.loaded) return $customPanelState.selectedModel;
     if ($selectedDDModel.id) return $selectedDDModel;
-    // Try to find the default model
     let match = ddModels.find((model) => {
       return model.remote_name === defaultModel;
     });
@@ -75,7 +40,7 @@
     ddModels = getModels();
     let model = getCurrentModel();
     if (model) {
-      selectedDDModel.set(model);
+      $selectedDDModel = model;
       modelId = model.id;
     }
   });
@@ -94,7 +59,7 @@
       value={modelId}
     >
       {#each ddModels as { id, name, name_c }}
-        <option value={id}>{$tMinTmax.in_fahrenheit ? name : name_c}</option>
+        <option value={id}>{$tMinTmax.in_f ? name : name_c}</option>
       {/each}
     </select>
   </div>

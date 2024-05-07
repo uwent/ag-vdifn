@@ -10,14 +10,11 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/point_details", to: "point_details#index"
-  post "/severities", to: "severities#index"
-
-  get "/?model=:local_name", to: "application#index"
-  get "/maps?model=:local_name", to: "application#index"
+  get "/point_details" => "point_details#index"
+  post "/severities" => "severities#index"
 
   # redirect all wayward routes to home
-  get "*path", to: redirect("/") unless Rails.env.development?
+  get "*path" => redirect("/vdifn") unless Rails.env.development?
 
   root to: "application#index"
 end

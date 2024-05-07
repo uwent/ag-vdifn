@@ -5,17 +5,6 @@
     display: flex;
   }
 
-  fieldset {
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-
-  label {
-    color: #484848;
-    font-size: 0.75em;
-    padding: 0 5px;
-  }
-
   .label-text {
     color: #484848;
     font-size: 0.75em;
@@ -60,9 +49,7 @@
 <script lang="ts">
   import moment from 'moment';
   import { getContext, onDestroy } from 'svelte';
-
-  import { endDate, panelKey, startDate, selectedAffliction } from '@store';
-  import type { PestInfo } from '@types';
+  import { endDate, panelKey, startDate, selectedPest } from '@store';
 
   const { panelType, dateToolTip, defaultStartDate } = getContext<any>(panelKey);
 
@@ -130,18 +117,18 @@
   }
 
   // panel and pest-specific tweaks to datepicker
-  const unsubscribe = selectedAffliction.subscribe((affliction) => {
+  const unsubscribe = selectedPest.subscribe((pest) => {
     if (panelType != 'custom') {
-      startLabel = affliction.biofix_label || 'Start date';
+      startLabel = pest.biofix_label || 'Start date';
 
       // if biofix has yet to occur default to last year
-      if (affliction.biofix_date) {
-        if (affliction.biofix_date < today) {
-          defaultStartDateValue = affliction.biofix_date;
+      if (pest.biofix_date) {
+        if (pest.biofix_date < today) {
+          defaultStartDateValue = pest.biofix_date;
           defaultEndDateValue = today;
         } else {
           defaultStartDateValue = moment
-            .utc(affliction.biofix_date)
+            .utc(pest.biofix_date)
             .subtract(1, 'year')
             .format('YYYY-MM-DD');
           defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31';
@@ -154,8 +141,8 @@
 
   onDestroy(unsubscribe);
 
-  $: startDate.set(startDateValue);
-  $: endDate.set(endDateValue);
+  $: $startDate = startDateValue;
+  $: $endDate = endDateValue;
 </script>
 
 <fieldset id="datepicker">

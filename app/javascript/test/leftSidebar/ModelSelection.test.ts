@@ -1,22 +1,22 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
-
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import ModelSelection from '@components/leftSidebar/ModelSelection.svelte';
 import { panelKey } from '@store';
+import type { CropWithPests, Pest } from '@types';
 
-const data = [
+const data: CropWithPests[] = [
   {
     id: 1,
     name: 'corn',
-    afflictions: [{ id: 11, name: 'bug' }],
+    pests: [{ id: 11, name: 'bug' } as Pest],
   },
   {
     id: 2,
     name: 'carrots',
-    afflictions: [
-      { id: 21, name: 'ladybug' },
-      { id: 22, name: 'grasshopper' },
-      { id: 23, name: 'fly' },
+    pests: [
+      { id: 21, name: 'ladybug' } as Pest,
+      { id: 22, name: 'grasshopper' } as Pest,
+      { id: 23, name: 'fly' } as Pest,
     ],
   },
 ];
@@ -29,20 +29,20 @@ describe('when data present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => data,
-          getAfflictionName: () => 'Disease',
+          getPestName: () => 'Disease',
         },
       },
     });
   });
 
-  test('defaults crop and affliction values to first in their respective lists', () => {
+  test('defaults crop and pest values to first in their respective lists', () => {
     expect(screen.getByTestId('crop-select')).toHaveValue('1');
-    expect(screen.getByTestId('affliction-select')).toHaveValue('11');
+    expect(screen.getByTestId('pest-select')).toHaveValue('11');
   });
 
-  test('updates afflictions for selected crop', async () => {
+  test('updates pests for selected crop', async () => {
     await fireEvent.change(screen.getByTestId('crop-select'), { target: { value: '2' } });
-    expect(screen.getByTestId('affliction-select')).toHaveValue('21');
+    expect(screen.getByTestId('pest-select')).toHaveValue('21');
   });
 
   test('shows modal when button is clicked', async () => {
@@ -67,7 +67,7 @@ describe('when data not present', () => {
         context_key: panelKey,
         context_value: {
           getCrops: () => [],
-          getAfflictionName: () => 'Disease',
+          getPestName: () => 'Disease',
         },
       },
     });
@@ -75,7 +75,7 @@ describe('when data not present', () => {
 
   test('renders empty select box', () => {
     expect(screen.getByTestId('crop-select'));
-    expect(screen.getByTestId('affliction-select'));
+    expect(screen.getByTestId('pest-select'));
   });
 
   test('does not contain modal button', () => {

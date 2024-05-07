@@ -40,7 +40,7 @@ test('displays params once submitted', async () => {
       end_date: '2020-10-20',
       t_min: 50,
       t_max: null,
-      in_fahrenheit: true,
+      in_f: true,
     },
   } as any;
   customPanelState.set(state);

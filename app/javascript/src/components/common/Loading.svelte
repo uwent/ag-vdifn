@@ -43,7 +43,8 @@
 </style>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { loadStatus } from '@store';
+  import { onDestroy, onMount } from 'svelte';
 
   let time = 0;
 
@@ -51,6 +52,10 @@
     setInterval(() => {
       time += 0.1;
     }, 100);
+  });
+
+  onDestroy(() => {
+    $loadStatus = `Data load completed in ${time.toFixed(1)} seconds.`;
   });
 </script>
 

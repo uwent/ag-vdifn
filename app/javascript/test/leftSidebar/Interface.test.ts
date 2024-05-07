@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
 import Interface from '@components/leftSidebar/Interface.svelte';
-import type { CropWithAfflictions, DegreeDayModel, Pest } from '@types';
+import type { CropWithPests, DegreeDayModel } from '@types';
 
 beforeEach(() => {
   render(Interface, {
@@ -11,22 +11,22 @@ beforeEach(() => {
         {
           id: 1,
           name: 'potato',
-          afflictions: [
+          pests: [
             { id: 5, name: 'late blight', t_min: 5, t_max: 10 },
             { id: 10, name: 'black death', t_min: 10, t_max: 100 },
           ],
         },
-      ] as CropWithAfflictions[],
+      ] as CropWithPests[],
       insectPanelData: [
         {
           id: 1,
           name: 'potato',
-          afflictions: [
+          pests: [
             { id: 10, name: 'grasshopper' },
             { id: 45, name: 'caterpillar' },
           ],
         },
-      ] as CropWithAfflictions[],
+      ] as CropWithPests[],
       customPanelData: [
         {
           id: 40,

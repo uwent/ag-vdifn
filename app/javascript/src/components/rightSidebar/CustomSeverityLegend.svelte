@@ -16,6 +16,7 @@
     width: 15px;
     margin-right: 10px;
     padding: 10px;
+    border: 1px solid grey;
   }
 </style>
 
@@ -30,11 +31,10 @@
   // converts color/cutoff gradient into array of legend text/color pairs
   function makeLegend(gradient) {
     if (!gradient) return [];
-    console.log(gradientMapping);
     return gradient.map((el, i) => {
       const color = el.color;
-      const lowRange = i === 0 ? 0 : round(gradient[i - 1].number, 1);
-      const text = i === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${el.number}`;
+      const lowRange = i === 0 ? 0 : round(gradient[i - 1].number);
+      const text = i === gradient.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(el.number)}`;
       return { color, text };
     });
   }

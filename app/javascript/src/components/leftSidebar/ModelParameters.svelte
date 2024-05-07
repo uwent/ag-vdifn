@@ -1,9 +1,4 @@
 <style>
-  legend {
-    color: #242424;
-    font-size: 0.85em;
-    padding: 0 5px;
-  }
 </style>
 
 <script lang="ts">

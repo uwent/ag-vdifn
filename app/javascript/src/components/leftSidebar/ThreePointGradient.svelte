@@ -242,7 +242,7 @@
   }
 
   onMount(() => {
-    const state = get(threePointGradientState);
+    const state = $threePointGradientState;
     if (
       Object.keys(state).length > 0 &&
       state.mapMin === $mapRange.min &&
@@ -260,13 +260,13 @@
   });
 
   onDestroy(() => {
-    threePointGradientState.set({
+    $threePointGradientState = {
       severityLevels,
       userValues,
-      mapMin: get(mapRange).min,
-      mapMax: get(mapRange).max,
+      mapMin: $mapRange.min,
+      mapMax: $mapRange.max,
       gradient: getGradient(),
-    });
+    };
   });
 
   $: setUserMinMax($mapRange.min, $mapRange.max);

@@ -1,20 +1,6 @@
 <style lang="scss">
   @import '../../scss/settings.scss';
 
-  $colors: (
-    'very_low': #00cc00,
-    'low': #7dff23,
-    'medium': #ffd700,
-    'high': #ff8000,
-    'very_high': #cc0000,
-  );
-
-  @each $slug, $color in $colors {
-    .dsv-threshold.dsv-#{$slug} {
-      background: $color;
-    }
-  }
-
   #severity-legend .dsv {
     clear: both;
   }
@@ -30,6 +16,7 @@
     height: 15px;
     vertical-align: middle;
     margin: 2px;
+    border: 1px solid grey;
   }
 
   button {
@@ -49,7 +36,7 @@
   <legend>Severity Legend:</legend>
   {#each severities as { name, description, slug }}
     <div id="dsv-{slug}" class="dsv" data-color="#ff0000" data-testid="severity-level-{slug}">
-      <div class="dsv-threshold dsv-{slug}" data-testid="severity-color-{slug}" />
+      <div class="dsv-threshold severity-{slug}" data-testid="severity-color-{slug}" />
       <label>
         {name}
         <button

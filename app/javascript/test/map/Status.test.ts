@@ -15,10 +15,9 @@ describe('when disease panel selected', () => {
     expect(screen.getByText('No model submitted')).to.exist;
   });
 
-  test('shows current affliction name', async () => {
+  test('shows current pest name', async () => {
     selectedPanel.set('disease');
-    // diseasePanelState.set({ currentAffliction: { name: 'disease name' } });
-    diseasePanelState.set({ currentAffliction: { name: 'disease name' } } as any);
+    diseasePanelState.set({ selectedPest: { name: 'disease name' } } as any);
     await tick();
     expect(screen.getByText('disease name')).to.exist;
   });
@@ -31,9 +30,9 @@ describe('when insect panel selected', () => {
     expect(screen.getByText('No model submitted')).to.exist;
   });
 
-  test('shows current affliction name', async () => {
+  test('shows current pest name', async () => {
     selectedPanel.set('insect');
-    insectPanelState.set({ currentAffliction: { name: 'insect name' } } as any);
+    insectPanelState.set({ selectedPest: { name: 'insect name' } } as any);
     await tick();
     expect(screen.getByText('insect name')).to.exist;
   });
@@ -43,7 +42,7 @@ describe('when custom panel selected', () => {
   test('shows Tmin and Tmax and temp units', async () => {
     selectedPanel.set('custom');
     customPanelState.set({
-      params: { t_min: 5, t_max: 10, in_fahrenheit: true },
+      params: { t_min: 5, t_max: 10, in_f: true },
       loaded: true,
     } as any);
     await tick();

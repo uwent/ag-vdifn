@@ -194,7 +194,7 @@ describe('fetchPointDetails', () => {
 // })
 
 describe('fetchDiseasePanel', () => {
-  test('converts diseases into afflictions', async () => {
+  test('converts diseases into pests', async () => {
     const database = new DatabaseClient();
 
     const response = await database.fetchDiseasePanel();
@@ -203,7 +203,7 @@ describe('fetchDiseasePanel', () => {
       {
         id: 1,
         name: 'potato',
-        afflictions: [
+        pests: [
           { id: 1, name: 'late blight' },
           { id: 2, name: 'black death' },
         ],
@@ -213,7 +213,7 @@ describe('fetchDiseasePanel', () => {
 });
 
 describe('fetchInsectPanel', () => {
-  test('converts diseases into afflictions', async () => {
+  test('converts diseases into pests', async () => {
     const database = new DatabaseClient();
 
     const response = await database.fetchInsectPanel();
@@ -222,7 +222,7 @@ describe('fetchInsectPanel', () => {
       {
         id: 1,
         name: 'potato',
-        afflictions: [
+        pests: [
           {
             id: 10,
             name: 'grasshopper',

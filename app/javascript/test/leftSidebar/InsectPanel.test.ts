@@ -1,20 +1,20 @@
-import { fireEvent, render, screen } from '@testing-library/svelte';
-import { get } from 'svelte/store';
-import moment from 'moment';
-
 import InsectPanel from '@components/leftSidebar/InsectPanel.svelte';
 import {
-  selectedAffliction,
-  selectedPanel,
+  defaults,
+  endDate,
+  extents,
+  insectPanelParams,
   insectPanelState,
   panelKey,
-  insectPanelParams,
+  pestId,
+  selectedInsect,
+  selectedPanel,
   startDate,
-  endDate,
-  afflictionValue,
-  defaults,
-  extents,
 } from '@store';
+import { fireEvent, render, screen } from '@testing-library/svelte';
+import type { Pest } from '@types';
+import moment from 'moment';
+import { get } from 'svelte/store';
 
 let insectPanel;
 
@@ -28,8 +28,8 @@ beforeEach(() => {
   insectPanel = component;
   startDate.set('2000-10-10');
   endDate.set('2000-11-10');
-  afflictionValue.set(1);
-  selectedAffliction.set({ name: 'bug', t_min: 42, t_max: null } as any);
+  pestId.set(1);
+  selectedInsect.set({ name: 'bug', t_min: 42, t_max: null } as Pest);
 });
 
 test('should set selected panel to insect on mount', () => {
@@ -41,9 +41,9 @@ test('should update insect panels state when submit button clicked', async () =>
   await fireEvent.click(button);
 
   expect(get(insectPanelState)).toEqual({
-    currentAffliction: { name: 'bug', t_min: 42, t_max: null },
+    selectedPest: { name: 'bug', t_min: 42, t_max: null },
     loaded: true,
-    selectedExtent: defaults.extent,
+    mapExtent: defaults.extent,
   });
 });
 
@@ -56,7 +56,7 @@ test('should dispatch submit params when button is clicked', async () => {
     pest_id: 1,
     t_min: 42,
     t_max: null,
-    in_fahrenheit: true,
+    in_f: true,
     ...extents[defaults.extent],
   });
 });
@@ -70,7 +70,7 @@ test('sets context data for child elements', () => {
       endDate: 'Date through which degree days are accumulated',
       startLabel: 'Biofix',
     },
-    getAfflictionName: expect.any(Function),
+    getPestName: expect.any(Function),
     defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
   });
 });

@@ -2,7 +2,7 @@
   #google-map {
     height: 100%;
     width: 100%;
-    position: absolute;
+    /* position: absolute; */
   }
 
   :global(#map-pan-zoom-controls #map-google-logo) {
@@ -60,8 +60,7 @@
   <h1>An error occurred loading Google Maps, please try refreshing the page</h1>
 {/await}
 
-<div bind:this={container} id="google-map">
-  {#if map}
-    <slot />
-  {/if}
-</div>
+<div bind:this={container} id="google-map"></div>
+{#if map}
+  <slot />
+{/if}

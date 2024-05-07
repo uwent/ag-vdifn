@@ -42,9 +42,9 @@
     panelType,
   ) {
     if (Object.entries(severityParams).length === 0) return;
-    overlayLoading.set(true);
+    $overlayLoading = true;
     await overlayHelper.updateOverlay(severityParams, panelType);
-    overlayLoading.set(false);
+    $overlayLoading = false;
   }
 
   // Handle switching panel overlays
@@ -98,7 +98,7 @@
         break;
     }
     currentOverlay.showOverlay();
-    overlayLoading.set(false);
+    $overlayLoading = false;
     // console.log("Switched to " + selectedSeverity + " panel in " + (new Date().getTime() - startTime) + "ms")
   });
 
@@ -122,10 +122,10 @@
 
   customPanelParams.subscribe(async (severityParams) => {
     await updateOverlay(customOverlay, severityParams as SeverityParams, 'custom');
-    mapRange.set({
+    $mapRange = {
       min: customOverlay.min || 0,
       max: customOverlay.max || 0,
-    });
+    };
     customPanelState.update((state) => ({
       ...state,
       severities: customOverlay.severities,

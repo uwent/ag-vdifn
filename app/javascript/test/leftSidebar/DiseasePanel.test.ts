@@ -4,17 +4,18 @@ import moment from 'moment';
 
 import DiseasePanel from '@components/leftSidebar/DiseasePanel.svelte';
 import {
-  selectedAffliction,
+  selectedDisease,
   diseasePanelState,
   selectedPanel,
   panelKey,
   diseasePanelParams,
   startDate,
   endDate,
-  afflictionValue,
+  pestId,
   defaults,
   extents,
 } from '@store';
+import type { Pest } from '@types';
 
 let diseasePanel;
 
@@ -28,8 +29,8 @@ beforeEach(() => {
   diseasePanel = component;
   startDate.set('2000-10-10');
   endDate.set('2000-11-10');
-  afflictionValue.set(1);
-  selectedAffliction.set({ name: 'bug' } as any);
+  pestId.set(1);
+  selectedDisease.set({ id: 1, name: 'bug' } as Pest);
 });
 
 test('sets selectedPanel state to disease panel on mount', () => {
@@ -42,7 +43,7 @@ test('should dispatch submit params when button is clicked', () => {
   expect(get(diseasePanelParams)).toEqual({
     start_date: '2000-10-10',
     end_date: '2000-11-10',
-    in_fahrenheit: true,
+    in_f: true,
     pest_id: 1,
     ...extents[defaults.extent],
   });
@@ -52,9 +53,9 @@ test('should update disease panel state', async () => {
   const button = screen.getByText('Submit');
   fireEvent.click(button);
   expect(get(diseasePanelState)).toEqual({
-    currentAffliction: { name: 'bug' },
+    selectedPest: { id: 1, name: 'bug' },
     loaded: true,
-    selectedExtent: defaults.extent,
+    mapExtent: defaults.extent,
   });
 });
 
@@ -68,6 +69,6 @@ test('sets context data for child elements', () => {
       startLabel: expect.any(String),
     },
     defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
-    getAfflictionName: expect.any(Function),
+    getPestName: expect.any(Function),
   });
 });
