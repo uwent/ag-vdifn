@@ -97,6 +97,13 @@
     height: 44px;
     margin: $spacing-xx-small $spacing-xx-small;
     background-size: contain;
+    border-radius: 8px;
+    background-position: center;
+    border: 1px solid #fff;
+
+    &:hover {
+      border: 1px solid grey;
+    }
   }
 
   #plantpath-logo {
@@ -109,7 +116,6 @@
 
   #uw-madison {
     background-image: url('@public/images/uw-madison.png');
-    background-position: center;
   }
 
   h1 span {
@@ -142,7 +148,7 @@
         id="uw-madison"
         title="Ag-Weather"
         class="logo"
-        href={host || 'https://agweather.cals.wisc.edu'}
+        href="https://agweather.cals.wisc.edu"
         target="_blank"
         rel="noreferrer"
       >
@@ -170,7 +176,7 @@
       </a>
     </div>
     <h1>
-      <a id="home" href={window.location.pathname}>
+      <a id="home" title="VDIFN Home" href={window.location.pathname}>
         <span>Vegetable Disease &amp;</span>
         <span>Insect Forecasting Network</span>
       </a>
