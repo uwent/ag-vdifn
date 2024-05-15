@@ -13,7 +13,7 @@ class SeveritiesController < ApplicationController
       end_date: @end_date,
       lat_range: @lat_range,
       long_range: @long_range,
-      units: @units,
+      units: @units
     }.compact
 
     grid = get_data_for(@pest.class.name)

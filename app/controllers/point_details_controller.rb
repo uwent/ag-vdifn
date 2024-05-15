@@ -18,12 +18,6 @@ class PointDetailsController < ApplicationController
       units:
     }.compact
 
-    puts params
-    puts in_f
-    puts units
-    puts t_min
-    puts t_max
-
     @data = get_data_for(@panel)
     @selected_data = @data.select { |h| h[:date] >= @start_date }
 
@@ -65,7 +59,8 @@ class PointDetailsController < ApplicationController
     # get severity for each date
     @severity_col = true
     data.collect do |day|
-      severity = @pest.total_to_severity(day[:cumulative_value], date: day[:date])
+      dd = day[:cumulative_value] * (@in_f ? 1 : 1.8)
+      severity = @pest.total_to_severity(dd, date: day[:date])
       if severity
         next unless (legend = @pest.severity_legend[severity])
         day[:severity] = legend[:name]

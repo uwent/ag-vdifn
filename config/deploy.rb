@@ -41,7 +41,7 @@ set :rbenv_type, :user
 set :rbenv_ruby, "3.3.0"
 
 # vite manifest location
-set :assets_prefix, 'vite/.vite'
+set :assets_prefix, "vite/.vite"
 
 before "deploy:assets:precompile", "deploy:npm_install"
 

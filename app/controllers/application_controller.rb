@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
 
   def in_f
     str = params[:in_f].to_s
-    return true if str == 'true'
-    return false if str == 'false'
-    return true
+    return true if str == "true"
+    return false if str == "false"
+    true
   end
 
   def units
@@ -37,12 +37,12 @@ class ApplicationController < ActionController::Base
 
   def t_min
     val = params[:t_min]
-    val = val.to_f if val.present?
+    val.to_f if val.present?
   end
 
   def t_max
     val = params[:t_max]
-    val = val.to_f if val.present?
+    val.to_f if val.present?
   end
 
   def c_to_f(temp)
