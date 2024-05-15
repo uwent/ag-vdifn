@@ -146,13 +146,11 @@
     <div>
       <a
         id="uw-madison"
-        title="Ag-Weather"
+        title="AgWeather Home"
         class="logo"
         href="https://agweather.cals.wisc.edu"
         target="_blank"
-        rel="noreferrer"
       >
-        Agweather
       </a>
       <a
         id="plantpath-logo"
@@ -160,9 +158,7 @@
         class="logo"
         href="https://vegpath.plantpath.wisc.edu/"
         target="_blank"
-        rel="noreferrer"
       >
-        UW-Madison Plant Pathology
       </a>
       <a
         id="vegento-logo"
@@ -170,9 +166,7 @@
         class="logo"
         href="https://vegento.russell.wisc.edu/"
         target="_blank"
-        rel="noreferrer"
       >
-        UW-Madison Vegetable Crop Entomology
       </a>
     </div>
     <h1>
