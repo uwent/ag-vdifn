@@ -12,6 +12,11 @@
     margin-right: 10px;
     text-align: center;
     padding: 0;
+    color: #666666;
+
+    &:hover {
+      color: #333333;
+    }
   }
 </style>
 
@@ -79,7 +84,7 @@
 
 <div bind:this={zoomBtn}>
   <button class="btn" title="Zoom extents" on:click={zoomExtents}>
-    <FontAwesomeIcon icon={faExpand} size="xl" />
+    <FontAwesomeIcon icon={faExpand} size="2x" />
   </button>
 </div>
 
@@ -90,9 +95,9 @@
     on:click={handleLocation}
   >
     {#if $userLocation}
-      <FontAwesomeIcon icon={faLocationDot} size="xl" />
+      <FontAwesomeIcon icon={faLocationDot} size="2x" />
     {:else}
-      <FontAwesomeIcon icon={faLocationCrosshairs} size="xl" />
+      <FontAwesomeIcon icon={faLocationCrosshairs} size="2x" />
     {/if}
   </button>
 </div>
