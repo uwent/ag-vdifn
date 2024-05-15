@@ -1,19 +1,53 @@
 <style lang="scss">
   @import '../../scss/settings.scss';
 
-  .model-status {
-    font-style: italic;
+  // .model-status {
+  //   font-style: italic;
+  //   position: fixed;
+  //   left: 0px;
+  //   top: 0px;
+  //   z-index: 10;
+  //   padding: 5px 10px;
+  //   border-bottom-right-radius: 0.2em;
+  //   background: rgba(255, 255, 255, 0.95);
+  //   box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.3);
+  //   @media #{$medium-up} {
+  //     left: 350px;
+  //   }
+  // }
+
+  .btn {
+    height: 40px;
+    width: 40px;
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    color: rgb(25, 25, 25);
+    cursor: pointer;
+    margin-top: 8px;
+    margin-right: 10px;
+    text-align: center;
+    padding: 0;
+  }
+
+  .status-container {
     position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: 10;
+    left: 10px;
+    top: 10px;
     padding: 5px 10px;
-    border-bottom-right-radius: 0.2em;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.3);
+    // height: 40px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     @media #{$medium-up} {
-      left: 350px;
+      left: 360px;
     }
+  }
+
+  .status {
+    font-weight: bold;
+    font-size: 15px;
   }
 </style>
 
@@ -53,6 +87,8 @@
   }
 </script>
 
-<div class="model-status">
-  {status}
+<div class="status-container">
+  <div class="status">
+    {status}
+  </div>
 </div>

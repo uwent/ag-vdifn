@@ -1,4 +1,4 @@
-import GradientHelper from '@ts/gradientHelper';
+import GradientHelper from '@components/map/ts/gradientHelper';
 
 const gradientHelper = new GradientHelper();
 
@@ -56,7 +56,6 @@ test('maps single range to colors', () => {
     gradientHelper.mapRangeToColors({
       min: 250,
       max: 750,
-      intermediateLevels: 4,
       totalLevels: 6,
     }),
   ).toEqual({
@@ -76,7 +75,6 @@ test('maps double range to colors', () => {
       middleMin: 400,
       middleMax: 500,
       max: 750,
-      intermediateLevels: 4,
       totalLevels: 6,
     }),
   ).toEqual({

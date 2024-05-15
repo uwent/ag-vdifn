@@ -1,30 +1,4 @@
-<style>
-  .options {
-    width: 100%;
-  }
-
-  .inner {
-    overflow-y: auto;
-    margin: 0 10px;
-  }
-
-  .switch-field {
-    font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 10px;
-  }
-
-  .switch-field label:hover {
-    cursor: pointer;
-  }
-
-  .switch-field input:checked + label {
-    background-color: #a5dc86;
-    box-shadow: none;
-  }
-
+<style lang="scss">
   input {
     opacity: 0;
     position: absolute;
@@ -55,6 +29,37 @@
 
   button {
     cursor: pointer;
+  }
+
+  .options {
+    width: 100%;
+  }
+
+  .inner {
+    overflow-y: auto;
+    margin: 0 10px;
+  }
+
+  .switch-field {
+    font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+  }
+
+  .switch-field label:hover {
+    cursor: pointer;
+  }
+
+  .switch-field input:checked + label {
+    background-color: #a5dc86;
+    box-shadow: none;
+  }
+
+  .help-btn {
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
   }
 </style>
 
@@ -148,7 +153,9 @@
           disabled={$overlayLoading}
         />
         <label for="custom">Custom</label>
-        <button on:click={() => (showHelp = true)}>?</button>
+        <button class="help-btn" title="How to use VDIFN" on:click={() => (showHelp = true)}
+          >?</button
+        >
       </div>
     </fieldset>
     <fieldset id="extents">

@@ -6,13 +6,17 @@
     right: 10px;
     bottom: 60px;
     z-index: 100;
-    padding: 5px 5px;
-    border: none;
+    padding: 5px 10px;
+    border: 1px solid grey;
     border-radius: 3px;
-    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    background: #fff;
 
     &[aria-expanded='true'] {
-      background: rgba(240, 240, 240);
+      // background: rgba(240, 240, 240);
+      padding: 0;
+      height: 25px;
+      width: 25px;
     }
 
     @media #{$medium-up} {
@@ -27,7 +31,8 @@
     right: 10px;
     z-index: 10;
     padding: 5px 10px;
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
+    // background: rgba(255, 255, 255, 0.95);
     border-radius: 3px;
     box-shadow:
       -4px 0px 10px rgba(0, 0, 0, 0.3),
@@ -92,7 +97,7 @@
   } from '@store';
   import type { GradientMapping } from '@types';
 
-  let expanded = false;
+  let expanded = true;
   let showModal = false;
   let showDiseaseLegend = false;
   let showInsectLegend = false;
@@ -178,6 +183,6 @@
     aria-expanded={expanded}
     on:click={() => (expanded = !expanded)}
   >
-    {expanded ? '\u2716' : 'Show Legend'}
+    {expanded ? '✖' : 'Show Legend'}
   </button>
 {/if}

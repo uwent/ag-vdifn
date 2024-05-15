@@ -1,4 +1,4 @@
-import ColorHelper from '@ts/map/colorHelper';
+import ColorHelper from '@components/map/ts/colorHelper';
 
 test('returns hex color if given valid severity level', () => {
   expect(ColorHelper.color(1, 5)).toEqual('#80d200');

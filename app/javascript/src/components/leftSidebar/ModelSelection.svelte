@@ -25,6 +25,10 @@
     display: none;
   }
 
+  label {
+    padding: 0;
+  }
+
   .clear {
     clear: both;
     height: 0.5em;
@@ -176,7 +180,7 @@
       {/each}
     </select>
     {#if crops.length > 0}
-      <button on:click={() => (showModal = true)}>?</button>
+      <button title="Show model information" on:click={() => (showModal = true)}>?</button>
     {/if}
   </div>
 </fieldset>

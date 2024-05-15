@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/svelte';
 import Color from 'color';
 
 import SeverityLegend from '@components/rightSidebar/SeverityLegend.svelte';
-import { severityColors } from '@ts/map/colors';
+import { severityColors } from '@components/map/ts/colors';
 
 const severities = [
   { name: 'Very Low', slug: 'very_low', description: 'description' },

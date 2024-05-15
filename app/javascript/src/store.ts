@@ -9,6 +9,7 @@ import type {
   PestPanelState,
   SeverityLegend,
   TMinTmax,
+  LatLng,
 } from '@types';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
@@ -54,6 +55,8 @@ export const bounds = {
     west: -98 - 0.05,
   },
 };
+
+export const userLocation = writable<LatLng | null>(null);
 
 export const panelKey = {};
 export const diseasePanelKey = {};

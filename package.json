@@ -15,7 +15,8 @@
     "fmt": "prettier --write './app/javascript/**/*.{.js,svelte,html,ts,tsx}'"
   },
   "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/svelte-fontawesome": "^0.2.2",
     "@googlemaps/js-api-loader": "^1.16.6",
     "@rails/ujs": "^7.1.3",
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
