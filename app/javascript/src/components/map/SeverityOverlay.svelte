@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import OverlayHelper from '@ts/map/overlayHelper';
+  import OverlayHelper from '@components/map/ts/overlayHelper';
   import type { SeverityParams } from '@types';
   import {
     mapKey,

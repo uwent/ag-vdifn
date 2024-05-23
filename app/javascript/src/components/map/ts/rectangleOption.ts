@@ -2,7 +2,7 @@ export default class RectangleOption {
   map: any;
   latitude: number;
   longitude: number;
-  severityLevel: number;
+  severityLevel: number | null;
   fillColor: string;
   bounds: {
     north: number;
@@ -12,7 +12,7 @@ export default class RectangleOption {
   };
 
   // strokeColor: string = "6c6c6c"
-  strokeColor = '000000';
+  strokeColor = '#000000';
   strokeOpacity = 1;
   strokeWeight = 0.025;
   fillOpacity = 0.5;
@@ -26,6 +26,7 @@ export default class RectangleOption {
     this.fillColor = fillColor;
     this.bounds = this.calculateBounds();
     this.map = map;
+    this.severityLevel = null;
   }
 
   private calculateBounds() {

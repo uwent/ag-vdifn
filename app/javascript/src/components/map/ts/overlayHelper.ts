@@ -7,16 +7,16 @@ import ColorHelper from './colorHelper';
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper;
-  rectangles: any;
-  bounds: any;
-  infoWindow: any;
+  rectangles;
+  bounds;
+  infoWindow;
   map;
   severities: Severity[];
   min?: number;
   max?: number;
   severityParams?: SeverityParams;
 
-  constructor(googleWrapper: GoogleWrapper, map: any) {
+  constructor(googleWrapper: GoogleWrapper, map) {
     this.googleWrapper = googleWrapper;
     this.rectangles = [];
     this.map = map;

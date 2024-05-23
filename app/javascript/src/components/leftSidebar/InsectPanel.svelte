@@ -36,8 +36,8 @@
     let pest = $insectPanelState.selectedPest;
     $selectedInsect = pest;
     initialModelName = pest.local_name;
-  } else {
     submitOnLoad = false;
+  } else {
     initialModelName = $selectedInsect.local_name;
   }
   setInsectPanelURL();

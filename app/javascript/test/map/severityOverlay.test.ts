@@ -5,7 +5,7 @@ import type { Mock } from 'vitest';
 
 import SetContextTest from '../testComponents/SetContextTest.svelte';
 import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
-import OverlayHelper from '@ts/map/overlayHelper';
+import OverlayHelper from '@components/map/ts/overlayHelper';
 import type { Severity } from '@types';
 import {
   mapKey,
@@ -20,7 +20,7 @@ import {
   mapRange,
 } from '@store';
 
-vi.mock('@ts/map/overlayHelper');
+vi.mock('@components/map/ts/overlayHelper');
 
 const severityParams = {
   start_date: '2020-10-10',

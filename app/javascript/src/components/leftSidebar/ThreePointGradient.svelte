@@ -106,9 +106,8 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount, onDestroy } from 'svelte';
-  import { get } from 'svelte/store';
-  import GradientHelper from '@ts/gradientHelper';
-  import ColorHelper from '@ts/map/colorHelper';
+  import GradientHelper from '@components/map/ts/gradientHelper';
+  import ColorHelper from '@components/map/ts/colorHelper';
   import { strToNum } from '@ts/utils';
   import { mapRange, threePointGradientState } from '@store';
 

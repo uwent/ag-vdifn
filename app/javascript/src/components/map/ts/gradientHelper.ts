@@ -1,5 +1,5 @@
-import { round } from './utils';
-import ColorHelper from './map/colorHelper';
+import { round } from '@ts/utils';
+import ColorHelper from './colorHelper';
 
 interface MapRangeToColors {
   min: number;

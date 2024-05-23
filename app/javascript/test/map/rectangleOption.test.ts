@@ -1,4 +1,4 @@
-import RectangleOption from '@ts/map/rectangleOption';
+import RectangleOption from '@components/map/ts/rectangleOption';
 
 const latitude = 41.88;
 const longitude = -87.62;

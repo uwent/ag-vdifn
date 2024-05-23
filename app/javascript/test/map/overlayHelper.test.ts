@@ -1,13 +1,13 @@
 import DatabaseClient from '@ts/databaseClient';
-import GoogleWrapper from '@ts/map/googleWrapper';
-import ColorHelper from '@ts/map/colorHelper';
-import RectangleOption from '@ts/map/rectangleOption';
-import infoWindowLoadingTemplate from '@ts/map/infoWindowLoading';
-import OverlayHelper from '@ts/map/overlayHelper';
+import GoogleWrapper from '@components/map/ts/googleWrapper';
+import ColorHelper from '@components/map/ts/colorHelper';
+import RectangleOption from '@components/map/ts/rectangleOption';
+import infoWindowLoadingTemplate from '@components/map/ts/infoWindowLoading';
+import OverlayHelper from '@components/map/ts/overlayHelper';
 
-vi.mock('@ts/map/googleWrapper');
-vi.mock('@ts/map/rectangleOption');
-vi.mock('@ts/map/colorHelper');
+vi.mock('@components/map/ts/googleWrapper');
+vi.mock('@components/map/ts/rectangleOption');
+vi.mock('@components/map/ts/colorHelper');
 
 let overlayHelper;
 const firstSeverity = { lat: 5, long: 10, level: 10 };

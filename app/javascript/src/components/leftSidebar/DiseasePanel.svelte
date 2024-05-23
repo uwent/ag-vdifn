@@ -42,8 +42,8 @@
     let pest = $diseasePanelState.selectedPest;
     $selectedDisease = pest;
     initialModelName = pest.local_name;
-  } else {
     submitOnLoad = false;
+  } else {
     initialModelName = $selectedDisease.local_name;
   }
   setDiseasePanelURL();

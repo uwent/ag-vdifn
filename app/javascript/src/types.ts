@@ -11,6 +11,11 @@ export type LegendMapping = {
   text: string;
 };
 
+export type LatLng = {
+  lat: number;
+  lng: number;
+};
+
 export type GradientMapping = {
   color: string;
   number: number;

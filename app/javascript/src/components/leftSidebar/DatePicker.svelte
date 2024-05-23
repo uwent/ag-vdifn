@@ -1,6 +1,10 @@
 <style lang="scss">
   @import '../../scss/settings.scss';
 
+  label {
+    padding: 0;
+  }
+
   .select-wrapper {
     display: flex;
   }
@@ -8,7 +12,6 @@
   .label-text {
     color: #484848;
     font-size: 0.75em;
-    padding: 0 5px;
   }
 
   .datepicker-tooltip {
