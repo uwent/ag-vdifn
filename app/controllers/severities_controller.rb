@@ -22,6 +22,12 @@ class SeveritiesController < ApplicationController
 
   private
 
+  def season_start
+    ["#{@start_date.year}-4-1".to_date, @start_date].min
+  rescue
+    @start_date
+  end
+
   def get_data_for(pest)
     case pest
     when "Insect", "OakWilt"
@@ -144,7 +150,7 @@ class SeveritiesController < ApplicationController
   end
 
   def get_late_blight_data
-    season_totals = get_pest_grid(start_date: @end_date.beginning_of_year, as_hash: true)
+    season_totals = get_pest_grid(start_date: season_start, as_hash: true)
     selected_dates = get_pest_grid
     grid = selected_dates.collect do |point|
       lat, long = point[:lat], point[:long]

@@ -1,11 +1,12 @@
 <div class="information" style="padding-bottom: 1em;">
   <div>
-    <b>Current season:</b> <%= "#{@data.first[:date].strftime('%b %-d')} to #{@data.last[:date].strftime('%b %-d, %Y')} (#{@data.size} days)" %>
-    <% total = @data.last[:cumulative_value] %><br>
-    <b>Season total <%= @dsv_units %>:</b> <%= total&.round(1) %><br>
-    <br>
-    <b>Selected dates:</b> <%= "#{@selected_data.first[:date].strftime('%b %-d')} to #{@selected_data.last[:date].strftime('%b %-d')} (#{@selected_data.size} days)" %><br>
-    <b>Selected total <%= @dsv_units %>:</b> <%= sprintf("%.1f", get_total(@selected_data)) %><br>
+    <% if @season_data %>
+      <b>Current season:</b> <%= "#{@season_data.first[:date].strftime('%b %-d')} to #{@season_data.last[:date].strftime('%b %-d, %Y')} (#{@season_data.size} days)" %><br>
+      <b>Season total <%= @dsv_units %>:</b> <%= @season_data.last[:cumulative_value]&.round(1) %><br>
+      <br>
+    <% end %>
+    <b>Selected dates:</b> <%= "#{@data.first[:date].strftime('%b %-d')} to #{@data.last[:date].strftime('%b %-d')} (#{@data.size} days)" %><br>
+    <b>Selected total <%= @dsv_units %>:</b> <%= sprintf("%.1f", get_total(@data)) %><br>
     
     <% if @data.size >= 14 %>
       <% total = get_total(@data.last(14)); avg = (total / 14.0).round(1) %>
