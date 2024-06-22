@@ -24,6 +24,14 @@ class PointDetailsController < ApplicationController
     render layout: false
   end
 
+  private
+
+  def season_start
+    ["#{@start_date.year}-4-1".to_date, @start_date].min
+  rescue
+    @start_date
+  end
+
   def get_data_for(panel)
     case panel
     when "disease"
@@ -39,13 +47,14 @@ class PointDetailsController < ApplicationController
 
   def get_disease_data
     opts = @opts.merge({pest: @pest.remote_name})
-    if @pest.is_a?(EarlyBlight)
+    if @pest.is_a? EarlyBlight
       @partial = "infobox_pdays"
       @dsv_units = "P-days"
     else
       @partial = "infobox_dsv"
       @dsv_units = "DSVs"
     end
+    @season_data = AgWeather.pest_point(opts.merge({start_date: season_start}))
     AgWeather.pest_point(opts)
   end
 
