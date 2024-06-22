@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.3.3-node
+      - image: cimg/ruby:3.3.0-node
         environment:
           PG_HOST: localhost
           PG_USER: postgres
@@ -45,7 +45,7 @@ jobs:
           command: |
             pnpm install
       - save_cache:
-          name: Save pnpm package pache
+          name: Save pnpm package cache
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - .pnpm-store
