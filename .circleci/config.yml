@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@2.1.1
+  ruby: circleci/ruby@2.1.3
   node: circleci/node@5.2.0
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
           command: |
             pnpm install
       - save_cache:
-          name: Save pnpm package pache
+          name: Save pnpm package cache
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
           paths:
             - .pnpm-store
