@@ -6,13 +6,13 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.3.0-node
+      - image: cimg/ruby:3.3.3-node
         environment:
           PG_HOST: localhost
           PG_USER: postgres
           RAILS_ENV: test
           RACK_ENV: test
-      - image: cimg/postgres:16.2
+      - image: cimg/postgres:16.3
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: vdifn_test
