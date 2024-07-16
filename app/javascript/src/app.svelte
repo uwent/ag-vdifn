@@ -83,37 +83,6 @@
     padding: 10px;
   }
 
-  // Point details info window //
-
-  #iw-container {
-    width: 275px;
-    height: 350px;
-  }
-
-  #iw-content {
-    margin: 0;
-    overflow-y: visible;
-    overflow-x: visible;
-    height: 303px;
-    font-size: 9pt;
-
-    table th,
-    table td {
-      text-align: center;
-    }
-  }
-
-  .iw-title {
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 400;
-    padding: 10px;
-    background-color: #48b5e9;
-    color: white;
-    margin: 1px;
-    border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
-  }
-
   #loading {
     margin: 100px 90px;
   }

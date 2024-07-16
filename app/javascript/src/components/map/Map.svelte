@@ -1,20 +1,50 @@
-<style>
+<style global lang="scss">
   #google-map {
     height: 100%;
     width: 100%;
     /* position: absolute; */
   }
 
-  :global(#map-pan-zoom-controls #map-google-logo) {
+  #map-pan-zoom-controls #map-google-logo {
     left: 335px;
   }
 
-  :global(#map-google-logo) {
+  #map-google-logo {
     bottom: 0;
   }
 
-  :global(.gm-style .gm-style-iw-c) {
+  .gm-style .gm-style-iw-c {
     overflow: visible;
+  }
+
+  .gm-style-iw-chr {
+    height: 10px;
+  }
+
+  #iw-container {
+    width: 275px;
+    height: 350px;
+  }
+
+  #iw-content {
+    margin: 0;
+    overflow-y: visible;
+    overflow-x: visible;
+    height: 303px;
+    font-size: 9pt;
+
+    table th,
+    table td {
+      text-align: center;
+    }
+  }
+
+  .iw-title {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 4px solid #48b5e9;
+    margin: 1px;
   }
 </style>
 
