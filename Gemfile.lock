@@ -426,7 +426,6 @@ DEPENDENCIES
   guard-rspec
   httparty
   jsbundling-rails
-  net-protocol
   pg
   pry-rails
   puma
