@@ -10,6 +10,7 @@ gem "sassc-rails"
 gem "jsbundling-rails"
 gem "terser"
 gem "csv" # no longer default gem, but it's being loaded by a gem and throwing a warning
+gem "net-protocol" # fix circleci build error? required by gem net-pop
 
 group :development do
   gem "puma"
