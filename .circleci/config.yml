@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps:
-          key: gems-v1
+          key: gems-{{ checksum ".ruby-version" }}
       - run:
           name: Set up database
           command: bundle exec rails db:setup
