@@ -37,5 +37,7 @@ end
 
 group :test do
   gem "simplecov"
+    gem "net-pop" # temporarily require to fix gem installation on circleci?
+    gem "net-protocol" # temporarily require to fix gem installation on circleci?
   gem "webmock"
 end
