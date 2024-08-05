@@ -1,4 +1,4 @@
-import * as chroma from 'chroma-js';
+import chroma from 'chroma-js';
 import { COLORS } from './colors';
 
 export default class ColorHelper {
