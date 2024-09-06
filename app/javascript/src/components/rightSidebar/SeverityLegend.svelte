@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   #severity-legend .dsv {
     clear: both;
   }

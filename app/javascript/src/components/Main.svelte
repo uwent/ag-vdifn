@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../scss/settings.scss';
-
   .main {
     width: 100%;
     height: 100%;

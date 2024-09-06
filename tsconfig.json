@@ -34,6 +34,8 @@
       "@ts/*": ["./src/ts/*"],
       "@types": ["./src/types"],
       "@store": ["./src/store"],
+      "@scss": ["./src/scss"],
+      "@node_modules": ["./node_modules"],
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     },

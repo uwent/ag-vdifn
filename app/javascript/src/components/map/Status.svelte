@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   .status-container {
     position: fixed;
     left: 10px;

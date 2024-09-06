@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   input {
     text-align: center;
   }

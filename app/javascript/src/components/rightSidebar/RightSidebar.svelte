@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   #right-sidebar-expand-button {
     position: fixed;
     right: 10px;
@@ -52,13 +50,14 @@
     }
 
     &[aria-expanded='false'] {
+      visibility: hidden;
+
       @media #{$medium-up} {
         visibility: visible;
         position: absolute;
         right: 15px;
         bottom: 30px;
       }
-      visibility: hidden;
     }
   }
 

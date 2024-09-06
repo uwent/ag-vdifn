@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   .button {
     display: inline-block;
     cursor: pointer;

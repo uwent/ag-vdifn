@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   .modal-background {
     position: fixed;
     top: 0;
