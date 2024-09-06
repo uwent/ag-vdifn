@@ -1,4 +1,6 @@
 <style lang="scss">
+  @import '../../scss/settings.scss';
+
   #sidebar {
     display: flex;
     flex-direction: column;

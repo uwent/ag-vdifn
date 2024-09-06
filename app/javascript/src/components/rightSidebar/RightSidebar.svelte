@@ -1,4 +1,6 @@
 <style lang="scss">
+  @import '../../scss/settings.scss';
+
   #right-sidebar-expand-button {
     position: fixed;
     right: 10px;

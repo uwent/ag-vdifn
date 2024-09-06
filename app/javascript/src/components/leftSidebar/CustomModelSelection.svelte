@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   .dd-container {
     display: flex;
   }

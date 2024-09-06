@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import Rails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -13,16 +13,6 @@ for (const k in process.env) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), svelte()],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-          @import '@/src/scss/variables';
-          @import '@/src/scss/breakpoints';
-        `,
-      },
-    },
-  },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
     manifest: true,
