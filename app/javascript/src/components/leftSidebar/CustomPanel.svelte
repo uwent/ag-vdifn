@@ -1,6 +1,3 @@
-<style>
-</style>
-
 <script lang="ts">
   import moment from 'moment';
   import { onMount, setContext } from 'svelte';

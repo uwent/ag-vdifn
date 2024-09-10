@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   label {
     padding: 0;
   }

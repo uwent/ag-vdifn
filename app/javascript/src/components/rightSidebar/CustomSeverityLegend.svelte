@@ -1,6 +1,4 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
-
   .severity-level-col {
     display: flex;
     flex-direction: row;

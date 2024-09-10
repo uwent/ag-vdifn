@@ -109,7 +109,6 @@
 <script lang="ts">
   import moment from 'moment';
   import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
 
   import TwoPointGradient from './TwoPointGradient.svelte';
   import ThreePointGradient from './ThreePointGradient.svelte';

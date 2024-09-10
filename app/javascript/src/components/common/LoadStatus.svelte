@@ -1,4 +1,4 @@
-<style type="scss">
+<style lang="scss">
   .status {
     margin: 1em 0;
     text-align: center;

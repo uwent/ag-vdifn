@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   #t-min-wrapper {
     width: 50%;
   }
@@ -55,6 +55,7 @@
     float: right;
     margin-right: 1.2em;
   }
+
   /* The switch - the box around the slider */
   .switch {
     position: relative;
@@ -62,13 +63,13 @@
     width: 60px;
     height: 34px;
     margin-left: 0;
-  }
 
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+    /* Hide default HTML checkbox */
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
   }
 
   /* The slider */
@@ -81,30 +82,30 @@
     bottom: 0;
     background-color: #6c6c6c;
     transition: 0.4s;
+
+    &:before {
+      position: absolute;
+      content: '';
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+    }
   }
 
-  .slider:before {
-    position: absolute;
-    content: '';
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
+  /* Rounded sliders */
+  .round {
+    border-radius: 34px;
+
+    &:before {
+      border-radius: 50%;
+    }
   }
 
   input:checked + .slider:before {
     transform: translateX(36px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
   }
 
   .symbol-wrapper {
@@ -115,7 +116,7 @@
 </style>
 
 <script lang="ts">
-  import { getContext, onMount } from 'svelte';
+  import { getContext } from 'svelte';
   import { f_to_c } from '@ts/utils';
   import { panelKey, selectedPest, selectedDDModel, tMinTmax } from '@store';
   import type { Pest, DegreeDayModel } from '@types';
