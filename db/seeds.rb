@@ -221,9 +221,71 @@ cabbage_maggot = Insect.create!(
   link: "https://vegento.russell.wisc.edu/pests/cabbage-maggot/"
 )
 
-colorado_potato_beetle = Insect.create!(
+cpb = Insect.create!(
   name: "Colorado Potato Beetle",
   local_name: "cpb",
+  remote_name: "dd_50_86",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 50, t_max: 86,
+  risk_array: [
+    [265, 895, 1115],
+    [1115, 1375, 2500]
+  ],
+  info: 
+    "<p>
+      The Colorado potato beetle (<i>Leptinotarsa decemlineata</i>) is a significant pest of potato, eggplant and pepper in home gardens as well as fresh market agricultural production. When not controlled, Colorado potato beetle (CPB) can completely defoliate plants resulting in serious yield losses or even plant death. Beetles prefer to feed on potato, but will also use eggplant and other solanaceous crops. Both larval and adult life stages commonly cause damage to plants throughout the growing season. CPB is a persistent pest annually, once an infestation occurs beetle populations tend to increase annually. When potato is unavailable in the environment CPB can utilize alternate solanaceous host plants such as eastern black and deadly black nightshade, jimson-weed, Carolina horse-nettle and buffalo-bur. Common solanaceous weeds in the environment are thought to provide a green bridge enabling potato beetle colonization into new environments.
+    </p><p>
+      Our Colorado potato beetle risk model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. The indicated risk score represents the estimated total abundance of adults and larvae. First adult colonization of crops is typically around 265 FDD with peak first-generation populations observed around 895 FDD. Total populations decline slightly through 1115 FDD during the period between generations. Populations peak again around 1375 FDD during second generation adult emergence and decline through the end of the season.
+    </p>",
+  severity_info: "Our Colorado potato beetle risk model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. The indicated risk score represents the estimated total abundance of adults and larvae. First adult colonization of crops is typically around 265 FDD with peak first-generation populations observed around 895 FDD. Total populations decline slightly through 1115 FDD during the period between generations. Populations peak again around 1375 FDD during second generation adult emergence and decline through the end of the season.",
+  photo: "colorado-potato-beetle.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
+)
+
+cpb_adult = Insect.create!(
+  name: "Colorado Potato Beetle (Adults)",
+  local_name: "cpbad",
+  remote_name: "dd_50_86",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 50, t_max: 86,
+  risk_array: [
+    [275, 690, 1090],
+    [1090, 1690, 2500]
+  ],
+  info: 
+    "<p>
+      The Colorado potato beetle (<i>Leptinotarsa decemlineata</i>) is a significant pest of potato, eggplant and pepper in home gardens as well as fresh market agricultural production. When not controlled, Colorado potato beetle (CPB) can completely defoliate plants resulting in serious yield losses or even plant death. Beetles prefer to feed on potato, but will also use eggplant and other solanaceous crops. Both larval and adult life stages commonly cause damage to plants throughout the growing season. CPB is a persistent pest annually, once an infestation occurs beetle populations tend to increase annually. When potato is unavailable in the environment CPB can utilize alternate solanaceous host plants such as eastern black and deadly black nightshade, jimson-weed, Carolina horse-nettle and buffalo-bur. Common solanaceous weeds in the environment are thought to provide a green bridge enabling potato beetle colonization into new environments.
+    </p><p>
+      Our Colorado potato beetle adult abundance model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. First adult colonization of crops is typically around 275 FDD with peak first-generation adults observed around 690 FDD. Adult populations decline to a low at 1090 FDD although larval feeding remains a significant threat if not controlled. Second generation adult populations peak around 1695 FDD and decline through the end of the season (around 2500 FDD).
+    </p>",
+  severity_info: "Our Colorado potato beetle adult abundance model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. First adult colonization of crops is typically around 275 FDD with peak first-generation adults observed around 690 FDD. Adult populations decline to a low at 1090 FDD although larval feeding remains a significant threat if not controlled. Second generation adult populations peak around 1695 FDD and decline through the end of the season (around 2500 FDD).",
+  photo: "colorado-potato-beetle.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
+)
+
+cpb_larvae = Insect.create!(
+  name: "Colorado Potato Beetle (Larvae)",
+  local_name: "cpbl",
+  remote_name: "dd_50_86",
+  biofix_mm: 1, biofix_dd: 1,
+  t_min: 50, t_max: 86,
+  risk_array: [
+    [485, 905, 2500],
+  ],
+  info: 
+    "<p>
+      The Colorado potato beetle (<i>Leptinotarsa decemlineata</i>) is a significant pest of potato, eggplant and pepper in home gardens as well as fresh market agricultural production. When not controlled, Colorado potato beetle (CPB) can completely defoliate plants resulting in serious yield losses or even plant death. Beetles prefer to feed on potato, but will also use eggplant and other solanaceous crops. Both larval and adult life stages commonly cause damage to plants throughout the growing season. CPB is a persistent pest annually, once an infestation occurs beetle populations tend to increase annually. When potato is unavailable in the environment CPB can utilize alternate solanaceous host plants such as eastern black and deadly black nightshade, jimson-weed, Carolina horse-nettle and buffalo-bur. Common solanaceous weeds in the environment are thought to provide a green bridge enabling potato beetle colonization into new environments.
+    </p><p>
+      Our Colorado potato beetle larval abundance model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. First egg hatch is typically around 485 FDD with peak larval populations reached during the first generation at around 905 FDD. Larval populations then decline steadily through the end of the season (around 2500 FDD).
+    </p>",
+  severity_info: "Our Colorado potato beetle larval abundance model was derived from 10 years of scouting data in the Central Sands and uses a base 50°F degree day model. First egg hatch is typically around 485 FDD with peak larval populations reached during the first generation at around 905 FDD. Larval populations then decline steadily through the end of the season (around 2500 FDD).",
+  photo: "colorado-potato-beetle.jpg",
+  link: "https://vegento.russell.wisc.edu/pests/colorado-potato-beetle/"
+)
+
+cpb_old = Insect.create!(
+  name: "Colorado Potato Beetle (old model)",
+  local_name: "cpb-old",
   remote_name: "dd_52",
   biofix_mm: 5, biofix_dd: 1,
   t_min: 52, t_max: nil,
@@ -703,7 +765,7 @@ cucumber = Crop.create!(name: "Cucumber")
 cucumber.pests = [black_cutworm, western_bean_cutworm, variegated_cutworm, seedcorn_maggot, squash_vine_borer, western_flower_thrips]
 
 eggplant = Crop.create!(name: "Eggplant")
-eggplant.pests = [colorado_potato_beetle, european_corn_borer, japanese_beetle, western_flower_thrips]
+eggplant.pests = [cpb, cpb_adult, cpb_larvae, cpb_old, european_corn_borer, japanese_beetle, western_flower_thrips]
 
 hops = Crop.create!(name: "Hops")
 hops.pests = [cabbage_looper, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle]
@@ -733,7 +795,7 @@ pepper = Crop.create!(name: "Pepper")
 pepper.pests = [european_corn_borer, japanese_beetle, western_flower_thrips]
 
 potato = Crop.create!(name: "Potato")
-potato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, lygus_bug, aphid_pvy]
+potato.pests = [early_blight, late_blight, cabbage_looper, cpb, cpb_adult, cpb_larvae, cpb_old, black_cutworm, western_bean_cutworm, variegated_cutworm, european_corn_borer, japanese_beetle, lygus_bug, aphid_pvy]
 
 pumpkin_squash = Crop.create!(name: "Pumpkin and Squash")
 pumpkin_squash.pests = [japanese_beetle, seedcorn_maggot, squash_vine_borer]
@@ -742,4 +804,4 @@ raspberry = Crop.create!(name: "Raspberry")
 raspberry.pests = [japanese_beetle, lygus_bug, spotted_wing]
 
 tomato = Crop.create!(name: "Tomato")
-tomato.pests = [early_blight, late_blight, cabbage_looper, colorado_potato_beetle, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle, western_flower_thrips]
+tomato.pests = [early_blight, late_blight, cabbage_looper, cpb, cpb_adult, cpb_larvae, cpb_old, black_cutworm, western_bean_cutworm, variegated_cutworm, japanese_beetle, western_flower_thrips]
