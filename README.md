@@ -8,7 +8,8 @@ University of Wisconsin Vegetable Disease & Insect Forecasting Network
 
 ## Dependencies
 
-`Ruby`
+### Ruby
+
 ```bash
 # install rbenv
 sudo apt -y install rbenv
@@ -25,34 +26,45 @@ git -C "$(rbenv root)"/plugins/ruby-build pull
 git config --global url."https://github.com/".insteadOf git://github.com/
 
 # install ruby with rbenv
-rbenv install 3.3.5 # or latest version
+rbenv install 3.3.6 # or latest version
 
 # update bundler to latest
 gem install bundler
 
-# install gems
-bundle install
-
-# or update gems
+# update gems...
 bundle update
+
+# OR if migrating to a new version of Ruby...
+rm Gemfile.lock
+bundle install
 ```
 
-`Postgres` and `gem pg`
+When upgrading Ruby versions, need to change the version number in the documentation above, in `.ruby-version`, and in `config/deploy.rb`.
+
+### Rails
+
+When upgrading to a new version of Rails, run the update task with `THOR_MERGE="code -d $1 $2" rails app:update`. This will use VSCode as the merge conflict tool.
+
+### Postgres
+
 ```bash
 # install postgres
-sudo apt -y install postgresql-14 postgresql-client-14 libpq-dev
+sudo apt -y install postgresql-16 postgresql-client-16 libpq-dev
 sudo service postgresql start
-
-# install gem pg
-gem install pg
 
 # Set postgres user password to 'password'
 sudo su - postgres
 psql -c "alter user postgres with password 'password'"
 exit
+
+# install gem pg
+gem install pg
 ```
 
+### Node
+
 `node` and `pnpm`
+
 ```bash
 # install npm
 sudo apt install npm
@@ -72,11 +84,11 @@ pnpm -v
 # install packages
 pnpm install
 
-# or update packages to latest - be sure to test compatibility after updates
+# or update packages to latest - be sure to test for breaking changes after updates
 pnpm up --latest
 ```
 
-## Setup
+## Initial Setup
 
 1. Install core dependencies listed above.
 2. Install ruby gems with `bundle install` and node packages with `pnpm install`
@@ -87,28 +99,17 @@ pnpm up --latest
 
 ## Running Tests
 
-### Lint
-
 ```bash
 # check ruby code for style
 bundle exec standardrb --fix
-```
 
-### Rspec (Ruby tests)
-
-```bash
+# Ruby specs
 bundle exec rspec
-```
 
-### Jest (Node tests)
-
-```bash
+# JS specs
 pnpm test
-```
 
-### Build
-
-```bash
+# Check for build success
 pnpm build
 ```
 
@@ -116,15 +117,15 @@ pnpm build
 
 Work with db admin to authorize your ssh key for the deploy user. Confirm you can access the dev and production servers:
 
-* `ssh deploy@dev.agweather.cals.wisc.edu -p 216`
-* `ssh deploy@agweather.cals.wisc.edu -p 216`
+- `ssh deploy@dev.agweather.cals.wisc.edu -p 216`
+- `ssh deploy@agweather.cals.wisc.edu -p 216`
 
 Then run the following commands from the main branch to deploy:
 
-* Staging: `cap staging deploy`
-* Production: `cap production deploy`
+- Staging: `cap staging deploy`
+- Production: `cap production deploy`
 
 Deployment targets:
 
-* Staging: [https://dev.agweather.cals.wisc.edu/vdifn](https://dev.agweather.cals.wisc.edu/vdifn)
-* Production: [https://agweather.cals.wisc.edu/vdifn](https://agweather.cals.wisc.edu/vdifn)
+- Staging: [https://dev.agweather.cals.wisc.edu/vdifn](https://dev.agweather.cals.wisc.edu/vdifn)
+- Production: [https://agweather.cals.wisc.edu/vdifn](https://agweather.cals.wisc.edu/vdifn)
