@@ -433,6 +433,7 @@ DEPENDENCIES
   jsbundling-rails
   net-pop
   net-protocol
+  ostruct
   pg
   pry-rails
   puma
