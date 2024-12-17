@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :db, only: :none do
+  resources :db, only: [] do
     collection do
       get "disease_panel"
       get "insect_panel"
