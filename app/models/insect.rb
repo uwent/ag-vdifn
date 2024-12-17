@@ -22,23 +22,39 @@ class Insect < Pest
 
   def severity_legend
     [
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of pest presence or damage"},
-      {name: "Low", slug: "low", description: "Low likelihood of pest presence or damage"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of pest presence or damage"},
-      {name: "High", slug: "high", description: "High likelihood of pest presence or damage"},
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of pest presence or damage"}
+      {name: "Very Low", slug: "very_low", description: "Very low pest abundance or likelihood of damage"},
+      {name: "Low", slug: "low", description: "Low pest abundance or likelihood of damage"},
+      {name: "Medium", slug: "medium", description: "Medium pest abundance or likelihood of damage"},
+      {name: "High", slug: "high", description: "High pest abundance or likelihood of damage"},
+      {name: "Very High", slug: "very_high", description: "Very high pest abundance or likelihood of damage"}
     ].freeze
   end
 
+  def sine_wave(value, start, peak)
+    # Normalize the input to range [0, 1]
+    x = (value - start) / (peak - start).to_f
+    # Use sine function to map [0, 1] to [0, 1], then scale to [0, 4]
+    y = (Math.sin(x * Math::PI - Math::PI / 2) + 1) / 2 * 4
+    y.ceil
+  end
+
+  # assign a severity value to total gdd based on start/peak/end of risk range
   def sev_ramp(start, peak, stop, total)
-    a = ((peak - start) / 3.5).round(0)
-    b = ((stop - peak) / 3.5).round(0)
-    return 4 if total.between?(start + a * 3, stop - b * 3)
-    return 3 if total.between?(start + a * 2, stop - b * 2)
-    return 2 if total.between?(start + a, stop - b)
-    return 1 if total.between?(start, stop)
+    return sine_wave(total, start, peak) if total.between?(start, peak)
+    return sine_wave(-1 * total, -1 * stop, -1 * peak) if total.between?(peak, stop)
     0
   end
+
+  # old method, uses equally-spaced intervals
+  # def sev_ramp(start, peak, stop, total)
+  #   a = ((peak - start) / 3.5).round(0)
+  #   b = ((stop - peak) / 3.5).round(0)
+  #   return 4 if total.between?(start + a * 3, stop - b * 3)
+  #   return 3 if total.between?(start + a * 2, stop - b * 2)
+  #   return 2 if total.between?(start + a, stop - b)
+  #   return 1 if total.between?(start, stop)
+  #   0
+  # end
 
   def biofix_label
     "Biofix (Default: #{biofix_date.strftime("%b %-d")})"
