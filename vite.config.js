@@ -13,6 +13,12 @@ for (const k in process.env) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), svelte()],
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, 'app/javascript'),
+      '@public': path.resolve(__dirname, 'public'),
+    },
+  },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
     manifest: true,
@@ -26,19 +32,13 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['test/test_setup.ts'],
-    alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
+    // alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
   },
-  server: {
-    fs: { cachedChecks: false },
-  },
+  // server: {
+  //   fs: { cachedChecks: false },
+  // },
   define: envKeys,
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './app/javascript'),
-      '@public': path.resolve(__dirname, './public'),
-    },
-  },
 });

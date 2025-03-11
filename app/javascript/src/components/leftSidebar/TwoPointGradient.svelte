@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   input {
     text-align: center;
@@ -31,8 +31,8 @@
   }
 
   %severity-button {
-    background: $btn-color-2;
-    background: linear-gradient(to bottom, $btn-color-1 0%, $btn-color-2);
+    background: vars.$btn-color-2;
+    background: linear-gradient(to bottom, vars.$btn-color-1 0%, vars.$btn-color-2);
     border-radius: 3px;
     box-shadow:
       0px 1px 3px rgba(000, 000, 000, 0),
@@ -45,7 +45,7 @@
     cursor: pointer;
 
     &:hover {
-      background: linear-gradient(to bottom, $btn-color-2 0%, $btn-color-3);
+      background: linear-gradient(to bottom, vars.$btn-color-2 0%, vars.$btn-color-3);
     }
   }
 
@@ -253,7 +253,7 @@
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
     <div class="severity-row" data-testid="severity-row">
-      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}" />
+      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}"></div>
       <div class="severity-value-end">0</div>
       <input
         class="severity-value-end-input"
@@ -273,7 +273,7 @@
         <div
           class="severity-color"
           style="background: {ColorHelper.color(index + 1, severityLevels)}"
-        />
+        ></div>
         <div class="severity-value-intermediate">
           {`${severityValueRange[0]} - ${severityValueRange[1]}`}
         </div>
@@ -283,7 +283,7 @@
       <div
         class="severity-color"
         style="background: {ColorHelper.color(severityLevels, severityLevels)}"
-      />
+      ></div>
       <input
         class="severity-value-end-input"
         title="End of gradient"

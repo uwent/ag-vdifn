@@ -30,11 +30,11 @@
   export let severities: SeverityLegend[] = [];
 </script>
 
-<fieldset id="dsv-legend">
+<fieldset id="severity-legend">
   <legend>Severity Legend:</legend>
   {#each severities as { name, description, slug }}
     <div id="dsv-{slug}" class="dsv" data-color="#ff0000" data-testid="severity-level-{slug}">
-      <div class="dsv-threshold severity-{slug}" data-testid="severity-color-{slug}" />
+      <div class="dsv-threshold severity-{slug}" data-testid="severity-color-{slug}"></div>
       <label>
         {name}
         <button

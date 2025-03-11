@@ -45,7 +45,7 @@
   {#each legend.reverse() as entry}
     <div class="severity-level-col">
       <div class="severity-level-row" data-testid="dsv-row">
-        <div class="severity-color" data-testid="dsv-color" style="background: {entry.color}" />
+        <div class="severity-color" data-testid="dsv-color" style="background: {entry.color}"></div>
         <div>{entry.text}</div>
       </div>
     </div>

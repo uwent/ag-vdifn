@@ -164,7 +164,7 @@
         bind:group={gradient}
         value={1}
       />
-      <span id="gradient-2-point-display" class="gradient" />
+      <span id="gradient-2-point-display" class="gradient"></span>
     </label>
     <label for="gradient-3-point" class="container">
       <input
@@ -175,7 +175,7 @@
         bind:group={gradient}
         value={2}
       />
-      <span id="gradient-3-point-display" class="gradient" />
+      <span id="gradient-3-point-display" class="gradient"></span>
     </label>
   </fieldset>
   {#if gradient === 1}

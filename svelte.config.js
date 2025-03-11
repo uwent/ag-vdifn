@@ -4,9 +4,14 @@ import autoprefixer from 'autoprefixer';
 
 export default {
   preprocess: vitePreprocess(),
-  'enable-ts-plugin': true,
   postcss: {
     plugins: [tailwindcss, autoprefixer],
     'postcss-preset-env': true,
   },
+  'enable-ts-plugin': true,
+  // compilerOptions: {
+  //   compatibility: {
+  //     componentApi: 4
+  //   }
+  // }
 };

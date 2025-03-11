@@ -191,7 +191,7 @@
     </div>
     <label class="switch">
       <input type="checkbox" title="temp-unit-toggle" bind:checked={in_f} />
-      <span class="slider round" />
+      <span class="slider round"></span>
     </label>
   </div>
 </div>

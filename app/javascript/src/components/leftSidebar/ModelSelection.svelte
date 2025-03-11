@@ -163,7 +163,7 @@
       <option value={id}>{name}</option>
     {/each}
   </select>
-  <div class="clear" />
+  <div class="clear"></div>
   <label for="pest-select">{pestName}</label>
   <div class="pest-container">
     <select

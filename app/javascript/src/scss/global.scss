@@ -1,6 +1,6 @@
-@import '../../../../node_modules/balloon-css/src/balloon.scss';
-@import './map.scss';
-@import './loading.scss';
+@use '../../../../node_modules/balloon-css/src/balloon.scss' as *;
+@use 'map.scss' as *;
+@use 'loading.scss' as *;
 
 html,
 body {

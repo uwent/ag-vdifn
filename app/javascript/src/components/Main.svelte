@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../scss/settings.scss';
+  @use '../scss/variables.scss' as vars;
 
   .main {
     width: 100%;
@@ -9,7 +9,7 @@
 
   .sidebar {
     z-index: 999;
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       width: 350px;
       box-shadow: 0 0 10px;
     }
@@ -17,7 +17,7 @@
 
   .map {
     width: 100%;
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       width: calc(100% - 350px);
     }
   }

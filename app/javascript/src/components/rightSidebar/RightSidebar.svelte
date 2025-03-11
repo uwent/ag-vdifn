@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   #right-sidebar-expand-button {
     position: fixed;
@@ -19,7 +19,7 @@
       width: 25px;
     }
 
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       display: none;
     }
   }
@@ -38,13 +38,13 @@
       -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
 
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       bottom: 30px;
     }
 
     &[aria-expanded='true'] {
       visibility: visible;
-      @media #{$medium-up} {
+      @media #{vars.$medium-up} {
         visibility: visible;
         position: absolute;
         right: 15px;
@@ -54,7 +54,7 @@
     &[aria-expanded='false'] {
       visibility: hidden;
 
-      @media #{$medium-up} {
+      @media #{vars.$medium-up} {
         visibility: visible;
         position: absolute;
         right: 15px;

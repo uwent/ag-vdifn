@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   #sidebar {
     display: flex;
@@ -8,11 +8,11 @@
     height: calc(100% - 50px);
     overflow-y: auto;
     background: rgba(255, 255, 255, 0.95);
-    z-index: $z-index-modal;
-    transition: $duration-promptly ease-in-out;
+    z-index: vars.$z-index-modal;
+    transition: vars.$duration-promptly ease-in-out;
     transition-delay: 0.1s;
 
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       width: 350px;
       height: 100%;
       bottom: 0;
@@ -22,7 +22,7 @@
       }
     }
 
-    @media #{$small-only} {
+    @media #{vars.$small-only} {
       position: absolute;
     }
 
@@ -51,7 +51,7 @@
     &[aria-expanded='false'] {
       top: 100%;
 
-      @media #{$medium-up} {
+      @media #{vars.$medium-up} {
         top: 0;
       }
 
@@ -95,7 +95,7 @@
     text-indent: -9999em;
     width: 44px;
     height: 44px;
-    margin: $spacing-xx-small $spacing-xx-small;
+    margin: vars.$spacing-xx-small vars.$spacing-xx-small;
     background-size: contain;
     border-radius: 8px;
     background-position: center;
@@ -147,6 +147,7 @@
       <a
         id="uw-madison"
         title="AgWeather Home"
+        aria-label="AgWeather Home"
         class="logo"
         href="https://agweather.cals.wisc.edu"
         target="_blank"
@@ -155,6 +156,7 @@
       <a
         id="plantpath-logo"
         title="UW-Madison Plant Pathology"
+        aria-label="UW-Madison Plant Pathology"
         class="logo"
         href="https://vegpath.plantpath.wisc.edu/"
         target="_blank"
@@ -163,6 +165,7 @@
       <a
         id="vegento-logo"
         title="UW-Madison Vegetable Entomology"
+        aria-label="UW-Madison Vegetable Entomology"
         class="logo"
         href="https://vegento.russell.wisc.edu/"
         target="_blank"
@@ -186,5 +189,5 @@
     Copyright &copy;{moment.utc().format('YYYY')} University of Wisconsin-Madison
   </footer>
 
-  <button on:click={() => (expanded = !expanded)} />
+  <button on:click={() => (expanded = !expanded)} aria-label="More information"></button>
 </div>

@@ -182,7 +182,7 @@
       <div class="datepicker-tooltip">&lt;- Not current year</div>
     {/if}
   </div>
-  <div class="clear" />
+  <div class="clear"></div>
   <div class="label-text">Quick date ranges:</div>
   <div class="preset-buttons">
     <button

@@ -7,7 +7,7 @@
   }
 </style>
 
-<script type="ts">
+<script lang="ts">
   // Displays prompt to submit when no model is submitted
   // Displays status message from Loading component after submit
   // Displays nothing when switching to a tab that already has data

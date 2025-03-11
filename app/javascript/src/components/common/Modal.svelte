@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   .modal-background {
     position: fixed;
@@ -25,7 +25,7 @@
     background: white;
     z-index: 1;
 
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       position: fixed;
       left: 62%;
     }
@@ -81,7 +81,7 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" role="none" on:click={close} on:keydown={close} />
+<div class="modal-background" role="none" on:click={close} on:keydown={close}></div>
 
 <div
   class="modal"

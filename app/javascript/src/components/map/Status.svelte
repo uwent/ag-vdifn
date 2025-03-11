@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   .status-container {
     position: fixed;
@@ -9,7 +9,7 @@
     background: #fff;
     border-radius: 3px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    @media #{$medium-up} {
+    @media #{vars.$medium-up} {
       left: 360px;
     }
   }
@@ -34,9 +34,9 @@
 
   function getDDStatus(state: CustomPanelState) {
     if (state.loaded) {
-      let units = state.params.in_f ? '\u2109' : '\u2103';
+      let units = state.params.in_f ? 'F' : 'F';
       let tMaxText = state.params.t_max ? `/${state.params.t_max}` : '';
-      return 'Degree day model: ' + state.params.t_min + tMaxText + units;
+      return 'Degree day model: ' + state.params.t_min + tMaxText + '°' + units;
     }
     return defaultStatus;
   }

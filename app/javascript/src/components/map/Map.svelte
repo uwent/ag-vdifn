@@ -27,7 +27,7 @@
       mapTypeIds: ['roadmap', 'terrain', 'satellite'],
       position: 3,
     },
-    mapTypeId: 'terrain',
+    mapTypeId: 'roadmap',
     maxZoom: 14,
     minZoom: 5,
     streetViewControl: false,

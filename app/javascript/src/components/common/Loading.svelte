@@ -33,10 +33,10 @@
 </script>
 
 <div class="lds-ring" title="Loading" data-testid="loading">
-  <div />
-  <div />
-  <div />
-  <div />
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
 
 <div class="loading-timer">Fetching data: {time.toFixed(1)} seconds</div>
