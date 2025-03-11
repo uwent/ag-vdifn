@@ -41,4 +41,11 @@ export default defineConfig({
   //   fs: { cachedChecks: false },
   // },
   define: envKeys,
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern'
+      },
+    },
+  }
 });
