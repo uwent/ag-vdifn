@@ -59,7 +59,7 @@ namespace :deploy do
   desc "Build Vite assets with watch disabled"
   task :vite_build do
     on roles(:app) do
-      execute "cd #{release_path} && VITE_FORCE_BUILD=true NODE_ENV=production pnpm vite build --mode production"
+      execute "cd #{release_path} && VITE_FORCE_BUILD=true NODE_ENV=production pnpm build --mode production"
     end
   end
 
