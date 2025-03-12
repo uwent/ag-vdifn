@@ -4,6 +4,7 @@ import GoogleWrapper from './googleWrapper';
 import RectangleOption from './rectangleOption';
 import infoWindowLoadingTemplate from './infoWindowLoading';
 import ColorHelper from './colorHelper';
+import tippy from 'tippy.js';
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper;
@@ -112,17 +113,33 @@ export default class OverlayHelper {
     this.rectangles.forEach((rectangle) => {
       rectangle.addListener('click', async (event) => {
         this.closeInfoWindow();
+
         this.infoWindow = this.googleWrapper.createInfoWindow({
           content: infoWindowLoadingTemplate,
           position: event.latLng,
         });
+
         this.infoWindow.open(this.map);
+
+        google.maps.event.addListener(this.infoWindow, 'domready', () => {
+          // Initialize tippy on elements with tippy-tooltip class inside the infoWindow
+          if (typeof tippy !== 'undefined') {
+            tippy('.tippy-tooltip', {
+              placement: 'top',
+              arrow: true,
+              theme: 'light-border',
+              duration: 200,
+            });
+          }
+        });
+
         const newContent = await this.fetchPointDetails(
           event.latLng.lat(),
           event.latLng.lng(),
           severityParams,
           panelType,
         );
+
         this.infoWindow.setContent(newContent);
       });
     });

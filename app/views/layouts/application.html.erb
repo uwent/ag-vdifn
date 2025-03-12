@@ -13,6 +13,8 @@
     gtag('js', new Date());
     gtag('config', '<%= ENV["VDIFN_GTAG"] %>');
   </script>
+  <!-- Add tippy.js CSS and JS -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
   <%= vite_client_tag %>
   <%= vite_typescript_tag 'application' %>
 </head>
