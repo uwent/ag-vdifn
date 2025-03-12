@@ -43,13 +43,21 @@ set :rbenv_ruby, "3.4.2"
 # vite manifest location
 set :assets_prefix, "vite/.vite"
 
+before "deploy:assets:precompile", "deploy:clear_vite_cache"
 before "deploy:assets:precompile", "deploy:npm_install"
 
 namespace :deploy do
+  desc "Clear Vite cache"
+  task :clear_vite_cache do
+    on roles(:app) do
+      execute "rm -rf #{release_path}/public/vite/.vite"
+    end
+  end
+
   desc "Run npm install"
   task :npm_install do
     on roles(:app) do
-      execute "cd #{release_path} && pnpm install --silent --force"
+      execute "cd #{release_path} && pnpm install"
     end
   end
 

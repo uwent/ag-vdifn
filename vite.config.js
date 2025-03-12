@@ -15,13 +15,14 @@ export default defineConfig({
   plugins: [Rails(), tsconfigPaths(), svelte()],
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'app/javascript'),
+      '@': path.resolve(__dirname, 'app/javascript'),
       '@public': path.resolve(__dirname, 'public'),
     },
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
     manifest: true,
+    watch: null,
     rollupOptions: {
       input: {
         main: '~/entrypoints/application.ts',
@@ -37,15 +38,15 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
   },
-  // server: {
-  //   fs: { cachedChecks: false },
-  // },
+  server: {
+    fs: { cachedChecks: false },
+  },
   define: envKeys,
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern'
+        api: 'modern',
       },
     },
-  }
+  },
 });
