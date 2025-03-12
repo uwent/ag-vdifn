@@ -43,21 +43,23 @@ set :rbenv_ruby, "3.4.2"
 # vite manifest location
 set :assets_prefix, "vite/.vite"
 
-before "deploy:assets:precompile", "deploy:clear_vite_cache"
+# Run npm install before precompile
 before "deploy:assets:precompile", "deploy:npm_install"
+# Run explicit vite build with no-watch flag before precompile
+before "deploy:assets:precompile", "deploy:vite_build"
 
 namespace :deploy do
-  desc "Clear Vite cache"
-  task :clear_vite_cache do
-    on roles(:app) do
-      execute "rm -rf #{release_path}/public/vite/.vite"
-    end
-  end
-
   desc "Run npm install"
   task :npm_install do
     on roles(:app) do
-      execute "cd #{release_path} && pnpm install"
+      execute "cd #{release_path} && pnpm install --silent --force"
+    end
+  end
+
+  desc "Build Vite assets with watch disabled"
+  task :vite_build do
+    on roles(:app) do
+      execute "cd #{release_path} && VITE_FORCE_BUILD=true NODE_ENV=production pnpm vite build --mode production"
     end
   end
 
