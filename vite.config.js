@@ -15,7 +15,13 @@ const forceBuild = process.env.VITE_FORCE_BUILD === 'true';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [Rails(), tsconfigPaths(), svelte()],
+  plugins: [
+    Rails(),
+    tsconfigPaths(),
+    svelte({
+      emitCss: true,
+    }),
+  ],
   resolve: {
     alias: {
       '@public': path.resolve(__dirname, 'public'),
@@ -29,7 +35,12 @@ export default defineConfig({
       input: {
         main: '~/entrypoints/application.ts',
       },
+      output: {
+        // Ensure assets are properly named and placed
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
     },
+    cssCodeSplit: true,
   },
   test: {
     globals: true,
