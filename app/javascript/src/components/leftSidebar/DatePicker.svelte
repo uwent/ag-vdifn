@@ -48,64 +48,107 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment';
+  import {
+    format,
+    parseISO,
+    subDays,
+    subWeeks,
+    subMonths,
+    isAfter,
+    isBefore,
+    getYear,
+    startOfYear,
+  } from 'date-fns';
   import { getContext, onDestroy } from 'svelte';
   import { endDate, panelKey, startDate, selectedPest } from '@store';
 
   const { panelType, dateToolTip, defaultStartDate } = getContext<any>(panelKey);
 
-  let today: string = moment.utc().subtract(1, 'day').format('YYYY-MM-DD');
-  let endDateValue: string = today;
-  let defaultEndDateValue = endDateValue;
-  let startDateValue: string = defaultStartDate;
-  let defaultStartDateValue = startDateValue;
-  let startLabel = 'Start date';
+  const formatDate = (date: Date): string => format(date, 'yyyy-MM-dd');
+  const tryParseDate = (dateStr: string): Date | null => {
+    console.log(dateStr);
+    return dateStr ? parseISO(dateStr) : null;
+  };
 
-  // handle end date changes
-  // allow end date to push start date forward and update
-  // if end date moves to different year start date set to Jan 1 of same year
+  let {
+    today = formatDate(subDays(new Date(), 1)),
+    endDateValue = today || '',
+    defaultEndDateValue = today || '',
+    startDateValue = defaultStartDate || '',
+    defaultStartDateValue = defaultStartDate || '',
+    startLabel = 'Start date',
+  } = $props<{
+    today?: string;
+    endDateValue?: string;
+    defaultEndDateValue?: string;
+    startDateValue?: string;
+    defaultStartDateValue?: string;
+    startLabel?: string;
+  }>();
+
+  // Update store values when local state changes
+  $effect(() => {
+    if (tryParseDate(startDateValue)) $startDate = startDateValue;
+  });
+
+  $effect(() => {
+    if (tryParseDate(endDateValue)) $endDate = endDateValue;
+  });
+
+  // Handle end date changes
   function updateStartDateInput() {
-    const start = moment.utc(startDateValue);
-    const end = moment.utc(endDateValue);
+    const start = tryParseDate(startDateValue);
+    const end = tryParseDate(endDateValue);
+    if (!start || !end) return (endDateValue = $endDate);
 
-    if (end < start) startDateValue = endDateValue;
+    // If end date is before start date, set start date to end date
+    if (isBefore(end, start)) {
+      startDateValue = endDateValue;
+    }
 
-    if (end.format('YYYY') != start.format('YYYY')) {
-      startDateValue = end.format('YYYY') + '-01-01';
+    // If end date is in a different year, set start date to Jan 1 of that year
+    if (getYear(end) !== getYear(start)) {
+      startDateValue = `${getYear(end)}-01-01`;
     }
   }
 
-  // handle start date changes
-  // allow start date to push end date backward
-  // if start date moves to different year end date follows
+  // Handle start date changes
   function updateEndDateInput() {
-    const start = moment.utc(startDateValue);
-    const end = moment.utc(endDateValue);
+    const start = tryParseDate(startDateValue);
+    const end = tryParseDate(endDateValue);
+    if (!start || !end) return (startDateValue = $startDate);
 
-    if (start > end) endDateValue = startDateValue;
+    // If start date is after end date, set end date to start date
+    if (isAfter(start, end)) {
+      endDateValue = startDateValue;
+    }
 
-    if (start.format('YYYY') != end.format('YYYY')) {
-      if (today < start.format('YYYY') + '-12-31') {
+    // If start date is in a different year, adjust end date accordingly
+    if (getYear(start) !== getYear(end)) {
+      const yearEnd = `${getYear(start)}-12-31`;
+
+      if (isBefore(parseISO(today), parseISO(yearEnd))) {
         endDateValue = today;
       } else {
-        endDateValue = start.format('YYYY') + '-12-31';
+        endDateValue = yearEnd;
       }
     }
   }
 
+  // Quick date selection functions
   function selectPastWeek() {
     endDateValue = today;
-    startDateValue = moment.utc().subtract(1, 'week').format('YYYY-MM-DD');
+    startDateValue = formatDate(subWeeks(today, 1));
   }
 
   function selectPastMonth() {
     endDateValue = today;
-    startDateValue = moment.utc().subtract(1, 'month').format('YYYY-MM-DD');
+    startDateValue = formatDate(subMonths(today, 1));
   }
 
   function selectThisYear() {
     endDateValue = today;
-    startDateValue = moment.utc().format('YYYY') + '-01-01';
+    startDateValue = formatDate(startOfYear(new Date()));
   }
 
   function selectDefaults() {
@@ -113,26 +156,28 @@
     startDateValue = defaultStartDateValue;
   }
 
-  function isPastYear(date: string) {
-    return moment.utc(date).format('YYYY') != moment.utc().format('YYYY');
+  function dateFeedback(dateStr: string): string {
+    let date = tryParseDate(dateStr);
+    if (!date) return `<< Date required`;
+    if (getYear(date) !== getYear(new Date())) return '<< Not current year';
+    return '';
   }
 
-  // panel and pest-specific tweaks to datepicker
+  // Panel and pest-specific configurations
   const unsubscribe = selectedPest.subscribe((pest) => {
     if (panelType != 'custom') {
       startLabel = pest.biofix_label || 'Start date';
 
-      // if biofix has yet to occur default to last year
+      // Handle biofix date logic
       if (pest.biofix_date) {
         if (pest.biofix_date < today) {
           defaultStartDateValue = pest.biofix_date;
           defaultEndDateValue = today;
         } else {
-          defaultStartDateValue = moment
-            .utc(pest.biofix_date)
-            .subtract(1, 'year')
-            .format('YYYY-MM-DD');
-          defaultEndDateValue = moment.utc(defaultStartDateValue).format('YYYY') + '-12-31';
+          // If biofix hasn't occurred yet, use last year's date
+          const lastYearBiofix = format(subDays(parseISO(pest.biofix_date), 365), 'yyyy-MM-dd');
+          defaultStartDateValue = lastYearBiofix;
+          defaultEndDateValue = `${getYear(parseISO(lastYearBiofix))}-12-31`;
         }
         startDateValue = defaultStartDateValue;
         endDateValue = defaultEndDateValue;
@@ -141,9 +186,6 @@
   });
 
   onDestroy(unsubscribe);
-
-  $: $startDate = startDateValue;
-  $: $endDate = endDateValue;
 </script>
 
 <fieldset id="datepicker">
@@ -157,13 +199,14 @@
       id="datepicker-start"
       data-testid="datepicker-start"
       bind:value={startDateValue}
-      on:focus={updateEndDateInput}
-      on:focusout={updateEndDateInput}
+      onfocus={updateEndDateInput}
+      onfocusout={updateEndDateInput}
       max={today}
+      aria-label={startLabel}
     />
-    {#if isPastYear(startDateValue)}
-      <div class="datepicker-tooltip">&lt;- Not current year</div>
-    {/if}
+    <div class="datepicker-tooltip" aria-live="polite">
+      {dateFeedback(startDateValue)}
+    </div>
   </div>
   <label for="datepicker-end">End Date</label>
   <div class="select-wrapper" id="datepicker-end-wrapper">
@@ -174,42 +217,45 @@
       id="datepicker-end"
       data-testid="datepicker-end"
       bind:value={endDateValue}
-      on:focus={updateStartDateInput}
-      on:focusout={updateStartDateInput}
+      onfocus={updateStartDateInput}
+      onfocusout={updateStartDateInput}
       max={today}
+      aria-label="End Date"
     />
-    {#if isPastYear(endDateValue)}
-      <div class="datepicker-tooltip">&lt;- Not current year</div>
-    {/if}
+    <div class="datepicker-tooltip" aria-live="polite">{dateFeedback(endDateValue)}</div>
   </div>
   <div class="clear"></div>
   <div class="label-text">Quick date ranges:</div>
-  <div class="preset-buttons">
+  <div class="preset-buttons" role="group" aria-label="Quick date range options">
     <button
       title="Set date range to past week"
       data-testid="button-past-week"
-      on:click={selectPastWeek}
+      onclick={selectPastWeek}
+      aria-label="Past week"
     >
       Past week
     </button>
     <button
       title="Set date range to past month"
       data-testid="button-past-month"
-      on:click={selectPastMonth}
+      onclick={selectPastMonth}
+      aria-label="Past month"
     >
       Past month
     </button>
     <button
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
-      on:click={selectThisYear}
+      onclick={selectThisYear}
+      aria-label="This year"
     >
       This year
     </button>
     <button
       title="Restore default date settings for this model"
       data-testid="button-defaults"
-      on:click={selectDefaults}
+      onclick={selectDefaults}
+      aria-label="Defaults"
     >
       Defaults
     </button>

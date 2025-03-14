@@ -1,7 +1,7 @@
 import '~/src/scss/global.scss';
+import { mount } from 'svelte';
 import App from '~/src/app.svelte';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const app = new App({ target: document.body });
-  (window as any).app = app;
-});
+const app = mount(App, { target: document.body });
+
+export default app;

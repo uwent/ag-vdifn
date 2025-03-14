@@ -23,6 +23,7 @@ export const defaults = {
   extent: 'wisconsin',
   disease: 'late-blight',
   insect: 'cpb',
+  dd_model: 'dd_50_86',
   t_min: 50,
   t_max: 86,
   in_f: true,

@@ -6,18 +6,17 @@
 
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
-
   import type { DegreeDayModel } from '@types';
-  import { panelKey, customPanelState, selectedDDModel, tMinTmax } from '@store';
+  import { defaults, panelKey, customPanelState, selectedDDModel, tMinTmax } from '@store';
 
   const { getModels } = getContext<any>(panelKey);
 
-  let ddModels: DegreeDayModel[] = getModels();
-  let defaultModel = 'dd_50_86';
-  let modelId = 0;
+  let ddModels = $state<DegreeDayModel[]>(getModels() || []);
+  let defaultModel = $state(defaults.dd_model);
+  let modelId = $state(0);
 
-  function setDegreeDayModel(event) {
-    const id = parseInt(event.target.value);
+  function setDegreeDayModel(event: Event) {
+    const id = parseInt((event.target as HTMLSelectElement).value);
     const model = ddModels.find((model) => {
       return model.id === id;
     });
@@ -51,7 +50,7 @@
   <label for="dd-select">Choose model</label>
   <div class="dd-container">
     <select
-      on:change={setDegreeDayModel}
+      onchange={setDegreeDayModel}
       class="dd-select"
       id="dd-select"
       name="dd-select"

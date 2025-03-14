@@ -36,12 +36,19 @@
 </style>
 
 <script lang="ts">
-  export let click;
-  export let text = 'Submit';
-  export let title = '';
-  export let disabled = false;
+  const {
+    click,
+    text = 'Submit',
+    title = '',
+    disabled = false,
+  } = $props<{
+    click: () => void;
+    text?: string;
+    title?: string;
+    disabled?: boolean;
+  }>();
 </script>
 
-<button class="button button-primary" {title} on:click={click} {disabled}>
+<button class="button button-primary" {title} onclick={click} {disabled}>
   {text}
 </button>

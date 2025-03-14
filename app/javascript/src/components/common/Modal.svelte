@@ -37,18 +37,28 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { createEventDispatcher, onDestroy, type Snippet } from 'svelte';
   import Button from './Button.svelte';
 
-  export let name = 'Information';
-  export let maxWidth = '32em';
+  // Props using $props
+  const {
+    name = 'Information',
+    maxWidth = '32em',
+    children,
+  } = $props<{
+    name?: string;
+    maxWidth?: string;
+    children?: Snippet;
+  }>();
 
+  // Use createEventDispatcher which still works in Svelte 5
+  // Although deprecated, this is still the recommended approach for now
   const dispatch = createEventDispatcher();
   const close = () => dispatch('close');
 
-  let modal: any;
+  let modal = $state<HTMLElement | null>(null);
 
-  const handle_keydown = (e) => {
+  const handle_keydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       close();
       return;
@@ -56,10 +66,14 @@
 
     if (e.key === 'Tab') {
       // trap focus
-      const nodes = modal.querySelectorAll('*');
-      const tabbable: any[] = Array.from(nodes).filter((n: any) => n.tabIndex >= 0);
+      const nodes = modal?.querySelectorAll('*');
+      if (!nodes) return;
 
-      let index = tabbable.indexOf(document.activeElement);
+      const tabbable = Array.from(nodes).filter(
+        (n: Element) => (n as HTMLElement).tabIndex >= 0,
+      ) as HTMLElement[];
+
+      let index = tabbable.indexOf(document.activeElement as HTMLElement);
       if (index === -1 && e.shiftKey) index = 0;
 
       index += tabbable.length + (e.shiftKey ? -1 : 1);
@@ -70,18 +84,18 @@
     }
   };
 
-  const previously_focused: any = typeof document !== 'undefined' && document.activeElement;
+  const previously_focused = typeof document !== 'undefined' && document.activeElement;
 
   if (previously_focused) {
     onDestroy(() => {
-      previously_focused.focus();
+      (previously_focused as HTMLElement)?.focus();
     });
   }
 </script>
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" role="none" on:click={close} on:keydown={close}></div>
+<div class="modal-background" role="none" onclick={close} onkeydown={() => close()}></div>
 
 <div
   class="modal"
@@ -89,11 +103,9 @@
   aria-modal="true"
   bind:this={modal}
   aria-labelledby="affliction-modal"
-  style={'max-width: ' + maxWidth}
+  style={`max-width: ${maxWidth}`}
 >
   <h2 id="affliction-modal">{name}</h2>
-  <slot name="header" />
-  <slot />
-
+  {@render children?.()}
   <Button click={close} text="Close" />
 </div>

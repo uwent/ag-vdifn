@@ -1,7 +1,6 @@
 <script lang="ts">
-  import moment from 'moment';
+  import { format, startOfYear, parseISO } from 'date-fns';
   import { onMount, setContext } from 'svelte';
-
   import ModelParameters from './ModelParameters.svelte';
   import DatePicker from './DatePicker.svelte';
   import SeverityGradient from './SeverityGradient.svelte';
@@ -23,9 +22,12 @@
     extents,
     mapExtent,
   } from '@store';
+
   import LoadStatus from '@components/common/LoadStatus.svelte';
 
-  export let data: any;
+  const { data } = $props<{
+    data: any;
+  }>();
 
   const thisPanel = 'custom';
 
@@ -36,26 +38,28 @@
       startDate: 'Biofix',
       endDate: 'Date through which degree-days are accumulated',
     },
-    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
+    defaultStartDate: format(startOfYear(new Date()), 'yyyy-MM-dd'),
   });
 
   function submit() {
     $customOverlaySubmitted = true;
     let params = {
-      start_date: moment.utc($startDate).format('YYYY-MM-DD'),
-      end_date: moment.utc($endDate).format('YYYY-MM-DD'),
+      start_date: format(parseISO($startDate), 'yyyy-MM-dd'),
+      end_date: format(parseISO($endDate), 'yyyy-MM-dd'),
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
-    customPanelState.update((state) => ({
-      ...state,
+
+    $customPanelState = {
+      ...$customPanelState,
       selectedExtent: $mapExtent,
       selectedModel: $selectedDDModel,
       params: params,
       loaded: true,
-    }));
+    };
+
     $customPanelParams = params;
     setCustomPanelURL();
     gtag('event', 'submit', {
@@ -79,16 +83,18 @@
     setCustomPanelURL();
   });
 
-  // Submit if map extent doesn't match stored data
-  $: if (
-    $selectedPanel == thisPanel &&
-    $customPanelState.loaded &&
-    $customPanelState.selectedExtent != $mapExtent
-  )
-    submit();
+  $effect(() => {
+    if (
+      $selectedPanel == thisPanel &&
+      $customPanelState.loaded &&
+      $customPanelState.selectedExtent != $mapExtent
+    ) {
+      submit();
+    }
+  });
 </script>
 
-<div data-testid="custom-panel">
+<div data-testid="custom-panel" role="region" aria-label="Custom degree-day parameters">
   <ModelParameters>
     <DatePicker />
     <CustomModelSelection />

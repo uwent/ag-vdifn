@@ -1,4 +1,5 @@
-export type PanelType = 'disease' | 'insect' | 'custom';
+export const PANEL_TYPES = ['disease', 'insect', 'custom'] as const;
+export type PanelType = (typeof PANEL_TYPES)[number];
 
 export type SeverityLegend = {
   name: string;

@@ -15,8 +15,8 @@
   import { loadStatus } from '@store';
   import { onDestroy, onMount } from 'svelte';
 
-  export let loaded = false;
-  let message = '';
+  const { loaded = false } = $props<{ loaded?: boolean }>();
+  let message = $state('');
 
   onMount(() => {
     message = loaded ? $loadStatus : 'Please submit a model.';

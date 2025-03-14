@@ -73,31 +73,31 @@
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
-  import type { CropWithPests, DegreeDayModel, PanelType } from '@types';
+  import { type CropWithPests, type DegreeDayModel, PANEL_TYPES, type PanelType } from '@types';
 
-  export let diseasePanelData: CropWithPests[] = [];
-  export let insectPanelData: CropWithPests[] = [];
-  export let customPanelData: DegreeDayModel[] = [];
-  let panelDataReady = false;
+  // reactive variables
+  let diseasePanelData = $state<CropWithPests[]>([]);
+  let insectPanelData = $state<CropWithPests[]>([]);
+  let customPanelData = $state<DegreeDayModel[]>([]);
+  let panelDataReady = $state(false);
+  let panel = $state(defaults.panel as PanelType);
+  let extent = $state(defaults.extent);
+  let showHelp = $state(false);
 
   const databaseClient = new DatabaseClient();
   const urlParams = new URLSearchParams(window.location.search);
-  const validPanels = ['disease', 'insect', 'custom'];
 
-  let panel = defaults.panel as PanelType;
-  let extent = defaults.extent;
-  let showHelp = false;
-  let opts = {
+  let opts = $state({
     initialModel: '',
     submitOnLoad: false,
-  };
-
-  // console.log('Launching VDIFN in ' + env + ' environment')
+  });
 
   function parseUrlParams() {
-    const initialPanel =
-      urlParams.get('type') || urlParams.get('panel') || urlParams.get('p') || 'disease';
-    if (validPanels.includes(initialPanel)) {
+    const initialPanel = (urlParams.get('type') ||
+      urlParams.get('panel') ||
+      urlParams.get('p') ||
+      defaults.panel) as PanelType;
+    if (PANEL_TYPES.includes(initialPanel)) {
       panel = initialPanel as PanelType;
       let model = urlParams.get('model') || urlParams.get('m');
       if (model) {
@@ -117,8 +117,14 @@
     panelDataReady = true;
   });
 
-  $: $selectedPanel = panel;
-  $: $mapExtent = extent;
+  // Update store values when local state changes
+  $effect(() => {
+    $selectedPanel = panel;
+  });
+
+  $effect(() => {
+    $mapExtent = extent;
+  });
 </script>
 
 <div class="options">
@@ -153,7 +159,7 @@
           disabled={$overlayLoading}
         />
         <label for="custom">Custom</label>
-        <button class="help-btn" title="How to use VDIFN" on:click={() => (showHelp = true)}
+        <button class="help-btn" title="How to use VDIFN" onclick={() => (showHelp = true)}
           >?</button
         >
       </div>
