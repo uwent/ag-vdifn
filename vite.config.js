@@ -10,18 +10,9 @@ for (const k in process.env) {
   envKeys[`process.env.${k}`] = JSON.stringify(process.env[k]);
 }
 
-// Force disable watching during build to prevent loops
-const forceBuild = process.env.VITE_FORCE_BUILD === 'true';
-
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    Rails(),
-    tsconfigPaths(),
-    svelte({
-      emitCss: true,
-    }),
-  ],
+  plugins: [Rails(), tsconfigPaths(), svelte()],
   resolve: {
     alias: {
       '@public': path.resolve(__dirname, 'public'),
@@ -35,10 +26,6 @@ export default defineConfig({
       input: {
         main: '~/entrypoints/application.ts',
       },
-      output: {
-        // Ensure assets are properly named and placed
-        assetFileNames: 'assets/[name].[hash].[ext]',
-      },
     },
     cssCodeSplit: true,
   },
@@ -46,28 +33,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['test/test_setup.ts'],
-    // alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
   },
-  server: {
-    fs: {
-      cachedChecks: false,
-    },
-    watch: {
-      usePolling: false,
-      interval: 1000,
-      // Prevent watching when in build mode with VITE_FORCE_BUILD
-      ignored: forceBuild ? ['**/*'] : [],
-    },
-  },
   define: envKeys,
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern',
-      },
-    },
-  },
 });

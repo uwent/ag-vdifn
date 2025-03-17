@@ -6,10 +6,9 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment';
+  import { format, parseISO, subWeeks } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
-  import ModelParameters from './ModelParameters.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import DatePicker from './DatePicker.svelte';
   import Button from '../common/Button.svelte';
@@ -31,12 +30,19 @@
     selectedPest,
   } from '@store';
   import LoadStatus from '@components/common/LoadStatus.svelte';
+  import type { PanelType } from '@types';
 
-  export let data;
-  export let initialModelName = defaults.disease;
-  export let submitOnLoad = false;
+  const thisPanel: PanelType = 'disease';
 
-  const thisPanel = 'disease';
+  let {
+    data = undefined,
+    initialModelName = defaults.disease,
+    submitOnLoad = false,
+  } = $props<{
+    data: any;
+    initialModelName?: string;
+    submitOnLoad?: boolean;
+  }>();
 
   if ($diseasePanelState.loaded) {
     let pest = $diseasePanelState.selectedPest;
@@ -57,14 +63,14 @@
       startLabel: 'Start date',
     },
     getPestName: () => 'Disease',
-    defaultStartDate: moment.utc().subtract(1, 'week').format('YYYY-MM-DD'),
+    defaultStartDate: format(subWeeks(new Date(), 1), 'yyyy-MM-dd'),
   });
 
   function submit() {
     let pest = $selectedDisease;
     let params = {
-      start_date: moment.utc($startDate).format('YYYY-MM-DD'),
-      end_date: moment.utc($endDate).format('YYYY-MM-DD'),
+      start_date: format(parseISO($startDate), 'yyyy-MM-dd'),
+      end_date: format(parseISO($endDate), 'yyyy-MM-dd'),
       pest_id: $pestId,
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
@@ -102,19 +108,26 @@
     if (submitOnLoad) submit();
   });
 
-  // submit if data is loaded and then extent is changed
-  $: if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
-  $: $selectedPest = $selectedDisease;
+  // Reactive statements
+  $effect(() => {
+    if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
+  });
+
+  $effect(() => {
+    $selectedPest = $selectedDisease;
+  });
 </script>
 
 <div data-testid="disease-panel">
   <ModelSelection initialModel={initialModelName} />
-  <ModelParameters>
+  <fieldset>
+    <legend>Model parameters</legend>
     <DatePicker />
     <TminMaxDisplay />
-  </ModelParameters>
+  </fieldset>
   <Button
     title="Submit parameters. Data load may take several seconds."
+    ariaLabel="Submit parameters"
     disabled={$overlayLoading}
     click={submit}
   />

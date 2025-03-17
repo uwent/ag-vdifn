@@ -65,7 +65,7 @@
         position: position,
         title: 'Your location',
       });
-      marker.addListener('click', () => {
+      marker.addListener('gmp-click', () => {
         map.setZoom(12);
         map.panTo(position);
       });

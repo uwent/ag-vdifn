@@ -9,9 +9,4 @@ export default {
     'postcss-preset-env': true,
   },
   'enable-ts-plugin': true,
-  // compilerOptions: {
-  //   compatibility: {
-  //     componentApi: 4
-  //   }
-  // }
 };

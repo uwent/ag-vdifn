@@ -107,14 +107,12 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment';
   import { onMount } from 'svelte';
-
   import TwoPointGradient from './TwoPointGradient.svelte';
   import ThreePointGradient from './ThreePointGradient.svelte';
   import { overlayGradient, customOverlaySubmitted, customPanelState, mapRange } from '@store';
 
-  let gradient = 1;
+  let selectedGradient = $state($customPanelState.selectedGradient);
 
   function updateOverlay(event) {
     $overlayGradient = event.detail;
@@ -124,15 +122,9 @@
   function updateCustomPanelState() {
     customPanelState.update((state) => ({
       ...state,
-      selectedGradient: gradient,
+      selectedGradient: selectedGradient,
     }));
   }
-
-  onMount(() => {
-    if ($customOverlaySubmitted) {
-      gradient = $customPanelState.selectedGradient || 1;
-    }
-  });
 </script>
 
 <div data-testid="gradient-opts">
@@ -141,9 +133,9 @@
       <legend>Submitted Values</legend>
       <div class="submitted-params" title="submitted-params">
         <div>Start Date:</div>
-        <div>{moment($customPanelState.params.start_date).format('YYYY-MM-DD')}</div>
+        <div>{$customPanelState.params.start_date}</div>
         <div>End Date:</div>
-        <div>{moment($customPanelState.params.end_date).format('YYYY-MM-DD')}</div>
+        <div>{$customPanelState.params.end_date}</div>
         <div>Tmin:</div>
         <div>{$customPanelState.params.t_min}</div>
         <div>Tmax:</div>
@@ -161,8 +153,8 @@
         type="radio"
         name="gradient-type"
         title="gradient-2-point"
-        bind:group={gradient}
-        value={1}
+        bind:group={selectedGradient}
+        value="two-point"
       />
       <span id="gradient-2-point-display" class="gradient"></span>
     </label>
@@ -172,13 +164,13 @@
         type="radio"
         name="gradient-type"
         title="gradient-3-point"
-        bind:group={gradient}
-        value={2}
+        bind:group={selectedGradient}
+        value="three-point"
       />
       <span id="gradient-3-point-display" class="gradient"></span>
     </label>
   </fieldset>
-  {#if gradient === 1}
+  {#if selectedGradient === 'two-point'}
     <TwoPointGradient on:updateOverlay={updateOverlay} />
   {:else}
     <ThreePointGradient on:updateOverlay={updateOverlay} />

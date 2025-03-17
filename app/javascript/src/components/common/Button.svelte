@@ -39,12 +39,14 @@
   const {
     click,
     text = 'Submit',
-    title = '',
+    title = text,
+    ariaLabel = title,
     disabled = false,
   } = $props<{
     click: () => void;
     text?: string;
     title?: string;
+    ariaLabel?: string;
     disabled?: boolean;
   }>();
 </script>

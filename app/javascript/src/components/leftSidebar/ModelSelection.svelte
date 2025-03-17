@@ -53,7 +53,7 @@
   import { getContext, onMount } from 'svelte';
 
   import Modal from '../common/Modal.svelte';
-  import type { CropWithPests, Pest } from '@types';
+  import type { CropWithPests, PanelType, Pest } from '@types';
   import {
     panelKey,
     selectedDisease,
@@ -64,19 +64,25 @@
     baseURL,
   } from '@store';
 
-  export let initialModel = '';
+  const { initialModel = '' } = $props<{
+    initialModel?: string;
+  }>();
 
-  const { panelType, getCrops, getPestName } = getContext<any>(panelKey);
+  const { panelType, getCrops, getPestName } = getContext<{
+    panelType: PanelType;
+    getCrops: () => CropWithPests[];
+    getPestName: () => string;
+  }>(panelKey);
   const defaultModel = panelType === 'disease' ? defaults.disease : defaults.insect;
   const selectedPest = panelType === 'disease' ? selectedDisease : selectedInsect;
   const logging = env === 'development';
 
-  let showModal = false;
-  let crops: CropWithPests[] = [];
-  let selectedCropValue = 0;
-  let pestsForCrop: Pest[] = [];
-  let pestName = getPestName();
-  let modelId: number;
+  let showModal = $state(false);
+  let crops = $state<CropWithPests[]>([]);
+  let selectedCropValue = $state(0);
+  let pestsForCrop = $state<Pest[]>([]);
+  let pestName = $state(getPestName());
+  let modelId = $state<number | null>(null);
 
   function getPestsForCrop(event) {
     const cropId = parseInt(event.target.value);
@@ -101,7 +107,6 @@
 
   function setPestValue(event) {
     const value = parseInt(event.target.value);
-    // pestId.update((value) => value);
     $pestId = value;
     $selectedPest = getCurrentPest(value);
   }
@@ -110,7 +115,6 @@
     const pest = pestsForCrop.find((pest) => {
       return pest.local_name === alias;
     });
-    // return pest ? pest.id : pestsForCrop[0].id;
     return pest ? pest.id : null;
   }
 
@@ -142,7 +146,6 @@
 
     selectInitialModel();
 
-    // pestId.update((_) => modelId);
     $pestId = modelId;
     $selectedPest = getCurrentPest(modelId);
   });
@@ -152,7 +155,7 @@
   <legend>Model Selection</legend>
   <label for="crop-select">Crop/Host</label>
   <select
-    on:change={getPestsForCrop}
+    onchange={getPestsForCrop}
     bind:value={selectedCropValue}
     id="crop-select"
     name="crop-select"
@@ -167,7 +170,7 @@
   <label for="pest-select">{pestName}</label>
   <div class="pest-container">
     <select
-      on:change={setPestValue}
+      onchange={setPestValue}
       class="pest-select"
       id="pest-select"
       name="pest-select"
@@ -180,7 +183,7 @@
       {/each}
     </select>
     {#if crops.length > 0}
-      <button title="Show model information" on:click={() => (showModal = true)}>?</button>
+      <button title="Show model information" onclick={() => (showModal = true)}>?</button>
     {/if}
   </div>
 </fieldset>

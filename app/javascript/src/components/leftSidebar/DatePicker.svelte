@@ -65,10 +65,7 @@
   const { panelType, dateToolTip, defaultStartDate } = getContext<any>(panelKey);
 
   const formatDate = (date: Date): string => format(date, 'yyyy-MM-dd');
-  const tryParseDate = (dateStr: string): Date | null => {
-    console.log(dateStr);
-    return dateStr ? parseISO(dateStr) : null;
-  };
+  const tryParseDate = (dateStr: string): Date | null => (dateStr ? parseISO(dateStr) : null);
 
   let {
     today = formatDate(subDays(new Date(), 1)),

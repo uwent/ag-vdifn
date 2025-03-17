@@ -109,7 +109,7 @@ export type CustomPanelState = {
   severities: Severity[];
   severityParams: SeverityParams;
   params: Partial<CustomPanelParams>;
-  selectedGradient: number;
+  selectedGradient: 'two-point' | 'three-point';
   loaded: boolean;
 };
 

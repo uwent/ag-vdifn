@@ -105,7 +105,7 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+  import { createEventDispatcher, untrack, onMount, onDestroy } from 'svelte';
   import GradientHelper from '@components/map/ts/gradientHelper';
   import ColorHelper from '@components/map/ts/colorHelper';
   import { strToNum } from '@ts/utils';
@@ -114,18 +114,18 @@
   const dispatch = createEventDispatcher();
 
   let gradientHelper = new GradientHelper();
-  let userInputElements: HTMLInputElement[] = [];
-  let severityLevels = 5;
-  let userValues = [0, 0, 0, 0];
-  let userInputs = [0, 0, 0, 0];
-  let intermediateRangesUpper: number[][] = [];
-  let intermediateRangesLower: number[][] = [];
-  let buttonsDisabled = false;
-  let gradientValidationMessage = '';
+  let userInputElements = $state<(HTMLInputElement | null)[]>([]);
+  let severityLevels = $state(5);
+  let userValues = $state<number[]>([0, 0, 0, 0]);
+  let userInputs = $state<number[]>([0, 0, 0, 0]);
+  let intermediateRangesUpper = $state<number[][]>([]);
+  let intermediateRangesLower = $state<number[][]>([]);
+  let buttonsDisabled = $state(false);
+  let gradientValidationMessage = $state('');
 
   // populate temporary elements
   for (let i = 0; i <= 3; i++) {
-    userInputElements.push(0 as any);
+    userInputElements[i] = null;
   }
 
   // populate user values from map range
@@ -168,18 +168,14 @@
       if (isNaN(ranges[i])) {
         msg = 'Please enter a number in each field.';
         messages.push(msg);
-        userInputElements[i].setCustomValidity(msg);
       } else if (i === 0 && ranges[0] < 0) {
         msg = 'Minimum value must be greater than zero.';
         messages.push(msg);
-        userInputElements[i].setCustomValidity(msg);
       } else if (ranges[i] < ranges[i - 1]) {
         msg = 'All values must be in ascending order.';
         messages.push(msg);
-        userInputElements[i].setCustomValidity(msg);
-      } else {
-        userInputElements[i].setCustomValidity('');
       }
+      if (userInputElements[i]) userInputElements[i]?.setCustomValidity(msg);
     }
     gradientValidationMessage = [...new Set(messages)].join(' ').trim();
     buttonsDisabled = !!gradientValidationMessage;
@@ -268,7 +264,12 @@
     };
   });
 
-  $: setUserMinMax($mapRange.min, $mapRange.max);
+  // Only track mapRange changes to avoid infinite recursion
+  $effect(() => {
+    const min = $mapRange.min;
+    const max = $mapRange.max;
+    untrack(() => setUserMinMax(min, max));
+  });
 </script>
 
 <fieldset title="Gradient specification">
@@ -286,7 +287,7 @@
         required
         bind:this={userInputElements[0]}
         bind:value={userInputs[0]}
-        on:change={handleUpdate}
+        onchange={handleUpdate}
       />
     </div>
     {#each intermediateRangesLower as severityValueRange, index}
@@ -314,7 +315,7 @@
         required
         bind:this={userInputElements[1]}
         bind:value={userInputs[1]}
-        on:change={handleUpdate}
+        onchange={handleUpdate}
       />
       <input
         class="severity-value-end-input"
@@ -325,7 +326,7 @@
         required
         bind:this={userInputElements[2]}
         bind:value={userInputs[2]}
-        on:change={handleUpdate}
+        onchange={handleUpdate}
       />
     </div>
     {#each intermediateRangesUpper as severityValueRange, index}
@@ -350,7 +351,7 @@
         required
         bind:this={userInputElements[3]}
         bind:value={userInputs[3]}
-        on:change={handleUpdate}
+        onchange={handleUpdate}
       />
       <div class="severity-value-end">&gt; &gt; &gt;</div>
     </div>
@@ -359,27 +360,27 @@
         class="level-quantity-button"
         title="Add levels to gradient"
         data-testid="addButton"
-        on:click={addLevel}
+        onclick={addLevel}
         disabled={buttonsDisabled || severityLevels >= 8}>+</button
       >
       <button
         class="update-overlay-button"
         title="Update grid overlay with new values"
         data-testid="updateButton"
-        on:click={updateOverlay}
+        onclick={updateOverlay}
         disabled={buttonsDisabled}>Update</button
       >
       <button
         class="update-overlay-button"
         title="Reset to defaults"
         data-testid="resetButton"
-        on:click={resetOverlay}>Reset</button
+        onclick={resetOverlay}>Reset</button
       >
       <button
         class="level-quantity-button"
         title="Remove levels from gradient"
         data-testid="minusButton"
-        on:click={decrementLevel}
+        onclick={decrementLevel}
         disabled={buttonsDisabled || severityLevels <= 3}>-</button
       >
     </div>

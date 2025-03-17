@@ -135,10 +135,8 @@
 </style>
 
 <script lang="ts">
-  import moment from 'moment';
-
+  import { format } from 'date-fns';
   let expanded = true;
-  let host = window.location.host;
 </script>
 
 <div id="sidebar" aria-expanded={expanded}>
@@ -186,8 +184,12 @@
 
   <footer>
     <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br />
-    Copyright &copy;{moment.utc().format('YYYY')} University of Wisconsin-Madison
+    Copyright &copy;{format(new Date(), 'yyyy')} University of Wisconsin-Madison
   </footer>
 
-  <button on:click={() => (expanded = !expanded)} aria-label="More information"></button>
+  <button
+    onclick={() => (expanded = !expanded)}
+    title={expanded ? 'Hide controls' : 'Show controls'}
+    aria-label={expanded ? 'Hide controls' : 'Show controls'}
+  ></button>
 </div>

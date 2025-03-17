@@ -1,8 +1,7 @@
 <script lang="ts">
-  import moment from 'moment';
+  import { format, parseISO, startOfYear } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
-  import ModelParameters from './ModelParameters.svelte';
   import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import Button from '../common/Button.svelte';
@@ -26,9 +25,15 @@
   } from '@store';
   import type { PanelType } from '@types';
 
-  export let data;
-  export let initialModelName = defaults.insect;
-  export let submitOnLoad = false;
+  let {
+    data = undefined,
+    initialModelName = defaults.insect,
+    submitOnLoad = false,
+  } = $props<{
+    data: any;
+    initialModelName?: string;
+    submitOnLoad?: boolean;
+  }>();
 
   const thisPanel: PanelType = 'insect';
 
@@ -51,14 +56,14 @@
       endDate: 'Date through which degree days are accumulated',
       startLabel: 'Biofix',
     },
-    defaultStartDate: moment.utc().startOf('year').format('YYYY-MM-DD'),
+    defaultStartDate: format(startOfYear(new Date()), 'yyyy-MM-dd'),
   });
 
   function submit() {
     let pest = $selectedInsect;
     let params = {
-      start_date: moment.utc($startDate).format('YYYY-MM-DD'),
-      end_date: moment.utc($endDate).format('YYYY-MM-DD'),
+      start_date: format(parseISO($startDate), 'yyyy-MM-dd'),
+      end_date: format(parseISO($endDate), 'yyyy-MM-dd'),
       pest_id: $pestId,
       t_min: $tMinTmax.t_min,
       t_max: $tMinTmax.t_max,
@@ -99,17 +104,22 @@
     if (submitOnLoad) submit();
   });
 
-  // submit if data is loaded and then extent is changed
-  $: if ($insectPanelState.loaded && $insectPanelState.mapExtent != $mapExtent) submit();
-  $: $selectedPest = $selectedInsect;
+  $effect(() => {
+    if ($insectPanelState.loaded && $insectPanelState.mapExtent != $mapExtent) submit();
+  });
+
+  $effect(() => {
+    $selectedPest = $selectedInsect;
+  });
 </script>
 
 <div data-testid="insect-panel">
   <ModelSelection initialModel={initialModelName} />
-  <ModelParameters>
+  <fieldset>
+    <legend>Model parameters</legend>
     <DatePicker />
     <TminMaxDisplay />
-  </ModelParameters>
+  </fieldset>
   <Button
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}

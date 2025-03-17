@@ -69,7 +69,7 @@
   import DiseasePanel from './DiseasePanel.svelte';
   import InsectPanel from './InsectPanel.svelte';
   import CustomPanel from './CustomPanel.svelte';
-  import Help from './Help.svelte';
+  import Help from '../common/Help.svelte';
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';

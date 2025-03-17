@@ -90,7 +90,7 @@
         currentOverlay = customOverlay;
         if (customOverlaySubmitted) {
           gradientStore =
-            $customPanelState.selectedGradient == 1
+            $customPanelState.selectedGradient === 'two-point'
               ? $twoPointGradientState
               : $threePointGradientState;
         }
@@ -126,6 +126,7 @@
       min: customOverlay.min || 0,
       max: customOverlay.max || 0,
     };
+    console.log($mapRange);
     customPanelState.update((state) => ({
       ...state,
       severities: customOverlay.severities,

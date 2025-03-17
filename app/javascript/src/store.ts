@@ -114,7 +114,7 @@ export const insectPanelState = writable({
   loaded: false,
 } as PestPanelState);
 export const customPanelState = writable({
-  selectedGradient: 1,
+  selectedGradient: 'two-point',
   loaded: false,
 } as CustomPanelState);
 

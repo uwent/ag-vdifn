@@ -119,17 +119,18 @@
   import { getContext } from 'svelte';
   import { f_to_c } from '@ts/utils';
   import { panelKey, selectedPest, selectedDDModel, tMinTmax } from '@store';
-  import type { Pest, DegreeDayModel } from '@types';
+  import type { Pest, DegreeDayModel, PanelType } from '@types';
 
-  const { panelType } = getContext<any>(panelKey);
+  const { panelType } = getContext<{ panelType: PanelType }>(panelKey);
 
-  let in_f = true;
-  let tMinF: number | null;
-  let tMaxF: number | null;
-  let tMinC: number | null;
-  let tMaxC: number | null;
-  let tMinText = '';
-  let tMaxText = '';
+  // Using $state for reactive variables
+  let in_f = $state(true);
+  let tMinF = $state<number | null>(null);
+  let tMaxF = $state<number | null>(null);
+  let tMinC = $state<number | null>(null);
+  let tMaxC = $state<number | null>(null);
+  let tMinText = $state('');
+  let tMaxText = $state('');
 
   // generate the temperature display text
   function makeText(temp) {
@@ -151,7 +152,7 @@
           t_max: tMaxC,
           in_f: false,
         };
-    $tMinTmax = opts;
+    tMinTmax.set(opts);
     tMinText = makeText(opts.t_min);
     tMaxText = makeText(opts.t_max);
   }
@@ -167,8 +168,14 @@
     }
   }
 
-  $: updateText(in_f);
-  $: setTminTmax(panelType === 'custom' ? $selectedDDModel : $selectedPest);
+  $effect(() => {
+    updateText(in_f);
+  });
+
+  $effect(() => {
+    const currentModel = panelType === 'custom' ? $selectedDDModel : $selectedPest;
+    setTminTmax(currentModel);
+  });
 </script>
 
 <div id="degree_day_info">

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { format, startOfYear, parseISO } from 'date-fns';
   import { onMount, setContext } from 'svelte';
-  import ModelParameters from './ModelParameters.svelte';
   import DatePicker from './DatePicker.svelte';
   import SeverityGradient from './SeverityGradient.svelte';
   import CustomModelSelection from './CustomModelSelection.svelte';
@@ -95,7 +94,8 @@
 </script>
 
 <div data-testid="custom-panel" role="region" aria-label="Custom degree-day parameters">
-  <ModelParameters>
+  <fieldset>
+    <legend>Model Parameters</legend>
     <DatePicker />
     <CustomModelSelection />
     <TminMaxDisplay />
@@ -104,15 +104,16 @@
       disabled={$overlayLoading}
       click={submit}
     />
-  </ModelParameters>
+  </fieldset>
   {#if $overlayLoading}
     <Loading />
   {:else}
     <LoadStatus loaded={$customPanelState.loaded} />
     {#if $customOverlaySubmitted}
-      <ModelParameters title={'Current Overlay Parameters'}>
+      <fieldset>
+        <legend>Current Overlay Parameters</legend>
         <SeverityGradient />
-      </ModelParameters>
+      </fieldset>
     {/if}
   {/if}
 </div>
