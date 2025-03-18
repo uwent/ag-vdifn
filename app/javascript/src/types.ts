@@ -123,8 +123,7 @@ export type CustomPanelState = {
 export type GradientState = {
   severityLevels: number;
   userValues: number[];
-  mapMin: number;
-  mapMax: number;
+  range: { min: number; max: number };
   gradient: GradientHash | null;
 };
 

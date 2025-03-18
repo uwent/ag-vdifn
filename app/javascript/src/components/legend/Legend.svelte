@@ -110,16 +110,6 @@
   let showInsectLegend = $derived($selectedPanel === 'insect' && $insectLegend);
   let showCustomLegend = $derived($selectedPanel === 'custom' && $customLegend && !$overlayLoading);
 
-  $effect(() => {
-    console.log('overlayLoading', $overlayLoading);
-  });
-  $effect(() => {
-    console.log('customPanelState', $customPanelState);
-  });
-  $effect(() => {
-    console.log('customLegend', $customLegend);
-  });
-
   async function updateSeverities(severityParams: SeverityParams) {
     return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
   }

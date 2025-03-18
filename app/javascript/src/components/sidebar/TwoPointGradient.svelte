@@ -84,79 +84,77 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    gap: 2px;
+    gap: 5px;
   }
 
   .level-quantity-button {
     @extend %severity-button;
-    width: 20%;
+    width: 2rem;
   }
 
   .update-overlay-button {
     @extend %severity-button;
-    width: 50%;
+    flex: 1;
   }
 </style>
 
 <script lang="ts">
-  import { untrack, onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import { strToNum } from '@ts/utils';
   import GradientHelper from '@components/map/ts/gradientHelper';
   import ColorHelper from '@components/map/ts/colorHelper';
-  import { strToNum } from '@ts/utils';
-  import { mapRange, overlayGradient, customPanelState, twoPointGradientState } from '@store';
-  import type { GradientHash } from '@types';
+  import { mapRange, overlayGradient, twoPointGradientState } from '@store';
 
   const gradientHelper = new GradientHelper();
+  const opts = {
+    defaultLevels: 5,
+    minLevels: 3,
+    maxLevels: 8,
+  };
 
-  let addButton: HTMLButtonElement;
-  let minusButton: HTMLButtonElement;
-  let userMinInput: HTMLInputElement;
-  let userMaxInput: HTMLInputElement;
-  let updateOverlayButton: HTMLButtonElement;
-  let resetOverlayButton: HTMLButtonElement;
+  let inputMinValue: HTMLInputElement;
+  let inputMaxValue: HTMLInputElement;
 
-  let severityLevels = $state(5);
-  let userValues = $state<number[]>([0, 0]);
-  let userInputs = $state<number[]>([0, 0]);
-  let intermediateRanges = $state<number[][]>([]);
+  let severityLevels = $state(opts.defaultLevels);
+  let userValues = $state([0, 0]);
+  let userInputs = $state([0, 0]);
   let buttonsDisabled = $state(false);
   let gradientValidationMessage = $state('');
-  let gradient = $derived<GradientHash | null>(getGradient());
 
-  // fetch gradient
-  function getGradient() {
-    if (!$customPanelState?.severities.length) return null;
+  let intermediateRanges = $derived.by<number[][]>(() => {
+    const { intermediateValues: values } = gradientHelper.gradientValues({
+      min: userValues[0],
+      max: userValues[1],
+      intermediateLevels: severityLevels - 2,
+    });
+    return values;
+  });
+
+  let gradient = $derived.by(() => {
     return gradientHelper.mapRangeToColors({
       min: userValues[0],
       max: userValues[1],
       totalLevels: severityLevels,
     });
-  }
+  });
 
   // populate user values from map range
-  function setUserMinMax(mapMin, mapMax) {
-    const x = (mapMax - mapMin) / severityLevels;
-    userInputs = [Math.floor(mapMin + x), Math.ceil(mapMax - x)];
+  function setMinMaxFromRange(range: { min: number; max: number }) {
+    const x = (range.max - range.min) / severityLevels;
+    userValues = userInputs = [Math.floor(range.min + x), Math.ceil(range.max - x)];
     validateInputs();
-    updateOverlay();
   }
 
   function validateInputs() {
-    if (!userMinInput || !userMaxInput) return;
-
     const min = strToNum(userInputs[0]);
     const max = strToNum(userInputs[1]);
     const minMsg = validateMin(min, max);
     const maxMsg = validateMax(min, max);
-    userMinInput.setCustomValidity(minMsg);
-    userMaxInput.setCustomValidity(maxMsg);
-
+    inputMinValue.setCustomValidity(minMsg);
+    inputMaxValue.setCustomValidity(maxMsg);
     gradientValidationMessage = `${minMsg} ${maxMsg}`.trim();
     buttonsDisabled = !!gradientValidationMessage;
-    if (!buttonsDisabled) {
-      userValues = [min, max];
-      updateIntermediateValues();
-    }
+    if (!buttonsDisabled) userValues = [min, max];
   }
 
   // validate inputs, write to values, and update intermediates
@@ -173,109 +171,75 @@
     return '';
   }
 
-  // generate intermediate values for display
-  function updateIntermediateValues() {
-    const { intermediateValues: values } = gradientHelper.gradientValues({
-      min: userValues[0],
-      max: userValues[1],
-      intermediateLevels: severityLevels - 2,
-    });
-    intermediateRanges = values;
+  // handle buttons
+  function resetValues() {
+    if ($mapRange) setMinMaxFromRange($mapRange);
   }
 
-  // update grid overlay
-  function updateOverlay() {
-    if (gradient) $overlayGradient = gradient;
+  function resetAll() {
+    severityLevels = opts.defaultLevels;
+    resetValues();
   }
 
-  // handle reset button
-  function resetOverlay() {
-    setUserMinMax($mapRange.min, $mapRange.max);
-  }
-
-  // add gradient level
-  function addLevel() {
-    if (severityLevels + 1 > 8) return;
+  function moreLevels() {
+    if (severityLevels + 1 > opts.maxLevels) return;
     severityLevels += 1;
-    updateIntermediateValues();
+    resetValues();
   }
 
-  // remove gradient level
-  function decrementLevel() {
-    if (severityLevels - 1 < 3) return;
+  function lessLevels() {
+    if (severityLevels - 1 < opts.minLevels) return;
     severityLevels -= 1;
-    updateIntermediateValues();
+    resetValues();
   }
 
-  // handle input updates
-  function handleUpdate(event) {
-    const name = event.target.name;
-    const { value } = event.target;
-    if (name === 'userMin') {
-      userInputs[0] = value;
-    } else if (name === 'userMax') {
-      userInputs[1] = value;
-    }
-    validateInputs();
-  }
-
+  // either reloads previous values or sets defaults
   onMount(() => {
     const state = $twoPointGradientState;
-    if (state) {
-      if (state.mapMin === $mapRange.min && state.mapMax === $mapRange.max) {
-        // console.log('loading saved state');
-        severityLevels = state.severityLevels || 5;
-        userInputs = state.userValues || [];
-        validateInputs();
-        updateOverlay();
-      } else {
-        // console.log('saved state present but map has changed');
-        setUserMinMax($mapRange.min, $mapRange.max);
-      }
+    const range = $mapRange;
+    if (state && range && state.range === range) {
+      severityLevels = state.severityLevels || opts.defaultLevels;
+      userInputs = state.userValues || [];
+      validateInputs();
     } else {
-      // console.log('no saved state found');
-      setUserMinMax($mapRange.min, $mapRange.max);
+      resetValues();
     }
   });
 
+  // save state
   onDestroy(() => {
     $twoPointGradientState = {
       severityLevels,
       userValues,
-      mapMin: $mapRange.min,
-      mapMax: $mapRange.max,
-      gradient: gradient,
+      range: $mapRange,
+      gradient,
     };
   });
 
+  // update gradient store
   $effect(() => {
-    const min = $mapRange.min;
-    const max = $mapRange.max;
-    untrack(() => setUserMinMax(min, max));
+    if (gradient) $overlayGradient = gradient;
   });
 </script>
 
 <fieldset title="Gradient specification">
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
-    <div class="severity-row" data-testid="severity-row">
+    <div class="severity-row">
       <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}"></div>
       <div class="severity-value-end">0</div>
       <input
+        type="number"
         class="severity-value-end-input"
         title="Start of gradient"
-        name="userMin"
-        data-testid="userMinInput"
-        type="number"
         required
-        bind:this={userMinInput}
+        bind:this={inputMinValue}
         bind:value={userInputs[0]}
-        onchange={handleUpdate}
-        onemptied={handleUpdate}
+        oninput={validateInputs}
       />
     </div>
     {#each intermediateRanges as severityValueRange, index}
-      <div class="severity-row" data-testid="severity-row">
+      <div class="severity-row">
         <div
           class="severity-color"
           style="background: {ColorHelper.color(index + 1, severityLevels)}"
@@ -285,22 +249,19 @@
         </div>
       </div>
     {/each}
-    <div class="severity-row" data-testid="severity-row">
+    <div class="severity-row">
       <div
         class="severity-color"
         style="background: {ColorHelper.color(severityLevels, severityLevels)}"
       ></div>
       <input
+        type="number"
         class="severity-value-end-input"
         title="End of gradient"
-        name="userMax"
-        data-testid="userMaxInput"
-        type="number"
         required
-        bind:this={userMaxInput}
+        bind:this={inputMaxValue}
         bind:value={userInputs[1]}
-        onchange={handleUpdate}
-        onemptied={handleUpdate}
+        oninput={validateInputs}
       />
       <div class="severity-value-end">&gt; &gt; &gt;</div>
     </div>
@@ -309,45 +270,30 @@
     <button
       class="level-quantity-button"
       title="Add levels to gradient"
-      data-testid="addButton"
-      bind:this={addButton}
-      onclick={addLevel}
-      disabled={buttonsDisabled || severityLevels >= 8}
+      onclick={moreLevels}
+      disabled={buttonsDisabled || severityLevels >= opts.maxLevels}
     >
       +
     </button>
     <button
       class="update-overlay-button"
-      title="Update grid overlay with new values"
-      data-testid="updateButton"
-      bind:this={updateOverlayButton}
-      onclick={updateOverlay}
-      disabled={buttonsDisabled}
+      title="Evenly space gradient across map"
+      onclick={resetValues}>Balance</button
     >
-      Update
-    </button>
-    <button
-      class="update-overlay-button"
-      title="Reset to defaults"
-      data-testid="resetButton"
-      bind:this={resetOverlayButton}
-      onclick={resetOverlay}
-    >
+    <button class="update-overlay-button" title="Reset to defaults" onclick={resetAll}>
       Reset
     </button>
     <button
       class="level-quantity-button"
       title="Remove levels from gradient"
-      data-testid="minusButton"
-      bind:this={minusButton}
-      onclick={decrementLevel}
-      disabled={buttonsDisabled || severityLevels <= 3}
+      onclick={lessLevels}
+      disabled={buttonsDisabled || severityLevels <= opts.minLevels}
     >
       -
     </button>
   </div>
   {#if gradientValidationMessage}
-    <div class="validation-msg" data-testid="validation-msg">
+    <div class="validation-msg">
       {gradientValidationMessage}
     </div>
   {/if}

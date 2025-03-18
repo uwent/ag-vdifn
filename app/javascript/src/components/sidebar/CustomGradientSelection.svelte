@@ -166,7 +166,10 @@
   {:else}
     <ThreePointGradient />
   {/if}
-  <div title="Map range" class="note">
-    Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
-  </div>
+  {#if $mapRange}
+    <div title="Map range" class="note">
+      Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree
+      days
+    </div>
+  {/if}
 </div>

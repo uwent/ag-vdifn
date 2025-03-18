@@ -1,4 +1,4 @@
-import type { SeverityParams, Severity } from '@types';
+import type { SeverityParams, Severity, PanelType, GradientMapping, GradientHash } from '@types';
 import DatabaseClient from '@ts/databaseClient';
 import GoogleWrapper from './googleWrapper';
 import RectangleOption from './rectangleOption';
@@ -44,27 +44,27 @@ export default class OverlayHelper {
     if (this.bounds) this.bounds.setOptions({ visible: true });
   }
 
-  async updateOverlay(severityParams: SeverityParams, panelType) {
+  async updateOverlay(panelType: PanelType, severityParams: SeverityParams) {
     this.clearRectangles();
     this.closeInfoWindow();
 
     this.severities = await this.getSeverities(severityParams);
-    if (this.severities.length > 0) {
-      this.min = Math.min(...this.severities.map((point) => point.level));
-      this.max = Math.max(...this.severities.map((point) => point.level));
-    }
-    const rectangleOptions = this.convertSeveritiesToRectangleOptions();
+    if (this.severities.length === 0) return;
+
+    this.min = Math.min(...this.severities.map((point) => point.level));
+    this.max = Math.max(...this.severities.map((point) => point.level));
+
+    const rectangleOptions = this.buildRectangles(panelType);
     this.drawDataPoints(rectangleOptions);
     this.addInfoWindowEvents(severityParams, panelType);
   }
 
-  updateOverlayGradient(gradientMapping) {
-    console.log('updateOverlayGradient');
+  updateOverlayGradient(gradient: GradientHash) {
     this.severities.forEach((severity, index) => {
       const rectangle = this.rectangles[index];
       if (!rectangle) return;
       rectangle.setOptions({
-        fillColor: this.severityToColor(severity.level, gradientMapping),
+        fillColor: this.severityToColor(severity.level, gradient),
       });
     });
   }
@@ -85,14 +85,14 @@ export default class OverlayHelper {
     return severities;
   }
 
-  convertSeveritiesToRectangleOptions(): RectangleOption[] {
+  buildRectangles(panelType: PanelType): RectangleOption[] {
     const rectangleOptions: RectangleOption[] = [];
     this.severities.forEach((severity: Severity) => {
       const latLng = this.googleWrapper.latLng(severity.lat, severity.long);
       const rectangleOption = new RectangleOption(
         latLng.lat(),
         latLng.lng(),
-        ColorHelper.color(severity.level, 5),
+        panelType === 'custom' ? '#ffffff00' : ColorHelper.color(severity.level, 5),
         this.map,
       );
       rectangleOptions.push(rectangleOption);
@@ -107,7 +107,7 @@ export default class OverlayHelper {
     });
   }
 
-  addInfoWindowEvents(severityParams: SeverityParams, panelType: string) {
+  addInfoWindowEvents(severityParams: SeverityParams, panelType: PanelType) {
     this.map.addListener('click', async () => {
       this.closeInfoWindow();
     });
@@ -146,19 +146,19 @@ export default class OverlayHelper {
     });
   }
 
-  severityToColor(severityNumber: number, gradientMapping): string {
-    const keys = Object.keys(gradientMapping)
+  severityToColor(severityNumber: number, gradient: GradientHash): string {
+    const keys = Object.keys(gradient)
       .map(Number)
       .sort((x, y) => x - y);
     const key = keys.find((rangeMax) => severityNumber <= rangeMax);
-    return key !== undefined ? gradientMapping[key] : ''; // handle the case when key is undefined
+    return key !== undefined ? gradient[key] : ''; // handle the case when key is undefined
   }
 
   private async fetchPointDetails(
-    latitude,
-    longitude,
+    latitude: number,
+    longitude: number,
     severityParams: SeverityParams,
-    panelType,
+    panelType: PanelType,
   ): Promise<string> {
     return new DatabaseClient().fetchPointDetails({
       latitude: latitude,
