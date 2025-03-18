@@ -10,6 +10,7 @@ import type {
   SeverityLegend,
   TMinTmax,
   LatLng,
+  GradientHash,
 } from '@types';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
@@ -71,7 +72,7 @@ export const startDate = writable('');
 export const endDate = writable('');
 export const pestId = writable();
 export const pestAlias = writable('');
-export const overlayGradient = writable({});
+export const overlayGradient = writable<GradientHash>({});
 export const overlayLoading = writable(false);
 export const loadStatus = writable('');
 export const customOverlaySubmitted = writable(false);

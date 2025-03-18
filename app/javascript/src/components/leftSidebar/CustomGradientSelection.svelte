@@ -107,24 +107,15 @@
 </style>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
   import TwoPointGradient from './TwoPointGradient.svelte';
   import ThreePointGradient from './ThreePointGradient.svelte';
-  import { overlayGradient, customOverlaySubmitted, customPanelState, mapRange } from '@store';
+  import { customPanelState, mapRange } from '@store';
 
   let selectedGradient = $state($customPanelState.selectedGradient);
 
-  function updateOverlay(event) {
-    $overlayGradient = event.detail;
-    updateCustomPanelState();
-  }
-
-  function updateCustomPanelState() {
-    customPanelState.update((state) => ({
-      ...state,
-      selectedGradient: selectedGradient,
-    }));
-  }
+  $effect(() => {
+    $customPanelState.selectedGradient = selectedGradient;
+  });
 </script>
 
 <div data-testid="gradient-opts">
@@ -171,9 +162,9 @@
     </label>
   </fieldset>
   {#if selectedGradient === 'two-point'}
-    <TwoPointGradient on:updateOverlay={updateOverlay} />
+    <TwoPointGradient />
   {:else}
-    <ThreePointGradient on:updateOverlay={updateOverlay} />
+    <ThreePointGradient />
   {/if}
   <div title="Map range" class="note">
     Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days

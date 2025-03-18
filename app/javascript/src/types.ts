@@ -7,19 +7,26 @@ export type SeverityLegend = {
   description: string;
 };
 
-export type LegendMapping = {
-  color: string;
-  text: string;
-};
-
 export type LatLng = {
   lat: number;
   lng: number;
 };
 
+// used to create the legend mapping
 export type GradientMapping = {
   color: string;
   number: number;
+};
+
+// used for creating the legend
+export type LegendMapping = {
+  color: string;
+  text: string;
+};
+
+// used to fill the rectangles on the map where the key is the upper cutoff value and the value is the color hex string
+export type GradientHash = {
+  [key: number]: string;
 };
 
 export type Pest = {
@@ -118,9 +125,7 @@ export type GradientState = {
   userValues: number[];
   mapMin: number;
   mapMax: number;
-  gradient: {
-    [key: number]: string;
-  };
+  gradient: GradientHash;
 };
 
 // export type StationDetailsParams = {

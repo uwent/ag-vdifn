@@ -105,15 +105,15 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, untrack, onMount, onDestroy } from 'svelte';
+  import { untrack, onMount, onDestroy } from 'svelte';
   import GradientHelper from '@components/map/ts/gradientHelper';
   import ColorHelper from '@components/map/ts/colorHelper';
   import { strToNum } from '@ts/utils';
-  import { mapRange, threePointGradientState } from '@store';
+  import { mapRange, overlayGradient, threePointGradientState } from '@store';
+  import type { GradientHash } from '@types';
 
-  const dispatch = createEventDispatcher();
+  const gradientHelper = new GradientHelper();
 
-  let gradientHelper = new GradientHelper();
   let userInputElements = $state<(HTMLInputElement | null)[]>([]);
   let severityLevels = $state(5);
   let userValues = $state<number[]>([0, 0, 0, 0]);
@@ -122,10 +122,23 @@
   let intermediateRangesLower = $state<number[][]>([]);
   let buttonsDisabled = $state(false);
   let gradientValidationMessage = $state('');
+  let gradient = $derived<GradientHash>(getGradient());
 
   // populate temporary elements
   for (let i = 0; i <= 3; i++) {
     userInputElements[i] = null;
+  }
+
+  // fetch gradient
+  function getGradient() {
+    const gradient = gradientHelper.mapRangeToColors({
+      min: userValues[0],
+      middleMin: userValues[1],
+      middleMax: userValues[2],
+      max: userValues[3],
+      totalLevels: severityLevels,
+    });
+    return gradient;
   }
 
   // populate user values from map range
@@ -139,22 +152,6 @@
     ];
     validateInputs();
     updateOverlay();
-  }
-
-  // generate intermediate values for display
-  function updateIntermediateValues() {
-    const { intermediateValues: lower } = gradientHelper.gradientValues({
-      min: userValues[0],
-      max: userValues[1],
-      intermediateLevels: severityLevels - 2,
-    });
-    const { intermediateValues: upper } = gradientHelper.gradientValues({
-      min: userValues[2],
-      max: userValues[3],
-      intermediateLevels: severityLevels - 2,
-    });
-    intermediateRangesLower = lower;
-    intermediateRangesUpper = upper;
   }
 
   // validate inputs, write to values, and update intermediates
@@ -185,15 +182,30 @@
     }
   }
 
-  // fetch gradient
-  function getGradient() {
-    return gradientHelper.mapRangeToColors({
+  // generate intermediate values for display
+  function updateIntermediateValues() {
+    const { intermediateValues: lower } = gradientHelper.gradientValues({
       min: userValues[0],
-      middleMin: userValues[1],
-      middleMax: userValues[2],
-      max: userValues[3],
-      totalLevels: severityLevels,
+      max: userValues[1],
+      intermediateLevels: severityLevels - 2,
     });
+    const { intermediateValues: upper } = gradientHelper.gradientValues({
+      min: userValues[2],
+      max: userValues[3],
+      intermediateLevels: severityLevels - 2,
+    });
+    intermediateRangesLower = lower;
+    intermediateRangesUpper = upper;
+  }
+
+  // update grid overlay
+  function updateOverlay() {
+    if (gradient) $overlayGradient = gradient;
+  }
+
+  // handle reset button
+  function resetOverlay() {
+    setUserMinMax($mapRange.min, $mapRange.max);
   }
 
   // add gradient level
@@ -208,16 +220,6 @@
     if (severityLevels < 3) return;
     severityLevels -= 1;
     updateIntermediateValues();
-  }
-
-  // update grid overlay
-  function updateOverlay() {
-    dispatch('updateOverlay', getGradient());
-  }
-
-  // handle reset button
-  function resetOverlay() {
-    setUserMinMax($mapRange.min, $mapRange.max);
   }
 
   // handle inputs
@@ -260,11 +262,10 @@
       userValues,
       mapMin: $mapRange.min,
       mapMax: $mapRange.max,
-      gradient: getGradient(),
+      gradient: gradient,
     };
   });
 
-  // Only track mapRange changes to avoid infinite recursion
   $effect(() => {
     const min = $mapRange.min;
     const max = $mapRange.max;

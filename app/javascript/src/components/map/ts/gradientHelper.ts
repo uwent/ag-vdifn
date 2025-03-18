@@ -1,5 +1,6 @@
 import { round } from '@ts/utils';
 import ColorHelper from './colorHelper';
+import type { GradientHash } from '@types';
 
 interface MapRangeToColors {
   min: number;
@@ -16,9 +17,13 @@ interface GradientValues {
 }
 
 export default class GradientHelper {
-  mapRangeToColors({ min, middleMin, middleMax, max, totalLevels }: MapRangeToColors): {
-    [key: number]: string;
-  } {
+  mapRangeToColors({
+    min,
+    middleMin,
+    middleMax,
+    max,
+    totalLevels,
+  }: MapRangeToColors): GradientHash {
     const result = {};
     result[min] = ColorHelper.color(0, totalLevels);
 

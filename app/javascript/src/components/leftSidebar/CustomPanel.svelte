@@ -2,7 +2,7 @@
   import { format, startOfYear, parseISO } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import DatePicker from './DatePicker.svelte';
-  import SeverityGradient from './SeverityGradient.svelte';
+  import SeverityGradient from './CustomGradientSelection.svelte';
   import CustomModelSelection from './CustomModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import Button from '../common/Button.svelte';

@@ -99,13 +99,13 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, untrack, onMount, onDestroy } from 'svelte';
+  import { untrack, onMount, onDestroy } from 'svelte';
   import GradientHelper from '@components/map/ts/gradientHelper';
   import ColorHelper from '@components/map/ts/colorHelper';
   import { strToNum } from '@ts/utils';
-  import { mapRange, twoPointGradientState } from '@store';
+  import { mapRange, overlayGradient, twoPointGradientState } from '@store';
+  import type { GradientHash } from '@types';
 
-  const dispatch = createEventDispatcher();
   const gradientHelper = new GradientHelper();
 
   let addButton: HTMLButtonElement;
@@ -117,10 +117,22 @@
 
   let severityLevels = $state(5);
   let userValues = $state<number[]>([0, 0]);
-  let userInputs = $state<number[]>([0, 100]);
+  let userInputs = $state<number[]>([0, 0]);
   let intermediateRanges = $state<number[][]>([]);
   let buttonsDisabled = $state(false);
   let gradientValidationMessage = $state('');
+  let gradient = $derived<GradientHash>(getGradient());
+
+  // fetch gradient
+  function getGradient() {
+    // console.log('two point gradient update');
+    const gradient = gradientHelper.mapRangeToColors({
+      min: userValues[0],
+      max: userValues[1],
+      totalLevels: severityLevels,
+    });
+    return gradient;
+  }
 
   // populate user values from map range
   function setUserMinMax(mapMin, mapMax) {
@@ -174,7 +186,7 @@
 
   // update grid overlay
   function updateOverlay() {
-    dispatch('updateOverlay', getGradient());
+    if (gradient) $overlayGradient = gradient;
   }
 
   // handle reset button
@@ -195,14 +207,6 @@
     severityLevels -= 1;
     updateIntermediateValues();
   }
-
-  // fetch gradient
-  const getGradient = () =>
-    gradientHelper.mapRangeToColors({
-      min: userValues[0],
-      max: userValues[1],
-      totalLevels: severityLevels,
-    });
 
   // handle input updates
   function handleUpdate(event) {
@@ -241,7 +245,7 @@
       userValues,
       mapMax: $mapRange.max,
       mapMin: $mapRange.min,
-      gradient: getGradient(),
+      gradient: gradient,
     };
   });
 
