@@ -1,4 +1,4 @@
-import InsectPanel from '@components/leftSidebar/InsectPanel.svelte';
+import InsectPanel from '@components/sidebar/InsectPanel.svelte';
 import {
   defaults,
   endDate,

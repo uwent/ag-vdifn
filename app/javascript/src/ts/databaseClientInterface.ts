@@ -3,7 +3,7 @@ import type {
   SeverityLegend,
   PointDetailsParams,
   SeverityParams,
-  CropWithAfflictions,
+  CropWithPests,
 } from '@types';
 
 export default interface DatabaseClientInterface {
@@ -13,6 +13,6 @@ export default interface DatabaseClientInterface {
   fetchPointDetails(pointDetailsParams: PointDetailsParams): Promise<string>;
   // fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo>
   // fetchStationDetails(stationDetailParams: StationDetailsParams): Promise<string>
-  fetchDiseasePanel(): Promise<CropWithAfflictions[]>;
-  fetchInsectPanel(): Promise<CropWithAfflictions[]>;
+  fetchDiseasePanel(): Promise<CropWithPests[]>;
+  fetchInsectPanel(): Promise<CropWithPests[]>;
 }

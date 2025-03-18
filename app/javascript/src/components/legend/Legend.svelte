@@ -81,10 +81,9 @@
 </style>
 
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import DatabaseClient from '@ts/databaseClient';
   import SeverityLegend from './SeverityLegend.svelte';
-  import CustomSeverityLegend from './CustomSeverityLegend.svelte';
+  import CustomSeverityLegend from './CustomLegend.svelte';
   import Modal from '../common/Modal.svelte';
   import {
     selectedPanel,
@@ -94,31 +93,66 @@
     selectedPest,
     diseaseLegend,
     insectLegend,
+    customPanelState,
     customLegend,
+    overlayLoading,
   } from '@store';
-  import type { GradientMapping } from '@types';
+  import type { GradientMapping, SeverityParams } from '@types';
+  import type { Snippet } from 'svelte';
 
-  let expanded = true;
-  let showModal = false;
-  let showDiseaseLegend = false;
-  let showInsectLegend = false;
-  let showCustomLegend = false;
+  const { parent } = $props<{
+    parent: Snippet;
+  }>();
 
-  const diseaseUnsubscribe = diseasePanelParams.subscribe(async (severityParams) => {
-    if (Object.entries(severityParams).length === 0) return;
-    const legend = await updateSeverities(severityParams);
-    $diseaseLegend = legend;
+  let expanded = $state(true);
+  let showModal = $state(false);
+  let showDiseaseLegend = $derived($selectedPanel === 'disease' && $diseaseLegend);
+  let showInsectLegend = $derived($selectedPanel === 'insect' && $insectLegend);
+  let showCustomLegend = $derived($selectedPanel === 'custom' && $customLegend && !$overlayLoading);
+
+  $effect(() => {
+    console.log('overlayLoading', $overlayLoading);
+  });
+  $effect(() => {
+    console.log('customPanelState', $customPanelState);
+  });
+  $effect(() => {
+    console.log('customLegend', $customLegend);
   });
 
-  const insectUnsubscribe = insectPanelParams.subscribe(async (severityParams) => {
-    if (Object.entries(severityParams).length === 0) return;
-    let legend = await updateSeverities(severityParams);
-    let info = await updateSeverityInfo(severityParams);
-    $insectLegend = { legend: legend, info: info };
+  async function updateSeverities(severityParams: SeverityParams) {
+    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
+  }
+
+  async function updateSeverityInfo(severityParams: SeverityParams) {
+    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id);
+  }
+
+  $effect(() => {
+    const severityParams = $diseasePanelParams;
+    if (!severityParams) return;
+
+    (async () => {
+      const legend = await updateSeverities(severityParams);
+      $diseaseLegend = legend;
+    })();
   });
 
-  const overlayGradientUnsubscribe = overlayGradient.subscribe((gradientMapping) => {
-    if (Object.keys(gradientMapping).length === 0) return;
+  $effect(() => {
+    const severityParams = $insectPanelParams;
+    if (!severityParams) return;
+
+    (async () => {
+      let legend = await updateSeverities(severityParams);
+      let info = await updateSeverityInfo(severityParams);
+      $insectLegend = { legend: legend, info: info };
+    })();
+  });
+
+  $effect(() => {
+    const gradientMapping = $overlayGradient;
+    if (!gradientMapping) return;
+
     const arr: GradientMapping[] = [];
     for (const key in gradientMapping) {
       if (gradientMapping.hasOwnProperty(key)) {
@@ -128,27 +162,9 @@
     const gradient = arr.sort((x, y) => x.number - y.number);
     $customLegend = gradient;
   });
-
-  async function updateSeverities(severityParams) {
-    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
-  }
-
-  async function updateSeverityInfo(severityParams) {
-    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id);
-  }
-
-  onDestroy(() => {
-    diseaseUnsubscribe();
-    insectUnsubscribe();
-    overlayGradientUnsubscribe();
-  });
-
-  $: showDiseaseLegend = $selectedPanel === 'disease' && $diseaseLegend.length > 0;
-  $: showInsectLegend = $selectedPanel === 'insect' && $insectLegend.legend.length > 0;
-  $: showCustomLegend = $selectedPanel === 'custom' && $customLegend.length > 0;
 </script>
 
-<slot />
+{@render parent?.()}
 
 {#if showModal}
   <Modal name="Pest Info" on:close={() => (showModal = false)}>
@@ -182,7 +198,7 @@
   <button
     id="right-sidebar-expand-button"
     aria-expanded={expanded}
-    on:click={() => (expanded = !expanded)}
+    onclick={() => (expanded = !expanded)}
   >
     {expanded ? '✖' : 'Show Legend'}
   </button>

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
 
-import TwoPointGradient from '@components/leftSidebar/TwoPointGradient.svelte';
+import TwoPointGradient from '@components/sidebar/TwoPointGradient.svelte';
 import { mapRange, twoPointGradientState } from '@store';
 
 const mapMin = 300;

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
-import Interface from '@components/leftSidebar/Interface.svelte';
+import Interface from '@components/sidebar/Interface.svelte';
 import type { CropWithPests, DegreeDayModel } from '@types';
 
 beforeEach(() => {

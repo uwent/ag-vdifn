@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
 
-import ThreePointGradient from '@components/leftSidebar/ThreePointGradient.svelte';
+import ThreePointGradient from '@components/sidebar/ThreePointGradient.svelte';
 import { mapRange, threePointGradientState } from '@store';
 
 const mapMin = 100;

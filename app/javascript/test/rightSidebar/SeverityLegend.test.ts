@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/svelte';
 import Color from 'color';
 
-import SeverityLegend from '@components/rightSidebar/SeverityLegend.svelte';
+import SeverityLegend from '@components/legend/SeverityLegend.svelte';
 import { COLORS } from '@components/map/ts/colors';
 
 const severities = [

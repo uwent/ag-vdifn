@@ -1,33 +1,42 @@
+<style lang="scss">
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
 <script lang="ts">
-  import { format, parseISO, startOfYear } from 'date-fns';
+  import { format, parseISO, subWeeks } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
-  import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
+  import DatePicker from './DatePicker.svelte';
   import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
-  import LoadStatus from '../common/LoadStatus.svelte';
   import {
-    defaults,
-    endDate,
-    extents,
-    insectPanelParams,
-    insectPanelState,
-    mapExtent,
     overlayLoading,
-    panelKey,
     pestId,
-    selectedInsect,
-    selectedPanel,
-    selectedPest,
+    endDate,
+    panelKey,
     startDate,
     tMinTmax,
+    diseasePanelParams,
+    selectedPanel,
+    diseasePanelState,
+    selectedDisease,
+    extents,
+    mapExtent,
+    defaults,
+    selectedPest,
   } from '@store';
+  import LoadStatus from '@components/common/LoadStatus.svelte';
   import type { PanelType } from '@types';
+
+  const thisPanel: PanelType = 'disease';
 
   let {
     data = undefined,
-    initialModelName = defaults.insect,
+    initialModelName = defaults.disease,
     submitOnLoad = false,
   } = $props<{
     data: any;
@@ -35,49 +44,45 @@
     submitOnLoad?: boolean;
   }>();
 
-  const thisPanel: PanelType = 'insect';
-
-  if ($insectPanelState.loaded) {
-    let pest = $insectPanelState.selectedPest;
-    $selectedInsect = pest;
+  if ($diseasePanelState.loaded) {
+    let pest = $diseasePanelState.selectedPest;
+    $selectedDisease = pest;
     initialModelName = pest.local_name;
     submitOnLoad = false;
   } else {
-    initialModelName = $selectedInsect.local_name;
+    initialModelName = $selectedDisease?.local_name;
   }
-  setInsectPanelURL();
+  setDiseasePanelURL();
 
   setContext(panelKey, {
     panelType: thisPanel,
     getCrops: () => data,
-    getPestName: () => 'Insect',
     dateToolTip: {
-      startDate: 'Biofix date for insect',
-      endDate: 'Date through which degree days are accumulated',
-      startLabel: 'Biofix',
+      startDate: 'Start of date range',
+      endDate: 'Date through which disease severity values are accumulated',
+      startLabel: 'Start date',
     },
-    defaultStartDate: format(startOfYear(new Date()), 'yyyy-MM-dd'),
+    getPestName: () => 'Disease',
+    defaultStartDate: format(subWeeks(new Date(), 1), 'yyyy-MM-dd'),
   });
 
   function submit() {
-    let pest = $selectedInsect;
+    let pest = $selectedDisease;
     let params = {
       start_date: format(parseISO($startDate), 'yyyy-MM-dd'),
       end_date: format(parseISO($endDate), 'yyyy-MM-dd'),
       pest_id: $pestId,
-      t_min: $tMinTmax.t_min,
-      t_max: $tMinTmax.t_max,
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
-    insectPanelState.update((state) => ({
+    diseasePanelState.update((state) => ({
       ...state,
       selectedPest: pest,
       mapExtent: $mapExtent,
       loaded: true,
     }));
-    $insectPanelParams = params;
-    setInsectPanelURL();
+    $diseasePanelParams = params;
+    setDiseasePanelURL();
     gtag('event', 'submit', {
       panel_name: thisPanel,
       model_name: pest.name,
@@ -85,14 +90,13 @@
     });
   }
 
-  function setInsectPanelURL() {
-    let title = 'VDIFN | Insect models';
+  function setDiseasePanelURL() {
+    let pest = $diseasePanelState.selectedPest;
     let url = window.location.pathname;
-    let pest = $insectPanelState.selectedPest;
-    url += '?type=' + thisPanel;
+    let title = 'VDIFN: Plant disease and insect risk models';
     if (pest) {
       initialModelName = pest.local_name;
-      url += '&model=' + pest.local_name;
+      url += '?model=' + pest.local_name;
       title = `VDIFN | ${pest.name} model`;
     }
     window.history.replaceState({}, '', url);
@@ -104,16 +108,17 @@
     if (submitOnLoad) submit();
   });
 
+  // Reactive statements
   $effect(() => {
-    if ($insectPanelState.loaded && $insectPanelState.mapExtent != $mapExtent) submit();
+    if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
   });
 
   $effect(() => {
-    $selectedPest = $selectedInsect;
+    $selectedPest = $selectedDisease;
   });
 </script>
 
-<div data-testid="insect-panel">
+<div data-testid="disease-panel">
   <ModelSelection initialModel={initialModelName} />
   <fieldset>
     <legend>Model parameters</legend>
@@ -122,12 +127,13 @@
   </fieldset>
   <Button
     title="Submit parameters. Data load may take several seconds."
+    ariaLabel="Submit parameters"
     disabled={$overlayLoading}
     click={submit}
   />
   {#if $overlayLoading}
     <Loading />
   {:else}
-    <LoadStatus loaded={$insectPanelState.loaded} />
+    <LoadStatus loaded={$diseasePanelState.loaded} />
   {/if}
 </div>

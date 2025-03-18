@@ -11,24 +11,14 @@ import type {
   TMinTmax,
   LatLng,
   GradientHash,
+  SeverityParams,
+  CustomPanelParams,
 } from '@types';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
 export const isDev = env === 'development';
 export const baseURL = isDev ? '' : '/vdifn';
 export const mapsApiKey = process.env.GOOGLE_MAPS_KEY;
-
-// initial component states
-export const defaults = {
-  panel: 'disease',
-  extent: 'wisconsin',
-  disease: 'late-blight',
-  insect: 'cpb',
-  dd_model: 'dd_50_86',
-  t_min: 50,
-  t_max: 86,
-  in_f: true,
-};
 
 // for AgWeather queries
 export const extents = {
@@ -58,6 +48,18 @@ export const bounds = {
   },
 };
 
+// initial component states
+export const defaults = {
+  panel: 'disease' as PanelType,
+  extent: 'wisconsin',
+  disease: 'late-blight',
+  insect: 'cpb',
+  dd_model: 'dd_50_86',
+  t_min: 50,
+  t_max: 86,
+  in_f: true,
+};
+
 export const userLocation = writable<LatLng | null>(null);
 
 export const panelKey = {};
@@ -67,31 +69,28 @@ export const customPanelKey = {};
 export const mapKey = {};
 export const interfaceKey = {};
 
-export const selectedPanel = writable<PanelType>('disease');
+export const selectedPanel = writable<PanelType>(defaults.panel);
 export const startDate = writable('');
 export const endDate = writable('');
 export const pestId = writable();
 export const pestAlias = writable('');
-export const overlayGradient = writable<GradientHash>({});
+export const overlayGradient = writable<GradientHash>();
 export const overlayLoading = writable(false);
 export const loadStatus = writable('');
 export const customOverlaySubmitted = writable(false);
 export const pestParams = writable({});
-export const diseasePanelParams = writable({});
-export const insectPanelParams = writable({});
-export const customPanelParams = writable({});
-export const diseaseLegend = writable([] as SeverityLegend[]);
-export const insectLegend = writable({
-  legend: [] as SeverityLegend[],
-  info: '',
-});
-export const customLegend = writable([] as GradientMapping[]);
+export const diseasePanelParams = writable<SeverityParams>();
+export const insectPanelParams = writable<SeverityParams>();
+export const customPanelParams = writable<CustomPanelParams>();
+export const diseaseLegend = writable<SeverityLegend[]>();
+export const insectLegend = writable<{ legend: SeverityLegend[]; info: string }>();
+export const customLegend = writable<GradientMapping[]>();
 
 // Affliction and DD model structures align with rails database
-export const selectedPest = writable({} as Pest);
-export const selectedDisease = writable({} as Pest);
-export const selectedInsect = writable({} as Pest);
-export const selectedDDModel = writable({} as DegreeDayModel);
+export const selectedPest = writable<Pest>();
+export const selectedDisease = writable<Pest>();
+export const selectedInsect = writable<Pest>();
+export const selectedDDModel = writable<DegreeDayModel>();
 
 // TminMaxDisplay
 export const tMinTmax = writable({
@@ -101,10 +100,7 @@ export const tMinTmax = writable({
 } as TMinTmax);
 
 // Map states
-export const mapRange = writable({
-  min: 0,
-  max: 0,
-});
+export const mapRange = writable<{ min: number; max: number }>();
 export const mapExtent = writable(defaults.extent);
 
 // Panel states
@@ -120,5 +116,5 @@ export const customPanelState = writable({
 } as CustomPanelState);
 
 // Custom tab gradient states
-export const twoPointGradientState = writable({} as GradientState);
-export const threePointGradientState = writable({} as GradientState);
+export const twoPointGradientState = writable<GradientState>();
+export const threePointGradientState = writable<GradientState>();

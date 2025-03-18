@@ -162,6 +162,7 @@
 
   // Panel and pest-specific configurations
   const unsubscribe = selectedPest.subscribe((pest) => {
+    if (!pest) return;
     if (panelType != 'custom') {
       startLabel = pest.biofix_label || 'Start date';
 

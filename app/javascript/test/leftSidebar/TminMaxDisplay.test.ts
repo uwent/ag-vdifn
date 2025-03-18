@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
 import SetContextTest from '../testComponents/SetContextTest.svelte';
-import TminMaxDisplay from '@components/leftSidebar/TminMaxDisplay.svelte';
+import TminMaxDisplay from '@components/sidebar/TminMaxDisplay.svelte';
 import { c_to_f, f_to_c } from '@ts/utils';
 import { panelKey, selectedPanel, selectedPest, selectedDDModel } from '@store';
 import type { DegreeDayModel, Pest } from '@types';

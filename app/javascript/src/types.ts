@@ -125,7 +125,7 @@ export type GradientState = {
   userValues: number[];
   mapMin: number;
   mapMax: number;
-  gradient: GradientHash;
+  gradient: GradientHash | null;
 };
 
 // export type StationDetailsParams = {

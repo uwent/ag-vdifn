@@ -22,12 +22,14 @@
   import { round } from '@ts/utils';
   import type { GradientMapping, LegendMapping } from '@types';
 
-  export let gradientMapping: GradientMapping[] = [];
+  const { gradientMapping = [] } = $props<{
+    gradientMapping: GradientMapping[];
+  }>();
 
-  let legend: LegendMapping[] = [];
+  let legend = $derived<LegendMapping[]>(makeLegend(gradientMapping));
 
   // converts color/cutoff gradient into array of legend text/color pairs
-  function makeLegend(gradient) {
+  function makeLegend(gradient: GradientMapping[]): LegendMapping[] {
     if (!gradient) return [];
     return gradient.map((el, i) => {
       const color = el.color;
@@ -36,8 +38,6 @@
       return { color, text };
     });
   }
-
-  $: legend = makeLegend(gradientMapping);
 </script>
 
 <fieldset id="dsv-legend" data-testid="dsv-legend">

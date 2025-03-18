@@ -24,6 +24,7 @@ export default class GradientHelper {
     max,
     totalLevels,
   }: MapRangeToColors): GradientHash {
+    console.log(arguments);
     const result = {};
     result[min] = ColorHelper.color(0, totalLevels);
 

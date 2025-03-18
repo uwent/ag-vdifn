@@ -3,7 +3,7 @@ import { tick } from 'svelte';
 import { get } from 'svelte/store';
 import moment from 'moment';
 
-import CustomPanel from '@components/leftSidebar/CustomPanel.svelte';
+import CustomPanel from '@components/sidebar/CustomPanel.svelte';
 import {
   customPanelState,
   panelKey,

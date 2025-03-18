@@ -26,10 +26,10 @@
 <script lang="ts">
   import Map from '~/src/components/map/Map.svelte';
   import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte';
-  import Sidebar from '~/src/components/leftSidebar/Sidebar.svelte';
-  import Interface from '~/src/components/leftSidebar/Interface.svelte';
-  import RightSidebar from '~/src/components/rightSidebar/RightSidebar.svelte';
-  import SeverityLegend from '~/src/components/rightSidebar/SeverityLegend.svelte';
+  import Sidebar from '@components/sidebar/Sidebar.svelte';
+  import Interface from '@components/sidebar/Interface.svelte';
+  import RightSidebar from '@components/legend/Legend.svelte';
+  import SeverityLegend from '@components/legend/SeverityLegend.svelte';
   import Status from '~/src/components/map/Status.svelte';
 </script>
 

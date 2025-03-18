@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import OverlayHelper from '@components/map/ts/overlayHelper';
-  import type { PanelType, SeverityParams, GradientState } from '@types';
+  import type { PanelType, SeverityParams } from '@types';
   import {
     mapKey,
     diseasePanelParams,
@@ -31,7 +31,8 @@
   // Using $state for reactive variables
   let currentOverlay = $state<OverlayHelper | null>(null);
 
-  async function closeInfoWindows() {
+  // Helper functions
+  function closeInfoWindows() {
     diseaseOverlay.closeInfoWindow();
     insectOverlay.closeInfoWindow();
     customOverlay.closeInfoWindow();
@@ -42,113 +43,162 @@
     severityParams: SeverityParams,
     panelType: string,
   ) {
-    if (Object.entries(severityParams).length === 0) return;
+    if (!severityParams) return;
     overlayLoading.set(true);
     await overlayHelper.updateOverlay(severityParams, panelType);
     overlayLoading.set(false);
   }
 
-  // Setup effect for mapExtent changes
+  function getOverlayForPanelType(panelType: PanelType): OverlayHelper {
+    switch (panelType) {
+      case 'insect':
+        return insectOverlay;
+      case 'custom':
+        return customOverlay;
+      default:
+        return diseaseOverlay;
+    }
+  }
+
+  function updatePanelState(
+    panelType: PanelType,
+    overlay: OverlayHelper,
+    severityParams: SeverityParams,
+  ) {
+    switch (panelType) {
+      case 'disease':
+        $diseasePanelState = {
+          ...$diseasePanelState,
+          severities: overlay.severities,
+          severityParams,
+        };
+        break;
+      case 'insect':
+        $insectPanelState = {
+          ...$insectPanelState,
+          severities: overlay.severities,
+          severityParams,
+        };
+        break;
+      case 'custom':
+        $mapRange = {
+          min: overlay.min || 0,
+          max: overlay.max || 0,
+        };
+        $customPanelState = {
+          ...$customPanelState,
+          severities: overlay.severities,
+          severityParams,
+        };
+        break;
+    }
+  }
+
+  function handleCustomGradient(overlay: OverlayHelper) {
+    if (!$customOverlaySubmitted) return;
+
+    const customState = $customPanelState;
+    const gradientState =
+      customState.selectedGradient === 'two-point'
+        ? $twoPointGradientState
+        : $threePointGradientState;
+
+    console.log('gradient state', gradientState);
+    if (gradientState?.gradient) overlay.updateOverlayGradient(gradientState.gradient);
+  }
+
+  function switchOverlay(panelType: PanelType) {
+    // Set current overlay based on panel type
+    const newOverlay = getOverlayForPanelType(panelType);
+
+    // Hide previous overlay and close info windows
+    if (currentOverlay) {
+      currentOverlay.hideOverlay();
+    }
+    closeInfoWindows();
+
+    // Get state for the selected panel
+    let severities;
+    let severityParams: SeverityParams;
+
+    switch (panelType) {
+      case 'disease':
+        const diseaseState = $diseasePanelState;
+        severities = diseaseState.severities;
+        severityParams = diseaseState.severityParams;
+        break;
+      case 'insect':
+        const insectState = $insectPanelState;
+        severities = insectState.severities;
+        severityParams = insectState.severityParams;
+        break;
+      case 'custom':
+        const customState = $customPanelState;
+        severities = customState.severities;
+        severityParams = customState.severityParams;
+        handleCustomGradient(newOverlay);
+        break;
+    }
+
+    // Only proceed if we have data
+    if (!severities && !severityParams) return;
+
+    // Update current overlay and show it
+    currentOverlay = newOverlay;
+    currentOverlay.showOverlay();
+    overlayLoading.set(false);
+  }
+
+  // Effect for mapExtent changes
   $effect(() => {
     if (currentOverlay) {
       currentOverlay.showBounds(bounds[$mapExtent]);
     }
   });
 
-  // Handle switching panel overlays
-  selectedPanel.subscribe((panelType: PanelType) => {
-    let severities;
-    let severityParams: SeverityParams;
-    let gradientStore: GradientState;
-
-    if (!currentOverlay) {
-      switch (panelType) {
-        case 'insect':
-          currentOverlay = insectOverlay;
-          break;
-        case 'custom':
-          currentOverlay = customOverlay;
-          break;
-        default:
-          panelType = 'disease';
-          currentOverlay = diseaseOverlay;
-          break;
-      }
-    }
-    closeInfoWindows();
-    currentOverlay.hideOverlay();
-
-    switch (panelType) {
-      case 'disease':
-        const diseaseState = $diseasePanelState;
-        severities = diseaseState.severities;
-        severityParams = diseaseState.severityParams as SeverityParams;
-        if (!severities && !severityParams) return;
-        currentOverlay = diseaseOverlay;
-        break;
-      case 'insect':
-        const insectState = $insectPanelState;
-        severities = insectState.severities;
-        severityParams = insectState.severityParams as SeverityParams;
-        if (!severities && !severityParams) return;
-        currentOverlay = insectOverlay;
-        break;
-      case 'custom':
-        const customState = $customPanelState;
-        severities = customState.severities;
-        severityParams = customState.severityParams as SeverityParams;
-        if (!severities && !severityParams) return;
-        currentOverlay = customOverlay;
-        if ($customOverlaySubmitted) {
-          gradientStore =
-            customState.selectedGradient === 'two-point'
-              ? $twoPointGradientState
-              : $threePointGradientState;
-          currentOverlay.updateOverlayGradient(gradientStore.gradient);
-        }
-        break;
-    }
-    currentOverlay.showOverlay();
-    overlayLoading.set(false);
+  // Effect for selectedPanel changes
+  $effect(() => {
+    const panelType = $selectedPanel;
+    switchOverlay(panelType);
   });
 
-  diseasePanelParams.subscribe(async (params) => {
+  // Effect for diseasePanelParams changes
+  $effect(() => {
+    const params = $diseasePanelParams;
     const severityParams = params as SeverityParams;
-    await updateOverlay(diseaseOverlay, severityParams, 'disease');
-    diseasePanelState.update((state) => ({
-      ...state,
-      severities: diseaseOverlay.severities,
-      severityParams,
-    }));
+
+    (async () => {
+      await updateOverlay(diseaseOverlay, severityParams, 'disease');
+      updatePanelState('disease', diseaseOverlay, severityParams);
+    })();
   });
 
-  insectPanelParams.subscribe(async (params) => {
+  // Effect for insectPanelParams changes
+  $effect(() => {
+    const params = $insectPanelParams;
     const severityParams = params as SeverityParams;
-    await updateOverlay(insectOverlay, severityParams, 'insect');
-    insectPanelState.update((state) => ({
-      ...state,
-      severities: insectOverlay.severities,
-      severityParams,
-    }));
+
+    (async () => {
+      await updateOverlay(insectOverlay, severityParams, 'insect');
+      updatePanelState('insect', insectOverlay, severityParams);
+    })();
   });
 
-  customPanelParams.subscribe(async (params) => {
+  // Effect for customPanelParams changes
+  $effect(() => {
+    const params = $customPanelParams;
     const severityParams = params as SeverityParams;
-    await updateOverlay(customOverlay, severityParams, 'custom');
-    mapRange.set({
-      min: customOverlay.min || 0,
-      max: customOverlay.max || 0,
-    });
-    console.log($mapRange);
-    customPanelState.update((state) => ({
-      ...state,
-      severities: customOverlay.severities,
-      severityParams,
-    }));
+
+    (async () => {
+      await updateOverlay(customOverlay, severityParams, 'custom');
+      updatePanelState('custom', customOverlay, severityParams);
+    })();
   });
 
-  overlayGradient.subscribe((gradientMapping) => {
-    if (Object.entries(gradientMapping).length === 0) return;
+  // Effect for overlayGradient changes
+  $effect(() => {
+    const gradientMapping = $overlayGradient;
+    if (!gradientMapping) return;
     customOverlay.updateOverlayGradient(gradientMapping);
   });
 </script>

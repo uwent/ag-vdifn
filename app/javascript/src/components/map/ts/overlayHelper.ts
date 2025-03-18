@@ -59,6 +59,7 @@ export default class OverlayHelper {
   }
 
   updateOverlayGradient(gradientMapping) {
+    console.log('updateOverlayGradient');
     this.severities.forEach((severity, index) => {
       const rectangle = this.rectangles[index];
       if (!rectangle) return;

@@ -85,8 +85,8 @@
   $effect(() => {
     if (
       $selectedPanel == thisPanel &&
-      $customPanelState.loaded &&
-      $customPanelState.selectedExtent != $mapExtent
+      $customPanelState?.loaded &&
+      $customPanelState?.selectedExtent != $mapExtent
     ) {
       submit();
     }

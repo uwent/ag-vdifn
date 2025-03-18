@@ -28,7 +28,7 @@
   // Try to find the default model
   function getCurrentModel(): DegreeDayModel {
     if ($customPanelState.loaded) return $customPanelState.selectedModel;
-    if ($selectedDDModel.id) return $selectedDDModel;
+    if ($selectedDDModel) return $selectedDDModel;
     let match = ddModels.find((model) => {
       return model.remote_name === defaultModel;
     });

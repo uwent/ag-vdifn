@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/svelte';
 import { get } from 'svelte/store';
 import moment from 'moment';
 
-import DiseasePanel from '@components/leftSidebar/DiseasePanel.svelte';
+import DiseasePanel from '@components/sidebar/DiseasePanel.svelte';
 import {
   selectedDisease,
   diseasePanelState,
