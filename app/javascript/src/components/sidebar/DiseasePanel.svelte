@@ -35,22 +35,22 @@
   const thisPanel: PanelType = 'disease';
 
   let {
-    data = undefined,
+    data,
     initialModelName = defaults.disease,
     submitOnLoad = false,
   } = $props<{
     data: any;
-    initialModelName?: string;
-    submitOnLoad?: boolean;
+    initialModelName: string;
+    submitOnLoad: boolean;
   }>();
 
   if ($diseasePanelState.loaded) {
     let pest = $diseasePanelState.selectedPest;
     $selectedDisease = pest;
     initialModelName = pest.local_name;
-    submitOnLoad = false;
+    // submitOnLoad = false;
   } else {
-    initialModelName = $selectedDisease?.local_name;
+    if ($selectedDisease) initialModelName = $selectedDisease.local_name;
   }
   setDiseasePanelURL();
 
@@ -75,12 +75,12 @@
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
-    diseasePanelState.update((state) => ({
-      ...state,
+    $diseasePanelState = {
+      ...$diseasePanelState,
       selectedPest: pest,
       mapExtent: $mapExtent,
       loaded: true,
-    }));
+    };
     $diseasePanelParams = params;
     setDiseasePanelURL();
     gtag('event', 'submit', {
@@ -105,6 +105,12 @@
 
   onMount(() => {
     $selectedPanel = thisPanel;
+    const params = $diseasePanelParams;
+    if (params) {
+      $startDate = params.start_date;
+      $endDate = params.end_date;
+      $pestId = params.pest_id;
+    }
     if (submitOnLoad) submit();
   });
 

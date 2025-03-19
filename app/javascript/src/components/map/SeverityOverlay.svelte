@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, untrack } from 'svelte';
   import OverlayHelper from '@components/map/ts/overlayHelper';
-  import type { PanelType, SeverityParams } from '@types';
+  import type { CustomPanelState, PanelType, PestPanelState, SeverityParams } from '@types';
   import {
     mapKey,
     diseasePanelParams,
@@ -25,49 +25,40 @@
   const insectOverlay = new OverlayHelper(google, map);
   const customOverlay = new OverlayHelper(google, map);
 
-  let currentOverlay = $derived.by(() => {
-    switch ($selectedPanel) {
+  let selected = $derived.by<{
+    overlay: OverlayHelper;
+    state: PestPanelState | CustomPanelState;
+    params: SeverityParams;
+  }>(() => {
+    const panel = $selectedPanel;
+    switch (panel) {
       case 'disease':
-        return diseaseOverlay;
+        return {
+          overlay: diseaseOverlay,
+          state: $diseasePanelState,
+          params: $diseasePanelParams,
+        };
       case 'insect':
-        return insectOverlay;
+        return { overlay: insectOverlay, state: $insectPanelState, params: $insectPanelParams };
       case 'custom':
-        return customOverlay;
+        return {
+          overlay: customOverlay,
+          state: $customPanelState,
+          params: $customPanelParams as SeverityParams,
+        };
     }
   });
 
-  let currentParams = $derived.by(() => {
-    switch ($selectedPanel) {
-      case 'disease':
-        return $diseasePanelParams;
-      case 'insect':
-        return $insectPanelParams;
-      case 'custom':
-        return $customPanelParams as SeverityParams;
-    }
-  });
-
-  $effect(() => {
-    const overlay = currentOverlay;
-    const params = currentParams;
-
-    if (overlay && params) {
-      untrack(async () => {
-        await updateOverlay(overlay, params, $selectedPanel);
-      });
-    }
-  });
-
-  // Effect for mapExtent changes
-  $effect(() => {
-    if (currentOverlay) currentOverlay.showBounds(bounds[$mapExtent]);
-  });
-
-  // Helper functions
   function closeInfoWindows() {
     diseaseOverlay.closeInfoWindow();
     insectOverlay.closeInfoWindow();
     customOverlay.closeInfoWindow();
+  }
+
+  function hideOverlays() {
+    diseaseOverlay.hideOverlay();
+    insectOverlay.hideOverlay();
+    customOverlay.hideOverlay();
   }
 
   async function updateOverlay(
@@ -77,15 +68,15 @@
   ) {
     if (!severityParams) return;
 
-    if (currentOverlay) currentOverlay.hideOverlay();
-    closeInfoWindows();
-
-    $overlayLoading = true;
+    // check if overlay is already loaded
+    if (selected.state.severities && selected.state.severityParams === severityParams)
+      return overlay.showOverlay();
 
     // fetch data and update overlay
+    $overlayLoading = true;
     await overlay.updateOverlay(panelType, severityParams);
 
-    // update panel state
+    // update panel state with severities and params
     switch (panelType) {
       case 'disease':
         $diseasePanelState = {
@@ -107,20 +98,42 @@
           severities: overlay.severities,
           severityParams,
         };
+        $mapRange = {
+          min: overlay.min || 0,
+          max: overlay.max || 0,
+        };
         break;
     }
 
-    $mapRange = {
-      min: overlay.min || 0,
-      max: overlay.max || 0,
-    };
     overlay.showOverlay();
     $overlayLoading = false;
   }
 
+  // Effect for panel changes
   $effect(() => {
-    const gradient = $overlayGradient;
-    if ($selectedPanel !== 'custom' || !gradient) return;
-    customOverlay.updateOverlayGradient(gradient);
+    const overlay = selected.overlay;
+    const params = selected.params;
+
+    closeInfoWindows();
+    hideOverlays();
+
+    if (overlay && params) {
+      untrack(async () => {
+        await updateOverlay(overlay, params, $selectedPanel);
+      });
+    }
+  });
+
+  // Show and update bounds when map extent changes
+  $effect(() => {
+    if (selected.overlay) selected.overlay.showBounds(bounds[$mapExtent]);
+  });
+
+  // For custom panel, no colors are initially drawn on the map because the gradient is not set
+  $effect(() => {
+    if ($selectedPanel === 'custom') {
+      const gradient = $overlayGradient;
+      if (gradient) customOverlay.updateOverlayGradient(gradient);
+    }
   });
 </script>

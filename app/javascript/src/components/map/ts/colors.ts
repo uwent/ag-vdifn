@@ -42,3 +42,4 @@ const classicPalette = {
 };
 
 export const COLORS = classicPalette;
+// export const COLORS = viridisPalette;

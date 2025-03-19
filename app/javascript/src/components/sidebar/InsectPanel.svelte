@@ -31,8 +31,8 @@
     submitOnLoad = false,
   } = $props<{
     data: any;
-    initialModelName?: string;
-    submitOnLoad?: boolean;
+    initialModelName: string;
+    submitOnLoad: boolean;
   }>();
 
   const thisPanel: PanelType = 'insect';
@@ -41,9 +41,9 @@
     let pest = $insectPanelState.selectedPest;
     $selectedInsect = pest;
     initialModelName = pest.local_name;
-    submitOnLoad = false;
+    // submitOnLoad = false;
   } else {
-    initialModelName = $selectedInsect?.local_name;
+    if ($selectedInsect) initialModelName = $selectedInsect.local_name;
   }
   setInsectPanelURL();
 
@@ -101,11 +101,17 @@
 
   onMount(() => {
     $selectedPanel = thisPanel;
+    const params = $insectPanelParams;
+    if (params) {
+      $startDate = params.start_date;
+      $endDate = params.end_date;
+      $pestId = params.pest_id;
+    }
     if (submitOnLoad) submit();
   });
 
   $effect(() => {
-    if ($insectPanelState.loaded && $insectPanelState.mapExtent != $mapExtent) submit();
+    if ($insectPanelState.loaded && $insectPanelState.mapExtent !== $mapExtent) submit();
   });
 
   $effect(() => {

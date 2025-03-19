@@ -60,11 +60,11 @@
     selectedInsect,
     pestId,
     defaults,
-    env,
+    dev,
     baseURL,
   } from '@store';
 
-  const { initialModel = '' } = $props<{
+  const { initialModel } = $props<{
     initialModel?: string;
   }>();
 
@@ -75,7 +75,6 @@
   }>(panelKey);
   const defaultModel = panelType === 'disease' ? defaults.disease : defaults.insect;
   const selectedPest = panelType === 'disease' ? selectedDisease : selectedInsect;
-  const logging = env === 'development';
 
   let showModal = $state(false);
   let crops = $state<CropWithPests[]>([]);
@@ -119,22 +118,17 @@
   }
 
   function selectInitialModel() {
-    if (logging) console.log('ModelSelection :: selectInitialModel', initialModel);
-    let matched;
     if (initialModel) {
-      matched = getPestId(initialModel);
+      let matched = getPestId(initialModel);
       modelId = matched || getPestId(defaultModel);
-      if (logging) {
-        if (matched) {
-          console.log(`Model selection >> Matched model '${initialModel} (${modelId})'`);
-        } else {
-          console.log(`Model selection >> Failed to match model name '${initialModel}'`);
-        }
+      if (dev) {
+        matched
+          ? console.log(`Model selection >> Matched model '${initialModel} (id ${modelId})'`)
+          : console.log(`Model selection >> Failed to match model name '${initialModel}'`);
       }
     } else {
       modelId = getPestId(defaultModel) || pestsForCrop[0].id;
-      if (logging)
-        console.log(`Model selection >> Loaded default model '${defaultModel} (${modelId})`);
+      if (dev) console.log(`Model selection >> Loaded default model '${defaultModel} (${modelId})`);
     }
   }
 
@@ -143,11 +137,9 @@
     if (crops.length <= 0) return;
     selectedCropValue = crops[0].id;
     pestsForCrop = crops[0].pests;
-
     selectInitialModel();
-
-    $pestId = modelId;
     $selectedPest = getCurrentPest(modelId);
+    $pestId = $selectedPest.id;
   });
 </script>
 

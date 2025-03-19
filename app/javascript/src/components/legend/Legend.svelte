@@ -100,8 +100,8 @@
   import type { GradientMapping, SeverityParams } from '@types';
   import type { Snippet } from 'svelte';
 
-  const { parent } = $props<{
-    parent: Snippet;
+  const { children } = $props<{
+    children: Snippet;
   }>();
 
   let expanded = $state(true);
@@ -154,7 +154,7 @@
   });
 </script>
 
-{@render parent?.()}
+{@render children?.()}
 
 {#if showModal}
   <Modal name="Pest Info" on:close={() => (showModal = false)}>

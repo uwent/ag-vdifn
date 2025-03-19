@@ -73,37 +73,43 @@
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
-  import { type CropWithPests, type DegreeDayModel, PANEL_TYPES, type PanelType } from '@types';
+  import {
+    type CropWithPests,
+    type DegreeDayModel,
+    type MapExtent,
+    PANEL_TYPES,
+    type PanelType,
+  } from '@types';
 
   // reactive variables
-  let diseasePanelData = $state<CropWithPests[]>([]);
-  let insectPanelData = $state<CropWithPests[]>([]);
-  let customPanelData = $state<DegreeDayModel[]>([]);
+  let diseasePanelData = $state<CropWithPests[]>();
+  let insectPanelData = $state<CropWithPests[]>();
+  let customPanelData = $state<DegreeDayModel[]>();
   let panelDataReady = $state(false);
-  let panel = $state(defaults.panel as PanelType);
-  let extent = $state(defaults.extent);
+  let panel = $state<PanelType>(defaults.panel);
+  let extent = $state<MapExtent>(defaults.extent);
   let showHelp = $state(false);
+  let opts = $state({
+    model: '',
+    submit: false,
+  });
 
   const databaseClient = new DatabaseClient();
   const urlParams = new URLSearchParams(window.location.search);
 
-  let opts = $state({
-    initialModel: '',
-    submitOnLoad: false,
-  });
-
   function parseUrlParams() {
-    const initialPanel = (urlParams.get('type') ||
+    const panelFromURL = (urlParams.get('type') ||
       urlParams.get('panel') ||
       urlParams.get('p') ||
       defaults.panel) as PanelType;
-    if (PANEL_TYPES.includes(initialPanel)) {
-      panel = initialPanel as PanelType;
+    if (PANEL_TYPES.includes(panelFromURL)) {
+      panel = panelFromURL as PanelType;
       let model = urlParams.get('model') || urlParams.get('m');
-      if (model) {
-        opts.initialModel = model;
-        opts.submitOnLoad = true;
-      }
+      if (model)
+        opts = {
+          model: model,
+          submit: true,
+        };
     } else {
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -111,9 +117,9 @@
 
   onMount(async () => {
     parseUrlParams();
-    if (diseasePanelData.length < 1) diseasePanelData = await databaseClient.fetchDiseasePanel();
-    if (insectPanelData.length < 1) insectPanelData = await databaseClient.fetchInsectPanel();
-    if (customPanelData.length < 1) customPanelData = await databaseClient.fetchCustomPanel();
+    diseasePanelData ||= await databaseClient.fetchDiseasePanel();
+    insectPanelData ||= await databaseClient.fetchInsectPanel();
+    customPanelData ||= await databaseClient.fetchCustomPanel();
     panelDataReady = true;
   });
 
@@ -191,14 +197,14 @@
       {#if panel === 'disease'}
         <DiseasePanel
           data={diseasePanelData}
-          initialModelName={opts.initialModel}
-          submitOnLoad={opts.submitOnLoad}
+          initialModelName={opts.model}
+          submitOnLoad={opts.submit}
         />
       {:else if panel === 'insect'}
         <InsectPanel
           data={insectPanelData}
-          initialModelName={opts.initialModel}
-          submitOnLoad={opts.submitOnLoad}
+          initialModelName={opts.model}
+          submitOnLoad={opts.submit}
         />
       {:else if panel === 'custom'}
         <CustomPanel data={customPanelData} />
