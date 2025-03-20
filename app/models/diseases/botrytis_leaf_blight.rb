@@ -24,11 +24,11 @@ class BotrytisLeafBlight < Disease
   # list low to high
   def severity_legend
     [
-      {name: "No DSV", slug: "very_low", description: "Very low risk of disease (no accumulated disease severity values in season, or end-of-season freeze has occurred)"},
-      {name: "CDSV < 21", slug: "low", description: "Low risk of disease (cumulative disease severity values < 21)"},
-      {name: "Threshold 1", slug: "medium", description: "Moderate risk of disease (cumulative disease severity values 21-30)"},
-      {name: "Threshold 2", slug: "high", description: "High risk of disease (cumulative disease severity values 31-40)"},
-      {name: "CDSV > 40", slug: "very_high", description: "Very high risk of disease (cumulative disease severity values > 40)"}
+      {value: 0, name: "No DSV", description: "Very low risk of disease (no accumulated disease severity values in season, or end-of-season freeze has occurred)"},
+      {value: 1, name: "CDSV < 21", description: "Low risk of disease (cumulative disease severity values < 21)"},
+      {value: 2, name: "Threshold 1", description: "Moderate risk of disease (cumulative disease severity values 21-30)"},
+      {value: 3, name: "Threshold 2", description: "High risk of disease (cumulative disease severity values 31-40)"},
+      {value: 4, name: "CDSV > 40", description: "Very high risk of disease (cumulative disease severity values > 40)"}
     ]
   end
 

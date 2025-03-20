@@ -199,6 +199,27 @@
         <label for="midwest">Upper Midwest</label>
       </div>
     </fieldset>
+    <fieldset id="palette">
+      <legend>Color Palette</legend>
+      <div class="switch-field">
+        <input
+          id="spectralPalette"
+          title="Spectral color palette"
+          type="radio"
+          value="classic"
+          bind:group={palette}
+        />
+        <label for="spectralPalette">Spectral</label>
+        <input
+          id="viridisPalette"
+          title="Viridis color palette"
+          type="radio"
+          value="viridis"
+          bind:group={palette}
+        />
+        <label for="viridisPalette">Viridis</label>
+      </div>
+    </fieldset>
     {#if panelDataReady}
       {#if panel === 'disease'}
         <DiseasePanel
@@ -215,27 +236,6 @@
       {:else if panel === 'custom'}
         <CustomPanel data={customPanelData} />
       {/if}
-      <fieldset id="palette">
-        <legend>Color Palette</legend>
-        <div class="switch-field">
-          <input
-            id="spectralPalette"
-            title="Spectral color palette"
-            type="radio"
-            value="classic"
-            bind:group={palette}
-          />
-          <label for="spectralPalette">Classic</label>
-          <input
-            id="viridisPalette"
-            title="Viridis color palette"
-            type="radio"
-            value="viridis"
-            bind:group={palette}
-          />
-          <label for="viridisPalette">Viridis</label>
-        </div>
-      </fieldset>
     {:else}
       <Loading />
     {/if}

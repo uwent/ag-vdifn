@@ -28,11 +28,11 @@ class LateBlight < Disease
 
   def severity_legend
     [
-      {name: "Very Low", slug: "very_low", description: "Very low likelihood of disease (DSVs = 0 and season DSVs < 30"},
-      {name: "Low", slug: "low", description: "Low likelihood of disease (accumulated DSVs 1-2 and season accumulated DSVs < 30)"},
-      {name: "Medium", slug: "medium", description: "Medium likelihood of disease (accumulated DSVs 3-14 or season accumulated DSVs > 30)"},
-      {name: "High", slug: "high", description: "High likelihood of disease (accumulated DSVs 14-20 and season accumulated DSVs > 30)"},
-      {name: "Very High", slug: "very_high", description: "Very high likelihood of disease (accumulated DSVs ≥ 21 and season accumulated DSVs > 30)"}
+      {value: 0, name: "Very Low", description: "Very low likelihood of disease (DSVs = 0 and season DSVs < 30"},
+      {value: 1, name: "Low", description: "Low likelihood of disease (accumulated DSVs 1-2 and season accumulated DSVs < 30)"},
+      {value: 2, name: "Medium", description: "Medium likelihood of disease (accumulated DSVs 3-14 or season accumulated DSVs > 30)"},
+      {value: 3, name: "High", description: "High likelihood of disease (accumulated DSVs 14-20 and season accumulated DSVs > 30)"},
+      {value: 4, name: "Very High", description: "Very high likelihood of disease (accumulated DSVs ≥ 21 and season accumulated DSVs > 30)"}
     ]
   end
 

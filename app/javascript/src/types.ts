@@ -6,9 +6,7 @@ export type GradientType = 'two-point' | 'three-point';
 export type ColorPaletteName = 'classic' | 'viridis';
 export type ColorPalette = {
   low: string;
-  // lowMed: string;
   med: string;
-  // medHigh: string;
   high: string;
   grey: string;
 };
@@ -23,26 +21,17 @@ export type MapRange = {
   max: number;
 };
 
-export type PestLegendElement = {
+export type LegendEntry = {
+  value: number;
+  color: string;
   name: string;
-  slug: string;
   description: string;
 };
 
-// used for creating the legend
-export type CustomLegendElement = {
-  color: string;
-  text: string;
+export type LegendData = {
+  legend: LegendEntry[];
+  info: string | null;
 };
-
-export type PestLegend = {
-  legend: PestLegendElement[];
-  info: string;
-};
-
-// export type CustomLegend = {
-//   legend: GradientMapping[];
-// };
 
 // used to create the custom legend
 export type GradientMapping = {

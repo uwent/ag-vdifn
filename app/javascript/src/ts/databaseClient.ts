@@ -1,15 +1,13 @@
 import type {
   Severity,
-  // PestInfo,
-  SeverityLegend,
   PointDetailsParams,
   SeverityParams,
   CropWithPests,
   CropWithDiseases,
   CropWithInsects,
   DegreeDayModel,
+  LegendEntry,
 } from '../types';
-import { env } from '@store';
 import axios from 'axios';
 import type DatabaseClientInterface from './databaseClientInterface';
 import ENDPOINTS from './endpoints';
@@ -115,22 +113,22 @@ export default class DatabaseClient implements DatabaseClientInterface {
     }
   }
 
-  async fetchSeverityLegend(pestId: number): Promise<SeverityLegend[]> {
+  async fetchSeverityLegend(pestId: number): Promise<LegendEntry[]> {
     const endpoint = ENDPOINTS.SEVERITY_LEGEND;
     const params = { pest_id: pestId };
 
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (logging)
-        console.log(
-          'DB >> fetchSeverityLegend',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-        );
+      // if (logging)
+      //   console.log(
+      //     'DB >> fetchSeverityLegend',
+      //     '\nEndpoint:',
+      //     endpoint,
+      //     '\nParams:',
+      //     params,
+      //     '\nResponse:',
+      //     response,
+      //   );
       return response.data;
     } catch (e) {
       return [];

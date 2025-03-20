@@ -1,7 +1,7 @@
 <style lang="scss">
   @use '../../scss/variables.scss' as vars;
 
-  #right-sidebar-expand-button {
+  #legend-expand-button {
     position: fixed;
     right: 10px;
     bottom: 60px;
@@ -24,13 +24,12 @@
     }
   }
 
-  #right-sidebar {
+  #legend {
     position: fixed;
     max-width: 200px;
     bottom: 60px;
     right: 10px;
     z-index: 10;
-    padding: 5px 10px;
     background: #fff;
     // background: rgba(255, 255, 255, 0.95);
     border-radius: 3px;
@@ -64,10 +63,9 @@
   }
 
   fieldset {
-    margin-top: 10px;
     background: rgba(234, 234, 234, 0.4);
-    margin-bottom: 10px;
     padding: 10px;
+    margin: 0px;
 
     p {
       margin: 0;
@@ -75,15 +73,43 @@
     }
   }
 
-  legend {
-    padding: 0 5px;
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    padding-top: 5px;
+  }
+
+  .legend-values {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .legend-value-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: small;
+  }
+
+  .legend-value-color {
+    height: 20px;
+    width: 30px;
+    border: 1px solid grey;
+  }
+
+  .legend-value-text {
+    display: flex;
+    align-items: center;
   }
 </style>
 
 <script lang="ts">
+  import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
-  import SeverityLegend from './SeverityLegend.svelte';
-  import CustomSeverityLegend from './CustomLegend.svelte';
   import Modal from '../common/Modal.svelte';
   import {
     selectedPanel,
@@ -92,51 +118,86 @@
     overlayGradient,
     selectedPest,
     overlayLoading,
+    selectedPalette,
   } from '@store';
-  import type { PestLegend, GradientHash, GradientMapping, SeverityParams } from '@types';
+  import type { LegendData, GradientHash, SeverityParams } from '@types';
+  import tippy from 'tippy.js';
+  import 'tippy.js/dist/tippy.css';
+  import ColorHelper from '@components/map/ts/colorHelper';
+
+  const db = new DatabaseClient();
 
   let expanded = $state(true);
   let showModal = $state(false);
-  let diseaseLegend = $state<PestLegend | null>(null);
-  let insectLegend = $state<PestLegend | null>(null);
-  let customLegend = $state<GradientMapping[] | null>(null);
-  let pestLegend = $derived.by(() => {
+  let diseaseLegend = $state<LegendData | null>();
+  let insectLegend = $state<LegendData | null>();
+  let customLegend = $state<LegendData | null>();
+  let currentLegend = $derived.by(() => {
     switch ($selectedPanel) {
       case 'disease':
-        return diseaseLegend;
+        if (diseaseLegend) return addColorToLegend(diseaseLegend);
       case 'insect':
-        return insectLegend;
+        if (insectLegend) return addColorToLegend(insectLegend);
+      case 'custom':
+        if (customLegend) return customLegend;
     }
-    return null;
   });
-  let showPestLegend = $derived(!!pestLegend);
   let showCustomLegend = $derived($selectedPanel === 'custom' && !!customLegend);
-  let showLegend = $derived(showPestLegend || showCustomLegend);
+  let showLegend = $derived(!!currentLegend || showCustomLegend);
+  let colorHelper = $derived(new ColorHelper($selectedPalette));
 
-  async function buildPestLegend(params: SeverityParams): Promise<PestLegend | null> {
+  function invokeTippy() {
+    tippy('.tippy-tooltip', {
+      placement: 'top',
+      arrow: true,
+      theme: 'light-border',
+      duration: 200,
+    });
+  }
+
+  function addColorToLegend(legend: LegendData) {
+    if (!legend) return null;
+    const newLegend = legend.legend.map((item) => ({
+      ...item,
+      color: colorHelper.color(item.value, 5),
+    }));
+    return { legend: newLegend, info: legend.info };
+  }
+
+  async function buildPestLegend(params: SeverityParams): Promise<LegendData | null> {
     if (!params) return null;
-    let legend = await updateSeverities(params);
-    let info = await updateSeverityInfo(params);
+    let legend = await db.fetchSeverityLegend(params.pest_id);
+    let info = await db.fetchSeverityLegendInfo(params.pest_id);
     return { legend: legend, info: info };
   }
 
-  function buildCustomLegend(gradient: GradientHash): GradientMapping[] | null {
+  function buildCustomLegend(gradient: GradientHash): LegendData | null {
     if (!gradient) return null;
-    const arr: GradientMapping[] = [];
+
+    // convert gradient hash to array of objects
+    const items: { value: number; color: string }[] = [];
     for (const key in gradient) {
       if (gradient.hasOwnProperty(key)) {
-        arr.push({ number: parseFloat(key), color: gradient[key] });
+        items.push({ value: parseFloat(key), color: gradient[key] });
       }
     }
-    return arr.sort((x, y) => x.number - y.number);
-  }
+    const sortedItems = items.sort((a, b) => a.value - b.value);
 
-  async function updateSeverities(severityParams: SeverityParams) {
-    return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
-  }
+    // add legend text and tooltip
+    const legendEntries = sortedItems.map((item, i) => {
+      const value = item.value;
+      const color = item.color;
+      const lowRange = i === 0 ? 0 : round(sortedItems[i - 1].value);
+      const name =
+        i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
+      const description = `${name} degree days`;
+      return { value, color, name, description };
+    });
 
-  async function updateSeverityInfo(severityParams: SeverityParams) {
-    return new DatabaseClient().fetchSeverityLegendInfo(severityParams.pest_id);
+    return {
+      legend: legendEntries,
+      info: null,
+    };
   }
 
   $effect(() => {
@@ -157,6 +218,11 @@
     if ($selectedPanel === 'custom' && !$overlayLoading)
       customLegend = buildCustomLegend($overlayGradient);
   });
+
+  $effect(() => {
+    currentLegend;
+    invokeTippy();
+  });
 </script>
 
 {#if showModal}
@@ -166,25 +232,28 @@
 {/if}
 
 {#if showLegend}
-  <div id="right-sidebar" aria-expanded={expanded}>
-    {#if pestLegend && showPestLegend}
-      <SeverityLegend severities={pestLegend.legend} />
-      {#if pestLegend.info}
-        <fieldset title="more-info">
-          <legend>More Information</legend>
-          <p>{@html pestLegend.info}</p>
-        </fieldset>
-      {/if}
+  <div id="legend" class="legend" aria-expanded={expanded}>
+    {#if currentLegend?.legend}
+      <fieldset id="legend-values">
+        <legend>{$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}</legend>
+        <div class="legend-values">
+          {#each [...currentLegend.legend].reverse() as entry}
+            <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
+              <div class="legend-value-color" style="background: {entry.color}"></div>
+              <div class="legend-value-text">{entry.name}</div>
+            </div>
+          {/each}
+        </div>
+      </fieldset>
     {/if}
-    {#if customLegend && showCustomLegend}
-      <CustomSeverityLegend gradientMapping={customLegend} />
+    {#if currentLegend?.info}
+      <fieldset>
+        <legend>More Information</legend>
+        <p>{@html currentLegend.info}</p>
+      </fieldset>
     {/if}
   </div>
-  <button
-    id="right-sidebar-expand-button"
-    aria-expanded={expanded}
-    onclick={() => (expanded = !expanded)}
-  >
+  <button id="legend-expand-button" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>
     {expanded ? '✖' : 'Show Legend'}
   </button>
 {/if}
