@@ -16,7 +16,9 @@
     mapRange,
     mapExtent,
     bounds,
+    selectedPalette,
   } from '@store';
+  import GradientHelper from './ts/gradientHelper';
 
   const { getMap, getGoogle } = getContext<any>(mapKey);
   const map = getMap();
@@ -25,6 +27,15 @@
   const insectOverlay = new OverlayHelper(google, map);
   const customOverlay = new OverlayHelper(google, map);
 
+  let severityGradient = $derived.by(() => {
+    const gradientHelper = new GradientHelper($selectedPalette);
+    return gradientHelper.mapRangeToColors({
+      min: 0,
+      max: 4,
+      totalLevels: 5,
+    });
+  });
+  $inspect('severityGradient', severityGradient);
   let selected = $derived.by<{
     overlay: OverlayHelper;
     state: PestPanelState | CustomPanelState;
@@ -130,10 +141,14 @@
   });
 
   // For custom panel, no colors are initially drawn on the map because the gradient is not set
+  // $effect(() => {
+  //   if ($selectedPanel === 'custom') {
+  //     const gradient = $overlayGradient;
+  //     if (gradient) customOverlay.updateOverlayGradient(gradient);
+  //   }
+  // });
   $effect(() => {
-    if ($selectedPanel === 'custom') {
-      const gradient = $overlayGradient;
-      if (gradient) customOverlay.updateOverlayGradient(gradient);
-    }
+    const gradient = $selectedPanel === 'custom' ? $overlayGradient : severityGradient;
+    selected.overlay.updateOverlayGradient(gradient);
   });
 </script>

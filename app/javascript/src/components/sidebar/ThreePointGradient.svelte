@@ -108,15 +108,17 @@
   import GradientHelper from '@components/map/ts/gradientHelper';
   import ColorHelper from '@components/map/ts/colorHelper';
   import { strToNum } from '@ts/utils';
-  import { mapRange, overlayGradient, threePointGradientState } from '@store';
+  import { mapRange, overlayGradient, threePointGradientState, selectedPalette } from '@store';
 
-  const gradientHelper = new GradientHelper();
+  // const gradientHelper = new GradientHelper();
   const opts = {
     defaultLevels: 5,
     minLevels: 3,
     maxLevels: 8,
   };
 
+  let gradientHelper = $state(new GradientHelper($selectedPalette));
+  let colorHelper = $state(new ColorHelper($selectedPalette));
   let userInputElements = $state<(HTMLInputElement | null)[]>([]);
   let severityLevels = $state(opts.defaultLevels);
   let userValues = $state([0, 0, 0, 0]);
@@ -238,7 +240,7 @@
   <legend>Custom Degree-Day Values</legend>
   <div class="custom-values-wrapper">
     <div class="severity-row">
-      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}"></div>
+      <div class="severity-color" style="background: {colorHelper.color(0, severityLevels)}"></div>
       <div class="severity-value-end">0</div>
       <input
         type="number"
@@ -255,7 +257,7 @@
       <div class="severity-row">
         <div
           class="severity-color"
-          style="background: {ColorHelper.color(index + 1, severityLevels)}"
+          style="background: {colorHelper.color(index + 1, severityLevels)}"
         ></div>
         <div class="severity-value-intermediate">
           {`${range[0]} - ${range[1]}`}
@@ -265,7 +267,7 @@
     <div class="severity-row">
       <div
         class="severity-color"
-        style="background: {ColorHelper.color(severityLevels, severityLevels)}"
+        style="background: {colorHelper.color(severityLevels, severityLevels)}"
       ></div>
       <input
         type="number"
@@ -290,7 +292,7 @@
       <div class="severity-row">
         <div
           class="severity-color"
-          style="background: {ColorHelper.colorInverse(index + 1, severityLevels)}"
+          style="background: {colorHelper.colorInverse(index + 1, severityLevels)}"
         ></div>
         <div class="severity-value-intermediate">
           {`${range[0]} - ${range[1]}`}
@@ -298,7 +300,7 @@
       </div>
     {/each}
     <div class="severity-row">
-      <div class="severity-color" style="background: {ColorHelper.color(0, severityLevels)}"></div>
+      <div class="severity-color" style="background: {colorHelper.color(0, severityLevels)}"></div>
       <input
         type="number"
         class="severity-value-end-input"

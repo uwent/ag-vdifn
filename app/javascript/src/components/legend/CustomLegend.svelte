@@ -20,16 +20,16 @@
 
 <script lang="ts">
   import { round } from '@ts/utils';
-  import type { GradientMapping, LegendMapping } from '@types';
+  import type { CustomLegendElement, GradientMapping } from '@types';
 
   const { gradientMapping = [] } = $props<{
     gradientMapping: GradientMapping[];
   }>();
 
-  let legend = $derived<LegendMapping[]>(makeLegend(gradientMapping));
+  let legend = $derived(makeLegend(gradientMapping));
 
   // converts color/cutoff gradient into array of legend text/color pairs
-  function makeLegend(gradient: GradientMapping[]): LegendMapping[] {
+  function makeLegend(gradient: GradientMapping[]): CustomLegendElement[] {
     if (!gradient) return [];
     return gradient.map((el, i) => {
       const color = el.color;

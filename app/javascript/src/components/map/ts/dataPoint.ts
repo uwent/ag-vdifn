@@ -1,9 +1,7 @@
-import { COLORS } from './colors';
-
 export default class DataPoint {
   latitude: number;
   longitude: number;
-  strokeColor: string = COLORS.brightRed;
+  strokeColor: string = '#808080';
   strokeOpacity = 1.0;
   strokeWeight = 0.05;
   fillColor: string;

@@ -2,12 +2,15 @@ export type PanelType = 'disease' | 'insect' | 'custom';
 export const PANEL_TYPES = ['disease', 'insect', 'custom'] as PanelType[];
 export type MapExtent = 'wisconsin' | 'midwest';
 export type GradientType = 'two-point' | 'three-point';
-export type ColorPalette = 'classic' | 'viridis';
 
-export type SeverityLegend = {
-  name: string;
-  slug: string;
-  description: string;
+export type ColorPaletteName = 'classic' | 'viridis';
+export type ColorPalette = {
+  low: string;
+  // lowMed: string;
+  med: string;
+  // medHigh: string;
+  high: string;
+  grey: string;
 };
 
 export type LatLng = {
@@ -20,16 +23,31 @@ export type MapRange = {
   max: number;
 };
 
-// used to create the legend mapping
-export type GradientMapping = {
-  color: string;
-  number: number;
+export type PestLegendElement = {
+  name: string;
+  slug: string;
+  description: string;
 };
 
 // used for creating the legend
-export type LegendMapping = {
+export type CustomLegendElement = {
   color: string;
   text: string;
+};
+
+export type PestLegend = {
+  legend: PestLegendElement[];
+  info: string;
+};
+
+// export type CustomLegend = {
+//   legend: GradientMapping[];
+// };
+
+// used to create the custom legend
+export type GradientMapping = {
+  color: string;
+  number: number;
 };
 
 // used to fill the rectangles on the map where the key is the upper cutoff value and the value is the color hex string

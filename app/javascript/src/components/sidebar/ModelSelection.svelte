@@ -90,7 +90,7 @@
     });
     if (cropWithPests) {
       pestsForCrop = cropWithPests.pests;
-      pestId.update((_) => pestsForCrop[0].id);
+      // pestId.update((_) => pestsForCrop[0].id);
       $pestId = pestsForCrop[0].id;
       $selectedPest = pestsForCrop[0];
     }

@@ -3,7 +3,6 @@ import DatabaseClient from '@ts/databaseClient';
 import GoogleWrapper from './googleWrapper';
 import RectangleOption from './rectangleOption';
 import infoWindowLoadingTemplate from './infoWindowLoading';
-import ColorHelper from './colorHelper';
 import tippy from 'tippy.js';
 
 export default class OverlayHelper {
@@ -54,7 +53,7 @@ export default class OverlayHelper {
     this.min = Math.min(...this.severities.map((point) => point.level));
     this.max = Math.max(...this.severities.map((point) => point.level));
 
-    const rectangleOptions = this.buildRectangles(panelType);
+    const rectangleOptions = this.buildRectangles();
     this.drawDataPoints(rectangleOptions);
     this.addInfoWindowEvents(severityParams, panelType);
   }
@@ -85,16 +84,11 @@ export default class OverlayHelper {
     return severities;
   }
 
-  buildRectangles(panelType: PanelType): RectangleOption[] {
+  buildRectangles(): RectangleOption[] {
     const rectangleOptions: RectangleOption[] = [];
     this.severities.forEach((severity: Severity) => {
       const latLng = this.googleWrapper.latLng(severity.lat, severity.long);
-      const rectangleOption = new RectangleOption(
-        latLng.lat(),
-        latLng.lng(),
-        panelType === 'custom' ? '#ffffff00' : ColorHelper.color(severity.level, 5),
-        this.map,
-      );
+      const rectangleOption = new RectangleOption(latLng.lat(), latLng.lng(), this.map);
       rectangleOptions.push(rectangleOption);
     });
     return rectangleOptions;

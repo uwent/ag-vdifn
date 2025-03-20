@@ -91,24 +91,45 @@
     insectPanelParams,
     overlayGradient,
     selectedPest,
-    diseaseLegend,
-    insectLegend,
-    customPanelState,
-    customLegend,
     overlayLoading,
   } from '@store';
-  import type { GradientMapping, SeverityParams } from '@types';
-  import type { Snippet } from 'svelte';
-
-  const { children } = $props<{
-    children: Snippet;
-  }>();
+  import type { PestLegend, GradientHash, GradientMapping, SeverityParams } from '@types';
 
   let expanded = $state(true);
   let showModal = $state(false);
-  let showDiseaseLegend = $derived($selectedPanel === 'disease' && $diseaseLegend);
-  let showInsectLegend = $derived($selectedPanel === 'insect' && $insectLegend);
-  let showCustomLegend = $derived($selectedPanel === 'custom' && $customLegend && !$overlayLoading);
+  let diseaseLegend = $state<PestLegend | null>(null);
+  let insectLegend = $state<PestLegend | null>(null);
+  let customLegend = $state<GradientMapping[] | null>(null);
+  let pestLegend = $derived.by(() => {
+    switch ($selectedPanel) {
+      case 'disease':
+        return diseaseLegend;
+      case 'insect':
+        return insectLegend;
+    }
+    return null;
+  });
+  let showPestLegend = $derived(!!pestLegend);
+  let showCustomLegend = $derived($selectedPanel === 'custom' && !!customLegend);
+  let showLegend = $derived(showPestLegend || showCustomLegend);
+
+  async function buildPestLegend(params: SeverityParams): Promise<PestLegend | null> {
+    if (!params) return null;
+    let legend = await updateSeverities(params);
+    let info = await updateSeverityInfo(params);
+    return { legend: legend, info: info };
+  }
+
+  function buildCustomLegend(gradient: GradientHash): GradientMapping[] | null {
+    if (!gradient) return null;
+    const arr: GradientMapping[] = [];
+    for (const key in gradient) {
+      if (gradient.hasOwnProperty(key)) {
+        arr.push({ number: parseFloat(key), color: gradient[key] });
+      }
+    }
+    return arr.sort((x, y) => x.number - y.number);
+  }
 
   async function updateSeverities(severityParams: SeverityParams) {
     return new DatabaseClient().fetchSeverityLegend(severityParams.pest_id);
@@ -119,42 +140,24 @@
   }
 
   $effect(() => {
-    const severityParams = $diseasePanelParams;
-    if (!severityParams) return;
-
-    (async () => {
-      const legend = await updateSeverities(severityParams);
-      $diseaseLegend = legend;
-    })();
+    if ($selectedPanel === 'disease')
+      buildPestLegend($diseasePanelParams).then((legend) => {
+        diseaseLegend = legend;
+      });
   });
 
   $effect(() => {
-    const severityParams = $insectPanelParams;
-    if (!severityParams) return;
-
-    (async () => {
-      let legend = await updateSeverities(severityParams);
-      let info = await updateSeverityInfo(severityParams);
-      $insectLegend = { legend: legend, info: info };
-    })();
+    if ($selectedPanel === 'insect')
+      buildPestLegend($insectPanelParams).then((legend) => {
+        insectLegend = legend;
+      });
   });
 
   $effect(() => {
-    const gradientMapping = $overlayGradient;
-    if (!gradientMapping) return;
-
-    const arr: GradientMapping[] = [];
-    for (const key in gradientMapping) {
-      if (gradientMapping.hasOwnProperty(key)) {
-        arr.push({ number: parseFloat(key), color: gradientMapping[key] });
-      }
-    }
-    const gradient = arr.sort((x, y) => x.number - y.number);
-    $customLegend = gradient;
+    if ($selectedPanel === 'custom' && !$overlayLoading)
+      customLegend = buildCustomLegend($overlayGradient);
   });
 </script>
-
-{@render children?.()}
 
 {#if showModal}
   <Modal name="Pest Info" on:close={() => (showModal = false)}>
@@ -162,29 +165,21 @@
   </Modal>
 {/if}
 
-{#if showDiseaseLegend}
+{#if showLegend}
   <div id="right-sidebar" aria-expanded={expanded}>
-    <SeverityLegend severities={$diseaseLegend} />
+    {#if pestLegend && showPestLegend}
+      <SeverityLegend severities={pestLegend.legend} />
+      {#if pestLegend.info}
+        <fieldset title="more-info">
+          <legend>More Information</legend>
+          <p>{@html pestLegend.info}</p>
+        </fieldset>
+      {/if}
+    {/if}
+    {#if customLegend && showCustomLegend}
+      <CustomSeverityLegend gradientMapping={customLegend} />
+    {/if}
   </div>
-{/if}
-
-{#if showInsectLegend}
-  <div id="right-sidebar" aria-expanded={expanded}>
-    <SeverityLegend severities={$insectLegend.legend} />
-    <fieldset title="more-info">
-      <legend>More Information</legend>
-      <p>{@html $insectLegend.info}</p>
-    </fieldset>
-  </div>
-{/if}
-
-{#if showCustomLegend}
-  <div id="right-sidebar" aria-expanded={expanded}>
-    <CustomSeverityLegend gradientMapping={$customLegend} />
-  </div>
-{/if}
-
-{#if showDiseaseLegend || showInsectLegend || showCustomLegend}
   <button
     id="right-sidebar-expand-button"
     aria-expanded={expanded}

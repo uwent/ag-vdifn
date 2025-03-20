@@ -72,14 +72,15 @@
   import Help from '../common/Help.svelte';
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
-  import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
-  import {
-    type CropWithPests,
-    type DegreeDayModel,
-    type MapExtent,
-    PANEL_TYPES,
-    type PanelType,
+  import { overlayLoading, mapExtent, defaults, selectedPanel, selectedPalette } from '@store';
+  import type {
+    ColorPaletteName,
+    CropWithPests,
+    DegreeDayModel,
+    MapExtent,
+    PanelType,
   } from '@types';
+  import { PANEL_TYPES } from '@types';
 
   // reactive variables
   let diseasePanelData = $state<CropWithPests[]>();
@@ -89,6 +90,7 @@
   let panel = $state<PanelType>(defaults.panel);
   let extent = $state<MapExtent>(defaults.extent);
   let showHelp = $state(false);
+  let palette = $state<ColorPaletteName>(defaults.palette);
   let opts = $state({
     model: '',
     submit: false,
@@ -130,6 +132,10 @@
 
   $effect(() => {
     $mapExtent = extent;
+  });
+
+  $effect(() => {
+    $selectedPalette = palette;
   });
 </script>
 
@@ -209,6 +215,27 @@
       {:else if panel === 'custom'}
         <CustomPanel data={customPanelData} />
       {/if}
+      <fieldset id="palette">
+        <legend>Color Palette</legend>
+        <div class="switch-field">
+          <input
+            id="spectralPalette"
+            title="Spectral color palette"
+            type="radio"
+            value="classic"
+            bind:group={palette}
+          />
+          <label for="spectralPalette">Classic</label>
+          <input
+            id="viridisPalette"
+            title="Viridis color palette"
+            type="radio"
+            value="viridis"
+            bind:group={palette}
+          />
+          <label for="viridisPalette">Viridis</label>
+        </div>
+      </fieldset>
     {:else}
       <Loading />
     {/if}

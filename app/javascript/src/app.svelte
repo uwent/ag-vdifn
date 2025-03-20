@@ -29,7 +29,6 @@
   import Sidebar from '@components/sidebar/Sidebar.svelte';
   import Interface from '@components/sidebar/Interface.svelte';
   import Legend from '@components/legend/Legend.svelte';
-  import SeverityLegend from '@components/legend/SeverityLegend.svelte';
   import Status from '~/src/components/map/Status.svelte';
 </script>
 
@@ -44,8 +43,6 @@
       <Status />
       <SeverityOverlay />
     </Map>
-    <Legend>
-      <SeverityLegend />
-    </Legend>
+    <Legend />
   </div>
 </main>

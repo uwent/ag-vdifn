@@ -21,12 +21,12 @@
 </style>
 
 <script lang="ts">
-  import type { SeverityLegend } from '@types';
+  import type { PestLegendElement } from '@types';
   import { onMount } from 'svelte';
   import tippy from 'tippy.js';
   import 'tippy.js/dist/tippy.css';
 
-  export let severities: SeverityLegend[] = [];
+  export let severities: PestLegendElement[] = [];
 
   onMount(() => {
     tippy('.tippy-tooltip', {

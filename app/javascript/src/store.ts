@@ -2,12 +2,10 @@ import { writable } from 'svelte/store';
 import type {
   CustomPanelState,
   DegreeDayModel,
-  GradientMapping,
   GradientState,
   PanelType,
   Pest,
   PestPanelState,
-  SeverityLegend,
   TminTmax,
   LatLng,
   GradientHash,
@@ -16,6 +14,7 @@ import type {
   GradientType,
   MapExtent,
   MapRange,
+  ColorPaletteName,
 } from '@types';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
@@ -62,8 +61,10 @@ export const defaults = {
   t_min: 50,
   t_max: 86,
   in_f: true,
+  palette: 'classic' as ColorPaletteName,
 };
 
+export const selectedPalette = writable<ColorPaletteName>('classic');
 export const userLocation = writable<LatLng | null>(null);
 export const panelKey = {};
 export const diseasePanelKey = {};
@@ -83,12 +84,12 @@ export const insectPanelState = writable({
   loaded: false,
 } as PestPanelState);
 export const customPanelState = writable({
-  selectedGradient: 'two-point',
+  selectedGradient: defaults.gradientType,
   loaded: false,
 } as CustomPanelState);
-export const diseaseLegend = writable<SeverityLegend[]>();
-export const insectLegend = writable<{ legend: SeverityLegend[]; info: string }>();
-export const customLegend = writable<GradientMapping[]>();
+// export const diseaseLegend = writable<SeverityLegend[]>();
+// export const insectLegend = writable<{ legend: SeverityLegend[]; info: string }>();
+// export const customLegend = writable<GradientMapping[]>();
 
 export const startDate = writable<string>('');
 export const endDate = writable<string>('');

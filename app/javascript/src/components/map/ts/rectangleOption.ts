@@ -20,10 +20,10 @@ export default class RectangleOption {
   private latitudeOffset = 0.05;
   private longitudeOffset = 0.05;
 
-  constructor(latitude: number, longitude: number, fillColor: string, map: any) {
+  constructor(latitude: number, longitude: number, map: any) {
     this.latitude = latitude;
     this.longitude = longitude;
-    this.fillColor = fillColor;
+    this.fillColor = '#ffffff00';
     this.bounds = this.calculateBounds();
     this.map = map;
     this.severityLevel = null;

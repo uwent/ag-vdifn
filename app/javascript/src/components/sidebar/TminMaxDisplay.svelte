@@ -141,18 +141,12 @@
 
   // convert between units and update text
   function updateText(in_f: boolean) {
-    const opts = in_f
-      ? {
-          t_min: tMinF,
-          t_max: tMaxF,
-          in_f: true,
-        }
-      : {
-          t_min: tMinC,
-          t_max: tMaxC,
-          in_f: false,
-        };
-    tMinTmax.set(opts);
+    const opts = {
+      t_min: in_f ? tMinF : tMinC,
+      t_max: in_f ? tMaxF : tMaxC,
+      in_f: in_f,
+    };
+    $tMinTmax = opts;
     tMinText = makeText(opts.t_min);
     tMaxText = makeText(opts.t_max);
   }

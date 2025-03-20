@@ -1,6 +1,6 @@
 import { round } from '@ts/utils';
 import ColorHelper from './colorHelper';
-import type { GradientHash } from '@types';
+import type { ColorPaletteName, GradientHash } from '@types';
 
 interface MapRangeToColors {
   min: number;
@@ -17,6 +17,12 @@ interface GradientValues {
 }
 
 export default class GradientHelper {
+  private palette: ColorPaletteName;
+
+  constructor(palette: ColorPaletteName = 'classic') {
+    this.palette = palette;
+  }
+
   mapRangeToColors({
     min,
     middleMin,
@@ -25,26 +31,27 @@ export default class GradientHelper {
     totalLevels,
   }: MapRangeToColors): GradientHash {
     const result = {};
-    result[min] = ColorHelper.color(0, totalLevels);
+    const colorHelper = new ColorHelper(this.palette);
+    result[min] = colorHelper.color(0, totalLevels);
 
     if (min === max) return result;
     if (middleMin && middleMax) {
       const lowerRanges = this.calculateRanges(min, middleMin, totalLevels - 2);
       const upperRanges = this.calculateRanges(middleMax, max, totalLevels - 2);
       lowerRanges.forEach((range, index) => {
-        result[range[1]] = ColorHelper.color(index + 1, totalLevels);
+        result[range[1]] = colorHelper.color(index + 1, totalLevels);
       });
-      result[middleMax] = ColorHelper.colorInverse(0, totalLevels);
+      result[middleMax] = colorHelper.colorInverse(0, totalLevels);
       upperRanges.forEach((range, index) => {
-        result[range[1]] = ColorHelper.colorInverse(index + 1, totalLevels);
+        result[range[1]] = colorHelper.colorInverse(index + 1, totalLevels);
       });
-      result[Infinity] = ColorHelper.color(0, totalLevels);
+      result[Infinity] = colorHelper.color(0, totalLevels);
     } else {
       const ranges = this.calculateRanges(min, max, totalLevels - 2);
       ranges.forEach((range, index) => {
-        result[range[1]] = ColorHelper.color(index + 1, totalLevels);
+        result[range[1]] = colorHelper.color(index + 1, totalLevels);
       });
-      result[Infinity] = ColorHelper.color(totalLevels, totalLevels);
+      result[Infinity] = colorHelper.color(totalLevels, totalLevels);
     }
     return result;
   }
