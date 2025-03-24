@@ -50,12 +50,12 @@
   <label for="dd-select">Choose model</label>
   <div class="dd-container">
     <select
-      onchange={setDegreeDayModel}
+      title="Select model"
       class="dd-select"
       id="dd-select"
       name="dd-select"
-      title="Select model"
       value={modelId}
+      onchange={setDegreeDayModel}
     >
       {#each ddModels as { id, name, name_c }}
         <option value={id}>{$tMinTmax.in_f ? name : name_c}</option>

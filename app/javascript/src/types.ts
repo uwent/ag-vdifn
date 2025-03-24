@@ -127,10 +127,11 @@ export type CustomPanelState = PanelState & {
 };
 
 export type GradientState = {
-  severityLevels: number;
-  userValues: number[];
-  range: MapRange;
-  gradient: GradientHash | null;
+  levels: number;
+  values: number[];
+  inputs: number[];
+  inputElements: HTMLInputElement[];
+  range?: MapRange;
 };
 
 export type Crop = {

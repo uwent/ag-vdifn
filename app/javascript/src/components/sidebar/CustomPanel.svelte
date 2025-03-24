@@ -1,10 +1,22 @@
+<style lang="scss">
+  .map-range {
+    margin: 0.5em;
+    text-align: center;
+    font-style: italic;
+    font-size: small;
+  }
+</style>
+
 <script lang="ts">
   import { format, startOfYear, parseISO } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import DatePicker from './DatePicker.svelte';
-  import SeverityGradient from './CustomGradientSelection.svelte';
-  import CustomModelSelection from './CustomModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
+  import CustomModelSelection from './CustomModelSelection.svelte';
+  import CustomGradientType from './CustomGradientType.svelte';
+  import LoadStatus from '@components/common/LoadStatus.svelte';
+  import CustomGradient from './CustomGradient.svelte';
+  import CustomPanelParams from './CustomPanelParams.svelte';
   import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
   import {
@@ -20,9 +32,8 @@
     selectedDDModel,
     extents,
     mapExtent,
+    mapRange,
   } from '@store';
-
-  import LoadStatus from '@components/common/LoadStatus.svelte';
 
   const { data } = $props<{
     data: any;
@@ -112,7 +123,15 @@
     {#if $customOverlaySubmitted}
       <fieldset>
         <legend>Current Overlay Parameters</legend>
-        <SeverityGradient />
+        <CustomPanelParams />
+        <CustomGradientType />
+        <CustomGradient />
+        {#if $mapRange}
+          <div title="Map range" class="map-range">
+            Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10}
+            degree days
+          </div>
+        {/if}
       </fieldset>
     {/if}
   {/if}

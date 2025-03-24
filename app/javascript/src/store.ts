@@ -69,27 +69,21 @@ export const userLocation = writable<LatLng | null>(null);
 export const panelKey = {};
 export const diseasePanelKey = {};
 export const insectPanelKey = {};
-export const customPanelKey = {};
+// export const customPanelKey = {};
 export const mapKey = {};
 export const interfaceKey = {};
+
 export const selectedPanel = writable<PanelType>(defaults.panel);
+
 export const diseasePanelParams = writable<SeverityParams>();
 export const insectPanelParams = writable<SeverityParams>();
-export const customPanelParams = writable<CustomPanelParams>();
-// export const diseasePanelState = writable<PestPanelState>();
+
 export const diseasePanelState = writable({
   loaded: false,
 } as PestPanelState);
 export const insectPanelState = writable({
   loaded: false,
 } as PestPanelState);
-export const customPanelState = writable({
-  selectedGradient: defaults.gradientType,
-  loaded: false,
-} as CustomPanelState);
-// export const diseaseLegend = writable<SeverityLegend[]>();
-// export const insectLegend = writable<{ legend: SeverityLegend[]; info: string }>();
-// export const customLegend = writable<GradientMapping[]>();
 
 export const startDate = writable<string>('');
 export const endDate = writable<string>('');
@@ -105,7 +99,6 @@ export const customOverlaySubmitted = writable<boolean>(false);
 export const selectedPest = writable<Pest>();
 export const selectedDisease = writable<Pest>();
 export const selectedInsect = writable<Pest>();
-export const selectedDDModel = writable<DegreeDayModel>();
 
 // TminMaxDisplay
 export const tMinTmax = writable<TminTmax>({
@@ -119,5 +112,11 @@ export const mapRange = writable<MapRange>();
 export const mapExtent = writable<MapExtent>(defaults.extent);
 
 // Custom tab gradient states
+export const customPanelState = writable({
+  selectedGradient: defaults.gradientType,
+  loaded: false,
+} as CustomPanelState);
+export const selectedDDModel = writable<DegreeDayModel>();
+export const customPanelParams = writable<CustomPanelParams>();
 export const twoPointGradientState = writable<GradientState>();
 export const threePointGradientState = writable<GradientState>();

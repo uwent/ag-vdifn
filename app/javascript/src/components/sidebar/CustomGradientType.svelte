@@ -108,54 +108,13 @@
     width: 8px;
     height: 8px;
   }
-
-  .submitted-params {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: flex-start;
-    padding: 0px 19% 0px;
-    padding-left: 0px;
-    font-size: small;
-  }
-
-  .note {
-    margin: 0.5em;
-    text-align: center;
-    font-style: italic;
-    font-size: small;
-  }
 </style>
 
 <script lang="ts">
-  import TwoPointGradient from './TwoPointGradient.svelte';
-  import ThreePointGradient from './ThreePointGradient.svelte';
-  import { customPanelState, mapRange, selectedPalette } from '@store';
-
-  let selectedGradient = $state($customPanelState.selectedGradient);
-
-  $effect(() => {
-    $customPanelState.selectedGradient = selectedGradient;
-  });
+  import { customPanelState, selectedPalette } from '@store';
 </script>
 
 <div data-testid="gradient-opts">
-  {#if $customPanelState.params}
-    <fieldset>
-      <legend>Submitted Values</legend>
-      <div class="submitted-params" title="submitted-params">
-        <div>Start Date:</div>
-        <div>{$customPanelState.params.start_date}</div>
-        <div>End Date:</div>
-        <div>{$customPanelState.params.end_date}</div>
-        <div>Tmin:</div>
-        <div>{$customPanelState.params.t_min}</div>
-        <div>Tmax:</div>
-        <div>{$customPanelState.params.t_max || 'None'}</div>
-        <div>Units:</div>
-        <div>{$customPanelState.params.in_f ? 'Fahrenheit' : 'Celcius'}</div>
-      </div>
-    </fieldset>
-  {/if}
   <fieldset class="gradient-type-field">
     <legend>Gradient Type</legend>
     <label for="gradient-2-point" class="container">
@@ -164,7 +123,7 @@
         type="radio"
         name="gradient-type"
         title="gradient-2-point"
-        bind:group={selectedGradient}
+        bind:group={$customPanelState.selectedGradient}
         value="two-point"
       />
       <span class="gradient {$selectedPalette}-2"></span>
@@ -175,21 +134,10 @@
         type="radio"
         name="gradient-type"
         title="gradient-3-point"
-        bind:group={selectedGradient}
+        bind:group={$customPanelState.selectedGradient}
         value="three-point"
       />
       <span class="gradient {$selectedPalette}-3"></span>
     </label>
   </fieldset>
-  {#if selectedGradient === 'two-point'}
-    <TwoPointGradient />
-  {:else}
-    <ThreePointGradient />
-  {/if}
-  {#if $mapRange}
-    <div title="Map range" class="note">
-      Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree
-      days
-    </div>
-  {/if}
 </div>

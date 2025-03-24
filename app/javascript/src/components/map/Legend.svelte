@@ -140,8 +140,7 @@
         if (customLegend) return customLegend;
     }
   });
-  let showCustomLegend = $derived($selectedPanel === 'custom' && !!customLegend);
-  let showLegend = $derived(!!currentLegend || showCustomLegend);
+  let showLegend = $derived(!!currentLegend);
   let colorHelper = $derived(new ColorHelper($selectedPalette));
 
   function invokeTippy() {

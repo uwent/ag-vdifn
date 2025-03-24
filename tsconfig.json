@@ -41,6 +41,13 @@
     },
     "outDir": "./public/vite"
   },
-  "include": ["**/*.d.ts", "**/*.js", "**/*.ts", "**/*.svelte"],
+  "include": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.svelte",
+    "app/javascript/src/components/sidebar/TwoPointGradient.svelte.ignore",
+    "app/javascript/src/components/sidebar/ThreePointGradient.svelte.ignore"
+  ],
   "exclude": ["node_modules"]
 }

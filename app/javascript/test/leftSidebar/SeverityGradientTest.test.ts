@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
 import SetContextTest from '../testComponents/SetContextTest.svelte';
-import SeverityGradient from '@components/sidebar/CustomGradientSelection.svelte';
+import SeverityGradient from '@components/sidebar/CustomGradientType.svelte';
 import {
   panelKey,
   mapRange,
