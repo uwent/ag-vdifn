@@ -74,6 +74,9 @@
   }
 
   footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 25px;
     margin-bottom: 10px;
     text-align: center;
@@ -136,6 +139,7 @@
 
 <script lang="ts">
   import { format } from 'date-fns';
+  import ColorSelector from './ColorSelector.svelte';
   let expanded = true;
 </script>
 
@@ -183,8 +187,11 @@
   </div>
 
   <footer>
-    <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br />
-    Copyright &copy;{format(new Date(), 'yyyy')} University of Wisconsin-Madison
+    <div>
+      <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br />
+      Copyright &copy;{format(new Date(), 'yyyy')} University of Wisconsin-Madison
+    </div>
+    <ColorSelector />
   </footer>
 
   <button
