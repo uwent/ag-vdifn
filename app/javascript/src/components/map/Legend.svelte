@@ -25,9 +25,9 @@
   }
 
   #legend {
-    position: fixed;
+    position: absolute;
     max-width: 200px;
-    bottom: 60px;
+    bottom: 10px;
     right: 10px;
     z-index: 10;
     background: #fff;
@@ -37,16 +37,15 @@
       -4px 0px 10px rgba(0, 0, 0, 0.3),
       4px 0px 10px rgba(0, 0, 0, 0.3);
 
-    @media #{vars.$medium-up} {
-      bottom: 30px;
-    }
+    // @media #{vars.$medium-up} {
+    //   bottom: 10px;
+    // }
 
     &[aria-expanded='true'] {
       visibility: visible;
       @media #{vars.$medium-up} {
         visibility: visible;
         position: absolute;
-        right: 15px;
       }
     }
 
@@ -56,8 +55,7 @@
       @media #{vars.$medium-up} {
         visibility: visible;
         position: absolute;
-        right: 15px;
-        bottom: 30px;
+        // bottom: 30px;
       }
     }
   }

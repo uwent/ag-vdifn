@@ -8,12 +8,10 @@ import type {
   DegreeDayModel,
   LegendEntry,
 } from '../types';
+import { dev } from '@store';
 import axios from 'axios';
 import type DatabaseClientInterface from './databaseClientInterface';
 import ENDPOINTS from './endpoints';
-
-// const logging = env === 'development';
-const logging = false;
 
 export default class DatabaseClient implements DatabaseClientInterface {
   constructor() {
@@ -26,7 +24,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
-      if (logging)
+      if (dev)
         console.log('DB >> fetchDiseasePanel', '\nEndpoint:', endpoint, '\nResponse:', response);
       cropsWithPests = response.data.map((cropWithDisease: CropWithDiseases) => {
         const { diseases, ...newData } = {
@@ -46,7 +44,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
-      if (logging)
+      if (dev)
         console.log('DB >> fetchInsectPanel', '\nEndpoint:', endpoint, '\nResponse:', response);
       cropsWithPests = response.data.map((cropWithInsect: CropWithInsects) => {
         const { insects, ...newData } = {
@@ -65,8 +63,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const endpoint = ENDPOINTS.DD_MODELS;
     try {
       const response = await axios.get(endpoint);
-      if (logging)
-        console.log('DB >> fetchDDModels', '\nEndpoint:', endpoint, '\nResponse:', response);
+      if (dev) console.log('DB >> fetchDDModels', '\nEndpoint:', endpoint, '\nResponse:', response);
       let ddModels: DegreeDayModel[] = [];
       ddModels = response.data.map((ddModel: DegreeDayModel) => {
         return ddModel;
@@ -83,7 +80,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const severities: Severity[] = [];
     try {
       const response = await axios.post(endpoint, params);
-      if (logging)
+      if (dev)
         console.log(
           'DB >> fetchSeverities',
           '\nEndpoint:',
@@ -97,7 +94,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
         response.data.forEach((data) => {
           severities.push({
             lat: data.lat,
-            long: data.long,
+            lng: data.lng,
             level: data.value,
           });
         });
@@ -119,16 +116,16 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.get(endpoint, { params: params });
-      // if (logging)
-      //   console.log(
-      //     'DB >> fetchSeverityLegend',
-      //     '\nEndpoint:',
-      //     endpoint,
-      //     '\nParams:',
-      //     params,
-      //     '\nResponse:',
-      //     response,
-      //   );
+      if (dev)
+        console.log(
+          'DB >> fetchSeverityLegend',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response,
+        );
       return response.data;
     } catch (e) {
       return [];
@@ -141,7 +138,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
 
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (logging)
+      if (dev)
         console.log(
           'DB >> fetchSeverityLegendInfo',
           '\nEndpoint:',
@@ -162,7 +159,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams };
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (logging)
+      if (dev)
         console.log(
           'DB >> fetchPointDetails',
           '\nEndpoint:',
@@ -177,42 +174,4 @@ export default class DatabaseClient implements DatabaseClientInterface {
       return '';
     }
   }
-
-  // async fetchPestInfo(pestId: number, inFahrenheit: boolean): Promise<PestInfo> {
-  //   const endpoint = ENDPOINTS.PEST_INFO
-  //   const params = {
-  //     pest_id: pestId,
-  //     in_f: inFahrenheit
-  //   }
-  //   try {
-  //     const response = await axios.post(endpoint, params)
-  //     if (isDev) console.log('DB >> fetchPestInfo', '\nEndpoint:', endpoint, '\nParams:', params, '\nResponse:', response)
-  //     return response.data
-  //   } catch (e) {
-  //     return {
-  //       info: null,
-  //       name: null,
-  //       pest_link: null,
-  //       biofix_date: null,
-  //       biofix_label: null,
-  //       end_date_enabled: null,
-  //       tmin: null,
-  //       tmax: null
-  //     }
-  //   }
-  // }
-
-  // Weather station display is not implemented
-  // async fetchStationDetails(
-  //   stationDetailsParams: StationDetailsParams,
-  // ): Promise<string> {
-  //   try {
-  //     const response = await axios.post(ENDPOINTS.STATION_DETAILS, {
-  //       ...stationDetailsParams,
-  //     })
-  //     return response.data
-  //   } catch (e) {
-  //     return ''
-  //   }
-  // }
 }

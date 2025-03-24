@@ -6,7 +6,7 @@ class OakWilt < Insect
     totals.map do |point|
       {
         lat: point[:lat],
-        long: point[:long],
+        lng: point[:lng],
         value: total_to_severity(
           point[:value],
           date: end_date,

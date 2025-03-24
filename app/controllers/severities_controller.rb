@@ -4,7 +4,7 @@ class SeveritiesController < ApplicationController
     @start_date = start_date
     @end_date = end_date
     @lat_range = lat_range
-    @long_range = long_range
+    @lng_range = lng_range
     @base = t_min
     @upper = t_max
     @units = units
@@ -12,7 +12,7 @@ class SeveritiesController < ApplicationController
       start_date: @start_date,
       end_date: @end_date,
       lat_range: @lat_range,
-      long_range: @long_range,
+      lng_range: @lng_range,
       units: @units
     }.compact
 
@@ -51,23 +51,23 @@ class SeveritiesController < ApplicationController
 
   def hash_to_array(grid)
     grid.collect do |key, value|
-      lat, long = key
+      lat, lng = key
       if value.is_a? Hash
-        {lat:, long:}.merge(value)
+        {lat:, lng:}.merge(value)
       else
-        {lat:, long:, value:}
+        {lat:, lng:, value:}
       end
     end
   end
 
-  # data received as hash: [lat, long] => value
+  # data received as hash: [lat, lng] => value
   def get_dd_grid(**args)
     opts = @opts.merge(args)
     data = AgWeather.dd_grid(opts)
     hash_to_array(data)
   end
 
-  # data received as hash: [lat, long] => value or hash
+  # data received as hash: [lat, lng] => value or hash
   def get_pest_grid(**args)
     opts = @opts.merge(args)
     opts[:pest] = @pest.remote_name
@@ -88,7 +88,7 @@ class SeveritiesController < ApplicationController
     if @end_date.month >= 11
       freeze_data = get_freeze_data(@end_date)
       data.collect do |point|
-        key = [point[:lat], point[:long]]
+        key = [point[:lat], point[:lng]]
         point[:freeze] = freeze_data[key] || 0
         point
       end
@@ -129,10 +129,10 @@ class SeveritiesController < ApplicationController
     two_day = get_pest_grid(start_date: @end_date - 2.days, as_hash: true)
     seven_day = get_pest_grid(start_date: @end_date - 7.days)
     grid = seven_day.map do |point|
-      lat, long = point[:lat], point[:long]
-      avg2 = two_day[[lat, long]]&.dig(:avg) || 0
+      lat, lng = point[:lat], point[:lng]
+      avg2 = two_day[[lat, lng]]&.dig(:avg) || 0
       avg7 = point[:avg] || 0
-      {lat:, long:, avg2:, avg7:}
+      {lat:, lng:, avg2:, avg7:}
     end
     @pest.severities_from_totals(grid)
   end
@@ -141,10 +141,10 @@ class SeveritiesController < ApplicationController
     seven_day = get_pest_grid(start_date: @end_date - 7.days, as_hash: true)
     selected_dates = get_pest_grid
     grid = selected_dates.collect do |point|
-      lat, long = point[:lat], point[:long]
+      lat, lng = point[:lat], point[:lng]
       total = point[:total]
-      avg7 = seven_day[[lat, long]]&.dig(:avg) || 0
-      {lat:, long:, total:, avg7:}
+      avg7 = seven_day[[lat, lng]]&.dig(:avg) || 0
+      {lat:, lng:, total:, avg7:}
     end
     @pest.severities_from_totals(grid)
   end
@@ -153,10 +153,10 @@ class SeveritiesController < ApplicationController
     season_totals = get_pest_grid(start_date: season_start, as_hash: true)
     selected_dates = get_pest_grid
     grid = selected_dates.collect do |point|
-      lat, long = point[:lat], point[:long]
+      lat, lng = point[:lat], point[:lng]
       selected_total = point[:total]
-      season_total = season_totals[[lat, long]]&.dig(:total)
-      {lat:, long:, selected_total:, season_total:}
+      season_total = season_totals[[lat, lng]]&.dig(:total)
+      {lat:, lng:, selected_total:, season_total:}
     end
     grid = add_freeze_data?(grid)
     @pest.severities_from_totals(grid)

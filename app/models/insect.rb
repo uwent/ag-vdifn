@@ -3,7 +3,7 @@ class Insect < Pest
     totals.map do |point|
       {
         lat: point[:lat],
-        long: point[:long],
+        lng: point[:lng],
         value: total_to_severity(point[:value], freezing: point[:freeze])
       }
     end

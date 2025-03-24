@@ -16,9 +16,14 @@
   }
 
   .map {
+    position: relative;
     width: 100%;
     @media #{vars.$medium-up} {
       width: calc(100% - 350px);
+    }
+    @media #{vars.$small-only} {
+      width: 100%;
+      height: calc(100vh - 50px);
     }
   }
 </style>
@@ -28,8 +33,9 @@
   import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte';
   import Sidebar from '@components/sidebar/Sidebar.svelte';
   import Interface from '@components/sidebar/Interface.svelte';
-  import Legend from '@components/legend/Legend.svelte';
+  import Legend from '@components/map/Legend.svelte';
   import Status from '~/src/components/map/Status.svelte';
+  import ColorSelector from '@components/map/ColorSelector.svelte';
 </script>
 
 <main class="main">
@@ -40,9 +46,10 @@
   </div>
   <div class="map">
     <Map>
-      <Status />
       <SeverityOverlay />
+      <Status />
+      <ColorSelector />
+      <Legend />
     </Map>
-    <Legend />
   </div>
 </main>

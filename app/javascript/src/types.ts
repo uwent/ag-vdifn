@@ -85,7 +85,7 @@ export type PointDetailsParams = {
 
 export type Severity = {
   lat: number;
-  long: number;
+  lng: number;
   level: number;
 };
 
@@ -99,7 +99,7 @@ type PanelParams = {
   start_date: string;
   end_date: string;
   lat_range: string;
-  long_range: string;
+  lng_range: string;
 };
 
 export type CustomPanelParams = PanelParams & TminTmax;

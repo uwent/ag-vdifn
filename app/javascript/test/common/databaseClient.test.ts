@@ -1,5 +1,27 @@
 import DatabaseClient from '@ts/databaseClient';
 import type { PointDetailsParams, SeverityParams } from '@types';
+import { http, HttpResponse } from 'msw';
+import { server } from '../msw_mocks/server';
+
+// Setup handlers before tests
+beforeEach(() => {
+  server.use(
+    http.get('/api/severities', ({ request }) => {
+      const url = new URL(request.url);
+      const pestId = url.searchParams.get('pest_id');
+
+      if (pestId === '101') {
+        return new HttpResponse(null, { status: 404 });
+      }
+
+      return HttpResponse.json([
+        { lat: 5, long: 10, level: 10 },
+        { lat: 50, long: 60, level: 5 },
+      ]);
+    }),
+    // Add other endpoints here
+  );
+});
 
 describe('fetchSeverities', () => {
   test('calls correct url and returns data', async () => {
@@ -38,18 +60,18 @@ describe('fetchSeverityLegend', () => {
 
     expect(response).toEqual([
       {
+        value: 2,
         name: 'High',
-        slug: 'very_high',
         description: 'High likelihood of disease',
       },
       {
+        value: 1,
         name: 'Medium',
-        slug: 'medium',
         description: 'Medium likelihood of disease',
       },
       {
+        value: 0,
         name: 'Low',
-        slug: 'very_low',
         description: 'Low likelihood of disease',
       },
     ]);
@@ -127,71 +149,6 @@ describe('fetchPointDetails', () => {
     expect(response).toEqual('');
   });
 });
-
-// describe('fetchPestInfo', () => {
-//   test('calls correct url and returns data', async () => {
-//     const database = new DatabaseClient()
-//     const pestId = 1
-//     const inFahrenheit = true
-
-//     const response = await database.fetchPestInfo(pestId, inFahrenheit)
-
-//     expect(response).toEqual({
-//       info: 'info',
-//       name: 'pest name',
-//       pest_link: 'www.example.com',
-//       biofix_date: new Date().toDateString(),
-//       end_date_enabled: true,
-//       tmin: 0,
-//       tmax: 100
-//     })
-//   })
-
-//   test('returns empty object on failure', async () => {
-//     const database = new DatabaseClient()
-//     const pestId = 101
-//     const inFahrenheit = true
-
-//     const response = await database.fetchPestInfo(pestId, inFahrenheit)
-
-//     expect(response).toEqual({
-//       info: null,
-//       name: null,
-//       pest_link: null,
-//       biofix_date: null,
-//       biofix_label: null,
-//       end_date_enabled: null,
-//       tmin: null,
-//       tmax: null
-//     })
-//   })
-// })
-
-// describe("fetchStationDetails", () => {
-//   test("calls correct url and returns data", async () => {
-//     const database = new DatabaseClient()
-//     const name = "name"
-//     const start_date = new Date()
-//     const end_date = new Date()
-//     const params: StationDetailsParams = { name, start_date, end_date }
-
-//     const response = await database.fetchStationDetails(params)
-
-//     expect(response).toEqual("string")
-//   })
-
-//   test("returns empty string on failure", async () => {
-//     const database = new DatabaseClient()
-//     const name = "error"
-//     const start_date = new Date()
-//     const end_date = new Date()
-//     const params: StationDetailsParams = { name, start_date, end_date }
-
-//     const response = await database.fetchStationDetails(params)
-
-//     expect(response).toEqual("")
-//   })
-// })
 
 describe('fetchDiseasePanel', () => {
   test('converts diseases into pests', async () => {

@@ -3,7 +3,7 @@ class CarrotFoliar < Disease
     seven_day.map do |point|
       {
         lat: point[:lat],
-        long: point[:long],
+        lng: point[:lng],
         value: total_to_severity(point[:total])
       }
     end

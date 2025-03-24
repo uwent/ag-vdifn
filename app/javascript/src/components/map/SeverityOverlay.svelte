@@ -35,7 +35,7 @@
       totalLevels: 5,
     });
   });
-  $inspect('severityGradient', severityGradient);
+
   let selected = $derived.by<{
     overlay: OverlayHelper;
     state: PestPanelState | CustomPanelState;

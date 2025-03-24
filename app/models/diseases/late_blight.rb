@@ -5,7 +5,7 @@ class LateBlight < Disease
     grid.collect do |point|
       {
         lat: point[:lat],
-        long: point[:long],
+        lng: point[:lng],
         value: total_to_severity(
           point[:selected_total],
           point[:season_total],

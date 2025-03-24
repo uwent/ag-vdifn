@@ -26,11 +26,11 @@ export const mapsApiKey = process.env.GOOGLE_MAPS_KEY;
 export const extents = {
   wisconsin: {
     lat_range: '42.4,47.1',
-    long_range: '-93.0,-86.8',
+    lng_range: '-93.0,-86.8',
   },
   midwest: {
     lat_range: '38,50',
-    long_range: '-82,-98',
+    lng_range: '-82,-98',
   },
 };
 

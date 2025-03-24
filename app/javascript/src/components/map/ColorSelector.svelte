@@ -1,9 +1,22 @@
 <style lang="scss">
-  .inline-flex {
+  @use '../../scss/variables.scss' as vars;
+
+  .container {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    z-index: 10;
+  }
+
+  .flex {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .label {
+    font-size: small;
+    color: grey;
   }
 
   .switch-field {
@@ -73,8 +86,8 @@
   });
 </script>
 
-<div class="inline-flex">
-  <div>Color Palette:</div>
+<div class="container flex">
+  <div class="label">Color Palette:</div>
   <div class="switch-field">
     <input
       id="spectral"

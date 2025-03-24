@@ -87,7 +87,7 @@ export default class OverlayHelper {
   buildRectangles(): RectangleOption[] {
     const rectangleOptions: RectangleOption[] = [];
     this.severities.forEach((severity: Severity) => {
-      const latLng = this.googleWrapper.latLng(severity.lat, severity.long);
+      const latLng = this.googleWrapper.latLng(severity.lat, severity.lng);
       const rectangleOption = new RectangleOption(latLng.lat(), latLng.lng(), this.map);
       rectangleOptions.push(rectangleOption);
     });
