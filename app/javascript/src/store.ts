@@ -61,10 +61,10 @@ export const defaults = {
   t_min: 50,
   t_max: 86,
   in_f: true,
-  palette: 'classic' as ColorPaletteName,
+  palette: 'spectral' as ColorPaletteName,
 };
 
-export const selectedPalette = writable<ColorPaletteName>('classic');
+export const selectedPalette = writable<ColorPaletteName>(defaults.palette);
 export const userLocation = writable<LatLng | null>(null);
 export const panelKey = {};
 export const diseasePanelKey = {};

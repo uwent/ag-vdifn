@@ -117,14 +117,15 @@
     maxLevels: 8,
   };
 
-  let gradientHelper = $state(new GradientHelper($selectedPalette));
-  let colorHelper = $state(new ColorHelper($selectedPalette));
   let userInputElements = $state<(HTMLInputElement | null)[]>([]);
   let severityLevels = $state(opts.defaultLevels);
   let userValues = $state([0, 0, 0, 0]);
   let userInputs = $state([0, 0, 0, 0]);
   let buttonsDisabled = $state(false);
   let gradientValidationMessage = $state('');
+
+  let gradientHelper = $derived(new GradientHelper($selectedPalette));
+  let colorHelper = $derived(new ColorHelper($selectedPalette));
 
   // generate intermediate values for display
   let intermediateRanges = $derived.by(() => {

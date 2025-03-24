@@ -93,7 +93,7 @@
       id="spectral"
       title="Spectral color palette"
       type="radio"
-      value="classic"
+      value="spectral"
       bind:group={palette}
     />
     <label for="spectral">Spectral</label>

@@ -19,7 +19,7 @@ interface GradientValues {
 export default class GradientHelper {
   private palette: ColorPaletteName;
 
-  constructor(palette: ColorPaletteName = 'classic') {
+  constructor(palette: ColorPaletteName = 'spectral') {
     this.palette = palette;
   }
 

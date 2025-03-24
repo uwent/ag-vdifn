@@ -1,21 +1,41 @@
 <style lang="scss">
-  #gradient-2-point-display {
+  .spectral-2 {
     background: linear-gradient(
       90deg,
-      rgba(0, 176, 38, 1) 0%,
-      rgba(245, 255, 0, 1) 50%,
-      rgba(255, 0, 0, 1) 100%
+      rgb(0, 176, 38) 0%,
+      rgb(245, 255, 0) 50%,
+      rgb(255, 0, 0) 100%
     );
   }
 
-  #gradient-3-point-display {
+  .spectral-3 {
     background: linear-gradient(
       90deg,
-      rgba(0, 176, 38, 1) 0%,
-      rgba(249, 255, 0, 1) 25%,
-      rgba(255, 0, 0, 1) 50%,
-      rgba(255, 255, 0, 1) 75%,
-      rgba(0, 176, 38, 1) 100%
+      rgb(0, 176, 38) 0%,
+      rgb(249, 255, 0) 25%,
+      rgb(255, 0, 0) 50%,
+      rgb(255, 255, 0) 75%,
+      rgb(0, 176, 38) 100%
+    );
+  }
+
+  .viridis-2 {
+    background: linear-gradient(
+      90deg,
+      rgb(71, 0, 82) 0%,
+      rgb(0, 138, 140) 50%,
+      rgb(255, 232, 73) 100%
+    );
+  }
+
+  .viridis-3 {
+    background: linear-gradient(
+      90deg,
+      rgb(71, 0, 82) 0%,
+      rgb(0, 138, 140) 25%,
+      rgb(255, 232, 73) 50%,
+      rgb(0, 138, 140) 75%,
+      rgb(71, 0, 82) 100%
     );
   }
 
@@ -109,7 +129,7 @@
 <script lang="ts">
   import TwoPointGradient from './TwoPointGradient.svelte';
   import ThreePointGradient from './ThreePointGradient.svelte';
-  import { customPanelState, mapRange } from '@store';
+  import { customPanelState, mapRange, selectedPalette } from '@store';
 
   let selectedGradient = $state($customPanelState.selectedGradient);
 
@@ -147,7 +167,7 @@
         bind:group={selectedGradient}
         value="two-point"
       />
-      <span id="gradient-2-point-display" class="gradient"></span>
+      <span class="gradient {$selectedPalette}-2"></span>
     </label>
     <label for="gradient-3-point" class="container">
       <input
@@ -158,7 +178,7 @@
         bind:group={selectedGradient}
         value="three-point"
       />
-      <span id="gradient-3-point-display" class="gradient"></span>
+      <span class="gradient {$selectedPalette}-3"></span>
     </label>
   </fieldset>
   {#if selectedGradient === 'two-point'}

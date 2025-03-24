@@ -34,7 +34,7 @@ const viridisPalette: ColorPalette = {
   grey: errColor,
 };
 
-const classicPalette: ColorPalette = {
+const spectralPalette: ColorPalette = {
   low: '#00cc00',
   // lowMed: '#7dff23',
   med: '#ffd700',
@@ -46,8 +46,8 @@ const classicPalette: ColorPalette = {
 export default class ColorHelper {
   private readonly COLORS: ColorPalette;
 
-  constructor(palette: ColorPaletteName = 'classic') {
-    this.COLORS = palette === 'classic' ? classicPalette : viridisPalette;
+  constructor(palette: ColorPaletteName = 'spectral') {
+    this.COLORS = palette === 'spectral' ? spectralPalette : viridisPalette;
   }
 
   color(severity: number, severityLevels: number): string {

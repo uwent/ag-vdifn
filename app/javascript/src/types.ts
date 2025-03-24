@@ -3,7 +3,7 @@ export const PANEL_TYPES = ['disease', 'insect', 'custom'] as PanelType[];
 export type MapExtent = 'wisconsin' | 'midwest';
 export type GradientType = 'two-point' | 'three-point';
 
-export type ColorPaletteName = 'classic' | 'viridis';
+export type ColorPaletteName = 'spectral' | 'viridis';
 export type ColorPalette = {
   low: string;
   med: string;
