@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/svelte';
 import { tick } from 'svelte';
 import moment from 'moment';
 
-import SetContextTest from '../testComponents/SetContextTest.svelte';
+import SetContextTest from '../SetContextTest.svelte';
 import DatePicker from '@components/sidebar/DatePicker.svelte';
 import { panelKey, selectedPest } from '@store';
 import type { Pest } from '@types';

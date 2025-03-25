@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 
-import SetContextTest from '../testComponents/SetContextTest.svelte';
+import SetContextTest from '../SetContextTest.svelte';
 import CustomModelSelection from '@components/sidebar/CustomModelSelection.svelte';
 import { panelKey } from '@store';
 

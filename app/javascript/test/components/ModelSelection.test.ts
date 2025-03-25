@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/svelte';
-import SetContextTest from '../testComponents/SetContextTest.svelte';
+import SetContextTest from '../SetContextTest.svelte';
 import ModelSelection from '@components/sidebar/ModelSelection.svelte';
 import { panelKey } from '@store';
 import type { CropWithPests, Pest } from '@types';

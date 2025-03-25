@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/svelte';
 import { tick } from 'svelte';
 
-import CustomSeverityLegend from '@components/legend/CustomLegend.svelte';
+import CustomSeverityLegend from '@components/map/CustomLegend.svelte';
 
 beforeEach(() => {
   render(CustomSeverityLegend, {

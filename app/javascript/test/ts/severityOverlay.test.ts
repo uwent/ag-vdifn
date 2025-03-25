@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 import { tick } from 'svelte';
 import type { Mock } from 'vitest';
 
-import SetContextTest from '../testComponents/SetContextTest.svelte';
+import SetContextTest from '../SetContextTest.svelte';
 import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
 import OverlayHelper from '@components/map/ts/overlayHelper';
 import type { Severity } from '@types';

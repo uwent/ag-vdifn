@@ -51,6 +51,6 @@
   }>();
 </script>
 
-<button class="button button-primary" {title} onclick={click} {disabled}>
+<button class="button button-primary" {title} aria-label={ariaLabel} onclick={click} {disabled}>
   {text}
 </button>

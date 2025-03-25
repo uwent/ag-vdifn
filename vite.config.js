@@ -17,6 +17,7 @@ export default defineConfig({
     alias: {
       '@public': path.resolve(__dirname, 'public'),
     },
+    conditions: process.env.VITEST ? ['browser'] : undefined,
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
