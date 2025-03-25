@@ -73,7 +73,7 @@ class PointDetailsController < ApplicationController
       if severity
         next unless (legend = @pest.severity_legend[severity])
         day[:severity] = legend[:name]
-        day[:severity_class] = "severity-#{legend[:slug]}"
+        day[:severity_class] = "severity-#{legend[:value]}"
         day[:severity_info] = legend[:description]
       end
       day

@@ -76,7 +76,6 @@ describe('common behavior for all panels', () => {
       id: 1,
       name: 'insect',
       biofix_date: twoWeeksAgo,
-      end_date_enabled: true,
     } as Pest;
     selectedPest.set(pest);
     await tick();

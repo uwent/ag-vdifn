@@ -163,9 +163,7 @@
 
   async function buildPestLegend(params: SeverityParams): Promise<LegendData | null> {
     if (!params) return null;
-    let legend = await db.fetchSeverityLegend(params.pest_id);
-    let info = await db.fetchSeverityLegendInfo(params.pest_id);
-    return { legend: legend, info: info };
+    return await db.fetchSeverityLegend(params.pest_id);
   }
 
   function buildCustomLegend(gradient: GradientHash): LegendData | null {

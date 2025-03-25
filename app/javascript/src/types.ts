@@ -1,8 +1,59 @@
+// Rails types
+export type Pest = {
+  id: number;
+  name: string;
+  local_name: string;
+  biofix_mm: number;
+  biofix_dd: number;
+  biofix_date: string;
+  biofix_label: string;
+  t_min: number;
+  t_max: number | null;
+  info: string;
+  severity_info: string;
+  photo: string;
+  link: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+export type PestInfo = {
+  info: string;
+  name: string;
+  pest_link: string;
+  biofix_date: string;
+  biofix_label: string;
+  tmin: number;
+  tmax: number;
+};
+
+export type Crop = {
+  id: number;
+  name: string;
+};
+
+export type CropWithPests = Crop & {
+  pests: Pest[];
+};
+
+export type DegreeDayModel = {
+  id: number;
+  name: string;
+  name_c: string;
+  remote_name: string;
+  t_min: number;
+  t_max: number | null;
+};
+
+export type PestsForCrops = {
+  pests: Pest[];
+  crops: Crop[];
+};
+
 export type PanelType = 'disease' | 'insect' | 'custom';
 export const PANEL_TYPES = ['disease', 'insect', 'custom'] as PanelType[];
 export type MapExtent = 'wisconsin' | 'midwest';
 export type GradientType = 'two-point' | 'three-point';
-
 export type ColorPaletteName = 'spectral' | 'viridis';
 export type ColorPalette = {
   low: string;
@@ -44,36 +95,6 @@ export type GradientHash = {
   [key: number]: string;
 };
 
-export type Pest = {
-  id: number;
-  name: string;
-  local_name: string;
-  biofix_mm: number;
-  biofix_dd: number;
-  biofix_date: string;
-  biofix_label: string;
-  end_date_enabled: boolean;
-  t_min: number;
-  t_max: number | null;
-  info: string;
-  severity_info: string;
-  photo: string;
-  link: string;
-  created_at: Date;
-  updated_at: Date;
-};
-
-export type PestInfo = {
-  info: string;
-  name: string;
-  pest_link: string;
-  biofix_date: string;
-  biofix_label: string;
-  end_date_enabled: boolean;
-  tmin: number;
-  tmax: number;
-};
-
 export type PointDetailsParams = {
   latitude: number;
   longitude: number;
@@ -86,7 +107,7 @@ export type PointDetailsParams = {
 export type Severity = {
   lat: number;
   lng: number;
-  level: number;
+  value: number;
 };
 
 export type TminTmax = {
@@ -132,35 +153,4 @@ export type GradientState = {
   inputs: number[];
   inputElements: HTMLInputElement[];
   range?: MapRange;
-};
-
-export type Crop = {
-  id: number;
-  name: string;
-};
-
-export type CropWithDiseases = Crop & {
-  diseases: Pest[];
-};
-
-export type CropWithInsects = Crop & {
-  insects: Pest[];
-};
-
-export type CropWithPests = Crop & {
-  pests: Pest[];
-};
-
-export type DegreeDayModel = {
-  id: number;
-  name: string;
-  name_c: string;
-  remote_name: string;
-  t_min: number;
-  t_max: number | null;
-};
-
-export type PestsForCrops = {
-  pests: Pest[];
-  crops: Crop[];
 };

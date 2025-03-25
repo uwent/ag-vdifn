@@ -35,8 +35,8 @@ const customSeverityParams = {
   in_fahrenheit: true,
 };
 const severities: Severity[] = [
-  { lat: 5, long: 10, level: 1 },
-  { lat: 2, long: 4, level: 2 },
+  { lat: 5, lng: 10, level: 1 },
+  { lat: 2, lng: 4, level: 2 },
 ];
 
 const mockUpdateOverlay = vi.fn();

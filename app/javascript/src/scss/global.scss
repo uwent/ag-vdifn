@@ -112,22 +112,22 @@ $medium: #ffd700;
 $high: #ff8000;
 $very_high: #cc0000;
 
-.severity-very_low {
+.severity-0 {
   background: $very_low;
 }
 
-.severity-low {
+.severity-1 {
   background: $low;
 }
 
-.severity-medium {
+.severity-2 {
   background: $medium;
 }
 
-.severity-high {
+.severity-3 {
   background: $high;
 }
 
-.severity-very_high {
+.severity-4 {
   background: $very_high;
 }

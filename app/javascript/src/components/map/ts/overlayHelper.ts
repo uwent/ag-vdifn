@@ -50,8 +50,8 @@ export default class OverlayHelper {
     this.severities = await this.getSeverities(severityParams);
     if (this.severities.length === 0) return;
 
-    this.min = Math.min(...this.severities.map((point) => point.level));
-    this.max = Math.max(...this.severities.map((point) => point.level));
+    this.min = Math.min(...this.severities.map((point) => point.value));
+    this.max = Math.max(...this.severities.map((point) => point.value));
 
     const rectangleOptions = this.buildRectangles();
     this.drawDataPoints(rectangleOptions);
@@ -63,7 +63,7 @@ export default class OverlayHelper {
       const rectangle = this.rectangles[index];
       if (!rectangle) return;
       rectangle.setOptions({
-        fillColor: this.severityToColor(severity.level, gradient),
+        fillColor: this.severityToColor(severity.value, gradient),
       });
     });
   }

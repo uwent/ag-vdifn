@@ -3,10 +3,10 @@ import type {
   PointDetailsParams,
   SeverityParams,
   CropWithPests,
-  CropWithDiseases,
-  CropWithInsects,
   DegreeDayModel,
   LegendEntry,
+  Pest,
+  LegendData,
 } from '../types';
 import { dev } from '@store';
 import axios from 'axios';
@@ -19,67 +19,107 @@ export default class DatabaseClient implements DatabaseClientInterface {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
   }
 
+  // get list of crops with diseases for model selection
   async fetchDiseasePanel(): Promise<CropWithPests[]> {
     const endpoint = ENDPOINTS.DISEASE_PANEL;
+    let data: CropWithPests[] = [];
     try {
-      let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
+      data = response.data;
       if (dev)
-        console.log('DB >> fetchDiseasePanel', '\nEndpoint:', endpoint, '\nResponse:', response);
-      cropsWithPests = response.data.map((cropWithDisease: CropWithDiseases) => {
-        const { diseases, ...newData } = {
-          ...cropWithDisease,
-          pests: cropWithDisease.diseases,
-        };
-        return newData;
-      });
-      return cropsWithPests;
+        console.log(
+          'DB >> fetchDiseasePanel',
+          '\nEndpoint:',
+          endpoint,
+          '\nResponse:',
+          response,
+          '\nData:',
+          data,
+        );
     } catch (e) {
-      return [];
+      console.log('Error fetching disease panel:', e);
     }
+    return data;
   }
 
+  // get list of crops with insects for model selection
   async fetchInsectPanel(): Promise<CropWithPests[]> {
     const endpoint = ENDPOINTS.INSECT_PANEL;
+    let data: CropWithPests[] = [];
     try {
-      let cropsWithPests: CropWithPests[] = [];
       const response = await axios.get(endpoint);
+      data = response.data;
       if (dev)
-        console.log('DB >> fetchInsectPanel', '\nEndpoint:', endpoint, '\nResponse:', response);
-      cropsWithPests = response.data.map((cropWithInsect: CropWithInsects) => {
-        const { insects, ...newData } = {
-          ...cropWithInsect,
-          pests: cropWithInsect.insects,
-        };
-        return newData;
-      });
-      return cropsWithPests;
+        console.log(
+          'DB >> fetchInsectPanel',
+          '\nEndpoint:',
+          endpoint,
+          '\nResponse:',
+          response,
+          '\nData:',
+          data,
+        );
     } catch (e) {
-      return [];
+      console.log('Error fetching insect panel:', e);
     }
+    return data;
   }
 
+  // get list of degree day models for model selection
   async fetchCustomPanel(): Promise<DegreeDayModel[]> {
     const endpoint = ENDPOINTS.DD_MODELS;
+    let data: DegreeDayModel[] = [];
     try {
       const response = await axios.get(endpoint);
-      if (dev) console.log('DB >> fetchDDModels', '\nEndpoint:', endpoint, '\nResponse:', response);
-      let ddModels: DegreeDayModel[] = [];
-      ddModels = response.data.map((ddModel: DegreeDayModel) => {
-        return ddModel;
-      });
-      return ddModels;
+      data = response.data;
+      if (dev)
+        console.log(
+          'DB >> fetchDDModels',
+          '\nEndpoint:',
+          endpoint,
+          '\nResponse:',
+          response,
+          '\nData:',
+          data,
+        );
     } catch (e) {
-      return [];
+      console.log('Error fetching custom panel:', e);
     }
+    return data;
   }
 
-  async fetchSeverities(severityParams: SeverityParams): Promise<Severity[]> {
-    const endpoint = ENDPOINTS.SEVERITIES;
-    const params = severityParams;
-    const severities: Severity[] = [];
+  // severity legend levels, eg low, medium, high
+  async fetchSeverityLegend(pestId: number): Promise<LegendData> {
+    const endpoint = ENDPOINTS.SEVERITY_LEGEND;
+    const params = { pest_id: pestId };
+    let data: LegendData = { legend: [], info: null };
     try {
-      const response = await axios.post(endpoint, params);
+      const response = await axios.get(endpoint, { params: params });
+      data = response.data;
+      if (dev)
+        console.log(
+          'DB >> fetchSeverityLegend',
+          '\nEndpoint:',
+          endpoint,
+          '\nParams:',
+          params,
+          '\nResponse:',
+          response,
+          '\nData:',
+          data,
+        );
+    } catch (e) {
+      console.log('Error fetching severity legend levels:', e);
+    }
+    return data;
+  }
+
+  async fetchSeverities(params: SeverityParams): Promise<Severity[]> {
+    const endpoint = ENDPOINTS.SEVERITIES;
+    let data: Severity[] = [];
+    try {
+      const response = await axios.get(endpoint, { params: params });
+      data = response.data;
       if (dev)
         console.log(
           'DB >> fetchSeverities',
@@ -90,68 +130,10 @@ export default class DatabaseClient implements DatabaseClientInterface {
           '\nResponse:',
           response,
         );
-      if (response.data) {
-        response.data.forEach((data) => {
-          severities.push({
-            lat: data.lat,
-            lng: data.lng,
-            level: data.value,
-          });
-        });
-        return severities;
-      } else {
-        return response.data.map(({ severity: severityLevel, ...data }) => ({
-          ...data,
-          level: severityLevel,
-        }));
-      }
     } catch (e) {
-      return [];
+      console.log('Error fetching severities:', e);
     }
-  }
-
-  async fetchSeverityLegend(pestId: number): Promise<LegendEntry[]> {
-    const endpoint = ENDPOINTS.SEVERITY_LEGEND;
-    const params = { pest_id: pestId };
-
-    try {
-      const response = await axios.get(endpoint, { params: params });
-      if (dev)
-        console.log(
-          'DB >> fetchSeverityLegend',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-        );
-      return response.data;
-    } catch (e) {
-      return [];
-    }
-  }
-
-  async fetchSeverityLegendInfo(pestId: number): Promise<string> {
-    const endpoint = ENDPOINTS.SEVERITY_LEGEND_INFO;
-    const params = { pest_id: pestId };
-
-    try {
-      const response = await axios.get(endpoint, { params: params });
-      if (dev)
-        console.log(
-          'DB >> fetchSeverityLegendInfo',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-        );
-      return response.data;
-    } catch (e) {
-      return '';
-    }
+    return data;
   }
 
   async fetchPointDetails(pointDetailsParams: PointDetailsParams): Promise<string> {

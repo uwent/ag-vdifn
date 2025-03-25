@@ -10,8 +10,8 @@ vi.mock('@components/map/ts/rectangleOption');
 vi.mock('@components/map/ts/colorHelper');
 
 let overlayHelper;
-const firstSeverity = { lat: 5, long: 10, level: 10 };
-const secondSeverity = { lat: 50, long: 60, level: 5 };
+const firstSeverity = { lat: 5, lng: 10, level: 10 };
+const secondSeverity = { lat: 50, lng: 60, level: 5 };
 const severityResults = [firstSeverity, secondSeverity];
 const googleWrapper = new GoogleWrapper({});
 const map = {};
@@ -50,8 +50,8 @@ describe('creates and updates overlay', () => {
 
   test('updates overlay', async () => {
     const severities = [
-      { lat: 5, long: 10, severity: 10 },
-      { lat: 50, long: 60, severity: 5 },
+      { lat: 5, lng: 10, severity: 10 },
+      { lat: 50, lng: 60, severity: 5 },
     ];
     const panelType = 'Disease';
     const rectangleOptions = [{ data: 'data' }, { data: 'data2' }];

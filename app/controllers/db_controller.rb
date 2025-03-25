@@ -1,22 +1,31 @@
 class DbController < ApplicationController
+  # def severity_legend
+  #   legend = Pest.find(params[:pest_id]).severity_legend
+  #   render json: legend
+  # end
+
+  # def severity_legend_info
+  #   info = Pest.find(params[:pest_id]).severity_info
+  #   render json: info
+  # end
+
   def severity_legend
-    legend = Pest.find(params[:pest_id]).severity_legend
-    render json: legend
+    pest = Pest.find(params[:pest_id])
+    render json: {
+      legend: pest.severity_legend,
+      info: pest.severity_info,
+    }
   end
 
-  def severity_legend_info
-    info = Pest.find(params[:pest_id]).severity_info
-    render json: info
-  end
 
   def disease_panel
     @crops = create_crops_for_disease_panel.unshift(create_any_option(Disease))
-    render json: @crops, include: {diseases: {methods: [:end_date_enabled, :biofix_date, :biofix_label]}}
+    render json: @crops, include: {pests: {methods: [:biofix_date, :biofix_label]}}
   end
 
   def insect_panel
     @crops = create_crops_for_insect_panel.unshift(create_any_option(Insect))
-    render json: @crops, include: {insects: {methods: [:end_date_enabled, :biofix_date, :biofix_label]}}
+    render json: @crops, include: {pests: {methods: [:biofix_date, :biofix_label]}}
   end
 
   def dd_models

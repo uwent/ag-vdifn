@@ -31,7 +31,7 @@
     const gradientHelper = new GradientHelper($selectedPalette);
     return gradientHelper.mapRangeToColors({
       min: 0,
-      max: 4,
+      max: 3, // a final 'infinity' level is automatically added to the gradient
       totalLevels: 5,
     });
   });
@@ -141,12 +141,6 @@
   });
 
   // For custom panel, no colors are initially drawn on the map because the gradient is not set
-  // $effect(() => {
-  //   if ($selectedPanel === 'custom') {
-  //     const gradient = $overlayGradient;
-  //     if (gradient) customOverlay.updateOverlayGradient(gradient);
-  //   }
-  // });
   $effect(() => {
     const gradient = $selectedPanel === 'custom' ? $overlayGradient : severityGradient;
     selected.overlay.updateOverlayGradient(gradient);
