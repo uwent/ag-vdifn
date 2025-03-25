@@ -45,7 +45,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 1})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 1})
       end
 
       it "returns success response when EarlyBlight" do
@@ -56,7 +56,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 0})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 0})
       end
 
       it "returns success response when FoliarDisease" do
@@ -67,7 +67,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 2})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 2})
       end
 
       it "returns success response when LateBlight" do
@@ -78,7 +78,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 2})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 2})
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 0})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 0})
       end
 
       it "returns success response when OakWilt" do
@@ -102,7 +102,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 0})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 0})
       end
 
       it "calls the freeze_grid endpoint in winter" do
@@ -114,7 +114,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 4})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 4})
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe SeveritiesController, type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
-        expect(json.first).to eq({lat: 1, long: 1, value: 10})
+        expect(json.first).to eq({lat: 1, lng: 1, value: 10})
       end
     end
   end

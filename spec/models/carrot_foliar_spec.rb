@@ -5,10 +5,10 @@ RSpec.describe CarrotFoliar, type: :model do
   let(:pest) { CarrotFoliar.new }
   let(:grid) {
     [
-      {lat: 1, long: 1, total: rand(28)},
-      {lat: 1, long: 2, total: rand(28)},
-      {lat: 2, long: 1, total: rand(28)},
-      {lat: 2, long: 2, total: rand(28)}
+      {lat: 1, lng: 1, total: rand(28)},
+      {lat: 1, lng: 2, total: rand(28)},
+      {lat: 2, lng: 1, total: rand(28)},
+      {lat: 2, lng: 2, total: rand(28)}
     ]
   }
 

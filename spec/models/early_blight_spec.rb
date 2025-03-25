@@ -8,10 +8,10 @@ RSpec.describe EarlyBlight, type: :model do
   }
   let(:grid) {
     [
-      {lat: 1, long: 1, total: rand(500), seven_day_avg: rand(10)},
-      {lat: 1, long: 2, total: rand(500), seven_day_avg: rand(10)},
-      {lat: 2, long: 1, total: rand(500), seven_day_avg: rand(10)},
-      {lat: 2, long: 2, total: rand(500), seven_day_avg: rand(10)}
+      {lat: 1, lng: 1, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 1, lng: 2, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 2, lng: 1, total: rand(500), seven_day_avg: rand(10)},
+      {lat: 2, lng: 2, total: rand(500), seven_day_avg: rand(10)}
     ]
   }
 
