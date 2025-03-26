@@ -11,22 +11,43 @@ export default class RectangleOption {
     west: number;
   };
 
-  // strokeColor: string = "6c6c6c"
-  strokeColor = '#000000';
-  strokeOpacity = 1;
-  strokeWeight = 0.025;
-  fillOpacity = 0.5;
+  strokeColor: string;
+  strokeOpacity: number;
+  strokeWeight: number;
+  fillOpacity: number;
 
-  private latitudeOffset = 0.05;
-  private longitudeOffset = 0.05;
+  private latitudeOffset: number;
+  private longitudeOffset: number;
 
-  constructor(latitude: number, longitude: number, map: any) {
+  constructor(
+    latitude: number,
+    longitude: number,
+    map: any,
+    options: {
+      latitudeOffset?: number;
+      longitudeOffset?: number;
+      strokeColor?: string;
+      strokeOpacity?: number;
+      strokeWeight?: number;
+      fillColor?: string;
+      fillOpacity?: number;
+    } = {},
+  ) {
     this.latitude = latitude;
     this.longitude = longitude;
-    this.fillColor = '#ffffff00';
-    this.bounds = this.calculateBounds();
     this.map = map;
     this.severityLevel = null;
+
+    this.latitudeOffset = options.latitudeOffset ?? 0.05;
+    this.longitudeOffset = options.longitudeOffset ?? 0.05;
+
+    this.strokeColor = options.strokeColor ?? '#000000';
+    this.strokeOpacity = options.strokeOpacity ?? 1;
+    this.strokeWeight = options.strokeWeight ?? 0.025;
+    this.fillColor = options.fillColor ?? '#ffffff00';
+    this.fillOpacity = options.fillOpacity ?? 0.5;
+
+    this.bounds = this.calculateBounds();
   }
 
   private calculateBounds() {

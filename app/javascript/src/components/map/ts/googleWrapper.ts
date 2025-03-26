@@ -1,25 +1,35 @@
 import RectangleOption from './rectangleOption';
 
-export default class GoogleWrapper {
-  google;
+// Define minimal interfaces for Google Maps types
+interface GoogleMapsAPI {
+  maps: {
+    Map: any;
+    LatLng: any;
+    Rectangle: any;
+    InfoWindow: any;
+  };
+}
 
-  constructor(google) {
+export default class GoogleWrapper {
+  private google: GoogleMapsAPI;
+
+  constructor(google: GoogleMapsAPI) {
     this.google = google;
   }
 
-  createMap(container, options): any {
+  createMap(container: HTMLElement, options: any): any {
     return new this.google.maps.Map(container, options);
   }
 
-  latLng(latitude: number, longitude: number) {
+  latLng(latitude: number, longitude: number): any {
     return new this.google.maps.LatLng(latitude, longitude);
   }
 
-  createRectangle(RectangleOption: RectangleOption) {
-    return new this.google.maps.Rectangle(RectangleOption);
+  createRectangle(options: RectangleOption): any {
+    return new this.google.maps.Rectangle(options);
   }
 
-  createBounds(bounds, map) {
+  createBounds(bounds: any, map: any): any {
     return new this.google.maps.Rectangle({
       strokeColor: '#000000',
       strokeOpacity: 0.8,
@@ -31,7 +41,7 @@ export default class GoogleWrapper {
     });
   }
 
-  createInfoWindow(options) {
+  createInfoWindow(options: any): any {
     return new this.google.maps.InfoWindow(options);
   }
 }

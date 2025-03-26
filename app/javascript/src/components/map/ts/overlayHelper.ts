@@ -1,9 +1,11 @@
-import type { SeverityParams, Severity, PanelType, GradientMapping, GradientHash } from '@types';
+import type { SeverityParams, Severity, PanelType, GradientHash } from '@types';
 import DatabaseClient from '@ts/databaseClient';
 import GoogleWrapper from './googleWrapper';
 import RectangleOption from './rectangleOption';
-import infoWindowLoadingTemplate from './infoWindowLoading';
 import tippy from 'tippy.js';
+
+const loadingTemplate =
+  '<div class="lds-ring" title="loading"><div></div><div></div><div></div><div></div></div>';
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper;
@@ -110,7 +112,7 @@ export default class OverlayHelper {
         this.closeInfoWindow();
 
         this.infoWindow = this.googleWrapper.createInfoWindow({
-          content: infoWindowLoadingTemplate,
+          content: loadingTemplate,
           position: event.latLng,
         });
 
