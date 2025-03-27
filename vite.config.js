@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import Rails from 'vite-plugin-rails';
+import ViteRails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
@@ -12,7 +12,15 @@ for (const k in process.env) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [Rails(), tsconfigPaths(), svelte()],
+  plugins: [
+    tsconfigPaths(),
+    svelte(),
+    ViteRails({
+      fullReload: {
+        additionalPaths: ['app/views/**/*'],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@public': path.resolve(__dirname, 'public'),
@@ -21,14 +29,7 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
-    manifest: true,
-    watch: null, // Explicitly disable watch mode
-    rollupOptions: {
-      input: {
-        main: '~/entrypoints/application.ts',
-      },
-    },
-    cssCodeSplit: true,
+    cssMinify: false,
   },
   test: {
     globals: true,
