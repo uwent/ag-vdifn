@@ -29,7 +29,7 @@ RSpec.describe SeveritiesController, type: :request do
     }
   }
 
-  describe "POST severities" do
+  describe "GET severities" do
     before do
       stub_request(:get, /degree_days\/grid*/).to_return(body: degree_days_data.to_json)
       stub_request(:get, /pest_forecasts\/grid*/).to_return(body: pest_forecast_data.to_json)
@@ -41,7 +41,7 @@ RSpec.describe SeveritiesController, type: :request do
         leaf_spot = CercosporaLeafSpot.create!
         allow(AgWeather).to receive(:pest_grid).and_return(pest_forecast_data)
 
-        post severities_path, params: {pest_id: leaf_spot.id}
+        get(severities_path, params: {pest_id: leaf_spot.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -52,7 +52,7 @@ RSpec.describe SeveritiesController, type: :request do
         early_blight = EarlyBlight.create!
         allow(AgWeather).to receive(:pest_grid).and_return(pest_forecast_data)
 
-        post severities_path, params: {end_date:, pest_id: early_blight.id}
+        get(severities_path, params: {end_date:, pest_id: early_blight.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -63,7 +63,7 @@ RSpec.describe SeveritiesController, type: :request do
         foliar_disease = CarrotFoliar.create!
         expect(AgWeather).to receive(:pest_grid).and_return(pest_forecast_data)
 
-        post severities_path, params: {end_date:, pest_id: foliar_disease.id}
+        get(severities_path, params: {end_date:, pest_id: foliar_disease.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -74,7 +74,7 @@ RSpec.describe SeveritiesController, type: :request do
         late_blight = LateBlight.create!
         allow(AgWeather).to receive(:pest_grid).and_return(pest_forecast_data)
 
-        post severities_path, params: {end_date:, pest_id: late_blight.id}
+        get(severities_path, params: {end_date:, pest_id: late_blight.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -87,7 +87,7 @@ RSpec.describe SeveritiesController, type: :request do
         pest = Insect.create(risk_array: [[100, 200, 300]])
         expect(AgWeather).to receive(:dd_grid).and_return(degree_days_data)
 
-        post severities_path, params: {end_date:, pest_id: pest.id}
+        get(severities_path, params: {end_date:, pest_id: pest.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -98,7 +98,7 @@ RSpec.describe SeveritiesController, type: :request do
         pest = OakWilt.create!
         expect(AgWeather).to receive(:dd_grid).and_return(degree_days_data)
 
-        post severities_path, params: {end_date:, pest_id: pest.id}
+        get(severities_path, params: {end_date:, pest_id: pest.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -110,7 +110,7 @@ RSpec.describe SeveritiesController, type: :request do
         expect(AgWeather).to receive(:dd_grid).and_return(degree_days_data)
         expect(AgWeather).to receive(:freeze_grid).and_return(freeze_data)
 
-        post severities_path, params: {end_date: end_date_winter, pest_id: pest.id}
+        get(severities_path, params: {end_date: end_date_winter, pest_id: pest.id})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty
@@ -122,7 +122,7 @@ RSpec.describe SeveritiesController, type: :request do
       it "returns success response when custom params sent" do
         allow(AgWeather).to receive(:dd_grid).and_return(degree_days_data)
 
-        post severities_path, params: {start_date: "2020-10-01", end_date: "2020-10-10", base: "10.0", upper: "50.0"}
+        get(severities_path, params: {start_date: "2020-10-01", end_date: "2020-10-10", base: "10.0", upper: "50.0"})
 
         expect(response).to have_http_status(:success)
         expect(response.body).not_to be_empty

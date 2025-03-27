@@ -37,6 +37,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
+    exclude: ['**/.test-archive/**', '**/node_modules/**'],
   },
   define: envKeys,
 });
