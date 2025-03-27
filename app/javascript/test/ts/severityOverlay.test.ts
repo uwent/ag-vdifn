@@ -5,7 +5,7 @@ import type { Mock } from 'vitest';
 
 import SetContextTest from '../SetContextTest.svelte';
 import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
-import OverlayHelper from '@components/map/ts/overlayHelper';
+import OverlayHelper from '@ts/overlayHelper';
 import type { Severity } from '@types';
 import {
   mapKey,

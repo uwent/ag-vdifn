@@ -76,12 +76,12 @@
   const defaultModel = panelType === 'disease' ? defaults.disease : defaults.insect;
   const selectedPest = panelType === 'disease' ? selectedDisease : selectedInsect;
 
-  let showModal = $state(false);
   let crops = $state<CropWithPests[]>([]);
   let selectedCropValue = $state(0);
   let pestsForCrop = $state<Pest[]>([]);
   let pestName = $state(getPestName());
   let modelId = $state<number | null>(null);
+  let showModal = $state(false);
 
   function getPestsForCrop(event) {
     const cropId = parseInt(event.target.value);
@@ -128,7 +128,8 @@
       }
     } else {
       modelId = getPestId(defaultModel) || pestsForCrop[0].id;
-      if (dev) console.log(`Model selection >> Loaded default model '${defaultModel} (${modelId})`);
+      if (dev)
+        console.log(`Model selection >> Loaded default model ${defaultModel} (id: ${modelId})`);
     }
   }
 
@@ -179,8 +180,14 @@
     {/if}
   </div>
 </fieldset>
+
 {#if showModal}
-  <Modal name={$selectedPest.name} on:close={() => (showModal = false)}>
+  <Modal
+    close={() => {
+      showModal = false;
+    }}
+    name={$selectedPest.name}
+  >
     <div class="modal__pest-info">
       {#if $selectedPest.photo}
         <img

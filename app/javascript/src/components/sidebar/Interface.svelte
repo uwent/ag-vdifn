@@ -84,6 +84,7 @@
   let panel = $state<PanelType>(defaults.panel);
   let extent = $state<MapExtent>(defaults.extent);
   let showHelp = $state(false);
+  // let helpModal = $state<SvelteComponent | null>(null);
 
   let opts = $state({
     model: '',
@@ -128,6 +129,18 @@
     $mapExtent = extent;
   });
 </script>
+
+{#if showHelp}
+  <Modal
+    close={() => {
+      showHelp = false;
+    }}
+    name="How to use VDIFN"
+    maxWidth="40em"
+  >
+    <Help />
+  </Modal>
+{/if}
 
 <div class="options">
   <div class="inner">
@@ -210,8 +223,3 @@
     {/if}
   </div>
 </div>
-{#if showHelp}
-  <Modal name="How to use VDIFN" maxWidth="40em" on:close={() => (showHelp = false)}>
-    <Help />
-  </Modal>
-{/if}

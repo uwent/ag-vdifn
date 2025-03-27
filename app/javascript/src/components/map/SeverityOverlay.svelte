@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getContext, untrack } from 'svelte';
-  import OverlayHelper from '@components/map/ts/overlayHelper';
+  import OverlayHelper from '@ts/overlayHelper';
+  import GradientHelper from '@ts/gradientHelper';
   import type { CustomPanelState, PanelType, PestPanelState, SeverityParams } from '@types';
   import {
     mapKey,
@@ -18,7 +19,6 @@
     bounds,
     selectedPalette,
   } from '@store';
-  import GradientHelper from './ts/gradientHelper';
 
   const { getMap, getGoogle } = getContext<any>(mapKey);
   const map = getMap();

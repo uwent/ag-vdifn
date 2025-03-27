@@ -2,15 +2,15 @@
   import { Loader } from '@googlemaps/js-api-loader';
   import { onMount, setContext, type Snippet } from 'svelte';
   import Loading from '../common/Loading.svelte';
-  import GoogleWrapper from './ts/googleWrapper';
+  import GoogleWrapper from '@ts/googleWrapper';
   import MapButtons from './MapButtons.svelte';
   import { mapKey, mapsApiKey } from '@store';
 
-  let container = $state<HTMLElement | null>(null);
-  let promise = $state<Promise<void> | null>(null);
-  let map = $state<google.maps.Map | null>(null);
-  let googleInstance = $state<GoogleWrapper | null>(null);
-  let error = $state<Error | null>(null);
+  let container = $state<HTMLElement>();
+  let promise = $state<Promise<void>>();
+  let map = $state<google.maps.Map>();
+  let googleInstance = $state<GoogleWrapper>();
+  let error = $state<Error>();
 
   const loader = new Loader({
     apiKey: mapsApiKey || '',
@@ -51,7 +51,7 @@
     try {
       await loader.importLibrary('maps');
       googleInstance = new GoogleWrapper(google);
-      map = googleInstance.createMap(container, mapOptions);
+      if (container) map = googleInstance.createMap(container, mapOptions);
     } catch (e) {
       error = e instanceof Error ? e : new Error(String(e));
     }

@@ -93,13 +93,11 @@
     setCustomPanelURL();
   });
 
+  // resubmit if already submitted and map extent or temperature units change
   $effect(() => {
-    if (
-      $selectedPanel == thisPanel &&
-      $customPanelState?.loaded &&
-      $customPanelState?.selectedExtent != $mapExtent
-    ) {
-      submit();
+    if ($selectedPanel == thisPanel && $customPanelState?.loaded) {
+      if ($customPanelState?.selectedExtent != $mapExtent) submit();
+      if ($customPanelState?.params.t_min != $tMinTmax.t_min) submit();
     }
   });
 </script>

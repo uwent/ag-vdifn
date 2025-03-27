@@ -39,7 +39,6 @@
       inset 0px 0px 1px rgba(255, 255, 255, 1);
     color: #fff;
     font-size: 0.85em;
-    margin-top: 13px;
     padding: 10px;
     border: 1px solid grey;
     cursor: pointer;
@@ -102,8 +101,8 @@
 <script lang="ts">
   import { untrack } from 'svelte';
   import { strToNum } from '@ts/utils';
-  import GradientHelper from '@components/map/ts/gradientHelper';
-  import ColorHelper from '@components/map/ts/colorHelper';
+  import GradientHelper from '@ts/gradientHelper';
+  import ColorHelper from '@ts/colorHelper';
   import {
     mapRange,
     overlayGradient,
@@ -456,7 +455,7 @@
       title="Evenly space gradient across map"
       onclick={resetValues}
     >
-      Balance
+      Auto
     </button>
     <button class="update-overlay-button" title="Reset to defaults" onclick={resetAll}>
       Reset

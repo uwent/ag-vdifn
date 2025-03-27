@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import ColorHelper from '@components/map/ts/colorHelper';
+import ColorHelper from '@ts/colorHelper';
 
 describe('ColorHelper', () => {
   // Test initialization with different palettes

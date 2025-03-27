@@ -108,7 +108,7 @@
 <script lang="ts">
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
-  import Modal from '../common/Modal.svelte';
+  import Modal from '@components/common/Modal.svelte';
   import {
     selectedPanel,
     diseasePanelParams,
@@ -121,7 +121,7 @@
   import type { LegendData, GradientHash, SeverityParams } from '@types';
   import tippy from 'tippy.js';
   import 'tippy.js/dist/tippy.css';
-  import ColorHelper from '@components/map/ts/colorHelper';
+  import ColorHelper from '@ts/colorHelper';
 
   const db = new DatabaseClient();
 
@@ -221,7 +221,7 @@
 </script>
 
 {#if showModal}
-  <Modal name="Pest Info" on:close={() => (showModal = false)}>
+  <Modal showModal={showModal} name="Pest Info">
     {@html $selectedPest.info}
   </Modal>
 {/if}

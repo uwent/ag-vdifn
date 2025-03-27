@@ -1,9 +1,9 @@
 import DatabaseClient from '@ts/databaseClient';
-import GoogleWrapper from '@components/map/ts/googleWrapper';
-import ColorHelper from '@components/map/ts/colorHelper';
-import RectangleOption from '@components/map/ts/rectangleOption';
+import GoogleWrapper from '@ts/googleWrapper';
+import ColorHelper from '@ts/colorHelper';
+import RectangleOption from '@ts/rectangleOption';
 import infoWindowLoadingTemplate from '@components/map/ts/infoWindowLoading';
-import OverlayHelper from '@components/map/ts/overlayHelper';
+import OverlayHelper from '@ts/overlayHelper';
 
 vi.mock('@components/map/ts/googleWrapper');
 vi.mock('@components/map/ts/rectangleOption');

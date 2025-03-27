@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import GoogleWrapper from '@components/map/ts/googleWrapper';
-import RectangleOption from '@components/map/ts/rectangleOption';
+import GoogleWrapper from '@ts/googleWrapper';
+import RectangleOption from '@ts/rectangleOption';
 
 // Mock Google Maps API
 const createMockGoogleMaps = () => {

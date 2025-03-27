@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import RectangleOption from '@components/map/ts/rectangleOption';
+import RectangleOption from '@ts/rectangleOption';
 
 describe('RectangleOption', () => {
   let map;

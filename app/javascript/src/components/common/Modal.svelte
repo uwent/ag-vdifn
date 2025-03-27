@@ -37,24 +37,20 @@
 </style>
 
 <script lang="ts">
-  import { createEventDispatcher, onDestroy, type Snippet } from 'svelte';
+  import { onDestroy, type Snippet } from 'svelte';
   import Button from './Button.svelte';
 
-  // Props using $props
-  const {
+  let {
+    close = () => {},
     name = 'Information',
     maxWidth = '32em',
     children,
   } = $props<{
+    close: () => void;
     name?: string;
     maxWidth?: string;
     children?: Snippet;
   }>();
-
-  // Use createEventDispatcher which still works in Svelte 5
-  // Although deprecated, this is still the recommended approach for now
-  const dispatch = createEventDispatcher();
-  const close = () => dispatch('close');
 
   let modal = $state<HTMLElement | null>(null);
 
