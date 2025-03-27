@@ -1,4 +1,4 @@
-import GradientHelper from '@components/map/ts/gradientHelper';
+import GradientHelper from '@ts/gradientHelper';
 
 const gradientHelper = new GradientHelper();
 

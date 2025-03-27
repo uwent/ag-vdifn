@@ -3,10 +3,10 @@ import { get } from 'svelte/store';
 import { tick } from 'svelte';
 import type { Mock } from 'vitest';
 
-import SetContextTest from '../SetContextTest.svelte';
+import SetContextTest from '../test/SetContextTest.svelte';
 import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
 import OverlayHelper from '@ts/overlayHelper';
-import type { Severity } from '@types';
+import type { CustomPanelParams, Severity } from '@types';
 import {
   mapKey,
   diseasePanelParams,
@@ -20,7 +20,7 @@ import {
   mapRange,
 } from '@store';
 
-vi.mock('@components/map/ts/overlayHelper');
+vi.mock('@ts/overlayHelper');
 
 const severityParams = {
   start_date: '2020-10-10',
@@ -30,13 +30,13 @@ const severityParams = {
 const customSeverityParams = {
   start_date: '2020-10-10',
   end_date: '2020-10-15',
-  t_min: '10',
-  t_max: '15',
-  in_fahrenheit: true,
-};
+  t_min: 10,
+  t_max: 15,
+  in_f: true,
+} satisfies CustomPanelParams;
 const severities: Severity[] = [
-  { lat: 5, lng: 10, level: 1 },
-  { lat: 2, lng: 4, level: 2 },
+  { lat: 5, lng: 10, value: 1 },
+  { lat: 2, lng: 4, value: 2 },
 ];
 
 const mockUpdateOverlay = vi.fn();
