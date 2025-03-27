@@ -1,5 +1,6 @@
 import { cleanup } from '@testing-library/svelte';
 import { afterEach } from 'vitest';
+import '@testing-library/jest-dom';
 
 // inject a fake CSRF token
 const ele = document.createElement('meta'); // Changed to meta which is more common for CSRF

@@ -4,8 +4,6 @@ import type {
   SeverityParams,
   CropWithPests,
   DegreeDayModel,
-  LegendEntry,
-  Pest,
   LegendData,
 } from '../types';
 import { dev } from '@store';
@@ -109,7 +107,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
           data,
         );
     } catch (e) {
-      console.log('Error fetching severity legend levels:', e);
+      console.log('Error fetching severity legend:', e);
     }
     return data;
   }
@@ -153,7 +151,8 @@ export default class DatabaseClient implements DatabaseClientInterface {
         );
       return response.data;
     } catch (e) {
-      return '';
+      console.log('Error fetching point details:', e);
+      return 'Unable to get data for this location.';
     }
   }
 }

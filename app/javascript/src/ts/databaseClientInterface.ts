@@ -4,7 +4,6 @@ import type {
   SeverityParams,
   CropWithPests,
   DegreeDayModel,
-  Pest,
   LegendData,
 } from '@types';
 
@@ -13,13 +12,6 @@ export default interface DatabaseClientInterface {
   fetchInsectPanel(): Promise<CropWithPests[]>;
   fetchCustomPanel(): Promise<DegreeDayModel[]>;
   fetchSeverityLegend(pestId: number): Promise<LegendData>;
-  // fetchSeverityLegendInfo(pestId: number): Promise<string>;
   fetchSeverities(severityParams: SeverityParams): Promise<Severity[]>;
   fetchPointDetails(pointDetailsParams: PointDetailsParams): Promise<string>;
-}
-
-export interface DiseasePanelData {
-  id: number;
-  name: string;
-  diseases: Pest[];
 }
