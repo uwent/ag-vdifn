@@ -2,7 +2,7 @@ class PointDetailsController < ApplicationController
   def index
     @panel = params[:panel]
     @lat = params[:latitude].to_f.round(1)
-    @long = params[:longitude].to_f.round(1)
+    @lng = params[:longitude].to_f.round(1)
     @start_date = start_date
     @end_date = end_date
     @in_f = in_f
@@ -12,7 +12,7 @@ class PointDetailsController < ApplicationController
     @upper = t_max
     @opts = {
       lat: @lat,
-      long: @long,
+      lng: @lng,
       start_date: @start_date,
       end_date: @end_date,
       units:
@@ -73,7 +73,7 @@ class PointDetailsController < ApplicationController
       if severity
         next unless (legend = @pest.severity_legend[severity])
         day[:severity] = legend[:name]
-        day[:severity_class] = "severity-#{legend[:slug]}"
+        day[:severity_class] = "severity-#{legend[:value]}"
         day[:severity_info] = legend[:description]
       end
       day

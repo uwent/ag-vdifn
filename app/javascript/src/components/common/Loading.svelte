@@ -19,24 +19,26 @@
   import { loadStatus } from '@store';
   import { onDestroy, onMount } from 'svelte';
 
-  let time = 0;
+  let time = $state(0);
+  let interval: ReturnType<typeof setTimeout>;
 
   onMount(() => {
-    setInterval(() => {
+    interval = setInterval(() => {
       time += 0.1;
     }, 100);
   });
 
   onDestroy(() => {
+    clearInterval(interval);
     $loadStatus = `Data load completed in ${time.toFixed(1)} seconds.`;
   });
 </script>
 
 <div class="lds-ring" title="Loading" data-testid="loading">
-  <div />
-  <div />
-  <div />
-  <div />
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
 
 <div class="loading-timer">Fetching data: {time.toFixed(1)} seconds</div>

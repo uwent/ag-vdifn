@@ -3,7 +3,7 @@ class Insect < Pest
     totals.map do |point|
       {
         lat: point[:lat],
-        long: point[:long],
+        lng: point[:lng],
         value: total_to_severity(point[:value], freezing: point[:freeze])
       }
     end
@@ -22,11 +22,11 @@ class Insect < Pest
 
   def severity_legend
     [
-      {name: "Very Low", slug: "very_low", description: "Very low pest abundance or likelihood of damage"},
-      {name: "Low", slug: "low", description: "Low pest abundance or likelihood of damage"},
-      {name: "Medium", slug: "medium", description: "Medium pest abundance or likelihood of damage"},
-      {name: "High", slug: "high", description: "High pest abundance or likelihood of damage"},
-      {name: "Very High", slug: "very_high", description: "Very high pest abundance or likelihood of damage"}
+      {value: 0, name: "Very Low", description: "Very low pest abundance or likelihood of damage"},
+      {value: 1, name: "Low", description: "Low pest abundance or likelihood of damage"},
+      {value: 2, name: "Medium", description: "Medium pest abundance or likelihood of damage"},
+      {value: 3, name: "High", description: "High pest abundance or likelihood of damage"},
+      {value: 4, name: "Very High", description: "Very high pest abundance or likelihood of damage"}
     ].freeze
   end
 

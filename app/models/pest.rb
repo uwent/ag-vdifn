@@ -19,8 +19,4 @@ class Pest < ApplicationRecord
   def biofix_label
     "Start date"
   end
-
-  def end_date_enabled
-    true
-  end
 end

@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import '../../scss/settings.scss';
+  @use '../../scss/variables.scss' as vars;
 
   .button {
     display: inline-block;
@@ -13,7 +13,7 @@
 
   .button-primary {
     background: #249dde;
-    background: linear-gradient(to bottom, $btn-color-1 0%, $btn-color-2);
+    background: linear-gradient(to bottom, vars.$btn-color-1 0%, vars.$btn-color-2);
     border-radius: 3px;
     box-shadow:
       0px 1px 3px rgba(000, 000, 000, 0),
@@ -26,7 +26,7 @@
   }
 
   .button-primary:hover {
-    background: linear-gradient(to bottom, $btn-color-2 0%, $btn-color-3);
+    background: linear-gradient(to bottom, vars.$btn-color-2 0%, vars.$btn-color-3);
   }
 
   button:disabled {
@@ -36,12 +36,21 @@
 </style>
 
 <script lang="ts">
-  export let click;
-  export let text = 'Submit';
-  export let title = '';
-  export let disabled = false;
+  const {
+    click,
+    text = 'Submit',
+    title = text,
+    ariaLabel = title,
+    disabled = false,
+  } = $props<{
+    click: () => void;
+    text?: string;
+    title?: string;
+    ariaLabel?: string;
+    disabled?: boolean;
+  }>();
 </script>
 
-<button class="button button-primary" {title} on:click={click} {disabled}>
+<button class="button button-primary" {title} aria-label={ariaLabel} onclick={click} {disabled}>
   {text}
 </button>

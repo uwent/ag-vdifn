@@ -4,7 +4,7 @@ RSpec.describe PointDetailsController, type: :request do
   let(:start_date) { 1.week.ago.to_date }
   let(:end_date) { Date.yesterday }
   let(:lat) { 45.0 }
-  let(:long) { -89.0 }
+  let(:lng) { -89.0 }
   let(:units) { "F" }
   let(:agwx_response) {
     [
@@ -30,13 +30,13 @@ RSpec.describe PointDetailsController, type: :request do
           panel: "disease",
           pest_id: pest.id,
           latitude: lat,
-          longitude: long,
+          longitude: lng,
           start_date:,
           end_date:
         }
 
         expect(AgWeather).to receive(:pest_point).with(
-          {lat:, long:, start_date:, end_date:, pest: "pest", units:}
+          {lat:, lng:, start_date:, end_date:, pest: "pest", units:}
         )
 
         get(point_details_path, params:)
@@ -55,13 +55,13 @@ RSpec.describe PointDetailsController, type: :request do
           panel: "insect",
           pest_id: pest.id,
           latitude: lat,
-          longitude: long,
+          longitude: lng,
           start_date:,
           end_date:
         }
 
         expect(AgWeather).to receive(:dd_point).with(
-          {lat:, long:, start_date:, end_date:, model: pest.remote_name, units:}
+          {lat:, lng:, start_date:, end_date:, model: pest.remote_name, units:}
         )
 
         get(point_details_path, params:)
@@ -74,7 +74,7 @@ RSpec.describe PointDetailsController, type: :request do
         params = {
           panel: "custom",
           latitude: lat,
-          longitude: long,
+          longitude: lng,
           start_date:,
           end_date:,
           t_min: base,
@@ -82,7 +82,7 @@ RSpec.describe PointDetailsController, type: :request do
         }
 
         expect(AgWeather).to receive(:dd_point).with(
-          {lat:, long:, start_date:, end_date:, base:, upper:, units:}
+          {lat:, lng:, start_date:, end_date:, base:, upper:, units:}
         )
 
         get(point_details_path, params:)

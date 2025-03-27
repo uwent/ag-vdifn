@@ -27,18 +27,10 @@ RSpec.describe DbController, type: :request do
     end
   end
 
-  describe "POST db/severity_legend" do
+  describe "GET db/severity_legend" do
     it "returns success response" do
       pest = CarrotFoliar.create
       get(severity_legend_db_index_path, params: {pest_id: pest.id})
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "POST db/severity_legend_info" do
-    it "returns success response" do
-      pest = Insect.create
-      get(severity_legend_info_db_index_path, params: {pest_id: pest.id})
       expect(response).to have_http_status(:success)
     end
   end

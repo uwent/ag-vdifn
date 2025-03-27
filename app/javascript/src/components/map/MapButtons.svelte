@@ -65,7 +65,7 @@
         position: position,
         title: 'Your location',
       });
-      marker.addListener('click', () => {
+      marker.addListener('gmp-click', () => {
         map.setZoom(12);
         map.panTo(position);
       });
@@ -84,7 +84,7 @@
 
 <div bind:this={zoomBtn}>
   <button class="btn" title="Zoom extents" on:click={zoomExtents}>
-    <FontAwesomeIcon icon={faExpand} size="2x" />
+    <FontAwesomeIcon icon={faExpand as any} size="2x" />
   </button>
 </div>
 
@@ -95,9 +95,9 @@
     on:click={handleLocation}
   >
     {#if $userLocation}
-      <FontAwesomeIcon icon={faLocationDot} size="2x" />
+      <FontAwesomeIcon icon={faLocationDot as any} size="2x" />
     {:else}
-      <FontAwesomeIcon icon={faLocationCrosshairs} size="2x" />
+      <FontAwesomeIcon icon={faLocationCrosshairs as any} size="2x" />
     {/if}
   </button>
 </div>

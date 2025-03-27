@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import Rails from 'vite-plugin-rails';
+import ViteRails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
@@ -12,33 +12,33 @@ for (const k in process.env) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [Rails(), tsconfigPaths(), svelte()],
+  plugins: [
+    tsconfigPaths(),
+    svelte(),
+    ViteRails({
+      fullReload: {
+        additionalPaths: ['app/views/**/*'],
+      },
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@public': path.resolve(__dirname, 'public'),
+    },
+    conditions: process.env.VITEST ? ['browser'] : undefined,
+  },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
-    manifest: true,
-    rollupOptions: {
-      input: {
-        main: '~/entrypoints/application.ts',
-      },
-    },
+    cssMinify: false,
   },
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['test/test_setup.ts'],
-    alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
-  },
-  server: {
-    fs: { cachedChecks: false },
+    exclude: ['**/.test-archive/**', '**/node_modules/**'],
   },
   define: envKeys,
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './app/javascript'),
-      '@public': path.resolve(__dirname, './public'),
-    },
-  },
 });

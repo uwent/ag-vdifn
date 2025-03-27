@@ -1,26 +1,4 @@
-export type PanelType = 'disease' | 'insect' | 'custom';
-
-export type SeverityLegend = {
-  name: string;
-  slug: string;
-  description: string;
-};
-
-export type LegendMapping = {
-  color: string;
-  text: string;
-};
-
-export type LatLng = {
-  lat: number;
-  lng: number;
-};
-
-export type GradientMapping = {
-  color: string;
-  number: number;
-};
-
+// Rails types
 export type Pest = {
   id: number;
   name: string;
@@ -29,7 +7,6 @@ export type Pest = {
   biofix_dd: number;
   biofix_date: string;
   biofix_label: string;
-  end_date_enabled: boolean;
   t_min: number;
   t_max: number | null;
   info: string;
@@ -46,108 +23,16 @@ export type PestInfo = {
   pest_link: string;
   biofix_date: string;
   biofix_label: string;
-  end_date_enabled: boolean;
   tmin: number;
   tmax: number;
 };
-
-export type PointDetailsParams = {
-  latitude: number;
-  longitude: number;
-  start_date: string;
-  end_date: string;
-  pest_id: number;
-  t_max?: number;
-  t_min?: number;
-  in_f?: boolean;
-  panel: string;
-};
-
-export type TMinTmax = {
-  t_min: number | null;
-  t_max: number | null;
-  in_f: boolean;
-};
-
-export type Severity = {
-  lat: number;
-  long: number;
-  level: number;
-};
-
-export type SeverityParams = {
-  pest_id: number;
-  start_date: string;
-  end_date: string;
-  t_max: number;
-  t_min: number;
-  in_f: boolean;
-  lat_range: string;
-  long_range: string;
-};
-
-export type PestPanelState = {
-  selectedPest: Pest;
-  severities: Severity[];
-  severityParams: SeverityParams;
-  mapExtent: string;
-  loaded: boolean;
-};
-
-export type CustomPanelParams = {
-  start_date: string;
-  end_date: string;
-  t_min: number;
-  t_max: number | null;
-  in_f: boolean;
-};
-
-export type CustomPanelState = {
-  selectedModel: DegreeDayModel;
-  selectedExtent: string;
-  severities: Severity[];
-  severityParams: SeverityParams;
-  params: Partial<CustomPanelParams>;
-  selectedGradient: number;
-  loaded: boolean;
-};
-
-export type GradientState = {
-  severityLevels: number;
-  userValues: number[];
-  mapMin: number;
-  mapMax: number;
-  gradient: {
-    [key: number]: string;
-  };
-};
-
-// export type StationDetailsParams = {
-//   name: string;
-//   start_date: Date;
-//   end_date: Date;
-// };
 
 export type Crop = {
   id: number;
   name: string;
 };
 
-export type CropWithDiseases = {
-  id: number;
-  name: string;
-  diseases: Pest[];
-};
-
-export type CropWithInsects = {
-  id: number;
-  name: string;
-  insects: Pest[];
-};
-
-export type CropWithPests = {
-  id: number;
-  name: string;
+export type CropWithPests = Crop & {
   pests: Pest[];
 };
 
@@ -163,4 +48,123 @@ export type DegreeDayModel = {
 export type PestsForCrops = {
   pests: Pest[];
   crops: Crop[];
+};
+
+export type PanelType = 'disease' | 'insect' | 'custom';
+export const PANEL_TYPES = ['disease', 'insect', 'custom'] as PanelType[];
+
+export type GradientType = 'two-point' | 'three-point';
+export type ColorPaletteName = 'spectral' | 'viridis';
+export type ColorPalette = {
+  low: string;
+  med: string;
+  high: string;
+  grey: string;
+};
+
+export type LatLng = {
+  lat: number;
+  lng: number;
+};
+
+export type MapRange = {
+  min: number;
+  max: number;
+};
+
+export type MapExtentOption = 'wisconsin' | 'midwest';
+export type MapExtents = Record<MapExtentOption, MapExtent>;
+export type MapExtent = {
+  lat_range: string;
+  lng_range: string;
+};
+export type MapBounds = Record<MapExtentOption, MapBoundary>;
+export type MapBoundary = {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+};
+
+export type LegendEntry = {
+  value: number;
+  color: string;
+  name: string;
+  description: string;
+};
+
+export type LegendData = {
+  legend: LegendEntry[];
+  info: string | null;
+};
+
+// used to create the custom legend
+export type GradientMapping = {
+  color: string;
+  number: number;
+};
+
+// used to fill the rectangles on the map where the key is the upper cutoff value and the value is the color hex string
+export type GradientHash = {
+  [key: number]: string;
+};
+
+export type PointDetailsParams = {
+  latitude: number;
+  longitude: number;
+  start_date: string;
+  end_date: string;
+  pest_id: number;
+  panel: string;
+} & Partial<TminTmax>;
+
+export type Severity = {
+  lat: number;
+  lng: number;
+  value: number;
+};
+
+export type TminTmax = {
+  t_min: number | null;
+  t_max: number | null;
+  in_f: boolean;
+};
+
+type PanelParams = {
+  start_date: string;
+  end_date: string;
+  lat_range?: string;
+  lng_range?: string;
+};
+
+export type CustomPanelParams = PanelParams & TminTmax;
+
+export type SeverityParams = PanelParams & {
+  pest_id: number;
+} & Partial<TminTmax>;
+
+type PanelState = {
+  severities: Severity[];
+  severityParams: SeverityParams;
+  mapExtent: MapExtent;
+  loaded: boolean;
+};
+
+export type PestPanelState = PanelState & {
+  selectedPest: Pest;
+};
+
+export type CustomPanelState = PanelState & {
+  selectedModel: DegreeDayModel;
+  selectedExtent: string;
+  selectedGradient: GradientType;
+  params: Partial<CustomPanelParams>;
+};
+
+export type GradientState = {
+  levels: number;
+  values: number[];
+  inputs: number[];
+  inputElements: HTMLInputElement[];
+  range?: MapRange;
 };

@@ -21,6 +21,7 @@ early_blight = EarlyBlight.create!(
     </p><p>
       The biofix for this model should be set to your crop emergence date. Accumulated p-days since that date will increase the risk of early blight development. Our model will indicate increased risk at 150, 200, and 250 p-days, with highest risk after 300 p-days. Once 300 p-days are reached, risk is determined by the weekly average daily p-day accumulation.
     </p>",
+  severity_info: "Early blight is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. The biofix for this model should be set to your crop emergence date. Accumulated p-days since that date will increase the risk of early blight development.",
   photo: "tomato-early-blight.jpg",
   link: "https://vegpath.plantpath.wisc.edu/diseases/early-blight/"
 )
@@ -33,6 +34,7 @@ late_blight = LateBlight.create!(
     "<p>
       <i>Phytophthora infestans</i> infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Foliar infections begin with watersoaking and progress quickly to cause tan/brown dead tissue. Brown cankers can girdle petioles and stems. White, downy sporulation is often visible, with high humidity, on undersides of leaves along lesion edges. Infected tomato fruits remain firm underneath mottled-looking brown areas. Infected tubers appear as brown decay on the surface and into the top ¼-inch of tissue. Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control. Eliminate culls and volunteer plants. Avoid prolonged wetness on leaves and canopy, use certified seed, and follow DSV accumulation values that prompt early, preventative fungicide applications. If disease is present, treat with appropriate fungicides on a 5-7 day spray interval.
     </p>",
+  severity_info: "Late blight infects all aboveground plant parts and potato tubers and can be transmitted via seed, culls, volunteers, and weeds (i.e., nightshade). Late blight disease advances quickly under conditions of high humidity (≥90%) and cool temperatures (50-70°F). Prevention is critical for control.",
   photo: "potato-late-blight.png",
   link: "https://vegpath.plantpath.wisc.edu/diseases/potato-late-blight/"
 )
@@ -47,6 +49,7 @@ carrot_foliar = CarrotFoliar.create!(
     </p><p>
       <b>Cercospora leaf blight</b>: the potentially seedborne <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles. Plant growth can be reduced from dead, curled leaflets and, in severe cases, death of the entire canopy. Disease management includes using certified or pre-treated seed, crop rotation, avoiding overhead irrigation to reduce foliar wetness, and disease forecasting programs for initiating a fungicide program.
     </p>",
+  severity_info: "<i>Alternaria</i> fungus causes dark-brown lesions on leaflets and petioles that weaken and/or kill carrot foliage, causing separation from root crowns during mechanical harvest. <i>Cercospora</i> fungus causes tan lesions with a darker brown margin on carrot leaflets and petioles.",
   photo: "carrot-foliar-disease.png",
   link: "https://vegpath.plantpath.wisc.edu/resources/carrot-diseases/"
 )
@@ -59,6 +62,7 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
     "<p>
       <b>Cercospora leaf spot (CLS)</b> and resultant defoliation is caused by the fungus <i>Cercospora beticola</i> Sacc. and is one of the most damaging diseases of table and sugar beet crops worldwide. Disease symptoms are initially discrete and necrotic lesions with red to purple margins red table beets. Lesions have gray centers and contain diagnostic fungal structures (pseudostromata). For large scale table beet production, defoliation may lead to challenges with mechanical harvest and crop loss. For fresh market, 'bunched beet' sale, foliar lesions can result in rejection. CLS control in conventional table beet requires preventative fungicide applications. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.
     </p>",
+  severity_info: "Cercospora leaf spot and resultant defoliation is one of the most damaging diseases of table and sugar beet crops worldwide. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.",
   photo: "cercospora-leaf-spot.jpg",
   link: "https://vegpath.plantpath.wisc.edu/resources/carrot-diseases/"
 )
@@ -74,6 +78,7 @@ botrytis_leaf_blight = BotrytisLeafBlight.create!(
     </p><p>
       The Botrytis risk model on this website is based the Botcast decision tool described in Sutton et al. 1986. This tool is useful for timing the initial fungicide spray to combat the development of Botrytis leaf blight, which should begin after Threshold 1 or Threshold 2 are reached.
     </p>",
+  severity_info: "Onion Botrytis leaf blight/leaf spot is a fungal disease of alliums. Symptoms first appear as small whitish spots on the leaf. Favorable conditions include relative humidity and rainfall, prolonged leaf wetness, and warm temperatures.",
   photo: "onion-botrytis.png",
   link: "https://vegpath.plantpath.wisc.edu/resources/onion-botrytis/"
 )

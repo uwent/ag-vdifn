@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
     params[:lat_range]
   end
 
-  def long_range
-    params[:long_range]
+  def lng_range
+    params[:lng_range]
   end
 
   def in_f

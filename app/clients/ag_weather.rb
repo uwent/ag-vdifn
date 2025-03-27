@@ -17,7 +17,7 @@ class AgWeather
     data[:data]
   end
 
-  ## Grids - returns hash where [lat, long] = value ##
+  ## Grids - returns hash where [lat, lng] = value ##
 
   def self.pest_grid(query)
     data = fetch(PEST_GRID, query:) || {}

@@ -5,10 +5,10 @@ RSpec.describe CercosporaLeafSpot, type: :model do
   let(:pest) { CercosporaLeafSpot.new }
   let(:grid) {
     [
-      {lat: 1, long: 1, avg7: rand(100), avg2: rand(10)},
-      {lat: 1, long: 2, avg7: rand(100), avg2: rand(10)},
-      {lat: 2, long: 1, avg7: rand(100), avg2: rand(10)},
-      {lat: 2, long: 2, avg7: rand(100), avg2: rand(10)}
+      {lat: 1, lng: 1, avg7: rand(100), avg2: rand(10)},
+      {lat: 1, lng: 2, avg7: rand(100), avg2: rand(10)},
+      {lat: 2, lng: 1, avg7: rand(100), avg2: rand(10)},
+      {lat: 2, lng: 2, avg7: rand(100), avg2: rand(10)}
     ]
   }
 

@@ -72,7 +72,7 @@ RSpec.describe AgWeather do
 
   describe "#pest_point" do
     it "calls correct endpoint and returns success" do
-      options = {lat: 10.0, long: 20.0, start_date:, end_date:, pest: "blight"}
+      options = {lat: 10.0, lng: 20.0, start_date:, end_date:, pest: "blight"}
       request_url = "#{endpoint}/pest_forecasts?#{options.to_query}"
       stub_request(:get, request_url).to_return(body: {data: point_data}.to_json)
 
@@ -83,7 +83,7 @@ RSpec.describe AgWeather do
 
   describe "#dd_point" do
     it "calls correct endpoint and returns success" do
-      options = {lat: 11.0, long: 20.0, start_date:, end_date:, base: 50}
+      options = {lat: 11.0, lng: 20.0, start_date:, end_date:, base: 50}
       request_url = "#{endpoint}/degree_days?#{options.to_query}"
       stub_request(:get, request_url).to_return(body: {data: point_data}.to_json)
 

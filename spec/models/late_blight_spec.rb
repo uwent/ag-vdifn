@@ -5,15 +5,15 @@ RSpec.describe LateBlight, type: :model do
   let(:pest) { LateBlight.new }
   let(:grid1) {
     1.upto(5).collect do |i|
-      {lat: rand(180), long: rand(180), selected_total: rand(25), season_total: rand(50), freeze: 0}
+      {lat: rand(180), lng: rand(180), selected_total: rand(25), season_total: rand(50), freeze: 0}
     end
   }
   let(:grid2) {
     [
-      {lat: 1, long: 1, selected_total: rand(25), season_total: rand(50), freeze: 1},
-      {lat: 1, long: 2, selected_total: rand(25), season_total: rand(50), freeze: 0},
-      {lat: 2, long: 1, selected_total: rand(25), season_total: rand(50), freeze: 3},
-      {lat: 2, long: 2, selected_total: rand(25), season_total: rand(50), freeze: 0}
+      {lat: 1, lng: 1, selected_total: rand(25), season_total: rand(50), freeze: 1},
+      {lat: 1, lng: 2, selected_total: rand(25), season_total: rand(50), freeze: 0},
+      {lat: 2, lng: 1, selected_total: rand(25), season_total: rand(50), freeze: 3},
+      {lat: 2, lng: 2, selected_total: rand(25), season_total: rand(50), freeze: 0}
     ]
   }
 

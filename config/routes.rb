@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   get "/point_details" => "point_details#index"
-  post "/severities" => "severities#index"
+  get "/severities" => "severities#index"
 
   # redirect all wayward routes to home
   get "*path" => redirect("/vdifn") unless Rails.env.development?

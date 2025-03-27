@@ -1,17 +1,16 @@
 <script lang="ts">
   import { Loader } from '@googlemaps/js-api-loader';
-  import { onMount, setContext } from 'svelte';
-
+  import { onMount, setContext, type Snippet } from 'svelte';
   import Loading from '../common/Loading.svelte';
-  import GoogleWrapper from './ts/googleWrapper';
+  import GoogleWrapper from '@ts/googleWrapper';
   import MapButtons from './MapButtons.svelte';
   import { mapKey, mapsApiKey } from '@store';
-  // import { mapStyle } from './ts/mapStyle';
 
-  let container;
-  let promise;
-  let map;
-  let googleInstance: GoogleWrapper;
+  let container = $state<HTMLElement>();
+  let promise = $state<Promise<void>>();
+  let map = $state<google.maps.Map>();
+  let googleInstance = $state<GoogleWrapper>();
+  let error = $state<Error>();
 
   const loader = new Loader({
     apiKey: mapsApiKey || '',
@@ -27,7 +26,7 @@
       mapTypeIds: ['roadmap', 'terrain', 'satellite'],
       position: 3,
     },
-    mapTypeId: 'terrain',
+    mapTypeId: 'roadmap',
     maxZoom: 14,
     minZoom: 5,
     streetViewControl: false,
@@ -37,10 +36,11 @@
       position: 7,
     },
     zoom: 7,
-    // styles: mapStyle,
     gestureHandling: 'greedy',
     mapId: 'cb1bee6358753186',
   };
+
+  const { children } = $props<{ children: Snippet }>();
 
   setContext(mapKey, {
     getMap: () => map,
@@ -48,26 +48,29 @@
   });
 
   async function initMap() {
-    await loader.importLibrary('maps').then(() => {
+    try {
+      await loader.importLibrary('maps');
       googleInstance = new GoogleWrapper(google);
-      map = googleInstance.createMap(container, mapOptions);
-    });
+      if (container) map = googleInstance.createMap(container, mapOptions);
+    } catch (e) {
+      error = e instanceof Error ? e : new Error(String(e));
+    }
   }
 
   onMount(() => {
-    promise = initMap();
+    if (container) promise = initMap();
   });
 </script>
 
-{#await promise}
+{#if !map && !error}
   <Loading />
-{:catch error}
-  <p>{error}</p>
+{:else if error}
+  <p>{error.message}</p>
   <h1>An error occurred loading Google Maps, please try refreshing the page</h1>
-{/await}
+{/if}
 
 <div bind:this={container} id="google-map"></div>
 {#if map}
   <MapButtons />
-  <slot />
+  {@render children()}
 {/if}

@@ -5,10 +5,10 @@ RSpec.describe BotrytisLeafBlight, type: :model do
   let(:pest) { BotrytisLeafBlight.new }
   let(:grid) {
     [
-      {lat: 1, long: 1, total: rand(10)},
-      {lat: 1, long: 2, total: rand(25)},
-      {lat: 2, long: 1, total: rand(50)},
-      {lat: 2, long: 2, total: rand(100)}
+      {lat: 1, lng: 1, total: rand(10)},
+      {lat: 1, lng: 2, total: rand(25)},
+      {lat: 2, lng: 1, total: rand(50)},
+      {lat: 2, lng: 2, total: rand(100)}
     ]
   }
 

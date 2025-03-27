@@ -30,30 +30,12 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>Min Temp.</th>
-        <th>Max Temp.</th>
-        <th
-          class="weather-details-dsv"
-          data-balloon-length="small"
-          data-balloon-pos="down"
-          aria-label="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">
-          Degree Days <div class="info-icon">?</div>
-        </th>
-        <th
-          class="weather-details-dsv"
-          data-balloon-length="small"
-          data-balloon-pos="down-right"
-          aria-label="Accumulated degree-day values can be used to estimate insect development.">
-          Cumulative Degree Days <div class="info-icon">?</div>
-        </th>
+        <th class="tippy-tooltip" data-tippy-content="Minimum daily air temperature">Min Temp.</th>
+        <th class="tippy-tooltip" data-tippy-content="Maximum daily air temperature">Max Temp.</th>
+        <th class="tippy-tooltip" data-tippy-content="Degree-days quantify the amount of heat energy generated each day that contributes to insect development.">Degree Days</th>
+        <th class="tippy-tooltip" data-tippy-content="Accumulated degree-day values can be used to estimate insect development.">Cumulative Degree Days</th>
         <% if @severity_col %>
-          <th
-            class="weather-details-dsv"
-            data-baloon-length="small"
-            data-balloon-pos="down-right"
-            aria-label="Predicted insect damage risk on date">
-            Risk <div class="info-icon">?</div>
-          </th>
+          <th class="tippy-tooltip" data-tippy-content="Predicted insect damage risk on date">Risk</th>
         <% end %>
       </tr>
     </thead>
@@ -66,7 +48,7 @@
           <td><%= day[:value].round(2) %></td>
           <td class="odd"><%= day[:cumulative_value]&.round(1) %></td>
           <% if @severity_col %>
-            <td class="<%= day[:severity_class] %>" title="<%= day[:severity_info] %>"><%= day[:severity] %></td>
+            <td class="<%= day[:severity_class] %> tippy-tooltip" data-tippy-content="<%= day[:severity_info] %>"><%= day[:severity] %></td>
           <% end %>
         </tr>
       <% end %>
