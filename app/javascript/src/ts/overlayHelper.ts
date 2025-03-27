@@ -1,4 +1,4 @@
-import type { SeverityParams, Severity, PanelType, GradientHash } from '@types';
+import type { SeverityParams, Severity, PanelType, GradientHash, MapBoundary } from '@types';
 import DatabaseClient from '@ts/databaseClient';
 import GoogleWrapper from './googleWrapper';
 import RectangleOption from './rectangleOption';
@@ -9,10 +9,10 @@ const loadingTemplate =
 
 export default class OverlayHelper {
   googleWrapper: GoogleWrapper;
-  rectangles;
-  bounds;
-  infoWindow;
-  map;
+  rectangles: google.maps.Rectangle[];
+  bounds: google.maps.Polygon | null;
+  infoWindow: google.maps.InfoWindow | null;
+  map: google.maps.Map;
   severities: Severity[];
   min?: number;
   max?: number;
@@ -23,9 +23,11 @@ export default class OverlayHelper {
     this.rectangles = [];
     this.map = map;
     this.severities = [];
+    this.bounds = null;
+    this.infoWindow = null;
   }
 
-  showBounds(bounds) {
+  showBounds(bounds: MapBoundary) {
     if (this.bounds) this.bounds.setMap(null);
     this.bounds = this.googleWrapper.createBounds(bounds, this.map);
     this.map.fitBounds(bounds);
@@ -57,7 +59,7 @@ export default class OverlayHelper {
 
     const rectangleOptions = this.buildRectangles();
     this.drawDataPoints(rectangleOptions);
-    this.addInfoWindowEvents(severityParams, panelType);
+    this.addInfoWindowEvents(panelType, severityParams);
   }
 
   updateOverlayGradient(gradient: GradientHash) {
@@ -103,7 +105,7 @@ export default class OverlayHelper {
     });
   }
 
-  addInfoWindowEvents(severityParams: SeverityParams, panelType: PanelType) {
+  addInfoWindowEvents(panelType: PanelType, severityParams: SeverityParams) {
     this.map.addListener('click', async () => {
       this.closeInfoWindow();
     });
@@ -116,28 +118,30 @@ export default class OverlayHelper {
           position: event.latLng,
         });
 
-        this.infoWindow.open(this.map);
+        if (this.infoWindow) {
+          this.infoWindow.open(this.map);
 
-        google.maps.event.addListener(this.infoWindow, 'domready', () => {
-          // Initialize tippy on elements with tippy-tooltip class inside the infoWindow
-          if (typeof tippy !== 'undefined') {
-            tippy('.tippy-tooltip', {
-              placement: 'top',
-              arrow: true,
-              theme: 'light-border',
-              duration: 200,
-            });
-          }
-        });
+          google.maps.event.addListener(this.infoWindow, 'domready', () => {
+            // Initialize tippy on elements with tippy-tooltip class inside the infoWindow
+            if (typeof tippy !== 'undefined') {
+              tippy('.tippy-tooltip', {
+                placement: 'top',
+                arrow: true,
+                theme: 'light-border',
+                duration: 200,
+              });
+            }
+          });
 
-        const newContent = await this.fetchPointDetails(
-          event.latLng.lat(),
-          event.latLng.lng(),
-          severityParams,
-          panelType,
-        );
+          const newContent = await this.fetchPointDetails(
+            event.latLng.lat(),
+            event.latLng.lng(),
+            severityParams,
+            panelType,
+          );
 
-        this.infoWindow.setContent(newContent);
+          this.infoWindow.setContent(newContent);
+        }
       });
     });
   }

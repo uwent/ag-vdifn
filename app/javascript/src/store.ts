@@ -12,9 +12,11 @@ import type {
   SeverityParams,
   CustomPanelParams,
   GradientType,
-  MapExtent,
   MapRange,
   ColorPaletteName,
+  MapBounds,
+  MapExtents,
+  MapExtentOption,
 } from '@types';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
@@ -32,7 +34,7 @@ export const extents = {
     lat_range: '38,50',
     lng_range: '-82,-98',
   },
-};
+} satisfies MapExtents;
 
 // for drawing google map shapes
 export const bounds = {
@@ -48,20 +50,31 @@ export const bounds = {
     east: -82 + 0.05,
     west: -98 - 0.05,
   },
-};
+} satisfies MapBounds;
 
 // initial component states
-export const defaults = {
-  panel: 'disease' as PanelType,
-  extent: 'wisconsin' as MapExtent,
+export const defaults: {
+  panel: PanelType;
+  extent: MapExtentOption;
+  disease: string;
+  insect: string;
+  dd_model: string;
+  gradientType: GradientType;
+  t_min: number;
+  t_max: number;
+  in_f: boolean;
+  palette: ColorPaletteName;
+} = {
+  panel: 'disease',
+  extent: 'wisconsin',
   disease: 'late-blight',
   insect: 'cpb',
   dd_model: 'dd_50_86',
-  gradientType: 'two-point' as GradientType,
+  gradientType: 'two-point',
   t_min: 50,
   t_max: 86,
   in_f: true,
-  palette: 'spectral' as ColorPaletteName,
+  palette: 'spectral',
 };
 
 export const selectedPalette = writable<ColorPaletteName>(defaults.palette);
@@ -109,7 +122,7 @@ export const tMinTmax = writable<TminTmax>({
 
 // Map states
 export const mapRange = writable<MapRange>();
-export const mapExtent = writable<MapExtent>(defaults.extent);
+export const mapExtent = writable<MapExtentOption>(defaults.extent);
 
 // Custom tab gradient states
 export const customPanelState = writable({

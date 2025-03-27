@@ -52,7 +52,7 @@ export type PestsForCrops = {
 
 export type PanelType = 'disease' | 'insect' | 'custom';
 export const PANEL_TYPES = ['disease', 'insect', 'custom'] as PanelType[];
-export type MapExtent = 'wisconsin' | 'midwest';
+
 export type GradientType = 'two-point' | 'three-point';
 export type ColorPaletteName = 'spectral' | 'viridis';
 export type ColorPalette = {
@@ -70,6 +70,20 @@ export type LatLng = {
 export type MapRange = {
   min: number;
   max: number;
+};
+
+export type MapExtentOption = 'wisconsin' | 'midwest';
+export type MapExtents = Record<MapExtentOption, MapExtent>;
+export type MapExtent = {
+  lat_range: string;
+  lng_range: string;
+};
+export type MapBounds = Record<MapExtentOption, MapBoundary>;
+export type MapBoundary = {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
 };
 
 export type LegendEntry = {
@@ -119,8 +133,8 @@ export type TminTmax = {
 type PanelParams = {
   start_date: string;
   end_date: string;
-  lat_range: string;
-  lng_range: string;
+  lat_range?: string;
+  lng_range?: string;
 };
 
 export type CustomPanelParams = PanelParams & TminTmax;
