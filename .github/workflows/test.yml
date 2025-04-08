@@ -1,4 +1,4 @@
-name: Rails Tests
+name: VDIFN Tests
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: ['*']
 
 jobs:
-  test:
+  rails-test:
+    name: Rails Tests
     runs-on: ubuntu-latest
 
     services:
@@ -45,6 +46,13 @@ jobs:
 
       - name: Run Rails tests
         run: bundle exec rspec
+
+  node-test:
+    name: Node.js Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js and pnpm
         uses: pnpm/action-setup@v2
