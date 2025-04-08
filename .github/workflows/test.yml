@@ -1,0 +1,75 @@
+name: VDIFN Tests
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+jobs:
+  rails-test:
+    name: Rails Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: vdifn_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      RACK_ENV: test
+      PG_HOST: localhost
+      PG_USER: postgres
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 'ruby-3'
+          bundler-cache: true
+
+      - name: Set up database
+        run: bundle exec rails db:setup
+
+      - name: Run Rails tests
+        run: bundle exec rspec
+
+  node-test:
+    name: Node.js Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js and pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 'latest-9'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Install JavaScript dependencies
+        run: pnpm install
+
+      - name: Run Vitest
+        run: pnpm test
+
+      - name: Run Vite build
+        run: pnpm build
