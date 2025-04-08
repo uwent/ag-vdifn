@@ -1,6 +1,6 @@
 # Ag-Vdifn
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/uwent/ag-vdifn/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/uwent/ag-vdifn/tree/main)
+[![Tests](https://github.com/uwent/ag-vdifn/actions/workflows/test.yml/badge.svg)](https://github.com/uwent/ag-vdifn/actions/workflows/test.yml)
 
 ## Description
 
