@@ -38,8 +38,8 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 'ruby-3.3' # This will use the latest 3.3.x version
-          bundler-cache: true # This will automatically run 'bundle install' and cache gems
+          ruby-version: 'ruby-3'
+          bundler-cache: true
 
       - name: Set up database
         run: bundle exec rails db:setup
@@ -62,7 +62,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*' # This will use the latest LTS version
+          node-version: 'lts/*'
           cache: 'pnpm'
 
       - name: Install JavaScript dependencies
