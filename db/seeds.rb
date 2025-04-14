@@ -23,7 +23,7 @@ early_blight = EarlyBlight.create!(
     </p>",
   severity_info: "Early blight is one of two common fungal diseases that can devastate tomatoes and potatoes in both commercial settings and home gardens. The biofix for this model should be set to your crop emergence date. Accumulated p-days since that date will increase the risk of early blight development.",
   photo: "tomato-early-blight.jpg",
-  link: "https://vegpath.plantpath.wisc.edu/diseases/early-blight/"
+  link: "https://vegpath.plantpath.wisc.edu/diseases/potato-early-blight/"
 )
 
 late_blight = LateBlight.create!(
