@@ -138,8 +138,8 @@ class SeveritiesController < ApplicationController
   end
 
   def get_early_blight_data
-    seven_day = get_pest_grid(start_date: @end_date - 7.days, as_hash: true)
     selected_dates = get_pest_grid
+    seven_day = get_pest_grid(start_date: @end_date - 7.days, as_hash: true)
     grid = selected_dates.collect do |point|
       lat, lng = point[:lat], point[:lng]
       total = point[:total]

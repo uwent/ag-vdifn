@@ -21,18 +21,20 @@ RSpec.describe EarlyBlight, type: :model do
     expect(legend.length).to eq(5)
   end
 
-  it "renders severity from selected date range when total < 300" do
+  it "determines severity from pday total when total < 400" do
     expect(pest.total_to_severity(0, 0)).to eq(0)
-    expect(pest.total_to_severity(150, 0)).to eq(1)
-    expect(pest.total_to_severity(250, 0)).to eq(3)
-    expect(pest.total_to_severity(300, 0)).to eq(0)
+    expect(pest.total_to_severity(200, 0)).to eq(1)
+    expect(pest.total_to_severity(250, 0)).to eq(2)
+    expect(pest.total_to_severity(300, 0)).to eq(3)
+    expect(pest.total_to_severity(350, 0)).to eq(4)
+    expect(pest.total_to_severity(400, 0)).to eq(0)
   end
 
-  it "renders severity from selected date range when total > 300" do
-    expect(pest.total_to_severity(300, 1.8)).to eq(1)
-    expect(pest.total_to_severity(300, 4)).to eq(2)
-    expect(pest.total_to_severity(300, 6.1)).to eq(3)
-    expect(pest.total_to_severity(300, 9.3)).to eq(4)
+  it "determines severity from average daily pdays when pday total > 400" do
+    expect(pest.total_to_severity(400, 1.8)).to eq(1)
+    expect(pest.total_to_severity(400, 4)).to eq(2)
+    expect(pest.total_to_severity(400, 6.1)).to eq(3)
+    expect(pest.total_to_severity(400, 9.3)).to eq(4)
   end
 
   it "generates severities from totals" do
