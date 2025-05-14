@@ -45,6 +45,7 @@
       <Interface />
     </Sidebar>
   </div>
+  
   <div class="map">
     <Map>
       <SeverityOverlay />

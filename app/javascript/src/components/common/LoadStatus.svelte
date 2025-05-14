@@ -28,7 +28,7 @@
 </script>
 
 {#if message}
-  <div class="status">
-    {message}
-  </div>
+<div class="my-4 text-center text-sm italic text-gray-600">
+  {message}
+</div>
 {/if}
