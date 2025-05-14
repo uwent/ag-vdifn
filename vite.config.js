@@ -3,6 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import ViteRails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
+import EnvironmentPlugin from 'vite-plugin-environment';
 
 const envKeys = {};
 
@@ -13,6 +14,7 @@ for (const k in process.env) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    EnvironmentPlugin(['GOOGLE_MAPS_KEY']), //updated
     tsconfigPaths(),
     svelte(),
     ViteRails({
