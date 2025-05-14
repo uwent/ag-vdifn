@@ -3,7 +3,6 @@
 </script>
 
 <div class="text-sm text-gray-800 leading-relaxed space-y-4 p-4 overflow-x-hidden">
-  <!-- Intro block with image -->
   <div class="flex flex-wrap md:flex-nowrap gap-4 items-start">
     <img
       src="{baseURL}/favicon.png"
