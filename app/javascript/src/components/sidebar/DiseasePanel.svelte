@@ -1,18 +1,14 @@
-<style lang="scss">
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-</style>
-
 <script lang="ts">
   import { format, parseISO, subWeeks } from 'date-fns';
   import { onMount, setContext } from 'svelte';
+
   import ModelSelection from './ModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import DatePicker from './DatePicker.svelte';
   import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
+  import LoadStatus from '@components/common/LoadStatus.svelte';
+
   import {
     overlayLoading,
     pestId,
@@ -29,7 +25,7 @@
     defaults,
     selectedPest,
   } from '@store';
-  import LoadStatus from '@components/common/LoadStatus.svelte';
+
   import type { PanelType } from '@types';
 
   const thisPanel: PanelType = 'disease';
@@ -48,10 +44,10 @@
     let pest = $diseasePanelState.selectedPest;
     $selectedDisease = pest;
     initialModelName = pest.local_name;
-    // submitOnLoad = false;
   } else {
     if ($selectedDisease) initialModelName = $selectedDisease.local_name;
   }
+
   setDiseasePanelURL();
 
   setContext(panelKey, {
@@ -75,14 +71,18 @@
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
+
     $diseasePanelState = {
-      ...$diseasePanelState,
-      selectedPest: pest,
-      mapExtent: $mapExtent,
-      loaded: true,
-    };
+  ...$diseasePanelState,
+  selectedPest: pest,
+  mapExtent: extents[$mapExtent], 
+  selectedExtent: $mapExtent,    
+  loaded: true,
+};
+
     $diseasePanelParams = params;
     setDiseasePanelURL();
+
     gtag('event', 'submit', {
       panel_name: thisPanel,
       model_name: pest.name,
@@ -114,29 +114,40 @@
     if (submitOnLoad) submit();
   });
 
-  // Reactive statements
   $effect(() => {
-    if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
-  });
+  if ($diseasePanelState.loaded && $diseasePanelState.selectedExtent !== $mapExtent) {
+    submit();
+  }
+});
 
   $effect(() => {
     $selectedPest = $selectedDisease;
   });
 </script>
 
-<div data-testid="disease-panel">
+<!-- ✅ UI markup using Tailwind only -->
+<div data-testid="disease-panel" class="flex flex-col space-y-4 max-w-xl mx-auto">
+  <!-- Crop and Model Selector -->
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
+
+  <!-- Parameter Inputs -->
+  <fieldset class="border border-gray-300 rounded-md p-4">
+    <legend class="text-sm font-medium text-gray-700 mb-2">Model parameters</legend>
+    <div class="space-y-2">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
   </fieldset>
+
+  <!-- Submit Button -->
   <Button
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"
     disabled={$overlayLoading}
     click={submit}
   />
+
+  <!-- Loading or Load Status -->
   {#if $overlayLoading}
     <Loading />
   {:else}

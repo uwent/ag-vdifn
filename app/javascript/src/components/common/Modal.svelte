@@ -54,6 +54,7 @@
 <svelte:window on:keydown={handle_keydown} />
 
 <!-- Modal backdrop -->
+<!-- svelte-ignore element_invalid_self_closing_tag -->
 <div
   class="fixed inset-0 bg-black bg-opacity-30 z-40"
   role="none"

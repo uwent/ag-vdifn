@@ -65,11 +65,13 @@
 {#if !map && !error}
   <Loading />
 {:else if error}
-  <p>{error.message}</p>
-  <h1>An error occurred loading Google Maps, please try refreshing the page</h1>
+  <div class="text-center p-6">
+    <p class="text-red-500 font-semibold">{error.message}</p>
+    <h1 class="text-lg font-bold mt-2">An error occurred loading Google Maps. Please try refreshing the page.</h1>
+  </div>
 {/if}
 
-<div bind:this={container} id="google-map"></div>
+<div bind:this={container} id="google-map" class="absolute inset-0 z-0"></div>
 {#if map}
   <MapButtons />
   {@render children()}

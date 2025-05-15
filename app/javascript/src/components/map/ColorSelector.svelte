@@ -1,81 +1,3 @@
-<style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  .container {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    z-index: 10;
-  }
-
-  .flex {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .label {
-    font-size: small;
-    color: grey;
-  }
-
-  .switch-field {
-    display: flex;
-    overflow: hidden;
-    border-radius: 15px;
-    border: 1px solid #ddd;
-
-    input {
-      position: absolute;
-      clip: rect(0, 0, 0, 0);
-      height: 1px;
-      width: 1px;
-      border: 0;
-      overflow: hidden;
-
-      &:focus + label {
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-      }
-
-      // Spectral - light green background when selected
-      &#spectral:checked + label {
-        background-color: #e8f5e9; // Light green
-        color: #2e7d32; // Darker green for text
-      }
-
-      // Viridis - light purple background when selected
-      &#viridis:checked + label {
-        background-color: #f3e5f5; // Light purple
-        color: #7b1fa2; // Darker purple for text
-      }
-    }
-
-    label {
-      display: inline-block;
-      background-color: #f8f8f8;
-      color: rgba(0, 0, 0, 0.6);
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      padding: 5px 10px;
-      transition: all 0.1s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #f1f1f1;
-      }
-
-      &:first-of-type {
-        border-radius: 20px 0 0 20px;
-      }
-
-      &:last-of-type {
-        border-radius: 0 20px 20px 0;
-      }
-    }
-  }
-</style>
-
 <script lang="ts">
   import { defaults, selectedPalette } from '@store';
   import type { ColorPaletteName } from '@types';
@@ -86,24 +8,37 @@
   });
 </script>
 
-<div class="container flex">
-  <div class="label">Color Palette:</div>
-  <div class="switch-field">
+<div class="absolute left-2 bottom-2 z-10 flex flex-col gap-1">
+  <div class="text-sm text-gray-500">Color Palette:</div>
+  <div class="flex overflow-hidden rounded-[15px] border border-gray-300">
     <input
       id="spectral"
       title="Spectral color palette"
       type="radio"
       value="spectral"
       bind:group={palette}
+      class="sr-only peer/spectral"
     />
-    <label for="spectral">Spectral</label>
+    <label
+      for="spectral"
+      class="peer-checked/spectral:bg-green-100 peer-checked/spectral:text-green-800 bg-gray-100 text-black/60 text-sm font-medium text-center px-3 py-1 cursor-pointer transition-all hover:bg-gray-200 rounded-l-[20px]"
+    >
+      Spectral
+    </label>
+
     <input
       id="viridis"
       title="Viridis color palette"
       type="radio"
       value="viridis"
       bind:group={palette}
+      class="sr-only peer/viridis"
     />
-    <label for="viridis">Viridis</label>
+    <label
+      for="viridis"
+      class="peer-checked/viridis:bg-purple-100 peer-checked/viridis:text-purple-800 bg-gray-100 text-black/60 text-sm font-medium text-center px-3 py-1 cursor-pointer transition-all hover:bg-gray-200 rounded-r-[20px]"
+    >
+      Viridis
+    </label>
   </div>
 </div>

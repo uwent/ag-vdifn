@@ -1,197 +1,84 @@
-<style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  #sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: calc(100% - 50px);
-    overflow-y: auto;
-    background: rgba(255, 255, 255, 0.95);
-    z-index: vars.$z-index-modal;
-    transition: vars.$duration-promptly ease-in-out;
-    transition-delay: 0.1s;
-
-    @media #{vars.$medium-up} {
-      width: 350px;
-      height: 100%;
-      bottom: 0;
-
-      button {
-        display: none;
-      }
-    }
-
-    @media #{vars.$small-only} {
-      position: absolute;
-    }
-
-    button {
-      height: 50px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      border-bottom: black 1px solid;
-      background-image: url('@public/images/close.svg');
-      background-color: white;
-      border-top: 1px solid gray;
-      border-left: none;
-      border-right: none;
-      border-bottom: none;
-      background-repeat: no-repeat;
-      background-position: center;
-      transition: none;
-      z-index: 100;
-    }
-
-    &[aria-expanded='true'] {
-      top: 0;
-    }
-
-    &[aria-expanded='false'] {
-      top: 100%;
-
-      @media #{vars.$medium-up} {
-        top: 0;
-      }
-
-      button {
-        background-image: url('@public/images/open.svg');
-      }
-    }
-  }
-
-  header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0 0 10px;
-    text-align: center;
-  }
-
-  .content {
-    flex: 1;
-  }
-
-  footer {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: smaller;
-    color: grey;
-
-    a:hover,
-    a:visited,
-    a:link,
-    a:active {
-      color: #249dde;
-      text-decoration: none;
-    }
-  }
-
-  .logo {
-    display: inline-block;
-    background-repeat: no-repeat;
-    text-indent: -9999em;
-    width: 44px;
-    height: 44px;
-    margin: vars.$spacing-xx-small vars.$spacing-xx-small;
-    background-size: contain;
-    border-radius: 8px;
-    background-position: center;
-    border: 1px solid #fff;
-
-    &:hover {
-      border: 1px solid grey;
-    }
-  }
-
-  #plantpath-logo {
-    background-image: url('@public/images/plantpath-logo.png');
-  }
-
-  #vegento-logo {
-    background-image: url('@public/images/vegento-logo.png');
-  }
-
-  #uw-madison {
-    background-image: url('@public/images/uw-madison.png');
-  }
-
-  h1 span {
-    display: block;
-    white-space: nowrap;
-  }
-
-  h1 span:nth-of-type(2) {
-    margin: -8px 0 0;
-    font-size: 0.85em;
-  }
-
-  h1 a {
-    color: inherit;
-    text-decoration: inherit;
-  }
-</style>
-
 <script lang="ts">
   import { format } from 'date-fns';
   let expanded = true;
 </script>
 
-<div id="sidebar" aria-expanded={expanded}>
-  <header>
-    <div>
+<!-- Sidebar Container -->
+<div
+  id="sidebar"
+  aria-expanded={expanded}
+  class="fixed md:relative z-50 flex flex-col w-full h-[calc(100%-50px)] md:w-[350px] md:h-full overflow-y-auto bg-white transition-all duration-300 ease-in-out"
+  class:top-0={expanded}
+  class:top-full={!expanded && !window.matchMedia('(min-width: 768px)').matches}
+>
+  <!-- Header Section -->
+  <header class="flex flex-col w-full px-4 pb-2 text-center">
+    <!-- Logos -->
+    <div class="flex justify-center gap-2 mt-4">
       <a
-        id="uw-madison"
+        class="w-11 h-11 bg-center bg-contain bg-no-repeat rounded border border-white hover:border-gray-400"
+        href="https://agweather.cals.wisc.edu"
+        style="background-image: url('/images/uw-madison.png');"
         title="AgWeather Home"
         aria-label="AgWeather Home"
-        class="logo"
-        href="https://agweather.cals.wisc.edu"
         target="_blank"
-      >
-      </a>
+      ></a>
       <a
-        id="plantpath-logo"
+        class="w-11 h-11 bg-center bg-contain bg-no-repeat rounded border border-white hover:border-gray-400"
+        href="https://vegpath.plantpath.wisc.edu/"
+        style="background-image: url('/images/plantpath-logo.png');"
         title="UW-Madison Plant Pathology"
         aria-label="UW-Madison Plant Pathology"
-        class="logo"
-        href="https://vegpath.plantpath.wisc.edu/"
         target="_blank"
-      >
-      </a>
+      ></a>
       <a
-        id="vegento-logo"
+        class="w-11 h-11 bg-center bg-contain bg-no-repeat rounded border border-white hover:border-gray-400"
+        href="https://vegento.russell.wisc.edu/"
+        style="background-image: url('/images/vegento-logo.png');"
         title="UW-Madison Vegetable Entomology"
         aria-label="UW-Madison Vegetable Entomology"
-        class="logo"
-        href="https://vegento.russell.wisc.edu/"
         target="_blank"
-      >
-      </a>
+      ></a>
     </div>
-    <h1>
-      <a id="home" title="VDIFN Home" href={window.location.pathname}>
-        <span>Vegetable Disease &amp;</span>
-        <span>Insect Forecasting Network</span>
+
+    <!-- Title -->
+    <h1 class="mt-2">
+      <a
+        id="home"
+        href={window.location.pathname}
+        title="VDIFN Home"
+        class="text-gray-800"
+      >
+        <span class="block whitespace-nowrap">Vegetable Disease &amp;</span>
+        <span class="block whitespace-nowrap -mt-2 text-sm">Insect Forecasting Network</span>
       </a>
     </h1>
   </header>
 
-  <div class="content">
+  <!-- Main Content -->
+  <div class="flex-1 px-4">
     <slot />
   </div>
 
-  <footer>
+  <!-- Footer -->
+  <footer class="mt-6 mb-2 text-center text-sm text-gray-500">
     <div>
-      <a href="mailto:agweather@cals.wisc.edu">Contact Us</a><br />
+      <a
+        href="mailto:agweather@cals.wisc.edu"
+        class="text-blue-600 hover:underline"
+      >
+        Contact Us
+      </a><br />
       Copyright &copy;{format(new Date(), 'yyyy')} University of Wisconsin-Madison
     </div>
   </footer>
 
+  <!-- Collapse Button (Mobile) -->
   <button
-    onclick={() => (expanded = !expanded)}
+    class="fixed bottom-0 w-full h-[50px] md:hidden bg-white border-t border-gray-300 bg-center bg-no-repeat z-[100]"
+    style="background-image: url({expanded ? '/images/close.svg' : '/images/open.svg'});"
     title={expanded ? 'Hide controls' : 'Show controls'}
     aria-label={expanded ? 'Hide controls' : 'Show controls'}
+    on:click={() => (expanded = !expanded)}
   ></button>
 </div>

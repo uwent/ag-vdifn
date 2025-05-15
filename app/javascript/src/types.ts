@@ -152,6 +152,7 @@ type PanelState = {
 
 export type PestPanelState = PanelState & {
   selectedPest: Pest;
+  selectedExtent: string;
 };
 
 export type CustomPanelState = PanelState & {

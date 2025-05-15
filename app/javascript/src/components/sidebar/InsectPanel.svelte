@@ -1,12 +1,14 @@
 <script lang="ts">
   import { format, parseISO, startOfYear } from 'date-fns';
   import { onMount, setContext } from 'svelte';
+
   import ModelSelection from './ModelSelection.svelte';
   import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
+
   import {
     defaults,
     endDate,
@@ -23,6 +25,7 @@
     startDate,
     tMinTmax,
   } from '@store';
+
   import type { PanelType } from '@types';
 
   let {
@@ -41,10 +44,10 @@
     let pest = $insectPanelState.selectedPest;
     $selectedInsect = pest;
     initialModelName = pest.local_name;
-    // submitOnLoad = false;
   } else {
     if ($selectedInsect) initialModelName = $selectedInsect.local_name;
   }
+
   setInsectPanelURL();
 
   setContext(panelKey, {
@@ -70,14 +73,19 @@
       in_f: $tMinTmax.in_f,
       ...extents[$mapExtent],
     };
+
     $insectPanelState = {
       ...$insectPanelState,
       selectedPest: pest,
-      mapExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
+      selectedExtent: $mapExtent,
       loaded: true,
     };
+
     $insectPanelParams = params;
+
     setInsectPanelURL();
+
     gtag('event', 'submit', {
       panel_name: thisPanel,
       model_name: pest.name,
@@ -111,7 +119,9 @@
   });
 
   $effect(() => {
-    if ($insectPanelState.loaded && $insectPanelState.mapExtent !== $mapExtent) submit();
+    if ($insectPanelState.loaded && $insectPanelState.selectedExtent !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -119,18 +129,24 @@
   });
 </script>
 
-<div data-testid="insect-panel">
+<!-- ✅ Tailwind layout and spacing -->
+<div data-testid="insect-panel" class="flex flex-col space-y-4 max-w-xl mx-auto">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
+
+  <fieldset class="border border-gray-300 rounded-md p-4">
+    <legend class="text-sm font-medium text-gray-700 mb-2">Model parameters</legend>
+    <div class="space-y-2">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
   </fieldset>
+
   <Button
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}
     click={submit}
   />
+
   {#if $overlayLoading}
     <Loading />
   {:else}

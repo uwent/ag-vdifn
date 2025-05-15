@@ -1,35 +1,5 @@
-<style lang="scss">
-  @use './scss/variables.scss' as vars;
-
-  .main {
-    width: 100%;
-    height: 100%;
-    display: flex;
-  }
-
-  .sidebar {
-    z-index: 999;
-    @media #{vars.$medium-up} {
-      width: 350px;
-      box-shadow: 0 0 10px;
-    }
-  }
-
-  .map {
-    position: relative;
-    width: 100%;
-    @media #{vars.$medium-up} {
-      width: calc(100% - 350px);
-    }
-    @media #{vars.$small-only} {
-      width: 100%;
-      height: calc(100vh - 50px);
-    }
-  }
-</style>
-
 <script lang="ts">
-  import '~/src/scss/global.scss';
+  import '~/src/scss/global.scss'; // keep global styles if needed
   import Map from '~/src/components/map/Map.svelte';
   import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte';
   import Sidebar from '@components/sidebar/Sidebar.svelte';
@@ -39,14 +9,17 @@
   import ColorSelector from '@components/map/ColorSelector.svelte';
 </script>
 
-<main class="main">
-  <div class="sidebar">
+<!-- Layout Container -->
+<main class="flex w-full h-full">
+  <!-- Sidebar: fixed width on medium+ screens -->
+  <div class="z-[999] w-full md:w-[350px] shadow-md md:shadow-lg">
     <Sidebar>
       <Interface />
     </Sidebar>
   </div>
-  
-  <div class="map">
+
+  <!-- Map: fills remaining space -->
+  <div class="relative w-full md:w-[calc(100%-350px)] h-[calc(100vh-50px)] md:h-full">
     <Map>
       <SeverityOverlay />
       <Status />

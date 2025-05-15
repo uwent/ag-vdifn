@@ -1,9 +1,3 @@
-<style lang="scss">
-  .dd-container {
-    display: flex;
-  }
-</style>
-
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
   import type { DegreeDayModel } from '@types';
@@ -17,21 +11,14 @@
 
   function setDegreeDayModel(event: Event) {
     const id = parseInt((event.target as HTMLSelectElement).value);
-    const model = ddModels.find((model) => {
-      return model.id === id;
-    });
+    const model = ddModels.find((model) => model.id === id);
     if (model) $selectedDDModel = model;
   }
 
-  // If loaded select the loaded model
-  // If not loaded, select the model that was last selected
-  // Try to find the default model
   function getCurrentModel(): DegreeDayModel {
     if ($customPanelState.loaded) return $customPanelState.selectedModel;
     if ($selectedDDModel) return $selectedDDModel;
-    let match = ddModels.find((model) => {
-      return model.remote_name === defaultModel;
-    });
+    let match = ddModels.find((model) => model.remote_name === defaultModel);
     return match || ddModels[0];
   }
 
@@ -45,13 +32,13 @@
   });
 </script>
 
-<fieldset id="model-selection">
-  <legend>Degree Day Model</legend>
-  <label for="dd-select">Choose model</label>
-  <div class="dd-container">
+<fieldset id="model-selection" class="mb-4">
+  <legend class="text-sm font-semibold text-gray-700 mb-2">Degree Day Model</legend>
+  <label for="dd-select" class="block text-sm text-gray-600 mb-1">Choose model</label>
+  <div class="flex">
     <select
       title="Select model"
-      class="dd-select"
+      class="block w-full max-w-xs px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
       id="dd-select"
       name="dd-select"
       value={modelId}
