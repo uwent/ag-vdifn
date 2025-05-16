@@ -38,11 +38,13 @@
   let buttonsDisabled = $state(false);
   let gradientValidationMessage = $state('');
 
+  // Derived values
   let gradientType = $derived<GradientType>($customPanelState.selectedGradient);
   let currentState = $derived(gradientType === 'two-point' ? twoPointState : threePointState);
   let gradientHelper = $derived(new GradientHelper($selectedPalette));
   let colorHelper = $derived(new ColorHelper($selectedPalette));
 
+  // Generate intermediate values for display
   let twoPointRanges = $derived.by(() => {
     const state = twoPointState;
     const { intermediateValues: values } = gradientHelper.gradientValues({
@@ -68,6 +70,7 @@
     return { lower, upper };
   });
 
+  // Generate gradient colors
   let gradient = $derived.by(() => {
     const args =
       gradientType === 'two-point'
@@ -86,6 +89,7 @@
     return gradientHelper.mapRangeToColors(args);
   });
 
+  // Populate user values from map range
   function setTwoPointRange(range: MapRange) {
     const x = (range.max - range.min) / twoPointState.levels;
     twoPointState.inputs = [Math.floor(range.min + x), Math.ceil(range.max - x)];
@@ -103,6 +107,7 @@
     validateInputs();
   }
 
+  // Validate inputs
   function validateInputs() {
     validateTwoPointInputs();
     validateThreePointInputs();
@@ -181,6 +186,7 @@
     resetValues();
   }
 
+  // reset values on map range change
   $effect(() => {
     if ($mapRange) {
       untrack(() => {
@@ -190,6 +196,7 @@
     }
   });
 
+  // Update gradient store
   $effect(() => {
     if (gradient) $overlayGradient = gradient;
   });
@@ -209,5 +216,147 @@
   });
 </script>
 
-<!-- Tailwind conversion of all visual classes will be done in markup components like fieldset, inputs, buttons etc -->
+{#snippet intermediateRangesSnippet(ranges: number[][], totalLevels: number)}
+  {#each ranges as range, index}
+    <div class="severity-row">
+      <div
+        class="severity-color"
+        style="background: {colorHelper.color(index + 1, totalLevels)}"
+      ></div>
+      <div class="severity-value-intermediate">
+        {`${range[0]} - ${range[1]}`}
+      </div>
+    </div>
+  {/each}
+{/snippet}
+<fieldset class="text-center p-4 border border-gray-300 rounded-lg bg-white shadow-md">
+  <legend class="text-lg font-medium mb-4">Custom Degree-Day Values</legend>
 
+  <!-- Two-point gradient -->
+  {#if gradientType === 'two-point'}
+    <div class="space-y-4">
+      <div class="grid grid-cols-[30px_1fr_1fr] items-center gap-x-4">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, twoPointState.levels)}"></div>
+        <div class="flex items-center justify-center text-sm bg-gray-200 py-1 px-2 rounded">0</div>
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={twoPointState.inputElements[0]}
+          bind:value={twoPointState.inputs[0]}
+          oninput={validateInputs}
+          title="Start of gradient"
+        />
+      </div>
+
+      {@render intermediateRangesSnippet(twoPointRanges.values, twoPointState.levels)}
+
+      <div class="grid grid-cols-[30px_1fr_1fr] items-center gap-x-4">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"></div>
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={twoPointState.inputElements[1]}
+          bind:value={twoPointState.inputs[1]}
+          oninput={validateInputs}
+          title="End of gradient"
+        />
+        <div class="flex items-center justify-center text-sm bg-gray-200 py-1 px-2 rounded">&gt; &gt; &gt;</div>
+      </div>
+    </div>
+  {/if}
+
+  <!-- Three-point gradient -->
+  {#if gradientType === 'three-point'}
+    <div class="space-y-4">
+      <div class="grid grid-cols-[30px_1fr_1fr] items-center gap-x-4">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, threePointState.levels)}"></div>
+        <div class="flex items-center justify-center text-sm bg-gray-200 py-1 px-2 rounded">0</div>
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={threePointState.inputElements[0]}
+          bind:value={threePointState.inputs[0]}
+          oninput={validateInputs}
+          title="Start of gradient"
+        />
+      </div>
+
+      {@render intermediateRangesSnippet(threePointRanges.lower, threePointState.levels)}
+
+      <div class="grid grid-cols-[30px_1fr_1fr] items-center gap-x-4">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"></div>
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={threePointState.inputElements[1]}
+          bind:value={threePointState.inputs[1]}
+          oninput={validateInputs}
+          title="Lower middle range"
+        />
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={threePointState.inputElements[2]}
+          bind:value={threePointState.inputs[2]}
+          oninput={validateInputs}
+          title="Upper middle range"
+        />
+      </div>
+
+      {@render intermediateRangesSnippet(threePointRanges.upper, threePointState.levels)}
+
+      <div class="grid grid-cols-[30px_1fr_1fr] items-center gap-x-4">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, threePointState.levels)}"></div>
+        <input
+          type="number"
+          class="text-center border border-gray-300 rounded px-2 py-1 shadow-sm"
+          required
+          bind:this={threePointState.inputElements[3]}
+          bind:value={threePointState.inputs[3]}
+          oninput={validateInputs}
+          title="End of gradient"
+        />
+        <div class="flex items-center justify-center text-sm bg-gray-200 py-1 px-2 rounded">&gt; &gt; &gt;</div>
+      </div>
+    </div>
+  {/if}
+
+  <!-- Button Row -->
+  <div class="flex justify-center gap-3 mt-6">
+    <button
+      class="w-8 py-1 px-2 bg-blue-500 text-white text-sm rounded shadow hover:bg-blue-600 disabled:bg-gray-400"
+      title="Add levels to gradient"
+      onclick={() => changeLevels(1)}
+      disabled={buttonsDisabled || currentState.levels >= opts.maxLevels}
+    >+
+    </button>
+    <button
+      class="flex-1 px-4 py-1 bg-gray-500 text-white text-sm rounded shadow hover:bg-gray-600"
+      title="Evenly space gradient across map"
+      onclick={resetValues}
+    >Auto
+    </button>
+    <button
+      class="flex-1 px-4 py-1 bg-gray-500 text-white text-sm rounded shadow hover:bg-gray-600"
+      title="Reset to defaults"
+      onclick={resetAll}
+    >Reset
+    </button>
+    <button
+      class="w-8 py-1 px-2 bg-blue-500 text-white text-sm rounded shadow hover:bg-blue-600 disabled:bg-gray-400"
+      title="Remove levels from gradient"
+      onclick={() => changeLevels(-1)}
+      disabled={buttonsDisabled || currentState.levels <= opts.minLevels}
+    >-
+    </button>
+  </div>
+
+  {#if gradientValidationMessage}
+    <div class="text-sm italic text-red-600 mt-3">{gradientValidationMessage}</div>
+  {/if}
+</fieldset>

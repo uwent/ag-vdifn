@@ -1,3 +1,20 @@
+<style lang="scss">
+  @keyframes -global-lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loading-timer {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+  }
+</style>
+
 <script lang="ts">
   import { loadStatus } from '@store';
   import { onDestroy, onMount } from 'svelte';
@@ -17,14 +34,11 @@
   });
 </script>
 
-<div class="flex flex-col items-center justify-center space-y-2 mt-4">
-  <div
-    class="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"
-    title="Loading"
-    data-testid="loading"
-  />
-  
-  <div class="text-center italic text-xs text-gray-600">
-    Fetching data: {time.toFixed(1)} seconds
-  </div>
+<div class="lds-ring" title="Loading" data-testid="loading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
 </div>
+
+<div class="loading-timer">Fetching data: {time.toFixed(1)} seconds</div>

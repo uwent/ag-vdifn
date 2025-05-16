@@ -61,21 +61,20 @@
 
   function buildCustomLegend(gradient: GradientHash): LegendData | null {
     if (!gradient) return null;
-    const items: { value: number; color: string }[] = [];
-    for (const key in gradient) {
-      if (gradient.hasOwnProperty(key)) {
-        items.push({ value: parseFloat(key), color: gradient[key] });
-      }
-    }
-    const sortedItems = items.sort((a, b) => a.value - b.value);
-    const legendEntries = sortedItems.map((item, i) => {
-      const value = item.value;
-      const color = item.color;
-      const lowRange = i === 0 ? 0 : round(sortedItems[i - 1].value);
-      const name =
-        i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
-      const description = `${name} degree days`;
-      return { value, color, name, description };
+
+    // Fixed breakpoints for consistent degree-day legend
+    const fixedBreaks = [91, 176, 262, 347];
+    const legendEntries = fixedBreaks.map((val, i) => {
+      const low = i === 0 ? 0 : fixedBreaks[i - 1];
+      const high = val;
+      const name = i === fixedBreaks.length - 1 ? `${low}+` : `${low} - ${high}`;
+      const color = gradient[high.toString()] || '#ccc';
+      return {
+        value: high,
+        color,
+        name,
+        description: `${name} degree days`,
+      };
     });
 
     return {
@@ -109,53 +108,49 @@
   });
 </script>
 
-{#if showModal}
-  <Modal close={() => (showModal = false)} name="Pest Info">
-    {@html $selectedPest.info}
-  </Modal>
-{/if}
+{#if showModal} <Modal close={() => (showModal = false)} 
+  name="Pest Info"> {@html $selectedPest.info} </Modal> {/if}
 
 {#if showLegend}
   <div
     id="legend"
-    class="absolute max-w-[200px] bottom-2 right-2 z-10 bg-white rounded shadow-[inset_-4px_0px_10px_rgba(0,0,0,0.3),inset_4px_0px_10px_rgba(0,0,0,0.3)]
-      [aria-expanded='true']:visible
-      [aria-expanded='false']:invisible md:[aria-expanded='false']:visible"
+    class="absolute max-w-[200px] bottom-2.5 right-2.5 z-10 bg-white rounded shadow-[rgba(0,0,0,0.3)_-4px_0px_10px,rgba(0,0,0,0.3)_4px_0px_10px]"
     aria-expanded={expanded}
+    class:invisible={!expanded && $selectedPanel !== 'custom'}
   >
-    <div class="flex flex-col gap-2.5 p-2.5 pt-1.5">
-      {#if currentLegend?.legend}
-        <fieldset class="bg-[rgba(234,234,234,0.4)] p-2.5 m-0">
-          <legend class="text-sm font-semibold mb-1">
-            {$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}
-          </legend>
-          <div class="w-full flex flex-col gap-1.5">
-            {#each [...currentLegend.legend].reverse() as entry}
-              <div class="flex flex-row gap-2.5 text-sm tippy-tooltip" data-tippy-content={entry.description}>
-                <div class="h-5 w-[30px] border border-gray-400" style="background: {entry.color}"></div>
-                <div class="flex items-center">{entry.name}</div>
-              </div>
-            {/each}
-          </div>
-        </fieldset>
-      {/if}
-
-      {#if currentLegend?.info}
-        <fieldset class="bg-[rgba(234,234,234,0.4)] p-2.5 m-0">
-          <legend class="text-sm font-semibold mb-1">More Information</legend>
-          <p class="m-0 text-xs">{@html currentLegend.info}</p>
-        </fieldset>
-      {/if}
-    </div>
+    {#if currentLegend?.legend}
+      <fieldset class="bg-[rgba(234,234,234,0.4)] p-2 m-0">
+        <legend class="text-sm font-medium">
+          {$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}
+        </legend>
+        <div class="flex flex-col gap-1.5 w-full">
+          {#each [...currentLegend.legend].reverse() as entry}
+            <div
+              class="flex flex-row gap-2 text-sm tippy-tooltip"
+              data-tippy-content={entry.description}
+            >
+              <div class="h-5 w-7.5 border border-gray-400" style="background: {entry.color}"></div>
+              <div class="flex items-center">{entry.name}</div>
+            </div>
+          {/each}
+        </div>
+      </fieldset>
+    {/if}
+    {#if currentLegend?.info}
+      <fieldset class="bg-[rgba(234,234,234,0.4)] p-2 m-0">
+        <legend class="text-sm font-medium">More Information</legend>
+        <p class="m-0 text-xs">{@html currentLegend.info}</p>
+      </fieldset>
+    {/if}
   </div>
-
   <button
-    id="legend-expand-button"
+    id="legend-expand-b utton"
+    class="fixed right-2.5 bottom-14 z-[100] px-2.5 py-1 border border-gray-400 rounded shadow-[0px_0px_10px_rgba(0,0,0,0.3)] bg-white md:hidden"
     aria-expanded={expanded}
     on:click={() => (expanded = !expanded)}
-    class="fixed right-2.5 bottom-[60px] z-[100] px-2.5 py-1 border border-gray-400 rounded shadow-md bg-white
-      [aria-expanded='true']:p-0 [aria-expanded='true']:w-[25px] [aria-expanded='true']:h-[25px]
-      md:hidden"
+    class:!p-0={!expanded}
+    class:!h-[25px]={!expanded}
+    class:!w-[25px]={!expanded}
   >
     {expanded ? '✖' : 'Show Legend'}
   </button>

@@ -1,4 +1,11 @@
-
+<style lang="scss">
+  .status {
+    margin: 1em 0;
+    text-align: center;
+    font-size: smaller;
+    font-style: italic;
+  }
+</style>
 
 <script lang="ts">
   // Displays prompt to submit when no model is submitted
@@ -21,7 +28,7 @@
 </script>
 
 {#if message}
-<div class="my-4 text-center text-sm italic text-gray-600">
-  {message}
-</div>
+  <div class="status">
+    {message}
+  </div>
 {/if}

@@ -1,3 +1,41 @@
+<style lang="scss">
+  @use '../../scss/variables.scss' as vars;
+
+  .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .modal {
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    width: calc(100vw - 4em);
+    max-width: 32em;
+    max-height: 80%;
+    overflow: auto;
+    transform: translate(-60%, -50%);
+    padding: 1em;
+    border-radius: 0.2em;
+    background: white;
+    z-index: 1;
+
+    @media #{vars.$medium-up} {
+      position: fixed;
+      left: 62%;
+    }
+  }
+
+  h2 {
+    margin: 0px;
+  }
+</style>
+
 <script lang="ts">
   import { onDestroy, type Snippet } from 'svelte';
   import Button from './Button.svelte';
@@ -53,27 +91,17 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<!-- Modal backdrop -->
-<!-- svelte-ignore element_invalid_self_closing_tag -->
-<div
-  class="fixed inset-0 bg-black bg-opacity-30 z-40"
-  role="none"
-  onclick={close}
-  onkeydown={() => close()}
-/>
+<div class="modal-background" role="none" onclick={close} onkeydown={() => close()}></div>
 
-<!-- Modal box -->
 <div
-  class="fixed left-[60%] top-1/2 transform -translate-x-[60%] -translate-y-1/2 w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto bg-white rounded p-4 z-50 shadow-xl"
+  class="modal"
   role="dialog"
   aria-modal="true"
   bind:this={modal}
   aria-labelledby="affliction-modal"
   style={`max-width: ${maxWidth}`}
 >
-  <h2 id="affliction-modal" class="text-lg font-semibold mb-4">{name}</h2>
+  <h2 id="affliction-modal">{name}</h2>
   {@render children?.()}
-  <div class="mt-4 text-right">
-    <Button click={close} text="Close" />
-  </div>
+  <Button click={close} text="Close" />
 </div>
