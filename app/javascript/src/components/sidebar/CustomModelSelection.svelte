@@ -1,9 +1,3 @@
-<style lang="scss">
-  .dd-container {
-    display: flex;
-  }
-</style>
-
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
   import type { DegreeDayModel } from '@types';
@@ -44,16 +38,15 @@
     }
   });
 </script>
-
-<fieldset id="model-selection">
-  <legend>Degree Day Model</legend>
-  <label for="dd-select">Choose model</label>
-  <div class="dd-container">
+<fieldset id="model-selection" class="border border-gray-300 p-4 rounded-md">
+  <legend class="font-semibold text-base mb-2">Degree Day Model</legend>
+  <label for="dd-select" class="block mb-1 text-sm font-medium text-gray-700">Choose model</label>
+  <div class="flex">
     <select
       title="Select model"
-      class="dd-select"
       id="dd-select"
       name="dd-select"
+      class="w-full border border-gray-300 rounded px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       value={modelId}
       onchange={setDegreeDayModel}
     >

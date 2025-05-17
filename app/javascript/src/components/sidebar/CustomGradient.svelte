@@ -1,103 +1,3 @@
-<style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  input {
-    text-align: center;
-  }
-
-  .severity-row {
-    display: grid;
-    grid-template-columns: 26px 1fr 1fr;
-    padding: 0.3rem 0;
-    column-gap: 1rem;
-    width: 100%;
-  }
-
-  .severity-color {
-    width: 30px;
-    height: 30px;
-  }
-
-  %severity-value {
-    display: flex;
-    border: none;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.85rem;
-    background-color: white;
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    padding: 0;
-  }
-
-  %severity-button {
-    background: vars.$btn-color-2;
-    background: linear-gradient(to bottom, vars.$btn-color-1 0%, vars.$btn-color-2);
-    border-radius: 3px;
-    box-shadow:
-      0px 1px 3px rgba(000, 000, 000, 0),
-      inset 0px 0px 1px rgba(255, 255, 255, 1);
-    color: #fff;
-    font-size: 0.85em;
-    padding: 10px;
-    border: 1px solid grey;
-    cursor: pointer;
-
-    &:hover {
-      background: linear-gradient(to bottom, vars.$btn-color-2 0%, vars.$btn-color-3);
-    }
-  }
-
-  button:disabled {
-    background: grey;
-    cursor: not-allowed;
-  }
-
-  .severity-value-end {
-    @extend %severity-value;
-    background-color: #d0d0d0;
-  }
-
-  .severity-value-end-input {
-    @extend %severity-value;
-  }
-
-  .severity-value-intermediate {
-    @extend %severity-value;
-    grid-column: 2 / span 2;
-    background-color: #d0d0d0;
-  }
-
-  input:invalid {
-    border-color: #900;
-    background-color: #fdd;
-  }
-
-  .validation-msg {
-    margin-top: 0.5rem;
-    font-size: smaller;
-    font-style: italic;
-  }
-
-  .button-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 5px;
-    margin-top: 1rem;
-  }
-
-  .level-quantity-button {
-    @extend %severity-button;
-    width: 2rem;
-  }
-
-  .update-overlay-button {
-    @extend %severity-button;
-    flex: 1;
-  }
-</style>
-
 <script lang="ts">
   import { untrack } from 'svelte';
   import { strToNum } from '@ts/utils';
@@ -330,21 +230,17 @@
     </div>
   {/each}
 {/snippet}
-
-<fieldset title="Gradient specification">
-  <legend>Custom Degree-Day Values</legend>
+<fieldset class="border border-gray-300 p-4 rounded-md" title="Gradient specification">
+  <legend class="font-semibold text-base mb-2">Custom Degree-Day Values</legend>
 
   {#if gradientType === 'two-point'}
-    <div class="custom-values-wrapper">
-      <div class="severity-row">
-        <div
-          class="severity-color"
-          style="background: {colorHelper.color(0, twoPointState.levels)}"
-        ></div>
-        <div class="severity-value-end">0</div>
+    <div class="space-y-2">
+      <div class="grid grid-cols-[26px_1fr_1fr] gap-x-4 items-center text-center">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, twoPointState.levels)}"></div>
+        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">0</div>
         <input
           type="number"
-          class="severity-value-end-input"
+          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
           title="Start of gradient"
           required
           bind:this={twoPointState.inputElements[0]}
@@ -353,116 +249,123 @@
         />
       </div>
 
-      {@render intermediateRangesSnippet(twoPointRanges.values, twoPointState.levels)}
+      {#each twoPointRanges.values as range, index}
+        <div class="grid grid-cols-[26px_1fr] gap-x-4 items-center text-center">
+          <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(index + 1, twoPointState.levels)}"></div>
+          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">{`${range[0]} - ${range[1]}`}</div>
+        </div>
+      {/each}
 
-      <div class="severity-row">
-        <div
-          class="severity-color"
-          style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"
-        ></div>
+      <div class="grid grid-cols-[26px_1fr_1fr] gap-x-4 items-center text-center">
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"></div>
         <input
           type="number"
-          class="severity-value-end-input"
+          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
           title="End of gradient"
           required
           bind:this={twoPointState.inputElements[1]}
           bind:value={twoPointState.inputs[1]}
           oninput={validateInputs}
         />
-        <div class="severity-value-end">&gt; &gt; &gt;</div>
+        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">&gt;&gt;&gt;</div>
       </div>
     </div>
   {/if}
 
   {#if gradientType === 'three-point'}
-    <div class="custom-values-wrapper">
-      <div class="severity-row">
-        <div
-          class="severity-color"
-          style="background: {colorHelper.color(0, threePointState.levels)}"
-        ></div>
-        <div class="severity-value-end">0</div>
+    <div class="space-y-2">
+      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">0</div>
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, threePointState.levels)}"></div>
+      </div>
+      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
         <input
           type="number"
-          class="severity-value-end-input"
+          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
           title="Start of gradient"
           required
           bind:this={threePointState.inputElements[0]}
           bind:value={threePointState.inputs[0]}
           oninput={validateInputs}
         />
+        <div></div>
       </div>
 
-      {@render intermediateRangesSnippet(threePointRanges.lower, threePointState.levels)}
+      {#each threePointRanges.lower as range, index}
+        <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">{`${range[0]} - ${range[1]}`}</div>
+          <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(index + 1, threePointState.levels)}"></div>
+        </div>
+      {/each}
 
-      <div class="severity-row">
-        <div
-          class="severity-color"
-          style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"
-        ></div>
-        <input
-          type="number"
-          class="severity-value-end-input"
-          title="Lower middle range"
-          required
-          bind:this={threePointState.inputElements[1]}
-          bind:value={threePointState.inputs[1]}
-          oninput={validateInputs}
-        />
-        <input
-          type="number"
-          class="severity-value-end-input"
-          title="Upper middle range"
-          required
-          bind:this={threePointState.inputElements[2]}
-          bind:value={threePointState.inputs[2]}
-          oninput={validateInputs}
-        />
+      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+        <div class="flex flex-col gap-1">
+          <input
+            type="number"
+            class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+            title="Lower middle range"
+            required
+            bind:this={threePointState.inputElements[1]}
+            bind:value={threePointState.inputs[1]}
+            oninput={validateInputs}
+          />
+          <input
+            type="number"
+            class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+            title="Upper middle range"
+            required
+            bind:this={threePointState.inputElements[2]}
+            bind:value={threePointState.inputs[2]}
+            oninput={validateInputs}
+          />
+        </div>
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"></div>
       </div>
 
-      {@render intermediateRangesSnippet(threePointRanges.upper, threePointState.levels)}
+      {#each threePointRanges.upper as range, index}
+        <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">{`${range[0]} - ${range[1]}`}</div>
+          <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(index + 1, threePointState.levels)}"></div>
+        </div>
+      {/each}
 
-      <div class="severity-row">
-        <div
-          class="severity-color"
-          style="background: {colorHelper.color(0, threePointState.levels)}"
-        ></div>
+      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
         <input
           type="number"
-          class="severity-value-end-input"
+          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
           title="End of gradient"
           required
           bind:this={threePointState.inputElements[3]}
           bind:value={threePointState.inputs[3]}
           oninput={validateInputs}
         />
-        <div class="severity-value-end">&gt; &gt; &gt;</div>
+        <div class="w-[30px] h-[30px]" style="background: {colorHelper.color(0, threePointState.levels)}"></div>
       </div>
     </div>
   {/if}
 
-  <div class="button-row">
+  <div class="flex justify-evenly gap-2 mt-4">
     <button
-      class="level-quantity-button"
-      title="Add levels to gradient"
+      class="w-8 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
       onclick={() => changeLevels(1)}
       disabled={buttonsDisabled || currentState.levels >= opts.maxLevels}
     >
       +
     </button>
     <button
-      class="update-overlay-button"
-      title="Evenly space gradient across map"
+      class="flex-1 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
       onclick={resetValues}
     >
       Auto
     </button>
-    <button class="update-overlay-button" title="Reset to defaults" onclick={resetAll}>
+    <button
+      class="flex-1 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
+      onclick={resetAll}
+    >
       Reset
     </button>
     <button
-      class="level-quantity-button"
-      title="Remove levels from gradient"
+      class="w-8 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
       onclick={() => changeLevels(-1)}
       disabled={buttonsDisabled || currentState.levels <= opts.minLevels}
     >
@@ -471,7 +374,7 @@
   </div>
 
   {#if gradientValidationMessage}
-    <div class="validation-msg">
+    <div class="mt-2 text-sm italic text-red-600 text-center">
       {gradientValidationMessage}
     </div>
   {/if}

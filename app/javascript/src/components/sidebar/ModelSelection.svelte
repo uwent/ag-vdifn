@@ -1,54 +1,3 @@
-<style lang="scss">
-  .pest-container {
-    display: flex;
-  }
-
-  button {
-    margin-left: 10px;
-    border: 1px solid #d0d0d0;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  select {
-    padding: 5px 8px;
-    text-indent: 0.01px;
-    width: 99%;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 0;
-    border: 1px solid #d0d0d0;
-    cursor: pointer;
-    appearance: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
-  label {
-    padding: 0;
-  }
-
-  .clear {
-    clear: both;
-    height: 0.5em;
-  }
-
-  .modal__pest-info {
-    overflow: hidden;
-    word-break: break-word;
-    margin-bottom: 1em;
-  }
-
-  .modal__pest-icon {
-    width: 150px;
-    float: left;
-    margin-top: 1em;
-    margin-right: 10px;
-    border-radius: 3px;
-  }
-</style>
-
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
 
@@ -144,9 +93,10 @@
   });
 </script>
 
-<fieldset id="model-selection">
-  <legend>Model Selection</legend>
-  <label for="crop-select">Crop/Host</label>
+<fieldset id="model-selection" class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+  <legend class="font-semibold text-lg mb-2">Model Selection</legend>
+
+  <label for="crop-select" class="block mb-1 text-sm font-medium">Crop/Host</label>
   <select
     onchange={getPestsForCrop}
     bind:value={selectedCropValue}
@@ -154,29 +104,37 @@
     name="crop-select"
     data-testid="crop-select"
     title="Select crop"
+    class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-sm mb-4 cursor-pointer shadow-sm"
   >
     {#each crops as { id, name }}
       <option value={id}>{name}</option>
     {/each}
   </select>
-  <div class="clear"></div>
-  <label for="pest-select">{pestName}</label>
-  <div class="pest-container">
+
+  <label for="pest-select" class="block mb-1 text-sm font-medium">{pestName}</label>
+  <div class="flex items-center gap-3">
     <select
       onchange={setPestValue}
-      class="pest-select"
       id="pest-select"
       name="pest-select"
       data-testid="pest-select"
       title="Select model"
       value={$pestId}
+      class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm cursor-pointer shadow-sm"
     >
       {#each pestsForCrop as { id, name }}
         <option value={id}>{name}</option>
       {/each}
     </select>
+    
     {#if crops.length > 0}
-      <button title="Show model information" onclick={() => (showModal = true)}>?</button>
+      <button
+        title="Show model information"
+        onclick={() => (showModal = true)}
+        class="px-3 py-2 border border-gray-300 rounded-md bg-gray-100 hover:bg-gray-200 transition text-sm"
+      >
+        ?
+      </button>
     {/if}
   </div>
 </fieldset>
@@ -188,18 +146,20 @@
     }}
     name={$selectedPest.name}
   >
-    <div class="modal__pest-info">
+    <div class="overflow-hidden break-words mb-4">
       {#if $selectedPest.photo}
         <img
-          class="modal__pest-icon"
+          class="float-left mr-4 mt-2 mb-2 rounded-md w-[150px]"
           src="{baseURL}/images/pests/{$selectedPest.photo}"
           alt="pest icon"
         />
       {/if}
       {@html $selectedPest.info}
       {#if $selectedPest.link}
-        <b>More information:</b>
-        <a href={$selectedPest.link} target="_blank">{$selectedPest.link}</a>
+        <div class="mt-2">
+          <b>More information:</b>
+          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">{$selectedPest.link}</a>
+        </div>
       {/if}
     </div>
   </Modal>

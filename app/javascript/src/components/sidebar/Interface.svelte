@@ -1,68 +1,3 @@
-<style lang="scss">
-  input {
-    opacity: 0;
-    position: absolute;
-    width: 0;
-  }
-
-  input:checked + label {
-    background-color: #a5dc86;
-    box-shadow: none;
-    color: rgba(0, 0, 0, 0.9);
-  }
-
-  label {
-    width: 100%;
-    background-color: #e4e4e4;
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 13px;
-    font-weight: normal;
-    text-align: center;
-    text-shadow: none;
-    padding: 6px 5px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow:
-      inset 0 1px 3px rgba(0, 0, 0, 0.3),
-      0 1px rgba(255, 255, 255, 0.1);
-    transition: all 0.1s ease-in-out;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  .options {
-    width: 100%;
-  }
-
-  .inner {
-    overflow-y: auto;
-    margin: 0 10px;
-  }
-
-  .switch-field {
-    font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 10px;
-  }
-
-  .switch-field label:hover {
-    cursor: pointer;
-  }
-
-  .switch-field input:checked + label {
-    background-color: #a5dc86;
-    box-shadow: none;
-  }
-
-  .help-btn {
-    border: 1px solid #d0d0d0;
-    border-radius: 3px;
-  }
-</style>
-
 <script lang="ts">
   import { onMount } from 'svelte';
   import DatabaseClient from '@ts/databaseClient';
@@ -76,15 +11,13 @@
   import type { CropWithPests, DegreeDayModel, MapExtent, PanelType } from '@types';
   import { PANEL_TYPES } from '@types';
 
-  // reactive variables
   let diseasePanelData = $state<CropWithPests[]>();
   let insectPanelData = $state<CropWithPests[]>();
   let customPanelData = $state<DegreeDayModel[]>();
   let panelDataReady = $state(false);
   let panel = $state<PanelType>(defaults.panel);
-  let extent = $state<MapExtent>(defaults.extent);
+  let extent = $state<string>('midwest'); 
   let showHelp = $state(false);
-  // let helpModal = $state<SvelteComponent | null>(null);
 
   let opts = $state({
     model: '',
@@ -120,13 +53,14 @@
     panelDataReady = true;
   });
 
-  // Update store values when local state changes
   $effect(() => {
     $selectedPanel = panel;
   });
 
   $effect(() => {
-    $mapExtent = extent;
+    if (extent === 'midwest' || extent === 'wisconsin') {
+      $mapExtent = extent;
+    }
   });
 </script>
 
@@ -142,66 +76,72 @@
   </Modal>
 {/if}
 
-<div class="options">
-  <div class="inner">
-    <fieldset id="interface">
-      <legend>Model Type</legend>
-      <div class="switch-field">
-        <input
-          name="interface"
-          type="radio"
-          id="disease"
-          value="disease"
-          bind:group={panel}
-          disabled={$overlayLoading}
-        />
-        <label for="disease">Disease</label>
-        <input
-          name="interface"
-          type="radio"
-          id="insect"
-          value="insect"
-          bind:group={panel}
-          disabled={$overlayLoading}
-        />
-        <label for="insect">Insect</label>
-        <input
-          name="interface"
-          type="radio"
-          id="custom"
-          value="custom"
-          bind:group={panel}
-          disabled={$overlayLoading}
-        />
-        <label for="custom">Custom</label>
-        <button class="help-btn" title="How to use VDIFN" onclick={() => (showHelp = true)}
-          >?</button
+<div class="w-full">
+  <div class="overflow-y-auto mx-[10px]">
+    <!-- MODEL TYPE -->
+    <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+      <legend class="flex items-center justify-between text-lg font-semibold mb-2">
+        Model Type
+        <button
+          class="ml-2 px-2 py-1 border border-[#d0d0d0] rounded-md text-sm hover:bg-gray-100"
+          title="How to use VDIFN"
+          on:click={() => (showHelp = true)}
         >
+          ?
+        </button>
+      </legend>
+      <div class="flex justify-evenly gap-4">
+        {#each ['disease', 'insect', 'custom'] as type}
+          <div class="relative w-23">
+            <input
+              type="radio"
+              name="interface"
+              id={type}
+              value={type}
+              bind:group={panel}
+              disabled={$overlayLoading}
+              class="absolute w-0 opacity-0"
+            />
+            <label
+              for={type}
+              class={`block text-[13px] text-center px-4 py-2 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+                ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            >
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </label>
+          </div>
+        {/each}
       </div>
     </fieldset>
-    <fieldset id="extents">
-      <legend>Data Range</legend>
-      <div class="switch-field">
-        <input
-          name="extent"
-          type="radio"
-          id="wisconsin"
-          value="wisconsin"
-          bind:group={extent}
-          disabled={$overlayLoading}
-        />
-        <label for="wisconsin">Wisconsin</label>
-        <input
-          name="extent"
-          type="radio"
-          id="midwest"
-          value="midwest"
-          bind:group={extent}
-          disabled={$overlayLoading}
-        />
-        <label for="midwest">Upper Midwest</label>
+
+    <!-- DATA RANGE -->
+    <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+      <legend class="font-semibold text-lg mb-2">Data Range</legend>
+      <div class="flex justify-evenly gap-4">
+        {#each ['wisconsin', 'midwest'] as region}
+          <div class="relative w-32">
+            <input
+              type="radio"
+              name="extent"
+              id={region}
+              value={region}
+              bind:group={extent}
+              disabled={$overlayLoading}
+              class="absolute w-0 opacity-0"
+            />
+            <label
+              for={region}
+              class={`block text-[13px] text-center px-4 py-2 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+                ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            >
+              {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
+            </label>
+          </div>
+        {/each}
       </div>
     </fieldset>
+
+    <!-- PANEL -->
     {#if panelDataReady}
       {#if panel === 'disease'}
         <DiseasePanel

@@ -1,25 +1,3 @@
-<style lang="scss">
-  .btn {
-    height: 40px;
-    width: 40px;
-    background-color: #fff;
-    border: 2px solid #fff;
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    color: rgb(25, 25, 25);
-    cursor: pointer;
-    margin-top: 8px;
-    margin-right: 10px;
-    text-align: center;
-    padding: 0;
-    color: #666666;
-
-    &:hover {
-      color: #333333;
-    }
-  }
-</style>
-
 <script lang="ts">
   import { mapKey } from '@store';
   import { getContext, onMount } from 'svelte';
@@ -81,16 +59,19 @@
 
   $: setMarker($userLocation);
 </script>
-
 <div bind:this={zoomBtn}>
-  <button class="btn" title="Zoom extents" on:click={zoomExtents}>
+  <button
+    class="h-10 w-10 bg-white border-2 border-white rounded shadow-md text-gray-500 hover:text-gray-700 flex items-center justify-center"
+    title="Zoom extents"
+    on:click={zoomExtents}
+  >
     <FontAwesomeIcon icon={faExpand as any} size="2x" />
   </button>
 </div>
 
 <div bind:this={locationBtn}>
   <button
-    class="btn"
+    class="h-10 w-10 bg-white border-2 border-white rounded shadow-md text-gray-500 hover:text-gray-700 flex items-center justify-center"
     title={$userLocation ? 'Hide location' : 'Show my location'}
     on:click={handleLocation}
   >
