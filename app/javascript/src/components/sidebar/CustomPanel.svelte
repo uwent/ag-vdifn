@@ -1,12 +1,3 @@
-<style lang="scss">
-  .map-range {
-    margin: 0.5em;
-    text-align: center;
-    font-style: italic;
-    font-size: small;
-  }
-</style>
-
 <script lang="ts">
   import { format, startOfYear, parseISO } from 'date-fns';
   import { onMount, setContext } from 'svelte';
@@ -35,10 +26,7 @@
     mapRange,
   } from '@store';
 
-  const { data } = $props<{
-    data: any;
-  }>();
-
+  const { data } = $props<{ data: any }>();
   const thisPanel = 'custom';
 
   setContext(panelKey, {
@@ -93,7 +81,6 @@
     setCustomPanelURL();
   });
 
-  // resubmit if already submitted and map extent or temperature units change
   $effect(() => {
     if ($selectedPanel == thisPanel && $customPanelState?.loaded) {
       if ($customPanelState?.selectedExtent != $mapExtent) submit();
@@ -102,35 +89,43 @@
   });
 </script>
 
-<div data-testid="custom-panel" role="region" aria-label="Custom degree-day parameters">
-  <fieldset>
-    <legend>Model Parameters</legend>
-    <DatePicker />
-    <CustomModelSelection />
-    <TminMaxDisplay />
-    <Button
-      title="Submit parameters. Data load may take several seconds."
-      disabled={$overlayLoading}
-      click={submit}
-    />
+<div data-testid="custom-panel" role="region" aria-label="Custom degree-day parameters" class="max-w-2xl mx-auto">
+  <!-- Model Params -->
+  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
+    <legend class="text-lg font-semibold mb-2">Model Parameters</legend>
+    <div class="flex flex-col gap-4">
+      <DatePicker />
+      <CustomModelSelection />
+      <TminMaxDisplay />
+      <Button
+        title="Submit parameters. Data load may take several seconds."
+        disabled={$overlayLoading}
+        click={submit}
+      />
+    </div>
   </fieldset>
+
+  <!-- Loading or Results -->
   {#if $overlayLoading}
     <Loading />
   {:else}
     <LoadStatus loaded={$customPanelState.loaded} />
+    
     {#if $customOverlaySubmitted}
-      <fieldset>
-        <legend>Current Overlay Parameters</legend>
-        <CustomPanelParams />
-        <CustomGradientType />
-        <CustomGradient />
-        {#if $mapRange}
-          <div title="Map range" class="map-range">
-            Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10}
-            degree days
-          </div>
-        {/if}
+      <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
+        <legend class="text-lg font-semibold mb-2">Current Overlay Parameters</legend>
+        <div class="flex flex-col gap-4">
+          <CustomPanelParams />
+          <CustomGradientType />
+          <CustomGradient />
+
+          {#if $mapRange}
+            <div class="text-sm italic text-center mt-2" title="Map range">
+              Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
+            </div>
+          {/if}
+        </div>
       </fieldset>
     {/if}
-  {/if}
-</div>
+    {/if}
+  </div>
