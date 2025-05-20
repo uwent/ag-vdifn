@@ -1,19 +1,13 @@
 import { server } from '../msw/server';
 import { http, HttpResponse } from 'msw';
+import { vi } from 'vitest';
 import ENDPOINTS from '@ts/endpoints';
-import {
-  diseasePanelData,
-  insectPanelData,
-  customPanelData,
-  severityLegendData,
-  severitiesData,
-  pointDetailsData,
-} from '../msw/handlers';
+import { mockData } from '../msw/handlers';
 import DatabaseClient from '@ts/databaseClient';
 import type { PointDetailsParams, SeverityParams } from '@types';
 
 const db = new DatabaseClient();
-const consoleSpy = vi.spyOn(console, 'log');
+const consoleSpy = vi.spyOn(console as Console, 'log');
 const store = await import('@store');
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
@@ -24,7 +18,7 @@ afterAll(() => server.close());
 describe('.fetchDiseasePanel', () => {
   test('returns array of crops with pests', async () => {
     const response = await db.fetchDiseasePanel();
-    expect(response).toEqual(diseasePanelData);
+    expect(response).toEqual(mockData.diseasePanel);
   });
 
   test('handles error gracefully', async () => {
@@ -51,7 +45,7 @@ describe('.fetchDiseasePanel', () => {
 describe('.fetchInsectPanel', () => {
   test('returns array of crops with pests', async () => {
     const response = await db.fetchInsectPanel();
-    expect(response).toEqual(insectPanelData);
+    expect(response).toEqual(mockData.insectPanel);
   });
 
   test('handles error gracefully', async () => {
@@ -77,7 +71,7 @@ describe('.fetchInsectPanel', () => {
 describe('.fetchCustomPanel', () => {
   test('returns array of degree day models', async () => {
     const response = await db.fetchCustomPanel();
-    expect(response).toEqual(customPanelData);
+    expect(response).toEqual(mockData.customPanel);
   });
 
   test('handles error gracefully', async () => {
@@ -104,7 +98,7 @@ describe('.fetchSeverityLegend', () => {
   test('calls correct url and returns legend', async () => {
     const pestId = 1;
     const response = await db.fetchSeverityLegend(pestId);
-    expect(response).toEqual(severityLegendData);
+    expect(response).toEqual(mockData.severityLegend);
   });
 
   test('returns empty legend on invalid pest id', async () => {
@@ -154,7 +148,7 @@ describe('.fetchSeverities', () => {
 
   test('calls correct url and returns data', async () => {
     const response = await db.fetchSeverities(validParams);
-    expect(response).toEqual(severitiesData);
+    expect(response).toEqual(mockData.severities);
   });
 
   test('returns empty array on invalid pest id', async () => {
@@ -203,7 +197,7 @@ describe('.fetchPointDetails', () => {
 
   test('calls correct url and returns data', async () => {
     const response = await db.fetchPointDetails(validParams);
-    expect(response).toEqual(pointDetailsData);
+    expect(response).toEqual(mockData.pointDetails);
   });
 
   test('returns empty string on failure', async () => {

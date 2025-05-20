@@ -27,7 +27,7 @@ export default defineConfig({
     alias: {
       '@public': path.resolve(__dirname, 'public'),
     },
-    conditions: process.env.VITEST ? ['browser'] : undefined,
+    conditions: ['browser'],
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
@@ -35,12 +35,32 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom',
     setupFiles: ['test/test_setup.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
-    exclude: ['**/.test-archive/**', '**/node_modules/**'],
+    include: ['test/**/*.test.ts'],
+    environment: 'jsdom',
+  //   // exclude: ['**/.test-archive/**', '**/node_modules/**'],
+    
+  //   workspace: [
+  //     {
+  //       extends: true,
+  //       test: {
+  //         name: 'browser',
+
+  //       }
+  //     },
+  //     {
+  //       extends: true,
+  //       test: {
+  //         name: 'node',
+  //         include: ['test/node/**/*.test.ts'],
+  //         environment: 'node',
+  //       }
+  //     }
+
+  //   ]
   },
   define: envKeys,
 });

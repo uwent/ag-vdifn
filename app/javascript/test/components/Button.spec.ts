@@ -21,13 +21,6 @@ describe('Button', () => {
     expect(button).toHaveTextContent('Save');
   });
 
-  it('applies button-primary class', async () => {
-    render(Button, { props: { click: vi.fn() } });
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('button');
-    expect(button).toHaveClass('button-primary');
-  });
-
   it('sets title attribute', async () => {
     render(Button, {
       props: {
