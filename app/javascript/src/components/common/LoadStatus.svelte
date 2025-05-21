@@ -1,5 +1,3 @@
-
-
 <script lang="ts">
   // Displays prompt to submit when no model is submitted
   // Displays status message from Loading component after submit
@@ -21,7 +19,7 @@
 </script>
 
 {#if message}
-<div class="my-4 text-center text-sm italic text-gray-600">
-  {message}
-</div>
+  <div class="my-4 text-center text-sm italic text-gray-600">
+    {message}
+  </div>
 {/if}

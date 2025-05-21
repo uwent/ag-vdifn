@@ -55,11 +55,11 @@
 
 <!-- Modal backdrop -->
 <div
-  class="fixed inset-0 bg-black bg-opacity-30 z-40"
+  class="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity duration-300 ease-in-out"
   role="none"
   onclick={close}
   onkeydown={() => close()}
-/>
+></div>
 
 <!-- Modal box -->
 <div
@@ -67,10 +67,10 @@
   role="dialog"
   aria-modal="true"
   bind:this={modal}
-  aria-labelledby="affliction-modal"
+  aria-labelledby="pest-modal"
   style={`max-width: ${maxWidth}`}
 >
-  <h2 id="affliction-modal" class="text-lg font-semibold mb-4">{name}</h2>
+  <h2 id="pest-modal" class="text-lg font-semibold mb-4">{name}</h2>
   {@render children?.()}
   <div class="mt-4 text-right">
     <Button click={close} text="Close" />

@@ -32,8 +32,8 @@
   let modelId = $state<number | null>(null);
   let showModal = $state(false);
 
-  function getPestsForCrop(event) {
-    const cropId = parseInt(event.target.value);
+  function getPestsForCrop(event: Event) {
+    const cropId = parseInt((event.target as HTMLSelectElement).value);
     const cropWithPests = crops.find((crop) => {
       return crop.id === cropId;
     });
@@ -45,7 +45,7 @@
     }
   }
 
-  function getCurrentPest(pestId) {
+  function getCurrentPest(pestId: number | null) {
     const pest = pestsForCrop.find((pest) => {
       return pest.id === pestId;
     });
@@ -53,8 +53,8 @@
     return crops[0].pests[0] || ({} as Pest);
   }
 
-  function setPestValue(event) {
-    const value = parseInt(event.target.value);
+  function setPestValue(event: Event) {
+    const value = parseInt((event.target as HTMLSelectElement).value);
     $pestId = value;
     $selectedPest = getCurrentPest(value);
   }
@@ -93,7 +93,10 @@
   });
 </script>
 
-<fieldset id="model-selection" class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+<fieldset
+  id="model-selection"
+  class="w-full border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto"
+>
   <legend class="font-semibold text-lg mb-2">Model Selection</legend>
 
   <label for="crop-select" class="block mb-1 text-sm font-medium">Crop/Host</label>
@@ -126,7 +129,7 @@
         <option value={id}>{name}</option>
       {/each}
     </select>
-    
+
     {#if crops.length > 0}
       <button
         title="Show model information"
@@ -158,7 +161,9 @@
       {#if $selectedPest.link}
         <div class="mt-2">
           <b>More information:</b>
-          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">{$selectedPest.link}</a>
+          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline"
+            >{$selectedPest.link}</a
+          >
         </div>
       {/if}
     </div>

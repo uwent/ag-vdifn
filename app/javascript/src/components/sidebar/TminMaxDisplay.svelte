@@ -2,51 +2,49 @@
   import { getContext } from 'svelte';
   import { f_to_c } from '@ts/utils';
   import { panelKey, selectedPest, selectedDDModel, tMinTmax } from '@store';
-  import type { Pest, DegreeDayModel, PanelType } from '@types';
+  import type { PanelType } from '@types';
 
   const { panelType } = getContext<{ panelType: PanelType }>(panelKey);
 
+  // Basic state variables
   let in_f = $state(true);
   let tMinF = $state<number | null>(null);
   let tMaxF = $state<number | null>(null);
-  let tMinC = $state<number | null>(null);
-  let tMaxC = $state<number | null>(null);
-  let tMinText = $state('');
-  let tMaxText = $state('');
 
-  function makeText(temp) {
+  // Derive Celsius values from Fahrenheit
+  let tMinC = $derived(f_to_c(tMinF));
+  let tMaxC = $derived(f_to_c(tMaxF));
+
+  // Helper function for formatting temperatures
+  function formatTemp(temp: number | null): string {
     if (temp === null || temp === undefined) return 'None';
     return Number.isInteger(temp) ? temp.toFixed(0) : temp.toFixed(1);
   }
 
-  function updateText(in_f: boolean) {
-    const opts = {
-      t_min: in_f ? tMinF : tMinC,
-      t_max: in_f ? tMaxF : tMaxC,
+  // Derive the current temperatures based on selected unit
+  let currentTMin = $derived(in_f ? tMinF : tMinC);
+  let currentTMax = $derived(in_f ? tMaxF : tMaxC);
+
+  // Derive formatted text for display
+  let tMinText = $derived(formatTemp(currentTMin));
+  let tMaxText = $derived(formatTemp(currentTMax));
+
+  // Update the store whenever relevant values change
+  $effect(() => {
+    $tMinTmax = {
+      t_min: currentTMin,
+      t_max: currentTMax,
       in_f: in_f,
     };
-    $tMinTmax = opts;
-    tMinText = makeText(opts.t_min);
-    tMaxText = makeText(opts.t_max);
-  }
-
-  function setTminTmax(model: Pest | DegreeDayModel) {
-    if (model) {
-      tMinF = model.t_min;
-      tMaxF = model.t_max;
-      tMinC = f_to_c(tMinF);
-      tMaxC = f_to_c(tMaxF);
-      updateText(in_f);
-    }
-  }
-
-  $effect(() => {
-    updateText(in_f);
   });
 
+  // Update temperature values when the model changes
   $effect(() => {
     const currentModel = panelType === 'custom' ? $selectedDDModel : $selectedPest;
-    setTminTmax(currentModel);
+    if (currentModel) {
+      tMinF = currentModel.t_min;
+      tMaxF = currentModel.t_max;
+    }
   });
 </script>
 
@@ -83,12 +81,7 @@
       <span>&#8457;</span>
     </div>
     <label class="relative inline-block w-[60px] h-[34px]">
-      <input
-        type="checkbox"
-        title="temp-unit-toggle"
-        bind:checked={in_f}
-        class="sr-only peer"
-      />
+      <input type="checkbox" title="temp-unit-toggle" bind:checked={in_f} class="sr-only peer" />
       <span
         class="peer-checked:bg-green-500 bg-gray-600 rounded-full absolute top-0 left-0 right-0 bottom-0 transition duration-300
           before:content-[''] before:absolute before:h-[26px] before:w-[26px] before:bottom-[4px] before:left-[4px]
@@ -96,6 +89,5 @@
           peer-checked:before:translate-x-[26px]"
       ></span>
     </label>
-    
   </div>
 </div>

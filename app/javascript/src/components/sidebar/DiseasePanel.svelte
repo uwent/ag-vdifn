@@ -70,7 +70,7 @@
     $diseasePanelState = {
       ...$diseasePanelState,
       selectedPest: pest,
-      mapExtent: extents[$mapExtent], 
+      mapExtent: extents[$mapExtent],
       loaded: true,
     };
     $diseasePanelParams = params;
@@ -81,7 +81,6 @@
       map_extent: $mapExtent,
     });
   }
-  
 
   function setDiseasePanelURL() {
     let pest = $diseasePanelState.selectedPest;
@@ -96,11 +95,10 @@
     document.title = title;
   }
   function getExtentKey(extent: MapExtent): string | undefined {
-  return Object.entries(extents).find(([, val]) =>
-    val.lat_range === extent.lat_range && val.lng_range === extent.lng_range
-  )?.[0];
-}
-
+    return Object.entries(extents).find(
+      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
+    )?.[0];
+  }
 
   onMount(() => {
     $selectedPanel = thisPanel;
@@ -114,13 +112,9 @@
   });
 
   $effect(() => {
-    if (
-  $diseasePanelState.loaded &&
-  getExtentKey($diseasePanelState.mapExtent) !== $mapExtent
-) {
-  submit();
-}
-
+    if ($diseasePanelState.loaded && getExtentKey($diseasePanelState.mapExtent) !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {

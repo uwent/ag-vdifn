@@ -8,11 +8,11 @@
     z-index: 10;
   }
 
-  .flex {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  // .flex {
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 2px;
+  // }
 
   .label {
     font-size: small;
@@ -86,7 +86,7 @@
   });
 </script>
 
-<div class="container flex">
+<div class="container flex-column w-min">
   <div class="label">Color Palette:</div>
   <div class="switch-field">
     <input

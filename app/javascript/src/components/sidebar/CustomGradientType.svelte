@@ -1,3 +1,45 @@
+<style>
+  .spectral-2 {
+    background: linear-gradient(
+      90deg,
+      rgb(0, 176, 38) 0%,
+      rgb(245, 255, 0) 50%,
+      rgb(255, 0, 0) 100%
+    );
+  }
+
+  .spectral-3 {
+    background: linear-gradient(
+      90deg,
+      rgb(0, 176, 38) 0%,
+      rgb(249, 255, 0) 25%,
+      rgb(255, 0, 0) 50%,
+      rgb(255, 255, 0) 75%,
+      rgb(0, 176, 38) 100%
+    );
+  }
+
+  .viridis-2 {
+    background: linear-gradient(
+      90deg,
+      rgb(71, 0, 82) 0%,
+      rgb(0, 138, 140) 50%,
+      rgb(255, 232, 73) 100%
+    );
+  }
+
+  .viridis-3 {
+    background: linear-gradient(
+      90deg,
+      rgb(71, 0, 82) 0%,
+      rgb(0, 138, 140) 25%,
+      rgb(255, 232, 73) 50%,
+      rgb(0, 138, 140) 75%,
+      rgb(71, 0, 82) 100%
+    );
+  }
+</style>
+
 <script lang="ts">
   import { customPanelState, selectedPalette } from '@store';
 </script>
@@ -45,45 +87,3 @@
     </label>
   </fieldset>
 </div>
-
-<style>
-  .spectral-2 {
-    background: linear-gradient(
-      90deg,
-      rgb(0, 176, 38) 0%,
-      rgb(245, 255, 0) 50%,
-      rgb(255, 0, 0) 100%
-    );
-  }
-
-  .spectral-3 {
-    background: linear-gradient(
-      90deg,
-      rgb(0, 176, 38) 0%,
-      rgb(249, 255, 0) 25%,
-      rgb(255, 0, 0) 50%,
-      rgb(255, 255, 0) 75%,
-      rgb(0, 176, 38) 100%
-    );
-  }
-
-  .viridis-2 {
-    background: linear-gradient(
-      90deg,
-      rgb(71, 0, 82) 0%,
-      rgb(0, 138, 140) 50%,
-      rgb(255, 232, 73) 100%
-    );
-  }
-
-  .viridis-3 {
-    background: linear-gradient(
-      90deg,
-      rgb(71, 0, 82) 0%,
-      rgb(0, 138, 140) 25%,
-      rgb(255, 232, 73) 50%,
-      rgb(0, 138, 140) 75%,
-      rgb(71, 0, 82) 100%
-    );
-  }
-</style>

@@ -8,7 +8,7 @@
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
-  import type { CropWithPests, DegreeDayModel, MapExtent, PanelType } from '@types';
+  import type { CropWithPests, DegreeDayModel, PanelType, MapExtentOption } from '@types';
   import { PANEL_TYPES } from '@types';
 
   let diseasePanelData = $state<CropWithPests[]>();
@@ -16,7 +16,7 @@
   let customPanelData = $state<DegreeDayModel[]>();
   let panelDataReady = $state(false);
   let panel = $state<PanelType>(defaults.panel);
-  let extent = $state<string>('midwest'); 
+  let extent = $state<MapExtentOption>(defaults.extent);
   let showHelp = $state(false);
 
   let opts = $state({
@@ -58,9 +58,7 @@
   });
 
   $effect(() => {
-    if (extent === 'midwest' || extent === 'wisconsin') {
-      $mapExtent = extent;
-    }
+    $mapExtent = extent;
   });
 </script>
 
@@ -79,20 +77,13 @@
 <div class="w-full">
   <div class="overflow-y-auto mx-[10px]">
     <!-- MODEL TYPE -->
-    <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+    <fieldset class="w-full border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
       <legend class="flex items-center justify-between text-lg font-semibold mb-2">
         Model Type
-        <button
-          class="ml-2 px-2 py-1 border border-[#d0d0d0] rounded-md text-sm hover:bg-gray-100"
-          title="How to use VDIFN"
-          on:click={() => (showHelp = true)}
-        >
-          ?
-        </button>
       </legend>
       <div class="flex justify-evenly gap-4">
         {#each ['disease', 'insect', 'custom'] as type}
-          <div class="relative w-23">
+          <div class="relative">
             <input
               type="radio"
               name="interface"
@@ -111,6 +102,13 @@
             </label>
           </div>
         {/each}
+        <button
+          class="ml-2 px-2 py-1 border border-[#d0d0d0] rounded-md text-sm hover:bg-gray-100"
+          title="How to use VDIFN"
+          onclick={() => (showHelp = true)}
+        >
+          ?
+        </button>
       </div>
     </fieldset>
 

@@ -221,7 +221,12 @@
 </script>
 
 {#if showModal}
-  <Modal showModal={showModal} name="Pest Info">
+  <Modal
+    close={() => {
+      showModal = false;
+    }}
+    name="Pest Info"
+  >
     {@html $selectedPest.info}
   </Modal>
 {/if}

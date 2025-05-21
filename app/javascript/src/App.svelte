@@ -29,7 +29,6 @@
 </style>
 
 <script lang="ts">
-  import '~/src/scss/global.scss';
   import Map from '~/src/components/map/Map.svelte';
   import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte';
   import Sidebar from '@components/sidebar/Sidebar.svelte';
@@ -45,7 +44,7 @@
       <Interface />
     </Sidebar>
   </div>
-  
+
   <div class="map">
     <Map>
       <SeverityOverlay />

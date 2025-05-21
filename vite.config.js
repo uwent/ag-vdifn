@@ -3,7 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import ViteRails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
-import EnvironmentPlugin from 'vite-plugin-environment';
+import tailwindcss from '@tailwindcss/vite';
 
 const envKeys = {};
 
@@ -14,9 +14,9 @@ for (const k in process.env) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    EnvironmentPlugin(['GOOGLE_MAPS_KEY']), //updated
     tsconfigPaths(),
     svelte(),
+    tailwindcss(),
     ViteRails({
       fullReload: {
         additionalPaths: ['app/views/**/*'],
@@ -41,26 +41,6 @@ export default defineConfig({
     },
     include: ['test/**/*.test.ts'],
     environment: 'jsdom',
-  //   // exclude: ['**/.test-archive/**', '**/node_modules/**'],
-    
-  //   workspace: [
-  //     {
-  //       extends: true,
-  //       test: {
-  //         name: 'browser',
-
-  //       }
-  //     },
-  //     {
-  //       extends: true,
-  //       test: {
-  //         name: 'node',
-  //         include: ['test/node/**/*.test.ts'],
-  //         environment: 'node',
-  //       }
-  //     }
-
-  //   ]
   },
   define: envKeys,
 });

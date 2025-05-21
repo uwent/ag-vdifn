@@ -42,3 +42,7 @@ group :test do
   gem "net-protocol" # temporarily require to fix gem installation on circleci?
   gem "webmock"
 end
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.2"

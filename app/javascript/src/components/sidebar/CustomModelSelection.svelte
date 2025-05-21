@@ -38,6 +38,7 @@
     }
   });
 </script>
+
 <fieldset id="model-selection" class="border border-gray-300 p-4 rounded-md">
   <legend class="font-semibold text-base mb-2">Degree Day Model</legend>
   <label for="dd-select" class="block mb-1 text-sm font-medium text-gray-700">Choose model</label>

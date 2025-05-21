@@ -1,3 +1,11 @@
+<style lang="scss">
+  .map-btn {
+    margin-top: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+</style>
+
 <script lang="ts">
   import { mapKey } from '@store';
   import { getContext, onMount } from 'svelte';
@@ -8,7 +16,6 @@
 
   const { getMap } = getContext<any>(mapKey);
   const map = getMap();
-  const position = google.maps.ControlPosition.RIGHT_TOP;
 
   let zoomBtn: HTMLDivElement;
   let locationBtn: HTMLDivElement;
@@ -26,7 +33,7 @@
     }
   }
 
-  function handlePosition(position) {
+  function handlePosition(position: GeolocationPosition) {
     $userLocation = {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
@@ -53,27 +60,32 @@
   }
 
   onMount(() => {
-    map.controls[position].push(zoomBtn);
-    map.controls[position].push(locationBtn);
+    const controlPosition = google.maps.ControlPosition.RIGHT_TOP;
+    map.controls[controlPosition].push(zoomBtn);
+    map.controls[controlPosition].push(locationBtn);
   });
 
-  $: setMarker($userLocation);
+  $effect(() => {
+    const loc = $userLocation;
+    setMarker(loc);
+  });
 </script>
-<div bind:this={zoomBtn}>
+
+<div bind:this={zoomBtn} class="map-btn">
   <button
-    class="h-10 w-10 bg-white border-2 border-white rounded shadow-md text-gray-500 hover:text-gray-700 flex items-center justify-center"
+    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
     title="Zoom extents"
-    on:click={zoomExtents}
+    onclick={zoomExtents}
   >
     <FontAwesomeIcon icon={faExpand as any} size="2x" />
   </button>
 </div>
 
-<div bind:this={locationBtn}>
+<div bind:this={locationBtn} class="map-btn">
   <button
-    class="h-10 w-10 bg-white border-2 border-white rounded shadow-md text-gray-500 hover:text-gray-700 flex items-center justify-center"
+    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
     title={$userLocation ? 'Hide location' : 'Show my location'}
-    on:click={handleLocation}
+    onclick={handleLocation}
   >
     {#if $userLocation}
       <FontAwesomeIcon icon={faLocationDot as any} size="2x" />

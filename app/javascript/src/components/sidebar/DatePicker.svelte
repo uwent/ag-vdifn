@@ -122,8 +122,8 @@
       id="datepicker-start"
       data-testid="datepicker-start"
       bind:value={startDateValue}
-      on:focus={updateEndDateInput}
-      on:focusout={updateEndDateInput}
+      onfocus={updateEndDateInput}
+      onfocusout={updateEndDateInput}
       max={today}
       aria-label={startLabel}
     />
@@ -141,8 +141,8 @@
       id="datepicker-end"
       data-testid="datepicker-end"
       bind:value={endDateValue}
-      on:focus={updateStartDateInput}
-      on:focusout={updateStartDateInput}
+      onfocus={updateStartDateInput}
+      onfocusout={updateStartDateInput}
       max={today}
       aria-label="End Date"
     />
@@ -154,12 +154,16 @@
   <div class="h-2"></div>
 
   <div class="text-xs text-gray-700 font-medium mb-1">Quick date ranges:</div>
-  <div class="flex justify-evenly flex-wrap gap-2 text-sm" role="group" aria-label="Quick date range options">
+  <div
+    class="flex justify-evenly flex-wrap gap-2 text-sm"
+    role="group"
+    aria-label="Quick date range options"
+  >
     <button
       class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to past week"
       data-testid="button-past-week"
-      on:click={selectPastWeek}
+      onclick={selectPastWeek}
       aria-label="Past week"
     >
       Past week
@@ -168,7 +172,7 @@
       class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to past month"
       data-testid="button-past-month"
-      on:click={selectPastMonth}
+      onclick={selectPastMonth}
       aria-label="Past month"
     >
       Past month
@@ -177,7 +181,7 @@
       class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
-      on:click={selectThisYear}
+      onclick={selectThisYear}
       aria-label="This year"
     >
       This year
@@ -186,7 +190,7 @@
       class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Restore default date settings for this model"
       data-testid="button-defaults"
-      on:click={selectDefaults}
+      onclick={selectDefaults}
       aria-label="Defaults"
     >
       Defaults

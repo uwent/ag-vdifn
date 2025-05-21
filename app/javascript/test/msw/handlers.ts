@@ -42,7 +42,6 @@ export const mockData = {
     },
   ],
 
-
   customPanel: [
     {
       id: 0,
@@ -80,9 +79,8 @@ export const mockData = {
     { lat: 2, lng: 2, value: 2 },
   ],
 
- pointDetails: '<html>Point details</html>'
-}
-
+  pointDetails: '<html>Point details</html>',
+};
 
 // Mock API handlers
 export const handlers = [

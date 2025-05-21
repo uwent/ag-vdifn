@@ -1,6 +1,7 @@
 import { mount } from 'svelte';
 import App from '~/src/App.svelte';
-import "../stylesheets/application.css";
+import '~/src/scss/global.scss';
+import '../stylesheets/tailwind.css';
 
 const app = mount(App, { target: document.body });
 

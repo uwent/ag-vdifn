@@ -23,7 +23,7 @@
     startDate,
     tMinTmax,
   } from '@store';
-  import type { PanelType, MapExtent} from '@types';
+  import type { PanelType, MapExtent } from '@types';
 
   let {
     data = undefined,
@@ -100,10 +100,10 @@
   }
 
   function getExtentKey(extent: MapExtent): string | undefined {
-  return Object.entries(extents).find(([, val]) =>
-    val.lat_range === extent.lat_range && val.lng_range === extent.lng_range
-  )?.[0];
-}
+    return Object.entries(extents).find(
+      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
+    )?.[0];
+  }
 
   onMount(() => {
     $selectedPanel = thisPanel;
@@ -117,13 +117,9 @@
   });
 
   $effect(() => {
-    if (
-  $insectPanelState.loaded &&
-  getExtentKey($insectPanelState.mapExtent) !== $mapExtent
-) {
-  submit();
-}
-
+    if ($insectPanelState.loaded && getExtentKey($insectPanelState.mapExtent) !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -140,7 +136,7 @@
       <TminMaxDisplay />
     </div>
   </fieldset>
-  
+
   <Button
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}

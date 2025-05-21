@@ -307,7 +307,7 @@ describe('OverlayHelper', () => {
       };
 
       // Mock the rectangle click listener to call the callback
-      mockRectangle.addListener.mockImplementation((event, callback) => {
+      mockRectangle.addListener.mockImplementation((event: any, callback: any) => {
         if (event === 'click') {
           callback(eventMock);
         }

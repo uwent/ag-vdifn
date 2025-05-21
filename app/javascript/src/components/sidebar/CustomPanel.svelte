@@ -89,7 +89,12 @@
   });
 </script>
 
-<div data-testid="custom-panel" role="region" aria-label="Custom degree-day parameters" class="max-w-2xl mx-auto">
+<div
+  data-testid="custom-panel"
+  role="region"
+  aria-label="Custom degree-day parameters"
+  class="max-w-2xl mx-auto"
+>
   <!-- Model Params -->
   <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
     <legend class="text-lg font-semibold mb-2">Model Parameters</legend>
@@ -110,7 +115,7 @@
     <Loading />
   {:else}
     <LoadStatus loaded={$customPanelState.loaded} />
-    
+
     {#if $customOverlaySubmitted}
       <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
         <legend class="text-lg font-semibold mb-2">Current Overlay Parameters</legend>
@@ -121,11 +126,12 @@
 
           {#if $mapRange}
             <div class="text-sm italic text-center mt-2" title="Map range">
-              Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) / 10} degree days
+              Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) /
+                10} degree days
             </div>
           {/if}
         </div>
       </fieldset>
     {/if}
-    {/if}
-  </div>
+  {/if}
+</div>
