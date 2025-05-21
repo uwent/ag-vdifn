@@ -10,6 +10,8 @@
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
   import type { CropWithPests, DegreeDayModel, PanelType, MapExtentOption } from '@types';
   import { PANEL_TYPES } from '@types';
+  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
   let diseasePanelData = $state<CropWithPests[]>();
   let insectPanelData = $state<CropWithPests[]>();
@@ -75,15 +77,25 @@
 {/if}
 
 <div class="w-full">
-  <div class="overflow-y-auto mx-[10px]">
+  <div class="mx-[10px] overflow-y-auto">
     <!-- MODEL TYPE -->
-    <fieldset class="w-full border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
-      <legend class="flex items-center justify-between text-lg font-semibold mb-2">
-        Model Type
+    <fieldset class="mx-auto p-4 border border-gray-300 rounded-lg w-full max-w-2xl">
+      <legend class="flex gap-2 mb-2 font-semibold text-lg">
+        <div>Model Type</div>
+        <div>
+          <button
+            type="button"
+            class="flex justify-center items-center rounded-md w-5 h-5 text-gray-500 text-lg cursor-pointer"
+            title="How to use VDIFN"
+            onclick={() => (showHelp = true)}
+          >
+            <FontAwesomeIcon icon={faCircleQuestion} />
+          </button>
+        </div>
       </legend>
-      <div class="flex justify-evenly gap-4">
+      <div class="flex justify-evenly gap-2 h-5">
         {#each ['disease', 'insect', 'custom'] as type}
-          <div class="relative">
+          <div class="flex-1 h-10">
             <input
               type="radio"
               name="interface"
@@ -91,7 +103,7 @@
               value={type}
               bind:group={panel}
               disabled={$overlayLoading}
-              class="absolute w-0 opacity-0"
+              class="absolute opacity-0 w-0"
             />
             <label
               for={type}
@@ -102,19 +114,12 @@
             </label>
           </div>
         {/each}
-        <button
-          class="ml-2 px-2 py-1 border border-[#d0d0d0] rounded-md text-sm hover:bg-gray-100"
-          title="How to use VDIFN"
-          onclick={() => (showHelp = true)}
-        >
-          ?
-        </button>
       </div>
     </fieldset>
 
     <!-- DATA RANGE -->
-    <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
-      <legend class="font-semibold text-lg mb-2">Data Range</legend>
+    <fieldset class="mx-auto mb-6 p-4 border border-gray-300 rounded-lg max-w-2xl">
+      <legend class="mb-2 font-semibold text-lg">Data Range</legend>
       <div class="flex justify-evenly gap-4">
         {#each ['wisconsin', 'midwest'] as region}
           <div class="relative w-32">
@@ -125,7 +130,7 @@
               value={region}
               bind:group={extent}
               disabled={$overlayLoading}
-              class="absolute w-0 opacity-0"
+              class="absolute opacity-0 w-0"
             />
             <label
               for={region}

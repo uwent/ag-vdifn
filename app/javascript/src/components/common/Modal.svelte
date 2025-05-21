@@ -55,7 +55,7 @@
 
 <!-- Modal backdrop -->
 <div
-  class="fixed inset-0 bg-black bg-opacity-30 z-40 transition-opacity duration-300 ease-in-out"
+  class="z-40 fixed inset-0 bg-black/30 transition-opacity duration-300 ease-in-out"
   role="none"
   onclick={close}
   onkeydown={() => close()}
@@ -63,14 +63,14 @@
 
 <!-- Modal box -->
 <div
-  class="fixed left-[60%] top-1/2 transform -translate-x-[60%] -translate-y-1/2 w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto bg-white rounded p-4 z-50 shadow-xl"
+  class="top-1/2 left-[60%] z-50 fixed bg-white shadow-xl p-4 rounded w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto -translate-x-[60%] -translate-y-1/2 transform"
   role="dialog"
   aria-modal="true"
   bind:this={modal}
   aria-labelledby="pest-modal"
   style={`max-width: ${maxWidth}`}
 >
-  <h2 id="pest-modal" class="text-lg font-semibold mb-4">{name}</h2>
+  <h2 id="pest-modal" class="mb-4 font-semibold text-lg">{name}</h2>
   {@render children?.()}
   <div class="mt-4 text-right">
     <Button click={close} text="Close" />
