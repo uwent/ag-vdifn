@@ -153,14 +153,14 @@
 
   <div class="h-2"></div>
 
-  <div class="text-xs text-gray-700 font-medium mb-1">Quick date ranges:</div>
+  <div class="text-m text-gray-700 font-small mb-1">Quick date ranges:</div>
   <div
-    class="flex justify-evenly flex-wrap gap-2 text-sm"
+    class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs w-full"
     role="group"
     aria-label="Quick date range options"
   >
     <button
-      class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
+      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to past week"
       data-testid="button-past-week"
       onclick={selectPastWeek}
@@ -169,7 +169,7 @@
       Past week
     </button>
     <button
-      class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
+      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to past month"
       data-testid="button-past-month"
       onclick={selectPastMonth}
@@ -178,7 +178,7 @@
       Past month
     </button>
     <button
-      class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
+      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Set date range to Jan 1 -> today"
       data-testid="button-this-year"
       onclick={selectThisYear}
@@ -187,7 +187,7 @@
       This year
     </button>
     <button
-      class="px-3 py-1 border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
+      class="w-fullh-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
       title="Restore default date settings for this model"
       data-testid="button-defaults"
       onclick={selectDefaults}

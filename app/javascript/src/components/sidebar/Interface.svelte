@@ -77,15 +77,15 @@
 {/if}
 
 <div class="w-full">
-  <div class="mx-[10px] overflow-y-auto">
+  <div class="mx-[12px] overflow-y-auto">
     <!-- MODEL TYPE -->
     <fieldset class="mx-auto p-4 border border-gray-300 rounded-lg w-full max-w-2xl">
-      <legend class="flex gap-2 mb-2 font-semibold text-lg">
+      <legend class="flex gap-2 mb-2 font-semibold text-2xl">
         <div>Model Type</div>
         <div>
           <button
             type="button"
-            class="flex justify-center items-center rounded-md w-5 h-5 text-gray-500 text-lg cursor-pointer"
+            class="flex justify-center items-center rounded-md w-5 text-gray-500 text-lg cursor-pointer"
             title="How to use VDIFN"
             onclick={() => (showHelp = true)}
           >
@@ -93,9 +93,9 @@
           </button>
         </div>
       </legend>
-      <div class="flex justify-evenly gap-2 h-5">
+      <div class="grid grid-cols-3 gap-2 auto-rows-fr">
         {#each ['disease', 'insect', 'custom'] as type}
-          <div class="flex-1 h-10">
+        <div class="w-full">
             <input
               type="radio"
               name="interface"
@@ -106,10 +106,12 @@
               class="absolute opacity-0 w-0"
             />
             <label
-              for={type}
-              class={`block text-[13px] text-center px-4 py-2 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-                ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-            >
+            for={type}
+            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-2xl px-6 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+              ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+          >
+          
+          
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </label>
           </div>
@@ -118,9 +120,9 @@
     </fieldset>
 
     <!-- DATA RANGE -->
-    <fieldset class="mx-auto mb-6 p-4 border border-gray-300 rounded-lg max-w-2xl">
+    <fieldset class="mx-auto mb-6 p-3 border border-gray-300 rounded-lg max-w-2xl">
       <legend class="mb-2 font-semibold text-lg">Data Range</legend>
-      <div class="flex justify-evenly gap-4">
+      <div class="flex justify-evenly gap-1">
         {#each ['wisconsin', 'midwest'] as region}
           <div class="relative w-32">
             <input
@@ -133,10 +135,11 @@
               class="absolute opacity-0 w-0"
             />
             <label
-              for={region}
-              class={`block text-[13px] text-center px-4 py-2 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-                ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-            >
+            for={region}
+            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-lg px-5 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+              ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+          >
+          
               {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
             </label>
           </div>
