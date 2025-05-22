@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, type Snippet } from 'svelte';
-  import Button from './Button.svelte';
+  import Button from './SubmitButton.svelte';
 
   let {
     close = () => {},

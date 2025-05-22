@@ -41,14 +41,13 @@
 </style>
 
 <script lang="ts">
+  import Frame from '../common/Frame.svelte';
   import { customPanelState, selectedPalette } from '@store';
 </script>
 
-<div data-testid="gradient-opts">
-  <fieldset class="flex flex-row justify-evenly">
-    <legend class="mb-2 text-lg font-bold text-gray-800">Gradient Type</legend>
-
-    <label for="gradient-2-point" class="flex flex-col mb-3 cursor-pointer select-none">
+<Frame title="Gradient Type">
+  <div class="gap-2 grid grid-cols-2">
+    <label for="gradient-2-point" class="flex cursor-pointer select-none">
       <input
         id="gradient-2-point"
         type="radio"
@@ -59,7 +58,7 @@
         class="hidden"
       />
       <span
-        class={`h-9 w-[110px] rounded-md border-2 ${
+        class={`h-9 w-full rounded-md border-2 ${
           $customPanelState.selectedGradient === 'two-point'
             ? 'border-blue-700'
             : 'border-white hover:border-gray-300'
@@ -67,7 +66,7 @@
       ></span>
     </label>
 
-    <label for="gradient-3-point" class="flex flex-col mb-3 cursor-pointer select-none">
+    <label for="gradient-3-point" class="flex p-0 cursor-pointer select-none">
       <input
         id="gradient-3-point"
         type="radio"
@@ -78,12 +77,12 @@
         class="hidden"
       />
       <span
-        class={`h-9 w-[110px] rounded-md border-2 ${
+        class={`h-9 w-full rounded-md border-2 ${
           $customPanelState.selectedGradient === 'three-point'
             ? 'border-blue-700'
             : 'border-white hover:border-gray-300'
         } ${$selectedPalette}-3`}
       ></span>
     </label>
-  </fieldset>
-</div>
+  </div>
+</Frame>

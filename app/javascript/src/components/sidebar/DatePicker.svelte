@@ -12,6 +12,7 @@
   } from 'date-fns';
   import { getContext, onDestroy } from 'svelte';
   import { endDate, panelKey, startDate, selectedPest } from '@store';
+  import Frame from '@components/common/Frame.svelte';
 
   const { panelType, dateToolTip, defaultStartDate } = getContext<any>(panelKey);
 
@@ -110,14 +111,23 @@
   onDestroy(unsubscribe);
 </script>
 
-<fieldset id="datepicker" class="border border-gray-300 p-4 rounded-md">
-  <legend class="text-base font-semibold">Date Range</legend>
+{#snippet quickBtn(title: string, text: string, onclick: () => void)}
+  <button
+    class="bg-gray-100 hover:bg-gray-300 px-1.5 py-0.5 border border-gray-300 rounded w-full text-xs transition cursor-pointer"
+    {title}
+    aria-label={title}
+    {onclick}
+  >
+    {text}
+  </button>
+{/snippet}
 
+<Frame title="Date Range">
   <label for="datepicker-start" class="block mb-1">{startLabel}</label>
   <div class="flex items-center gap-2 mb-3">
     <input
       type="date"
-      class="datepicker border border-gray-300 px-2 py-1 rounded text-sm"
+      class="bg-white px-2 py-1 border border-gray-300 rounded text-sm datepicker"
       title={dateToolTip.startDate}
       id="datepicker-start"
       data-testid="datepicker-start"
@@ -127,7 +137,7 @@
       max={today}
       aria-label={startLabel}
     />
-    <div class="text-xs w-1/2 text-gray-600 italic" aria-live="polite">
+    <div class="w-1/2 text-gray-600 text-xs italic" aria-live="polite">
       {dateFeedback(startDateValue)}
     </div>
   </div>
@@ -136,7 +146,7 @@
   <div class="flex items-center gap-2 mb-3">
     <input
       type="date"
-      class="datepicker border border-gray-300 px-2 py-1 rounded text-sm"
+      class="bg-white px-2 py-1 border border-gray-300 rounded text-sm datepicker"
       title={dateToolTip.endDate}
       id="datepicker-end"
       data-testid="datepicker-end"
@@ -146,54 +156,20 @@
       max={today}
       aria-label="End Date"
     />
-    <div class="text-xs w-1/2 text-gray-600 italic" aria-live="polite">
+    <div class="w-1/2 text-gray-600 text-xs italic" aria-live="polite">
       {dateFeedback(endDateValue)}
     </div>
   </div>
 
-  <div class="h-2"></div>
-
-  <div class="text-m text-gray-700 font-small mb-1">Quick date ranges:</div>
+  <div class="mb-1 text-gray-700 text-m text-sm">Quick date ranges:</div>
   <div
-    class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs w-full"
+    class="gap-2 grid grid-cols-2 sm:grid-cols-4 w-full text-xs"
     role="group"
     aria-label="Quick date range options"
   >
-    <button
-      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
-      title="Set date range to past week"
-      data-testid="button-past-week"
-      onclick={selectPastWeek}
-      aria-label="Past week"
-    >
-      Past week
-    </button>
-    <button
-      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
-      title="Set date range to past month"
-      data-testid="button-past-month"
-      onclick={selectPastMonth}
-      aria-label="Past month"
-    >
-      Past month
-    </button>
-    <button
-      class="w-full h-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
-      title="Set date range to Jan 1 -> today"
-      data-testid="button-this-year"
-      onclick={selectThisYear}
-      aria-label="This year"
-    >
-      This year
-    </button>
-    <button
-      class="w-fullh-[1.5rem] px-1.5 py-0.5 text-[9.5px] border border-gray-300 rounded bg-gray-200 hover:bg-gray-300 transition"
-      title="Restore default date settings for this model"
-      data-testid="button-defaults"
-      onclick={selectDefaults}
-      aria-label="Defaults"
-    >
-      Defaults
-    </button>
+    {@render quickBtn('Set date range to past week', 'Past week', selectPastWeek)}
+    {@render quickBtn('Set date range to past month', 'Past month', selectPastMonth)}
+    {@render quickBtn('Set date range to Jan 1 -> today', 'This year', selectThisYear)}
+    {@render quickBtn('Restore default date settings for this model', 'Defaults', selectDefaults)}
   </div>
-</fieldset>
+</Frame>

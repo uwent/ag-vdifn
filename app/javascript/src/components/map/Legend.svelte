@@ -109,6 +109,7 @@
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
   import Modal from '@components/common/Modal.svelte';
+  import Frame from '@components/common/Frame.svelte';
   import {
     selectedPanel,
     diseasePanelParams,
@@ -234,8 +235,7 @@
 {#if showLegend}
   <div id="legend" class="legend" aria-expanded={expanded}>
     {#if currentLegend?.legend}
-      <fieldset id="legend-values">
-        <legend>{$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}</legend>
+      <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
         <div class="legend-values">
           {#each [...currentLegend.legend].reverse() as entry}
             <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
@@ -244,13 +244,12 @@
             </div>
           {/each}
         </div>
-      </fieldset>
+      </Frame>
     {/if}
     {#if currentLegend?.info}
-      <fieldset>
-        <legend>More Information</legend>
-        <p>{@html currentLegend.info}</p>
-      </fieldset>
+      <Frame title="More Information">
+        <p class="text-sm">{@html currentLegend.info}</p>
+      </Frame>
     {/if}
   </div>
   <button id="legend-expand-button" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>

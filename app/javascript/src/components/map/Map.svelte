@@ -31,6 +31,7 @@
     minZoom: 5,
     streetViewControl: false,
     fullscreenControl: false,
+    cameraControl: false,
     zoomControl: true,
     zoomControlOptions: {
       position: 7,

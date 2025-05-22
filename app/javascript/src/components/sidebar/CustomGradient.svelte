@@ -12,6 +12,7 @@
     customPanelState,
   } from '@store';
   import type { GradientType, MapRange } from '@types';
+  import Frame from '@components/common/Frame.svelte';
 
   const opts = {
     defaultLevels: 5,
@@ -217,33 +218,19 @@
   });
 </script>
 
-{#snippet intermediateRangesSnippet(ranges: number[][], totalLevels: number)}
-  {#each ranges as range, index}
-    <div class="severity-row">
-      <div
-        class="severity-color"
-        style="background: {colorHelper.color(index + 1, totalLevels)}"
-      ></div>
-      <div class="severity-value-intermediate">
-        {`${range[0]} - ${range[1]}`}
-      </div>
-    </div>
-  {/each}
-{/snippet}
-<fieldset class="border border-gray-300 p-4 rounded-md" title="Gradient specification">
-  <legend class="font-semibold text-base mb-2">Custom Degree-Day Values</legend>
-
+<Frame title="Custom Degree-Day Values">
+  <!-- Two-point gradient -->
   {#if gradientType === 'two-point'}
     <div class="space-y-2">
-      <div class="grid grid-cols-[26px_1fr_1fr] gap-x-4 items-center text-center">
+      <div class="items-center gap-x-4 grid grid-cols-[26px_1fr_1fr] text-center">
         <div
           class="w-[30px] h-[30px]"
           style="background: {colorHelper.color(0, twoPointState.levels)}"
         ></div>
-        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">0</div>
+        <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">0</div>
         <input
           type="number"
-          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+          class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
           title="Start of gradient"
           required
           bind:this={twoPointState.inputElements[0]}
@@ -253,51 +240,52 @@
       </div>
 
       {#each twoPointRanges.values as range, index}
-        <div class="grid grid-cols-[26px_1fr] gap-x-4 items-center text-center">
+        <div class="items-center gap-x-4 grid grid-cols-[26px_1fr] text-center">
           <div
             class="w-[30px] h-[30px]"
             style="background: {colorHelper.color(index + 1, twoPointState.levels)}"
           ></div>
-          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">
+          <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">
             {`${range[0]} - ${range[1]}`}
           </div>
         </div>
       {/each}
 
-      <div class="grid grid-cols-[26px_1fr_1fr] gap-x-4 items-center text-center">
+      <div class="items-center gap-x-4 grid grid-cols-[26px_1fr_1fr] text-center">
         <div
           class="w-[30px] h-[30px]"
           style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"
         ></div>
         <input
           type="number"
-          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+          class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
           title="End of gradient"
           required
           bind:this={twoPointState.inputElements[1]}
           bind:value={twoPointState.inputs[1]}
           oninput={validateInputs}
         />
-        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">
+        <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">
           &gt;&gt;&gt;
         </div>
       </div>
     </div>
   {/if}
 
+  <!-- Three-point gradient -->
   {#if gradientType === 'three-point'}
     <div class="space-y-2">
-      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
-        <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">0</div>
+      <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
+        <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">0</div>
         <div
           class="w-[30px] h-[30px]"
           style="background: {colorHelper.color(0, threePointState.levels)}"
         ></div>
       </div>
-      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+      <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
         <input
           type="number"
-          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+          class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
           title="Start of gradient"
           required
           bind:this={threePointState.inputElements[0]}
@@ -308,8 +296,8 @@
       </div>
 
       {#each threePointRanges.lower as range, index}
-        <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
-          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">
+        <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
+          <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">
             {`${range[0]} - ${range[1]}`}
           </div>
           <div
@@ -319,11 +307,11 @@
         </div>
       {/each}
 
-      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+      <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
         <div class="flex flex-col gap-1">
           <input
             type="number"
-            class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+            class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
             title="Lower middle range"
             required
             bind:this={threePointState.inputElements[1]}
@@ -332,7 +320,7 @@
           />
           <input
             type="number"
-            class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+            class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
             title="Upper middle range"
             required
             bind:this={threePointState.inputElements[2]}
@@ -347,8 +335,8 @@
       </div>
 
       {#each threePointRanges.upper as range, index}
-        <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
-          <div class="flex items-center justify-center text-sm bg-gray-200 shadow w-full">
+        <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
+          <div class="flex justify-center items-center bg-gray-200 shadow w-full text-sm">
             {`${range[0]} - ${range[1]}`}
           </div>
           <div
@@ -358,10 +346,10 @@
         </div>
       {/each}
 
-      <div class="grid grid-cols-[1fr_26px] gap-x-4 items-center text-center">
+      <div class="items-center gap-x-4 grid grid-cols-[1fr_26px] text-center">
         <input
           type="number"
-          class="flex items-center justify-center text-sm bg-white shadow w-full text-center border border-gray-300 px-2 py-1"
+          class="flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center"
           title="End of gradient"
           required
           bind:this={threePointState.inputElements[3]}
@@ -378,26 +366,26 @@
 
   <div class="flex justify-evenly gap-2 mt-4">
     <button
-      class="w-8 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
+      class="disabled:bg-gray-400 bg-gradient-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded w-8 text-white text-sm disabled:cursor-not-allowed"
       onclick={() => changeLevels(1)}
       disabled={buttonsDisabled || currentState.levels >= opts.maxLevels}
     >
       +
     </button>
     <button
-      class="flex-1 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
+      class="flex-1 disabled:bg-gray-400 bg-gradient-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded text-white text-sm disabled:cursor-not-allowed"
       onclick={resetValues}
     >
       Auto
     </button>
     <button
-      class="flex-1 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
+      class="flex-1 disabled:bg-gray-400 bg-gradient-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded text-white text-sm disabled:cursor-not-allowed"
       onclick={resetAll}
     >
       Reset
     </button>
     <button
-      class="w-8 bg-gradient-to-b from-[#249dde] to-[#1c87c9] border border-gray-500 text-white text-sm py-2 rounded shadow-inner hover:from-[#1c87c9] hover:to-[#176da8] disabled:bg-gray-400 disabled:cursor-not-allowed"
+      class="disabled:bg-gray-400 bg-gradient-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded w-8 text-white text-sm disabled:cursor-not-allowed"
       onclick={() => changeLevels(-1)}
       disabled={buttonsDisabled || currentState.levels <= opts.minLevels}
     >
@@ -406,8 +394,8 @@
   </div>
 
   {#if gradientValidationMessage}
-    <div class="mt-2 text-sm italic text-red-600 text-center">
+    <div class="mt-2 text-red-600 text-sm text-center italic">
       {gradientValidationMessage}
     </div>
   {/if}
-</fieldset>
+</Frame>

@@ -14,6 +14,7 @@
     dev,
     baseURL,
   } from '@store';
+  import Frame from '@components/common/Frame.svelte';
 
   const { initialModel } = $props<{
     initialModel?: string;
@@ -87,13 +88,8 @@
   });
 </script>
 
-<fieldset
-  id="model-selection"
-  class="w-full border border-gray-300 p-6 rounded-xl mb-6 max-w-2xl mx-auto shadow-sm"
->
-  <legend class="font-semibold text-xl mb-4">Model Selection</legend>
-
-  <label for="crop-select" class="block mb-2 text-base font-medium">Crop/Host</label>
+<Frame title="Model Selection">
+  <label for="crop-select" class="block mb-2 font-medium text-base">Crop/Host</label>
   <select
     onchange={getPestsForCrop}
     bind:value={selectedCropValue}
@@ -101,14 +97,14 @@
     name="crop-select"
     data-testid="crop-select"
     title="Select crop"
-    class="w-full px-4 py-3 border border-gray-300 rounded-md bg-white text-base mb-6 cursor-pointer shadow"
+    class="bg-white shadow mb-6 px-4 py-3 border border-gray-300 rounded-md w-full text-base cursor-pointer"
   >
     {#each crops as { id, name }}
       <option value={id}>{name}</option>
     {/each}
   </select>
 
-  <label for="pest-select" class="block mb-2 text-base font-medium">{pestName}</label>
+  <label for="pest-select" class="block mb-2 font-medium text-base">{pestName}</label>
   <div class="flex items-center gap-4">
     <select
       onchange={setPestValue}
@@ -117,7 +113,7 @@
       data-testid="pest-select"
       title="Select model"
       value={$pestId}
-      class="flex-1 px-4 py-3 border border-gray-300 rounded-md bg-white text-base cursor-pointer shadow"
+      class="flex-1 bg-white shadow px-4 py-3 border border-gray-300 rounded-md text-base cursor-pointer"
     >
       {#each pestsForCrop as { id, name }}
         <option value={id}>{name}</option>
@@ -130,11 +126,11 @@
         onclick={() => (showModal = true)}
         class="text-gray-500 hover:text-black transition"
       >
-        <FontAwesomeIcon icon={faCircleQuestion} class="text-lg -ml-1" />
+        <FontAwesomeIcon icon={faCircleQuestion} class="-ml-1 text-lg" />
       </button>
     {/if}
   </div>
-</fieldset>
+</Frame>
 
 {#if showModal}
   <Modal
@@ -143,10 +139,10 @@
     }}
     name={$selectedPest.name}
   >
-    <div class="overflow-hidden break-words mb-4">
+    <div class="mb-4 overflow-hidden break-words">
       {#if $selectedPest.photo}
         <img
-          class="float-left mr-4 mt-2 mb-2 rounded-md w-[150px]"
+          class="float-left mt-2 mr-4 mb-2 rounded-md w-[150px]"
           src="{baseURL}/images/pests/{$selectedPest.photo}"
           alt="pest icon"
         />

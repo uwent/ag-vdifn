@@ -8,8 +8,8 @@
   import LoadStatus from '@components/common/LoadStatus.svelte';
   import CustomGradient from './CustomGradient.svelte';
   import CustomPanelParams from './CustomPanelParams.svelte';
-  import Button from '../common/Button.svelte';
   import Loading from '../common/Loading.svelte';
+  import SubmitButton from '@components/common/SubmitButton.svelte';
   import {
     customOverlaySubmitted,
     endDate,
@@ -25,6 +25,7 @@
     mapExtent,
     mapRange,
   } from '@store';
+  import Frame from '@components/common/Frame.svelte';
 
   const { data } = $props<{ data: any }>();
   const thisPanel = 'custom';
@@ -93,22 +94,21 @@
   data-testid="custom-panel"
   role="region"
   aria-label="Custom degree-day parameters"
-  class="max-w-2xl mx-auto"
+  class="mx-auto max-w-2xl"
 >
   <!-- Model Params -->
-  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
-    <legend class="text-lg font-semibold mb-2">Model Parameters</legend>
+  <Frame title="Model Parameters">
     <div class="flex flex-col gap-4">
       <DatePicker />
       <CustomModelSelection />
       <TminMaxDisplay />
-      <Button
+      <SubmitButton
         title="Submit parameters. Data load may take several seconds."
         disabled={$overlayLoading}
         click={submit}
       />
     </div>
-  </fieldset>
+  </Frame>
 
   <!-- Loading or Results -->
   {#if $overlayLoading}
@@ -117,21 +117,20 @@
     <LoadStatus loaded={$customPanelState.loaded} />
 
     {#if $customOverlaySubmitted}
-      <fieldset class="border border-gray-300 p-4 rounded-lg mb-6">
-        <legend class="text-lg font-semibold mb-2">Current Overlay Parameters</legend>
+      <Frame title="Current Overlay Parameters">
         <div class="flex flex-col gap-4">
           <CustomPanelParams />
           <CustomGradientType />
           <CustomGradient />
 
           {#if $mapRange}
-            <div class="text-sm italic text-center mt-2" title="Map range">
+            <div class="mt-2 text-sm text-center italic" title="Map range">
               Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) /
                 10} degree days
             </div>
           {/if}
         </div>
-      </fieldset>
+      </Frame>
     {/if}
   {/if}
 </div>
