@@ -67,7 +67,9 @@
 </script>
 
 <!-- Mobile Header -->
-<header class="sm:hidden fixed top-0 left-0 w-full h-12 bg-green-700 text-white flex justify-between items-center px-4 z-[60] shadow">
+<header
+  class="sm:hidden fixed top-0 left-0 w-full h-12 bg-green-700 text-white flex justify-between items-center px-4 z-[60] shadow"
+>
   <div class="text-lg font-bold">VDIFN</div>
   <button onclick={() => (sidebarOpen = !sidebarOpen)} aria-label="Toggle menu">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 20 20">
