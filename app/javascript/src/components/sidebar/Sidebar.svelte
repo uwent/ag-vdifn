@@ -1,18 +1,34 @@
 <script lang="ts">
+  import { sidebarOpen } from '@store';
   import { format } from 'date-fns';
-  import type { Snippet } from 'svelte';
-
-  let expanded = $state(true);
+  import type { Snippet} from 'svelte';
+  import {onMount } from 'svelte';
   let { children } = $props<{ children: Snippet }>();
+  let isMobile = $state(window.innerWidth < 640);
+  onMount(() => {
+  const handler = () => {
+    isMobile = window.innerWidth < 640;
+  };
+  window.addEventListener('resize', handler);
+  return () => window.removeEventListener('resize', handler);
+});
+
 </script>
+
+
 
 <div
   id="sidebar"
-  aria-expanded={expanded}
-  class={`fixed md:static z-50 flex flex-col bg-white/95 transition-all duration-300 ${
-    expanded ? 'top-0' : 'top-full md:top-0'
-  } w-full md:w-[350px] h-[calc(100%-50px)] md:h-full overflow-y-auto`}
+  aria-expanded={$sidebarOpen}
+  style={isMobile
+    ? `transform: ${$sidebarOpen ? 'translateX(0)' : 'translateX(-100%)'}; transition: transform 0.3s ease;`
+    : ''}
+  class="fixed top-0 left-0 z-50 bg-white w-4/5 max-w-[350px] h-screen overflow-y-auto sm:static sm:w-[350px] sm:h-full sm:transform-none
+  pt-12 sm:pt-0"
 >
+
+
+
   <!-- HEADER -->
   <header class="flex flex-col items-center px-0 pb-2 w-full text-center">
     <div class="flex justify-center items-center mt-2 mb-1">
@@ -58,8 +74,8 @@
     </h1>
   </header>
 
-  <!-- CONTENT -->
-  <div class="flex-1">
+  <!-- SLOT IN INTERFACE OR OTHER CHILDREN -->
+  <div class="flex-1 p-2 overflow-y-auto">
     {@render children()}
   </div>
 
@@ -76,13 +92,11 @@
       Copyright &copy;{format(new Date(), 'yyyy')} University of Wisconsin-Madison
     </div>
   </footer>
-
-  <!-- TOGGLE BUTTON -->
-  <button
-    onclick={() => (expanded = !expanded)}
-    title={expanded ? 'Hide controls' : 'Show controls'}
-    aria-label={expanded ? 'Hide controls' : 'Show controls'}
-    class="md:hidden bottom-0 fixed bg-white bg-no-repeat bg-center border-gray-300 border-t w-full h-[50px]"
-    style={`background-image: url('/images/${expanded ? 'close' : 'open'}.svg')`}
-  ></button>
 </div>
+  <!-- FOR MOBILE, CLICKAWAY OVERLAY -->
+  {#if $sidebarOpen}
+   <div
+    class="sm:hidden fixed inset-0 bg-black/40 z-40"
+    on:click={() => sidebarOpen.set(false)}
+   />
+   {/if}

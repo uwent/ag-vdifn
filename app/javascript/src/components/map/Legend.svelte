@@ -12,13 +12,6 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     background: #fff;
 
-    &[aria-expanded='true'] {
-      // background: rgba(240, 240, 240);
-      padding: 0;
-      height: 25px;
-      width: 25px;
-    }
-
     @media #{vars.$medium-up} {
       display: none;
     }
@@ -40,36 +33,8 @@
     // @media #{vars.$medium-up} {
     //   bottom: 10px;
     // }
-
-    &[aria-expanded='true'] {
-      visibility: visible;
-      @media #{vars.$medium-up} {
-        visibility: visible;
-        position: absolute;
-      }
-    }
-
-    &[aria-expanded='false'] {
-      visibility: hidden;
-
-      @media #{vars.$medium-up} {
-        visibility: visible;
-        position: absolute;
-        // bottom: 30px;
-      }
-    }
   }
 
-  fieldset {
-    background: rgba(234, 234, 234, 0.4);
-    padding: 10px;
-    margin: 0px;
-
-    p {
-      margin: 0;
-      font-size: 12px;
-    }
-  }
 
   .legend {
     display: flex;
@@ -126,7 +91,7 @@
 
   const db = new DatabaseClient();
 
-  let expanded = $state(true);
+  
   let showModal = $state(false);
   let diseaseLegend = $state<LegendData | null>();
   let insectLegend = $state<LegendData | null>();
@@ -233,7 +198,7 @@
 {/if}
 
 {#if showLegend}
-  <div id="legend" class="legend" aria-expanded={expanded}>
+  <div id="legend" class="legend" >
     {#if currentLegend?.legend}
       <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
         <div class="legend-values">
@@ -252,7 +217,4 @@
       </Frame>
     {/if}
   </div>
-  <button id="legend-expand-button" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>
-    {expanded ? '✖' : 'Show Legend'}
-  </button>
 {/if}

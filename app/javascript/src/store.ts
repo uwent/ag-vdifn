@@ -133,3 +133,6 @@ export const selectedDDModel = writable<DegreeDayModel>();
 export const customPanelParams = writable<CustomPanelParams>();
 export const twoPointGradientState = writable<GradientState>();
 export const threePointGradientState = writable<GradientState>();
+
+// Sidebar state
+export const sidebarOpen = writable<boolean>(false); 

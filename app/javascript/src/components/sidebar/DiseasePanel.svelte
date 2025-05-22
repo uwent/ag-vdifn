@@ -4,7 +4,7 @@
   import ModelSelection from './ModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import DatePicker from './DatePicker.svelte';
-  import SubmitButton from '../common/SubmitButton.svelte';
+  import Button from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import {
     overlayLoading,
@@ -24,7 +24,6 @@
   } from '@store';
   import LoadStatus from '@components/common/LoadStatus.svelte';
   import type { PanelType, MapExtent } from '@types';
-  import Frame from '@components/common/Frame.svelte';
 
   const thisPanel: PanelType = 'disease';
 
@@ -126,14 +125,15 @@
 <div data-testid="disease-panel" class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
 
-  <Frame title="Model Parameters">
+  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
+    <legend class="text-base font-semibold">Model parameters</legend>
     <div class="flex flex-col gap-2">
       <DatePicker />
       <TminMaxDisplay />
     </div>
-  </Frame>
+  </fieldset>
 
-  <SubmitButton
+  <Button
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"
     disabled={$overlayLoading}
