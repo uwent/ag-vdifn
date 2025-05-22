@@ -71,7 +71,8 @@
       }
     } else {
       modelId = getPestId(defaultModel) || pestsForCrop[0].id;
-      if (dev) console.log(`Model selection >> Loaded default model ${defaultModel} (id: ${modelId})`);
+      if (dev)
+        console.log(`Model selection >> Loaded default model ${defaultModel} (id: ${modelId})`);
     }
   }
 

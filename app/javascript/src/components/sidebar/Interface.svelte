@@ -5,6 +5,7 @@
   import InsectPanel from './InsectPanel.svelte';
   import CustomPanel from './CustomPanel.svelte';
   import Help from '../common/Help.svelte';
+  import Frame from '../common/Frame.svelte';
   import Loading from '../common/Loading.svelte';
   import Modal from '../common/Modal.svelte';
   import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
@@ -20,6 +21,7 @@
   let panel = $state<PanelType>(defaults.panel);
   let extent = $state<MapExtentOption>(defaults.extent);
   let showHelp = $state(false);
+  let sidebarOpen = false;
 
   let opts = $state({
     model: '',
@@ -64,38 +66,51 @@
   });
 </script>
 
-{#if showHelp}
-  <Modal
-    close={() => {
-      showHelp = false;
-    }}
-    name="How to use VDIFN"
-    maxWidth="40em"
-  >
-    <Help />
-  </Modal>
-{/if}
+<!-- Mobile Header -->
+<header class="sm:hidden fixed top-0 left-0 w-full h-12 bg-green-700 text-white flex justify-between items-center px-4 z-[60] shadow">
+  <div class="text-lg font-bold">VDIFN</div>
+  <button onclick={() => (sidebarOpen = !sidebarOpen)} aria-label="Toggle menu">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+      <path d="M3 6h14M3 10h14M3 14h14" />
+    </svg>
+  </button>
+</header>
 
-<div class="w-full">
-  <div class="mx-[12px] overflow-y-auto">
-    <!-- MODEL TYPE -->
-    <fieldset class="mx-auto p-4 border border-gray-300 rounded-lg w-full max-w-2xl">
-      <legend class="flex gap-2 mb-2 font-semibold text-2xl">
-        <div>Model Type</div>
-        <div>
-          <button
-            type="button"
-            class="flex justify-center items-center rounded-md w-5 text-gray-500 text-lg cursor-pointer"
-            title="How to use VDIFN"
-            onclick={() => (showHelp = true)}
-          >
-            <FontAwesomeIcon icon={faCircleQuestion} />
-          </button>
-        </div>
-      </legend>
+<!-- Sidebar -->
+<div
+  id="sidebar"
+  aria-expanded={sidebarOpen}
+  class={`fixed sm:static top-12 sm:top-0 left-0 z-50 bg-white transition-transform duration-300 transform sm:transform-none sm:translate-x-0 ${
+    sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+  } w-4/5 sm:w-[350px] h-screen sm:h-full overflow-y-auto shadow-lg`}
+>
+  <div class="mx-[12px] overflow-y-auto pt-2">
+    {#if showHelp}
+      <Modal
+        close={() => {
+          showHelp = false;
+        }}
+        name="How to use VDIFN"
+        maxWidth="40em"
+      >
+        <Help />
+      </Modal>
+    {/if}
+
+    <Frame legend="Model Type">
+      <button
+        slot="legend-end"
+        type="button"
+        class="flex justify-center items-center rounded-md w-5 text-gray-500 text-lg cursor-pointer"
+        title="How to use VDIFN"
+        onclick={() => (showHelp = true)}
+      >
+        <FontAwesomeIcon icon={faCircleQuestion} />
+      </button>
+
       <div class="grid grid-cols-3 gap-2 auto-rows-fr">
         {#each ['disease', 'insect', 'custom'] as type}
-        <div class="w-full">
+          <div class="w-full">
             <input
               type="radio"
               name="interface"
@@ -106,22 +121,18 @@
               class="absolute opacity-0 w-0"
             />
             <label
-            for={type}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-2xl px-6 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-              ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-          >
-          
-          
+              for={type}
+              class={`w-full h-full min-h-[2rem] flex items-center justify-center text-2xl px-6 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+                ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            >
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </label>
           </div>
         {/each}
       </div>
-    </fieldset>
+    </Frame>
 
-    <!-- DATA RANGE -->
-    <fieldset class="mx-auto mb-6 p-3 border border-gray-300 rounded-lg max-w-2xl">
-      <legend class="mb-2 font-semibold text-lg">Data Range</legend>
+    <Frame legend="Data Range">
       <div class="flex justify-evenly gap-1">
         {#each ['wisconsin', 'midwest'] as region}
           <div class="relative w-32">
@@ -135,19 +146,17 @@
               class="absolute opacity-0 w-0"
             />
             <label
-            for={region}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-lg px-5 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-              ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-          >
-          
+              for={region}
+              class={`w-full h-full min-h-[2rem] flex items-center justify-center text-lg px-5 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
+                ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            >
               {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
             </label>
           </div>
         {/each}
       </div>
-    </fieldset>
+    </Frame>
 
-    <!-- PANEL -->
     {#if panelDataReady}
       {#if panel === 'disease'}
         <DiseasePanel
@@ -169,3 +178,8 @@
     {/if}
   </div>
 </div>
+
+<!-- Background overlay -->
+{#if sidebarOpen}
+  <div class="fixed inset-0 bg-black/40 z-40 sm:hidden" onclick={() => (sidebarOpen = false)} />
+{/if}
