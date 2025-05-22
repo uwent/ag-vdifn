@@ -17,13 +17,6 @@
   });
 </script>
 
-<div class="lds-ring" title="Loading" data-testid="loading">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-</div>
-
-<div class="text-center italic text-sm mt-2">
+<div class="mt-2 text-sm text-center italic">
   Fetching data: {time.toFixed(1)} seconds
 </div>

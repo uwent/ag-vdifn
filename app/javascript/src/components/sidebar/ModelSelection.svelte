@@ -1,5 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
+  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
   import Modal from '../common/Modal.svelte';
   import type { CropWithPests, PanelType, Pest } from '@types';
@@ -12,6 +14,7 @@
     dev,
     baseURL,
   } from '@store';
+  import Frame from '@components/common/Frame.svelte';
 
   const { initialModel } = $props<{
     initialModel?: string;
@@ -34,23 +37,17 @@
 
   function getPestsForCrop(event: Event) {
     const cropId = parseInt((event.target as HTMLSelectElement).value);
-    const cropWithPests = crops.find((crop) => {
-      return crop.id === cropId;
-    });
+    const cropWithPests = crops.find((crop) => crop.id === cropId);
     if (cropWithPests) {
       pestsForCrop = cropWithPests.pests;
-      // pestId.update((_) => pestsForCrop[0].id);
       $pestId = pestsForCrop[0].id;
       $selectedPest = pestsForCrop[0];
     }
   }
 
   function getCurrentPest(pestId: number | null) {
-    const pest = pestsForCrop.find((pest) => {
-      return pest.id === pestId;
-    });
-    if (pest) return pest;
-    return crops[0].pests[0] || ({} as Pest);
+    const pest = pestsForCrop.find((pest) => pest.id === pestId);
+    return pest ?? crops[0].pests[0] ?? ({} as Pest);
   }
 
   function setPestValue(event: Event) {
@@ -60,9 +57,7 @@
   }
 
   function getPestId(alias: string) {
-    const pest = pestsForCrop.find((pest) => {
-      return pest.local_name === alias;
-    });
+    const pest = pestsForCrop.find((pest) => pest.local_name === alias);
     return pest ? pest.id : null;
   }
 
@@ -93,13 +88,8 @@
   });
 </script>
 
-<fieldset
-  id="model-selection"
-  class="w-full border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto"
->
-  <legend class="font-semibold text-lg mb-2">Model Selection</legend>
-
-  <label for="crop-select" class="block mb-1 text-sm font-medium">Crop/Host</label>
+<Frame title="Model Selection">
+  <label for="crop-select" class="block mb-2 font-medium text-base">Crop/Host</label>
   <select
     onchange={getPestsForCrop}
     bind:value={selectedCropValue}
@@ -107,15 +97,15 @@
     name="crop-select"
     data-testid="crop-select"
     title="Select crop"
-    class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-sm mb-4 cursor-pointer shadow-sm"
+    class="bg-white shadow mb-6 px-4 py-3 border border-gray-300 rounded-md w-full text-base cursor-pointer"
   >
     {#each crops as { id, name }}
       <option value={id}>{name}</option>
     {/each}
   </select>
 
-  <label for="pest-select" class="block mb-1 text-sm font-medium">{pestName}</label>
-  <div class="flex items-center gap-3">
+  <label for="pest-select" class="block mb-2 font-medium text-base">{pestName}</label>
+  <div class="flex items-center gap-4">
     <select
       onchange={setPestValue}
       id="pest-select"
@@ -123,7 +113,7 @@
       data-testid="pest-select"
       title="Select model"
       value={$pestId}
-      class="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm cursor-pointer shadow-sm"
+      class="flex-1 bg-white shadow px-4 py-3 border border-gray-300 rounded-md text-base cursor-pointer"
     >
       {#each pestsForCrop as { id, name }}
         <option value={id}>{name}</option>
@@ -134,13 +124,13 @@
       <button
         title="Show model information"
         onclick={() => (showModal = true)}
-        class="px-3 py-2 border border-gray-300 rounded-md bg-gray-100 hover:bg-gray-200 transition text-sm"
+        class="text-gray-500 hover:text-black transition"
       >
-        ?
+        <FontAwesomeIcon icon={faCircleQuestion} class="-ml-1 text-lg" />
       </button>
     {/if}
   </div>
-</fieldset>
+</Frame>
 
 {#if showModal}
   <Modal
@@ -149,10 +139,10 @@
     }}
     name={$selectedPest.name}
   >
-    <div class="overflow-hidden break-words mb-4">
+    <div class="mb-4 overflow-hidden break-words">
       {#if $selectedPest.photo}
         <img
-          class="float-left mr-4 mt-2 mb-2 rounded-md w-[150px]"
+          class="float-left mt-2 mr-4 mb-2 rounded-md w-[150px]"
           src="{baseURL}/images/pests/{$selectedPest.photo}"
           alt="pest icon"
         />
@@ -161,9 +151,9 @@
       {#if $selectedPest.link}
         <div class="mt-2">
           <b>More information:</b>
-          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline"
-            >{$selectedPest.link}</a
-          >
+          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">
+            {$selectedPest.link}
+          </a>
         </div>
       {/if}
     </div>

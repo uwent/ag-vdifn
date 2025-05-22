@@ -1,12 +1,11 @@
 <script lang="ts">
+  import Frame from '@components/common/Frame.svelte';
   import { customPanelState } from '@store';
 </script>
 
 {#if $customPanelState.params}
-  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
-    <legend class="text-lg font-semibold mb-2">Submitted Values</legend>
-
-    <div class="grid grid-cols-2 gap-y-2 text-sm pl-0 pr-[19%]" title="submitted-params">
+  <Frame title="Submitted Values">
+    <div class="gap-y-2 grid grid-cols-2 pr-[19%] pl-0 text-sm" title="submitted-params">
       <div class="font-medium text-gray-700">Start Date:</div>
       <div>{$customPanelState.params.start_date}</div>
 
@@ -22,5 +21,5 @@
       <div class="font-medium text-gray-700">Units:</div>
       <div>{$customPanelState.params.in_f ? 'Fahrenheit' : 'Celsius'}</div>
     </div>
-  </fieldset>
+  </Frame>
 {/if}

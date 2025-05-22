@@ -4,7 +4,7 @@
   import ModelSelection from './ModelSelection.svelte';
   import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
-  import Button from '../common/Button.svelte';
+  import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
   import {
@@ -129,15 +129,15 @@
 
 <div data-testid="insect-panel">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
-    <legend class="text-base font-semibold">Model parameters</legend>
+  <fieldset class="mx-auto mb-6 p-4 border border-gray-300 rounded-lg max-w-2xl">
+    <legend class="font-semibold text-base">Model parameters</legend>
     <div class="flex flex-col gap-4">
       <DatePicker />
       <TminMaxDisplay />
     </div>
   </fieldset>
 
-  <Button
+  <SubmitButton
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}
     click={submit}

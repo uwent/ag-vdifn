@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import Button from '@components/common/Button.svelte';
+import Button from '@components/common/SubmitButton.svelte';
 
 describe('Button', () => {
   it('renders with default text', async () => {

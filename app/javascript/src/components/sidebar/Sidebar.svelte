@@ -1,6 +1,9 @@
 <script lang="ts">
   import { format } from 'date-fns';
-  let expanded = true;
+  import type { Snippet } from 'svelte';
+
+  let expanded = $state(true);
+  let { children } = $props<{ children: Snippet }>();
 </script>
 
 <div
@@ -11,13 +14,13 @@
   } w-full md:w-[350px] h-[calc(100%-50px)] md:h-full overflow-y-auto`}
 >
   <!-- HEADER -->
-  <header class="flex flex-col items-center w-full px-0 pb-2 text-center">
+  <header class="flex flex-col items-center px-0 pb-2 w-full text-center">
     <div class="flex justify-center items-center mt-2 mb-1">
       <a
         id="uw-madison"
         title="AgWeather Home"
         aria-label="AgWeather Home"
-        class="logo bg-center bg-contain bg-no-repeat inline-block w-11 h-11 mx-1 rounded border border-white hover:border-gray-400"
+        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
         href="https://agweather.cals.wisc.edu"
         target="_blank"
         style="background-image: url('/images/uw-madison.png')"
@@ -26,7 +29,7 @@
         id="plantpath-logo"
         title="UW-Madison Plant Pathology"
         aria-label="UW-Madison Plant Pathology"
-        class="logo bg-center bg-contain bg-no-repeat inline-block w-11 h-11 mx-1 rounded border border-white hover:border-gray-400"
+        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
         href="https://vegpath.plantpath.wisc.edu/"
         target="_blank"
         style="background-image: url('/images/plantpath-logo.png')"
@@ -35,7 +38,7 @@
         id="vegento-logo"
         title="UW-Madison Vegetable Entomology"
         aria-label="UW-Madison Vegetable Entomology"
-        class="logo bg-center bg-contain bg-no-repeat inline-block w-11 h-11 mx-1 rounded border border-white hover:border-gray-400"
+        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
         href="https://vegento.russell.wisc.edu/"
         target="_blank"
         style="background-image: url('/images/vegento-logo.png')"
@@ -57,15 +60,15 @@
 
   <!-- CONTENT -->
   <div class="flex-1">
-    <slot />
+    {@render children()}
   </div>
 
   <!-- FOOTER -->
-  <footer class="mt-6 mb-2 text-center text-sm text-gray-500">
+  <footer class="mt-6 mb-2 text-gray-500 text-sm text-center">
     <div>
       <a
         href="mailto:agweather@cals.wisc.edu"
-        class="hover:text-blue-500 text-current no-underline"
+        class="text-current hover:text-blue-500 no-underline"
       >
         Contact Us
       </a>
@@ -79,7 +82,7 @@
     onclick={() => (expanded = !expanded)}
     title={expanded ? 'Hide controls' : 'Show controls'}
     aria-label={expanded ? 'Hide controls' : 'Show controls'}
-    class="md:hidden fixed bottom-0 w-full h-[50px] bg-white border-t border-gray-300 bg-center bg-no-repeat"
+    class="md:hidden bottom-0 fixed bg-white bg-no-repeat bg-center border-gray-300 border-t w-full h-[50px]"
     style={`background-image: url('/images/${expanded ? 'close' : 'open'}.svg')`}
   ></button>
 </div>
