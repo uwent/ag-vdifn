@@ -18,7 +18,7 @@ export default class OverlayHelper {
   max?: number;
   severityParams?: SeverityParams;
 
-  constructor(googleWrapper: GoogleWrapper, map) {
+  constructor(googleWrapper: GoogleWrapper, map: google.maps.Map) {
     this.googleWrapper = googleWrapper;
     this.rectangles = [];
     this.map = map;
@@ -110,7 +110,7 @@ export default class OverlayHelper {
       this.closeInfoWindow();
     });
     this.rectangles.forEach((rectangle) => {
-      rectangle.addListener('click', async (event) => {
+      rectangle.addListener('click', async (event: google.maps.MapMouseEvent) => {
         this.closeInfoWindow();
 
         this.infoWindow = this.googleWrapper.createInfoWindow({
@@ -132,6 +132,8 @@ export default class OverlayHelper {
               });
             }
           });
+
+          if (!event.latLng) return; // Type guard for latLng
 
           const newContent = await this.fetchPointDetails(
             event.latLng.lat(),

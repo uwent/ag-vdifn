@@ -1,56 +1,7 @@
-<style lang="scss">
-  .pest-container {
-    display: flex;
-  }
-
-  button {
-    margin-left: 10px;
-    border: 1px solid #d0d0d0;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  select {
-    padding: 5px 8px;
-    text-indent: 0.01px;
-    width: 99%;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 0;
-    border: 1px solid #d0d0d0;
-    cursor: pointer;
-    appearance: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
-  label {
-    padding: 0;
-  }
-
-  .clear {
-    clear: both;
-    height: 0.5em;
-  }
-
-  .modal__pest-info {
-    overflow: hidden;
-    word-break: break-word;
-    margin-bottom: 1em;
-  }
-
-  .modal__pest-icon {
-    width: 150px;
-    float: left;
-    margin-top: 1em;
-    margin-right: 10px;
-    border-radius: 3px;
-  }
-</style>
-
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
+  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 
   import Modal from '../common/Modal.svelte';
   import type { CropWithPests, PanelType, Pest } from '@types';
@@ -63,6 +14,7 @@
     dev,
     baseURL,
   } from '@store';
+  import Frame from '@components/common/Frame.svelte';
 
   const { initialModel } = $props<{
     initialModel?: string;
@@ -83,37 +35,29 @@
   let modelId = $state<number | null>(null);
   let showModal = $state(false);
 
-  function getPestsForCrop(event) {
-    const cropId = parseInt(event.target.value);
-    const cropWithPests = crops.find((crop) => {
-      return crop.id === cropId;
-    });
+  function getPestsForCrop(event: Event) {
+    const cropId = parseInt((event.target as HTMLSelectElement).value);
+    const cropWithPests = crops.find((crop) => crop.id === cropId);
     if (cropWithPests) {
       pestsForCrop = cropWithPests.pests;
-      // pestId.update((_) => pestsForCrop[0].id);
       $pestId = pestsForCrop[0].id;
       $selectedPest = pestsForCrop[0];
     }
   }
 
-  function getCurrentPest(pestId) {
-    const pest = pestsForCrop.find((pest) => {
-      return pest.id === pestId;
-    });
-    if (pest) return pest;
-    return crops[0].pests[0] || ({} as Pest);
+  function getCurrentPest(pestId: number | null) {
+    const pest = pestsForCrop.find((pest) => pest.id === pestId);
+    return pest ?? crops[0].pests[0] ?? ({} as Pest);
   }
 
-  function setPestValue(event) {
-    const value = parseInt(event.target.value);
+  function setPestValue(event: Event) {
+    const value = parseInt((event.target as HTMLSelectElement).value);
     $pestId = value;
     $selectedPest = getCurrentPest(value);
   }
 
   function getPestId(alias: string) {
-    const pest = pestsForCrop.find((pest) => {
-      return pest.local_name === alias;
-    });
+    const pest = pestsForCrop.find((pest) => pest.local_name === alias);
     return pest ? pest.id : null;
   }
 
@@ -144,9 +88,8 @@
   });
 </script>
 
-<fieldset id="model-selection">
-  <legend>Model Selection</legend>
-  <label for="crop-select">Crop/Host</label>
+<Frame title="Model Selection">
+  <label for="crop-select" class="block mb-2 font-medium text-base">Crop/Host</label>
   <select
     onchange={getPestsForCrop}
     bind:value={selectedCropValue}
@@ -154,32 +97,40 @@
     name="crop-select"
     data-testid="crop-select"
     title="Select crop"
+    class="bg-white shadow mb-6 px-4 py-3 border border-gray-300 rounded-md w-full text-base cursor-pointer"
   >
     {#each crops as { id, name }}
       <option value={id}>{name}</option>
     {/each}
   </select>
-  <div class="clear"></div>
-  <label for="pest-select">{pestName}</label>
-  <div class="pest-container">
+
+  <label for="pest-select" class="block mb-2 font-medium text-base">{pestName}</label>
+  <div class="flex items-center gap-4">
     <select
       onchange={setPestValue}
-      class="pest-select"
       id="pest-select"
       name="pest-select"
       data-testid="pest-select"
       title="Select model"
       value={$pestId}
+      class="flex-1 bg-white shadow px-4 py-3 border border-gray-300 rounded-md text-base cursor-pointer"
     >
       {#each pestsForCrop as { id, name }}
         <option value={id}>{name}</option>
       {/each}
     </select>
+
     {#if crops.length > 0}
-      <button title="Show model information" onclick={() => (showModal = true)}>?</button>
+      <button
+        title="Show model information"
+        onclick={() => (showModal = true)}
+        class="text-gray-500 hover:text-black transition"
+      >
+        <FontAwesomeIcon icon={faCircleQuestion} class="-ml-1 text-lg" />
+      </button>
     {/if}
   </div>
-</fieldset>
+</Frame>
 
 {#if showModal}
   <Modal
@@ -188,18 +139,22 @@
     }}
     name={$selectedPest.name}
   >
-    <div class="modal__pest-info">
+    <div class="mb-4 overflow-hidden break-words">
       {#if $selectedPest.photo}
         <img
-          class="modal__pest-icon"
+          class="float-left mt-2 mr-4 mb-2 rounded-md w-[150px]"
           src="{baseURL}/images/pests/{$selectedPest.photo}"
           alt="pest icon"
         />
       {/if}
       {@html $selectedPest.info}
       {#if $selectedPest.link}
-        <b>More information:</b>
-        <a href={$selectedPest.link} target="_blank">{$selectedPest.link}</a>
+        <div class="mt-2">
+          <b>More information:</b>
+          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">
+            {$selectedPest.link}
+          </a>
+        </div>
       {/if}
     </div>
   </Modal>

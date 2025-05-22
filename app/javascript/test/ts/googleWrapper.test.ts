@@ -29,8 +29,8 @@ const createMockGoogleMaps = () => {
 };
 
 describe('GoogleWrapper', () => {
-  let mockGoogle;
-  let googleWrapper;
+  let mockGoogle: ReturnType<typeof createMockGoogleMaps>;
+  let googleWrapper: GoogleWrapper;
 
   beforeEach(() => {
     mockGoogle = createMockGoogleMaps();

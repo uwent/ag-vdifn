@@ -1,4 +1,4 @@
-<style lang="scss">
+<style>
   .spectral-2 {
     background: linear-gradient(
       90deg,
@@ -38,86 +38,16 @@
       rgb(71, 0, 82) 100%
     );
   }
-
-  /* Customize the label (the container) */
-  .gradient-type-field {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 12px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-
-  /* Hide the browser's default radio button */
-  .container input {
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  /* Create a custom radio button */
-  .gradient {
-    top: 0;
-    left: 0;
-    height: 36px;
-    width: 110px;
-    border-radius: 6px;
-  }
-
-  .container input ~ .gradient {
-    border: medium solid white;
-  }
-
-  /* On mouse-over, add a grey background color */
-  .container:hover input ~ .gradient {
-    border-color: #ccc;
-  }
-
-  /* When the radio button is checked, add a blue background */
-  .container input:checked ~ .gradient {
-    background-color: #2196f3;
-    border: medium solid rgba(52, 65, 187, 0.947);
-  }
-
-  /* Create the indicator (the dot/circle - hidden when not checked) */
-  .gradient:after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
-
-  /* Show the indicator (dot/circle) when checked */
-  .container input:checked ~ .gradient:after {
-    display: block;
-  }
-
-  /* Style the indicator (dot/circle) */
-  .container .gradient:after {
-    top: 9px;
-    left: 9px;
-    width: 8px;
-    height: 8px;
-  }
 </style>
 
 <script lang="ts">
+  import Frame from '../common/Frame.svelte';
   import { customPanelState, selectedPalette } from '@store';
 </script>
 
-<div data-testid="gradient-opts">
-  <fieldset class="gradient-type-field">
-    <legend>Gradient Type</legend>
-    <label for="gradient-2-point" class="container">
+<Frame title="Gradient Type">
+  <div class="gap-2 grid grid-cols-2">
+    <label for="gradient-2-point" class="flex cursor-pointer select-none">
       <input
         id="gradient-2-point"
         type="radio"
@@ -125,10 +55,18 @@
         title="gradient-2-point"
         bind:group={$customPanelState.selectedGradient}
         value="two-point"
+        class="hidden"
       />
-      <span class="gradient {$selectedPalette}-2"></span>
+      <span
+        class={`h-9 w-full rounded-md border-2 ${
+          $customPanelState.selectedGradient === 'two-point'
+            ? 'border-blue-700'
+            : 'border-white hover:border-gray-300'
+        } ${$selectedPalette}-2`}
+      ></span>
     </label>
-    <label for="gradient-3-point" class="container">
+
+    <label for="gradient-3-point" class="flex p-0 cursor-pointer select-none">
       <input
         id="gradient-3-point"
         type="radio"
@@ -136,8 +74,15 @@
         title="gradient-3-point"
         bind:group={$customPanelState.selectedGradient}
         value="three-point"
+        class="hidden"
       />
-      <span class="gradient {$selectedPalette}-3"></span>
+      <span
+        class={`h-9 w-full rounded-md border-2 ${
+          $customPanelState.selectedGradient === 'three-point'
+            ? 'border-blue-700'
+            : 'border-white hover:border-gray-300'
+        } ${$selectedPalette}-3`}
+      ></span>
     </label>
-  </fieldset>
-</div>
+  </div>
+</Frame>

@@ -1,32 +1,25 @@
-<style lang="scss">
-  .submitted-params {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: flex-start;
-    padding: 0px 19% 0px;
-    padding-left: 0px;
-    font-size: small;
-  }
-</style>
-
 <script lang="ts">
+  import Frame from '@components/common/Frame.svelte';
   import { customPanelState } from '@store';
 </script>
 
 {#if $customPanelState.params}
-  <fieldset>
-    <legend>Submitted Values</legend>
-    <div class="submitted-params" title="submitted-params">
-      <div>Start Date:</div>
+  <Frame title="Submitted Values">
+    <div class="gap-y-2 grid grid-cols-2 pr-[19%] pl-0 text-sm" title="submitted-params">
+      <div class="font-medium text-gray-700">Start Date:</div>
       <div>{$customPanelState.params.start_date}</div>
-      <div>End Date:</div>
+
+      <div class="font-medium text-gray-700">End Date:</div>
       <div>{$customPanelState.params.end_date}</div>
-      <div>Tmin:</div>
+
+      <div class="font-medium text-gray-700">Tmin:</div>
       <div>{$customPanelState.params.t_min}</div>
-      <div>Tmax:</div>
+
+      <div class="font-medium text-gray-700">Tmax:</div>
       <div>{$customPanelState.params.t_max || 'None'}</div>
-      <div>Units:</div>
-      <div>{$customPanelState.params.in_f ? 'Fahrenheit' : 'Celcius'}</div>
+
+      <div class="font-medium text-gray-700">Units:</div>
+      <div>{$customPanelState.params.in_f ? 'Fahrenheit' : 'Celsius'}</div>
     </div>
-  </fieldset>
+  </Frame>
 {/if}

@@ -4,7 +4,7 @@
   import ModelSelection from './ModelSelection.svelte';
   import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
-  import Button from '../common/Button.svelte';
+  import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
   import {
@@ -23,7 +23,7 @@
     startDate,
     tMinTmax,
   } from '@store';
-  import type { PanelType } from '@types';
+  import type { PanelType, MapExtent } from '@types';
 
   let {
     data = undefined,
@@ -73,7 +73,7 @@
     $insectPanelState = {
       ...$insectPanelState,
       selectedPest: pest,
-      mapExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
       loaded: true,
     };
     $insectPanelParams = params;
@@ -99,6 +99,12 @@
     document.title = title;
   }
 
+  function getExtentKey(extent: MapExtent): string | undefined {
+    return Object.entries(extents).find(
+      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
+    )?.[0];
+  }
+
   onMount(() => {
     $selectedPanel = thisPanel;
     const params = $insectPanelParams;
@@ -111,7 +117,9 @@
   });
 
   $effect(() => {
-    if ($insectPanelState.loaded && $insectPanelState.mapExtent !== $mapExtent) submit();
+    if ($insectPanelState.loaded && getExtentKey($insectPanelState.mapExtent) !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -121,12 +129,15 @@
 
 <div data-testid="insect-panel">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
+  <fieldset class="mx-auto mb-6 p-4 border border-gray-300 rounded-lg max-w-2xl">
+    <legend class="font-semibold text-base">Model parameters</legend>
+    <div class="flex flex-col gap-4">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
   </fieldset>
-  <Button
+
+  <SubmitButton
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}
     click={submit}

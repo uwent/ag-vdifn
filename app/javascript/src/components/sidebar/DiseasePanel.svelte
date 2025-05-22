@@ -1,17 +1,10 @@
-<style lang="scss">
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-</style>
-
 <script lang="ts">
   import { format, parseISO, subWeeks } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import DatePicker from './DatePicker.svelte';
-  import Button from '../common/Button.svelte';
+  import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import {
     overlayLoading,
@@ -30,7 +23,8 @@
     selectedPest,
   } from '@store';
   import LoadStatus from '@components/common/LoadStatus.svelte';
-  import type { PanelType } from '@types';
+  import type { PanelType, MapExtent } from '@types';
+  import Frame from '@components/common/Frame.svelte';
 
   const thisPanel: PanelType = 'disease';
 
@@ -48,7 +42,6 @@
     let pest = $diseasePanelState.selectedPest;
     $selectedDisease = pest;
     initialModelName = pest.local_name;
-    // submitOnLoad = false;
   } else {
     if ($selectedDisease) initialModelName = $selectedDisease.local_name;
   }
@@ -78,7 +71,7 @@
     $diseasePanelState = {
       ...$diseasePanelState,
       selectedPest: pest,
-      mapExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
       loaded: true,
     };
     $diseasePanelParams = params;
@@ -102,6 +95,11 @@
     window.history.replaceState({}, '', url);
     document.title = title;
   }
+  function getExtentKey(extent: MapExtent): string | undefined {
+    return Object.entries(extents).find(
+      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
+    )?.[0];
+  }
 
   onMount(() => {
     $selectedPanel = thisPanel;
@@ -114,9 +112,10 @@
     if (submitOnLoad) submit();
   });
 
-  // Reactive statements
   $effect(() => {
-    if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
+    if ($diseasePanelState.loaded && getExtentKey($diseasePanelState.mapExtent) !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -124,19 +123,23 @@
   });
 </script>
 
-<div data-testid="disease-panel">
+<div data-testid="disease-panel" class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
-  </fieldset>
-  <Button
+
+  <Frame title="Model Parameters">
+    <div class="flex flex-col gap-2">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
+  </Frame>
+
+  <SubmitButton
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"
     disabled={$overlayLoading}
     click={submit}
   />
+
   {#if $overlayLoading}
     <Loading />
   {:else}

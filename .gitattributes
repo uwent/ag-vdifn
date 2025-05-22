@@ -1,1 +1,7 @@
-* text=auto
+# Set default behavior to LF
+* text=auto eol=lf
+
+# Denote binary files explicitly
+*.png binary
+*.jpg binary
+# (add other binary file types your project uses)

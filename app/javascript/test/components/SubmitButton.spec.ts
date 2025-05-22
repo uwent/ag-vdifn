@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import { describe, it, expect, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import Button from '@components/common/Button.svelte';
+import Button from '@components/common/SubmitButton.svelte';
 
 describe('Button', () => {
   it('renders with default text', async () => {
@@ -19,13 +19,6 @@ describe('Button', () => {
     });
     const button = screen.getByRole('button');
     expect(button).toHaveTextContent('Save');
-  });
-
-  it('applies button-primary class', async () => {
-    render(Button, { props: { click: vi.fn() } });
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('button');
-    expect(button).toHaveClass('button-primary');
   });
 
   it('sets title attribute', async () => {

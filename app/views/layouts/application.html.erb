@@ -6,13 +6,19 @@
   <link rel="icon" type="image/png" href="<%= Rails.configuration.relative_url_root %>/favicon.png">
   <%= csrf_meta_tags %>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV["VDIFN_GTAG"] %>"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '<%= ENV["VDIFN_GTAG"] %>');
-  </script>
+  <% if ENV["VDIFN_GTAG"].present? %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV["VDIFN_GTAG"] %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= ENV["VDIFN_GTAG"] %>');
+    </script>
+  <% else %>
+    <script>
+      function gtag(){};
+    </script>
+  <% end %>
   <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
   <%= vite_client_tag %>
   <%= vite_typescript_tag 'application' %>
