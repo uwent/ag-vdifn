@@ -21,7 +21,7 @@
   let panel = $state<PanelType>(defaults.panel);
   let extent = $state<MapExtentOption>(defaults.extent);
   let showHelp = $state(false);
-  let sidebarOpen = $state(false);
+  let sidebarOpen = $state(true);
 
   let opts = $state({
     model: '',
