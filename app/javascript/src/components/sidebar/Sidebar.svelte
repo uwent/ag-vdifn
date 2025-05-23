@@ -23,11 +23,8 @@
   style={isMobile
     ? `transform: ${$sidebarOpen ? 'translateX(0)' : 'translateX(-100%)'}; transition: transform 0.3s ease;`
     : ''}
-  class="fixed top-0 left-0 z-50 bg-white w-4/5 max-w-[350px] h-screen overflow-y-auto sm:static sm:w-[350px] sm:h-full sm:transform-none
-  pt-12 sm:pt-0"
+  class="fixed top-[50px] sm:top-0 left-0 z-50 bg-white w-4/5 max-w-[350px] h-[calc(100vh-50px)] sm:h-full overflow-y-auto sm:static sm:w-[350px] sm:transform-none"
 >
-
-
 
   <!-- HEADER -->
   <header class="flex flex-col items-center px-0 pb-2 w-full text-center">

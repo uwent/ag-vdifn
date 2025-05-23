@@ -79,7 +79,8 @@
   </Modal>
 {/if}
 
-<Frame title="Model Type">
+
+<Frame title="Model Type" >
   {#snippet titleContent()}
     <button
       type="button"

@@ -1,21 +1,24 @@
-<style lang="scss">
+
+  <style lang="scss">
   @use '../../scss/variables.scss' as vars;
 
   #legend-expand-button {
-    position: fixed;
-    right: 10px;
-    bottom: 60px;
-    z-index: 100;
-    padding: 5px 10px;
-    border: 1px solid grey;
-    border-radius: 3px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    background: #fff;
+  position: fixed;
+  right: 12px;
+  bottom: 65px; 
+  z-index: 100;
+  padding: 4px 6px; // smaller padding
+  border: 1px solid grey;
+  border-radius: 9999px; // fully rounded (pill style)
+  font-size: 0.8rem; // smaller text
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  background: lightgreen;
 
-    @media #{vars.$medium-up} {
-      display: none;
-    }
+  @media #{vars.$medium-up} {
+    display: none;
   }
+}
+
 
   #legend {
     position: absolute;
@@ -75,6 +78,9 @@
   import DatabaseClient from '@ts/databaseClient';
   import Modal from '@components/common/Modal.svelte';
   import Frame from '@components/common/Frame.svelte';
+  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+
   import {
     selectedPanel,
     diseasePanelParams,
@@ -108,6 +114,9 @@
   });
   let showLegend = $derived(!!currentLegend);
   let colorHelper = $derived(new ColorHelper($selectedPalette));
+
+  let showLegendUI = $state(true);
+
 
   function invokeTippy() {
     tippy('.tippy-tooltip', {
@@ -197,7 +206,16 @@
   </Modal>
 {/if}
 
-{#if showLegend}
+<button
+  id="legend-expand-button"
+  aria-expanded={showLegendUI}
+  on:click={() => (showLegendUI = !showLegendUI)}
+>
+  {showLegendUI ? '×' : '+'}
+</button>
+
+
+{#if showLegend && showLegendUI}
   <div id="legend" class="legend" >
     {#if currentLegend?.legend}
       <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
