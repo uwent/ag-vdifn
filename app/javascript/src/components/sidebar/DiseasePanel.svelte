@@ -6,6 +6,7 @@
   import DatePicker from './DatePicker.svelte';
   import Button from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
+  import Frame from '../common/Frame.svelte'
   import {
     overlayLoading,
     pestId,
@@ -125,14 +126,13 @@
 <div data-testid="disease-panel" class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
 
-  <fieldset class="border border-gray-300 p-4 rounded-lg mb-6 max-w-2xl mx-auto">
-    <legend class="text-base font-semibold">Model parameters</legend>
+  <Frame title="Model Parameters">
     <div class="flex flex-col gap-2">
       <DatePicker />
       <TminMaxDisplay />
     </div>
-  </fieldset>
-
+  </Frame>
+  
   <Button
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"

@@ -6,11 +6,11 @@
   position: fixed;
   right: 12px;
   bottom: 65px; 
-  z-index: 100;
-  padding: 4px 6px; // smaller padding
+  z-index: 12;
+  padding: 4px 6px; 
   border: 1px solid grey;
-  border-radius: 9999px; // fully rounded (pill style)
-  font-size: 0.8rem; // smaller text
+  border-radius: 9999px; 
+  font-size: 0.8rem; 
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
   background: lightgreen;
 

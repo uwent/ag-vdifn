@@ -91,6 +91,8 @@ export const selectedPanel = writable<PanelType>(defaults.panel);
 export const diseasePanelParams = writable<SeverityParams>();
 export const insectPanelParams = writable<SeverityParams>();
 
+export const showLegend = writable(false);
+
 export const diseasePanelState = writable({
   loaded: false,
 } as PestPanelState);

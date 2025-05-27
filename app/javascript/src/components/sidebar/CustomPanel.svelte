@@ -94,9 +94,9 @@
   data-testid="custom-panel"
   role="region"
   aria-label="Custom degree-day parameters"
-  class="mx-auto max-w-2xl"
+  class="flex flex-col gap-2 mx-auto max-w-2xl"
 >
-  <!-- Model Params -->
+
   <Frame title="Model Parameters">
     <div class="flex flex-col gap-4">
       <DatePicker />
@@ -124,7 +124,7 @@
           <CustomGradient />
 
           {#if $mapRange}
-            <div class="mt-2 text-sm text-center italic" title="Map range">
+            <div class="mt-1 text-sm text-center italic" title="Map range">
               Map range: {Math.round($mapRange.min * 10) / 10} - {Math.round($mapRange.max * 10) /
                 10} degree days
             </div>

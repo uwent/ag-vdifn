@@ -128,7 +128,7 @@
   });
 </script>
 
-<div data-testid="insect-panel">
+<div data-testid="insect-panel" class="flex flex-col gap-2">
   <ModelSelection initialModel={initialModelName} />
   <Frame title="Model Parameters">
     <div class="flex flex-col gap-2">
