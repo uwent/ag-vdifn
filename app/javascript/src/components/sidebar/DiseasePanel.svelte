@@ -6,7 +6,7 @@
   import DatePicker from './DatePicker.svelte';
   import Button from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
-  import Frame from '../common/Frame.svelte'
+  import Frame from '../common/Frame.svelte';
   import {
     overlayLoading,
     pestId,
@@ -132,7 +132,7 @@
       <TminMaxDisplay />
     </div>
   </Frame>
-  
+
   <Button
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"

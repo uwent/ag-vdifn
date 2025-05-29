@@ -18,6 +18,7 @@ import type {
   MapExtents,
   MapExtentOption,
 } from '@types';
+import type { Snippet } from 'svelte';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
 export const dev = env === 'development';
@@ -137,4 +138,7 @@ export const twoPointGradientState = writable<GradientState>();
 export const threePointGradientState = writable<GradientState>();
 
 // Sidebar state
-export const sidebarOpen = writable<boolean>(false); 
+export const sidebarOpen = writable<boolean>(false);
+
+// Modal
+export const modal = writable<{ name: string; content: Snippet; maxWidth?: string } | null>(null);

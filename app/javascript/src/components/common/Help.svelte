@@ -2,15 +2,15 @@
   import { baseURL } from '@store';
 </script>
 
-<div class="text-sm text-gray-800 leading-relaxed space-y-4 p-4 overflow-x-hidden">
-  <div class="flex flex-wrap md:flex-nowrap gap-4 items-start">
+<div class="space-y-4 p-4 overflow-x-hidden text-gray-800 text-sm leading-relaxed">
+  <div class="flex flex-wrap md:flex-nowrap items-start gap-4">
     <img
       src="{baseURL}/favicon.png"
-      class="w-[150px] mt-4 rounded shadow shrink-0"
+      class="shadow mt-4 rounded w-[150px] shrink-0"
       alt="VDIFN logo"
     />
     <div class="flex-1 min-w-0">
-      <h4 class="text-lg font-semibold mb-2">Introduction</h4>
+      <h4 class="mb-2 font-semibold text-lg">Introduction</h4>
       <p>
         One of the pillars of modern integrated pest and disease management strategies is the use of
         local climatic and environmental variables to model disease and insect pest risk for a
@@ -41,7 +41,7 @@
   </p>
 
   <!-- Navigation -->
-  <h4 class="text-lg font-semibold mt-6">Navigation and usage</h4>
+  <h4 class="mt-6 font-semibold text-lg">Navigation and usage</h4>
   <p>
     On the left you will find the navigation and settings pane, the map and pest severity display in
     the center, and a legend on the lower right You can switch between disease, insect, and custom
@@ -62,7 +62,7 @@
   </p>
 
   <!-- Disease -->
-  <h4 class="text-lg font-semibold mt-6">Disease models</h4>
+  <h4 class="mt-6 font-semibold text-lg">Disease models</h4>
   <p>
     Disease models generally rely on the accumulation of daily Disease Severity Values, DSVs, or
     sometimes Disease Infection Values, DIVs. These are calculated from weather data, including
@@ -73,7 +73,7 @@
   </p>
 
   <!-- Insect -->
-  <h4 class="text-lg font-semibold mt-6">Insect models</h4>
+  <h4 class="mt-6 font-semibold text-lg">Insect models</h4>
   <p>
     The insect models are based on annual accumulations of daily degree-day values. Most use Jan 1
     as a biofix (start date), but several use other, midyear dates or scouting events (such as the
@@ -85,7 +85,7 @@
   </p>
 
   <!-- Custom -->
-  <h4 class="text-lg font-semibold mt-6">Custom models</h4>
+  <h4 class="mt-6 font-semibold text-lg">Custom models</h4>
   <p>
     The <b>custom tab</b> is a little more complicated to use, but essentially it allows you to generate
     and visualize any degree-day model of your choosing(or select the parameters of one of the insect

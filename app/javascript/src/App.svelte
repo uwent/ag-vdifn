@@ -27,35 +27,33 @@
   import Interface from '@components/sidebar/Interface.svelte';
   import Legend from '@components/map/Legend.svelte';
   import Status from '~/src/components/map/Status.svelte';
+  import Modal from '@components/common/Modal.svelte';
   import ColorSelector from '@components/map/ColorSelector.svelte';
-  import { sidebarOpen } from '@store';
+  import { sidebarOpen, modal } from '@store';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
   import { faBars, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-  import { Drawer, CloseButton } from 'flowbite-svelte';
-
-  let sidebarHidden = true;
-  let legendHidden = true;
+  // import { Drawer, CloseButton } from 'flowbite-svelte';
 </script>
 
 <header
-  class="sm:hidden top-0 left-0 z-[60] fixed flex justify-between items-center bg-green-700 shadow px-4 w-full h-12 text-white"
+  class="sm:hidden top-0 left-0 z-[60] fixed flex justify-left items-center gap-2 bg-green-700 shadow px-4 w-full h-12 text-white"
 >
-  <div class="font-bold text-lg ">VDIFN</div>
-  <button
-    on:click={() => sidebarOpen.set(!$sidebarOpen)}
-    aria-label="Toggle menu"
-  >
-    <FontAwesomeIcon icon={$sidebarOpen ? faArrowLeft : faBars} class="w-6 h-6" />
+  <button onclick={() => ($sidebarOpen = !$sidebarOpen)} aria-label="Toggle menu">
+    {#if $sidebarOpen}
+      <FontAwesomeIcon icon={faArrowLeft} class="w-6 h-6" />
+    {:else}
+      <FontAwesomeIcon icon={faBars} class="w-6 h-6" />
+    {/if}
   </button>
+  <div class="font-bold text-lg">VDIFN</div>
 </header>
 
-
 <main class="main">
-    <Sidebar>
-      <Interface />
-    </Sidebar>
+  <Sidebar>
+    <Interface />
+  </Sidebar>
 
-  <div class="map pt-12 sm:pt-0">
+  <div class="pt-12 sm:pt-0 map">
     <Map>
       <SeverityOverlay />
       <Status />
@@ -64,3 +62,9 @@
     </Map>
   </div>
 </main>
+
+{#if $modal}
+  <Modal name={$modal.name} maxWidth={$modal?.maxWidth}>
+    {@render $modal.content()}
+  </Modal>
+{/if}

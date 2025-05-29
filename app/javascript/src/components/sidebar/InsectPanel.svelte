@@ -7,7 +7,7 @@
   import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
-  import Frame from '../common/Frame.svelte'
+  import Frame from '../common/Frame.svelte';
   import {
     defaults,
     endDate,

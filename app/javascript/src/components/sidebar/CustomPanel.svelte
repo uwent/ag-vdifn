@@ -96,7 +96,6 @@
   aria-label="Custom degree-day parameters"
   class="flex flex-col gap-2 mx-auto max-w-2xl"
 >
-
   <Frame title="Model Parameters">
     <div class="flex flex-col gap-4">
       <DatePicker />

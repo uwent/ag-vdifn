@@ -7,8 +7,7 @@
   import Help from '../common/Help.svelte';
   import Frame from '../common/Frame.svelte';
   import Loading from '../common/Loading.svelte';
-  import Modal from '../common/Modal.svelte';
-  import { overlayLoading, mapExtent, defaults, selectedPanel } from '@store';
+  import { overlayLoading, mapExtent, defaults, selectedPanel, modal } from '@store';
   import type { CropWithPests, DegreeDayModel, PanelType, MapExtentOption } from '@types';
   import { PANEL_TYPES } from '@types';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
@@ -20,8 +19,6 @@
   let panelDataReady = $state(false);
   let panel = $state<PanelType>(defaults.panel);
   let extent = $state<MapExtentOption>(defaults.extent);
-  let showHelp = $state(false);
-  let sidebarOpen = $state(true);
 
   let opts = $state({
     model: '',
@@ -66,27 +63,22 @@
   });
 </script>
 
-<!-- Help Modal -->
-{#if showHelp}
-  <Modal
-    close={() => {
-      showHelp = false;
-    }}
-    name="How to use VDIFN"
-    maxWidth="40em"
-  >
-    <Help />
-  </Modal>
-{/if}
+{#snippet helpContent()}
+  <Help />
+{/snippet}
 
-
-<Frame title="Model Type" >
+<Frame title="Model Type">
   {#snippet titleContent()}
     <button
       type="button"
       class="flex justify-center items-center rounded-md w-5 text-gray-500 text-lg cursor-pointer"
       title="How to use VDIFN"
-      on:click={() => (showHelp = true)}
+      onclick={() =>
+        modal.set({
+          name: 'How to use VDIFN',
+          content: helpContent,
+          maxWidth: '40rem',
+        })}
     >
       <FontAwesomeIcon icon={faCircleQuestion} />
     </button>
@@ -143,7 +135,11 @@
 
 {#if panelDataReady}
   {#if panel === 'disease'}
-    <DiseasePanel data={diseasePanelData} initialModelName={opts.model} submitOnLoad={opts.submit} />
+    <DiseasePanel
+      data={diseasePanelData}
+      initialModelName={opts.model}
+      submitOnLoad={opts.submit}
+    />
   {:else if panel === 'insect'}
     <InsectPanel data={insectPanelData} initialModelName={opts.model} submitOnLoad={opts.submit} />
   {:else if panel === 'custom'}

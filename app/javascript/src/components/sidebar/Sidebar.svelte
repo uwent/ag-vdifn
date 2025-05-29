@@ -1,21 +1,18 @@
 <script lang="ts">
   import { sidebarOpen } from '@store';
   import { format } from 'date-fns';
-  import type { Snippet} from 'svelte';
-  import {onMount } from 'svelte';
+  import type { Snippet } from 'svelte';
+  import { onMount } from 'svelte';
   let { children } = $props<{ children: Snippet }>();
   let isMobile = $state(window.innerWidth < 640);
   onMount(() => {
-  const handler = () => {
-    isMobile = window.innerWidth < 640;
-  };
-  window.addEventListener('resize', handler);
-  return () => window.removeEventListener('resize', handler);
-});
-
+    const handler = () => {
+      isMobile = window.innerWidth < 640;
+    };
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  });
 </script>
-
-
 
 <div
   id="sidebar"
@@ -23,39 +20,34 @@
   style={isMobile
     ? `transform: ${$sidebarOpen ? 'translateX(0)' : 'translateX(-100%)'}; transition: transform 0.3s ease;`
     : ''}
-  class="fixed top-[50px] sm:top-0 left-0 z-50 bg-white w-4/5 max-w-[350px] h-[calc(100vh-50px)] sm:h-full overflow-y-auto sm:static sm:w-[350px] sm:transform-none"
+  class="top-[50px] sm:top-0 left-0 z-50 sm:static fixed bg-white w-4/5 sm:w-[350px] max-w-[350px] h-[calc(100vh-50px)] sm:h-full overflow-y-auto sm:transform-none"
 >
-
   <!-- HEADER -->
+
+  {#snippet logo(title: string, imgUrl: string, href: string)}
+    <a
+      class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
+      style="background-image: url('{imgUrl}')"
+      {title}
+      aria-label={title}
+      {href}
+      target="_blank"
+    ></a>
+  {/snippet}
+
   <header class="flex flex-col items-center px-0 pb-2 w-full text-center">
     <div class="flex justify-center items-center mt-2 mb-1">
-      <a
-        id="uw-madison"
-        title="AgWeather Home"
-        aria-label="AgWeather Home"
-        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
-        href="https://agweather.cals.wisc.edu"
-        target="_blank"
-        style="background-image: url('/images/uw-madison.png')"
-      ></a>
-      <a
-        id="plantpath-logo"
-        title="UW-Madison Plant Pathology"
-        aria-label="UW-Madison Plant Pathology"
-        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
-        href="https://vegpath.plantpath.wisc.edu/"
-        target="_blank"
-        style="background-image: url('/images/plantpath-logo.png')"
-      ></a>
-      <a
-        id="vegento-logo"
-        title="UW-Madison Vegetable Entomology"
-        aria-label="UW-Madison Vegetable Entomology"
-        class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
-        href="https://vegento.russell.wisc.edu/"
-        target="_blank"
-        style="background-image: url('/images/vegento-logo.png')"
-      ></a>
+      {@render logo('AgWeather Home', '/images/uw-madison.png', 'https://agweather.cals.wisc.edu')}
+      {@render logo(
+        'UW-Madison Plant Pathology',
+        '/images/plantpath-logo.png',
+        'https://vegpath.plantpath.wisc.edu/',
+      )}
+      {@render logo(
+        'UW-Madison Vegetable Entomology',
+        '/images/vegento-logo.png',
+        'https://vegento.russell.wisc.edu/',
+      )}
     </div>
 
     <h1>
@@ -90,10 +82,19 @@
     </div>
   </footer>
 </div>
-  <!-- FOR MOBILE, CLICKAWAY OVERLAY -->
-  {#if $sidebarOpen}
-   <div
-    class="sm:hidden fixed inset-0 bg-black/40 z-40"
-    on:click={() => sidebarOpen.set(false)}
-   />
-   {/if}
+<!-- FOR MOBILE, CLICKAWAY OVERLAY -->
+{#if $sidebarOpen}
+  <div
+    class="sm:hidden z-40 fixed inset-0 bg-black/40"
+    role="button"
+    tabindex="0"
+    aria-label="Close sidebar"
+    onclick={() => sidebarOpen.set(false)}
+    onkeydown={(e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        sidebarOpen.set(false);
+      }
+    }}
+  ></div>
+{/if}

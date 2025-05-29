@@ -1,56 +1,57 @@
 <style lang="scss">
   @use '../../scss/variables.scss' as vars;
-  
 
   #legend-expand-button {
-  position: fixed;
-  right: 12px;
-  bottom: 65px; 
-  z-index: 12;
-  padding: 4px 6px; 
-  border: 1px solid grey;
-  border-radius: 9999px; 
-  font-size: 0.8rem; 
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-  background: lightgreen;
-
-  @media #{vars.$medium-up} {
-    display: none; // ✅ hide on desktop
-  }
-}
-
-
-#legend {
-  background: #fff;
-  padding: 10px;
-
-  @media (min-width: 768px) {
-    position: static;
-    transform: none !important;
-    box-shadow: none;
-    border: none;
-    max-height: none;
-  }
-
-  @media (max-width: 767px) {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-height: 33vh;
-    overflow-y: auto;
-    border-top: 1px solid #ccc;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-    background: white;
-    transition: transform 0.3s ease;
-    transform: translateY(100%);
+    right: 12px;
+    bottom: 65px;
+    z-index: 12;
+    padding: 4px 6px;
+    border: 1px solid grey;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    background: lightgreen;
 
-    &.visible {
-      transform: translateY(0%);
+    @media #{vars.$medium-up} {
+      display: none; // ✅ hide on desktop
     }
   }
-}
 
+  #legend {
+    background: #fff;
+    padding: 10px;
+
+    @media (min-width: 768px) {
+      // position: static;
+      position: absolute;
+      max-width: 200px;
+      bottom: 10px;
+      right: 10px;
+      transform: none !important;
+      box-shadow: none;
+      border: none;
+      max-height: none;
+    }
+
+    @media (max-width: 767px) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-height: 33vh;
+      overflow-y: auto;
+      border-top: 1px solid #ccc;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+      background: white;
+      transition: transform 0.3s ease;
+      transform: translateY(100%);
+
+      &.visible {
+        transform: translateY(0%);
+      }
+    }
+  }
 
   .legend {
     display: flex;
@@ -68,12 +69,11 @@
   }
 
   .legend-value-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px; //the value name is below the color 
-}
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; //the value name is below the color
+  }
 
   .legend-value-color {
     height: 20px;
@@ -91,17 +91,15 @@
   import { onMount } from 'svelte';
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
-  import Modal from '@components/common/Modal.svelte';
   import Frame from '@components/common/Frame.svelte';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
- import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+  import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
   import {
     selectedPanel,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    selectedPest,
     overlayLoading,
     selectedPalette,
   } from '@store';
@@ -112,8 +110,6 @@
 
   const db = new DatabaseClient();
 
-  
-  let showModal = $state(false);
   let diseaseLegend = $state<LegendData | null>();
   let insectLegend = $state<LegendData | null>();
   let customLegend = $state<LegendData | null>();
@@ -219,17 +215,11 @@
   });
 </script>
 
-{#if showModal}
-  <Modal close={() => (showModal = false)} name="Pest Info">
-    {@html $selectedPest.info}
-  </Modal>
-{/if}
-
 {#if !isDesktop}
   <button
     id="legend-expand-button"
     aria-expanded={showLegendUI}
-    on:click={() => (showLegendUI = !showLegendUI)}
+    onclick={() => (showLegendUI = !showLegendUI)}
   >
     <FontAwesomeIcon icon={showLegendUI ? faTimes : faPlus} />
   </button>
