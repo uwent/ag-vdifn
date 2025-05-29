@@ -7,14 +7,6 @@
     display: flex;
   }
 
-  // .sidebar {
-  //   z-index: 999;
-  //   @media #{vars.$medium-up} {
-  //     width: 350px;
-  //     box-shadow: 0 0 10px;
-  //   }
-  // }
-
   .map {
     position: relative;
     width: 100%;
@@ -39,6 +31,10 @@
   import { sidebarOpen } from '@store';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
   import { faBars, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+  import { Drawer, CloseButton } from 'flowbite-svelte';
+
+  let sidebarHidden = true;
+  let legendHidden = true;
 </script>
 
 <header

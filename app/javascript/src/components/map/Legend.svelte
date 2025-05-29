@@ -1,6 +1,6 @@
-
-  <style lang="scss">
+<style lang="scss">
   @use '../../scss/variables.scss' as vars;
+  
 
   #legend-expand-button {
   position: fixed;
@@ -15,28 +15,41 @@
   background: lightgreen;
 
   @media #{vars.$medium-up} {
-    display: none;
+    display: none; // ✅ hide on desktop
   }
 }
 
 
-  #legend {
-    position: absolute;
-    max-width: 200px;
-    bottom: 10px;
-    right: 10px;
-    z-index: 10;
-    background: #fff;
-    // background: rgba(255, 255, 255, 0.95);
-    border-radius: 3px;
-    box-shadow:
-      -4px 0px 10px rgba(0, 0, 0, 0.3),
-      4px 0px 10px rgba(0, 0, 0, 0.3);
+#legend {
+  background: #fff;
+  padding: 10px;
 
-    // @media #{vars.$medium-up} {
-    //   bottom: 10px;
-    // }
+  @media (min-width: 768px) {
+    position: static;
+    transform: none !important;
+    box-shadow: none;
+    border: none;
+    max-height: none;
   }
+
+  @media (max-width: 767px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 33vh;
+    overflow-y: auto;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+
+    &.visible {
+      transform: translateY(0%);
+    }
+  }
+}
 
 
   .legend {
@@ -50,16 +63,17 @@
   .legend-values {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    gap: 15px;
   }
 
   .legend-value-row {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    font-size: small;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px; //the value name is below the color 
+}
+
 
   .legend-value-color {
     height: 20px;
@@ -74,12 +88,13 @@
 </style>
 
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
   import Modal from '@components/common/Modal.svelte';
   import Frame from '@components/common/Frame.svelte';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+ import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
   import {
     selectedPanel,
@@ -117,6 +132,15 @@ import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
   let showLegendUI = $state(true);
 
+  let isDesktop = $state(window.innerWidth >= 768);
+
+  onMount(() => {
+    const handler = () => {
+      isDesktop = window.innerWidth >= 768;
+    };
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  });
 
   function invokeTippy() {
     tippy('.tippy-tooltip', {
@@ -196,43 +220,43 @@ import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 </script>
 
 {#if showModal}
-  <Modal
-    close={() => {
-      showModal = false;
-    }}
-    name="Pest Info"
-  >
+  <Modal close={() => (showModal = false)} name="Pest Info">
     {@html $selectedPest.info}
   </Modal>
 {/if}
 
-<button
-  id="legend-expand-button"
-  aria-expanded={showLegendUI}
-  on:click={() => (showLegendUI = !showLegendUI)}
->
-  {showLegendUI ? '×' : '+'}
-</button>
-
-
-{#if showLegend && showLegendUI}
-  <div id="legend" class="legend" >
-    {#if currentLegend?.legend}
-      <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
-        <div class="legend-values">
-          {#each [...currentLegend.legend].reverse() as entry}
-            <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
-              <div class="legend-value-color" style="background: {entry.color}"></div>
-              <div class="legend-value-text">{entry.name}</div>
-            </div>
-          {/each}
-        </div>
-      </Frame>
-    {/if}
-    {#if currentLegend?.info}
-      <Frame title="More Information">
-        <p class="text-sm">{@html currentLegend.info}</p>
-      </Frame>
-    {/if}
-  </div>
+{#if !isDesktop}
+  <button
+    id="legend-expand-button"
+    aria-expanded={showLegendUI}
+    on:click={() => (showLegendUI = !showLegendUI)}
+  >
+    <FontAwesomeIcon icon={showLegendUI ? faTimes : faPlus} />
+  </button>
 {/if}
+
+<div
+  id="legend"
+  class="legend"
+  class:visible={!isDesktop && showLegendUI}
+  style={isDesktop ? 'transform: translateY(0%)' : ''}
+>
+  {#if currentLegend?.legend}
+    <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
+      <div class="legend-values">
+        {#each [...currentLegend.legend].reverse() as entry}
+          <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
+            <div class="legend-value-color" style="background: {entry.color}"></div>
+            <div class="legend-value-text">{entry.name}</div>
+          </div>
+        {/each}
+      </div>
+    </Frame>
+  {/if}
+
+  {#if currentLegend?.info}
+    <Frame title="More Information">
+      <p class="text-sm">{@html currentLegend.info}</p>
+    </Frame>
+  {/if}
+</div>
