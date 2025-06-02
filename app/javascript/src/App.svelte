@@ -53,7 +53,7 @@
     <Interface />
   </Sidebar>
 
-  <div class="pt-12 sm:pt-0 map">
+  <div class="relative pt-12 sm:pt-0 map">
     <Map>
       <SeverityOverlay />
       <Status />

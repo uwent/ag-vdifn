@@ -4,8 +4,8 @@
   #legend-expand-button {
     position: fixed;
     right: 12px;
-    bottom: 65px;
-    z-index: 12;
+    bottom: 34vh;
+    z-index: 25;
     padding: 4px 6px;
     border: 1px solid grey;
     border-radius: 9999px;
@@ -14,42 +14,40 @@
     background: lightgreen;
 
     @media #{vars.$medium-up} {
-      display: none; // ✅ hide on desktop
+      display: none; // hide on desktop
     }
   }
 
   #legend {
     background: #fff;
     padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-height: 33vh;
+    overflow-y: auto;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+      background: white;
+      transition: transform 0.3s ease;
+      transform: translateY(100%);
+      z-index: 20;
 
-    @media (min-width: 768px) {
-      // position: static;
+      &.visible {
+        transform: translateY(0%);
+      }
+
+    @media (min-width: 768px) { //desktop
       position: absolute;
       max-width: 200px;
+      left: auto;          
+      width: auto;  
       bottom: 10px;
       right: 10px;
       transform: none !important;
       box-shadow: none;
       border: none;
       max-height: none;
-    }
-
-    @media (max-width: 767px) {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      max-height: 33vh;
-      overflow-y: auto;
-      border-top: 1px solid #ccc;
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-      background: white;
-      transition: transform 0.3s ease;
-      transform: translateY(100%);
-
-      &.visible {
-        transform: translateY(0%);
-      }
     }
   }
 
@@ -59,6 +57,7 @@
     gap: 10px;
     padding: 10px;
     padding-top: 5px;
+    
   }
 
   .legend-values {
@@ -66,6 +65,10 @@
     display: flex;
     flex-direction: row;
     gap: 15px;
+
+    @media (min-width: 768px) { //desktop
+    gap:8px
+    }
   }
 
   .legend-value-row {
@@ -73,17 +76,29 @@
     flex-direction: column;
     align-items: center;
     gap: 12px; //the value name is below the color
+
+    @media (min-width: 768px) {
+    gap: 6px; // tighten spacing between color and text
+  }
   }
 
   .legend-value-color {
     height: 20px;
     width: 30px;
     border: 1px solid grey;
+    @media (min-width: 768px) {
+    height: 14px;
+    width: 20px; // smaller color boxes
+  }
   }
 
   .legend-value-text {
     display: flex;
     align-items: center;
+
+    @media (min-width: 768px) {
+    font-size: 0.7rem;
+  }
   }
 </style>
 
@@ -215,15 +230,24 @@
   });
 </script>
 
+
 {#if !isDesktop}
-  <button
-    id="legend-expand-button"
-    aria-expanded={showLegendUI}
-    onclick={() => (showLegendUI = !showLegendUI)}
-  >
-    <FontAwesomeIcon icon={showLegendUI ? faTimes : faPlus} />
-  </button>
+<button
+  id="legend-expand-button"
+  aria-expanded={showLegendUI}
+  onclick={() => (showLegendUI = !showLegendUI)}
+  class="fixed right-4 z-20 sm:hidden p-2 text-xl rounded-full border border-gray-400 shadow bg-green-200 transition-all duration-300 ease-in-out"
+>
+  {#if showLegendUI}
+    <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
+  {:else}
+    <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
+  {/if}
+</button>
+
 {/if}
+
+
 
 <div
   id="legend"

@@ -4,7 +4,7 @@
   .status-container {
     position: fixed;
     left: 10px;
-    top: 10px;
+    top: 60px;
     padding: 5px 10px;
     background: #fff;
     border-radius: 3px;
@@ -13,6 +13,7 @@
 
     @media #{vars.$medium-up} {
       left: 360px;
+      top: 10px;  //for desktop 
     }
   }
 

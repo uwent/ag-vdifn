@@ -1,19 +1,5 @@
 <style lang="scss">
   @use '../../scss/variables.scss' as vars;
-
-  .container {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    z-index: 10;
-  }
-
-  // .flex {
-  //   display: flex;
-  //   flex-direction: column;
-  //   gap: 2px;
-  // }
-
   .label {
     font-size: small;
     color: grey;
@@ -86,7 +72,7 @@
   });
 </script>
 
-<div class="container flex-column w-min">
+<div class="fixed sm:absolute left-4 bottom-[110px] sm:bottom-4 z-5 flex flex-col w-min">
   <div class="label">Color Palette:</div>
   <div class="switch-field">
     <input
