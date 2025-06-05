@@ -28,20 +28,21 @@
     overflow-y: auto;
     border-top: 1px solid #ccc;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-      background: white;
-      transition: transform 0.3s ease;
-      transform: translateY(100%);
-      z-index: 20;
+    background: white;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+    z-index: 20;
 
-      &.visible {
-        transform: translateY(0%);
-      }
+    &.visible {
+      transform: translateY(0%);
+    }
 
-    @media (min-width: 768px) { //desktop
+    @media (min-width: 768px) {
+      //desktop
       position: absolute;
       max-width: 200px;
-      left: auto;          
-      width: auto;  
+      left: auto;
+      width: auto;
       bottom: 10px;
       right: 10px;
       transform: none !important;
@@ -57,7 +58,6 @@
     gap: 10px;
     padding: 10px;
     padding-top: 5px;
-    
   }
 
   .legend-values {
@@ -66,8 +66,9 @@
     flex-direction: row;
     gap: 15px;
 
-    @media (min-width: 768px) { //desktop
-    gap:8px
+    @media (min-width: 768px) {
+      //desktop
+      gap: 8px;
     }
   }
 
@@ -78,8 +79,8 @@
     gap: 12px; //the value name is below the color
 
     @media (min-width: 768px) {
-    gap: 6px; // tighten spacing between color and text
-  }
+      gap: 6px; // tighten spacing between color and text
+    }
   }
 
   .legend-value-color {
@@ -87,9 +88,9 @@
     width: 30px;
     border: 1px solid grey;
     @media (min-width: 768px) {
-    height: 14px;
-    width: 20px; // smaller color boxes
-  }
+      height: 14px;
+      width: 20px; // smaller color boxes
+    }
   }
 
   .legend-value-text {
@@ -97,8 +98,8 @@
     align-items: center;
 
     @media (min-width: 768px) {
-    font-size: 0.7rem;
-  }
+      font-size: 0.7rem;
+    }
   }
 </style>
 
@@ -230,24 +231,20 @@
   });
 </script>
 
-
 {#if !isDesktop}
-<button
-  id="legend-expand-button"
-  aria-expanded={showLegendUI}
-  onclick={() => (showLegendUI = !showLegendUI)}
-  class="fixed right-4 z-20 sm:hidden p-2 text-xl rounded-full border border-gray-400 shadow bg-green-200 transition-all duration-300 ease-in-out"
->
-  {#if showLegendUI}
-    <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
-  {:else}
-    <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
-  {/if}
-</button>
-
+  <button
+    id="legend-expand-button"
+    aria-expanded={showLegendUI}
+    onclick={() => (showLegendUI = !showLegendUI)}
+    class="sm:hidden right-4 z-20 fixed bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl transition-all duration-300 ease-in-out"
+  >
+    {#if showLegendUI}
+      <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
+    {:else}
+      <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
+    {/if}
+  </button>
 {/if}
-
-
 
 <div
   id="legend"
