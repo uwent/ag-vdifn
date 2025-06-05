@@ -1,28 +1,3 @@
-<style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  .status-container {
-    position: fixed;
-    left: 10px;
-    top: 60px;
-    padding: 5px 10px;
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    max-width: 40%;
-
-    @media #{vars.$medium-up} {
-      left: 360px;
-      top: 10px;  //for desktop 
-    }
-  }
-
-  .status {
-    font-weight: bold;
-    font-size: 15px;
-  }
-</style>
-
 <script lang="ts">
   import { insectPanelState, selectedPanel, diseasePanelState, customPanelState } from '@store';
   import type { CustomPanelState, PestPanelState } from '@types';
@@ -35,7 +10,7 @@
 
   function buildCustomStatus(state: CustomPanelState): string {
     if (state.loaded) {
-      const units = state.params.in_f ? 'F' : 'C'; // Fixed bug: second unit was 'F', changed to 'C'
+      const units = state.params.in_f ? 'F' : 'C';
       const tMaxText = state.params.t_max ? `/${state.params.t_max}` : '';
       return `Degree day model: ${state.params.t_min}${tMaxText}°${units}`;
     }
@@ -57,8 +32,10 @@
   });
 </script>
 
-<div class="status-container">
-  <div class="status">
+<div
+  class="top-2.5 left-2.5 absolute bg-white shadow-lg px-2.5 py-1.5 border border-gray-200 rounded max-w-[50]"
+>
+  <div class="font-bold text-[15px]">
     {status()}
   </div>
 </div>

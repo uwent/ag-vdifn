@@ -1,40 +1,29 @@
 <script lang="ts">
-  import { sidebarOpen } from '@store';
   import { format } from 'date-fns';
   import type { Snippet } from 'svelte';
-  import { onMount } from 'svelte';
+  import { sidebarOpen } from '@store';
+
   let { children } = $props<{ children: Snippet }>();
-  let isMobile = $state(window.innerWidth < 640);
-  onMount(() => {
-    const handler = () => {
-      isMobile = window.innerWidth < 640;
-    };
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  });
 </script>
+
+{#snippet logo(title: string, imgUrl: string, href: string)}
+  <a
+    class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
+    style="background-image: url('{imgUrl}')"
+    {title}
+    aria-label={title}
+    {href}
+    target="_blank"
+  ></a>
+{/snippet}
 
 <div
   id="sidebar"
   aria-expanded={$sidebarOpen}
-  style={isMobile
-    ? `transform: ${$sidebarOpen ? 'translateX(0)' : 'translateX(-100%)'}; transition: transform 0.3s ease;`
-    : ''}
-  class="top-[50px] sm:top-0 left-0 z-50 sm:static fixed bg-white w-4/5 sm:w-[350px] max-w-[350px] h-[calc(100vh-50px)] sm:h-full overflow-y-auto sm:transform-none"
+  class={'top-12 sm:top-0 left-0 z-50 sm:static fixed bg-white sm:w-4/5 w-[350px] max-w-[350px] h-full overflow-y-auto sm:transform-none transition-transform sm:transition-none duration-300 ease-in-out transform sm:translate-x-0 ' +
+    ($sidebarOpen ? 'translate-x-0' : '-translate-x-full')}
 >
   <!-- HEADER -->
-
-  {#snippet logo(title: string, imgUrl: string, href: string)}
-    <a
-      class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
-      style="background-image: url('{imgUrl}')"
-      {title}
-      aria-label={title}
-      {href}
-      target="_blank"
-    ></a>
-  {/snippet}
-
   <header class="flex flex-col items-center px-0 pb-2 w-full text-center">
     <div class="flex justify-center items-center mt-2 mb-1">
       {@render logo('AgWeather Home', '/images/uw-madison.png', 'https://agweather.cals.wisc.edu')}
@@ -82,6 +71,7 @@
     </div>
   </footer>
 </div>
+
 <!-- FOR MOBILE, CLICKAWAY OVERLAY -->
 {#if $sidebarOpen}
   <div
