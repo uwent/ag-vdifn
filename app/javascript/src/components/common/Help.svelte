@@ -1,32 +1,37 @@
+<style lang="postcss">
+  @reference "tailwindcss";
+
+  h4 {
+    @apply mb-2 font-semibold text-lg;
+  }
+</style>
+
 <script lang="ts">
   import { baseURL } from '@store';
 </script>
 
-<div class="text-sm text-gray-800 leading-relaxed space-y-4 p-4 overflow-x-hidden">
-  <div class="flex flex-wrap md:flex-nowrap gap-4 items-start">
+<div class="space-y-4 p-4 overflow-x-hidden text-gray-800 text-sm leading-relaxed">
+  <div>
     <img
       src="{baseURL}/favicon.png"
-      class="w-[150px] mt-4 rounded shadow shrink-0"
+      class="float-left mt-2 mr-5 rounded w-[150px] shrink-0"
       alt="VDIFN logo"
     />
-    <div class="flex-1 min-w-0">
-      <h4 class="text-lg font-semibold mb-2">Introduction</h4>
-      <p>
-        One of the pillars of modern integrated pest and disease management strategies is the use of
-        local climatic and environmental variables to model disease and insect pest risk for a
-        particular field or region. Rather than treating for pests on a preset schedule or waiting
-        for symptoms to appear, growers can anticipate the onset of increased pest risk using
-        predictive models developed and tested for specific disease and insect risks to crops. The
-        outcomes of the use of such models would be increased awareness of current and near future
-        pest and disease risk, as well as the reduction in the use of pesticides and increased
-        profits.
-      </p>
-      <p>
-        This website, VDIFN, is a free tool for growers and residents of Wisconsin that currently
-        includes plant disease models, insect growing degree-day models, and a custom degree-day map
-        generator.
-      </p>
-    </div>
+    <h4>Introduction</h4>
+    <p>
+      One of the pillars of modern integrated pest and disease management strategies is the use of
+      local climatic and environmental variables to model disease and insect pest risk for a
+      particular field or region. Rather than treating for pests on a preset schedule or waiting for
+      symptoms to appear, growers can anticipate the onset of increased pest risk using predictive
+      models developed and tested for specific disease and insect risks to crops. The outcomes of
+      the use of such models would be increased awareness of current and near future pest and
+      disease risk, as well as the reduction in the use of pesticides and increased profits.
+    </p>
+    <p>
+      This website, VDIFN, is a free tool for growers and residents of Wisconsin that currently
+      includes plant disease models, insect growing degree-day models, and a custom degree-day map
+      generator.
+    </p>
   </div>
 
   <!-- Weather data -->
@@ -41,16 +46,16 @@
   </p>
 
   <!-- Navigation -->
-  <h4 class="text-lg font-semibold mt-6">Navigation and usage</h4>
+  <h4>Navigation and usage</h4>
   <p>
     On the left you will find the navigation and settings pane, the map and pest severity display in
     the center, and a legend on the lower right You can switch between disease, insect, and custom
-    model modes with the buttons across the top of the left panel. Pick a model using the <b>
-      Model Selection
-    </b>
-    section, and use the <b>question mark </b> box to get more information on the disease or insect.
-    After selecting a model, note that the date range boxes populate with defaults for each model, but
-    can be adjusted if desired.
+    model modes with the buttons across the top of the left panel. Pick a model using the <b
+      >Model Selection</b
+    >
+    section, and use the <b>question mark</b> box to get more information on the disease or insect. After
+    selecting a model, note that the date range boxes populate with defaults for each model, but can
+    be adjusted if desired.
   </p>
   <p>
     Click on an <b>individual grid point</b> to bring up more details for that specific location, including
@@ -62,7 +67,7 @@
   </p>
 
   <!-- Disease -->
-  <h4 class="text-lg font-semibold mt-6">Disease models</h4>
+  <h4>Disease models</h4>
   <p>
     Disease models generally rely on the accumulation of daily Disease Severity Values, DSVs, or
     sometimes Disease Infection Values, DIVs. These are calculated from weather data, including
@@ -73,7 +78,7 @@
   </p>
 
   <!-- Insect -->
-  <h4 class="text-lg font-semibold mt-6">Insect models</h4>
+  <h4>Insect models</h4>
   <p>
     The insect models are based on annual accumulations of daily degree-day values. Most use Jan 1
     as a biofix (start date), but several use other, midyear dates or scouting events (such as the
@@ -85,7 +90,7 @@
   </p>
 
   <!-- Custom -->
-  <h4 class="text-lg font-semibold mt-6">Custom models</h4>
+  <h4>Custom models</h4>
   <p>
     The <b>custom tab</b> is a little more complicated to use, but essentially it allows you to generate
     and visualize any degree-day model of your choosing(or select the parameters of one of the insect

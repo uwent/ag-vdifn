@@ -3,71 +3,52 @@
 
   #legend-expand-button {
     position: fixed;
-    right: 10px;
-    bottom: 60px;
-    z-index: 100;
-    padding: 5px 10px;
+    right: 12px;
+    bottom: 34vh;
+    z-index: 25;
+    padding: 4px 6px;
     border: 1px solid grey;
-    border-radius: 3px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    background: #fff;
-
-    &[aria-expanded='true'] {
-      // background: rgba(240, 240, 240);
-      padding: 0;
-      height: 25px;
-      width: 25px;
-    }
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    background: lightgreen;
 
     @media #{vars.$medium-up} {
-      display: none;
+      display: none; // hide on desktop
     }
   }
 
   #legend {
-    position: absolute;
-    max-width: 200px;
-    bottom: 10px;
-    right: 10px;
-    z-index: 10;
     background: #fff;
-    // background: rgba(255, 255, 255, 0.95);
-    border-radius: 3px;
-    box-shadow:
-      -4px 0px 10px rgba(0, 0, 0, 0.3),
-      4px 0px 10px rgba(0, 0, 0, 0.3);
-
-    // @media #{vars.$medium-up} {
-    //   bottom: 10px;
-    // }
-
-    &[aria-expanded='true'] {
-      visibility: visible;
-      @media #{vars.$medium-up} {
-        visibility: visible;
-        position: absolute;
-      }
-    }
-
-    &[aria-expanded='false'] {
-      visibility: hidden;
-
-      @media #{vars.$medium-up} {
-        visibility: visible;
-        position: absolute;
-        // bottom: 30px;
-      }
-    }
-  }
-
-  fieldset {
-    background: rgba(234, 234, 234, 0.4);
     padding: 10px;
-    margin: 0px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-height: 33vh;
+    overflow-y: auto;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+    z-index: 20;
 
-    p {
-      margin: 0;
-      font-size: 12px;
+    &.visible {
+      transform: translateY(0%);
+    }
+
+    @media (min-width: 768px) {
+      //desktop
+      position: absolute;
+      max-width: 200px;
+      left: auto;
+      width: auto;
+      bottom: 10px;
+      right: 10px;
+      transform: none !important;
+      box-shadow: none;
+      border: none;
+      max-height: none;
     }
   }
 
@@ -82,40 +63,59 @@
   .legend-values {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+      //desktop
+      gap: 8px;
+    }
   }
 
   .legend-value-row {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    font-size: small;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; //the value name is below the color
+
+    @media (min-width: 768px) {
+      gap: 6px; // tighten spacing between color and text
+    }
   }
 
   .legend-value-color {
     height: 20px;
     width: 30px;
     border: 1px solid grey;
+    @media (min-width: 768px) {
+      height: 14px;
+      width: 20px; // smaller color boxes
+    }
   }
 
   .legend-value-text {
     display: flex;
     align-items: center;
+
+    @media (min-width: 768px) {
+      font-size: 0.7rem;
+    }
   }
 </style>
 
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
-  import Modal from '@components/common/Modal.svelte';
   import Frame from '@components/common/Frame.svelte';
+  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+  import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+
   import {
     selectedPanel,
     diseasePanelParams,
     insectPanelParams,
     overlayGradient,
-    selectedPest,
     overlayLoading,
     selectedPalette,
   } from '@store';
@@ -126,8 +126,6 @@
 
   const db = new DatabaseClient();
 
-  let expanded = $state(true);
-  let showModal = $state(false);
   let diseaseLegend = $state<LegendData | null>();
   let insectLegend = $state<LegendData | null>();
   let customLegend = $state<LegendData | null>();
@@ -143,6 +141,18 @@
   });
   let showLegend = $derived(!!currentLegend);
   let colorHelper = $derived(new ColorHelper($selectedPalette));
+
+  let showLegendUI = $state(true);
+
+  let isDesktop = $state(window.innerWidth >= 768);
+
+  onMount(() => {
+    const handler = () => {
+      isDesktop = window.innerWidth >= 768;
+    };
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  });
 
   function invokeTippy() {
     tippy('.tippy-tooltip', {
@@ -221,38 +231,43 @@
   });
 </script>
 
-{#if showModal}
-  <Modal
-    close={() => {
-      showModal = false;
-    }}
-    name="Pest Info"
+{#if !isDesktop}
+  <button
+    id="legend-expand-button"
+    aria-expanded={showLegendUI}
+    onclick={() => (showLegendUI = !showLegendUI)}
+    class="sm:hidden right-4 z-20 fixed bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl transition-all duration-300 ease-in-out"
   >
-    {@html $selectedPest.info}
-  </Modal>
-{/if}
-
-{#if showLegend}
-  <div id="legend" class="legend" aria-expanded={expanded}>
-    {#if currentLegend?.legend}
-      <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
-        <div class="legend-values">
-          {#each [...currentLegend.legend].reverse() as entry}
-            <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
-              <div class="legend-value-color" style="background: {entry.color}"></div>
-              <div class="legend-value-text">{entry.name}</div>
-            </div>
-          {/each}
-        </div>
-      </Frame>
+    {#if showLegendUI}
+      <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
+    {:else}
+      <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
     {/if}
-    {#if currentLegend?.info}
-      <Frame title="More Information">
-        <p class="text-sm">{@html currentLegend.info}</p>
-      </Frame>
-    {/if}
-  </div>
-  <button id="legend-expand-button" aria-expanded={expanded} onclick={() => (expanded = !expanded)}>
-    {expanded ? '✖' : 'Show Legend'}
   </button>
 {/if}
+
+<div
+  id="legend"
+  class="legend"
+  class:visible={!isDesktop && showLegendUI}
+  style={isDesktop ? 'transform: translateY(0%)' : ''}
+>
+  {#if currentLegend?.legend}
+    <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
+      <div class="legend-values">
+        {#each [...currentLegend.legend].reverse() as entry}
+          <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
+            <div class="legend-value-color" style="background: {entry.color}"></div>
+            <div class="legend-value-text">{entry.name}</div>
+          </div>
+        {/each}
+      </div>
+    </Frame>
+  {/if}
+
+  {#if currentLegend?.info}
+    <Frame title="More Information">
+      <p class="text-sm">{@html currentLegend.info}</p>
+    </Frame>
+  {/if}
+</div>

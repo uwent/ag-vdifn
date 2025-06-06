@@ -7,6 +7,7 @@
   import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
+  import Frame from '../common/Frame.svelte';
   import {
     defaults,
     endDate,
@@ -127,15 +128,14 @@
   });
 </script>
 
-<div data-testid="insect-panel">
+<div data-testid="insect-panel" class="flex flex-col gap-2">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset class="mx-auto mb-6 p-4 border border-gray-300 rounded-lg max-w-2xl">
-    <legend class="font-semibold text-base">Model parameters</legend>
-    <div class="flex flex-col gap-4">
+  <Frame title="Model Parameters">
+    <div class="flex flex-col gap-2">
       <DatePicker />
       <TminMaxDisplay />
     </div>
-  </fieldset>
+  </Frame>
 
   <SubmitButton
     title="Submit parameters. Data load may take several seconds."

@@ -1,20 +1,23 @@
 <script lang="ts">
   import { onDestroy, type Snippet } from 'svelte';
   import Button from './SubmitButton.svelte';
+  import { modal } from '@store';
 
   let {
-    close = () => {},
     name = 'Information',
-    maxWidth = '32em',
+    maxWidth = '32rem',
     children,
   } = $props<{
-    close: () => void;
     name?: string;
     maxWidth?: string;
     children?: Snippet;
   }>();
 
-  let modal = $state<HTMLElement | null>(null);
+  const close = () => {
+    modal.set(null);
+  };
+
+  let modalElement = $state<HTMLElement | null>(null);
 
   const handle_keydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -24,7 +27,7 @@
 
     if (e.key === 'Tab') {
       // trap focus
-      const nodes = modal?.querySelectorAll('*');
+      const nodes = modalElement?.querySelectorAll('*');
       if (!nodes) return;
 
       const tabbable = Array.from(nodes).filter(
@@ -55,7 +58,7 @@
 
 <!-- Modal backdrop -->
 <div
-  class="z-40 fixed inset-0 bg-black/30 transition-opacity duration-300 ease-in-out"
+  class="z-[70] fixed inset-0 bg-black/30 transition-opacity duration-300 ease-in-out"
   role="none"
   onclick={close}
   onkeydown={() => close()}
@@ -63,10 +66,10 @@
 
 <!-- Modal box -->
 <div
-  class="top-1/2 left-[60%] z-50 fixed bg-white shadow-xl p-4 rounded w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto -translate-x-[60%] -translate-y-1/2 transform"
+  class="top-1/2 left-[60%] z-[71] fixed bg-white shadow-xl p-4 rounded w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto -translate-x-[60%] -translate-y-1/2 transform"
   role="dialog"
   aria-modal="true"
-  bind:this={modal}
+  bind:this={modalElement}
   aria-labelledby="pest-modal"
   style={`max-width: ${maxWidth}`}
 >

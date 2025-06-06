@@ -1,51 +1,27 @@
-<style lang="scss">
-  @use './scss/variables.scss' as vars;
-
-  .main {
-    width: 100%;
-    height: 100%;
-    display: flex;
-  }
-
-  .sidebar {
-    z-index: 999;
-    @media #{vars.$medium-up} {
-      width: 350px;
-      box-shadow: 0 0 10px;
-    }
-  }
-
-  .map {
-    position: relative;
-    width: 100%;
-    @media #{vars.$medium-up} {
-      width: calc(100% - 350px);
-    }
-    @media #{vars.$small-only} {
-      width: 100%;
-      height: calc(100vh - 50px);
-    }
-  }
-</style>
-
 <script lang="ts">
-  import Map from '~/src/components/map/Map.svelte';
-  import SeverityOverlay from '~/src/components/map/SeverityOverlay.svelte';
-  import Sidebar from '@components/sidebar/Sidebar.svelte';
-  import Interface from '@components/sidebar/Interface.svelte';
-  import Legend from '@components/map/Legend.svelte';
-  import Status from '~/src/components/map/Status.svelte';
+  import Modal from '@components/common/Modal.svelte';
+  import Interface from '@components/interface/Interface.svelte';
+  import MobileHeader from '@components/interface/MobileHeader.svelte';
+  import Sidebar from '@components/interface/Sidebar.svelte';
   import ColorSelector from '@components/map/ColorSelector.svelte';
+  import Legend from '@components/map/Legend.svelte';
+  import Map from '@components/map/Map.svelte';
+  import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
+  import Status from '@components/map/Status.svelte';
+
+  import { modal } from '@store';
 </script>
 
-<main class="main">
-  <div class="sidebar">
-    <Sidebar>
-      <Interface />
-    </Sidebar>
-  </div>
+<header class="sm:hidden top-0 right-0 left-0 z-50 fixed h-12">
+  <MobileHeader />
+</header>
 
-  <div class="map">
+<main class="flex mt-12 sm:mt-0 w-full h-screen">
+  <Sidebar>
+    <Interface />
+  </Sidebar>
+
+  <div class="relative w-full h-full">
     <Map>
       <SeverityOverlay />
       <Status />
@@ -54,3 +30,9 @@
     </Map>
   </div>
 </main>
+
+{#if $modal}
+  <Modal name={$modal.name} maxWidth={$modal?.maxWidth}>
+    {@render $modal.content()}
+  </Modal>
+{/if}

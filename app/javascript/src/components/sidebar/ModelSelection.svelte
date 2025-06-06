@@ -1,9 +1,8 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
+  import Frame from '@components/common/Frame.svelte';
   import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
   import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
-
-  import Modal from '../common/Modal.svelte';
   import type { CropWithPests, PanelType, Pest } from '@types';
   import {
     panelKey,
@@ -13,8 +12,8 @@
     defaults,
     dev,
     baseURL,
+    modal,
   } from '@store';
-  import Frame from '@components/common/Frame.svelte';
 
   const { initialModel } = $props<{
     initialModel?: string;
@@ -33,7 +32,6 @@
   let pestsForCrop = $state<Pest[]>([]);
   let pestName = $state(getPestName());
   let modelId = $state<number | null>(null);
-  let showModal = $state(false);
 
   function getPestsForCrop(event: Event) {
     const cropId = parseInt((event.target as HTMLSelectElement).value);
@@ -88,6 +86,27 @@
   });
 </script>
 
+{#snippet modalContent()}
+  <div class="mb-4 overflow-hidden break-words">
+    {#if $selectedPest.photo}
+      <img
+        class="float-left mt-2 mr-4 mb-2 rounded-md w-[150px]"
+        src="{baseURL}/images/pests/{$selectedPest.photo}"
+        alt="pest icon"
+      />
+    {/if}
+    {@html $selectedPest.info}
+    {#if $selectedPest.link}
+      <div class="mt-2">
+        <b>More information:</b>
+        <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">
+          {$selectedPest.link}
+        </a>
+      </div>
+    {/if}
+  </div>
+{/snippet}
+
 <Frame title="Model Selection">
   <label for="crop-select" class="block mb-2 font-medium text-base">Crop/Host</label>
   <select
@@ -122,40 +141,16 @@
 
     {#if crops.length > 0}
       <button
+        class="text-gray-500 hover:text-black transition cursor-pointer"
         title="Show model information"
-        onclick={() => (showModal = true)}
-        class="text-gray-500 hover:text-black transition"
+        onclick={() =>
+          modal.set({
+            name: $selectedPest.name,
+            content: modalContent,
+          })}
       >
         <FontAwesomeIcon icon={faCircleQuestion} class="-ml-1 text-lg" />
       </button>
     {/if}
   </div>
 </Frame>
-
-{#if showModal}
-  <Modal
-    close={() => {
-      showModal = false;
-    }}
-    name={$selectedPest.name}
-  >
-    <div class="mb-4 overflow-hidden break-words">
-      {#if $selectedPest.photo}
-        <img
-          class="float-left mt-2 mr-4 mb-2 rounded-md w-[150px]"
-          src="{baseURL}/images/pests/{$selectedPest.photo}"
-          alt="pest icon"
-        />
-      {/if}
-      {@html $selectedPest.info}
-      {#if $selectedPest.link}
-        <div class="mt-2">
-          <b>More information:</b>
-          <a href={$selectedPest.link} target="_blank" class="text-blue-600 underline">
-            {$selectedPest.link}
-          </a>
-        </div>
-      {/if}
-    </div>
-  </Modal>
-{/if}
