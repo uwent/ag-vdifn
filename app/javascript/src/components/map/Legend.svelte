@@ -2,9 +2,7 @@
   @use '../../scss/variables.scss' as vars;
 
   #legend-expand-button {
-    position: fixed;
     right: 12px;
-    bottom: 34vh;
     z-index: 25;
     padding: 4px 6px;
     border: 1px solid grey;
@@ -17,25 +15,39 @@
       display: none; // hide on desktop
     }
   }
-
-  #legend {
-    background: #fff;
-    padding: 10px;
-    position: fixed;
+  .mobile-legend-wrapper {
+    position:fixed;
     bottom: 0;
     width: 100%;
-    max-height: 33vh;
-    overflow-y: auto;
-    border-top: 1px solid #ccc;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
     background: white;
-    transition: transform 0.3s ease;
-    transform: translateY(100%);
     z-index: 20;
+    display: flex;
+    max-height: 40vh; 
+    flex-direction: column;
+    align-items: flex-end;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    max-height: 40vh;
 
     &.visible {
       transform: translateY(0%);
     }
+}
+
+  #legend {
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    width: 100%;
+    max-height: 33vh;
+    overflow-y: auto; 
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    transition: transform 0.3s ease;
+    z-index: 20;
 
     @media (min-width: 768px) {
       //desktop
@@ -102,7 +114,6 @@
     }
   }
 </style>
-
 <script lang="ts">
   import { onMount } from 'svelte';
   import { round } from '@ts/utils';
@@ -143,7 +154,6 @@
   let colorHelper = $derived(new ColorHelper($selectedPalette));
 
   let showLegendUI = $state(true);
-
   let isDesktop = $state(window.innerWidth >= 768);
 
   onMount(() => {
@@ -179,8 +189,6 @@
 
   function buildCustomLegend(gradient: GradientHash): LegendData | null {
     if (!gradient) return null;
-
-    // convert gradient hash to array of objects
     const items: { value: number; color: string }[] = [];
     for (const key in gradient) {
       if (gradient.hasOwnProperty(key)) {
@@ -188,41 +196,27 @@
       }
     }
     const sortedItems = items.sort((a, b) => a.value - b.value);
-
-    // add legend text and tooltip
     const legendEntries = sortedItems.map((item, i) => {
       const value = item.value;
       const color = item.color;
       const lowRange = i === 0 ? 0 : round(sortedItems[i - 1].value);
-      const name =
-        i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
+      const name = i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
       const description = `${name} degree days`;
       return { value, color, name, description };
     });
-
-    return {
-      legend: legendEntries,
-      info: null,
-    };
+    return { legend: legendEntries, info: null };
   }
 
   $effect(() => {
-    if ($selectedPanel === 'disease')
-      buildPestLegend($diseasePanelParams).then((legend) => {
-        diseaseLegend = legend;
-      });
+    if ($selectedPanel === 'disease') buildPestLegend($diseasePanelParams).then((legend) => (diseaseLegend = legend));
   });
 
   $effect(() => {
-    if ($selectedPanel === 'insect')
-      buildPestLegend($insectPanelParams).then((legend) => {
-        insectLegend = legend;
-      });
+    if ($selectedPanel === 'insect') buildPestLegend($insectPanelParams).then((legend) => (insectLegend = legend));
   });
 
   $effect(() => {
-    if ($selectedPanel === 'custom' && !$overlayLoading)
-      customLegend = buildCustomLegend($overlayGradient);
+    if ($selectedPanel === 'custom' && !$overlayLoading) customLegend = buildCustomLegend($overlayGradient);
   });
 
   $effect(() => {
@@ -235,8 +229,10 @@
   <button
     id="legend-expand-button"
     aria-expanded={showLegendUI}
+    aria-controls="legend"
+    class="z-30 bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl"
     onclick={() => (showLegendUI = !showLegendUI)}
-    class="sm:hidden right-4 z-20 fixed bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl transition-all duration-300 ease-in-out"
+    tabindex="0"
   >
     {#if showLegendUI}
       <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
@@ -244,30 +240,49 @@
       <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
     {/if}
   </button>
+
+  <div class={`mobile-legend-wrapper ${showLegendUI ? 'visible' : ''}`}
+    style="position: fixed; bottom: 0; width: 100%; background: white; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; max-height: 40vh; transition: transform 0.3s ease;"
+  >
+    <div id="legend" class="visible legend">
+      {#if currentLegend?.legend}
+        <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
+          <div class="legend-values">
+            {#each [...currentLegend.legend].reverse() as entry}
+              <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
+                <div class="legend-value-color" style="background: {entry.color}"></div>
+                <div class="legend-value-text">{entry.name}</div>
+              </div>
+            {/each}
+          </div>
+        </Frame>
+      {/if}
+      {#if currentLegend?.info}
+        <Frame title="More Information">
+          <p class="text-sm">{@html currentLegend.info}</p>
+        </Frame>
+      {/if}
+    </div>
+  </div>
+{:else}
+  <div id="legend" class="legend desktop">
+    {#if currentLegend?.legend}
+      <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
+        <div class="legend-values">
+          {#each [...currentLegend.legend].reverse() as entry}
+            <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
+              <div class="legend-value-color" style="background: {entry.color}"></div>
+              <div class="legend-value-text">{entry.name}</div>
+            </div>
+          {/each}
+        </div>
+      </Frame>
+    {/if}
+    {#if currentLegend?.info}
+      <Frame title="More Information">
+        <p class="text-sm">{@html currentLegend.info}</p>
+      </Frame>
+    {/if}
+  </div>
 {/if}
 
-<div
-  id="legend"
-  class="legend"
-  class:visible={!isDesktop && showLegendUI}
-  style={isDesktop ? 'transform: translateY(0%)' : ''}
->
-  {#if currentLegend?.legend}
-    <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
-      <div class="legend-values">
-        {#each [...currentLegend.legend].reverse() as entry}
-          <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
-            <div class="legend-value-color" style="background: {entry.color}"></div>
-            <div class="legend-value-text">{entry.name}</div>
-          </div>
-        {/each}
-      </div>
-    </Frame>
-  {/if}
-
-  {#if currentLegend?.info}
-    <Frame title="More Information">
-      <p class="text-sm">{@html currentLegend.info}</p>
-    </Frame>
-  {/if}
-</div>
