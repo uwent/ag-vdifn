@@ -72,7 +72,7 @@
   });
 </script>
 
-<div class="fixed sm:absolute left-4 bottom-[110px] sm:bottom-4 z-5 flex flex-col w-min">
+<div class="bottom-[110px] sm:bottom-4 left-4 z-5 fixed sm:absolute flex flex-col w-min">
   <div class="label">Color Palette:</div>
   <div class="switch-field">
     <input

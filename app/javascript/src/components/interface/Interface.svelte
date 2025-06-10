@@ -1,3 +1,17 @@
+<style lang="postcss">
+  @reference "tailwindcss";
+
+  .label1 {
+    @apply w-full h-full min-h-[2rem] flex items-center justify-center px-6 border border-black/20 rounded-md shadow-inner transition-all cursor-pointer;
+  }
+  .selected {
+    @apply bg-green-300 font-semibold text-black;
+  }
+  .not_selected{
+    @apply bg-gray-200 text-black/60;
+  }
+  </style>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import DatabaseClient from '@ts/databaseClient';
@@ -63,6 +77,7 @@
   });
 </script>
 
+
 {#snippet helpModal()}
   <Help />
 {/snippet}
@@ -95,12 +110,12 @@
             value={type}
             bind:group={panel}
             disabled={$overlayLoading}
-            class="absolute opacity-0 w-0"
+            class="sr-only"
           />
           <label
             for={type}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-2xl px-6 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-            ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            class={`label1 text-2xl
+            ${panel === type ? 'selected' : 'not_selected'}`}
           >
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </label>
@@ -120,12 +135,11 @@
             value={region}
             bind:group={extent}
             disabled={$overlayLoading}
-            class="absolute opacity-0 w-0"
+            class="sr-only"
           />
           <label
             for={region}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-lg px-5 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-            ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
+            class={`label1 text-lg ${extent === region ? 'selected' : 'not_selected'}`}
           >
             {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
           </label>
