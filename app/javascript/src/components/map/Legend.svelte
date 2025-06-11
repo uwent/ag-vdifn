@@ -231,6 +231,7 @@
     aria-expanded={showLegendUI}
     aria-controls="legend"
     class="z-30 bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl"
+    style={`position: fixed; right: 12px; bottom: ${showLegendUI ? 'calc(38vh - 2rem)' : '8px'}; transition: bottom 0.3s ease;`}
     onclick={() => (showLegendUI = !showLegendUI)}
     tabindex="0"
   >
@@ -285,4 +286,3 @@
     {/if}
   </div>
 {/if}
-
