@@ -16,7 +16,8 @@
 
   const { getMap } = getContext<any>(mapKey);
   const map = getMap();
-
+  const btnBaseClass =
+  'bg-white shadow-md border-2 border-white w-10 h-10 text-gray-500 hover:text-gray-700';
   let zoomBtn: HTMLDivElement;
   let locationBtn: HTMLDivElement;
   let marker: google.maps.marker.AdvancedMarkerElement;
@@ -73,7 +74,7 @@
 
 <div bind:this={zoomBtn} class="map-btn">
   <button
-    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
+    class="btnBaseClass"
     title="Zoom extents"
     onclick={zoomExtents}
   >
@@ -83,7 +84,7 @@
 
 <div bind:this={locationBtn} class="map-btn">
   <button
-    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
+    class="btnBaseClass"
     title={$userLocation ? 'Hide location' : 'Show my location'}
     onclick={handleLocation}
   >
@@ -94,3 +95,4 @@
     {/if}
   </button>
 </div>
+

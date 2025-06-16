@@ -114,6 +114,7 @@
     }
   }
 </style>
+<!-- svelte-ignore non_reactive_update -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { round } from '@ts/utils';
@@ -135,6 +136,19 @@
   import 'tippy.js/dist/tippy.css';
   import ColorHelper from '@ts/colorHelper';
 
+  let legendEl: HTMLDivElement;
+  let toggleBottom = $state('8px');
+
+  $effect(() => {
+    if (legendEl && showLegendUI) {
+      toggleBottom = `${legendEl.offsetHeight + 12}px`;
+    } else {
+      toggleBottom = '8px';
+    }
+  });
+
+
+
   const db = new DatabaseClient();
 
   let diseaseLegend = $state<LegendData | null>();
@@ -153,7 +167,7 @@
   let showLegend = $derived(!!currentLegend);
   let colorHelper = $derived(new ColorHelper($selectedPalette));
 
-  let showLegendUI = $state(true);
+  let showLegendUI = $state(window.innerWidth >= 768); // open on desktop, closed on mobile
   let isDesktop = $state(window.innerWidth >= 768);
 
   onMount(() => {
@@ -172,6 +186,7 @@
       duration: 200,
     });
   }
+  
 
   function addColorToLegend(legend: LegendData) {
     if (!legend) return null;
@@ -226,15 +241,16 @@
 </script>
 
 {#if !isDesktop}
-  <button
-    id="legend-expand-button"
-    aria-expanded={showLegendUI}
-    aria-controls="legend"
-    class="z-30 bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl"
-    style={`position: fixed; right: 12px; bottom: ${showLegendUI ? 'calc(38vh - 2rem)' : '8px'}; transition: bottom 0.3s ease;`}
-    onclick={() => (showLegendUI = !showLegendUI)}
-    tabindex="0"
-  >
+<button
+  id="legend-expand-button"
+  aria-expanded={showLegendUI}
+  aria-controls="legend"
+  class="z-30 bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl"
+  style={`position: fixed; right: 12px; bottom: ${toggleBottom}; transition: bottom 0.3s ease;`}
+  onclick={() => (showLegendUI = !showLegendUI)}
+  tabindex="0"
+>
+
     {#if showLegendUI}
       <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
     {:else}
@@ -243,6 +259,7 @@
   </button>
 
   <div class={`mobile-legend-wrapper ${showLegendUI ? 'visible' : ''}`}
+  bind:this={legendEl}
     style="position: fixed; bottom: 0; width: 100%; background: white; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; max-height: 40vh; transition: transform 0.3s ease;"
   >
     <div id="legend" class="visible legend">
