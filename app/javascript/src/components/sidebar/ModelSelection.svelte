@@ -1,8 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from 'svelte';
   import Frame from '@components/common/Frame.svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+  import { IconHelpCircleFilled as IconHelp } from '@tabler/icons-svelte';
   import type { CropWithPests, PanelType, Pest } from '@types';
   import {
     panelKey,
@@ -108,7 +107,7 @@
 {/snippet}
 
 <Frame title="Model Selection">
-  <label for="crop-select" class="block mb-2 font-medium text-base">Crop/Host</label>
+  <label for="crop-select">Crop/Host</label>
   <select
     onchange={getPestsForCrop}
     bind:value={selectedCropValue}
@@ -116,14 +115,14 @@
     name="crop-select"
     data-testid="crop-select"
     title="Select crop"
-    class="bg-white shadow mb-6 px-4 py-3 border border-gray-300 rounded-md w-full text-base cursor-pointer"
+    class="bg-white shadow mb-3 px-4 py-3 border border-gray-300 rounded-md w-full cursor-pointer"
   >
     {#each crops as { id, name }}
       <option value={id}>{name}</option>
     {/each}
   </select>
 
-  <label for="pest-select" class="block mb-2 font-medium text-base">{pestName}</label>
+  <label for="pest-select">{pestName}</label>
   <div class="flex items-center gap-4">
     <select
       onchange={setPestValue}
@@ -132,7 +131,7 @@
       data-testid="pest-select"
       title="Select model"
       value={$pestId}
-      class="flex-1 bg-white shadow px-4 py-3 border border-gray-300 rounded-md text-base cursor-pointer"
+      class="flex-1 bg-white shadow px-4 py-3 border border-gray-300 rounded-md cursor-pointer"
     >
       {#each pestsForCrop as { id, name }}
         <option value={id}>{name}</option>
@@ -149,7 +148,7 @@
             content: modalContent,
           })}
       >
-        <FontAwesomeIcon icon={faCircleQuestion} class="-ml-1 text-lg" />
+        <IconHelp />
       </button>
     {/if}
   </div>

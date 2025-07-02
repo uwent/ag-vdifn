@@ -53,8 +53,9 @@
 
     $customPanelState = {
       ...$customPanelState,
-      selectedExtent: $mapExtent,
       selectedModel: $selectedDDModel,
+      selectedExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
       params: params,
       loaded: true,
     };

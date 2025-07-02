@@ -1,3 +1,15 @@
+<style lang="postcss">
+  @reference "tailwindcss";
+
+  .label {
+    @apply w-full h-full min-h-[2rem] flex items-center justify-center px-6 border border-black/20 rounded-md shadow-inner transition-all cursor-pointer bg-gray-200 text-black/60;
+  }
+
+  .selected {
+    @apply bg-green-500/50 font-semibold text-black;
+  }
+</style>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import DatabaseClient from '@ts/databaseClient';
@@ -10,8 +22,7 @@
   import { overlayLoading, mapExtent, defaults, selectedPanel, modal } from '@store';
   import type { CropWithPests, DegreeDayModel, PanelType, MapExtentOption } from '@types';
   import { PANEL_TYPES } from '@types';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+  import { IconHelpCircleFilled as IconHelp } from '@tabler/icons-svelte';
 
   let diseasePanelData = $state<CropWithPests[]>();
   let insectPanelData = $state<CropWithPests[]>();
@@ -79,7 +90,7 @@
         maxWidth: '40rem',
       })}
   >
-    <FontAwesomeIcon icon={faCircleQuestion} />
+    <IconHelp class="hover:text-black transition" />
   </button>
 {/snippet}
 
@@ -95,13 +106,9 @@
             value={type}
             bind:group={panel}
             disabled={$overlayLoading}
-            class="absolute opacity-0 w-0"
+            class="sr-only"
           />
-          <label
-            for={type}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-2xl px-6 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-            ${panel === type ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-          >
+          <label for={type} class="label" class:selected={panel === type}>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </label>
         </div>
@@ -120,13 +127,9 @@
             value={region}
             bind:group={extent}
             disabled={$overlayLoading}
-            class="absolute opacity-0 w-0"
+            class="sr-only"
           />
-          <label
-            for={region}
-            class={`w-full h-full min-h-[2rem] flex items-center justify-center text-lg px-5 border border-black/20 rounded-md shadow-inner hover:cursor-pointer transition-all
-            ${extent === region ? 'bg-green-300 text-black font-semibold' : 'bg-gray-200 text-black/60'}`}
-          >
+          <label for={region} class="label" class:selected={extent === region}>
             {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
           </label>
         </div>

@@ -24,7 +24,7 @@
     selectedPest,
   } from '@store';
   import LoadStatus from '@components/common/LoadStatus.svelte';
-  import type { PanelType, MapExtent } from '@types';
+  import type { PanelType } from '@types';
 
   const thisPanel: PanelType = 'disease';
 
@@ -71,6 +71,7 @@
     $diseasePanelState = {
       ...$diseasePanelState,
       selectedPest: pest,
+      selectedExtent: $mapExtent,
       mapExtent: extents[$mapExtent],
       loaded: true,
     };
@@ -95,11 +96,6 @@
     window.history.replaceState({}, '', url);
     document.title = title;
   }
-  function getExtentKey(extent: MapExtent): string | undefined {
-    return Object.entries(extents).find(
-      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
-    )?.[0];
-  }
 
   onMount(() => {
     $selectedPanel = thisPanel;
@@ -112,8 +108,11 @@
     if (submitOnLoad) submit();
   });
 
+  $inspect($diseasePanelState);
+  $inspect($mapExtent);
+
   $effect(() => {
-    if ($diseasePanelState.loaded && getExtentKey($diseasePanelState.mapExtent) !== $mapExtent) {
+    if ($diseasePanelState.loaded && $diseasePanelState.selectedExtent !== $mapExtent) {
       submit();
     }
   });
@@ -123,7 +122,7 @@
   });
 </script>
 
-<div data-testid="disease-panel" class="flex flex-col gap-4">
+<div class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
 
   <Frame title="Model Parameters">

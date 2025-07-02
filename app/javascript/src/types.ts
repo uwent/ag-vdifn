@@ -146,6 +146,7 @@ export type SeverityParams = PanelParams & {
 type PanelState = {
   severities: Severity[];
   severityParams: SeverityParams;
+  selectedExtent: MapExtentOption;
   mapExtent: MapExtent;
   loaded: boolean;
 };
@@ -156,7 +157,6 @@ export type PestPanelState = PanelState & {
 
 export type CustomPanelState = PanelState & {
   selectedModel: DegreeDayModel;
-  selectedExtent: string;
   selectedGradient: GradientType;
   params: Partial<CustomPanelParams>;
 };

@@ -1,24 +1,21 @@
-<style lang="scss">
-  .map-btn {
-    margin-top: 8px;
-    margin-right: 10px;
-    cursor: pointer;
+<style lang="postcss">
+  @reference "tailwindcss";
+
+  button {
+    @apply text-gray-500 hover:text-gray-700 text-center cursor-pointer;
   }
 </style>
 
 <script lang="ts">
   import { mapKey } from '@store';
   import { getContext, onMount } from 'svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faLocationCrosshairs, faLocationDot, faExpand } from '@fortawesome/free-solid-svg-icons';
+  import { IconArrowsMaximize, IconMapPin, IconMapPinX } from '@tabler/icons-svelte';
   import { bounds, mapExtent, userLocation } from '@store';
   import type { LatLng } from '@types';
 
   const { getMap } = getContext<any>(mapKey);
   const map = getMap();
-
-  let zoomBtn: HTMLDivElement;
-  let locationBtn: HTMLDivElement;
+  let buttons: HTMLDivElement;
   let marker: google.maps.marker.AdvancedMarkerElement;
 
   function zoomExtents() {
@@ -61,8 +58,7 @@
 
   onMount(() => {
     const controlPosition = google.maps.ControlPosition.RIGHT_TOP;
-    map.controls[controlPosition].push(zoomBtn);
-    map.controls[controlPosition].push(locationBtn);
+    map.controls[controlPosition].push(buttons);
   });
 
   $effect(() => {
@@ -71,26 +67,16 @@
   });
 </script>
 
-<div bind:this={zoomBtn} class="map-btn">
-  <button
-    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
-    title="Zoom extents"
-    onclick={zoomExtents}
-  >
-    <FontAwesomeIcon icon={faExpand as any} size="2x" />
+<div bind:this={buttons} class="flex flex-col gap-4 bg-white shadow-md m-[10px] p-[8px]">
+  <button title="Zoom extents" onclick={zoomExtents}>
+    <IconArrowsMaximize />
   </button>
-</div>
 
-<div bind:this={locationBtn} class="map-btn">
-  <button
-    class="h-10 w-10 bg-white border-2 border-white shadow-md text-gray-500 hover:text-gray-700"
-    title={$userLocation ? 'Hide location' : 'Show my location'}
-    onclick={handleLocation}
-  >
+  <button title={$userLocation ? 'Hide location pin' : 'Show my location'} onclick={handleLocation}>
     {#if $userLocation}
-      <FontAwesomeIcon icon={faLocationDot as any} size="2x" />
+      <IconMapPinX class="text-black" />
     {:else}
-      <FontAwesomeIcon icon={faLocationCrosshairs as any} size="2x" />
+      <IconMapPin />
     {/if}
   </button>
 </div>

@@ -19,7 +19,7 @@
 </script>
 
 {#if message}
-  <div class="my-4 text-center text-sm italic text-gray-600">
+  <div class="text-gray-600 text-sm text-center italic">
     {message}
   </div>
 {/if}
