@@ -1,5 +1,5 @@
 <style lang="postcss">
-    @reference "tailwindcss";
+  @reference "tailwindcss";
   .input {
     @apply flex justify-center items-center bg-white shadow px-2 py-1 border border-gray-300 w-full text-sm text-center;
   }
@@ -22,9 +22,7 @@
   .class2 {
     @apply items-center gap-x-4 grid text-center;
   }
-
 </style>
-
 
 <script lang="ts">
   import { untrack } from 'svelte';
@@ -293,9 +291,7 @@
           bind:value={twoPointState.inputs[1]}
           oninput={validateInputs}
         />
-        <div class="range-box">
-          &gt;&gt;&gt;
-        </div>
+        <div class="range-box">&gt;&gt;&gt;</div>
       </div>
     </div>
   {/if}
@@ -400,18 +396,8 @@
     >
       +
     </button>
-    <button
-      class="flex-1 btn"
-      onclick={resetValues}
-    >
-      Auto
-    </button>
-    <button
-      class="flex-1 btn"
-      onclick={resetAll}
-    >
-      Reset
-    </button>
+    <button class="flex-1 btn" onclick={resetValues}> Auto </button>
+    <button class="flex-1 btn" onclick={resetAll}> Reset </button>
     <button
       class="w-8 btn"
       onclick={() => changeLevels(-1)}
@@ -427,4 +413,3 @@
     </div>
   {/if}
 </Frame>
-

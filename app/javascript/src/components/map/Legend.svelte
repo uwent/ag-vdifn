@@ -1,127 +1,36 @@
 <style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  #legend-expand-button {
-    right: 12px;
-    z-index: 25;
-    padding: 4px 6px;
-    border: 1px solid grey;
-    border-radius: 9999px;
-    font-size: 0.8rem;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-    background: lightgreen;
-
-    @media #{vars.$medium-up} {
-      display: none; // hide on desktop
-    }
-  }
-  .mobile-legend-wrapper {
-    position:fixed;
-    bottom: 0;
-    width: 100%;
-    background: white;
-    z-index: 20;
-    display: flex;
-    max-height: 40vh; 
-    flex-direction: column;
-    align-items: flex-end;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    max-height: 40vh;
-
-    &.visible {
-      transform: translateY(0%);
-    }
-}
-
-  #legend {
-    background: #fff;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-    width: 100%;
-    max-height: 33vh;
-    overflow-y: auto; 
-    border-top: 1px solid #ccc;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-    background: white;
-    transition: transform 0.3s ease;
-    z-index: 20;
-
-    @media (min-width: 768px) {
-      //desktop
-      position: absolute;
-      max-width: 200px;
-      left: auto;
-      width: auto;
-      bottom: 10px;
-      right: 10px;
-      transform: none !important;
-      box-shadow: none;
-      border: none;
-      max-height: none;
-    }
-  }
-
-  .legend {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    padding-top: 5px;
-  }
-
-  .legend-values {
-    width: 100%;
+  .legend-gradient-horizontal {
     display: flex;
     flex-direction: row;
     gap: 15px;
-
-    @media (min-width: 768px) {
-      //desktop
-      gap: 8px;
-    }
   }
 
-  .legend-value-row {
+  .legend-gradient-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .legend-color-item-horizontal {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px; //the value name is below the color
-
-    @media (min-width: 768px) {
-      gap: 6px; // tighten spacing between color and text
-    }
+    gap: 12px;
   }
 
-  .legend-value-color {
-    height: 20px;
-    width: 30px;
-    border: 1px solid grey;
-    @media (min-width: 768px) {
-      height: 14px;
-      width: 20px; // smaller color boxes
-    }
-  }
-
-  .legend-value-text {
+  .legend-color-item-vertical {
     display: flex;
+    flex-direction: row;
     align-items: center;
-
-    @media (min-width: 768px) {
-      font-size: 0.7rem;
-    }
+    gap: 8px;
   }
 </style>
-<!-- svelte-ignore non_reactive_update -->
+
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { round } from '@ts/utils';
   import DatabaseClient from '@ts/databaseClient';
   import Frame from '@components/common/Frame.svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+  import { IconChevronDown, IconChevronUp } from '@tabler/icons-svelte';
 
   import {
     selectedPanel,
@@ -135,19 +44,7 @@
   import tippy from 'tippy.js';
   import 'tippy.js/dist/tippy.css';
   import ColorHelper from '@ts/colorHelper';
-
-  let legendEl: HTMLDivElement;
-  let toggleBottom = $state('8px');
-
-  $effect(() => {
-    if (legendEl && showLegendUI) {
-      toggleBottom = `${legendEl.offsetHeight + 12}px`;
-    } else {
-      toggleBottom = '8px';
-    }
-  });
-
-
+  import { innerWidth } from 'svelte/reactivity/window';
 
   const db = new DatabaseClient();
 
@@ -164,19 +61,13 @@
         if (customLegend) return customLegend;
     }
   });
-  let showLegend = $derived(!!currentLegend);
   let colorHelper = $derived(new ColorHelper($selectedPalette));
 
-  let showLegendUI = $state(window.innerWidth >= 768); // open on desktop, closed on mobile
-  let isDesktop = $state(window.innerWidth >= 768);
-
-  onMount(() => {
-    const handler = () => {
-      isDesktop = window.innerWidth >= 768;
-    };
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  });
+  // Reactive window size detection
+  const MOBILE_WIDTH = 640; // tailwind small width breakpoint
+  let isDesktop = $derived((innerWidth.current || MOBILE_WIDTH) >= MOBILE_WIDTH);
+  let showLegend = $state(true);
+  let mobileDrawerHeight = $state(0);
 
   function invokeTippy() {
     tippy('.tippy-tooltip', {
@@ -186,7 +77,6 @@
       duration: 200,
     });
   }
-  
 
   function addColorToLegend(legend: LegendData) {
     if (!legend) return null;
@@ -215,7 +105,8 @@
       const value = item.value;
       const color = item.color;
       const lowRange = i === 0 ? 0 : round(sortedItems[i - 1].value);
-      const name = i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
+      const name =
+        i === sortedItems.length - 1 ? `${lowRange}+` : `${lowRange} - ${round(item.value)}`;
       const description = `${name} degree days`;
       return { value, color, name, description };
     });
@@ -223,15 +114,18 @@
   }
 
   $effect(() => {
-    if ($selectedPanel === 'disease') buildPestLegend($diseasePanelParams).then((legend) => (diseaseLegend = legend));
+    if ($selectedPanel === 'disease')
+      buildPestLegend($diseasePanelParams).then((legend) => (diseaseLegend = legend));
   });
 
   $effect(() => {
-    if ($selectedPanel === 'insect') buildPestLegend($insectPanelParams).then((legend) => (insectLegend = legend));
+    if ($selectedPanel === 'insect')
+      buildPestLegend($insectPanelParams).then((legend) => (insectLegend = legend));
   });
 
   $effect(() => {
-    if ($selectedPanel === 'custom' && !$overlayLoading) customLegend = buildCustomLegend($overlayGradient);
+    if ($selectedPanel === 'custom' && !$overlayLoading)
+      customLegend = buildCustomLegend($overlayGradient);
   });
 
   $effect(() => {
@@ -240,36 +134,25 @@
   });
 </script>
 
-{#if !isDesktop}
-<button
-  id="legend-expand-button"
-  aria-expanded={showLegendUI}
-  aria-controls="legend"
-  class="z-30 bg-green-200 shadow p-2 border border-gray-400 rounded-full text-xl"
-  style={`position: fixed; right: 12px; bottom: ${toggleBottom}; transition: bottom 0.3s ease;`}
-  onclick={() => (showLegendUI = !showLegendUI)}
-  tabindex="0"
->
-
-    {#if showLegendUI}
-      <FontAwesomeIcon icon={faTimes} class="w-4 h-4" />
-    {:else}
-      <FontAwesomeIcon icon={faPlus} class="w-4 h-4" />
-    {/if}
-  </button>
-
-  <div class={`mobile-legend-wrapper ${showLegendUI ? 'visible' : ''}`}
-  bind:this={legendEl}
-    style="position: fixed; bottom: 0; width: 100%; background: white; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; max-height: 40vh; transition: transform 0.3s ease;"
-  >
-    <div id="legend" class="visible legend">
+{#if currentLegend}
+  {#if isDesktop}
+    <!-- DESKTOP LEGEND -->
+    <div
+      class="right-2 bottom-2 z-20 absolute flex flex-col gap-2 bg-white shadow-lg p-2 pt-1 border border-gray-200 rounded-lg max-w-60 max-h-100"
+    >
       {#if currentLegend?.legend}
         <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
-          <div class="legend-values">
+          <div class="legend-gradient-vertical">
             {#each [...currentLegend.legend].reverse() as entry}
-              <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
-                <div class="legend-value-color" style="background: {entry.color}"></div>
-                <div class="legend-value-text">{entry.name}</div>
+              <div
+                class="legend-color-item-vertical tippy-tooltip"
+                data-tippy-content={entry.description}
+              >
+                <div
+                  class="flex-shrink-0 border border-gray-400 w-5 h-3.5"
+                  style="background: {entry.color}"
+                ></div>
+                <div class="text-xs leading-tight">{entry.name}</div>
               </div>
             {/each}
           </div>
@@ -277,30 +160,63 @@
       {/if}
       {#if currentLegend?.info}
         <Frame title="More Information">
-          <p class="text-sm">{@html currentLegend.info}</p>
+          <p class="max-h-40 overflow-auto text-xs">{@html currentLegend.info}</p>
         </Frame>
       {/if}
     </div>
-  </div>
-{:else}
-  <div id="legend" class="legend desktop">
-    {#if currentLegend?.legend}
-      <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
-        <div class="legend-values">
-          {#each [...currentLegend.legend].reverse() as entry}
-            <div class="legend-value-row tippy-tooltip" data-tippy-content={entry.description}>
-              <div class="legend-value-color" style="background: {entry.color}"></div>
-              <div class="legend-value-text">{entry.name}</div>
-            </div>
-          {/each}
-        </div>
-      </Frame>
-    {/if}
-    {#if currentLegend?.info}
-      <Frame title="More Information">
-        <p class="text-sm">{@html currentLegend.info}</p>
-      </Frame>
-    {/if}
-  </div>
-{/if}
+  {:else}
+    <!-- MOBILE LEGEND -->
+    <!-- Toggle Button -->
+    <button
+      class="inline-flex right-1 bottom-0 z-10 fixed items-center bg-white border-4 border-gray-300 border-t border-r border-l rounded-t h-10 overflow-hidden text-sm align-middle transition-all duration-300 ease-in-out"
+      style={`bottom: ${showLegend ? mobileDrawerHeight - 10 : -10}px;`}
+      onclick={() => (showLegend = !showLegend)}
+      aria-expanded={showLegend}
+      aria-controls="mobile-legend"
+      aria-label={showLegend ? 'Hide legend' : 'Show legend'}
+    >
+      {#if showLegend}
+        <IconChevronDown size={40} />
+      {:else}
+        <span class="pl-2">Show legend</span>
+        <IconChevronUp size={40} />
+      {/if}
+    </button>
 
+    <!-- Mobile Drawer -->
+    <div
+      id="mobile-legend"
+      class="right-0 bottom-0 left-0 z-20 fixed bg-white shadow-2xl border-gray-300 border-t max-h-[40vh] overflow-hidden transition-transform duration-300 ease-in-out"
+      style="transform: translateY({showLegend ? '0%' : '100%'})"
+      bind:clientHeight={mobileDrawerHeight}
+    >
+      <div class="p-2 max-h-full overflow-y-auto">
+        {#if currentLegend?.legend}
+          <Frame title={$selectedPanel === 'custom' ? 'Degree-Day Legend:' : 'Severity Legend:'}>
+            <div class="w-full legend-gradient-horizontal">
+              {#each [...currentLegend.legend] as entry}
+                <div
+                  class="flex-1 legend-color-item-horizontal tippy-tooltip"
+                  data-tippy-content={entry.description}
+                >
+                  <div
+                    class="border border-gray-400 w-full min-w-[30px] h-5"
+                    style="background: {entry.color}"
+                  ></div>
+                  <div class="text-xs text-center leading-tight">{entry.name}</div>
+                </div>
+              {/each}
+            </div>
+          </Frame>
+        {/if}
+        {#if currentLegend?.info}
+          <div class="mt-3">
+            <Frame title="More Information">
+              <p class="max-h-40 overflow-auto text-sm">{@html currentLegend.info}</p>
+            </Frame>
+          </div>
+        {/if}
+      </div>
+    </div>
+  {/if}
+{/if}

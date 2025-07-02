@@ -33,7 +33,7 @@
 </script>
 
 <div
-  class="top-2.5 left-2.5 absolute bg-white shadow-lg px-2.5 py-1.5 border border-gray-200 rounded max-w-[50]"
+  class="top-2 left-2 absolute bg-white shadow-lg px-2.5 py-1.5 border border-gray-200 rounded max-w-[50]"
 >
   <div class="font-bold text-[15px]">
     {status()}

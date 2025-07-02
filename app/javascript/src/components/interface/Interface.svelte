@@ -1,16 +1,14 @@
 <style lang="postcss">
   @reference "tailwindcss";
 
-  .label1 {
-    @apply w-full h-full min-h-[2rem] flex items-center justify-center px-6 border border-black/20 rounded-md shadow-inner transition-all cursor-pointer;
+  .label {
+    @apply w-full h-full min-h-[2rem] flex items-center justify-center px-6 border border-black/20 rounded-md shadow-inner transition-all cursor-pointer bg-gray-200 text-black/60;
   }
+
   .selected {
-    @apply bg-green-300 font-semibold text-black;
+    @apply bg-green-500/50 font-semibold text-black;
   }
-  .not_selected{
-    @apply bg-gray-200 text-black/60;
-  }
-  </style>
+</style>
 
 <script lang="ts">
   import { onMount } from 'svelte';
@@ -24,8 +22,7 @@
   import { overlayLoading, mapExtent, defaults, selectedPanel, modal } from '@store';
   import type { CropWithPests, DegreeDayModel, PanelType, MapExtentOption } from '@types';
   import { PANEL_TYPES } from '@types';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+  import { IconHelpCircleFilled as IconHelp } from '@tabler/icons-svelte';
 
   let diseasePanelData = $state<CropWithPests[]>();
   let insectPanelData = $state<CropWithPests[]>();
@@ -77,7 +74,6 @@
   });
 </script>
 
-
 {#snippet helpModal()}
   <Help />
 {/snippet}
@@ -94,7 +90,7 @@
         maxWidth: '40rem',
       })}
   >
-    <FontAwesomeIcon icon={faCircleQuestion} />
+    <IconHelp class="hover:text-black transition" />
   </button>
 {/snippet}
 
@@ -112,11 +108,7 @@
             disabled={$overlayLoading}
             class="sr-only"
           />
-          <label
-            for={type}
-            class={`label1 text-2xl
-            ${panel === type ? 'selected' : 'not_selected'}`}
-          >
+          <label for={type} class="label" class:selected={panel === type}>
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </label>
         </div>
@@ -137,10 +129,7 @@
             disabled={$overlayLoading}
             class="sr-only"
           />
-          <label
-            for={region}
-            class={`label1 text-lg ${extent === region ? 'selected' : 'not_selected'}`}
-          >
+          <label for={region} class="label" class:selected={extent === region}>
             {region === 'midwest' ? 'Upper Midwest' : 'Wisconsin'}
           </label>
         </div>

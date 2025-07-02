@@ -123,14 +123,13 @@
 {/snippet}
 
 <Frame title="Date Range">
-  <label for="datepicker-start" class="block mb-1">{startLabel}</label>
+  <label for="datepicker-start">{startLabel}</label>
   <div class="flex items-center gap-2 mb-3">
     <input
       type="date"
       class="bg-white px-2 py-1 border border-gray-300 rounded text-sm datepicker"
       title={dateToolTip.startDate}
       id="datepicker-start"
-      data-testid="datepicker-start"
       bind:value={startDateValue}
       onfocus={updateEndDateInput}
       onfocusout={updateEndDateInput}
@@ -142,14 +141,13 @@
     </div>
   </div>
 
-  <label for="datepicker-end" class="block mb-1">End Date</label>
+  <label for="datepicker-end">End Date</label>
   <div class="flex items-center gap-2 mb-3">
     <input
       type="date"
       class="bg-white px-2 py-1 border border-gray-300 rounded text-sm datepicker"
       title={dateToolTip.endDate}
       id="datepicker-end"
-      data-testid="datepicker-end"
       bind:value={endDateValue}
       onfocus={updateStartDateInput}
       onfocusout={updateStartDateInput}

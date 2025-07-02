@@ -24,7 +24,7 @@
     startDate,
     tMinTmax,
   } from '@store';
-  import type { PanelType, MapExtent } from '@types';
+  import type { PanelType } from '@types';
 
   let {
     data = undefined,
@@ -74,6 +74,7 @@
     $insectPanelState = {
       ...$insectPanelState,
       selectedPest: pest,
+      selectedExtent: $mapExtent,
       mapExtent: extents[$mapExtent],
       loaded: true,
     };
@@ -100,12 +101,6 @@
     document.title = title;
   }
 
-  function getExtentKey(extent: MapExtent): string | undefined {
-    return Object.entries(extents).find(
-      ([, val]) => val.lat_range === extent.lat_range && val.lng_range === extent.lng_range,
-    )?.[0];
-  }
-
   onMount(() => {
     $selectedPanel = thisPanel;
     const params = $insectPanelParams;
@@ -118,7 +113,7 @@
   });
 
   $effect(() => {
-    if ($insectPanelState.loaded && getExtentKey($insectPanelState.mapExtent) !== $mapExtent) {
+    if ($insectPanelState.loaded && $insectPanelState.selectedExtent !== $mapExtent) {
       submit();
     }
   });
@@ -128,8 +123,9 @@
   });
 </script>
 
-<div data-testid="insect-panel" class="flex flex-col gap-2">
+<div class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
+
   <Frame title="Model Parameters">
     <div class="flex flex-col gap-2">
       <DatePicker />
@@ -142,6 +138,7 @@
     disabled={$overlayLoading}
     click={submit}
   />
+
   {#if $overlayLoading}
     <Loading />
   {:else}

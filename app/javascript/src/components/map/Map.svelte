@@ -1,10 +1,11 @@
 <script lang="ts">
   import { Loader } from '@googlemaps/js-api-loader';
-  import { onMount, setContext, type Snippet } from 'svelte';
-  import Loading from '../common/Loading.svelte';
+  import { onMount, setContext } from 'svelte';
   import GoogleWrapper from '@ts/googleWrapper';
-  import MapButtons from './MapButtons.svelte';
   import { mapKey, mapsApiKey } from '@store';
+  import Loading from '../common/Loading.svelte';
+  import MapButtons from './MapButtons.svelte';
+  import SeverityOverlay from './SeverityOverlay.svelte';
 
   let container = $state<HTMLElement>();
   let promise = $state<Promise<void>>();
@@ -41,8 +42,6 @@
     mapId: 'cb1bee6358753186',
   };
 
-  const { children } = $props<{ children: Snippet }>();
-
   setContext(mapKey, {
     getMap: () => map,
     getGoogle: () => googleInstance,
@@ -73,6 +72,5 @@
 <div bind:this={container} id="google-map"></div>
 {#if map}
   <MapButtons />
-  {@render children()}
+  <SeverityOverlay />
 {/if}
-

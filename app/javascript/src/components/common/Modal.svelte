@@ -61,7 +61,6 @@
   class="z-[70] fixed inset-0 bg-black/30 transition-opacity duration-300 ease-in-out"
   role="none"
   onclick={close}
- 
 ></div>
 
 <!-- Modal box -->

@@ -3,11 +3,10 @@
   import Interface from '@components/interface/Interface.svelte';
   import MobileHeader from '@components/interface/MobileHeader.svelte';
   import Sidebar from '@components/interface/Sidebar.svelte';
+  import Map from '@components/map/Map.svelte';
+  import Status from '@components/map/Status.svelte';
   import ColorSelector from '@components/map/ColorSelector.svelte';
   import Legend from '@components/map/Legend.svelte';
-  import Map from '@components/map/Map.svelte';
-  import SeverityOverlay from '@components/map/SeverityOverlay.svelte';
-  import Status from '@components/map/Status.svelte';
 
   import { modal } from '@store';
 </script>
@@ -16,18 +15,16 @@
   <MobileHeader />
 </header>
 
-<main class="flex mt-12 sm:mt-0 w-full h-screen">
+<main class="flex mt-12 sm:mt-0 w-full h-[calc(100vh-3rem)] sm:h-full">
   <Sidebar>
     <Interface />
   </Sidebar>
 
   <div class="relative w-full h-full">
-    <Map>
-      <SeverityOverlay />
-      <Status />
-      <ColorSelector />
-      <Legend />
-    </Map>
+    <Map />
+    <Status />
+    <ColorSelector />
+    <Legend />
   </div>
 </main>
 
