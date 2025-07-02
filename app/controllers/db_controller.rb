@@ -13,10 +13,9 @@ class DbController < ApplicationController
     pest = Pest.find(params[:pest_id])
     render json: {
       legend: pest.severity_legend,
-      info: pest.severity_info,
+      info: pest.severity_info
     }
   end
-
 
   def disease_panel
     @crops = create_crops_for_disease_panel.unshift(create_any_option(Disease))
