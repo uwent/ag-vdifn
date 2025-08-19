@@ -45,21 +45,12 @@ set :assets_prefix, "vite/.vite"
 
 # Run npm install before precompile
 before "deploy:assets:precompile", "deploy:npm_install"
-# Run explicit vite build with no-watch flag before precompile
-before "deploy:assets:precompile", "deploy:vite_build"
 
 namespace :deploy do
   desc "Run npm install"
   task :npm_install do
     on roles(:app) do
       execute "cd #{release_path} && pnpm install --silent --force"
-    end
-  end
-
-  desc "Build Vite assets with watch disabled"
-  task :vite_build do
-    on roles(:app) do
-      execute "cd #{release_path} && NODE_ENV=production pnpm build --mode production"
     end
   end
 
