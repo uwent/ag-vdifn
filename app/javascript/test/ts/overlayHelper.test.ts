@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import OverlayHelper from '@ts/overlayHelper';
 import DatabaseClient from '@ts/databaseClient';

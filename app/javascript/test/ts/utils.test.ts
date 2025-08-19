@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { describe, it, expect } from 'vitest';
 import { f_to_c, c_to_f, round, strToNum } from '@ts/utils';
 

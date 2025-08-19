@@ -35,12 +35,12 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    setupFiles: ['test/test_setup.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
     include: ['test/**/*.test.ts'],
-    environment: 'jsdom',
+    environment: 'happy-dom',
+    setupFiles: ['test/setup.ts'],
   },
   define: envKeys,
 });

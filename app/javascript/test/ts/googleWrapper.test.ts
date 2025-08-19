@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GoogleWrapper from '@ts/googleWrapper';
 import RectangleOption from '@ts/rectangleOption';
