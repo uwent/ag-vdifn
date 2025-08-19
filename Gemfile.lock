@@ -252,6 +252,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.0)
+    rack-attack (6.7.0)
+      rack (>= 1.0, < 4)
     rack-proxy (0.7.7)
       rack
     rack-session (2.1.1)
@@ -458,6 +460,7 @@ DEPENDENCIES
   pg
   pry-rails
   puma
+  rack-attack
   rails (~> 8.0)
   railties (~> 8.0)
   rspec-rails
