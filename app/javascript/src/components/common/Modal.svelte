@@ -1,58 +1,23 @@
-<style lang="scss">
-  @use '../../scss/variables.scss' as vars;
-
-  .modal-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-  }
-
-  .modal {
-    position: absolute;
-    left: 60%;
-    top: 50%;
-    width: calc(100vw - 4em);
-    max-width: 32em;
-    max-height: 80%;
-    overflow: auto;
-    transform: translate(-60%, -50%);
-    padding: 1em;
-    border-radius: 0.2em;
-    background: white;
-    z-index: 1;
-
-    @media #{vars.$medium-up} {
-      position: fixed;
-      left: 62%;
-    }
-  }
-
-  h2 {
-    margin: 0px;
-  }
-</style>
-
 <script lang="ts">
   import { onDestroy, type Snippet } from 'svelte';
-  import Button from './Button.svelte';
+  import Button from './SubmitButton.svelte';
+  import { modal } from '@store';
 
   let {
-    close = () => {},
     name = 'Information',
-    maxWidth = '32em',
+    maxWidth = '32rem',
     children,
   } = $props<{
-    close: () => void;
     name?: string;
     maxWidth?: string;
     children?: Snippet;
   }>();
 
-  let modal = $state<HTMLElement | null>(null);
+  const close = () => {
+    modal.set(null);
+  };
+
+  let modalElement = $state<HTMLElement | null>(null);
 
   const handle_keydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
@@ -62,7 +27,7 @@
 
     if (e.key === 'Tab') {
       // trap focus
-      const nodes = modal?.querySelectorAll('*');
+      const nodes = modalElement?.querySelectorAll('*');
       if (!nodes) return;
 
       const tabbable = Array.from(nodes).filter(
@@ -91,17 +56,25 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" role="none" onclick={close} onkeydown={() => close()}></div>
-
+<!-- Modal backdrop -->
 <div
-  class="modal"
+  class="z-[70] fixed inset-0 bg-black/30 transition-opacity duration-300 ease-in-out"
+  role="none"
+  onclick={close}
+></div>
+
+<!-- Modal box -->
+<div
+  class="top-1/2 left-[60%] z-[71] fixed bg-white shadow-xl p-4 rounded w-[calc(100vw-4em)] max-w-[32em] max-h-[80%] overflow-auto -translate-x-[60%] -translate-y-1/2 transform"
   role="dialog"
   aria-modal="true"
-  bind:this={modal}
-  aria-labelledby="affliction-modal"
+  bind:this={modalElement}
+  aria-labelledby="pest-modal"
   style={`max-width: ${maxWidth}`}
 >
-  <h2 id="affliction-modal">{name}</h2>
+  <h2 id="pest-modal" class="mb-4 font-semibold text-lg">{name}</h2>
   {@render children?.()}
-  <Button click={close} text="Close" />
+  <div class="mt-4 text-right">
+    <Button click={close} text="Close" />
+  </div>
 </div>

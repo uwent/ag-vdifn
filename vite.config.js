@@ -3,6 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import ViteRails from 'vite-plugin-rails';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
+import tailwindcss from '@tailwindcss/vite';
 
 const envKeys = {};
 
@@ -15,6 +16,7 @@ export default defineConfig({
   plugins: [
     tsconfigPaths(),
     svelte(),
+    tailwindcss(),
     ViteRails({
       fullReload: {
         additionalPaths: ['app/views/**/*'],
@@ -25,7 +27,7 @@ export default defineConfig({
     alias: {
       '@public': path.resolve(__dirname, 'public'),
     },
-    conditions: process.env.VITEST ? ['browser'] : undefined,
+    conditions: ['browser'],
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
@@ -33,12 +35,12 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom',
     setupFiles: ['test/test_setup.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
-    exclude: ['**/.test-archive/**', '**/node_modules/**'],
+    include: ['test/**/*.test.ts'],
+    environment: 'jsdom',
   },
   define: envKeys,
 });

@@ -1,39 +1,21 @@
-<style lang="scss">
-  .btn {
-    height: 40px;
-    width: 40px;
-    background-color: #fff;
-    border: 2px solid #fff;
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    color: rgb(25, 25, 25);
-    cursor: pointer;
-    margin-top: 8px;
-    margin-right: 10px;
-    text-align: center;
-    padding: 0;
-    color: #666666;
+<style lang="postcss">
+  @reference "tailwindcss";
 
-    &:hover {
-      color: #333333;
-    }
+  button {
+    @apply text-gray-500 hover:text-gray-700 text-center cursor-pointer;
   }
 </style>
 
 <script lang="ts">
   import { mapKey } from '@store';
   import { getContext, onMount } from 'svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faLocationCrosshairs, faLocationDot, faExpand } from '@fortawesome/free-solid-svg-icons';
+  import { IconArrowsMaximize, IconMapPin, IconMapPinX } from '@tabler/icons-svelte';
   import { bounds, mapExtent, userLocation } from '@store';
   import type { LatLng } from '@types';
 
   const { getMap } = getContext<any>(mapKey);
   const map = getMap();
-  const position = google.maps.ControlPosition.RIGHT_TOP;
-
-  let zoomBtn: HTMLDivElement;
-  let locationBtn: HTMLDivElement;
+  let buttons: HTMLDivElement;
   let marker: google.maps.marker.AdvancedMarkerElement;
 
   function zoomExtents() {
@@ -48,7 +30,7 @@
     }
   }
 
-  function handlePosition(position) {
+  function handlePosition(position: GeolocationPosition) {
     $userLocation = {
       lat: position.coords.latitude,
       lng: position.coords.longitude,
@@ -75,29 +57,26 @@
   }
 
   onMount(() => {
-    map.controls[position].push(zoomBtn);
-    map.controls[position].push(locationBtn);
+    const controlPosition = google.maps.ControlPosition.RIGHT_TOP;
+    map.controls[controlPosition].push(buttons);
   });
 
-  $: setMarker($userLocation);
+  $effect(() => {
+    const loc = $userLocation;
+    setMarker(loc);
+  });
 </script>
 
-<div bind:this={zoomBtn}>
-  <button class="btn" title="Zoom extents" on:click={zoomExtents}>
-    <FontAwesomeIcon icon={faExpand as any} size="2x" />
+<div bind:this={buttons} class="flex flex-col gap-4 bg-white shadow-md m-[10px] p-[8px]">
+  <button title="Zoom extents" onclick={zoomExtents}>
+    <IconArrowsMaximize />
   </button>
-</div>
 
-<div bind:this={locationBtn}>
-  <button
-    class="btn"
-    title={$userLocation ? 'Hide location' : 'Show my location'}
-    on:click={handleLocation}
-  >
+  <button title={$userLocation ? 'Hide location pin' : 'Show my location'} onclick={handleLocation}>
     {#if $userLocation}
-      <FontAwesomeIcon icon={faLocationDot as any} size="2x" />
+      <IconMapPinX class="text-black" />
     {:else}
-      <FontAwesomeIcon icon={faLocationCrosshairs as any} size="2x" />
+      <IconMapPin />
     {/if}
   </button>
 </div>

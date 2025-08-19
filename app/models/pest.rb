@@ -13,7 +13,7 @@ class Pest < ApplicationRecord
   end
 
   def biofix_date
-    Date.new(Date.current.year, (biofix_mm || 1), (biofix_dd || 1))
+    Date.new(Date.current.year, biofix_mm || 1, biofix_dd || 1)
   end
 
   def biofix_label

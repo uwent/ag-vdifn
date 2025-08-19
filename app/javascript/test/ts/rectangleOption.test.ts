@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import RectangleOption from '@ts/rectangleOption';
 
 describe('RectangleOption', () => {
-  let map;
+  let map: Partial<google.maps.Map>;
 
   beforeEach(() => {
     // Create a simple mock map object

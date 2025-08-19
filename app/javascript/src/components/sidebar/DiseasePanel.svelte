@@ -1,18 +1,12 @@
-<style lang="scss">
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-</style>
-
 <script lang="ts">
   import { format, parseISO, subWeeks } from 'date-fns';
   import { onMount, setContext } from 'svelte';
   import ModelSelection from './ModelSelection.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
   import DatePicker from './DatePicker.svelte';
-  import Button from '../common/Button.svelte';
+  import Button from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
+  import Frame from '../common/Frame.svelte';
   import {
     overlayLoading,
     pestId,
@@ -48,7 +42,6 @@
     let pest = $diseasePanelState.selectedPest;
     $selectedDisease = pest;
     initialModelName = pest.local_name;
-    // submitOnLoad = false;
   } else {
     if ($selectedDisease) initialModelName = $selectedDisease.local_name;
   }
@@ -78,7 +71,8 @@
     $diseasePanelState = {
       ...$diseasePanelState,
       selectedPest: pest,
-      mapExtent: $mapExtent,
+      selectedExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
       loaded: true,
     };
     $diseasePanelParams = params;
@@ -114,9 +108,13 @@
     if (submitOnLoad) submit();
   });
 
-  // Reactive statements
+  $inspect($diseasePanelState);
+  $inspect($mapExtent);
+
   $effect(() => {
-    if ($diseasePanelState.loaded && $diseasePanelState.mapExtent != $mapExtent) submit();
+    if ($diseasePanelState.loaded && $diseasePanelState.selectedExtent !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -124,19 +122,23 @@
   });
 </script>
 
-<div data-testid="disease-panel">
+<div class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
-  </fieldset>
+
+  <Frame title="Model Parameters">
+    <div class="flex flex-col gap-2">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
+  </Frame>
+
   <Button
     title="Submit parameters. Data load may take several seconds."
     ariaLabel="Submit parameters"
     disabled={$overlayLoading}
     click={submit}
   />
+
   {#if $overlayLoading}
     <Loading />
   {:else}

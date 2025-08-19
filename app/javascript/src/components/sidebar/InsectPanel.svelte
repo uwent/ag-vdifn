@@ -4,9 +4,10 @@
   import ModelSelection from './ModelSelection.svelte';
   import DatePicker from './DatePicker.svelte';
   import TminMaxDisplay from './TminMaxDisplay.svelte';
-  import Button from '../common/Button.svelte';
+  import SubmitButton from '../common/SubmitButton.svelte';
   import Loading from '../common/Loading.svelte';
   import LoadStatus from '../common/LoadStatus.svelte';
+  import Frame from '../common/Frame.svelte';
   import {
     defaults,
     endDate,
@@ -73,7 +74,8 @@
     $insectPanelState = {
       ...$insectPanelState,
       selectedPest: pest,
-      mapExtent: $mapExtent,
+      selectedExtent: $mapExtent,
+      mapExtent: extents[$mapExtent],
       loaded: true,
     };
     $insectPanelParams = params;
@@ -111,7 +113,9 @@
   });
 
   $effect(() => {
-    if ($insectPanelState.loaded && $insectPanelState.mapExtent !== $mapExtent) submit();
+    if ($insectPanelState.loaded && $insectPanelState.selectedExtent !== $mapExtent) {
+      submit();
+    }
   });
 
   $effect(() => {
@@ -119,18 +123,22 @@
   });
 </script>
 
-<div data-testid="insect-panel">
+<div class="flex flex-col gap-4">
   <ModelSelection initialModel={initialModelName} />
-  <fieldset>
-    <legend>Model parameters</legend>
-    <DatePicker />
-    <TminMaxDisplay />
-  </fieldset>
-  <Button
+
+  <Frame title="Model Parameters">
+    <div class="flex flex-col gap-2">
+      <DatePicker />
+      <TminMaxDisplay />
+    </div>
+  </Frame>
+
+  <SubmitButton
     title="Submit parameters. Data load may take several seconds."
     disabled={$overlayLoading}
     click={submit}
   />
+
   {#if $overlayLoading}
     <Loading />
   {:else}

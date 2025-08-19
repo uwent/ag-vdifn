@@ -1,12 +1,3 @@
-<style lang="scss">
-  .status {
-    margin: 1em 0;
-    text-align: center;
-    font-size: smaller;
-    font-style: italic;
-  }
-</style>
-
 <script lang="ts">
   // Displays prompt to submit when no model is submitted
   // Displays status message from Loading component after submit
@@ -28,7 +19,7 @@
 </script>
 
 {#if message}
-  <div class="status">
+  <div class="text-gray-600 text-sm text-center italic">
     {message}
   </div>
 {/if}

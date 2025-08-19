@@ -18,6 +18,7 @@ import type {
   MapExtents,
   MapExtentOption,
 } from '@types';
+import type { Snippet } from 'svelte';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
 export const dev = env === 'development';
@@ -91,6 +92,8 @@ export const selectedPanel = writable<PanelType>(defaults.panel);
 export const diseasePanelParams = writable<SeverityParams>();
 export const insectPanelParams = writable<SeverityParams>();
 
+export const showLegend = writable(false);
+
 export const diseasePanelState = writable({
   loaded: false,
 } as PestPanelState);
@@ -133,3 +136,9 @@ export const selectedDDModel = writable<DegreeDayModel>();
 export const customPanelParams = writable<CustomPanelParams>();
 export const twoPointGradientState = writable<GradientState>();
 export const threePointGradientState = writable<GradientState>();
+
+// Sidebar state
+export const sidebarOpen = writable<boolean>(false);
+
+// Modal
+export const modal = writable<{ name: string; content: Snippet; maxWidth?: string } | null>(null);
