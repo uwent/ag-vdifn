@@ -10,22 +10,22 @@ const selectedPanel = 'disease';
 
 // Mock dependencies
 vi.mock('@ts/databaseClient', () => ({
-  default: vi.fn().mockImplementation(() => ({
-    fetchSeverities: vi.fn(),
-    fetchPointDetails: vi.fn(),
-  })),
+  default: vi.fn().mockImplementation(function (this: any) {
+    this.fetchSeverities = vi.fn();
+    this.fetchPointDetails = vi.fn();
+  }),
 }));
 
 vi.mock('@ts/googleWrapper');
 vi.mock('@ts/rectangleOption', () => ({
-  default: vi.fn().mockImplementation((lat, lng, map) => ({
-    bounds: {},
-    fillColor: '#FF0000',
-    strokeColor: '#000000',
-    strokeWeight: 1,
-    fillOpacity: 0.5,
-    map: map,
-  })),
+  default: vi.fn().mockImplementation(function (this: any, lat, lng, map) {
+    this.bounds = {};
+    this.fillColor = '#FF0000';
+    this.strokeColor = '#000000';
+    this.strokeWeight = 1;
+    this.fillOpacity = 0.5;
+    this.map = map;
+  }),
 }));
 
 vi.mock('tippy.js', () => ({
@@ -108,7 +108,10 @@ describe('OverlayHelper', () => {
     };
 
     // Mock the DatabaseClient constructor
-    vi.mocked(DatabaseClient).mockImplementation(() => mockDatabaseClient);
+    vi.mocked(DatabaseClient).mockImplementation(function (this: any) {
+      this.fetchSeverities = mockDatabaseClient.fetchSeverities;
+      this.fetchPointDetails = mockDatabaseClient.fetchPointDetails;
+    });
 
     // RectangleOption is already mocked in vi.mock('./rectangleOption', ...)
 
@@ -308,10 +311,11 @@ describe('OverlayHelper', () => {
         },
       };
 
-      // Mock the rectangle click listener to call the callback
+      let clickCallback: any;
+      // Mock the rectangle click listener to capture the callback
       mockRectangle.addListener.mockImplementation((event: any, callback: any) => {
         if (event === 'click') {
-          callback(eventMock);
+          clickCallback = callback;
         }
         return { remove: vi.fn() };
       });
@@ -325,21 +329,20 @@ describe('OverlayHelper', () => {
         in_f: true,
       };
 
-      // Call method
+      // Call method to set up event listeners
       overlayHelper.addInfoWindowEvents(selectedPanel, severityParams);
 
       // Verify rectangle click listener was added
       expect(mockRectangle.addListener).toHaveBeenCalledWith('click', expect.any(Function));
+
+      // Now trigger the click
+      await clickCallback(eventMock);
 
       // Verify info window was created with loading template
       expect(mockGoogleWrapper.createInfoWindow).toHaveBeenCalledWith({
         content: expect.stringContaining('lds-ring'),
         position: eventMock.latLng,
       });
-
-      // Wait for promises to resolve
-      vi.useFakeTimers();
-      await vi.runAllTimersAsync();
 
       // Verify point details were fetched
       expect(mockDatabaseClient.fetchPointDetails).toHaveBeenCalledWith({
