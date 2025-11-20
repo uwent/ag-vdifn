@@ -22,7 +22,16 @@ import type { Snippet } from 'svelte';
 
 export const env = process.env.NODE_ENV || process.env.RAILS_ENV || 'production';
 export const dev = env === 'development';
-export const baseURL = dev ? '' : '/vdifn';
+export const baseURL = (() => {
+  switch (env) {
+    case 'production':
+      return '/vdifn';
+    case 'test':
+      return 'http://example.com';
+    default:
+      return '';
+  }
+})();
 export const mapsApiKey = process.env.GOOGLE_MAPS_KEY;
 
 // for AgWeather queries

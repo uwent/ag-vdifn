@@ -108,8 +108,8 @@
     if (submitOnLoad) submit();
   });
 
-  $inspect($diseasePanelState);
-  $inspect($mapExtent);
+  // $inspect($diseasePanelState);
+  // $inspect($mapExtent);
 
   $effect(() => {
     if ($diseasePanelState.loaded && $diseasePanelState.selectedExtent !== $mapExtent) {

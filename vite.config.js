@@ -35,12 +35,22 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    setupFiles: ['test/test_setup.ts'],
     coverage: {
       reporter: ['text', 'json', 'html'],
+      // Explicitly include source files for coverage
+      include: ['app/javascript/**/*.{js,ts,svelte}'],
+      // Exclude test files and other non-source files
+      exclude: [
+        'app/javascript/test/**',
+        '**/*.test.{js,ts}',
+        '**/*.spec.{js,ts}',
+        '**/node_modules/**',
+        '**/*.config.{js,ts}',
+      ],
     },
-    include: ['test/**/*.test.ts'],
-    environment: 'jsdom',
+    include: ['**/*.test.ts'],
+    environment: 'happy-dom',
+    setupFiles: ['test/setup.ts'],
   },
   define: envKeys,
 });

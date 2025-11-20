@@ -1,7 +1,7 @@
 <script lang="ts">
   import { format } from 'date-fns';
   import type { Snippet } from 'svelte';
-  import { sidebarOpen } from '@store';
+  import { baseURL, sidebarOpen } from '@store';
 
   let { children } = $props<{ children: Snippet }>();
 </script>
@@ -9,10 +9,10 @@
 {#snippet logo(title: string, imgUrl: string, href: string)}
   <a
     class="inline-block bg-contain bg-no-repeat bg-center mx-1 border border-white hover:border-gray-400 rounded w-11 h-11 logo"
-    style="background-image: url('{imgUrl}')"
-    {title}
+    style={`background-image: url('${baseURL}${imgUrl}')`}
+    title={title}
     aria-label={title}
-    {href}
+    href={href}
     target="_blank"
   ></a>
 {/snippet}

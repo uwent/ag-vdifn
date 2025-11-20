@@ -13,8 +13,44 @@ import ENDPOINTS from './endpoints';
 
 export default class DatabaseClient implements DatabaseClientInterface {
   constructor() {
-    const token = (document.querySelector('[name=csrf-token]') as HTMLMetaElement).content;
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+    const token = this.getCsrfToken();
+    if (token) {
+      axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+    }
+  }
+
+  private getCsrfToken(): string | null {
+    if (typeof document === 'undefined') {
+      return null;
+    }
+    const metaElement = document.querySelector('[name=csrf-token]') as HTMLMetaElement;
+    return metaElement?.content || null;
+  }
+
+  // log activity in development mode
+  private log(
+    fn: string,
+    args: {
+      endpoint: string;
+      response: any;
+      params?: any;
+      data?: any;
+    },
+  ): void {
+    if (dev) {
+      const { endpoint, response, params, data } = args;
+      console.log(
+        `DB >> ${fn}`,
+        '\nEndpoint:',
+        endpoint,
+        params ? '\nParams:' : '',
+        params,
+        '\nResponse:',
+        response,
+        data ? '\nData:' : '',
+        data,
+      );
+    }
   }
 
   // get list of crops with diseases for model selection
@@ -24,16 +60,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.get(endpoint);
       data = response.data;
-      if (dev)
-        console.log(
-          'DB >> fetchDiseasePanel',
-          '\nEndpoint:',
-          endpoint,
-          '\nResponse:',
-          response,
-          '\nData:',
-          data,
-        );
+      this.log('fetchDiseasePanel', { endpoint, response, data });
     } catch (e) {
       console.log('Error fetching disease panel:', e);
     }
@@ -47,16 +74,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.get(endpoint);
       data = response.data;
-      if (dev)
-        console.log(
-          'DB >> fetchInsectPanel',
-          '\nEndpoint:',
-          endpoint,
-          '\nResponse:',
-          response,
-          '\nData:',
-          data,
-        );
+      this.log('fetchInsectPanel', { endpoint, response, data });
     } catch (e) {
       console.log('Error fetching insect panel:', e);
     }
@@ -70,16 +88,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.get(endpoint);
       data = response.data;
-      if (dev)
-        console.log(
-          'DB >> fetchDDModels',
-          '\nEndpoint:',
-          endpoint,
-          '\nResponse:',
-          response,
-          '\nData:',
-          data,
-        );
+      this.log('fetchCustomPanel', { endpoint, response, data });
     } catch (e) {
       console.log('Error fetching custom panel:', e);
     }
@@ -94,18 +103,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.get(endpoint, { params: params });
       data = response.data;
-      if (dev)
-        console.log(
-          'DB >> fetchSeverityLegend',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-          '\nData:',
-          data,
-        );
+      this.log('fetchSeverityLegend', { endpoint, response, params, data });
     } catch (e) {
       console.log('Error fetching severity legend:', e);
     }
@@ -118,16 +116,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     try {
       const response = await axios.get(endpoint, { params: params });
       data = response.data;
-      if (dev)
-        console.log(
-          'DB >> fetchSeverities',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-        );
+      this.log('fetchSeverities', { endpoint, response, params, data });
     } catch (e) {
       console.log('Error fetching severities:', e);
     }
@@ -139,16 +128,7 @@ export default class DatabaseClient implements DatabaseClientInterface {
     const params = { ...pointDetailsParams };
     try {
       const response = await axios.get(endpoint, { params: params });
-      if (dev)
-        console.log(
-          'DB >> fetchPointDetails',
-          '\nEndpoint:',
-          endpoint,
-          '\nParams:',
-          params,
-          '\nResponse:',
-          response,
-        );
+      this.log('fetchPointDetails', { endpoint, response, params });
       return response.data;
     } catch (e) {
       console.log('Error fetching point details:', e);

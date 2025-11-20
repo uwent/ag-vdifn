@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GoogleWrapper from '@ts/googleWrapper';
 import RectangleOption from '@ts/rectangleOption';
@@ -6,24 +8,24 @@ import RectangleOption from '@ts/rectangleOption';
 const createMockGoogleMaps = () => {
   return {
     maps: {
-      Map: vi.fn().mockImplementation((container, options) => ({
-        container,
-        options,
-      })),
-      LatLng: vi.fn().mockImplementation((lat, lng) => ({
-        lat: () => lat,
-        lng: () => lng,
-      })),
-      Rectangle: vi.fn().mockImplementation((options) => ({
-        ...options,
-        setMap: vi.fn(),
-        getBounds: vi.fn(),
-      })),
-      InfoWindow: vi.fn().mockImplementation((options) => ({
-        ...options,
-        open: vi.fn(),
-        close: vi.fn(),
-      })),
+      Map: vi.fn().mockImplementation(function (this: any, container, options) {
+        this.container = container;
+        this.options = options;
+      }),
+      LatLng: vi.fn().mockImplementation(function (this: any, lat, lng) {
+        this.lat = () => lat;
+        this.lng = () => lng;
+      }),
+      Rectangle: vi.fn().mockImplementation(function (this: any, options) {
+        Object.assign(this, options);
+        this.setMap = vi.fn();
+        this.getBounds = vi.fn();
+      }),
+      InfoWindow: vi.fn().mockImplementation(function (this: any, options) {
+        Object.assign(this, options);
+        this.open = vi.fn();
+        this.close = vi.fn();
+      }),
     },
   };
 };

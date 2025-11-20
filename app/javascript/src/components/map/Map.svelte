@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Loader } from '@googlemaps/js-api-loader';
+  import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
   import { onMount, setContext } from 'svelte';
   import GoogleWrapper from '@ts/googleWrapper';
   import { mapKey, mapsApiKey } from '@store';
@@ -13,8 +13,8 @@
   let googleInstance = $state<GoogleWrapper>();
   let error = $state<Error>();
 
-  const loader = new Loader({
-    apiKey: mapsApiKey || '',
+  setOptions({
+    key: mapsApiKey || '',
   });
 
   const mapOptions: google.maps.MapOptions = {
@@ -49,7 +49,7 @@
 
   async function initMap() {
     try {
-      await loader.importLibrary('maps');
+      await importLibrary('maps');
       googleInstance = new GoogleWrapper(google);
       if (container) map = googleInstance.createMap(container, mapOptions);
     } catch (e) {

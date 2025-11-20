@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import { server } from '../msw/server';
 import { http, HttpResponse } from 'msw';
 import { vi } from 'vitest';
@@ -5,6 +7,9 @@ import ENDPOINTS from '@ts/endpoints';
 import { mockData } from '../msw/handlers';
 import DatabaseClient from '@ts/databaseClient';
 import type { PointDetailsParams, SeverityParams } from '@types';
+
+// Mock the getCsrfToken method
+vi.spyOn(DatabaseClient.prototype, 'getCsrfToken' as any).mockReturnValue('test-csrf-token');
 
 const db = new DatabaseClient();
 const consoleSpy = vi.spyOn(console as Console, 'log');
