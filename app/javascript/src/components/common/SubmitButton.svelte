@@ -4,8 +4,8 @@
   const {
     click,
     text = 'Submit',
-    title = text,
-    ariaLabel = title,
+    title,
+    ariaLabel,
     disabled = false,
   } = $props<{
     click: () => void;
@@ -14,12 +14,15 @@
     ariaLabel?: string;
     disabled?: boolean;
   }>();
+
+  const computedTitle = $derived(title ?? text);
+  const computedAriaLabel = $derived(ariaLabel ?? computedTitle);
 </script>
 
 <button
   class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 px-6 py-2 border border-gray-300 rounded-md w-full font-semibold text-white text-center cursor-pointer disabled:cursor-not-allowed"
-  {title}
-  aria-label={ariaLabel}
+  title={computedTitle}
+  aria-label={computedAriaLabel}
   onclick={click}
   {disabled}
 >
