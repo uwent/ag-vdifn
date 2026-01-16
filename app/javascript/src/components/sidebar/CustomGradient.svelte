@@ -16,12 +16,12 @@
     @apply disabled:bg-gray-400 bg-linear-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded text-white text-sm disabled:cursor-not-allowed;
   }
 
-  .gradient-row-with-color {
-    @apply items-center gap-x-4 grid grid-cols-[1fr_26px] text-center;
+  .gradient-row-2col {
+    @apply items-center gap-x-4 grid grid-cols-[26px_1fr] text-center;
   }
 
-  .gradient-row-multi-col {
-    @apply items-center gap-x-4 grid text-center;
+  .gradient-row-3col {
+    @apply items-center gap-x-4 grid grid-cols-[26px_1fr_1fr] text-center;
   }
 </style>
 
@@ -249,7 +249,7 @@
   <!-- Two-point gradient -->
   {#if gradientType === 'two-point'}
     <div class="space-y-2">
-      <div class="grid-cols-[26px_1fr_1fr] gradient-row-multi-col">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(0, twoPointState.levels)}"
@@ -267,7 +267,7 @@
       </div>
 
       {#each twoPointRanges.values as range, index}
-        <div class="grid-cols-[26px_1fr] gradient-row-multi-col">
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, twoPointState.levels)}"
@@ -278,7 +278,7 @@
         </div>
       {/each}
 
-      <div class="grid-cols-[26px_1fr_1fr] gradient-row-multi-col">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"
@@ -300,7 +300,7 @@
   <!-- Three-point gradient -->
   {#if gradientType === 'three-point'}
     <div class="space-y-2">
-      <div class="grid-cols-[26px_1fr_1fr] gradient-row-multi-col">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(0, threePointState.levels)}"
@@ -318,7 +318,7 @@
       </div>
 
       {#each threePointRanges.lower as range, index}
-        <div class="grid-cols-[26px_1fr] gradient-row-multi-col">
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, threePointState.levels)}"
@@ -326,11 +326,10 @@
           <div class="range-box">
             {`${range[0]} - ${range[1]}`}
           </div>
-
         </div>
       {/each}
 
-      <div class="grid-cols-[26px_1fr_1fr] gradient-row-multi-col">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"
@@ -356,7 +355,7 @@
       </div>
 
       {#each threePointRanges.upper as range, index}
-        <div class="grid-cols-[26px_1fr] gradient-row-multi-col">
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, threePointState.levels)}"
@@ -367,7 +366,7 @@
         </div>
       {/each}
 
-      <div class="grid-cols-[26px_1fr] gradient-row-multi-col">
+      <div class="gradient-row-2col">
         <div
           class="color-box"
           style="background: {colorHelper.color(0, threePointState.levels)}"
