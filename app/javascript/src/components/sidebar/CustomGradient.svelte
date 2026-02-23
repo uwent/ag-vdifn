@@ -5,22 +5,23 @@
   }
 
   .range-box {
-    @apply flex justify-center items-center bg-gray-200 shadow w-full text-sm;
+    @apply flex justify-center items-center bg-gray-200 shadow w-full h-7 text-sm;
   }
 
   .color-box {
-    @apply w-[30px] h-[30px];
+    @apply w-7.5 h-7.5;
   }
 
   .btn {
-    @apply disabled:bg-gray-400 bg-gradient-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded text-white text-sm disabled:cursor-not-allowed;
+    @apply disabled:bg-gray-400 bg-linear-to-b from-[#249dde] hover:from-[#1c87c9] to-[#1c87c9] hover:to-[#176da8] shadow-inner py-2 border border-gray-500 rounded text-white text-sm disabled:cursor-not-allowed;
   }
 
-  .class1 {
-    @apply items-center gap-x-4 grid grid-cols-[1fr_26px] text-center;
+  .gradient-row-2col {
+    @apply items-center gap-x-4 grid grid-cols-[26px_1fr] text-center;
   }
-  .class2 {
-    @apply items-center gap-x-4 grid text-center;
+
+  .gradient-row-3col {
+    @apply items-center gap-x-4 grid grid-cols-[26px_1fr_1fr] text-center;
   }
 </style>
 
@@ -248,7 +249,7 @@
   <!-- Two-point gradient -->
   {#if gradientType === 'two-point'}
     <div class="space-y-2">
-      <div class="grid-cols-[26px_1fr_1fr]">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(0, twoPointState.levels)}"
@@ -266,7 +267,7 @@
       </div>
 
       {#each twoPointRanges.values as range, index}
-        <div class="grid-cols-[26px_1fr] class2">
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, twoPointState.levels)}"
@@ -277,7 +278,7 @@
         </div>
       {/each}
 
-      <div class="grid-cols-[26px_1fr_1fr] class2">
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(twoPointState.levels, twoPointState.levels)}"
@@ -299,14 +300,12 @@
   <!-- Three-point gradient -->
   {#if gradientType === 'three-point'}
     <div class="space-y-2">
-      <div class="class1">
-        <div class="range-box">0</div>
+      <div class="gradient-row-3col">
         <div
           class="color-box"
           style="background: {colorHelper.color(0, threePointState.levels)}"
         ></div>
-      </div>
-      <div class="class1">
+        <div class="range-box">0</div>
         <input
           type="number"
           class="input"
@@ -316,23 +315,25 @@
           bind:value={threePointState.inputs[0]}
           oninput={validateInputs}
         />
-        <div></div>
       </div>
 
       {#each threePointRanges.lower as range, index}
-        <div class="class1">
-          <div class="range-box">
-            {`${range[0]} - ${range[1]}`}
-          </div>
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, threePointState.levels)}"
           ></div>
+          <div class="range-box">
+            {`${range[0]} - ${range[1]}`}
+          </div>
         </div>
       {/each}
 
-      <div class="class1">
-        <div class="flex flex-col gap-1">
+      <div class="gradient-row-3col">
+        <div
+          class="color-box"
+          style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"
+        ></div>
           <input
             type="number"
             class="input"
@@ -351,26 +352,25 @@
             bind:value={threePointState.inputs[2]}
             oninput={validateInputs}
           />
-        </div>
-        <div
-          class="color-box"
-          style="background: {colorHelper.color(threePointState.levels, threePointState.levels)}"
-        ></div>
       </div>
 
       {#each threePointRanges.upper as range, index}
-        <div class="class1">
-          <div class="range-box">
-            {`${range[0]} - ${range[1]}`}
-          </div>
+        <div class="gradient-row-2col">
           <div
             class="color-box"
             style="background: {colorHelper.color(index + 1, threePointState.levels)}"
           ></div>
+          <div class="range-box">
+            {`${range[0]} - ${range[1]}`}
+          </div>
         </div>
       {/each}
 
-      <div class="class1">
+      <div class="gradient-row-2col">
+        <div
+          class="color-box"
+          style="background: {colorHelper.color(0, threePointState.levels)}"
+        ></div>
         <input
           type="number"
           class="input"
@@ -380,10 +380,6 @@
           bind:value={threePointState.inputs[3]}
           oninput={validateInputs}
         />
-        <div
-          class="color-box"
-          style="background: {colorHelper.color(0, threePointState.levels)}"
-        ></div>
       </div>
     </div>
   {/if}

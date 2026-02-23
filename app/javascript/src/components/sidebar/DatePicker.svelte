@@ -20,11 +20,11 @@
   const tryParseDate = (dateStr: string): Date | null => (dateStr ? parseISO(dateStr) : null);
 
   let {
-    today = formatDate(subDays(new Date(), 1)),
-    endDateValue = today || '',
-    defaultEndDateValue = today || '',
-    startDateValue = defaultStartDate || '',
-    defaultStartDateValue = defaultStartDate || '',
+    today: initialToday,
+    endDateValue: initialEndDateValue,
+    defaultEndDateValue: initialDefaultEndDateValue,
+    startDateValue: initialStartDateValue,
+    defaultStartDateValue: initialDefaultStartDateValue,
     startLabel = 'Start date',
   } = $props<{
     today?: string;
@@ -34,6 +34,12 @@
     defaultStartDateValue?: string;
     startLabel?: string;
   }>();
+
+  const today = $derived(initialToday ?? formatDate(subDays(new Date(), 1)));
+  let endDateValue = $derived(initialEndDateValue ?? today);
+  let defaultEndDateValue = $derived(initialDefaultEndDateValue ?? today);
+  let startDateValue = $derived(initialStartDateValue ?? defaultStartDate);
+  let defaultStartDateValue = $derived(initialDefaultStartDateValue ?? defaultStartDate);
 
   $effect(() => {
     if (tryParseDate(startDateValue)) $startDate = startDateValue;
