@@ -43,21 +43,12 @@ set :rbenv_ruby, File.read(".ruby-version").strip # set the rbenv_ruby to the sa
 # vite manifest location
 set :assets_prefix, "vite/.vite"
 
-# Run npm install before precompile
-before "deploy:assets:precompile", "deploy:npm_install"
-
 namespace :deploy do
-  desc "Run npm install"
-  task :npm_install do
-    on roles(:app) do
-      execute "cd #{release_path} && pnpm install --silent --force"
-    end
-  end
-
   desc "Precompile assets"
   after :updated, :precompile_assets do
     on roles(:app) do
       within release_path do
+        execute "pnpm install --silent --force"
         execute :rake, "assets:precompile"
       end
     end
