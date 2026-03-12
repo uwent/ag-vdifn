@@ -48,7 +48,7 @@ namespace :deploy do
   after :updated, :precompile_assets do
     on roles(:app) do
       within release_path do
-        execute "pnpm install --silent --force"
+        execute :pnpm, "install --silent --force"
         execute :rake, "assets:precompile"
       end
     end
