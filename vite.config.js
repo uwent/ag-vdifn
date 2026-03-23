@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import ViteRails from 'vite-plugin-rails';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -14,7 +13,6 @@ for (const k in process.env) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    tsconfigPaths(),
     svelte(),
     tailwindcss(),
     ViteRails({
@@ -28,6 +26,7 @@ export default defineConfig({
       '@public': path.resolve(__dirname, 'public'),
     },
     conditions: ['browser'],
+    tsconfigPaths: true,
   },
   build: {
     commonjsOptions: { exclude: ['chroma-js'] },
