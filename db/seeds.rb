@@ -64,7 +64,7 @@ cercospora_leaf_spot = CercosporaLeafSpot.create!(
     </p>",
   severity_info: "Cercospora leaf spot and resultant defoliation is one of the most damaging diseases of table and sugar beet crops worldwide. Timing of the application of fungicides with disease forecasting can greatly enhance control to limit inoculum within the crop for full season disease control.",
   photo: "cercospora-leaf-spot.jpg",
-  link: "https://vegpath.plantpath.wisc.edu/resources/carrot-diseases/"
+  link: "https://apsjournals.apsnet.org/doi/abs/10.1094/PDIS.1998.82.7.716"
 )
 
 botrytis_leaf_blight = BotrytisLeafBlight.create!(

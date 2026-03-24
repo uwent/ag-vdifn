@@ -9,6 +9,7 @@ class CercosporaLeafSpot < Disease
     end
   end
 
+  # https://apsjournals.apsnet.org/doi/abs/10.1094/PDIS.1998.82.7.716
   def total_to_severity(avg7, avg2)
     return 4 if avg7 >= 5 || avg2 >= 5.5
     return 3 if avg7 >= 3 || avg2 >= 3.5
