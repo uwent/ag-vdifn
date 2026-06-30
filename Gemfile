@@ -28,14 +28,10 @@ group :development do
 end
 
 group :development, :test do
-  gem "byebug"
   gem "dotenv-rails"
-  gem "guard-rspec"
   gem "pry-rails"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "spring"
-  gem "spring-commands-rspec"
   gem "foreman"
 end
 
