@@ -12,6 +12,7 @@ gem "terser"
 gem "csv" # no longer default gem, but it's being loaded by a gem and throwing a warning
 gem "ostruct" # no longer a default gem as of 3.3.6
 gem "rack-attack" # rate limiting
+gem "redis", "~> 5.0" # caching
 
 group :development do
   gem "puma"
