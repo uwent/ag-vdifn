@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@public': path.resolve(__dirname, 'public'),
+      '@public': path.resolve(import.meta.dirname, 'public'),
     },
     conditions: ['browser'],
     tsconfigPaths: true,
