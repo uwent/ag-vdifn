@@ -12,6 +12,7 @@ gem "terser"
 gem "csv" # no longer default gem, but it's being loaded by a gem and throwing a warning
 gem "ostruct" # no longer a default gem as of 3.3.6
 gem "rack-attack" # rate limiting
+gem "redis", "~> 5.0" # caching
 
 group :development do
   gem "puma"
@@ -25,17 +26,14 @@ group :development do
   gem "bundler-audit" # patch-level verification
   gem "ed25519" # for ssh keys
   gem "bcrypt_pbkdf" # for ssh keys
+  gem "solargraph" # Ruby language server for code completion and static analysis
 end
 
 group :development, :test do
-  gem "byebug"
   gem "dotenv-rails"
-  gem "guard-rspec"
   gem "pry-rails"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "spring"
-  gem "spring-commands-rspec"
   gem "foreman"
 end
 
