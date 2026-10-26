@@ -13,7 +13,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16-alpine
+        image: postgres:18-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
@@ -33,12 +33,12 @@ jobs:
       PG_USER: postgres
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 'ruby-3'
+          ruby-version: ".ruby-version"
           bundler-cache: true
 
       - name: Set up database
@@ -52,21 +52,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - name: Set up Node.js and pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 'latest-9'
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 'lts/*'
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install JavaScript dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run Vitest
         run: pnpm test

@@ -1,0 +1,6 @@
+# Dependency build scripts pnpm may run. None are needed: @parcel/watcher ships prebuilt binaries,
+# and the msw and svelte-preprocess scripts only print setup notes.
+allowBuilds:
+  "@parcel/watcher": false
+  msw: false
+  svelte-preprocess: false
