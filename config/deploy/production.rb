@@ -21,7 +21,7 @@ role :db, %w[deploy@agweather.cals.wisc.edu:216]
 
 set :rails_env, "production"
 
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle", "node_modules"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/packs", ".bundle"
 
 # Configuration
 # =============

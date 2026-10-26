@@ -48,6 +48,8 @@ namespace :deploy do
   after :updated, :precompile_assets do
     on roles(:app) do
       within release_path do
+        # node_modules is a real directory in each release, not linked to shared/: pnpm 12 refuses
+        # to install into a symlink. Packages are hardlinked from pnpm's store, so it stays cheap.
         execute :pnpm, "install --silent --force"
         execute :rake, "assets:precompile"
       end
